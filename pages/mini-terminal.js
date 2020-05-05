@@ -1,9 +1,9 @@
 import React from "react";
-import { GitHubCorner } from "../src/github-corner";
-import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
-import { CodeHikeLogo } from "../src/code-hike-logo";
-import { useSpring } from "use-spring";
 import Head from "next/head";
+import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
+import { GitHubCorner } from "../src/github-corner";
+import { CodeHikeLogo } from "../src/code-hike-logo";
+import { useStepsProgress, StepsRange } from "../src/steps-range";
 
 export default function Page() {
   return (
@@ -48,12 +48,7 @@ function Header() {
 }
 
 function Demo() {
-  const [{ target, teleport }, setState] = React.useState({
-    target: 0,
-    teleport: false,
-  });
-  const [progress] = useSpring(target, { teleport });
-  const max = steps.length - 1;
+  const [progress, updateProgress] = useStepsProgress();
   return (
     <div style={{ width: 500, margin: "48px auto 24px" }}>
       <MiniTerminalTransitions
@@ -62,40 +57,11 @@ function Demo() {
         progress={progress}
         steps={steps}
       />
-      <div style={{ display: "flex", alignItems: "center", marginTop: "24px" }}>
-        <button
-          style={{ userSelect: "none" }}
-          onClick={() =>
-            setState(({ target }) => ({
-              teleport: false,
-              target: Math.max(Math.ceil(target - 1), 0),
-            }))
-          }
-        >
-          prev
-        </button>
-        <input
-          type="range"
-          max={max}
-          step={0.01}
-          style={{ width: "100%" }}
-          onChange={(e) =>
-            setState({ target: +e.target.value, teleport: true })
-          }
-          value={progress}
-        />
-        <button
-          style={{ userSelect: "none" }}
-          onClick={() =>
-            setState(({ target }) => ({
-              teleport: false,
-              target: Math.min(Math.floor(target + 1), max),
-            }))
-          }
-        >
-          next
-        </button>
-      </div>
+      <StepsRange
+        progress={progress}
+        updateProgress={updateProgress}
+        stepsCount={steps.length}
+      />
     </div>
   );
 }

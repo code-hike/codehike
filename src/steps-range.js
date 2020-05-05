@@ -1,22 +1,28 @@
 import React from "react";
 import { useSpring } from "use-spring";
-export { StepsRange };
+export { StepsRange, useStepsProgress };
 
-function StepsRange({ max, onChange }) {
+function useStepsProgress() {
   const [{ target, teleport }, setState] = React.useState({
     target: 0,
     teleport: false,
   });
   const [progress] = useSpring(target, { teleport });
 
+  return [progress, setState];
+}
+
+function StepsRange({ progress, updateProgress: setState, stepsCount }) {
+  const max = stepsCount - 1;
   return (
-    <div style={{ display: "flex", alignItems: "center", marginTop: "30px" }}>
+    <div style={{ display: "flex", alignItems: "center", marginTop: "24px" }}>
       <button
         style={{ userSelect: "none" }}
         onClick={() =>
-          setState((p) =>
-            setState({ teleport: false, target: Math.max(Math.ceil(p - 1), 0) })
-          )
+          setState(({ target }) => ({
+            teleport: false,
+            target: Math.max(Math.ceil(target - 1), 0),
+          }))
         }
       >
         prev
@@ -32,12 +38,10 @@ function StepsRange({ max, onChange }) {
       <button
         style={{ userSelect: "none" }}
         onClick={() =>
-          setState((p) =>
-            setState({
-              teleport: false,
-              target: Math.min(Math.floor(p + 1), max),
-            })
-          )
+          setState(({ target }) => ({
+            teleport: false,
+            target: Math.min(Math.floor(target + 1), max),
+          }))
         }
       >
         next
