@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "@code-hike/mini-terminal": "^0.1.1",
     "next": "^9.3.6",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "use-spring": "^0.2.2"
   },
   "scripts": {
     "dev": "next",
