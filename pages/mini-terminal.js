@@ -15,7 +15,7 @@ export default function Page() {
       <Header />
       <GitHubCorner repo="https://github.com/code-hike/mini-terminal" />
       <Demo />
-      <div style={{ fontSize: "1.3rem", marginBottom: 50 }}>
+      <div style={{ fontSize: "1.3rem", marginBottom: 48 }}>
         React component for terminal walkthroughs. It transitions smoothly
         between a given list of steps using the <code>progress</code> prop.
       </div>
@@ -30,17 +30,17 @@ function Header() {
   return (
     <header
       style={{
-        margin: "120px 0 60px 0",
+        margin: "128px 0 56px 0",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <CodeHikeLogo style={{ height: 128, width: 128 }} />
-      <div style={{ width: 40 }} />
+      <CodeHikeLogo style={{ height: 104, width: 104 }} />
+      <div style={{ width: 24 }} />
       <div>
         <h1 style={{ margin: 0 }}>Code Hike</h1>
-        <div style={{ height: 10 }} />
+        <div style={{ height: 4 }} />
         <h1 style={{ margin: 0 }}>Mini Terminal</h1>
       </div>
     </header>
@@ -55,14 +55,14 @@ function Demo() {
   const [progress] = useSpring(target, { teleport });
   const max = steps.length - 1;
   return (
-    <div style={{ width: 500, margin: "50px auto 25px" }}>
+    <div style={{ width: 500, margin: "48px auto 24px" }}>
       <MiniTerminalTransitions
         title="loremsh"
         height={300}
         progress={progress}
         steps={steps}
       />
-      <div style={{ display: "flex", alignItems: "center", marginTop: "30px" }}>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "24px" }}>
         <button
           style={{ userSelect: "none" }}
           onClick={() =>
