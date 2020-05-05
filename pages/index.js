@@ -31,11 +31,6 @@ export default function Page() {
           body {
             height: 100%;
             margin: 0;
-            background: #fafafa;
-            color: #4f4f4f;
-            font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
-              Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-              Segoe UI Symbol;
           }
           body > div {
             display: flex;
