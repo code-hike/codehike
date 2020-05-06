@@ -9,7 +9,7 @@ import { useSpring } from "use-spring";
 
 export default function Page() {
   return (
-    <div style={{ width: 500, margin: "0 auto" }}>
+    <div style={{ width: 500, margin: "0 auto 30px" }}>
       <Head>
         <title>Mini Terminal - Code Hike</title>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -25,10 +25,12 @@ export default function Page() {
           style={{ flex: 1 }}
           href="https://codesandbox.io/s/gifted-jennings-p4co1?file=/src/App.js"
         >
+          {/* <CodeSandboxIcon size="1.4em" style={{ marginRight: "0.5rem" }} /> */}
           Try it
         </ExternalLinkButton>
         <div style={{ width: 12 }} />
         <LinkButton style={{ flex: 1 }} href="mini-terminal/docs">
+          {/* <DocsIcon size="1.4em" style={{ marginRight: "0.5rem" }} /> */}
           Docs
         </LinkButton>
         <div style={{ width: 12 }} />
@@ -36,6 +38,7 @@ export default function Page() {
           style={{ flex: 1 }}
           href="https://github.com/code-hike/mini-terminal"
         >
+          {/* <GitHubIcon size="1.2em" style={{ marginRight: "0.5rem" }} /> */}
           GitHub
         </ExternalLinkButton>
       </div>

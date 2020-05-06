@@ -1,6 +1,7 @@
 import React from "react";
 import { useSpring } from "use-spring";
 import { Range } from "react-range";
+import { PauseIcon, PlayIcon, LeftIcon, RightIcon } from "./icons";
 export { StepsRange, useStepsProgress };
 
 function useStepsProgress({ auto, stepsCount } = {}) {
@@ -79,7 +80,7 @@ function StepsRange({ state, setState, stepsCount, progress }) {
             }))
           }
         >
-          {"<"}
+          <LeftIcon style={{ display: "block" }} />
         </Button>
         <Button
           onClick={() =>
@@ -90,7 +91,11 @@ function StepsRange({ state, setState, stepsCount, progress }) {
             }))
           }
         >
-          {delay ? "S" : "P"}
+          {delay ? (
+            <PauseIcon style={{ display: "block", padding: "1px 3px" }} />
+          ) : (
+            <PlayIcon style={{ display: "block", padding: "1px 3px" }} />
+          )}
         </Button>
         <Button
           onClick={() =>
@@ -101,10 +106,19 @@ function StepsRange({ state, setState, stepsCount, progress }) {
             }))
           }
         >
-          {">"}
+          <RightIcon style={{ display: "block" }} />
         </Button>
         <RangeInput {...{ progress, updateProgress: setState, stepsCount }} />
-        <div style={{ fontWeight: "bolder" }}>{progress.toFixed(2)}</div>
+        <div
+          style={{
+            fontWeight: "bolder",
+            width: 70,
+            textAlign: "center",
+            fontSize: "1.1em",
+          }}
+        >
+          {progress.toFixed(2)}
+        </div>
       </div>
     </>
   );
@@ -118,15 +132,13 @@ function Button(props) {
         {`
           button {
             font: inherit;
-            color: inherit;
             background-color: transparent;
             cursor: pointer;
             user-select: none;
-            padding: 2px 8px;
+            padding: 1px 0;
             border: none;
-            border-radius: 6px;
             color: #7387c4;
-            font-weight: bolder;
+            height: 26px;
           }
         `}
       </style>
@@ -174,16 +186,16 @@ function RangeInput({ progress, updateProgress, stepsCount }) {
           onTouchStart={props.onTouchStart}
           style={{
             ...props.style,
-            height: "36px",
+            height: "32px",
             display: "flex",
             width: "100%",
-            margin: "0 24px",
+            margin: "0 10px",
           }}
         >
           <div
             ref={props.ref}
             style={{
-              height: "5px",
+              height: "4px",
               width: "100%",
               borderRadius: "4px",
               background: "#7387c4",
@@ -199,8 +211,8 @@ function RangeInput({ progress, updateProgress, stepsCount }) {
           {...props}
           style={{
             ...props.style,
-            height: "20px",
-            width: "20px",
+            height: "18px",
+            width: "18px",
             borderRadius: "50%",
             border: `${isDragged ? 5 : 3}px solid #7387c4`,
             backgroundColor: "#fafafa",
