@@ -19,9 +19,6 @@ export default function Page() {
         React component for terminal walkthroughs. It transitions smoothly
         between a given list of steps using the <code>progress</code> prop.
       </div>
-      <pre>
-        <code>{code}</code>
-      </pre>
     </div>
   );
 }
@@ -48,20 +45,19 @@ function Header() {
 }
 
 function Demo() {
-  const [progress, updateProgress] = useStepsProgress();
+  const [progress, rangeProps] = useStepsProgress({
+    stepsCount: steps.length,
+    auto: 3000,
+  });
   return (
     <div style={{ width: 500, margin: "48px auto 24px" }}>
       <MiniTerminalTransitions
-        title="loremsh"
-        height={300}
+        title="bash"
+        height={200}
         progress={progress}
         steps={steps}
       />
-      <StepsRange
-        progress={progress}
-        updateProgress={updateProgress}
-        stepsCount={steps.length}
-      />
+      <StepsRange {...rangeProps} />
     </div>
   );
 }
@@ -90,44 +86,3 @@ officia deserunt
 $ mollit anim id est laborum
 $ `,
 ];
-
-const code = `
-import React from "react";
-import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
-
-function Demo({progress}) {
-  return (
-      <MiniTerminalTransitions
-        title="loremsh"
-        height={300}
-        progress={progress}
-        steps={steps}
-      />
-  );
-}
-
-const steps = [
-  \`$ lorem ipsum
-dolor sit amet
-consectetur adipiscing elit
-$ sed do\`,
-  \`$ eiusmod tempor incididunt
-ut labore et dolore\`,
-  \`$ magna aliqua
-ut enim ad minim veniam
-quis nostrud
-exercitation ullamco laboris nisi ut aliquip
-ex ea commodo consequat
-$ duis aute irure dolor
-in reprehenderit\`,
-  \`$ in voluptate
-velit esse cillum dolore
-$ eu fugiat nulla pariatur\`,
-  \`$ excepteur sint occaecat
-cupidatat non proident
-sunt in culpa qui
-officia deserunt
-$ mollit anim id est laborum
-$ \`,
-];
-`.trim();

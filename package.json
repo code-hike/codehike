@@ -4,6 +4,7 @@
     "next": "^9.3.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-range": "^1.6.1",
     "use-spring": "^0.2.2"
   },
   "scripts": {
