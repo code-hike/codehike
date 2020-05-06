@@ -1,9 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
-import { GitHubCorner } from "../src/github-corner";
 import { CodeHikeLogo } from "../src/code-hike-logo";
 import { useStepsProgress, StepsRange } from "../src/steps-range";
+import { ExternalLinkButton, LinkButton } from "../src/button";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -13,27 +14,55 @@ export default function Page() {
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <GitHubCorner repo="https://github.com/code-hike/mini-terminal" />
       <Demo />
-      <div style={{ fontSize: "1.3rem", marginBottom: 48 }}>
+      <div style={{ fontSize: "1.4rem", marginBottom: 48 }}>
         React component for terminal walkthroughs. It transitions smoothly
         between a given list of steps using the <code>progress</code> prop.
+      </div>
+      <div style={{ display: "flex" }}>
+        <ExternalLinkButton
+          style={{ flex: 1 }}
+          href="https://codesandbox.io/s/gifted-jennings-p4co1?file=/src/App.js"
+        >
+          Try it
+        </ExternalLinkButton>
+        <div style={{ width: 12 }} />
+        <LinkButton style={{ flex: 1 }} href="mini-terminal/docs">
+          Docs
+        </LinkButton>
+        <div style={{ width: 12 }} />
+        <ExternalLinkButton
+          style={{ flex: 1 }}
+          href="https://github.com/code-hike/mini-terminal"
+        >
+          GitHub
+        </ExternalLinkButton>
       </div>
     </div>
   );
 }
 
 function Header() {
+  // const mouseCoords = useMouseCoords();
+
   return (
     <header
       style={{
-        margin: "128px 0 56px 0",
+        margin: "128px 0 48px 0",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <CodeHikeLogo style={{ height: 104, width: 104 }} />
+      <Link href="/">
+        <a>
+          <CodeHikeLogo
+            style={{ height: 104, width: 104 }}
+            rotate={0}
+            id="compass"
+          />
+        </a>
+      </Link>
       <div style={{ width: 24 }} />
       <div>
         <h1 style={{ margin: 0 }}>Code Hike</h1>
@@ -42,6 +71,20 @@ function Header() {
       </div>
     </header>
   );
+}
+
+function useMouseCoords() {
+  const [coords, setCoords] = React.useState({ x: 0, y: 0 });
+  React.useEffect(() => {
+    const onMove = ({ pageX, pageY }) => {
+      setCoords({ x: pageX, y: pageY });
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+    };
+  }, []);
+  return coords;
 }
 
 function Demo() {
