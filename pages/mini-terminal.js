@@ -59,7 +59,7 @@ function Header() {
     <>
       <header
         style={{
-          margin: "92px 0 36px 0",
+          margin: "92px 0 48px 0",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
