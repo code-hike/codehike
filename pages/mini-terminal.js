@@ -5,6 +5,7 @@ import { CodeHikeLogo } from "../src/code-hike-logo";
 import { useStepsProgress, StepsRange } from "../src/steps-range";
 import { ExternalLinkButton, LinkButton } from "../src/button";
 import Link from "next/link";
+import { useSpring } from "use-spring";
 
 export default function Page() {
   return (
@@ -43,7 +44,13 @@ export default function Page() {
 }
 
 function Header() {
-  // const mouseCoords = useMouseCoords();
+  const mouseCoords = useMouseCoords();
+  const rotate =
+    mouseCoords.x === 0 && mouseCoords.y === 0
+      ? 0
+      : (Math.atan2(mouseCoords.y, mouseCoords.x) * 180) / Math.PI + 90 - 16;
+
+  const [angle] = useSpring(rotate, { mass: 12, stiffness: 50, damping: 10 });
 
   return (
     <header
@@ -58,7 +65,7 @@ function Header() {
         <a>
           <CodeHikeLogo
             style={{ height: 104, width: 104 }}
-            rotate={0}
+            rotate={angle}
             id="compass"
           />
         </a>
@@ -75,13 +82,32 @@ function Header() {
 
 function useMouseCoords() {
   const [coords, setCoords] = React.useState({ x: 0, y: 0 });
+  // todo return angle instead of coords
+  // set events using react
   React.useEffect(() => {
-    const onMove = ({ pageX, pageY }) => {
-      setCoords({ x: pageX, y: pageY });
+    const compass = document.getElementById("compass");
+    var html = document.documentElement;
+
+    const onMove = (e) => {
+      var bound = compass.getBoundingClientRect();
+      const top =
+        bound.top + bound.height / 2 + window.pageYOffset - html.clientTop;
+      const left =
+        bound.left + bound.width / 2 + window.pageXOffset - html.clientLeft;
+
+      const x = e.pageX - left;
+      const y = e.pageY - top;
+      // console.log(e.currentTarget);
+      setCoords({ x, y });
     };
-    window.addEventListener("mousemove", onMove);
+    const onLeave = (e) => {
+      setCoords({ x: 0, y: 0 });
+    };
+    compass.addEventListener("mousemove", onMove);
+    compass.addEventListener("mouseleave", onLeave);
     return () => {
-      window.removeEventListener("mousemove", onMove);
+      compass.removeEventListener("mousemove", onMove);
+      compass.removeEventListener("mouseleave", onLeave);
     };
   }, []);
   return coords;
