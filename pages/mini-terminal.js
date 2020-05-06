@@ -12,7 +12,18 @@ export default function Page() {
     <div style={{ width: 500, margin: "0 auto 30px" }}>
       <Head>
         <title>Mini Terminal - Code Hike</title>
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
       </Head>
       <Header />
       <Demo />
