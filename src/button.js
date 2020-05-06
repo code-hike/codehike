@@ -29,7 +29,7 @@ const ExternalLinkButton = React.forwardRef((props, ref) => {
           line-height: 1.2;
           height: 2.5rem;
           min-width: 2.5rem;
-          font-size: 1rem;
+          font-size: 1.2rem;
           padding-left: 1rem;
           padding-right: 1rem;
           color: #7387c4;

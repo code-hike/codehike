@@ -56,30 +56,50 @@ function Header() {
   const [angle] = useSpring(rotate, { mass: 12, stiffness: 50, damping: 10 });
 
   return (
-    <header
-      style={{
-        margin: "128px 0 48px 0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Link href="/">
-        <a>
-          <CodeHikeLogo
-            style={{ height: 104, width: 104 }}
-            rotate={angle}
-            id="compass"
-          />
-        </a>
-      </Link>
-      <div style={{ width: 24 }} />
-      <div>
-        <h1 style={{ margin: 0 }}>Code Hike</h1>
-        <div style={{ height: 4 }} />
-        <h1 style={{ margin: 0 }}>Mini Terminal</h1>
-      </div>
-    </header>
+    <>
+      <header
+        style={{
+          margin: "92px 0 36px 0",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Link href="/">
+          <a>
+            <CodeHikeLogo
+              style={{ height: 104, width: 104, display: "block" }}
+              rotate={angle}
+              id="compass"
+            />
+          </a>
+        </Link>
+        <div style={{ width: 16 }} />
+        <div>
+          <h1
+            style={{
+              fontSize: "3.1rem",
+              margin: 0,
+              fontFamily: `'Code', sans-serif`,
+            }}
+          >
+            Code
+          </h1>
+          <h1
+            style={{
+              fontSize: "2.65rem",
+              margin: 0,
+              fontFamily: `'Hike', cursive`,
+            }}
+          >
+            Hike
+          </h1>
+        </div>
+      </header>
+      <h1 style={{ margin: 0, textAlign: "center", fontSize: "2.8rem" }}>
+        Mini Terminal
+      </h1>
+    </>
   );
 }
 
