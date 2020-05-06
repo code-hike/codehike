@@ -113,6 +113,7 @@ function StepsRange({ state, setState, stepsCount, progress }) {
           style={{
             fontWeight: "bolder",
             width: 70,
+            flexShrink: 0,
             textAlign: "center",
             fontSize: "1.1em",
           }}
