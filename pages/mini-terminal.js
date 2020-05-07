@@ -7,9 +7,17 @@ import { LogoHeader } from "../src/logo-header";
 
 export default function Page() {
   return (
-    <div style={{ width: 500, margin: "0 auto 30px" }}>
+    <div
+      style={{
+        width: 500,
+        maxWidth: "90vw",
+        minWidth: "288px",
+        margin: "0 auto 30px",
+      }}
+    >
       <Head>
         <title>Mini Terminal - Code Hike</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
           rel="icon"
           type="image/png"
@@ -59,9 +67,17 @@ function Header() {
   return (
     <>
       <LogoHeader />
-      <h1 style={{ margin: 0, textAlign: "center", fontSize: "2.8rem" }}>
-        Mini Terminal
-      </h1>
+      <h1 style={{ margin: 0, textAlign: "center" }}>Mini Terminal</h1>
+      <style jsx>{`
+        h1 {
+          font-size: 2.8rem;
+        }
+        @media only screen and (max-width: 500px) {
+          h1 {
+            font-size: 2.4rem;
+          }
+        }
+      `}</style>
     </>
   );
 }
@@ -72,7 +88,7 @@ function Demo() {
     auto: 3000,
   });
   return (
-    <div style={{ width: 500, margin: "48px auto 24px" }}>
+    <div>
       <MiniTerminalTransitions
         title="bash"
         height={200}
@@ -80,6 +96,16 @@ function Demo() {
         steps={steps}
       />
       <StepsRange {...rangeProps} />
+      <style jsx>{`
+        div {
+          margin: 48px auto 24px;
+        }
+        @media only screen and (max-width: 500px) {
+          div {
+            margin: 24px auto 24px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

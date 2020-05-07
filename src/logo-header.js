@@ -37,7 +37,6 @@ function LogoHeader() {
         style={{
           color: "inherit",
           textDecoration: "none",
-          margin: "92px auto 48px",
           display: "flex",
           justifyContent: "center",
         }}
@@ -77,6 +76,16 @@ function LogoHeader() {
             </h1>
           </div>
         </header>
+        <style jsx>{`
+          a {
+            margin: 92px auto 48px;
+          }
+          @media only screen and (max-width: 500px) {
+            a {
+              margin: 48px auto 24px;
+            }
+          }
+        `}</style>
       </a>
     </Link>
   );
