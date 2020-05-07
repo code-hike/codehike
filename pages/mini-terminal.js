@@ -1,11 +1,9 @@
 import React from "react";
 import Head from "next/head";
 import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
-import { CodeHikeLogo } from "../src/code-hike-logo";
 import { useStepsProgress, StepsRange } from "../src/steps-range";
 import { ExternalLinkButton, LinkButton } from "../src/button";
-import Link from "next/link";
-import { useSpring } from "use-spring";
+import { LogoHeader } from "../src/logo-header";
 
 export default function Page() {
   return (
@@ -58,93 +56,14 @@ export default function Page() {
 }
 
 function Header() {
-  const mouseCoords = useMouseCoords();
-  const rotate =
-    mouseCoords.x === 0 && mouseCoords.y === 0
-      ? 0
-      : (Math.atan2(mouseCoords.y, mouseCoords.x) * 180) / Math.PI + 90 - 16;
-
-  const [angle] = useSpring(rotate, { mass: 12, stiffness: 50, damping: 10 });
-
   return (
     <>
-      <header
-        style={{
-          margin: "92px 0 48px 0",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Link href="/">
-          <a>
-            <CodeHikeLogo
-              style={{ height: 104, width: 104, display: "block" }}
-              rotate={angle}
-              id="compass"
-            />
-          </a>
-        </Link>
-        <div style={{ width: 16 }} />
-        <div>
-          <h1
-            style={{
-              fontSize: "3.1rem",
-              margin: 0,
-              fontFamily: `'Code', sans-serif`,
-            }}
-          >
-            Code
-          </h1>
-          <h1
-            style={{
-              fontSize: "2.65rem",
-              margin: 0,
-              fontFamily: `'Hike', cursive`,
-            }}
-          >
-            Hike
-          </h1>
-        </div>
-      </header>
+      <LogoHeader />
       <h1 style={{ margin: 0, textAlign: "center", fontSize: "2.8rem" }}>
         Mini Terminal
       </h1>
     </>
   );
-}
-
-function useMouseCoords() {
-  const [coords, setCoords] = React.useState({ x: 0, y: 0 });
-  // todo return angle instead of coords
-  // set events using react
-  React.useEffect(() => {
-    const compass = document.getElementById("compass");
-    var html = document.documentElement;
-
-    const onMove = (e) => {
-      var bound = compass.getBoundingClientRect();
-      const top =
-        bound.top + bound.height / 2 + window.pageYOffset - html.clientTop;
-      const left =
-        bound.left + bound.width / 2 + window.pageXOffset - html.clientLeft;
-
-      const x = e.pageX - left;
-      const y = e.pageY - top;
-      // console.log(e.currentTarget);
-      setCoords({ x, y });
-    };
-    const onLeave = (e) => {
-      setCoords({ x: 0, y: 0 });
-    };
-    compass.addEventListener("mousemove", onMove);
-    compass.addEventListener("mouseleave", onLeave);
-    return () => {
-      compass.removeEventListener("mousemove", onMove);
-      compass.removeEventListener("mouseleave", onLeave);
-    };
-  }, []);
-  return coords;
 }
 
 function Demo() {
