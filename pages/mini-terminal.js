@@ -1,90 +1,116 @@
 import React from "react";
-import { GitHubCorner } from "../src/github-corner";
-import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
-import { CodeHikeLogo } from "../src/code-hike-logo";
-import { useSpring } from "use-spring";
 import Head from "next/head";
+import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
+import { useStepsProgress, StepsRange } from "../src/steps-range";
+import { ExternalLinkButton, LinkButton } from "../src/button";
+import { LogoHeader } from "../src/logo-header";
 
 export default function Page() {
-  const [{ target, teleport }, setState] = React.useState({
-    target: 0,
-    teleport: false,
-  });
-  const [progress] = useSpring(target, { teleport });
-  console.log(target, progress);
-  const max = steps.length - 1;
+  return (
+    <div
+      style={{
+        width: 500,
+        maxWidth: "90vw",
+        minWidth: "288px",
+        margin: "0 auto 30px",
+      }}
+    >
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Mini Terminal - Code Hike</title>
+        <meta
+          name="description"
+          content="React component for terminal walkthroughs."
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+      </Head>
+      <Header />
+      <Demo />
+      <div style={{ fontSize: "1.4rem", marginBottom: 48 }}>
+        React component for terminal walkthroughs. It transitions smoothly
+        between a given list of steps using the <code>progress</code> prop.
+      </div>
+      <div style={{ display: "flex" }}>
+        <ExternalLinkButton
+          style={{ flex: 1 }}
+          href="https://codesandbox.io/s/gifted-jennings-p4co1?file=/src/App.js"
+        >
+          {/* <CodeSandboxIcon size="1.4em" style={{ marginRight: "0.5rem" }} /> */}
+          Try it
+        </ExternalLinkButton>
+        <div style={{ width: 12 }} />
+        <LinkButton style={{ flex: 1 }} href="mini-terminal/docs">
+          {/* <DocsIcon size="1.4em" style={{ marginRight: "0.5rem" }} /> */}
+          Docs
+        </LinkButton>
+        <div style={{ width: 12 }} />
+        <ExternalLinkButton
+          style={{ flex: 1 }}
+          href="https://github.com/code-hike/mini-terminal"
+        >
+          {/* <GitHubIcon size="1.2em" style={{ marginRight: "0.5rem" }} /> */}
+          GitHub
+        </ExternalLinkButton>
+      </div>
+    </div>
+  );
+}
+
+function Header() {
   return (
     <>
-      <Head>
-        <title>Mini Terminal - Code Hike</title>
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-      </Head>
-      <header
-        style={{
-          margin: "120px 0 60px 0",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "#4f4f4f",
-          fontFamily: `Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
-              Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-              Segoe UI Symbol`,
-        }}
-      >
-        <CodeHikeLogo style={{ height: 128, width: 128 }} />
-        <div style={{ width: 40 }} />
-        <div>
-          <h1 style={{ margin: 0 }}>Code Hike</h1>
-          <div style={{ height: 10 }} />
-          <h1 style={{ margin: 0 }}>Mini Terminal</h1>
-        </div>
-      </header>
-      <GitHubCorner repo="https://github.com/code-hike/mini-terminal" />
-      <div style={{ width: 500, margin: "50px auto" }}>
-        <MiniTerminalTransitions
-          title="loremsh"
-          height={300}
-          progress={progress}
-          steps={steps}
-        />
-        <div
-          style={{ display: "flex", alignItems: "center", marginTop: "30px" }}
-        >
-          <button
-            style={{ userSelect: "none" }}
-            onClick={() =>
-              setState(({ target }) => ({
-                teleport: false,
-                target: Math.max(Math.ceil(target - 1), 0),
-              }))
-            }
-          >
-            prev
-          </button>
-          <input
-            type="range"
-            max={max}
-            step={0.01}
-            style={{ width: "100%" }}
-            onChange={(e) =>
-              setState({ target: +e.target.value, teleport: true })
-            }
-            value={progress}
-          />
-          <button
-            style={{ userSelect: "none" }}
-            onClick={() =>
-              setState(({ target }) => ({
-                teleport: false,
-                target: Math.min(Math.floor(target + 1), max),
-              }))
-            }
-          >
-            next
-          </button>
-        </div>
-      </div>
+      <LogoHeader />
+      <h1 style={{ margin: 0, textAlign: "center" }}>Mini Terminal</h1>
+      <style jsx>{`
+        h1 {
+          font-size: 2.8rem;
+        }
+        @media only screen and (max-width: 500px) {
+          h1 {
+            font-size: 2.4rem;
+          }
+        }
+      `}</style>
     </>
+  );
+}
+
+function Demo() {
+  const [progress, rangeProps] = useStepsProgress({
+    stepsCount: steps.length,
+    delay: 3000,
+  });
+  return (
+    <div>
+      <MiniTerminalTransitions
+        title="bash"
+        height={200}
+        progress={progress}
+        steps={steps}
+      />
+      <StepsRange {...rangeProps} />
+      <style jsx>{`
+        div {
+          margin: 48px auto 24px;
+        }
+        @media only screen and (max-width: 500px) {
+          div {
+            margin: 24px auto 24px;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
 

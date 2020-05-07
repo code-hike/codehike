@@ -8,9 +8,20 @@ export default function Page() {
     <>
       <Head>
         <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Code Hike</title>
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
         <meta name="twitter:card" content="summary" />
         <meta property="og:title" content="Code Hike" />
         <meta
@@ -31,11 +42,6 @@ export default function Page() {
           body {
             height: 100%;
             margin: 0;
-            background: #fafafa;
-            color: #4f4f4f;
-            font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI,
-              Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-              Segoe UI Symbol;
           }
           body > div {
             display: flex;
