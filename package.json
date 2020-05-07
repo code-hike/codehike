@@ -5,7 +5,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-range": "^1.6.1",
-    "use-spring": "^0.2.2"
+    "use-spring": "^0.2.3"
   },
   "scripts": {
     "dev": "next",
