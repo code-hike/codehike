@@ -85,7 +85,7 @@ function Header() {
 function Demo() {
   const [progress, rangeProps] = useStepsProgress({
     stepsCount: steps.length,
-    auto: 3000,
+    delay: 3000,
   });
   return (
     <div>

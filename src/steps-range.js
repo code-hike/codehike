@@ -4,63 +4,77 @@ import { Range } from "react-range";
 import { PauseIcon, PlayIcon, LeftIcon, RightIcon } from "./icons";
 export { StepsRange, useStepsProgress };
 
-function useStepsProgress({ auto, stepsCount } = {}) {
-  // change to reducer
-  const [state, setState] = React.useState({
+function useStepsProgress({ delay, stepsCount } = {}) {
+  const max = stepsCount - 1;
+  function reducer(state, action) {
+    const { target, backwards, playing } = state;
+    switch (action.type) {
+      case "seek":
+        return {
+          ...state,
+          target: action.target,
+          teleport: true,
+        };
+      case "next":
+        return {
+          ...state,
+          target: Math.min(Math.floor(target + 1), max),
+          teleport: false,
+        };
+      case "prev":
+        return {
+          ...state,
+          target: Math.max(Math.ceil(target - 1), 0),
+          teleport: false,
+        };
+      case "toggle":
+        return {
+          ...state,
+          playing: !playing,
+        };
+      case "auto":
+        if (target >= max || (backwards && target > 0)) {
+          return {
+            ...state,
+            target: Math.max(Math.ceil(target - 1), 0),
+            backwards: true,
+            teleport: false,
+          };
+        } else {
+          return {
+            ...state,
+            target: Math.min(Math.floor(target + 1), max),
+            backwards: false,
+            teleport: false,
+          };
+        }
+      default:
+        throw new Error();
+    }
+  }
+  const [state, dispatch] = React.useReducer(reducer, {
     target: 0,
     teleport: false,
     backwards: false,
-    auto,
-    delay: auto,
+    playing: true,
   });
-  const { target, teleport, backwards, delay } = state;
+
+  const { target, teleport, backwards, playing } = state;
   const [progress] = useSpring(target, { teleport });
 
   const fast = backwards && target > 0;
-  useInterval(fast ? delay / 5 : delay, () => {
-    const max = stepsCount - 1;
-    setState(({ target, backwards, ...rest }) => {
-      if (backwards && target <= 0) {
-        return {
-          ...rest,
-          target: 1,
-          teleport: false,
-          backwards: false,
-        };
-      } else if (backwards && target > 0) {
-        return {
-          ...rest,
-          target: Math.max(Math.ceil(target - 1), 0),
-          teleport: false,
-          backwards: true,
-        };
-      } else if (!backwards && target >= max) {
-        return {
-          ...rest,
-          target: max - 1,
-          teleport: false,
-          backwards: true,
-        };
-      } else if (!backwards && target < max) {
-        return {
-          ...rest,
-          target: Math.min(Math.floor(target + 1), max),
-          teleport: false,
-          backwards: false,
-        };
-      }
-    });
+  useInterval(!playing ? null : fast ? delay / 5 : delay, () => {
+    dispatch({ type: "auto" });
   });
 
-  const props = { state, setState, stepsCount, progress };
+  const props = { state, dispatch, stepsCount, progress };
 
   return [progress, props];
 }
 
-function StepsRange({ state, setState, stepsCount, progress }) {
-  const { delay } = state;
+function StepsRange({ state, dispatch, stepsCount, progress }) {
+  const { playing } = state;
 
-  const max = stepsCount - 1;
   return (
     <>
       <div
@@ -71,44 +85,20 @@ function StepsRange({ state, setState, stepsCount, progress }) {
           color: "#7387c4",
         }}
       >
-        <Button
-          onClick={() =>
-            setState(({ target, ...rest }) => ({
-              ...rest,
-              teleport: false,
-              target: Math.max(Math.ceil(target - 1), 0),
-            }))
-          }
-        >
+        <Button onClick={() => dispatch({ type: "prev" })}>
           <LeftIcon style={{ display: "block" }} />
         </Button>
-        <Button
-          onClick={() =>
-            setState(({ auto, delay, ...rest }) => ({
-              ...rest,
-              auto,
-              delay: delay ? null : auto,
-            }))
-          }
-        >
-          {delay ? (
+        <Button onClick={() => dispatch({ type: "toggle" })}>
+          {playing ? (
             <PauseIcon style={{ display: "block", padding: "1px 3px" }} />
           ) : (
             <PlayIcon style={{ display: "block", padding: "1px 3px" }} />
           )}
         </Button>
-        <Button
-          onClick={() =>
-            setState(({ target, ...rest }) => ({
-              ...rest,
-              teleport: false,
-              target: Math.min(Math.floor(target + 1), max),
-            }))
-          }
-        >
+        <Button onClick={() => dispatch({ type: "next" })}>
           <RightIcon style={{ display: "block" }} />
         </Button>
-        <RangeInput {...{ progress, updateProgress: setState, stepsCount }} />
+        <RangeInput {...{ progress, dispatch, stepsCount }} />
         <div
           style={{
             fontWeight: "bolder",
@@ -149,13 +139,9 @@ function Button(props) {
 
 function useInterval(delay, callback) {
   const savedCallback = React.useRef();
-
-  // Remember the latest callback.
   React.useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
-
-  // Set up the interval.
   React.useEffect(() => {
     function tick() {
       savedCallback.current();
@@ -167,7 +153,7 @@ function useInterval(delay, callback) {
   }, [delay]);
 }
 
-function RangeInput({ progress, updateProgress, stepsCount }) {
+function RangeInput({ progress, dispatch, stepsCount }) {
   return (
     <Range
       values={[progress]}
@@ -175,11 +161,7 @@ function RangeInput({ progress, updateProgress, stepsCount }) {
       min={0}
       max={stepsCount - 1}
       onChange={(values) => {
-        updateProgress((rest) => ({
-          ...rest,
-          target: values[0],
-          teleport: true,
-        }));
+        dispatch({ type: "seek", target: values[0] });
       }}
       renderTrack={({ props, children }) => (
         <div
