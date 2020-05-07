@@ -85,17 +85,29 @@ function StepsRange({ state, dispatch, stepsCount, progress }) {
           color: "#7387c4",
         }}
       >
-        <Button onClick={() => dispatch({ type: "prev" })}>
+        <Button
+          onClick={() => dispatch({ type: "prev" })}
+          aria-label="Previous Step"
+        >
           <LeftIcon style={{ display: "block" }} />
         </Button>
         <Button onClick={() => dispatch({ type: "toggle" })}>
           {playing ? (
-            <PauseIcon style={{ display: "block", padding: "1px 3px" }} />
+            <PauseIcon
+              style={{ display: "block", padding: "1px 3px" }}
+              aria-label="Pause"
+            />
           ) : (
-            <PlayIcon style={{ display: "block", padding: "1px 3px" }} />
+            <PlayIcon
+              style={{ display: "block", padding: "1px 3px" }}
+              aria-label="Play"
+            />
           )}
         </Button>
-        <Button onClick={() => dispatch({ type: "next" })}>
+        <Button
+          onClick={() => dispatch({ type: "next" })}
+          aria-label="Next Step"
+        >
           <RightIcon style={{ display: "block" }} />
         </Button>
         <RangeInput {...{ progress, dispatch, stepsCount }} />

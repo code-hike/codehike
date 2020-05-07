@@ -27,7 +27,7 @@ function LogoHeader() {
 
     setTargetAngle(angle);
   };
-  const handleLeave = (e) => {
+  const handleLeave = () => {
     setTargetAngle(0);
   };
 
@@ -40,6 +40,7 @@ function LogoHeader() {
           display: "flex",
           justifyContent: "center",
         }}
+        aria-label="Code Hike home"
       >
         <header
           ref={ref}
