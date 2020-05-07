@@ -16,8 +16,12 @@ export default function Page() {
       }}
     >
       <Head>
-        <title>Mini Terminal - Code Hike</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Mini Terminal - Code Hike</title>
+        <meta
+          name="description"
+          content="React component for terminal walkthroughs."
+        />
         <link
           rel="icon"
           type="image/png"
