@@ -4,6 +4,8 @@ import { MiniEditor } from "packages/mini-editor/mini-editor";
 import { Player } from "packages/player/player";
 import { useSpring } from "use-spring";
 import { editorSteps, browserSteps, playerSteps } from "./steps";
+import { CodeHikeLogo } from "src/code-hike-logo";
+import Link from "next/link";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -69,26 +71,7 @@ export function Demo() {
           </div>
         </div>
       </div>
-      <footer
-        style={{
-          position: "fixed",
-          bottom: 30,
-          right: 30,
-          fontFamily:
-            "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
-        }}
-      >
-        <div>
-          Built with <a href="https://codehike.org">Code Hike</a> by{" "}
-          <a href="https://twitter.com/pomber">@pomber</a>
-        </div>
-        <div>
-          Content from{" "}
-          <a href="https://www.youtube.com/watch?v=dpw9EHDh2bM">
-            Dan Abramov's talk
-          </a>
-        </div>
-      </footer>
+      <Footer />
       <style jsx global>{`
         html {
           height: 100%;
@@ -103,5 +86,58 @@ export function Demo() {
         }
       `}</style>
     </>
+  );
+}
+
+function Footer() {
+  return (
+    <footer
+      style={{
+        position: "fixed",
+        bottom: 30,
+        right: 30,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        fontFamily:
+          "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
+      }}
+    >
+      <div>
+        Built with{" "}
+        <Link href="/">
+          <a>
+            <CodeHikeLogo
+              width="1.2em"
+              height="1.2em"
+              style={{ display: "inline-block", verticalAlign: "top" }}
+            />{" "}
+            <span
+              style={{ fontFamily: `'Code', sans-serif`, fontSize: "1.2em" }}
+            >
+              Code
+            </span>{" "}
+            <span
+              style={{ fontFamily: `'Hike', sans-serif`, fontWeight: "600" }}
+            >
+              Hike
+            </span>
+          </a>
+        </Link>{" "}
+        by <a href="https://twitter.com/pomber">@pomber</a>
+      </div>
+      <div style={{ height: "0.2em" }} />
+      <div>
+        Content from{" "}
+        <a href="https://www.youtube.com/watch?v=dpw9EHDh2bM">
+          Dan Abramov's talk
+        </a>
+      </div>
+      <style jsx>{`
+        a {
+          color: ;
+        }
+      `}</style>
+    </footer>
   );
 }
