@@ -1,9 +1,12 @@
 import React from "react";
 import Head from "next/head";
-import { GitHubCorner } from "../src/github-corner";
-import { CodeHikeLogo } from "../src/code-hike-logo";
+import { GitHubCorner } from "src/github-corner";
+import { LogoHeader } from "../src/logo-header";
+import { LandingPage } from "src/landing";
 
-export default function Page() {
+export default LandingPage;
+
+function Page() {
   return (
     <>
       <Head>
@@ -33,8 +36,13 @@ export default function Page() {
           content="https://user-images.githubusercontent.com/1911623/80647122-54014500-8a44-11ea-91d0-0c6684c390b0.png"
         />
       </Head>
-      <CodeHikeLogo className="logo" />
-      <Countdown />
+      <LogoHeader className="logo" />
+      <p style={{ fontSize: "1.4em" }}>
+        An <strong>open source</strong> tool set to build marvellous{" "}
+        <strong>code walkthroughs</strong>. Code Hike provides the building
+        blocks for video tutorials, blog posts, talk slides, codebase
+        onboarding, docs, and on and on.
+      </p>
       <GitHubCorner repo="https://github.com/code-hike/codehike" />
       <style jsx global>
         {`

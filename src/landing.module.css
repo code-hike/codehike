@@ -1,0 +1,95 @@
+.main {
+  background: #aaa;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.header {
+  background: #cee;
+  max-width: 576px;
+  margin: 0 auto;
+  display: flex;
+  font-size: 1.435em;
+  padding: 64px 32px 32px;
+}
+
+.header .logo {
+  width: 10em;
+  height: 10em;
+}
+
+.header > .space {
+  width: 2em;
+}
+
+.header h1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  /* background: salmon; */
+  font-size: 2.2346em;
+}
+
+.header h1 .code {
+  display: inline-block;
+  font-size: 3.1em;
+  line-height: 0.615em;
+  height: 0.646em;
+  vertical-align: -0.1em;
+  font-family: "Code", sans-serif;
+  margin-left: -0.027em;
+  letter-spacing: -0.03em;
+  /* background: #bbc; */
+}
+
+.header h1 .hike {
+  display: inline-block;
+  font-size: 2.5em;
+  line-height: 0.89em;
+  height: 0.789em;
+  vertical-align: -0.1em;
+  font-family: "Hike", cursive;
+  margin-left: -0.11em;
+  letter-spacing: 0.03em;
+  /* margin-left: 2.3em; */
+  /* margin-top: -1em; */
+  /* background: #bb4; */
+}
+
+.header h1 > .space {
+  height: 0.5em;
+}
+
+.description {
+  background: #eec;
+  max-width: 576px;
+  padding: 32px;
+  margin: 0 auto;
+  font-size: 1.62em;
+}
+
+.demos {
+  background: #ece;
+  padding: 32px;
+}
+
+.demos h2 {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 32px;
+}
+
+.demos .list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.demos .box {
+  background: #222;
+  color: #fafafa;
+  height: 160px;
+  width: 216px;
+}
