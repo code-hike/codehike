@@ -31,8 +31,24 @@ function LandingPage() {
           <li className={s.box}>4</li>
         </ul>
       </div>
-      <div className={s.tools}>tools</div>
-      <footer className={s.footer}>footer</footer>
+      <div className={s.tools}>
+        <h2>Tools</h2>
+        <ul className={s.list}>
+          <li className={s.box}>1</li>
+          <li className={s.box}>2</li>
+          <li className={s.box}>3</li>
+          <li className={s.box}>4</li>
+          <li className={s.box}>5</li>
+          <li className={s.box}>6</li>
+          <li className={s.box}>7</li>
+          <li className={s.box}>8</li>
+        </ul>
+      </div>
+      <footer className={s.footer}>
+        <span>GitHub</span>
+        <span>Twitter</span>
+        <span>Open Collective</span>
+      </footer>
     </div>
   );
 }

@@ -1,15 +1,17 @@
 .main {
-  background: #aaa;
+  /* background: #aaa; */
   max-width: 1024px;
   margin: 0 auto;
 }
 
 .header {
-  background: #cee;
+  /* background: #cee; */
   max-width: 576px;
   margin: 0 auto;
   display: flex;
+  justify-content: center;
   font-size: 1.435em;
+  font-size: 1.1em;
   padding: 64px 32px 32px;
 }
 
@@ -51,8 +53,6 @@
   font-family: "Hike", cursive;
   margin-left: -0.11em;
   letter-spacing: 0.03em;
-  /* margin-left: 2.3em; */
-  /* margin-top: -1em; */
   /* background: #bb4; */
 }
 
@@ -61,7 +61,7 @@
 }
 
 .description {
-  background: #eec;
+  /* background: #eec; */
   max-width: 576px;
   padding: 32px;
   margin: 0 auto;
@@ -69,7 +69,7 @@
 }
 
 .demos {
-  background: #ece;
+  /* background: #ece; */
   padding: 32px;
 }
 
@@ -80,9 +80,6 @@
 }
 
 .demos .list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   justify-content: space-between;
 }
@@ -92,4 +89,46 @@
   color: #fafafa;
   height: 160px;
   width: 216px;
+}
+
+.tools {
+  /* background: #cee; */
+  padding: 32px 32px 16px;
+}
+
+.tools h2 {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.tools .list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.tools .box {
+  background: #222;
+  color: #fafafa;
+  height: 160px;
+  width: 216px;
+  margin: 16px 0;
+}
+
+.footer {
+  border-top: 1px solid var(--accent-color);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer > span {
+  padding-left: 16px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
