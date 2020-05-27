@@ -119,6 +119,13 @@
   color: #fafafa;
   height: 180px;
   width: 298.67px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1.5em;
+  padding-bottom: 16px;
+  box-sizing: border-box;
+  border-radius: 8px;
 }
 
 .tools {
@@ -144,10 +151,21 @@
   height: 160px;
   width: 216px;
   margin: 16px 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1.25em;
+  padding-bottom: 16px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.tools a:hover {
+  text-decoration: none;
 }
 
 .footer {
-  border-top: 1px solid var(--accent-color);
+  /* border-top: 1px solid var(--accent-color); */
   padding: 16px 32px;
   display: flex;
   justify-content: flex-end;

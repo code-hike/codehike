@@ -2,12 +2,15 @@ import React from "react";
 import s from "./landing.module.css";
 import { CodeHikeLogo } from "./code-hike-logo";
 import { LeftIcon, RightIcon } from "./icons";
+import { CodeHikeHead } from "./code-hike-head";
+import Link from "next/link";
 
 export { LandingPage };
 
 function LandingPage() {
   return (
     <div className={s.main}>
+      <CodeHikeHead />
       <header className={s.header}>
         <CodeHikeLogo className={s.logo} />
         <div className={s.space} />
@@ -27,9 +30,9 @@ function LandingPage() {
         <h2>Demos</h2>
         <div className={s.listContainer}>
           <ul className={s.list}>
-            <li className={s.box}>1</li>
-            <li className={s.box}>2</li>
-            <li className={s.box}>3</li>
+            <li className={s.box}>BLOG POST</li>
+            <li className={s.box}>VIDEO TUTORIAL</li>
+            <li className={s.box}>TALK SLIDES</li>
           </ul>
           <button className={s.prev} aria-label="Previous Demo">
             <LeftIcon />
@@ -42,14 +45,18 @@ function LandingPage() {
       <div className={s.tools}>
         <h2>Tools</h2>
         <ul className={s.list}>
-          <li className={s.box}>1</li>
-          <li className={s.box}>2</li>
-          <li className={s.box}>3</li>
-          <li className={s.box}>4</li>
-          <li className={s.box}>5</li>
-          <li className={s.box}>6</li>
-          <li className={s.box}>7</li>
-          <li className={s.box}>8</li>
+          <li>
+            <Link href="mini-terminal">
+              <a className={s.box}>MINI TERMINAL</a>
+            </Link>
+          </li>
+          <li className={s.box}>MINI EDITOR</li>
+          <li className={s.box}>MINI BROWSER</li>
+          <li className={s.box}>MINI PHONE</li>
+          <li className={s.box}>PLAYER</li>
+          <li className={s.box}>SIM USER</li>
+          <li className={s.box}>STEP SCROLLER</li>
+          <li className={s.box}>COMING SOON</li>
         </ul>
       </div>
       <footer className={s.footer}>
