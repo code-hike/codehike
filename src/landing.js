@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./landing.module.css";
 import { CodeHikeLogo } from "./code-hike-logo";
+import { LeftIcon, RightIcon } from "./icons";
 
 export { LandingPage };
 
@@ -24,12 +25,19 @@ function LandingPage() {
       </p>
       <div className={s.demos}>
         <h2>Demos</h2>
-        <ul className={s.list}>
-          <li className={s.box}>1</li>
-          <li className={s.box}>2</li>
-          <li className={s.box}>3</li>
-          <li className={s.box}>4</li>
-        </ul>
+        <div className={s.listContainer}>
+          <ul className={s.list}>
+            <li className={s.box}>1</li>
+            <li className={s.box}>2</li>
+            <li className={s.box}>3</li>
+          </ul>
+          <button className={s.prev} aria-label="Previous Demo">
+            <LeftIcon />
+          </button>
+          <button className={s.next} aria-label="Next Demo">
+            <RightIcon />
+          </button>
+        </div>
       </div>
       <div className={s.tools}>
         <h2>Tools</h2>
@@ -45,9 +53,9 @@ function LandingPage() {
         </ul>
       </div>
       <footer className={s.footer}>
-        <span>GitHub</span>
-        <span>Twitter</span>
-        <span>Open Collective</span>
+        <a href="https://github.com/code-hike/codehike">GitHub</a>
+        <a href="https://twitter.com/pomber">Twitter</a>
+        <a href="https://opencollective.com/codehike">Open Collective</a>
       </footer>
     </div>
   );
