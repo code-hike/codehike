@@ -1,5 +1,5 @@
 import React from "react";
-import { WindowButtons, Back, Forward, Refresh, Open } from "./buttons.tsx";
+import { WindowButtons, Back, Forward, Refresh, Open } from "./buttons";
 
 function MiniBrowser({
   height = 100,
