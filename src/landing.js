@@ -30,13 +30,20 @@ function LandingPage() {
         <h2>Demos</h2>
         <div className={s.listContainer}>
           <ul className={s.list}>
-            <li className={s.box}>BLOG POST</li>
+            <li className={s.box}>
+              <h3>BLOG POST</h3>
+            </li>
             <li>
               <Link href="demo/hooks-talk">
-                <a className={s.box}>VIDEO TUTORIAL</a>
+                <a className={s.box}>
+                  <img src="/video-tutorial.jpg" />
+                  <h3>VIDEO TUTORIAL</h3>
+                </a>
               </Link>
             </li>
-            <li className={s.box}>TALK SLIDES</li>
+            <li className={s.box}>
+              <h3>TALK SLIDES</h3>
+            </li>
           </ul>
           <button className={s.prev} aria-label="Previous Demo">
             <LeftIcon />

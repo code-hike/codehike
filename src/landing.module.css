@@ -117,15 +117,41 @@
 .demos .box {
   background: #4f4f4f;
   color: #fafafa;
-  height: 180px;
+  height: 174.22px;
   width: 298.67px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  font-size: 1.5em;
-  padding-bottom: 16px;
+  display: block;
   box-sizing: border-box;
   border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.demos .box h3 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #2228;
+  margin: 0;
+  font-size: 1.5em;
+  padding-top: 130px;
+  text-align: center;
+  vertical-align: bottom;
+  background: linear-gradient(
+    0deg,
+    rgba(79, 79, 79, 0.9) 20%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  transition: opacity 500ms;
+}
+
+.demos .box h3:hover {
+  opacity: 0;
+}
+
+.demos .box img {
+  width: 298.67px;
 }
 
 .tools {
