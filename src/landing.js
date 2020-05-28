@@ -58,16 +58,33 @@ function LandingPage() {
         <ul className={s.list}>
           <li>
             <Link href="mini-terminal">
-              <a className={s.box}>MINI TERMINAL</a>
+              <a className={s.box}>
+                <img src="/mini-terminal.jpg" />
+                <h3>MINI TERMINAL</h3>
+              </a>
             </Link>
           </li>
-          <li className={s.box}>MINI EDITOR</li>
-          <li className={s.box}>MINI BROWSER</li>
-          <li className={s.box}>MINI PHONE</li>
-          <li className={s.box}>PLAYER</li>
-          <li className={s.box}>SIM USER</li>
-          <li className={s.box}>STEP SCROLLER</li>
-          <li className={s.box}>COMING SOON</li>
+          <li className={s.box}>
+            <h3>MINI EDITOR</h3>
+          </li>
+          <li className={s.box}>
+            <h3>MINI BROWSER</h3>
+          </li>
+          <li className={s.box}>
+            <h3>MINI PHONE</h3>
+          </li>
+          <li className={s.box}>
+            <h3>PLAYER</h3>
+          </li>
+          <li className={s.box}>
+            <h3>SIM USER</h3>
+          </li>
+          <li className={s.box}>
+            <h3>STEP SCROLLER</h3>
+          </li>
+          <li className={s.box}>
+            <h3>COMING SOON</h3>
+          </li>
         </ul>
       </div>
       <footer className={s.footer}>
