@@ -31,7 +31,11 @@ function LandingPage() {
         <div className={s.listContainer}>
           <ul className={s.list}>
             <li className={s.box}>BLOG POST</li>
-            <li className={s.box}>VIDEO TUTORIAL</li>
+            <li>
+              <Link href="demo/hooks-talk">
+                <a className={s.box}>VIDEO TUTORIAL</a>
+              </Link>
+            </li>
             <li className={s.box}>TALK SLIDES</li>
           </ul>
           <button className={s.prev} aria-label="Previous Demo">

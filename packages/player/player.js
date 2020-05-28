@@ -37,7 +37,7 @@ function Player({
           boxSizing: "border-box",
         }}
       >
-        1/5 State in class components
+        {/* 1/5 State in class components */}
       </div>
       <div
         style={{

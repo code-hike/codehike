@@ -6,6 +6,7 @@ import { useSpring } from "use-spring";
 import { editorSteps, browserSteps, playerSteps } from "./steps";
 import { CodeHikeLogo } from "src/code-hike-logo";
 import Link from "next/link";
+import { CodeHikeHead } from "src/code-hike-head";
 
 export function Demo() {
   const [state, setState] = React.useState({
@@ -23,6 +24,7 @@ export function Demo() {
 
   return (
     <>
+      <CodeHikeHead title="Hooks Talk Demo | Code Hike" />
       <div
         style={{
           display: "flex",
