@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./landing.module.css";
-import { CodeHikeLogo } from "./code-hike-logo";
 import { LeftIcon, RightIcon } from "./icons";
 import { CodeHikeHead } from "./code-hike-head";
 import Link from "next/link";
+import { Header } from "./header";
 
 export { LandingPage };
 
@@ -11,15 +11,7 @@ function LandingPage() {
   return (
     <div className={s.main}>
       <CodeHikeHead />
-      <header className={s.header}>
-        <CodeHikeLogo className={s.logo} />
-        <div className={s.space} />
-        <h1>
-          <span className={s.code}>Code</span>
-          <span className={s.space} />
-          <span className={s.hike}>Hike</span>
-        </h1>
-      </header>
+      <Header />
       <p className={s.description}>
         An <strong>open source</strong> tool set to build marvellous{" "}
         <strong>code walkthroughs</strong>. Code Hike provides the building
