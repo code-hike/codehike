@@ -4,6 +4,12 @@
   margin: 0 auto;
 }
 
+.header {
+  margin-top: 96px;
+  padding: 32px;
+  font-size: 0.7em;
+}
+
 .description {
   /* background: #eec; */
   max-width: 576px;

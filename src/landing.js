@@ -11,7 +11,7 @@ function LandingPage() {
   return (
     <div className={s.main}>
       <CodeHikeHead />
-      <Header />
+      <Header className={s.header} />
       <p className={s.description}>
         An <strong>open source</strong> tool set to build marvellous{" "}
         <strong>code walkthroughs</strong>. Code Hike provides the building
