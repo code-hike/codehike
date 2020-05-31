@@ -20,19 +20,25 @@ function Slider({ inputSteps, currentIndex, stepProgress, onChange, style }) {
   const currentStep = steps[currentIndex];
   const progress = currentStep.start + stepProgress;
   return (
-    <div style={{ display: "flex", flexDirection: "column", ...style }}>
-      <RangeBar
-        style={style}
-        max={totalDuration}
-        value={progress}
-        ticks={steps.map((s) => s.start)}
-        onChange={(value) => onChange(getStepProgressFromValue(steps, value))}
-      />
-      {/* {isPlaying ? (
+    <div style={{ display: "flex", color: "#7387c4", ...style }}>
+      <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
+        <RangeBar
+          style={style}
+          max={totalDuration}
+          value={progress}
+          ticks={steps.map((s) => s.start)}
+          onChange={(value) => onChange(getStepProgressFromValue(steps, value))}
+        />
+        {/* {isPlaying ? (
         <button onClick={pause}>Pause</button>
       ) : (
         <button onClick={play}>Play</button>
       )} */}
+      </div>
+      <div style={{ width: 16 }} />
+      <div>
+        {secondsToTime(progress)} / {secondsToTime(totalDuration)}
+      </div>
     </div>
   );
 }
@@ -135,4 +141,12 @@ function RangeBar({ max, value, onChange, ticks, style }) {
       )}
     />
   );
+}
+
+function secondsToTime(seconds) {
+  const s = Math.round(seconds % 60)
+    .toString()
+    .padStart(2, 0);
+  const m = Math.round(seconds / 60);
+  return `${m}:${s}`;
 }
