@@ -15,6 +15,7 @@ function Player({
   isPlaying,
 }) {
   const playerRef = React.useRef();
+  const showVideo = isPlaying && !steps[stepIndex].hide;
   return (
     <div
       style={{
@@ -37,7 +38,7 @@ function Player({
           boxSizing: "border-box",
         }}
       >
-        {/* 1/5 State in class components */}
+        {stepIndex}
       </div>
       <div
         style={{
@@ -63,7 +64,7 @@ function Player({
         >
           <img
             src="/hooks-talk-thumb.png"
-            style={{ display: isPlaying && "none", height: "100%" }}
+            style={{ display: showVideo && "none", height: "100%" }}
           />
           <VideoPlayer
             ref={playerRef}
@@ -71,7 +72,7 @@ function Player({
             videoId={videoId}
             style={{
               transform: "translate(-74px, -278px)",
-              display: !isPlaying && "none",
+              display: !showVideo && "none",
             }}
             onChange={onChange}
           />

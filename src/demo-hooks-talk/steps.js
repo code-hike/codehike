@@ -4,193 +4,25 @@ import Demo1 from "./steps/0.11.demo";
 import { DemoContainer } from "./demo-container";
 
 const steps = [
-  {
-    player: { ...t("17:50-18:04"), hide: true },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.0.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("18:04-18:23") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.0.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("18:25-18:39") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.1.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("18:39-18:44") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.2.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("18:44-18:55") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.3.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("18:55-18:59") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.4.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:09-19:15") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.5.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:15-19:18") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.6.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:18-19:24") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.7.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:24-19:33") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.8.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:33-19:40") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.9.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:40-19:44") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.10.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:44-19:48") },
-    demo: <Demo0 name={`Mary`} />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.10.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:48-19:52") },
-    demo: <Demo010 key="1" sim />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.10.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:52-19:56") },
-    demo: <Demo010 key="1" sim />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.11.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:56-19:59") },
-    demo: <Demo010 key="2" />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.11.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
-  {
-    player: { ...t("19:59-20:12") },
-    demo: <Demo1 />,
-    editor: {
-      code: require("!!raw-loader!./steps/0.11.js").default,
-      lang: "jsx",
-      file: "ClassExample.js",
-      focus: undefined,
-      tabs: ["ClassExample.js"],
-    },
-  },
+  chapter0("17:50-18:04", "0.0.js", <Demo0 name={`Mary`} />, { hide: true }),
+  chapter0("18:04-18:23", "0.0.js", <Demo0 name={`Mary`} />),
+  chapter0("18:25-18:39", "0.1.js", <Demo0 name={`Mary`} />),
+  chapter0("18:39-18:44", "0.2.js", <Demo0 name={`Mary`} />),
+  chapter0("18:44-18:55", "0.3.js", <Demo0 name={`Mary`} />),
+  chapter0("18:55-18:59", "0.4.js", <Demo0 name={`Mary`} />),
+  chapter0("19:09-19:15", "0.5.js", <Demo0 name={`Mary`} />),
+  chapter0("19:15-19:18", "0.6.js", <Demo0 name={`Mary`} />),
+  chapter0("19:18-19:24", "0.7.js", <Demo0 name={`Mary`} />),
+  chapter0("19:24-19:33", "0.8.js", <Demo0 name={`Mary`} />),
+  chapter0("19:33-19:40", "0.9.js", <Demo0 name={`Mary`} />),
+  chapter0("19:40-19:44", "0.10.js", <Demo0 name={`Mary`} />),
+  chapter0("19:44-19:48", "0.10.js", <Demo0 name={`Mary`} />),
+  chapter0("19:48-19:52", "0.10.js", <Demo010 key="1" sim />),
+  chapter0("19:52-19:55", "0.11.js", <Demo010 key="1" sim />),
+  chapter0("19:55-19:59", "0.11.js", <Demo010 key="2" />, { hide: true }),
+  chapter0("19:59-20:06", "0.11.js", <Demo1 />, { hide: true }),
+  chapter0("20:06-20:12", "0.11.js", <Demo1 />),
+
   chapter1("20:12-20:28", "1.0.js", <Demo0 name={`Mary`} />),
   chapter1("20:28-20:31", "1.1.js", <Demo0 name={`Mary`} />),
   chapter1("20:31-20:42", "1.2.js", <Demo0 name={`Mary`} />),
@@ -207,9 +39,23 @@ const steps = [
   chapter1("22:26-22:39", "1.10.js", <Demo1 />),
 ];
 
-function chapter1(time, file, demo, { focus } = {}) {
+function chapter0(time, file, demo, { focus, hide } = {}) {
   return {
-    player: t(time),
+    player: { hide, ...t(time) },
+    demo,
+    editor: {
+      code: require(`!!raw-loader!./steps/${file}`).default,
+      lang: "jsx",
+      focus,
+      file: "ClassExample.js",
+      tabs: ["ClassExample.js"],
+    },
+  };
+}
+
+function chapter1(time, file, demo, { focus, hide } = {}) {
+  return {
+    player: { hide, ...t(time) },
     demo,
     editor: {
       code: require(`!!raw-loader!./steps/${file}`).default,
