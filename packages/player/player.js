@@ -61,12 +61,17 @@ function Player({
             background: "rgb(20,20,20)",
           }}
         >
+          <img
+            src="/hooks-talk-thumb.png"
+            style={{ display: isPlaying && "none", height: "100%" }}
+          />
           <VideoPlayer
             ref={playerRef}
             steps={steps}
             videoId={videoId}
             style={{
               transform: "translate(-74px, -278px)",
+              display: !isPlaying && "none",
             }}
             onChange={onChange}
           />
