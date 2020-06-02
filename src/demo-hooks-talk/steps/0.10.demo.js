@@ -106,8 +106,7 @@ function ErrorOverlay() {
             cursor: "pointer",
           }}
         >
-          {`  10 | }
-  11 | 
+          {`  11 | 
   12 | handleNameChange(e) {`}
           <div
             style={{

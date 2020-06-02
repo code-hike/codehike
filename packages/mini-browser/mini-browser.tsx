@@ -2,22 +2,21 @@ import React from "react";
 import { WindowButtons, Back, Forward, Refresh, Open } from "./buttons";
 
 function MiniBrowser({
-  height = 100,
+  height,
   url,
-  style,
   children,
+  ...props
 }: {
   height?: number;
-  style?: React.CSSProperties;
   url: string;
   children: React.ReactNode;
-}) {
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
   return (
-    <div style={style}>
+    <div {...props}>
       <div
         className="shadow"
         style={{
-          height,
+          height: height || "100%",
           borderRadius: "6px",
           // border: '1px solid rgba(175, 173, 169, 0.15)',
           boxShadow:
