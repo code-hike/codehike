@@ -3,6 +3,7 @@
   overflow: hidden;
   background: linear-gradient(-16deg, #ffffff, #d8d8d8, #ffffff);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -15,9 +16,31 @@
   --scale: calc(731 / 1024);
 }
 
+.pageTop {
+  flex: 1;
+  width: 100%;
+}
+
+.pageBottom {
+  flex: 1;
+  width: 100%;
+  min-height: calc(var(--m) * 4);
+}
+
 .footer {
   /* transform: scale(var(--scale)); */
-  transform-origin: bottom right;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  margin: var(--m);
+  height: calc(var(--m) * 2);
+  justify-content: space-between;
+  line-height: var(--m);
+  font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
+    Segoe UI, sans-serif;
+  align-items: center;
 }
 
 .main {

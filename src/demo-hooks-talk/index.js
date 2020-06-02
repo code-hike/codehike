@@ -26,6 +26,7 @@ export function Demo() {
     <>
       <CodeHikeHead title="Hooks Talk Demo | Code Hike" />
       <div className={s.page}>
+        <div className={s.pageTop} />
         <div className={s.main}>
           <div className={s.editor}>
             <MiniEditor
@@ -61,27 +62,16 @@ export function Demo() {
             </div>
           </div>
         </div>
+        <div className={s.pageBottom} />
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }
 
 function Footer() {
   return (
-    <footer
-      style={{
-        position: "fixed",
-        bottom: 30,
-        right: 30,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        fontFamily:
-          "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
-      }}
-      className={s.footer}
-    >
+    <footer className={s.footer}>
       <div>
         Built with{" "}
         <Link href="/">
@@ -105,18 +95,12 @@ function Footer() {
         </Link>{" "}
         by <a href="https://twitter.com/pomber">@pomber</a>
       </div>
-      <div style={{ height: "0.2em" }} />
       <div>
         Content from{" "}
         <a href="https://www.youtube.com/watch?v=dpw9EHDh2bM">
           Dan Abramov's talk
         </a>
       </div>
-      <style jsx>{`
-        a {
-          color: ;
-        }
-      `}</style>
     </footer>
   );
 }
