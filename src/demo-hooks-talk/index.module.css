@@ -13,23 +13,28 @@
   --ch: calc(var(--cw) / 1.618);
   --ew: calc(var(--ch) - var(--m) / 2);
   --rw: calc(var(--cw) * 0.382 - var(--m) / 2);
-  --scale: calc(731 / 1024);
+  --scale: calc(1024 / 1024);
+}
+
+.page > * {
+  transform: scale(var(--scale));
 }
 
 .pageTop {
   flex: 1;
   width: 100%;
+  min-height: calc(var(--m));
 }
 
 .pageBottom {
   flex: 1;
   width: 100%;
   min-height: calc(var(--m) * 4);
+  position: relative;
 }
 
 .footer {
-  /* transform: scale(var(--scale)); */
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0;
   display: flex;
@@ -41,6 +46,7 @@
   font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
     Segoe UI, sans-serif;
   align-items: center;
+  transform-origin: bottom right;
 }
 
 .main {

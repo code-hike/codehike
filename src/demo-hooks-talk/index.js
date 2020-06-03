@@ -62,8 +62,9 @@ export function Demo() {
             </div>
           </div>
         </div>
-        <div className={s.pageBottom} />
-        <Footer />
+        <div className={s.pageBottom}>
+          <Footer />
+        </div>
       </div>
     </>
   );
