@@ -144,9 +144,9 @@ function RangeBar({ max, value, onChange, ticks, style }) {
 }
 
 function secondsToTime(seconds) {
-  const s = Math.round(seconds % 60)
+  const s = Math.max(Math.round(seconds % 60), 0)
     .toString()
     .padStart(2, 0);
-  const m = Math.round(seconds / 60);
+  const m = Math.max(Math.round(seconds / 60), 0);
   return `${m}:${s}`;
 }

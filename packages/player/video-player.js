@@ -7,19 +7,21 @@ export { VideoPlayer };
 const VideoPlayer = React.forwardRef(
   ({ steps, onChange, style, videoId }, parentRef) => {
     const opts = {
-      height: "500",
-      width: "800",
+      height: "590",
+      width: "944",
       playerVars: {
         controls: 0,
         autoplay: 1,
         disablekb: 1,
         modestbranding: 1,
-        origin: "codehike.org",
+        origin:
+          typeof window !== "undefined"
+            ? window.location.origin
+            : "https://codehike.org",
         fs: 0,
         start: steps[0].start,
       },
     };
-
     const playerRef = React.useRef({ player: null, state: initState(steps) });
 
     useInterval(() => {
@@ -52,8 +54,12 @@ const VideoPlayer = React.forwardRef(
         // console.log("imp change", state.get());
         onChange(state.get());
       },
-      play: () => playerRef.current.player.playVideo(),
-      pause: () => playerRef.current.player.pauseVideo(),
+      play: () => {
+        playerRef.current.player.playVideo();
+      },
+      pause: () => {
+        playerRef.current.player.pauseVideo();
+      },
     }));
 
     return (
@@ -62,6 +68,7 @@ const VideoPlayer = React.forwardRef(
           videoId={videoId}
           opts={opts}
           onReady={({ target }) => {
+            console.log("ready");
             playerRef.current.player = target;
           }}
           onStateChange={() => {
@@ -80,7 +87,7 @@ function initState(steps) {
   const state = {
     currentIndex: 0,
     stepProgress: 0,
-    isPlaying: true,
+    isPlaying: false,
   };
 
   return {
