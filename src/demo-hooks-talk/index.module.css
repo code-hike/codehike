@@ -3,9 +3,8 @@
   overflow: hidden;
   background: linear-gradient(-16deg, #ffffff, #d8d8d8, #ffffff);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   --w: 1024px;
   --m: 24px;
@@ -13,11 +12,15 @@
   --ch: calc(var(--cw) / 1.618);
   --ew: calc(var(--ch) - var(--m) / 2);
   --rw: calc(var(--cw) * 0.382 - var(--m) / 2);
-  --scale: calc(1024 / 1024);
 }
 
-.page > * {
+.page main {
   transform: scale(var(--scale));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .pageTop {
@@ -28,7 +31,7 @@
 
 .pageBottom {
   flex: 1;
-  width: 100%;
+  width: calc(100vw / var(--scale));
   min-height: calc(var(--m) * 4);
   position: relative;
 }
@@ -46,11 +49,9 @@
   font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
     Segoe UI, sans-serif;
   align-items: center;
-  transform-origin: bottom right;
 }
 
-.main {
-  /* transform: scale(var(--scale)); */
+.content {
   width: var(--cw);
   min-width: var(--cw);
   height: var(--ch);
