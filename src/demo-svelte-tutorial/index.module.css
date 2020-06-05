@@ -1,0 +1,57 @@
+.page {
+  display: flex;
+  justify-content: center;
+  background: #eee;
+}
+
+.page h1 {
+  text-align: center;
+}
+
+.page main {
+  width: 1024px;
+  /* background: #eee; */
+  padding: 16px;
+}
+
+.page footer {
+  height: 400px;
+}
+
+.content {
+  display: flex;
+}
+
+.text {
+  flex: 1;
+  /* background: lightcyan; */
+  padding-right: 16px;
+}
+
+.text section {
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  background: white;
+  border-radius: 6px;
+  margin: 50vh 0;
+  min-height: 200px;
+  padding: 16px 8px;
+}
+
+.stickerContainer {
+  flex: 1;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding-left: 16px;
+  /* background: gray; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticker {
+  height: 200px;
+  width: 100%;
+  background: #444;
+}
