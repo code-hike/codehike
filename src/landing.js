@@ -95,7 +95,7 @@ function LandingPage() {
       </div>
       <footer className={s.footer}>
         <a href="https://github.com/code-hike/codehike">GitHub</a>
-        <a href="https://twitter.com/pomber">Twitter</a>
+        <a href="https://twitter.com/codehike_">Twitter</a>
         <a href="https://opencollective.com/codehike">Open Collective</a>
       </footer>
     </div>
