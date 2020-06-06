@@ -32,7 +32,12 @@ function LandingPage() {
         <div className={s.listContainer}>
           <ul className={s.list}>
             <li className={s.box}>
-              <h3>BLOG POST</h3>
+              <Link href="demo/svelte-tutorial">
+                <a className={s.box}>
+                  <img src="/video-tutorial.jpg" />
+                  <h3>BLOG POST</h3>
+                </a>
+              </Link>
             </li>
             <li>
               <Link href="demo/hooks-talk">
