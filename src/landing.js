@@ -18,6 +18,15 @@ function LandingPage() {
         blocks for video tutorials, blog posts, talk slides, codebase
         onboarding, docs, and on and on.
       </p>
+      <div className={s.experimental}>
+        <span className={s.label}>June 2020 project status:</span>{" "}
+        <span className={s.status}>Prototype</span> <br />{" "}
+        <p>
+          Packages aren't even published yet. I'm building different kind of
+          demos to use them as a guide to define the right APIs. Follow{" "}
+          <a href="https://twitter.com/codehike_">@codehike_</a> for updates.
+        </p>
+      </div>
       <div className={s.demos}>
         <h2>Demos</h2>
         <div className={s.listContainer}>

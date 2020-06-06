@@ -18,6 +18,35 @@
   font-size: 1.62em;
 }
 
+.experimental {
+  /* background: #eec; */
+  max-width: 576px;
+  padding: 16px 32px;
+  margin: 0 auto;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 1px solid #92273c;
+}
+
+.experimental .label {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+}
+
+.experimental .status {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+  background: #f3c7cf;
+  color: #92273c;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 2px 8px;
+}
+
+.experimental p {
+  font-size: 1rem;
+}
+
 .demos {
   /* background: #ece; */
   padding: 32px;
