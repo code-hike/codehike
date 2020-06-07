@@ -4,6 +4,10 @@ import s from "./index.module.css";
 import { Step, Scroller } from "packages/scroller/scroller";
 import { MiniTerminalTransitions } from "packages/mini-terminal";
 import { useSpring } from "use-spring";
+import { steps } from "./steps";
+
+const M = steps[0].text;
+const M1 = steps[1].text;
 
 export { Demo };
 
@@ -12,16 +16,20 @@ function Demo() {
   const [currentIndex] = useSpring(index);
   return (
     <>
-      <CodeHikeHead title="Svelte Tutorial Demo | Code Hike" />
+      <CodeHikeHead title="Blog Post Demo | Code Hike" />
 
       <div className={s.page}>
         <main>
-          <h1>Mini Svelte Tutorial</h1>
+          <h1>Blog Post Demo</h1>
           <div className={s.content}>
             <Scroller onStepChange={setIndex}>
               <div className={s.text}>
-                <Step index={0}>Something something 0</Step>
-                <Step index={1}>Something something 1</Step>
+                <Step index={0}>
+                  <M />
+                </Step>
+                <Step index={1}>
+                  <M1 />
+                </Step>
                 <Step index={2}>Something something 2</Step>
                 <Step index={3}>Something something 3</Step>
               </div>

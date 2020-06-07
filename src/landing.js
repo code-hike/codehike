@@ -19,11 +19,10 @@ function LandingPage() {
         onboarding, docs, and on and on.
       </p>
       <div className={s.experimental}>
-        <span className={s.label}>June 2020 project status:</span>{" "}
-        <span className={s.status}>Prototype</span> <br />{" "}
+        <span className={s.label}>June 2020 status:</span>{" "}
         <p>
-          Packages aren't even published yet. I'm building different kind of
-          demos to use them as a guide to define the right APIs. Follow{" "}
+          Packages aren't published yet. I'm building different kind of demos to
+          use them as a guide to define the right APIs. Follow{" "}
           <a href="https://twitter.com/codehike_">@codehike_</a> for updates.
         </p>
       </div>

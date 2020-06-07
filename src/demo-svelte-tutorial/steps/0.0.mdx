@@ -1,0 +1,5 @@
+A few weeks ago [ZEIT released Next.js 9.3](https://nextjs.org/blog/next-9-3). This new version introduces `getStaticProps` and `getStaticPaths`, two of the framework's coolest APIs. Why do I think these APIs are so cool? Let me show you with code.
+
+Suppose you want to build a web site that displays Coronavirus stats. The home page shows information for each country with links to more details. All the data comes from a [JSON file](https://github.com/pomber/covid19/) that you can download from a public URL. The file is updated once per day.
+
+Try to think about how you would build that site and then keep reading to see my approach using Next.js 9.3.
