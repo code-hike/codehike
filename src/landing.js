@@ -31,7 +31,7 @@ function LandingPage() {
         <div className={s.listContainer}>
           <ul className={s.list}>
             <li className={s.box}>
-              <Link href="demo/svelte-tutorial">
+              <Link href="demo/blog-post">
                 <a className={s.box}>
                   <img src="/video-tutorial.jpg" />
                   <h3>BLOG POST</h3>

@@ -123,5 +123,13 @@ function GenerateScaleVar() {
   resetScale()
   window.addEventListener('resize', resetScale)
 })()`;
+  React.useLayoutEffect(() => {
+    const M = 24;
+    const W = 1024;
+    const H = (W - M * 2) / 1.618 + M * 5;
+    const root = document.documentElement;
+    const scale = Math.min(1, root.clientWidth / W, root.clientHeight / H);
+    root.style.setProperty("--scale", scale);
+  }, []);
   return <script dangerouslySetInnerHTML={{ __html: js }} />;
 }
