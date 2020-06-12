@@ -30,13 +30,18 @@ function MiniEditor({ progress, steps, height, backwards, style }) {
     activeSteps.length - 1
   );
 
+  const terminalHeight = getTerminalHeight(steps, progress);
+
   return (
     <EditorFrame
       files={activeStep.tabs || files}
       active={activeFile}
+      terminal={activeStep.terminal}
+      terminalHeight={terminalHeight}
       height={height}
       link={activeStep.link}
       style={style}
+      progress={activeProgress}
     >
       {activeSteps.length > 0 && (
         <CodeSurfer
@@ -49,4 +54,21 @@ function MiniEditor({ progress, steps, height, backwards, style }) {
       )}
     </EditorFrame>
   );
+}
+
+const MAX_HEIGHT = 150;
+function getTerminalHeight(steps, progress) {
+  const prevIndex = Math.floor(progress);
+  const nextIndex = Math.ceil(progress);
+  const prevTerminal = steps[prevIndex] && steps[prevIndex].terminal;
+  const nextTerminal = steps[nextIndex].terminal;
+
+  if (!prevTerminal && !nextTerminal) return 0;
+
+  if (!prevTerminal && nextTerminal)
+    return MAX_HEIGHT * Math.min((progress % 1) * 4, 1);
+  if (prevTerminal && !nextTerminal)
+    return MAX_HEIGHT * Math.max(1 - (progress % 1) * 4, 0);
+
+  return MAX_HEIGHT;
 }

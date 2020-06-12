@@ -25,7 +25,7 @@
 .text {
   flex: 1;
   /* background: lightcyan; */
-  padding-right: 16px;
+  padding-right: 64px;
 }
 
 .text section {
@@ -36,14 +36,15 @@
   margin: 10vh 0;
   min-height: 200px;
   padding: 32px;
+  box-sizing: border-box;
 }
 
 .stickerContainer {
-  flex: 1;
+  /* flex: 1; */
+  width: 420px;
   position: sticky;
   top: 0;
   height: 100vh;
-  padding-left: 16px;
   /* background: gray; */
   display: flex;
   align-items: center;
@@ -51,7 +52,6 @@
 }
 
 .sticker {
-  height: 200px;
   width: 100%;
   /* background: #444; */
   /* color: white; */

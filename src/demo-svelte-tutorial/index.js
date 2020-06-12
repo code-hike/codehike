@@ -2,18 +2,20 @@ import React from "react";
 import { CodeHikeHead } from "src/code-hike-head";
 import s from "./index.module.css";
 import { Step, Scroller } from "packages/scroller/scroller";
-import { MiniTerminalTransitions } from "packages/mini-terminal";
 import { useSpring } from "use-spring";
 import { steps } from "./steps";
-
-const M = steps[0].text;
-const M1 = steps[1].text;
+import { SmoothColumn } from "packages/smooth-column/smooth-column";
 
 export { Demo };
 
 function Demo() {
   const [index, setIndex] = React.useState(0);
-  const [currentIndex] = useSpring(index);
+  const [currentIndex] = useSpring(index, {
+    decimals: 3,
+    stiffness: 24,
+    damping: 12,
+  });
+  const backwards = index < currentIndex;
   return (
     <>
       <CodeHikeHead title="Blog Post Demo | Code Hike" />
@@ -24,27 +26,30 @@ function Demo() {
           <div className={s.content}>
             <Scroller onStepChange={setIndex}>
               <div className={s.text}>
-                <Step index={0}>
-                  <M />
-                </Step>
-                <Step index={1}>
-                  <M1 />
-                </Step>
-                <Step index={2}>Something something 2</Step>
-                <Step index={3}>Something something 3</Step>
+                {steps.map((step, i) => {
+                  const Content = step.text;
+                  return (
+                    <Step
+                      index={i}
+                      key={i}
+                      style={{
+                        borderLeft: "10px solid",
+                        borderColor:
+                          index === i ? "var(--accent-color)" : "#eee",
+                      }}
+                    >
+                      <Content />
+                    </Step>
+                  );
+                })}
               </div>
             </Scroller>
             <div className={s.stickerContainer}>
               <div className={s.sticker}>
-                <MiniTerminalTransitions
-                  height="200px"
+                <SmoothColumn
+                  steps={steps.map((s) => s.sticker)}
                   progress={currentIndex}
-                  steps={[
-                    "$ npx degit sveltejs/template my-svelte-project",
-                    "$ cd my-svelte-project",
-                    "$ npm install",
-                    "$ npm run dev",
-                  ]}
+                  backwards={backwards}
                 />
               </div>
             </div>
