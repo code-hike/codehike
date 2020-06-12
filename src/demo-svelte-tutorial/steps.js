@@ -31,8 +31,6 @@ const editorSteps = [
   },
 ];
 
-console.log(editorSteps);
-
 const steps = [
   step("0.0", [
     <Box1 height={100} />,
