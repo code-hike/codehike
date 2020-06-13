@@ -4,6 +4,7 @@ import { LeftIcon, RightIcon } from "./icons";
 import { CodeHikeHead } from "./code-hike-head";
 import Link from "next/link";
 import { Header } from "./header";
+import { Footer } from "./footer";
 
 export { LandingPage };
 
@@ -92,11 +93,7 @@ function LandingPage() {
           </li>
         </ul>
       </div>
-      <footer className={s.footer}>
-        <a href="https://github.com/code-hike/codehike">GitHub</a>
-        <a href="https://twitter.com/codehike_">Twitter</a>
-        <a href="https://opencollective.com/codehike">Open Collective</a>
-      </footer>
+      <Footer />
     </div>
   );
 }

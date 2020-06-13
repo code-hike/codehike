@@ -193,17 +193,6 @@
   text-decoration: none;
 }
 
-.footer {
-  /* border-top: 1px solid var(--accent-color); */
-  padding: 16px 32px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.footer > a {
-  padding-left: 16px;
-}
-
 .list {
   list-style: none;
   padding: 0;

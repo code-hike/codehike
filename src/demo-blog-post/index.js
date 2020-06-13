@@ -6,6 +6,7 @@ import { useSpring } from "use-spring";
 import { steps } from "./steps";
 import Link from "next/link";
 import { SmoothColumn } from "packages/smooth-column/smooth-column";
+import { Footer } from "src/footer";
 
 export { Demo };
 
@@ -63,7 +64,7 @@ function Demo() {
               </div>
             </div>
           </div>
-          <footer>Foo Bar</footer>
+          <Footer />
         </main>
       </div>
     </>
