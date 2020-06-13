@@ -1,0 +1,31 @@
+The JSON file has the following content:
+
+```json
+{
+  "China": [
+    {
+      "date": "2020-1-22",
+      "confirmed": 548,
+      "deaths": 17,
+      "recovered": 28
+    },
+    {
+      "date": "2020-1-23",
+      "confirmed": 643,
+      "deaths": 18,
+      "recovered": 30
+    },
+    ...
+  ],
+  "Spain": [...],
+  ...
+}
+```
+
+Extract the last date from any of the time-series and show it.
+
+---
+
+Stop for a moment here. What have we done so far?
+
+Every time a user visits the site, we show a loading screen until we have downloaded a big JSON file. Our page then uses a tiny fraction of the information that is contained in this file.

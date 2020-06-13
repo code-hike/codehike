@@ -1,0 +1,5 @@
+In `getStaticProps` using the country name from the `context`, you can get the stats from that country from the JSON file.
+
+> Next.js will run `getStaticProps` for each country, so it will fetch the JSON file like 200 times. If you use something like this on a real app make sure you put the JSON response in a cache.
+
+Pass the country stats to the page component using another prop.

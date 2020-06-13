@@ -1,0 +1,7 @@
+Finally, render the country stats using a `Stream` chart.
+
+And that's all.
+
+Try running `yarn build` and `yarn start` to run the production version of the site (or use https://nextjs-static-props.now.sh). Make sure to open the network panel to see what is downloaded and when.
+
+For example, hover over a country, let's say Spain. Notice how Next.js downloads `/country/Spain.json` and `/country/[name].js`. Then, if you hover over Italy, it will only download `/country/Italy.json`. Now, if you click on Italy or Spain the transition will be instantaneous.

@@ -1,0 +1,9 @@
+### Build-time data fetching
+
+What if I told you that you can get rid of the loading screen and spare the time needed to download the JSON file? Next.js makes this possible by allowing you to perform all this work at build time (build time is when you or a build server run `yarn build`).
+
+**Inside any Next.js page, you can export an async [`getStaticProps`](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) function. There, you can perform any work that can be done at build time and pass the result as props to the page component.**
+
+Instead of fetching the data when the browser loads the site using the `useData` hook, move the code to `getStaticProps` and pass `data` as a prop to the `HomePage` component.
+
+Note that `getStaticProps` runs at build time in Node and not in the browser. That's why you can't use the browser's `fetch` API and you need a polyfill library like `node-fetch`. The upside of this is that with Node you can do a whole bunch of cool things: read the filesystem, query a database, launch a headless Chrome using Puppeteer.

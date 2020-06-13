@@ -1,0 +1,12 @@
+### Dynamic Routes
+
+If you want to use the same React component for different routes you can use [dynamic routes](https://nextjs.org/docs/routing/dynamic-routes). How? Add brackets to a page filename.
+
+For example, if you create the file `pages/country/[name].js`, Next.js will use that page for any route matching that pattern: `/country/Spain`, `/country/Iran`, etc.
+
+Inside the page component, you can use the `useRouter` hook to get the parameter using the name specified by the filename:
+
+```js
+const router = useRouter();
+const { name } = router.query;
+```

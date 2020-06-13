@@ -1,0 +1,5 @@
+The site isn't showing the loading screen anymore. That's an improvement, but Next.js is still sending all the `data` to the browser, even when we are only using the date.
+
+Instead of passing the whole `data` object to the `HomePage` component, move the code that extracts the date to `getStaticProps` and return `date` as a prop.
+
+Now, when a user visits the site, it will be as fast as the minimal site we had at the beginning.
