@@ -22,10 +22,19 @@
   display: flex;
 }
 
+.intro {
+  background: white;
+  border-radius: 6px;
+  max-width: 512px;
+  margin: 64px auto;
+  padding: 16px;
+  border: 1px solid #92273c;
+}
+
 .text {
   flex: 1;
   /* background: lightcyan; */
-  padding-right: 64px;
+  padding: 5vh 64px 25vh 0;
 }
 
 .text section {

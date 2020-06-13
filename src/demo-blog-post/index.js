@@ -4,6 +4,7 @@ import s from "./index.module.css";
 import { Step, Scroller } from "packages/scroller/scroller";
 import { useSpring } from "use-spring";
 import { steps } from "./steps";
+import Link from "next/link";
 import { SmoothColumn } from "packages/smooth-column/smooth-column";
 
 export { Demo };
@@ -22,6 +23,14 @@ function Demo() {
 
       <div className={s.page}>
         <main>
+          <section className={s.intro}>
+            This is a demo of using{" "}
+            <Link href="/">
+              <a>Code Hike</a>
+            </Link>{" "}
+            for a blog post. The content comes from{" "}
+            <a href="https://pomb.us/nextjs-static-props">this post</a>.
+          </section>
           <h1>Blog Post Demo</h1>
           <div className={s.content}>
             <Scroller onStepChange={setIndex}>
