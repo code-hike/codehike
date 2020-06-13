@@ -131,7 +131,13 @@ const defaultProps = {
 const steps = p(
   s(
     "00",
-    <Box1 height={100} />,
+    <img
+      height={100}
+      width="100%"
+      src="/demo-legend.png"
+      alt="The app we are building"
+      style={{ objectFit: "contain" }}
+    />,
     <MiniBrowser url="https://nextjs-static-props.now.sh/">
       <video
         autoPlay
@@ -236,7 +242,13 @@ const steps = p(
   s(
     "20",
     <MiniBrowser url="https://nextjs-static-props.now.sh/" sandbox="" />,
-    <Box1 height={100} />
+    <img
+      height={75}
+      width="100%"
+      src="/no-js.png"
+      alt="Look Ma, no javascript!"
+      style={{ objectFit: "contain" }}
+    />
   )
 );
 
