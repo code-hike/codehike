@@ -22,7 +22,7 @@
   /* background: #eec; */
   max-width: 576px;
   padding: 16px 32px;
-  margin: 0 auto;
+  margin: 0 auto 64px;
   font-size: 1.1em;
   border-radius: 6px;
   border: 1px solid #92273c;
@@ -52,28 +52,12 @@
   padding: 32px;
 }
 
-.demos h2 {
-  margin: 0;
-  text-align: center;
-  padding-bottom: 32px;
-}
-
 .demos .listContainer {
   position: relative;
 }
 
-.demos button {
-  position: absolute;
-  top: 40%;
-  font-size: 3em;
-  transform: translateY(-50%);
-  color: var(--accent-color);
-  background-color: transparent;
-  padding: 0;
-  border: none;
-  user-select: none;
-  cursor: pointer;
-  border-radius: 50%;
+.demos a {
+  color: inherit;
 }
 .demos button svg {
   display: block;
@@ -89,47 +73,22 @@
 .demos .list {
   display: flex;
   justify-content: space-between;
-  clip-path: polygon(20% 0, 80% 0, 100% 90%, 100% 100%, 0 100%, 0 90%);
-  clip-path: polygon(20% 0, 80% 0, 95% 100%, 5% 100%);
 }
 
 .demos .box {
-  background: #4f4f4f;
-  color: #fafafa;
-  height: 174.22px;
-  width: 298.67px;
   display: block;
   box-sizing: border-box;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
+  padding: 0 8px;
 }
 
 .demos .box h3 {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: 0;
   font-size: 1.5em;
-  padding-top: 130px;
   text-align: center;
-  background: #2228;
-  background: linear-gradient(
-    0deg,
-    rgba(79, 79, 79, 0.9) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transition: opacity 500ms;
-}
-
-.demos .box h3:hover {
-  opacity: 0;
 }
 
 .demos .box img {
-  width: 298.67px;
+  width: 100%;
 }
 
 .tools {

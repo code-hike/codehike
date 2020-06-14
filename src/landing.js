@@ -27,38 +27,7 @@ function LandingPage() {
           <a href="https://twitter.com/codehike_">@codehike_</a> for updates.
         </p>
       </div>
-      <div className={s.demos}>
-        <h2>Demos</h2>
-        <div className={s.listContainer}>
-          <ul className={s.list}>
-            <li className={s.box}>
-              <Link href="demo/blog-post">
-                <a className={s.box}>
-                  <img src="/video-tutorial.jpg" />
-                  <h3>BLOG POST</h3>
-                </a>
-              </Link>
-            </li>
-            <li>
-              <Link href="demo/hooks-talk">
-                <a className={s.box}>
-                  <img src="/video-tutorial.jpg" />
-                  <h3>VIDEO TUTORIAL</h3>
-                </a>
-              </Link>
-            </li>
-            <li className={s.box}>
-              <h3>TALK SLIDES</h3>
-            </li>
-          </ul>
-          <button className={s.prev} aria-label="Previous Demo">
-            <LeftIcon />
-          </button>
-          <button className={s.next} aria-label="Next Demo">
-            <RightIcon />
-          </button>
-        </div>
-      </div>
+      <Demos />
       <div className={s.tools}>
         <h2>Tools</h2>
         <ul className={s.list}>
@@ -94,6 +63,33 @@ function LandingPage() {
         </ul>
       </div>
       <Footer />
+    </div>
+  );
+}
+
+function Demos() {
+  return (
+    <div className={s.demos}>
+      <div className={s.listContainer}>
+        <ul className={s.list}>
+          <li>
+            <Link href="demo/hooks-talk">
+              <a className={s.box}>
+                <h3>Player Demo</h3>
+                <img src="/video-tutorial.png" style={{ padding: "2.32% 0" }} />
+              </a>
+            </Link>
+          </li>
+          <li className={s.box}>
+            <Link href="demo/blog-post">
+              <a className={s.box}>
+                <h3>Blog Demo</h3>
+                <img src="/post-thumb.png" />
+              </a>
+            </Link>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
