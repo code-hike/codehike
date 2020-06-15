@@ -1,0 +1,5 @@
+If you use `getStaticPaths` for a page you also need to use `getStaticProps`.
+
+Inside `getStaticProps` you can access the page `params` using the `context` parameter. And then use the `params` to send some props to the page component.
+
+For now, just pass the country `name` as a prop to the `Country` component.

@@ -1,0 +1,53 @@
+.header {
+  /* background: #cee; */
+  max-width: 576px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  font-size: 1.435em;
+}
+
+.header .logo {
+  width: 10em;
+  height: 10em;
+}
+
+.header > .space {
+  width: 2em;
+}
+
+.header h1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  /* background: salmon; */
+  font-size: 2.2346em;
+}
+
+.header h1 .code {
+  display: inline-block;
+  font-size: 3.1em;
+  line-height: 0.615em;
+  height: 0.646em;
+  vertical-align: -0.1em;
+  font-family: "Code", sans-serif;
+  margin-left: -0.027em;
+  letter-spacing: -0.03em;
+  /* background: #bbc; */
+}
+
+.header h1 .hike {
+  display: inline-block;
+  font-size: 2.5em;
+  line-height: 0.89em;
+  height: 0.789em;
+  vertical-align: -0.1em;
+  font-family: "Hike", cursive;
+  margin-left: -0.11em;
+  letter-spacing: 0.03em;
+  /* background: #bb4; */
+}
+
+.header h1 > .space {
+  height: 0.5em;
+}

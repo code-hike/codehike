@@ -39,6 +39,7 @@ function LogoHeader() {
           textDecoration: "none",
           display: "flex",
           justifyContent: "center",
+          border: "none",
         }}
         aria-label="Code Hike home"
       >

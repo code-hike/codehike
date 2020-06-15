@@ -1,0 +1,81 @@
+.page {
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(-16deg, #ffffff, #d8d8d8, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  --w: 1024px;
+  --m: 24px;
+  --cw: calc(var(--w) - 2 * var(--m));
+  --ch: calc(var(--cw) / 1.618);
+  --ew: calc(var(--ch) - var(--m) / 2);
+  --rw: calc(var(--cw) * 0.382 - var(--m) / 2);
+}
+
+.page main {
+  transform: scale(var(--scale));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.pageTop {
+  flex: 1;
+  width: 100%;
+  min-height: var(--m);
+}
+
+.pageBottom {
+  flex: 1;
+  width: calc(100vw / var(--scale));
+  min-height: calc(var(--m) * 4);
+  position: relative;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  margin: var(--m);
+  height: calc(var(--m) * 2);
+  justify-content: space-between;
+  line-height: var(--m);
+  font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
+    Segoe UI, sans-serif;
+  align-items: center;
+}
+
+.content {
+  width: var(--cw);
+  min-width: var(--cw);
+  height: var(--ch);
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor {
+  height: var(--ch);
+  width: var(--ew);
+}
+
+.rightCol {
+  width: var(--rw);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.browser {
+  height: var(--rw);
+}
+
+.player {
+  --player-height: calc(var(--ch) - var(--rw) - var(--m));
+  height: var(--player-height);
+}

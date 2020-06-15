@@ -1,0 +1,64 @@
+.page {
+  display: flex;
+  justify-content: center;
+  background: #eee;
+}
+
+.page h1 {
+  text-align: center;
+}
+
+.page main {
+  width: 1024px;
+  /* background: #eee; */
+  padding: 16px;
+}
+
+.content {
+  display: flex;
+}
+
+.intro {
+  background: white;
+  border-radius: 6px;
+  max-width: 512px;
+  margin: 64px auto;
+  padding: 16px;
+  border: 1px solid #92273c;
+}
+
+.text {
+  flex: 1;
+  /* background: lightcyan; */
+  padding: 5vh 64px 25vh 0;
+}
+
+.text section {
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  background: white;
+  border-radius: 6px;
+  margin: 10vh 0;
+  min-height: 200px;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+.stickerContainer {
+  /* flex: 1; */
+  width: 420px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  /* background: gray; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticker {
+  width: 100%;
+  /* background: #444; */
+  /* color: white; */
+  /* font-size: 2em; */
+}

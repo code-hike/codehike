@@ -1,0 +1,42 @@
+.player {
+  border-radius: 6px;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  overflow: hidden;
+  background: rgb(30, 30, 30);
+  position: relative;
+  color: #7387c4;
+}
+
+.rightBox {
+  position: absolute;
+  overflow: hidden;
+  height: var(--player-height);
+  width: var(--player-height);
+  right: 0;
+}
+
+.videoAndImageBox {
+  position: absolute;
+  left: 2;
+  right: 2;
+  top: 2;
+  bottom: 2;
+}
+
+.gradient {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(
+    transparent 30%,
+    rgb(20, 20, 20) 48%,
+    rgb(30, 30, 30) 66%
+  );
+}
+
+.bottomBox {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

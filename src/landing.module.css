@@ -1,0 +1,168 @@
+.main {
+  /* background: #aaa; */
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-top: 96px;
+  padding: 32px;
+  font-size: 0.7em;
+}
+
+.description {
+  /* background: #eec; */
+  max-width: 576px;
+  padding: 32px;
+  margin: 0 auto;
+  font-size: 1.62em;
+}
+
+.experimental {
+  /* background: #eec; */
+  max-width: 576px;
+  padding: 16px 32px;
+  margin: 32px auto 64px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 1px solid #92273c;
+}
+
+.experimental .label {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+}
+
+.experimental .status {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+  background: #f3c7cf;
+  color: #92273c;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 2px 8px;
+}
+
+.experimental p {
+  font-size: 1rem;
+}
+
+.demos {
+  /* background: #ece; */
+  padding: 32px;
+}
+
+.demos .listContainer {
+  position: relative;
+}
+
+.demos a {
+  color: inherit;
+}
+.demos button svg {
+  display: block;
+}
+.demos .prev {
+  left: 0;
+}
+
+.demos .next {
+  right: 0;
+}
+
+.demos .list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.demos .box {
+  display: block;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+.demos .box:hover {
+  color: var(--accent-color);
+}
+
+.demos .box h3 {
+  margin: 0;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.demos .box img {
+  width: 100%;
+}
+
+.tools {
+  /* background: #cee; */
+  padding: 32px 32px 16px;
+}
+
+.tools h2 {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.tools .list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.tools a {
+  color: inherit;
+}
+
+.tools .box {
+  width: 316px;
+  margin: 16px 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+.tools .box:hover {
+  color: var(--accent-color);
+}
+
+.tools .noMedia {
+  width: 316px;
+  height: 184.33px;
+  padding: 15px 28px 20px;
+  box-sizing: border-box;
+}
+
+.tools .noMedia > div {
+  border: 3px solid #4f4f4f;
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  font-size: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+.tools .box h3 {
+  margin: 0;
+  font-size: 1.15em;
+  text-align: center;
+}
+
+.tools .box img {
+  width: 100%;
+}
+
+.box:hover {
+  text-decoration: none;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

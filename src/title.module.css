@@ -1,0 +1,8 @@
+.titleContainer {
+  display: flex;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,9 @@
+### Client-side data fetching
+
+Fetch `timeseries.json` from `https://pomber.github.io/covid19/`.
+
+Wrap the fetch code inside a `useData` hook that returns `undefined` until the JSON file is downloaded.
+
+In the `HomePage` component, call the `useData` hook and show "Loading..." until the data is ready.
+
+Now, let's use the data to display something on page.

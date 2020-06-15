@@ -1,0 +1,5 @@
+### getStaticPaths
+
+If you want the country pages to be rendered at build time you need to tell Next.js the list of countries.
+
+In order to do that you can export a `getStaticPaths` function which returns a list of paths. Those paths define the parameters of the route, for the country page, that would be the country name. For example, `{ params: { name: "Spain" } }`.

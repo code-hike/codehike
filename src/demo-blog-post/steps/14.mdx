@@ -1,0 +1,7 @@
+Before creating the country page, there's another Next.js API you need to be aware of: the [`Link` component](https://nextjs.org/docs/api-reference/next/link).
+
+Without using `Link`, the browser will download everything from scratch every time the user navigates to another page.
+
+Using `Link`, the transition between pages is handled by Next.js, which downloads only the code and data needed to display the next page.
+
+Even better, Next.js starts downloading the resources for the next page when the user hovers over a `Link`.

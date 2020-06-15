@@ -1,0 +1,21 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.header {
+  font-size: 0.5em;
+}
+
+.page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page code {
+  padding: 64px 0;
+  font-size: 2.4em;
+}
