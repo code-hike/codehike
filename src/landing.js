@@ -71,12 +71,14 @@ function Tools() {
           img="/mini-terminal.jpg"
           href="mini-terminal"
         />
-        <Tool title="MINI EDITOR" href="mini-terminal" />
-        <Tool title="MINI BROWSER" href="mini-terminal" />
-        <Tool title="PLAYER" href="mini-terminal" />
-        <Tool title="SIM USER" href="mini-terminal" />
-        <Tool title="STEP SCROLLER" href="mini-terminal" />
-        <Tool title="MORE COMING SOON" href="mini-terminal" />
+        <Tool title="MINI EDITOR" href="mini-editor" />
+        <Tool title="MINI BROWSER" href="mini-browser" />
+        <Tool title="PLAYER" href="player" />
+        <Tool title="SIM USER" href="sim-user" />
+        <Tool title="STEP SCROLLER" href="step-scroller" />
+        <Tool title="MORE COMING SOON" href="#" />
+        <Tool title="MORE COMING SOON" href="#" />
+        <Tool title="MORE COMING SOON" href="#" />
       </ul>
     </div>
   );
