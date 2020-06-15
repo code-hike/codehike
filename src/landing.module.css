@@ -81,6 +81,10 @@
   padding: 0 8px;
 }
 
+.demos .box:hover {
+  color: var(--accent-color);
+}
+
 .demos .box h3 {
   margin: 0;
   font-size: 1.5em;
@@ -108,44 +112,49 @@
   flex-wrap: wrap;
 }
 
+.tools a {
+  color: inherit;
+}
+
 .tools .box {
-  background: #4f4f4f;
-  color: #fafafa;
-  height: 126px;
-  width: 216px;
+  width: 316px;
   margin: 16px 0;
   display: block;
   box-sizing: border-box;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
+}
+
+.tools .box:hover {
+  color: var(--accent-color);
+}
+
+.tools .noMedia {
+  width: 316px;
+  height: 184.33px;
+  padding: 15px 28px 20px;
+  box-sizing: border-box;
+}
+
+.tools .noMedia > div {
+  border: 3px solid #4f4f4f;
+  height: 100%;
+  width: 100%;
+  border-radius: 3px;
+  font-size: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 }
 
 .tools .box h3 {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: 0;
   font-size: 1.15em;
-  padding-top: 90px;
   text-align: center;
-  background: #2228;
-  background: linear-gradient(
-    0deg,
-    rgba(79, 79, 79, 0.9) 20%,
-    rgba(255, 255, 255, 0) 80%
-  );
-  transition: opacity 500ms;
-}
-
-.tools .box h3:hover {
-  opacity: 0;
 }
 
 .tools .box img {
-  width: 216px;
+  width: 100%;
 }
 
 .box:hover {

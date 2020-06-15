@@ -28,40 +28,7 @@ function LandingPage() {
         </p>
       </div>
       <Demos />
-      <div className={s.tools}>
-        <h2>Tools</h2>
-        <ul className={s.list}>
-          <li>
-            <Link href="mini-terminal">
-              <a className={s.box}>
-                <img src="/mini-terminal.jpg" />
-                <h3>MINI TERMINAL</h3>
-              </a>
-            </Link>
-          </li>
-          <li className={s.box}>
-            <h3>MINI EDITOR</h3>
-          </li>
-          <li className={s.box}>
-            <h3>MINI BROWSER</h3>
-          </li>
-          <li className={s.box}>
-            <h3>MINI PHONE</h3>
-          </li>
-          <li className={s.box}>
-            <h3>PLAYER</h3>
-          </li>
-          <li className={s.box}>
-            <h3>SIM USER</h3>
-          </li>
-          <li className={s.box}>
-            <h3>STEP SCROLLER</h3>
-          </li>
-          <li className={s.box}>
-            <h3>COMING SOON</h3>
-          </li>
-        </ul>
-      </div>
+      <Tools />
       <Footer />
     </div>
   );
@@ -91,5 +58,45 @@ function Demos() {
         </ul>
       </div>
     </div>
+  );
+}
+
+function Tools() {
+  return (
+    <div className={s.tools}>
+      <h2>Building Blocks</h2>
+      <ul className={s.list}>
+        <Tool
+          title="MINI TERMINAL"
+          img="/mini-terminal.jpg"
+          href="mini-terminal"
+        />
+        <Tool title="MINI EDITOR" href="mini-terminal" />
+        <Tool title="MINI BROWSER" href="mini-terminal" />
+        <Tool title="PLAYER" href="mini-terminal" />
+        <Tool title="SIM USER" href="mini-terminal" />
+        <Tool title="STEP SCROLLER" href="mini-terminal" />
+        <Tool title="MORE COMING SOON" href="mini-terminal" />
+      </ul>
+    </div>
+  );
+}
+
+function Tool({ title, img, href }) {
+  return (
+    <li>
+      <Link href={href}>
+        <a className={s.box}>
+          {img ? (
+            <img src={img} alt={title} />
+          ) : (
+            <div className={s.noMedia}>
+              <div>?</div>
+            </div>
+          )}
+          <h3>{title}</h3>
+        </a>
+      </Link>
+    </li>
   );
 }
