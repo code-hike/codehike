@@ -5,5 +5,12 @@
 </a>
 <br/>
 </div>
+<br/>
+<br/>
 
-Code Hike is an open-source toolset for building all types of code walkthroughs: blog posts, tutorials, quickstarts, slides, videos, workshops, docs, and so on.
+
+Code Hike is an open-source toolset for building all types of **code walkthroughs**: blog posts, tutorials, quickstarts, slides, videos, workshops, docs, and so on.
+
+> **June 2020 status:** Currently working on prototypes and refining the APIs and package's boundaries. No packages published to npm yet. 
+>
+> Follow [@codehike_](https://twitter.com/codehike_) for updates. [Sponsor Code Hike](https://github.com/sponsors/code-hike) if you wanna help.
