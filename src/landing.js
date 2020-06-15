@@ -14,17 +14,21 @@ function LandingPage() {
       <CodeHikeHead />
       <Header className={s.header} />
       <p className={s.description}>
-        An <strong>open source</strong> tool set to build marvellous{" "}
-        <strong>code walkthroughs</strong>. Code Hike provides the building
-        blocks for video tutorials, blog posts, talk slides, codebase
-        onboarding, docs, and on and on.
+        Code Hike is an open-source toolset for building all types of{" "}
+        <strong>code walkthroughs</strong>: blog posts, tutorials, quickstarts,
+        slides, videos, workshops, docs, and so on.
       </p>
       <div className={s.experimental}>
         <span className={s.label}>June 2020 status:</span>{" "}
         <p>
-          Packages aren't published yet. I'm building different kind of demos to
-          use them as a guide to define the right APIs. Follow{" "}
-          <a href="https://twitter.com/codehike_">@codehike_</a> for updates.
+          Currently working on prototypes and refining the APIs and package's
+          boundaries. No packages published to npm yet.
+        </p>
+        <p>
+          Follow <a href="https://twitter.com/codehike_">@codehike_</a> for
+          updates.{" "}
+          <a href="https://github.com/sponsors/code-hike">Sponsor Code Hike</a>{" "}
+          if you wanna help.
         </p>
       </div>
       <Demos />
