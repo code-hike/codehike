@@ -72,7 +72,8 @@
 
 .demos .list {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .demos .box {
@@ -93,6 +94,8 @@
 
 .demos .box img {
   width: 100%;
+  min-width: 300px;
+  max-width: 450px;
 }
 
 .tools {
@@ -108,7 +111,7 @@
 
 .tools .list {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -165,4 +168,23 @@
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+@media screen and (max-width: 725px) {
+  .header {
+    font-size: 0.4em;
+  }
+  .description {
+    font-size: 1.2em;
+  }
+
+  .experimental {
+    /* background: #eec; */
+    max-width: 576px;
+    padding: 16px 32px;
+    margin: 32px auto 64px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: none;
+  }
 }

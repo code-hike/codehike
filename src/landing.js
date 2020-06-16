@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./landing.module.css";
-import { LeftIcon, RightIcon } from "./icons";
 import { CodeHikeHead } from "./code-hike-head";
 import Link from "next/link";
 import { Header } from "./header";
