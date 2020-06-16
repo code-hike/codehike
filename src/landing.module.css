@@ -72,7 +72,8 @@
 
 .demos .list {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .demos .box {
@@ -93,6 +94,8 @@
 
 .demos .box img {
   width: 100%;
+  min-width: 300px;
+  max-width: 450px;
 }
 
 .tools {
