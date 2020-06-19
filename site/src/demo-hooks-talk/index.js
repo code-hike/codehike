@@ -1,6 +1,6 @@
 import React from "react";
-import { MiniBrowser } from "packages/mini-browser/mini-browser";
-import { MiniEditor } from "packages/mini-editor/mini-editor";
+import { MiniBrowser } from "@code-hike/mini-browser";
+import { MiniEditor } from "@code-hike/mini-editor";
 import { Player } from "packages/player/player";
 import { useSpring } from "use-spring";
 import { editorSteps, browserSteps, playerSteps } from "./steps";

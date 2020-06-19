@@ -5,8 +5,10 @@ import { vsDark } from "@code-surfer/themes";
 
 export { MiniEditor };
 
-function MiniEditor({ progress, steps, height, backwards, style }) {
-  const files = [...new Set(steps.map((s) => s.file).filter((f) => f != null))];
+function MiniEditor({ progress, steps, height, backwards, style }: any) {
+  const files = [
+    ...new Set(steps.map((s: any) => s.file).filter((f: any) => f != null)),
+  ];
 
   const activeStepIndex = backwards
     ? Math.floor(progress)
@@ -14,8 +16,8 @@ function MiniEditor({ progress, steps, height, backwards, style }) {
   const activeStep = steps[activeStepIndex];
   const activeFile = activeStep && activeStep.file;
 
-  const fileSteps = {};
-  steps.forEach((s) => {
+  const fileSteps: any = {};
+  steps.forEach((s: any) => {
     if (s.file == null) return;
     if (!fileSteps[s.file]) {
       fileSteps[s.file] = [];
@@ -57,7 +59,7 @@ function MiniEditor({ progress, steps, height, backwards, style }) {
 }
 
 const MAX_HEIGHT = 150;
-function getTerminalHeight(steps, progress) {
+function getTerminalHeight(steps: any, progress: number) {
   const prevIndex = Math.floor(progress);
   const nextIndex = Math.ceil(progress);
   const prevTerminal = steps[prevIndex] && steps[prevIndex].terminal;
