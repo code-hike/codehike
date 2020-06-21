@@ -5,14 +5,12 @@
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
   "scripts": {
-    "build": "rollup -c ../../scripts/rollup.config.js",
-    "watch": "rollup -c ../../scripts/rollup.config.js --watch"
+    "build": "ch-build",
+    "watch": "ch-build --watch"
   },
   "devDependencies": {
-    "typescript": "^3.9.5",
-    "react": "^16.13.1",
-    "rollup": "^2.17.0",
-    "rollup-plugin-typescript2": "^0.27.1"
+    "@code-hike/build": "0.0.1",
+    "react": "^16.13.1"
   },
   "dependencies": {
     "@types/react": "^16.9.38"

@@ -1,6 +1,7 @@
 {
   "private": true,
   "workspaces": [
+    "packages/build",
     "packages/mini-browser",
     "packages/mini-frame",
     "packages/mini-browser",

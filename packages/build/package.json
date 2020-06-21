@@ -1,0 +1,12 @@
+{
+  "name": "@code-hike/build",
+  "version": "0.0.1",
+  "bin": {
+    "ch-build": "./build.js"
+  },
+  "dependencies": {
+    "rollup": "^2.17.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "typescript": "^3.9.5"
+  }
+}
