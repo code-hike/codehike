@@ -1,19 +1,21 @@
 {
   "private": true,
-  "workspaces": [
-    "packages/build",
-    "packages/mini-browser",
-    "packages/mini-frame",
-    "packages/mini-browser",
-    "packages/mini-editor",
-    "packages/mini-terminal",
-    "packages/player",
-    "packages/scroller",
-    "packages/sim-user",
-    "packages/smooth-column",
-    "storybook",
-    "site"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/build",
+      "packages/mini-browser",
+      "packages/mini-frame",
+      "packages/mini-browser",
+      "packages/mini-editor",
+      "packages/mini-terminal",
+      "packages/player",
+      "packages/scroller",
+      "packages/sim-user",
+      "packages/smooth-column",
+      "storybook",
+      "site"
+    ]
+  },
   "scripts": {
     "mbrowser": "yarn workspace @code-hike/mini-browser",
     "mframe": "yarn workspace @code-hike/mini-frame",
@@ -22,5 +24,9 @@
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "ch-build": "yarn workspace @code-hike/build"
+  },
+  "dependencies": {
+    "@emotion/core": "10.0.7",
+    "theme-ui": "0.2.31"
   }
 }
