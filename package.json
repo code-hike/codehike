@@ -20,6 +20,7 @@
     "mterminal": "yarn workspace @code-hike/mini-terminal",
     "meditor": "yarn workspace @code-hike/mini-editor",
     "storybook": "yarn workspace storybook",
-    "site": "yarn workspace site"
+    "site": "yarn workspace site",
+    "ch-build": "yarn workspace @code-hike/build"
   }
 }

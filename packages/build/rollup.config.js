@@ -1,24 +1,24 @@
-// import styles from "rollup-plugin-styles";
-// import autoprefixer from "autoprefixer";
+import styles from "rollup-plugin-styles";
+import autoprefixer from "autoprefixer";
 // import postcss from "rollup-plugin-postcss";
 // import embedCSS from "rollup-plugin-embed-css";
-// import cssnano from "cssnano";
+import cssnano from "cssnano";
 import typescript from "rollup-plugin-typescript2";
 
 const plugins = [
   typescript(),
-  // styles({
-  //   plugins: [autoprefixer(), cssnano()],
-  //   mode: [
-  //     "inject",
-  //     {
-  //       // container: "body",
-  //       singleTag: true,
-  //       // prepend: true,
-  //       // attributes: { id: "global" },
-  //     },
-  //   ],
-  // }),
+  styles({
+    plugins: [autoprefixer(), cssnano()],
+    mode: [
+      "inject",
+      {
+        // container: "body",
+        singleTag: true,
+        // prepend: true,
+        // attributes: { id: "global" },
+      },
+    ],
+  }),
   // // postcss({
   // //   plugins: [],
   // // }),
