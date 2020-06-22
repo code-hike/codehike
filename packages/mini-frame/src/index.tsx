@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 
 type MiniFrameProps = {
-  title: string;
+  title?: string;
   titleBar?: React.ReactNode;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
 
@@ -23,7 +23,7 @@ export function MiniFrame({
   );
 }
 
-function DefaultTitleBar({ title }: { title: string }) {
+function DefaultTitleBar({ title }: { title?: string }) {
   return (
     <>
       <div className="ch-left-bar">
