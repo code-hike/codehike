@@ -1,0 +1,21 @@
+{
+  "name": "@code-hike/mini-frame",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "ch-build",
+    "watch": "ch-build --watch"
+  },
+  "devDependencies": {
+    "@code-hike/build": "0.0.1",
+    "react": "^16.13.1"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.38"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  }
+}

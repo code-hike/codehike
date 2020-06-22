@@ -1,5 +1,5 @@
-import { MiniBrowser } from "packages/mini-browser/mini-browser";
-import { MiniEditor } from "packages/mini-editor/mini-editor";
+import { MiniBrowser } from "@code-hike/mini-browser";
+import { MiniEditor } from "@code-hike/mini-editor";
 
 const yarnCommands = `$ yarn install
 Fetching packages...

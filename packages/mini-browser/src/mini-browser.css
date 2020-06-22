@@ -1,0 +1,20 @@
+.ch-mini-browser {
+  height: 100%;
+}
+
+.ch-mini-browser iframe {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.ch-mini-browser .ch-title-bar input {
+  height: 18px;
+  font-size: 11px;
+  border-radius: 9px;
+  border: none;
+  box-shadow: none;
+  flex: 1;
+  padding: 0 10px;
+  color: #544;
+}

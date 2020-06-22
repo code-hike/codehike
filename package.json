@@ -1,32 +1,33 @@
 {
-  "dependencies": {
-    "@code-hike/mini-terminal": "^0.1.1",
-    "@code-surfer/standalone": "^3.1.1",
-    "@emotion/core": "10.0.7",
-    "@mdx-js/loader": "^1.6.5",
-    "@mdx-js/mdx": "^1.2.2",
-    "@mdx-js/react": "^1.0.6",
-    "@next/mdx": "^9.4.4",
-    "@testing-library/dom": "^7.5.7",
-    "@testing-library/user-event": "^10.3.1",
-    "next": "^9.4.0",
-    "raw-loader": "^4.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-range": "^1.6.1",
-    "react-youtube": "^7.11.2",
-    "theme-ui": "0.2.31",
-    "use-spring": "^0.2.3"
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/build",
+      "packages/mini-browser",
+      "packages/mini-frame",
+      "packages/mini-browser",
+      "packages/mini-editor",
+      "packages/mini-terminal",
+      "packages/player",
+      "packages/scroller",
+      "packages/sim-user",
+      "packages/smooth-column",
+      "storybook",
+      "site"
+    ]
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "mbrowser": "yarn workspace @code-hike/mini-browser",
+    "mframe": "yarn workspace @code-hike/mini-frame",
+    "mterminal": "yarn workspace @code-hike/mini-terminal",
+    "meditor": "yarn workspace @code-hike/mini-editor",
+    "storybook": "yarn workspace storybook",
+    "site": "yarn workspace site",
+    "ch-build": "yarn workspace @code-hike/build",
+    "build-site": "yarn mframe build && yarn mterminal build && yarn mbrowser build && yarn meditor build && yarn workspace site export"
   },
-  "devDependencies": {
-    "@types/node": "^14.0.5",
-    "@types/react": "^16.9.35",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.3"
+  "dependencies": {
+    "@emotion/core": "10.0.7",
+    "theme-ui": "0.2.31"
   }
 }

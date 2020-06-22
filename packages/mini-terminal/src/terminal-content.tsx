@@ -27,7 +27,7 @@ function TerminalContent({
   );
 }
 
-function parse(text, progress) {
+function parse(text: string, progress: number) {
   if (!text) return [];
   const chars = Math.round(text.length * progress);
   const { commands } = getCommands(text.slice(0, chars));

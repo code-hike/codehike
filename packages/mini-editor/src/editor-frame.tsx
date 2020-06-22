@@ -1,5 +1,5 @@
 import React from "react";
-import { TerminalContent } from "packages/mini-terminal/terminal-content";
+import { TerminalContent } from "@code-hike/mini-terminal";
 
 export { EditorFrame };
 
@@ -13,7 +13,7 @@ function EditorFrame({
   link,
   style,
   progress,
-}) {
+}: any) {
   return (
     <div
       className="shadow"
@@ -41,7 +41,7 @@ function EditorFrame({
   );
 }
 
-function Button({ bg, border }) {
+function Button({ bg, border }: any) {
   return (
     <div
       style={{
@@ -71,7 +71,7 @@ function Buttons() {
   );
 }
 
-function Tab({ enabled, children }) {
+function Tab({ enabled, children }: any) {
   return (
     <div
       style={{
@@ -79,7 +79,7 @@ function Tab({ enabled, children }) {
         background: enabled ? "rgb(30, 30, 30)" : "rgb(45, 45, 45)",
         width: "120px",
         minWidth: "fit-content",
-        flexShrink: "0",
+        flexShrink: 0,
         position: "relative",
         display: "flex",
         whiteSpace: "nowrap",
@@ -106,7 +106,7 @@ function Tab({ enabled, children }) {
   );
 }
 
-function TabsContainer({ files, active, link }) {
+function TabsContainer({ files, active }: any) {
   return (
     <div
       style={{
@@ -117,7 +117,7 @@ function TabsContainer({ files, active, link }) {
       }}
     >
       <Buttons />
-      {files.map((fileName) => (
+      {files.map((fileName: string) => (
         <Tab key={fileName} enabled={fileName === active}>
           {fileName}
         </Tab>
@@ -135,11 +135,11 @@ const editorStyle = {
   padding: "5px 10px",
   lineHeight: "1.1rem",
 };
-function EditorContainer({ children }) {
+function EditorContainer({ children }: any) {
   return <div style={editorStyle}>{children}</div>;
 }
 
-function TerminalPanel({ code, height, progress }) {
+function TerminalPanel({ code, height, progress }: any) {
   return !height ? null : (
     <div
       style={{
@@ -175,7 +175,7 @@ function TerminalPanel({ code, height, progress }) {
           fontSize: "12px",
         }}
       >
-        <TerminalContent text={code} running={true} progress={progress} />
+        <TerminalContent text={code} progress={progress} />
       </div>
     </div>
   );
