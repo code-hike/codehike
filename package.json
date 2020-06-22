@@ -23,7 +23,8 @@
     "meditor": "yarn workspace @code-hike/mini-editor",
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
-    "ch-build": "yarn workspace @code-hike/build"
+    "ch-build": "yarn workspace @code-hike/build",
+    "build-site": "yarn workspace site export"
   },
   "dependencies": {
     "@emotion/core": "10.0.7",
