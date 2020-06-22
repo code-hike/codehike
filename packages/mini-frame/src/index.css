@@ -9,10 +9,55 @@
 
 .ch-title-bar {
   height: 28px;
-  background-color: #4f4f4f;
+  background-color: rgb(45, 45, 45);
+  display: flex;
+  align-items: center;
+  color: rgb(250, 250, 250);
+  font-size: 14px;
+}
+
+.ch-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ch-left-bar,
+.ch-right-bar {
+  flex: 1;
 }
 
 .ch-frame-content {
   background-color: #fafafa;
   height: calc(100% - 28px);
+}
+
+.ch-frame-buttons {
+  height: 13px;
+  margin: 0 -3px 0 4px;
+  min-width: 61px;
+}
+
+.ch-frame-button {
+  width: 10px;
+  height: 10px;
+  border: 1px solid;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 3px;
+}
+
+.ch-frame-button.red {
+  border-color: #e33e41;
+  background-color: #ff5c5c;
+}
+
+.ch-frame-button.yellow {
+  border-color: #e09e3e;
+  background-color: #ffbd4c;
+}
+
+.ch-frame-button.green {
+  border-color: #14ae46;
+  background-color: #00ca56;
 }

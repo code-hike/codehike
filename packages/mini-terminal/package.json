@@ -13,7 +13,8 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@types/react": "^16.9.38"
+    "@types/react": "^16.9.38",
+    "@code-hike/mini-frame": "0.0.1"
   },
   "peerDependencies": {
     "react": ">=16.8"

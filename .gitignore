@@ -2,3 +2,4 @@ node_modules
 .next
 todo.md
 dist
+yarn-error.log

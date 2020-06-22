@@ -1,6 +1,6 @@
 import React from "react";
 import { TerminalContent } from "./terminal-content";
-import { Frame } from "./frame";
+import { MiniFrame } from "@code-hike/mini-frame";
 
 function MiniTerminalTransition({
   height = 100,
@@ -20,11 +20,11 @@ function MiniTerminalTransition({
   progress: number;
 }) {
   return (
-    <Frame title={title} height={height}>
+    <MiniFrame title={title} style={{ height }}>
       <InnerTerminalTransition
         {...{ prev, prevKey, next, nextKey, progress }}
       />
-    </Frame>
+    </MiniFrame>
   );
 }
 

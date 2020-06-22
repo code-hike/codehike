@@ -1,13 +1,38 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import { MiniFrame } from "@code-hike/mini-frame";
+import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
 
-storiesOf("Mini Frame", module).add("Basic", () => <Story />);
-
-function Story() {
-  return (
-    <MiniFrame style={{ width: 300 }}>
-      <div style={{ width: 200, background: "salmon" }}>Hey</div>
+storiesOf("Mini Frame", module)
+  .add("Basic", () => (
+    <MiniFrame style={{ width: 300 }} title="This Frame Title">
+      <div style={{ height: 200, background: "beige", padding: 10 }}>
+        Lorem Ipsum
+      </div>
     </MiniFrame>
-  );
-}
+  ))
+  .add("Long Title", () => (
+    <MiniFrame
+      style={{ width: 300 }}
+      title="Lets test what happens if we put a very long title"
+    >
+      <div style={{ height: 200 }} />
+    </MiniFrame>
+  ))
+  .add("No Title", () => (
+    <MiniFrame>
+      <div style={{ width: 100, height: 200 }} />
+    </MiniFrame>
+  ))
+  .add("Custom Title Bar", () => (
+    <MiniFrame
+      titleBar={
+        <>
+          <FrameButtons />
+          <div style={{ flex: 1 }}>Hello</div>
+          <div style={{ marginRight: 7 }}>Bye</div>
+        </>
+      }
+    >
+      <div style={{ width: 100, height: 200 }} />
+    </MiniFrame>
+  ));
