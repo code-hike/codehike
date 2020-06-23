@@ -22,7 +22,7 @@ function CodeHikeHead({ title = "Code Hike" }) {
         href="/favicon-16x16.png"
       />
       <meta name="twitter:card" content="summary" />
-      <meta property="og:title" content="Code Hike" />
+      <meta property="og:title" content={title} />
       <meta property="og:description" content="Marvellous code walkthroughs" />
       <meta
         property="og:image"
