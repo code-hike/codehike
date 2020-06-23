@@ -1,8 +1,9 @@
 import React from "react";
 import s from "./index.module.css";
 import { CodeHikeHead } from "src/code-hike-head";
-import { MiniTerminal } from "@code-hike/mini-terminal";
+import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
 import { Scroller, Step } from "@code-hike/scroller";
+import { useSpring } from "use-spring";
 
 export { Demo };
 
@@ -37,7 +38,8 @@ function Demo() {
 }
 
 function Section({ title }) {
-  const [currentIndex, setCurrentIndex] = React.useState(null);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [progress] = useSpring(currentIndex);
   const h = 260;
   return (
     <section>
@@ -46,27 +48,23 @@ function Section({ title }) {
         className={s.sticker}
         style={{ top: `calc(100vh - ${h}px)`, height: h + 1 }}
       >
-        <Sticker style={{ height: h - 40 }} index={currentIndex} />
-        {/* <MiniTerminal text="$ foo" height={h - 50} style={{ width: 300 }} /> */}
+        <MiniTerminalTransitions
+          title="bash"
+          height={h - 50}
+          progress={progress}
+          steps={terminalSteps}
+        />
       </div>
       <div>
         <Scroller onStepChange={setCurrentIndex}>
           <ol style={{ marginTop: -h + 30, paddingBottom: h }}>
             <Step
               as="li"
-              index={0}
-              className={s.step}
-              style={{ opacity: currentIndex === 0 ? 1 : 0.5 }}
-            >
-              Lorem ipsum dolor sit amet consectetur adipiscing elit.
-            </Step>
-            <Step
-              as="li"
               index={1}
               className={s.step}
               style={{ opacity: currentIndex === 1 ? 1 : 0.5 }}
             >
-              Eiusmod tempor incididunt ut labore et dolore.
+              Lorem ipsum dolor sit amet consectetur adipiscing elit.
             </Step>
             <Step
               as="li"
@@ -74,8 +72,7 @@ function Section({ title }) {
               className={s.step}
               style={{ opacity: currentIndex === 2 ? 1 : 0.5 }}
             >
-              Magna aliqua ut enim ad minim veniam quis nostrud exercitation
-              ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              Eiusmod tempor incididunt ut labore et dolore.
             </Step>
             <Step
               as="li"
@@ -83,13 +80,22 @@ function Section({ title }) {
               className={s.step}
               style={{ opacity: currentIndex === 3 ? 1 : 0.5 }}
             >
-              In voluptate velit esse cillum dolore. Eu fugiat nulla pariatur.
+              Magna aliqua ut enim ad minim veniam quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Step>
             <Step
               as="li"
               index={4}
               className={s.step}
               style={{ opacity: currentIndex === 4 ? 1 : 0.5 }}
+            >
+              In voluptate velit esse cillum dolore. Eu fugiat nulla pariatur.
+            </Step>
+            <Step
+              as="li"
+              index={5}
+              className={s.step}
+              style={{ opacity: currentIndex === 5 ? 1 : 0.5 }}
             >
               Excepteur sint occaecat cupidatat non proident sunt in culpa qui
               officia deserunt.
@@ -101,22 +107,28 @@ function Section({ title }) {
   );
 }
 
-function Sticker({ index, style }) {
-  return (
-    <div
-      style={{
-        ...style,
-        background: "rgb(42,42,42)",
-        border: "1px solid rgb(58,58,58)",
-        borderRadius: 6,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontSize: 60,
-        color: "rgb(100,100,100)",
-      }}
-    >
-      {index}
-    </div>
-  );
-}
+const terminalSteps = [
+  `$`,
+  `$ lorem ipsum
+dolor sit amet
+consectetur adipiscing elit
+$ sed do`,
+  `$ eiusmod tempor incididunt
+ut labore et dolore`,
+  `$ magna aliqua
+ut enim ad minim veniam
+quis nostrud
+exercitation ullamco laboris nisi ut aliquip
+ex ea commodo consequat
+$ duis aute irure dolor
+in reprehenderit`,
+  `$ in voluptate
+velit esse cillum dolore
+$ eu fugiat nulla pariatur`,
+  `$ excepteur sint occaecat
+cupidatat non proident
+sunt in culpa qui
+officia deserunt
+$ mollit anim id est laborum
+$ `,
+];
