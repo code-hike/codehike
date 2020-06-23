@@ -11,7 +11,7 @@ function Demo() {
     <div className={s.page}>
       <CodeHikeHead title="Apple Landing Demo | Code Hike" />
       <header>
-        <h3>Cloning Apple landing page, with Code Hike.</h3>
+        <h3>Cloning Apple landing page, with Code&nbsp;Hike.</h3>
         <p>
           <a href="/">Go to Code Hike home</a>
         </p>
