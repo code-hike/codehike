@@ -2,6 +2,7 @@ import React from "react";
 import s from "./index.module.css";
 import { CodeHikeHead } from "src/code-hike-head";
 import { MiniTerminal } from "@code-hike/mini-terminal";
+import { Scroller, Step } from "@code-hike/scroller";
 
 export { Demo };
 
@@ -36,6 +37,7 @@ function Demo() {
 }
 
 function Section({ title }) {
+  const [currentIndex, setCurrentIndex] = React.useState(null);
   const h = 260;
   return (
     <section>
@@ -44,29 +46,77 @@ function Section({ title }) {
         className={s.sticker}
         style={{ top: `calc(100vh - ${h}px)`, height: h + 1 }}
       >
-        <MiniTerminal text="$ foo" height={h - 50} style={{ width: 300 }} />
+        <Sticker style={{ height: h - 40 }} index={currentIndex} />
+        {/* <MiniTerminal text="$ foo" height={h - 50} style={{ width: 300 }} /> */}
       </div>
       <div>
-        <ol style={{ marginTop: -h + 30, paddingBottom: h }}>
-          <li className={s.step}>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit.
-          </li>
-          <li className={s.step}>
-            Eiusmod tempor incididunt ut labore et dolore.
-          </li>
-          <li className={s.step}>
-            Magna aliqua ut enim ad minim veniam quis nostrud exercitation
-            ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </li>
-          <li className={s.step}>
-            In voluptate velit esse cillum dolore. Eu fugiat nulla pariatur.
-          </li>
-          <li className={s.step}>
-            Excepteur sint occaecat cupidatat non proident sunt in culpa qui
-            officia deserunt.
-          </li>
-        </ol>
+        <Scroller onStepChange={setCurrentIndex}>
+          <ol style={{ marginTop: -h + 30, paddingBottom: h }}>
+            <Step
+              as="li"
+              index={0}
+              className={s.step}
+              style={{ opacity: currentIndex === 0 ? 1 : 0.5 }}
+            >
+              Lorem ipsum dolor sit amet consectetur adipiscing elit.
+            </Step>
+            <Step
+              as="li"
+              index={1}
+              className={s.step}
+              style={{ opacity: currentIndex === 1 ? 1 : 0.5 }}
+            >
+              Eiusmod tempor incididunt ut labore et dolore.
+            </Step>
+            <Step
+              as="li"
+              index={2}
+              className={s.step}
+              style={{ opacity: currentIndex === 2 ? 1 : 0.5 }}
+            >
+              Magna aliqua ut enim ad minim veniam quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </Step>
+            <Step
+              as="li"
+              index={3}
+              className={s.step}
+              style={{ opacity: currentIndex === 3 ? 1 : 0.5 }}
+            >
+              In voluptate velit esse cillum dolore. Eu fugiat nulla pariatur.
+            </Step>
+            <Step
+              as="li"
+              index={4}
+              className={s.step}
+              style={{ opacity: currentIndex === 4 ? 1 : 0.5 }}
+            >
+              Excepteur sint occaecat cupidatat non proident sunt in culpa qui
+              officia deserunt.
+            </Step>
+          </ol>
+        </Scroller>
       </div>
     </section>
+  );
+}
+
+function Sticker({ index, style }) {
+  return (
+    <div
+      style={{
+        ...style,
+        background: "rgb(42,42,42)",
+        border: "1px solid rgb(58,58,58)",
+        borderRadius: 6,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 60,
+        color: "rgb(100,100,100)",
+      }}
+    >
+      {index}
+    </div>
   );
 }

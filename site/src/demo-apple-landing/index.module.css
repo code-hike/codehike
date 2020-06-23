@@ -50,6 +50,7 @@
   line-height: 1.33341;
   font-weight: 700;
   letter-spacing: 0.009em;
+  transition: opacity 500ms;
 }
 
 .sectionTitle {
