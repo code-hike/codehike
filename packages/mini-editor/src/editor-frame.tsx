@@ -1,5 +1,6 @@
 import React from "react";
 import { TerminalContent } from "@code-hike/mini-terminal";
+import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
 
 export { EditorFrame };
 
@@ -15,59 +16,17 @@ function EditorFrame({
   progress,
 }: any) {
   return (
-    <div
-      className="shadow"
-      style={{
-        height,
-        position: "relative",
-        borderRadius: "6px",
-        // border: "1px solid rgba(175, 173, 169, 0.15)",
-        boxShadow:
-          "0 13px 27px -5px rgba(50,50,93,.25), 0 8px 16px -8px rgba(0,0,0,.3), 0 -6px 16px -6px rgba(0,0,0,.025)",
-        overflow: "hidden",
-        fontFamily:
-          "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
-        ...style,
-      }}
+    <MiniFrame
+      style={{ height, ...style }}
+      titleBar={<TabsContainer files={files} active={active} link={link} />}
     >
-      <TabsContainer files={files} active={active} link={link} />
       <EditorContainer>{children}</EditorContainer>
       <TerminalPanel
         code={terminal}
         height={terminalHeight}
         progress={progress}
       />
-    </div>
-  );
-}
-
-function Button({ bg, border }: any) {
-  return (
-    <div
-      style={{
-        background: bg,
-        width: "10px",
-        height: "10px",
-        border: `1px solid ${border}`,
-        borderRadius: "50%",
-        display: "inline-block",
-        marginLeft: "6px",
-      }}
-    />
-  );
-}
-
-function Buttons() {
-  return (
-    <div
-      style={{
-        margin: "auto 10px auto 4px",
-      }}
-    >
-      <Button border="#e33e41" bg="#ff5c5c" />
-      <Button border="#e09e3e" bg="#ffbd4c" />
-      <Button border="#14ae46" bg="#00ca56" />
-    </div>
+    </MiniFrame>
   );
 }
 
@@ -108,28 +67,21 @@ function Tab({ enabled, children }: any) {
 
 function TabsContainer({ files, active }: any) {
   return (
-    <div
-      style={{
-        height: "28px",
-        background: "rgb(37, 37, 38)",
-        overflow: "hidden",
-        display: "flex",
-      }}
-    >
-      <Buttons />
+    <>
+      <FrameButtons />
       {files.map((fileName: string) => (
         <Tab key={fileName} enabled={fileName === active}>
           {fileName}
         </Tab>
       ))}
       <div style={{ flex: 1 }} />
-    </div>
+    </>
   );
 }
 
 const editorStyle = {
   backgroundColor: "rgb(30, 30, 30)",
-  height: "calc(100% - 28px)",
+  height: "100%",
   color: "#cccccc",
   fontSize: "15px",
   padding: "5px 10px",

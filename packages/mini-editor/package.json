@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@code-hike/mini-terminal": "0.0.1",
+    "@code-hike/mini-frame": "0.0.1",
     "@code-surfer/standalone": "^3.1.1",
     "@types/react": "^16.9.38"
   },
