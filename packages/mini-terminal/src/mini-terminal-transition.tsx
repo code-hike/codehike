@@ -1,6 +1,7 @@
 import React from "react";
 import { TerminalContent } from "./terminal-content";
 import { MiniFrame } from "@code-hike/mini-frame";
+import "./mini-terminal.css";
 
 function MiniTerminalTransition({
   height = 100,
@@ -45,6 +46,7 @@ function InnerTerminalTransition({
 }) {
   return (
     <div
+      className="ch-terminal"
       style={{
         fontSize: "14px",
         height: "100%",

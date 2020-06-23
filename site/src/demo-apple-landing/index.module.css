@@ -107,3 +107,8 @@
 .page footer p {
   font-size: 1.1em;
 }
+
+.page :global(.ch-frame) {
+  box-shadow: none;
+  border: 0.7px solid rgb(56, 56, 56);
+}
