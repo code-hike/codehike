@@ -9,18 +9,27 @@ const ObserverContext = React.createContext<IntersectionObserver | undefined>(
 type ScrollerProps = {
   onStepChange: (stepIndex: number) => void;
   children: React.ReactNode;
+  getRootMargin?: (vh: number) => string;
 };
 
 type StepElement = {
   stepIndex: any;
 };
 
-function Scroller({ onStepChange, children }: ScrollerProps) {
+function defaultRootMargin(vh: number) {
+  return `-${vh / 2 - 2}px 0px`;
+}
+
+function Scroller({
+  onStepChange,
+  children,
+  getRootMargin = defaultRootMargin,
+}: ScrollerProps) {
   const [observer, setObserver] = React.useState<IntersectionObserver>();
   const vh = useWindowHeight();
 
   React.useLayoutEffect(() => {
-    const windowHieght = vh || 0;
+    const windowHeight = vh || 0;
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.intersectionRatio > 0) {
@@ -33,7 +42,7 @@ function Scroller({ onStepChange, children }: ScrollerProps) {
       // setIntersections(entries.map(e => e.intersectionRect))
     };
     const observer = new IntersectionObserver(handleIntersect, {
-      rootMargin: `-${windowHieght / 2 - 2}px 0px`,
+      rootMargin: getRootMargin(windowHeight),
       threshold: 0.000001,
     });
     setObserver(observer);

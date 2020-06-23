@@ -75,7 +75,14 @@ function Section({ title, stickerHeight, Sticker, texts }) {
         <Sticker progress={progress} />
       </div>
       <div>
-        <Scroller onStepChange={setCurrentIndex} center={stickerHeight}>
+        <Scroller
+          onStepChange={setCurrentIndex}
+          getRootMargin={(vh) =>
+            `-${(vh - (stickerHeight - 120)) / 2 - 2}px 0px -${
+              (vh + (stickerHeight - 120)) / 2 - 2
+            }px`
+          }
+        >
           <ol
             style={{
               marginTop: -stickerHeight + 30,
@@ -87,7 +94,7 @@ function Section({ title, stickerHeight, Sticker, texts }) {
                 as="li"
                 key={i}
                 index={i + 1}
-                style={{ opacity: currentIndex === i + 1 ? 1 : 0.5 }}
+                style={{ opacity: currentIndex === i + 1 ? 0.999 : 0.15 }}
                 className={s.step}
               >
                 {text}
