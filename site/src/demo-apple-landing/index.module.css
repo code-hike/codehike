@@ -101,6 +101,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px 0 40px;
+  margin-top: 30px;
 }
 
 .page footer p {
