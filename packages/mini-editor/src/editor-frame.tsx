@@ -88,7 +88,11 @@ const editorStyle = {
   lineHeight: "1.1rem",
 };
 function EditorContainer({ children }: any) {
-  return <div style={editorStyle}>{children}</div>;
+  return (
+    <div style={editorStyle} className="ch-editor-content">
+      {children}
+    </div>
+  );
 }
 
 function TerminalPanel({ code, height, progress }: any) {
