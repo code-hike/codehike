@@ -41,4 +41,9 @@ storiesOf("Mini Frame", module)
       <div style={{ height: 200, background: "salmon" }} />
       <div style={{ height: 200, background: "beige" }} />
     </MiniFrame>
+  ))
+  .add("Overflow X", () => (
+    <MiniFrame style={{ width: 200 }}>
+      <div style={{ height: 100, width: 240, background: "salmon" }} />
+    </MiniFrame>
   ));
