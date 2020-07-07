@@ -4,6 +4,7 @@
 
 .ch-mini-browser iframe {
   border: none;
+  position: absolute;
   height: 100%;
   width: 100%;
 }

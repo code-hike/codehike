@@ -11,6 +11,6 @@ storiesOf("Mini Browser", module)
   .add("Iframe", () => (
     <MiniBrowser
       url="https://whatismyviewport.com/"
-      style={{ width: 500, height: 300 }}
+      style={{ maxWidth: 500, height: 300 }}
     />
   ));

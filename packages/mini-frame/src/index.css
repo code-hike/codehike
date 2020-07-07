@@ -6,15 +6,18 @@
   font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
     Segoe UI, sans-serif;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .ch-title-bar {
-  height: 28px;
-  background-color: rgb(45, 45, 45);
+  font-size: 14px;
+  height: 2em;
+  min-height: 2em;
   display: flex;
   align-items: center;
+  background-color: rgb(45, 45, 45);
   color: rgb(250, 250, 250);
-  font-size: 14px;
 }
 
 .ch-title {
@@ -30,7 +33,9 @@
 
 .ch-frame-content {
   background-color: #fafafa;
-  height: calc(100% - 28px);
+  flex-grow: 1;
+  overflow: auto;
+  position: relative;
 }
 
 .ch-frame-buttons {
