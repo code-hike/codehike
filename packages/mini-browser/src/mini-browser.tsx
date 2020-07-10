@@ -1,5 +1,5 @@
 import React from "react";
-import { Back, Forward, Refresh, Open } from "./buttons";
+import { Back, Forward, Open } from "./buttons";
 import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
 import "./mini-browser.css";
 
@@ -36,7 +36,7 @@ function Bar({ url }: { url: string }) {
       <FrameButtons />
       <Back />
       <Forward />
-      <Refresh />
+      {/* <Refresh /> */}
       <input value={url} readOnly />
       <Open href={url} />
     </>

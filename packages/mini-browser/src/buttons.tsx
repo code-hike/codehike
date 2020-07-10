@@ -5,9 +5,9 @@ function Back() {
     <svg
       fill="currentColor"
       preserveAspectRatio="xMidYMid meet"
-      height="0.75em"
-      viewBox="10 10 23 23"
-      style={{ marginRight: 6, color: "#999" }}
+      height="1em"
+      viewBox="13 10 14 23"
+      style={{ marginLeft: "0.2em", marginRight: "1em", color: "#999" }}
     >
       <g>
         <path d="m26.5 12.1q0 0.3-0.2 0.6l-8.8 8.7 8.8 8.8q0.2 0.2 0.2 0.5t-0.2 0.5l-1.1 1.1q-0.3 0.3-0.6 0.3t-0.5-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l10.4-10.4q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z" />
@@ -21,9 +21,9 @@ function Forward() {
     <svg
       fill="currentColor"
       preserveAspectRatio="xMidYMid meet"
-      height="0.75em"
-      viewBox="10 10 23 23"
-      style={{ marginRight: 6, color: "#999" }}
+      height="1em"
+      viewBox="13 10 14 23"
+      style={{ marginRight: "1em", color: "#999" }}
     >
       <g>
         <path d="m26.3 21.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.6 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.3-0.2 0.5-0.2t0.6 0.2l10.4 10.4q0.2 0.2 0.2 0.5z" />
@@ -49,7 +49,7 @@ function Refresh() {
 function Open({ href }: { href: string }) {
   return (
     <a
-      style={{ margin: "0 10px 0 6px", color: "inherit" }}
+      style={{ margin: "0 1em 0 1em", color: "inherit" }}
       title="Open in new tab"
       href={href}
       target="_blank"
@@ -59,9 +59,9 @@ function Open({ href }: { href: string }) {
         stroke="currentColor"
         fill="currentColor"
         strokeWidth="0"
-        viewBox="0 0 24 24"
-        height="14px"
-        width="14px"
+        viewBox="3 3 18 18"
+        height="1em"
+        width="1em"
         style={{ display: "block" }}
         xmlns="http://www.w3.org/2000/svg"
       >

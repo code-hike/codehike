@@ -4,7 +4,7 @@ import { MiniBrowser } from "@code-hike/mini-browser";
 
 storiesOf("Mini Browser", module)
   .add("Basic", () => (
-    <MiniBrowser url="https://localhost:8000" style={{ width: 500 }}>
+    <MiniBrowser url="https://localhost:8000" style={{}}>
       <div style={{ background: "beige", height: 200 }}>Lorem Ipsum</div>
     </MiniBrowser>
   ))

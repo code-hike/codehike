@@ -4,7 +4,7 @@ import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
 
 storiesOf("Mini Frame", module)
   .add("Basic", () => (
-    <MiniFrame style={{ width: 300 }} title="This Frame Title">
+    <MiniFrame style={{ width: 300 }} title="This">
       <div style={{ height: 200, background: "beige", padding: 10 }}>
         Lorem Ipsum
       </div>
