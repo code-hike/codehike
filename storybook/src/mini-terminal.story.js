@@ -1,9 +1,27 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
-import { MiniTerminal } from "@code-hike/mini-terminal";
+import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
+import { WithProgress, Page } from "./utils";
 
-storiesOf("Mini Terminal", module).add("Basic", () => <Story />);
+export default {
+  title: "Mini Terminal",
+};
 
-function Story() {
-  return <MiniTerminal style={{ width: 300 }} text="$ foo" />;
-}
+export const basic = () => (
+  <Page>
+    <MiniTerminalTransitions
+      style={{ width: 300 }}
+      steps={["$ foo"]}
+      progress={0}
+    />
+  </Page>
+);
+
+const steps = ["$ one", "$ two", "$ three"];
+
+export const transitions = () => (
+  <WithProgress length={steps.length}>
+    {(progress) => (
+      <MiniTerminalTransitions progress={progress} steps={steps} />
+    )}
+  </WithProgress>
+);
