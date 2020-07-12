@@ -1,6 +1,6 @@
 import React from "react";
 import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
-import { WithProgress, Page } from "./utils";
+import { Page } from "./utils";
 
 export default {
   title: "Mini Frame",

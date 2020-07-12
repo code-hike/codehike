@@ -19,3 +19,17 @@ export const iframe = () => (
     <MiniBrowser url="https://whatismyviewport.com/" style={{ height: 300 }} />
   </Page>
 );
+export const video = () => (
+  <Page>
+    <MiniBrowser url="https://nextjs-static-props.now.sh/" height={300}>
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        type="video/mp4"
+        src="https://pomb.us/static/demo-75c5b2395f634c494e40b8008eef20eb.mp4"
+      />
+    </MiniBrowser>
+  </Page>
+);

@@ -79,17 +79,20 @@ function TabsContainer({ files, active }: any) {
   );
 }
 
-const editorStyle = {
-  backgroundColor: "rgb(30, 30, 30)",
-  height: "100%",
-  color: "#cccccc",
-  fontSize: "15px",
-  padding: "5px 10px",
-  lineHeight: "1.1rem",
-};
 function EditorContainer({ children }: any) {
   return (
-    <div style={editorStyle} className="ch-editor-content">
+    <div
+      style={{
+        backgroundColor: "rgb(30, 30, 30)",
+        height: "100%",
+        color: "#cccccc",
+        fontSize: "15px",
+        padding: "5px 10px",
+        lineHeight: "1.1rem",
+        boxSizing: "border-box",
+      }}
+      className="ch-editor-content"
+    >
       {children}
     </div>
   );

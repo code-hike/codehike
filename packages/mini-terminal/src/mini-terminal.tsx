@@ -1,37 +1,33 @@
 import React from "react";
-import { TerminalContent } from "./terminal-content";
-import { MiniFrame } from "@code-hike/mini-frame";
-
-function MiniTerminal({
-  height,
-  title = "bash",
-  text,
-}: {
-  height?: number;
-  title?: string;
-  text: string;
-}) {
-  return (
-    <MiniFrame title={title} style={{ height }}>
-      <div
-        style={{
-          fontSize: "14px",
-          height: "100%",
-          boxSizing: "border-box",
-          background: "rgb(30, 30, 30)",
-          color: "rgb(231, 231, 231)",
-          overflow: "hidden",
-          padding: "0 8px 8px",
-          fontFamily:
-            "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
-        }}
-      >
-        <div>
-          <TerminalContent text={text} progress={1} />
-        </div>
-      </div>
-    </MiniFrame>
-  );
-}
+import { MiniTerminalTransitions } from "./mini-terminal-transitions";
 
 export { MiniTerminal };
+
+type MiniTerminalProps = {
+  text?: string;
+  title?: string;
+  progress?: number;
+  backward?: boolean;
+  steps?: [{ text: string }];
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+
+function MiniTerminal({
+  text,
+  title = "bash",
+  progress = 0,
+  backward = false,
+  steps,
+  ...rest
+}: MiniTerminalProps) {
+  const actualSteps = steps || [{ text: text || "" }];
+
+  return (
+    <MiniTerminalTransitions
+      steps={actualSteps}
+      progress={progress}
+      backward={backward}
+      title={title}
+      {...rest}
+    />
+  );
+}

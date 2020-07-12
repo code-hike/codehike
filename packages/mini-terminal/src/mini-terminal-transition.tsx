@@ -11,6 +11,7 @@ function MiniTerminalTransition({
   next,
   nextKey,
   progress,
+  ...rest
 }: {
   height?: number;
   title?: string;
@@ -19,9 +20,9 @@ function MiniTerminalTransition({
   next: string;
   nextKey?: React.Key;
   progress: number;
-}) {
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
   return (
-    <MiniFrame title={title} style={{ height }}>
+    <MiniFrame title={title} {...rest}>
       <InnerTerminalTransition
         {...{ prev, prevKey, next, nextKey, progress }}
       />

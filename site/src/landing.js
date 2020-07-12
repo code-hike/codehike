@@ -18,7 +18,7 @@ function LandingPage() {
         slides, videos, workshops, docs, and so on.
       </p>
       <div className={s.experimental}>
-        <span className={s.label}>June 2020 status:</span>{" "}
+        <span className={s.label}>July 2020 status:</span>{" "}
         <p>
           Currently working on prototypes and refining the APIs and package's
           boundaries. No packages published to npm yet.
