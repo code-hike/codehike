@@ -17,7 +17,7 @@ export const basic = () => (
 );
 
 export const longTitle = () => (
-  <Page>
+  <Page style={{ width: 300 }}>
     <MiniFrame title="Lets test what happens if we put a very long title">
       <div style={{ height: 200 }} />
     </MiniFrame>

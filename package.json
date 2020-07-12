@@ -26,6 +26,7 @@
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "ch-build": "yarn workspace @code-hike/build",
+    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn mbrowser watch & yarn meditor watch",
     "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn mbrowser build && yarn meditor build",
     "build-site": "yarn build-packages && yarn workspace site export"
   },
