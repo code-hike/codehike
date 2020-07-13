@@ -2,7 +2,8 @@
   height: 100%;
 }
 
-.ch-mini-browser iframe {
+.ch-mini-browser .ch-frame-content > iframe,
+.ch-mini-browser .ch-frame-content > video {
   border: none;
   position: absolute;
   height: 100%;
