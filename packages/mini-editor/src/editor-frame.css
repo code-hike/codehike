@@ -9,7 +9,7 @@
   display: flex;
   white-space: nowrap;
   cursor: pointer;
-  height: 28px;
+  height: 100%;
   box-sizing: border-box;
   padding-left: 15px;
   padding-right: 15px;
