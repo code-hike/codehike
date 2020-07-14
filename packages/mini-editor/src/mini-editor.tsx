@@ -5,14 +5,44 @@ import { vsDark } from "@code-surfer/themes";
 
 export { MiniEditor };
 
-function MiniEditor({ progress, steps, height, backwards, style }: any) {
+type MiniEditorStep = {
+  code?: string;
+  focus?: string;
+  lang?: string;
+  file?: string;
+  tabs?: string;
+};
+
+type MiniEditorProps = {
+  progress?: number;
+  backward?: boolean;
+  code?: string;
+  focus?: string;
+  lang?: string;
+  steps?: MiniEditorStep[];
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+
+function MiniEditor({
+  progress = 0,
+  backward = false,
+  code = "",
+  focus,
+  lang,
+  steps: ogSteps,
+  ...rest
+}: any) {
+  const steps = ogSteps?.map((s: any) => ({
+    code,
+    focus,
+    lang,
+    ...s,
+  })) || [{ code, focus, lang }];
+
   const files = [
     ...new Set(steps.map((s: any) => s.file).filter((f: any) => f != null)),
   ];
 
-  const activeStepIndex = backwards
-    ? Math.floor(progress)
-    : Math.ceil(progress);
+  const activeStepIndex = backward ? Math.floor(progress) : Math.ceil(progress);
   const activeStep = steps[activeStepIndex];
   const activeFile = activeStep && activeStep.file;
 
@@ -40,10 +70,9 @@ function MiniEditor({ progress, steps, height, backwards, style }: any) {
       active={activeFile}
       terminal={activeStep.terminal}
       terminalHeight={terminalHeight}
-      height={height}
       link={activeStep.link}
-      style={style}
       progress={activeProgress}
+      {...rest}
     >
       {activeSteps.length > 0 && (
         <CodeSurfer
@@ -60,6 +89,10 @@ function MiniEditor({ progress, steps, height, backwards, style }: any) {
 
 const MAX_HEIGHT = 150;
 function getTerminalHeight(steps: any, progress: number) {
+  if (!steps.length) {
+    return 0;
+  }
+
   const prevIndex = Math.floor(progress);
   const nextIndex = Math.ceil(progress);
   const prevTerminal = steps[prevIndex] && steps[prevIndex].terminal;

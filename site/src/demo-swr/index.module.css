@@ -127,6 +127,6 @@
   line-height: 20px;
 }
 
-.page :global(.ch-editor-content) {
+.page :global(.ch-editor-body) {
   padding: 5px 0px !important;
 }
