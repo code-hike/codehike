@@ -6,32 +6,83 @@ export default {
   title: "Mini Editor",
 };
 
-export const basic = () => (
+const code1 = `console.log(1)`;
+const code2 = `console.log(1)
+console.log(2)`;
+const terminal1 = `$ lorem ipsum
+dolor sit amet
+consectetur adipiscing elit
+$ sed do`;
+const terminal2 = `$ eiusmod tempor incididunt
+ut labore et dolore`;
+
+export const empty = () => (
   <Page>
     <MiniEditor />
   </Page>
 );
 
-export const code = () => (
+export const justCode = () => (
   <Page>
-    <MiniEditor
-      code="console.log()"
-      lang="js"
-      steps={[{ file: "foo.js" }, { file: "foo.js" }]}
-    />
+    <MiniEditor code={code1} />
   </Page>
 );
 
-export const terminal = () => (
-  <WithProgress>
-    {(progress, backward) => (
-      <MiniEditor
-        style={{ height: 500 }}
-        code="console.log()"
-        lang="js"
-        progress={progress}
-        steps={[{ file: "foo.js" }, { file: "bar.js", terminal: "$ bar" }]}
-      />
-    )}
-  </WithProgress>
-);
+export const code = () => {
+  const steps = [{ code: code1 }, { code: code2 }];
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          lang="js"
+          file="index.js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  );
+};
+
+export const files = () => {
+  const steps = [
+    { code: code1, file: "foo.js" },
+    { code: code2, file: "bar.js" },
+  ];
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 300 }}
+          lang="js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  );
+};
+
+export const terminal = () => {
+  const steps = [
+    { code: code1 },
+    { code: code1, terminal: terminal1 },
+    { code: code1, terminal: terminal2 },
+  ];
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 300 }}
+          lang="js"
+          file="foo.js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  );
+};

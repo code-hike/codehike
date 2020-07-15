@@ -124,8 +124,8 @@ const files = {
 };
 
 const defaultProps = {
-  [MiniEditor]: { height: 350 },
-  [MiniBrowser]: { height: 300 },
+  [MiniEditor]: { height: 350, style: { height: 350 } },
+  [MiniBrowser]: { height: 300, style: { height: 300 } },
 };
 
 const steps = p(
@@ -297,9 +297,3 @@ function p(...ss) {
 
 console.log(steps);
 export { steps };
-
-function Box1({ height, progress }) {
-  return (
-    <div style={{ height, background: "lime", width: "100%" }}>{progress}</div>
-  );
-}

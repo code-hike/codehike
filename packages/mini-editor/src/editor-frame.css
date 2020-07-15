@@ -42,10 +42,15 @@
   box-sizing: border-box;
 }
 
+.ch-editor-body code {
+  line-height: 20px;
+}
+
 /** terminal */
 
 .ch-editor-terminal {
   position: absolute;
+  overflow: hidden;
   bottom: 0;
   width: 100%;
   background-color: rgb(30, 30, 30);

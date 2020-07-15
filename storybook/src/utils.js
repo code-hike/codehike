@@ -18,7 +18,10 @@ export function Page({ children, style }) {
 }
 
 export function WithProgress({ children, length = 2 }) {
-  const [progress, setProgress] = React.useState(0);
+  const [{ progress, backward }, setState] = React.useState({
+    progress: 0,
+    backward: false,
+  });
   return (
     <Page>
       <div style={{ display: "flex", margin: "10px 0" }}>
@@ -28,13 +31,19 @@ export function WithProgress({ children, length = 2 }) {
           value={progress}
           max={length - 1}
           step={0.01}
-          onChange={(e) => setProgress(+e.target.value)}
+          onChange={(e) => {
+            const newProgress = +e.target.value;
+            setState((oldState) => ({
+              progress: newProgress,
+              backward: oldState.progress > newProgress,
+            }));
+          }}
         />
         <span style={{ width: 40, textAlign: "right" }}>
           {progress.toFixed(2)}
         </span>
       </div>
-      {children(progress, false)}
+      {children(progress, backward)}
     </Page>
   );
 }

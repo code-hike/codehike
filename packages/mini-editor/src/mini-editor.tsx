@@ -10,7 +10,8 @@ type MiniEditorStep = {
   focus?: string;
   lang?: string;
   file?: string;
-  tabs?: string;
+  tabs?: string[];
+  terminal?: string;
 };
 
 type MiniEditorProps = {
@@ -19,58 +20,47 @@ type MiniEditorProps = {
   code?: string;
   focus?: string;
   lang?: string;
+  file?: string;
   steps?: MiniEditorStep[];
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
 
 function MiniEditor({
   progress = 0,
   backward = false,
-  code = "",
+  code,
   focus,
   lang,
+  file,
   steps: ogSteps,
   ...rest
-}: any) {
-  const steps = ogSteps?.map((s: any) => ({
+}: MiniEditorProps) {
+  const { steps, files, stepsByFile } = useSteps(ogSteps, {
     code,
     focus,
     lang,
-    ...s,
-  })) || [{ code, focus, lang }];
-
-  const files = [
-    ...new Set(steps.map((s: any) => s.file).filter((f: any) => f != null)),
-  ];
+    file,
+  });
 
   const activeStepIndex = backward ? Math.floor(progress) : Math.ceil(progress);
   const activeStep = steps[activeStepIndex];
-  const activeFile = activeStep && activeStep.file;
+  const activeFile = (activeStep && activeStep.file) || "";
 
-  const fileSteps: any = {};
-  steps.forEach((s: any) => {
-    if (s.file == null) return;
-    if (!fileSteps[s.file]) {
-      fileSteps[s.file] = [];
-    }
-    fileSteps[s.file].push(s);
-  });
-
-  const activeSteps = fileSteps[activeFile] || [];
+  const activeSteps = stepsByFile[activeFile] || [];
   const index = activeSteps.indexOf(activeStep);
   const activeProgress = Math.min(
     Math.max(progress - activeStepIndex + index, 0),
     activeSteps.length - 1
   );
+  const tabs = activeStep.tabs || files;
 
   const terminalHeight = getTerminalHeight(steps, progress);
 
   return (
     <EditorFrame
-      files={activeStep.tabs || files}
+      files={tabs}
       active={activeFile}
       terminal={activeStep.terminal}
       terminalHeight={terminalHeight}
-      link={activeStep.link}
       progress={activeProgress}
       {...rest}
     >
@@ -85,6 +75,36 @@ function MiniEditor({
       )}
     </EditorFrame>
   );
+}
+
+function useSteps(
+  ogSteps: MiniEditorStep[] | undefined,
+  { code = "", focus, lang, file }: MiniEditorStep
+) {
+  return React.useMemo(() => {
+    const steps = ogSteps?.map((s) => ({
+      code,
+      focus,
+      lang,
+      file,
+      ...s,
+    })) || [{ code, focus, lang, file }];
+
+    const files = [
+      ...new Set(steps.map((s: any) => s.file).filter((f: any) => f != null)),
+    ];
+
+    const stepsByFile: Record<string, MiniEditorStep[]> = {};
+    steps.forEach((s) => {
+      if (s.file == null) return;
+      if (!stepsByFile[s.file]) {
+        stepsByFile[s.file] = [];
+      }
+      stepsByFile[s.file].push(s);
+    });
+
+    return { steps, files, stepsByFile };
+  }, [ogSteps, code, focus, lang, file]);
 }
 
 const MAX_HEIGHT = 150;
