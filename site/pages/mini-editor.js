@@ -78,7 +78,7 @@ function Header() {
 }
 
 function Demo() {
-  const [progress, rangeProps] = useStepsProgress({
+  const [progress, backward, rangeProps] = useStepsProgress({
     stepsCount: steps.length,
     delay: 3000,
   });
@@ -88,6 +88,7 @@ function Demo() {
         lang="js"
         style={{ height: 300 }}
         progress={progress}
+        backward={backward}
         steps={steps}
       />
       <StepsRange {...rangeProps} />
@@ -191,7 +192,7 @@ const code3 = `
 
 .ipsum {
   color: red;
-  height: 42px;
+  border-bottom: 1px solid rgb(231, 231, 231);
 }
 `;
 const terminal1 = `$ lorem ipsum

@@ -87,7 +87,7 @@ function Header() {
 }
 
 function Demo() {
-  const [progress, rangeProps] = useStepsProgress({
+  const [progress, backward, rangeProps] = useStepsProgress({
     stepsCount: steps.length,
     delay: 3000,
   });
@@ -97,6 +97,7 @@ function Demo() {
         title="bash"
         style={{ height: 200 }}
         progress={progress}
+        backward={backward}
         steps={steps}
       />
       <StepsRange {...rangeProps} />

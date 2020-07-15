@@ -9,24 +9,33 @@ function useStepsProgress({ delay, stepsCount } = {}) {
   function reducer(state, action) {
     const { target, backwards, playing } = state;
     switch (action.type) {
-      case "seek":
+      case "seek": {
+        const newTarget = action.target;
         return {
           ...state,
-          target: action.target,
+          target: newTarget,
           teleport: true,
+          back: newTarget < target,
         };
-      case "next":
+      }
+      case "next": {
+        const newTarget = Math.min(Math.floor(target + 1), max);
         return {
           ...state,
-          target: Math.min(Math.floor(target + 1), max),
+          target: newTarget,
           teleport: false,
+          back: newTarget < target,
         };
-      case "prev":
+      }
+      case "prev": {
+        const newTarget = Math.max(Math.ceil(target - 1), 0);
         return {
           ...state,
-          target: Math.max(Math.ceil(target - 1), 0),
+          target: newTarget,
           teleport: false,
+          back: newTarget < target,
         };
+      }
       case "toggle":
         return {
           ...state,
@@ -34,18 +43,22 @@ function useStepsProgress({ delay, stepsCount } = {}) {
         };
       case "auto":
         if (target >= max || (backwards && target > 0)) {
+          const newTarget = Math.max(Math.ceil(target - 1), 0);
           return {
             ...state,
-            target: Math.max(Math.ceil(target - 1), 0),
+            target: newTarget,
             backwards: true,
             teleport: false,
+            back: newTarget < target,
           };
         } else {
+          const newTarget = Math.min(Math.floor(target + 1), max);
           return {
             ...state,
-            target: Math.min(Math.floor(target + 1), max),
+            target: newTarget,
             backwards: false,
             teleport: false,
+            back: newTarget < target,
           };
         }
       default:
@@ -57,10 +70,17 @@ function useStepsProgress({ delay, stepsCount } = {}) {
     teleport: false,
     backwards: false,
     playing: true,
+    back: false,
   });
 
   const { target, teleport, backwards, playing } = state;
-  const [progress] = useSpring(target, { teleport });
+  const [progress] = useSpring(target, {
+    teleport,
+    decimals: 3,
+    stiffness: 80,
+    damping: 48,
+    mass: 8,
+  });
 
   const fast = backwards && target > 0;
   useInterval(!playing ? null : fast ? delay / 5 : delay, () => {
@@ -69,7 +89,7 @@ function useStepsProgress({ delay, stepsCount } = {}) {
 
   const props = { state, dispatch, stepsCount, progress };
 
-  return [progress, props];
+  return [progress, state.back, props];
 }
 
 function StepsRange({ state, dispatch, stepsCount, progress }) {
