@@ -1,5 +1,5 @@
 import React from "react";
-import { MiniTerminal } from "@code-hike/mini-terminal";
+import { MiniTerminal, InnerTerminal } from "@code-hike/mini-terminal";
 import { WithProgress, Page } from "./utils";
 
 export default {
@@ -32,11 +32,7 @@ ex ea commodo consequat
 $ duis aute irure dolor
 in reprehenderit`,
   },
-  {
-    text: `$ in voluptate
-velit esse cillum dolore
-$ eu fugiat nulla pariatur`,
-  },
+  {},
   {
     text: `$ excepteur sint occaecat
 cupidatat non proident
@@ -46,10 +42,17 @@ $ mollit anim id est laborum
 $ `,
   },
 ];
+
 export const transitions = () => (
   <WithProgress length={steps.length}>
     {(progress) => (
       <MiniTerminal progress={progress} steps={steps} style={{ height: 200 }} />
     )}
+  </WithProgress>
+);
+
+export const inner = () => (
+  <WithProgress length={steps.length}>
+    {(progress) => <InnerTerminal progress={progress} steps={steps} />}
   </WithProgress>
 );

@@ -1,7 +1,8 @@
 import React from "react";
-import { EditorFrame } from "./editor-frame";
+import { EditorFrame, TerminalPanel } from "./editor-frame";
 import { CodeSurfer } from "@code-surfer/standalone";
 import { vsDark } from "@code-surfer/themes";
+import { InnerTerminal } from "@code-hike/mini-terminal";
 
 export { MiniEditor };
 
@@ -55,13 +56,16 @@ function MiniEditor({
 
   const terminalHeight = getTerminalHeight(steps, progress);
 
+  const terminalSteps = steps.map((s) => ({ text: (s && s.terminal) || "" }));
   return (
     <EditorFrame
       files={tabs}
       active={activeFile}
-      terminal={activeStep.terminal}
-      terminalHeight={terminalHeight}
-      progress={activeProgress}
+      terminalPanel={
+        <TerminalPanel height={terminalHeight}>
+          <InnerTerminal steps={terminalSteps} progress={progress} />
+        </TerminalPanel>
+      }
       {...rest}
     >
       {activeSteps.length > 0 && (

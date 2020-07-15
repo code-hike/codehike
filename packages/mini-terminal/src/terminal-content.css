@@ -1,0 +1,12 @@
+.ch-terminal-prompt {
+  color: #8fa2db;
+  user-select: none;
+}
+
+.ch-terminal-content {
+  margin: 0;
+}
+
+.ch-terminal-output {
+  opacity: 0.66;
+}

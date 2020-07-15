@@ -1,7 +1,8 @@
 import React from "react";
 import { getCommands } from "./commands";
+import "./terminal-content.css";
 
-const prompt = <span style={{ color: "#8FA2DB", userSelect: "none" }}>$</span>;
+const prompt = <span className="ch-terminal-prompt">$</span>;
 
 function TerminalContent({
   text,
@@ -14,13 +15,13 @@ function TerminalContent({
 }) {
   const commands = parse(text, progress);
   return (
-    <pre style={{ margin: 0, ...style }}>
+    <pre style={style} className="ch-terminal-content">
       {commands.map(({ run, output }, i) => (
         <React.Fragment key={i}>
           <div>
             {prompt} <span>{run}</span>
           </div>
-          {output && <div style={{ opacity: 0.66 }}>{output}</div>}
+          {output && <div className="ch-terminal-output">{output}</div>}
         </React.Fragment>
       ))}
     </pre>

@@ -62,7 +62,7 @@
 
 .ch-editor-terminal-tab {
   text-transform: uppercase;
-  padding-left: 4px 10px 3px;
+  padding: 4px 10px 3px;
   font-size: 11px;
   line-height: 24px;
   display: flex;
@@ -76,5 +76,9 @@
   margin-top: 8px;
   height: calc(100% -40px);
   box-sizing: border-box;
+}
+
+.ch-editor-terminal-content .ch-terminal {
   font-size: 12px;
+  margin: 0;
 }

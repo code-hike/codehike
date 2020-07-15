@@ -70,6 +70,7 @@ export const terminal = () => {
     { code: code1 },
     { code: code1, terminal: terminal1 },
     { code: code1, terminal: terminal2 },
+    { code: code2 },
   ];
   return (
     <WithProgress length={steps.length}>

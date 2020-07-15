@@ -13,7 +13,7 @@ function MiniTerminalTransitions({
 }: {
   height?: number;
   title?: string;
-  steps: [{ text: string }];
+  steps: { text: string }[];
   progress: number;
   backward: boolean;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
@@ -38,17 +38,18 @@ function InnerTerminalTransitions({
   steps,
   progress,
 }: {
-  steps: string[];
+  steps: { text: string }[];
   progress: number;
 }) {
+  const textSteps = steps.map((s) => s.text);
   const stepProgress = progress % 1;
   const prevIndex = clamp(Math.floor(progress), 0, steps.length - 1);
   const nextIndex = prevIndex + 1;
   return (
     <InnerTerminalTransition
-      prev={steps[prevIndex]}
+      prev={textSteps[prevIndex]}
       prevKey={prevIndex}
-      next={steps[nextIndex] || ""}
+      next={textSteps[nextIndex] || ""}
       nextKey={nextIndex}
       progress={stepProgress}
     />
