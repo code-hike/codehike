@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
+import { MiniTerminal } from "@code-hike/mini-terminal";
 import { useStepsProgress, StepsRange } from "../src/steps-range";
 import { ExternalLinkButton, LinkButton } from "../src/button";
 import { LogoHeader } from "../src/logo-header";
@@ -87,16 +87,17 @@ function Header() {
 }
 
 function Demo() {
-  const [progress, rangeProps] = useStepsProgress({
+  const [progress, backward, rangeProps] = useStepsProgress({
     stepsCount: steps.length,
     delay: 3000,
   });
   return (
     <div>
-      <MiniTerminalTransitions
+      <MiniTerminal
         title="bash"
-        height={200}
+        style={{ height: 200 }}
         progress={progress}
+        backward={backward}
         steps={steps}
       />
       <StepsRange {...rangeProps} />
@@ -115,26 +116,36 @@ function Demo() {
 }
 
 const steps = [
-  `$ lorem ipsum
+  {
+    text: `$ lorem ipsum
 dolor sit amet
 consectetur adipiscing elit
 $ sed do`,
-  `$ eiusmod tempor incididunt
+  },
+  {
+    text: `$ eiusmod tempor incididunt
 ut labore et dolore`,
-  `$ magna aliqua
+  },
+  {
+    text: `$ magna aliqua
 ut enim ad minim veniam
 quis nostrud
 exercitation ullamco laboris nisi ut aliquip
 ex ea commodo consequat
 $ duis aute irure dolor
 in reprehenderit`,
-  `$ in voluptate
+  },
+  {
+    text: `$ in voluptate
 velit esse cillum dolore
 $ eu fugiat nulla pariatur`,
-  `$ excepteur sint occaecat
+  },
+  {
+    text: `$ excepteur sint occaecat
 cupidatat non proident
 sunt in culpa qui
 officia deserunt
 $ mollit anim id est laborum
 $ `,
+  },
 ];

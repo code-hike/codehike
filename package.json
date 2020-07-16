@@ -26,7 +26,9 @@
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "ch-build": "yarn workspace @code-hike/build",
-    "build-site": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn mbrowser build && yarn meditor build && yarn workspace site export"
+    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn mbrowser watch & yarn meditor watch",
+    "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn mbrowser build && yarn meditor build",
+    "build-site": "yarn build-packages && yarn workspace site export"
   },
   "dependencies": {
     "@emotion/core": "10.0.7",

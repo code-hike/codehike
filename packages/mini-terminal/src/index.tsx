@@ -1,11 +1,5 @@
 import { MiniTerminal } from "./mini-terminal";
-import { MiniTerminalTransition } from "./mini-terminal-transition";
-import { MiniTerminalTransitions } from "./mini-terminal-transitions";
 import { TerminalContent } from "./terminal-content";
+import { InnerTerminalTransitions as InnerTerminal } from "./mini-terminal-transitions";
 
-export {
-  MiniTerminal,
-  MiniTerminalTransition,
-  MiniTerminalTransitions,
-  TerminalContent,
-};
+export { MiniTerminal, TerminalContent, InnerTerminal };

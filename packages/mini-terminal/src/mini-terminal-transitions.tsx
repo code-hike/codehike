@@ -5,28 +5,31 @@ import {
 } from "./mini-terminal-transition";
 
 function MiniTerminalTransitions({
-  height = 100,
   title = "bash",
   steps,
   progress,
+  backward,
+  ...rest
 }: {
   height?: number;
   title?: string;
-  steps: string[];
+  steps: { text: string }[];
   progress: number;
-}) {
+  backward: boolean;
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
+  const textSteps = steps.map((s) => s.text);
   const stepProgress = progress % 1;
-  const prevIndex = clamp(Math.floor(progress), 0, steps.length - 1);
+  const prevIndex = clamp(Math.floor(progress), 0, textSteps.length - 1);
   const nextIndex = prevIndex + 1;
   return (
     <MiniTerminalTransition
-      height={height}
       title={title}
-      prev={steps[prevIndex]}
+      prev={textSteps[prevIndex]}
       prevKey={prevIndex}
-      next={steps[nextIndex] || ""}
+      next={textSteps[nextIndex] || ""}
       nextKey={nextIndex}
       progress={stepProgress}
+      {...rest}
     />
   );
 }
@@ -35,17 +38,18 @@ function InnerTerminalTransitions({
   steps,
   progress,
 }: {
-  steps: string[];
+  steps: { text: string }[];
   progress: number;
 }) {
+  const textSteps = steps.map((s) => s.text);
   const stepProgress = progress % 1;
   const prevIndex = clamp(Math.floor(progress), 0, steps.length - 1);
   const nextIndex = prevIndex + 1;
   return (
     <InnerTerminalTransition
-      prev={steps[prevIndex]}
+      prev={textSteps[prevIndex]}
       prevKey={prevIndex}
-      next={steps[nextIndex] || ""}
+      next={textSteps[nextIndex] || ""}
       nextKey={nextIndex}
       progress={stepProgress}
     />

@@ -2,16 +2,18 @@
   height: 100%;
 }
 
-.ch-mini-browser iframe {
+.ch-mini-browser .ch-frame-content > iframe,
+.ch-mini-browser .ch-frame-content > video {
   border: none;
+  position: absolute;
   height: 100%;
   width: 100%;
 }
 
 .ch-mini-browser .ch-title-bar input {
-  height: 18px;
-  font-size: 11px;
-  border-radius: 9px;
+  height: 1.4em;
+  font-size: 1em;
+  border-radius: 0.5em;
   border: none;
   box-shadow: none;
   flex: 1;

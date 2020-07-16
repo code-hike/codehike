@@ -32,6 +32,7 @@ function Walkthrough() {
     damping: 48,
     mass: 8,
   });
+
   return (
     <section>
       <div
@@ -42,7 +43,7 @@ function Walkthrough() {
         }}
       >
         <MiniEditor
-          height={editorHeight - 25}
+          style={{ height: editorHeight - 25 }}
           progress={progress}
           steps={editorSteps}
         />

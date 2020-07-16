@@ -123,10 +123,6 @@
   border: 0.7px solid rgb(56, 56, 56);
 }
 
-.page code {
-  line-height: 20px;
-}
-
-.page :global(.ch-editor-content) {
+.page :global(.ch-editor-body) {
   padding: 5px 0px !important;
 }
