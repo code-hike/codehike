@@ -1,6 +1,6 @@
 import React from "react";
 import { useSpring } from "use-spring";
-import { MiniTerminalTransitions } from "@code-hike/mini-terminal";
+import { MiniTerminal } from "@code-hike/mini-terminal";
 import { MiniEditor } from "@code-hike/mini-editor";
 import { Scroller, Step } from "@code-hike/scroller";
 import { CodeHikeHead } from "src/code-hike-head";
@@ -35,7 +35,7 @@ function Demo() {
 
 function TerminalSticker({ progress }) {
   return (
-    <MiniTerminalTransitions
+    <MiniTerminal
       title="bash"
       height={terminalHeight - 25}
       progress={progress}
