@@ -71,11 +71,15 @@ function Tools() {
       <ul className={s.list}>
         <Tool
           title="MINI TERMINAL"
-          img="/mini-terminal.jpg"
+          img="/mini-terminal.png"
           href="mini-terminal"
         />
-        <Tool title="MINI EDITOR" href="mini-editor" />
-        <Tool title="MINI BROWSER" href="mini-browser" />
+        <Tool title="MINI EDITOR" img="/mini-editor.png" href="mini-editor" />
+        <Tool
+          title="MINI BROWSER"
+          img="/mini-browser.png"
+          href="mini-browser"
+        />
         <Tool title="PLAYER" href="player" />
         <Tool title="SIM USER" href="sim-user" />
         <Tool title="STEP SCROLLER" href="step-scroller" />
@@ -92,13 +96,15 @@ function Tool({ title, img, href }) {
     <li>
       <Link href={href}>
         <a className={s.box}>
-          {img ? (
-            <img src={img} alt={title} />
-          ) : (
-            <div className={s.noMedia}>
-              <div>?</div>
-            </div>
-          )}
+          <div className={s.container}>
+            {img ? (
+              <img src={img} alt={title} />
+            ) : (
+              <div className={s.noMedia}>
+                <div>?</div>
+              </div>
+            )}
+          </div>
           <h3>{title}</h3>
         </a>
       </Link>
