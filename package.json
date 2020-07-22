@@ -14,10 +14,12 @@
       "packages/smooth-column",
       "packages/scroller",
       "storybook",
-      "site"
+      "site",
+      "xmdx"
     ]
   },
   "scripts": {
+    "dev": "yarn workspace xmdx dev",
     "mbrowser": "yarn workspace @code-hike/mini-browser",
     "mframe": "yarn workspace @code-hike/mini-frame",
     "mterminal": "yarn workspace @code-hike/mini-terminal",

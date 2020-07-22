@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #eee;
+}
+
+.content {
+  flex: 1;
+  margin: calc(50vh - 100px) 0;
+}
+
+.step {
+  min-height: 100px;
+  background: white;
+  margin: 50px;
+}
+
+.sticker {
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sticker > div {
+  position: fixed;
+  width: 300px;
+}
