@@ -40,7 +40,7 @@ function Component({ stickers, contents }) {
             <ScrollerStep
               key={i}
               index={i}
-              className={s.step}
+              className={`${s.step} placeholdify`}
               style={{
                 opacity: currentIndex === i ? 0.99 : 0.4,
                 boxShadow:
@@ -48,6 +48,7 @@ function Component({ stickers, contents }) {
                 borderRadius: "6px",
                 padding: "32px",
                 boxSizing: "border-box",
+                color: "#666",
               }}
             >
               {c}
