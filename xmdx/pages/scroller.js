@@ -18,15 +18,7 @@ function Step({ children }) {
 
 function Sticker({ children }) {
   return (
-    <div
-      style={{
-        border: "1px solid green",
-        borderRadius: 7,
-        overflow: "hidden",
-      }}
-    >
-      {children}
-    </div>
+    <div style={{ textAlign: "center" }}>{children}</div>
   );
 }
 
@@ -40,7 +32,7 @@ function Component({ stickers, contents }) {
             <ScrollerStep
               key={i}
               index={i}
-              className={`${s.step} placeholdify`}
+              className={`${s.step}`}
               style={{
                 opacity: currentIndex === i ? 0.99 : 0.4,
                 boxShadow:
@@ -48,7 +40,9 @@ function Component({ stickers, contents }) {
                 borderRadius: "6px",
                 padding: "32px",
                 boxSizing: "border-box",
-                color: "#666",
+                // color: "#666",
+                fontFamily:
+                  "Ubuntu,Droid Sans,-apple-system,BlinkMacSystemFont,Segoe WPC,Segoe UI,sans-serif",
               }}
             >
               {c}
@@ -94,6 +88,14 @@ const components = {
 export default function Page() {
   return (
     <MDXProvider components={components}>
+      <style global jsx>{`
+        html,
+        body,
+        div#__next {
+          height: 100%;
+          margin: 0;
+        }
+      `}</style>
       <Content />
     </MDXProvider>
   );
