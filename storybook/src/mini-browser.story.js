@@ -8,7 +8,7 @@ export default {
 
 export const basic = () => (
   <Page>
-    <MiniBrowser url="https://localhost:8000" style={{}}>
+    <MiniBrowser url="https://localhost:8000">
       <div style={{ background: "beige", height: 200 }}>Lorem Ipsum</div>
     </MiniBrowser>
   </Page>
@@ -19,6 +19,17 @@ export const iframe = () => (
     <MiniBrowser url="https://whatismyviewport.com/" style={{ height: 300 }} />
   </Page>
 );
+
+export const zoom = () => (
+  <Page>
+    <MiniBrowser
+      url="https://whatismyviewport.com/"
+      style={{ height: 300 }}
+      zoom={0.5}
+    />
+  </Page>
+);
+
 export const video = () => (
   <Page>
     <MiniBrowser url="https://nextjs-static-props.now.sh/" height={300}>

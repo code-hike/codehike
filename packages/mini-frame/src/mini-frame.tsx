@@ -4,12 +4,14 @@ import "./mini-frame.css";
 type MiniFrameProps = {
   title?: string;
   titleBar?: React.ReactNode;
+  zoom?: number;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
 
 export function MiniFrame({
   title,
   children,
   titleBar,
+  zoom = 1,
   ...props
 }: MiniFrameProps) {
   const bar = titleBar || <DefaultTitleBar title={title} />;
@@ -17,7 +19,14 @@ export function MiniFrame({
     <div {...props}>
       <div className="ch-frame">
         <div className="ch-title-bar">{bar}</div>
-        <div className="ch-frame-content">{children}</div>
+        <div className="ch-frame-content">
+          <div
+            className="ch-frame-zoom"
+            style={{ "--ch-frame-zoom": zoom } as React.CSSProperties}
+          >
+            {children}
+          </div>
+        </div>
       </div>
     </div>
   );

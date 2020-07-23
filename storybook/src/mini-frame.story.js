@@ -16,6 +16,16 @@ export const basic = () => (
   </Page>
 );
 
+export const basicZoom = () => (
+  <Page>
+    <MiniFrame title="This" zoom={2}>
+      <div style={{ height: 200, background: "beige", padding: 10 }}>
+        Lorem Ipsum
+      </div>
+    </MiniFrame>
+  </Page>
+);
+
 export const longTitle = () => (
   <Page style={{ width: 300 }}>
     <MiniFrame title="Lets test what happens if we put a very long title">
@@ -53,6 +63,25 @@ export const overflowY = () => (
     <MiniFrame style={{ height: 300 }}>
       <div style={{ height: 200, background: "salmon" }} />
       <div style={{ height: 200, background: "beige" }} />
+    </MiniFrame>
+  </Page>
+);
+
+export const overflowYZoomIn = () => (
+  <Page>
+    <MiniFrame style={{ height: 300 }} zoom={2}>
+      <div style={{ height: 200, background: "salmon" }} />
+      <div style={{ height: 200, background: "beige" }} />
+    </MiniFrame>
+  </Page>
+);
+
+export const overflowYZoomOut = () => (
+  <Page>
+    <MiniFrame style={{ height: 300 }} zoom={0.5}>
+      <div style={{ height: 200, background: "salmon" }} />
+      <div style={{ height: 200, background: "beige" }} />
+      <div style={{ height: 200, background: "darksalmon" }} />
     </MiniFrame>
   </Page>
 );

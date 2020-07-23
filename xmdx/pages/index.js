@@ -31,6 +31,7 @@ export default function Page() {
           <div className={s.div2}>
             <MiniBrowser
               style={{ height: "100%" }}
+              zoom={0.4}
               url="http://localhost:3000/scroller"
             />
           </div>

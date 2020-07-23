@@ -3,16 +3,14 @@ import { Back, Forward, Open } from "./buttons";
 import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
 import "./mini-browser.css";
 
-function MiniBrowser({
-  height,
-  url,
-  children,
-  ...props
-}: {
+type MiniBrowserProps = {
   height?: number;
   url: string;
   children: React.ReactNode;
-} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
+  zoom?: number;
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+
+function MiniBrowser({ height, url, children, ...props }: MiniBrowserProps) {
   return (
     <MiniFrame
       {...props}
