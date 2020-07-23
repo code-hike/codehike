@@ -38,12 +38,25 @@ function Scroller({
           onStepChange(+stepElement.stepIndex);
         }
       });
-      // setRootRect(entries[0].rootBounds)
-      // setIntersections(entries.map(e => e.intersectionRect))
+      // console.log(entries[0].rootBounds, entries);
+      // const rrect = document.getElementById("root-rect")!;
+      // const bounds = entries[0].rootBounds;
+      // rrect.style.top = bounds?.top + "px";
+      // rrect.style.left = bounds?.left + "px";
+      // rrect.style.height = bounds?.height + "px";
+      // rrect.style.width = bounds?.width + "px";
+
+      // const irect = document.getElementById("entry-rect")!;
+      // const ibounds = entries[0].intersectionRect;
+      // irect.style.top = ibounds?.top + "px";
+      // irect.style.left = ibounds?.left + "px";
+      // irect.style.height = ibounds?.height + "px";
+      // irect.style.width = ibounds?.width + "px";
     };
     const observer = new IntersectionObserver(handleIntersect, {
       rootMargin: getRootMargin(windowHeight),
       threshold: 0.000001,
+      root: document as any,
     });
     setObserver(observer);
 

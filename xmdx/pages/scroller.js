@@ -1,12 +1,19 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
-import { Scroller, Step as ScrollerStep } from "../src/scroller.tsx";
+import {
+  Scroller,
+  Step as ScrollerStep,
+} from "../src/scroller.tsx";
 
 import Content from "./content/scroller.mdx";
 import s from "./scroller.module.css";
 
 function Step({ children }) {
-  return <div style={{ border: "1px solid blue" }}>{children}</div>;
+  return (
+    <div style={{ border: "1px solid blue" }}>
+      {children}
+    </div>
+  );
 }
 
 function Sticker({ children }) {
