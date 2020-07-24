@@ -46,15 +46,33 @@ export default function Page() {
 
 function Author() {
   return (
-    <div className={s.author}>
-      <div className={s.details}>
+    <div className={s.video}>
+      <video
+        src="000.mp4"
+        style={{
+          height: "100%",
+          float: "right",
+          marginRight: -30,
+        }}
+        loop
+        autoPlay
+        muted
+      />
+      <div
+        className={s.details}
+        style={{
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
         @pomber
         <br />
         Rodrigo Pombo
         <br />
         Foo Conf
       </div>
-      <div className={s.video}></div>
     </div>
   );
 }

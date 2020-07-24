@@ -17,8 +17,8 @@
 .grid {
   display: grid;
   height: 100%;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   grid-column-gap: 16px;
   grid-row-gap: 16px;
   padding: 16px;
@@ -26,13 +26,13 @@
 }
 
 .div1 {
-  grid-area: 1 / 1 / 6 / 4;
+  grid-area: 1 / 1 / 7 / 5;
 }
 .div2 {
-  grid-area: 1 / 4 / 4 / 6;
+  grid-area: 1 / 5 / 5 / 8;
 }
 .div3 {
-  grid-area: 4 / 4 / 6 / 6;
+  grid-area: 5 / 5 / 7 / 8;
 }
 
 .author {
@@ -43,16 +43,26 @@
   justify-content: center;
 }
 
-.details {
-  /* flex: 1; */
-  padding-right: 16px;
-  text-align: right;
-  line-height: 1.5em;
+.video {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #b4b2b8;
+  height: 100%;
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
-.video {
-  border-radius: 50%;
-  background: #555;
-  height: 128px;
-  width: 128px;
+.details {
+  /* flex: 1; */
+  position: absolute;
+  background: linear-gradient(
+    to right,
+    #222 34%,
+    transparent 75%
+  );
+  color: #ddd;
+  padding: 16px;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
 }
