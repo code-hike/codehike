@@ -56,13 +56,18 @@
 .details {
   /* flex: 1; */
   position: absolute;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 0.8em;
+  color: #bbb;
   background: linear-gradient(
     to right,
     #222 34%,
     transparent 75%
   );
   color: #ddd;
-  padding: 16px;
+  padding: 32px;
   font-family: Ubuntu, Droid Sans, -apple-system,
     BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
 }
