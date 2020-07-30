@@ -10,14 +10,14 @@ type Step = {
 
 type VideoProps = {
   steps: Step[];
-  onTimeChange: (time: number) => void;
-  onStepChange: (stepIndex: number) => void;
+  onTimeChange?: (time: number) => void;
+  onStepChange?: (stepIndex: number) => void;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["video"]>;
 
 function Video({
   steps,
-  onTimeChange,
-  onStepChange,
+  onTimeChange = () => {},
+  onStepChange = () => {},
   ...props
 }: VideoProps) {
   const [state, setState] = React.useState({
@@ -55,7 +55,7 @@ function Video({
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <>
       {prevStep && (
         <video
           src={getSrc(prevStep)}
@@ -99,7 +99,7 @@ function Video({
           id={"" + (state.stepIndex + 1)}
         />
       )}
-    </div>
+    </>
   );
 }
 

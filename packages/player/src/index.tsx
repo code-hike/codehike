@@ -1,4 +1,4 @@
-import { Controls } from "./controls";
+import { Controls, useTimeData } from "./controls";
 import { Video } from "./video";
 
-export { Video, Controls };
+export { Video, Controls, useTimeData };

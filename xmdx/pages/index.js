@@ -3,11 +3,45 @@ import s from "./index.module.css";
 import { MiniEditor } from "@code-hike/mini-editor";
 import { MiniBrowser } from "@code-hike/mini-browser";
 import { Range, getTrackBackground } from "react-range";
+import { Video, useTimeData } from "@code-hike/player";
+import { useSpring } from "use-spring";
 
 const code = require("!!raw-loader!./content/scroller.mdx")
   .default;
 
+const videoSteps = [
+  { src: "000.mp4", start: 0, end: 5 },
+  { src: "000.mp4", start: 1, end: 3 },
+  { src: "000.mp4", start: 1, end: 6 },
+  { src: "000.mp4", start: 0, end: 7 },
+  { src: "000.mp4", start: 0, end: 7 },
+  { src: "000.mp4", start: 0, end: 7 },
+  { src: "000.mp4", start: 0, end: 7 },
+  { src: "000.mp4", start: 0, end: 7 },
+];
+
+const codeSteps = [
+  { focus: "10:20" },
+  { focus: "20:30" },
+  { focus: "10:20" },
+  { focus: "20:30" },
+  { focus: "10:20" },
+  { focus: "20:30" },
+  { focus: "10:20" },
+  { focus: "20:30" },
+];
+
 export default function Page() {
+  const [stepIndex, changeStep] = React.useState(0);
+  const [videoTime, setVideoTime] = React.useState(
+    videoSteps[0].start
+  );
+  const [progress] = useSpring(stepIndex, {
+    decimals: 3,
+    stiffness: 80,
+    damping: 48,
+    mass: 8,
+  });
   return (
     <div className={s.page}>
       <style global jsx>{`
@@ -23,10 +57,11 @@ export default function Page() {
           <div className={s.div1}>
             <MiniEditor
               style={{ height: "100%" }}
-              file="index.mdx"
+              file="cake.mdx"
               lang="md"
               code={code}
-              focus="10:20"
+              steps={codeSteps}
+              progress={progress}
             />
           </div>
           <div className={s.div2}>
@@ -37,29 +72,42 @@ export default function Page() {
             />
           </div>
           <div className={s.div3}>
-            <Author />
+            <Author
+              onStepChange={changeStep}
+              onTimeChange={setVideoTime}
+            />
           </div>
         </div>
-        <VideoControls />
+        <VideoControls
+          steps={videoSteps}
+          videoTime={videoTime}
+          stepIndex={stepIndex}
+        />
       </main>
     </div>
   );
 }
 
-function Author() {
+function Author({ onStepChange, onTimeChange }) {
   return (
     <div className={s.video}>
-      <video
-        src="000.mp4"
+      <div
         style={{
           height: "100%",
           float: "right",
           marginRight: -30,
         }}
-        loop
-        autoPlay
-        muted
-      />
+      >
+        <Video
+          steps={videoSteps}
+          style={{
+            height: "100%",
+          }}
+          muted
+          onStepChange={onStepChange}
+          onTimeChange={onTimeChange}
+        />
+      </div>
       <div
         className={s.details}
         style={{
@@ -85,18 +133,22 @@ function Author() {
   );
 }
 
-const MIN = 0;
-const MAX = 100;
+function VideoControls({ steps, stepIndex, videoTime }) {
+  // const [value, setValue] = React.useState(10);
+  const { currentSeconds, totalSeconds } = useTimeData({
+    steps,
+    stepIndex,
+    videoTime,
+  });
 
-function VideoControls() {
-  const [value, setValue] = React.useState(10);
+  const value = currentSeconds;
   return (
     <Range
       step={0.1}
-      min={MIN}
-      max={MAX}
+      min={0}
+      max={totalSeconds}
       values={[value]}
-      onChange={(values) => setValue(values[0])}
+      // onChange={(values) => setValue(values[0])}
       renderTrack={({ props, children }) => (
         <div
           {...props}
@@ -107,8 +159,8 @@ function VideoControls() {
             background: getTrackBackground({
               values: [value],
               colors: ["red", "#ccc"],
-              min: MIN,
-              max: MAX,
+              min: 0,
+              max: totalSeconds,
             }),
           }}
         >
@@ -120,8 +172,8 @@ function VideoControls() {
           {...props}
           style={{
             ...props.style,
-            height: "15px",
-            width: "15px",
+            height: "12px",
+            width: "12px",
             borderRadius: "50%",
             backgroundColor: "red",
           }}

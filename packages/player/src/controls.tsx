@@ -1,6 +1,6 @@
 import React from "react";
 
-export { Controls };
+export { Controls, useTimeData };
 
 type Step = {
   src: string;
@@ -12,10 +12,18 @@ type ControlsProps = {
   steps: Step[];
   stepIndex: number;
   videoTime: number;
-  onChange: (payload: { stepIndex: number; videoTime: number }) => void;
+  onChange: (payload: {
+    stepIndex: number;
+    videoTime: number;
+  }) => void;
 };
 
-function Controls({ steps, stepIndex, videoTime, onChange }: ControlsProps) {
+function Controls({
+  steps,
+  stepIndex,
+  videoTime,
+  onChange,
+}: ControlsProps) {
   let cumulativeDuration = 0;
   const stepsWithDuration = steps.map((s) => {
     const duration = s.end - s.start;
@@ -28,7 +36,10 @@ function Controls({ steps, stepIndex, videoTime, onChange }: ControlsProps) {
     };
   });
 
-  const totalDuration = stepsWithDuration.reduce((t, s) => s.duration + t, 0);
+  const totalDuration = stepsWithDuration.reduce(
+    (t, s) => s.duration + t,
+    0
+  );
 
   const stepTime = videoTime - stepsWithDuration[stepIndex].start;
   const value = stepsWithDuration[stepIndex].globalStart + stepTime;
@@ -43,7 +54,8 @@ function Controls({ steps, stepIndex, videoTime, onChange }: ControlsProps) {
         const value = +e.target.value;
         for (let i = 0; i < stepsWithDuration.length; i++) {
           if (value < stepsWithDuration[i].globalEnd) {
-            const stepTime = value - stepsWithDuration[i].globalStart;
+            const stepTime =
+              value - stepsWithDuration[i].globalStart;
             onChange({
               stepIndex: i,
               videoTime: stepsWithDuration[i].start + stepTime,
@@ -54,4 +66,37 @@ function Controls({ steps, stepIndex, videoTime, onChange }: ControlsProps) {
       }}
     />
   );
+}
+
+function useTimeData({
+  steps,
+  stepIndex,
+  videoTime,
+}: ControlsProps) {
+  const [stepsWithDuration, totalSeconds] = React.useMemo(() => {
+    let cumulativeDuration = 0;
+    const stepsWithDuration = steps.map((s) => {
+      const duration = s.end - s.start;
+      cumulativeDuration += duration;
+      return {
+        ...s,
+        duration,
+        globalStart: cumulativeDuration - duration,
+        globalEnd: cumulativeDuration,
+      };
+    });
+    const totalSeconds = stepsWithDuration.reduce(
+      (t, s) => s.duration + t,
+      0
+    );
+    return [stepsWithDuration, totalSeconds];
+  }, [steps]);
+
+  const currentStep = stepsWithDuration[stepIndex];
+  const stepTime = videoTime - currentStep.start;
+  const currentSeconds = Math.min(
+    currentStep.globalStart + stepTime,
+    totalSeconds
+  );
+  return { currentSeconds, totalSeconds };
 }

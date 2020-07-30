@@ -5,13 +5,15 @@
     "@code-hike/mini-browser": "0.0.1",
     "@code-hike/mini-editor": "0.0.1",
     "@code-hike/mini-terminal": "0.0.1",
+    "@code-hike/player": "0.0.1",
     "@code-hike/scroller": "0.0.1",
     "@mdx-js/loader": "^1.6.11",
     "@next/mdx": "^9.4.4",
     "next": "^9.4.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-range": "^1.6.7"
+    "react-range": "^1.6.7",
+    "use-spring": "^0.2.3"
   },
   "scripts": {
     "dev": "next"
