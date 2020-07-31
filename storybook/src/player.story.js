@@ -21,9 +21,11 @@ export const video = () => {
     stepIndex: 0,
     videoTime: steps[0].start,
   });
+  const ref = React.useRef();
   return (
     <Page style={{ width: 300 }}>
       <Video
+        ref={ref}
         steps={steps}
         onTimeChange={(t) =>
           setState((s) => ({ ...s, videoTime: t }))
@@ -37,7 +39,9 @@ export const video = () => {
         steps={steps}
         stepIndex={state.stepIndex}
         videoTime={state.videoTime}
-        onChange={console.log}
+        onChange={({ stepIndex, videoTime }) => {
+          ref.current.seek(stepIndex, videoTime);
+        }}
       />
     </Page>
   );

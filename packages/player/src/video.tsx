@@ -1,5 +1,7 @@
 import React from "react";
 
+const Video = React.forwardRef(VideoWithRef);
+
 export { Video };
 
 type Step = {
@@ -14,12 +16,19 @@ type VideoProps = {
   onStepChange?: (stepIndex: number) => void;
 } & React.PropsWithoutRef<JSX.IntrinsicElements["video"]>;
 
-function Video({
-  steps,
-  onTimeChange = () => {},
-  onStepChange = () => {},
-  ...props
-}: VideoProps) {
+type PlayerHandle = {
+  seek: (stepIndex: number, videoTime: number) => void;
+};
+
+function VideoWithRef(
+  {
+    steps,
+    onTimeChange = () => {},
+    onStepChange = () => {},
+    ...props
+  }: VideoProps,
+  parentRef: React.Ref<PlayerHandle>
+) {
   const [state, setState] = React.useState({
     stepIndex: 0,
     videoTime: steps[0].start,
@@ -28,6 +37,20 @@ function Video({
   const ref = React.useRef<HTMLVideoElement>(null!);
   const nextRef = React.useRef<HTMLVideoElement>(null!);
   const timeRef = React.useRef(-1);
+
+  React.useImperativeHandle<PlayerHandle, PlayerHandle>(
+    parentRef,
+    () => ({
+      seek: (stepIndex, videoTime) => {
+        const newStep = steps[stepIndex];
+        ref.current.src = getSrc(newStep);
+        ref.current.currentTime = videoTime;
+        setState({ stepIndex, videoTime });
+        onStepChange(stepIndex);
+        onTimeChange(videoTime);
+      },
+    })
+  );
 
   const currentStep = steps[state.stepIndex];
   const nextStep = steps[state.stepIndex + 1];
@@ -107,6 +130,7 @@ function getSrc({ src, start, end }: Step) {
   return `${src}#t=${start},${end}`;
 }
 
+// TODO use the rAF from use-spring
 function useAnimationFrame(callback: () => void) {
   const requestRef = React.useRef<number>();
   const previousTimeRef = React.useRef<number>();
