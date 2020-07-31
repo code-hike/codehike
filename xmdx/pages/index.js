@@ -5,31 +5,11 @@ import { MiniBrowser } from "@code-hike/mini-browser";
 import { Range, getTrackBackground } from "react-range";
 import { Video, useTimeData } from "@code-hike/player";
 import { useSpring } from "use-spring";
-
-const code = require("!!raw-loader!./content/scroller.mdx")
-  .default;
-
-const videoSteps = [
-  { src: "000.mp4", start: 0, end: 5 },
-  { src: "000.mp4", start: 1, end: 3 },
-  { src: "000.mp4", start: 1, end: 6 },
-  { src: "000.mp4", start: 0, end: 7 },
-  { src: "000.mp4", start: 0, end: 7 },
-  { src: "000.mp4", start: 0, end: 7 },
-  { src: "000.mp4", start: 0, end: 7 },
-  { src: "000.mp4", start: 0, end: 7 },
-];
-
-const codeSteps = [
-  { focus: "10:20" },
-  { focus: "20:30" },
-  { focus: "10:20" },
-  { focus: "20:30" },
-  { focus: "10:20" },
-  { focus: "20:30" },
-  { focus: "10:20" },
-  { focus: "20:30" },
-];
+import {
+  videoSteps,
+  browserSteps,
+  editorSteps,
+} from "../src/steps";
 
 export default function Page() {
   const [stepIndex, changeStep] = React.useState(0);
@@ -42,6 +22,7 @@ export default function Page() {
     damping: 48,
     mass: 8,
   });
+  const backward = stepIndex < progress;
   return (
     <div className={s.page}>
       <style global jsx>{`
@@ -57,18 +38,17 @@ export default function Page() {
           <div className={s.div1}>
             <MiniEditor
               style={{ height: "100%" }}
-              file="cake.mdx"
-              lang="md"
-              code={code}
-              steps={codeSteps}
+              steps={editorSteps}
               progress={progress}
+              backward={backward}
             />
           </div>
           <div className={s.div2}>
             <MiniBrowser
               style={{ height: "100%" }}
-              zoom={0.4}
-              url="http://localhost:3000/scroller"
+              steps={browserSteps}
+              progress={progress}
+              backward={backward}
             />
           </div>
           <div className={s.div3}>

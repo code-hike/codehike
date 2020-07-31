@@ -36,12 +36,14 @@ export const zoom = () => (
 );
 
 export const steps = () => {
-  const steps = [{ zoom: 0.5 }, { zoom: 1 }];
+  const steps = [
+    { zoom: 0.5, url: "https://whatismyviewport.com/" },
+    { zoom: 1, url: "https://whatismyviewport.com/" },
+  ];
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
         <MiniBrowser
-          url="https://whatismyviewport.com/"
           style={{ height: 300 }}
           steps={steps}
           progress={progress}

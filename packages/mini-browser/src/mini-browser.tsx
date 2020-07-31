@@ -37,7 +37,7 @@ function MiniBrowser({
       {...props}
       zoom={currentStep.zoom}
       className={`ch-mini-browser ${props.className || ""}`}
-      titleBar={<Bar url={url} />}
+      titleBar={<Bar url={currentStep.url!} />}
     >
       {currentStep.children || (
         <iframe
