@@ -13,6 +13,7 @@ import {
 
 export default function Page() {
   const [stepIndex, changeStep] = React.useState(0);
+  const playerRef = React.useRef();
   const [videoTime, setVideoTime] = React.useState(
     videoSteps[0].start
   );
@@ -23,6 +24,11 @@ export default function Page() {
     mass: 8,
   });
   const backward = stepIndex < progress;
+
+  const seek = ({ stepIndex, videoTime }) => {
+    playerRef.current.seek(stepIndex, videoTime);
+  };
+
   return (
     <div className={s.page}>
       <style global jsx>{`
@@ -52,83 +58,97 @@ export default function Page() {
             />
           </div>
           <div className={s.div3}>
-            <Author
-              onStepChange={changeStep}
-              onTimeChange={setVideoTime}
-            />
+            <div className={s.video}>
+              <div
+                style={{
+                  height: "100%",
+                  float: "right",
+                  marginRight: -30,
+                }}
+              >
+                <Video
+                  steps={videoSteps}
+                  style={{
+                    height: "100%",
+                  }}
+                  muted
+                  onStepChange={changeStep}
+                  onTimeChange={setVideoTime}
+                  ref={playerRef}
+                />
+              </div>
+              <div
+                className={s.details}
+                style={{
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              >
+                <div>
+                  <span style={{ fontSize: "1.2em" }}>
+                    @pomber
+                  </span>
+                  <div style={{ height: 5 }} />
+                  <span style={{ fontSize: "1.8em" }}>
+                    Rodrigo
+                  </span>
+                  <br />
+                  <span style={{ fontSize: "2em" }}>
+                    Pombo
+                  </span>
+                  <div style={{ height: 10 }} />
+                  <span style={{ fontSize: "1.3em" }}>
+                    FOO CONF
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <VideoControls
           steps={videoSteps}
           videoTime={videoTime}
           stepIndex={stepIndex}
+          onChange={seek}
         />
       </main>
     </div>
   );
 }
 
-function Author({ onStepChange, onTimeChange }) {
-  return (
-    <div className={s.video}>
-      <div
-        style={{
-          height: "100%",
-          float: "right",
-          marginRight: -30,
-        }}
-      >
-        <Video
-          steps={videoSteps}
-          style={{
-            height: "100%",
-          }}
-          muted
-          onStepChange={onStepChange}
-          onTimeChange={onTimeChange}
-        />
-      </div>
-      <div
-        className={s.details}
-        style={{
-          top: 0,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}
-      >
-        <div>
-          <span style={{ fontSize: "1.2em" }}>@pomber</span>
-          <div style={{ height: 5 }} />
-          <span style={{ fontSize: "1.8em" }}>Rodrigo</span>
-          <br />
-          <span style={{ fontSize: "2em" }}>Pombo</span>
-          <div style={{ height: 10 }} />
-          <span style={{ fontSize: "1.3em" }}>
-            FOO CONF
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function VideoControls({ steps, stepIndex, videoTime }) {
-  // const [value, setValue] = React.useState(10);
-  const { currentSeconds, totalSeconds } = useTimeData({
+function VideoControls({
+  steps,
+  stepIndex,
+  videoTime,
+  onChange,
+}) {
+  const {
+    currentSeconds,
+    getStepAndTime,
+    totalSeconds,
+  } = useTimeData({
     steps,
     stepIndex,
     videoTime,
   });
 
   const value = currentSeconds;
+
+  const handleChange = (values) => {
+    const value = values[0];
+    const { stepIndex, videoTime } = getStepAndTime(value);
+    onChange({ stepIndex, videoTime });
+  };
+
   return (
     <Range
       step={0.1}
       min={0}
       max={totalSeconds}
       values={[value]}
-      // onChange={(values) => setValue(values[0])}
+      onChange={handleChange}
       renderTrack={({ props, children }) => (
         <div
           {...props}

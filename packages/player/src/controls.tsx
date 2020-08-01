@@ -73,7 +73,11 @@ function useTimeData({
   stepIndex,
   videoTime,
 }: ControlsProps) {
-  const [stepsWithDuration, totalSeconds] = React.useMemo(() => {
+  const [
+    stepsWithDuration,
+    totalSeconds,
+    getStepAndTime,
+  ] = React.useMemo(() => {
     let cumulativeDuration = 0;
     const stepsWithDuration = steps.map((s) => {
       const duration = s.end - s.start;
@@ -89,7 +93,19 @@ function useTimeData({
       (t, s) => s.duration + t,
       0
     );
-    return [stepsWithDuration, totalSeconds];
+    const getStepAndTime = (value: number) => {
+      for (let i = 0; i < stepsWithDuration.length; i++) {
+        if (value < stepsWithDuration[i].globalEnd) {
+          const stepTime = value - stepsWithDuration[i].globalStart;
+          return {
+            stepIndex: i,
+            videoTime: stepsWithDuration[i].start + stepTime,
+          };
+        }
+      }
+      throw new Error("Value out of range");
+    };
+    return [stepsWithDuration, totalSeconds, getStepAndTime];
   }, [steps]);
 
   const currentStep = stepsWithDuration[stepIndex];
@@ -98,5 +114,5 @@ function useTimeData({
     currentStep.globalStart + stepTime,
     totalSeconds
   );
-  return { currentSeconds, totalSeconds };
+  return { currentSeconds, totalSeconds, getStepAndTime };
 }
