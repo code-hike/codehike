@@ -17,6 +17,7 @@ export default function Page() {
   const [videoTime, setVideoTime] = React.useState(
     videoSteps[0].start
   );
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [progress] = useSpring(stepIndex, {
     decimals: 3,
     stiffness: 80,
@@ -27,6 +28,14 @@ export default function Page() {
 
   const seek = ({ stepIndex, videoTime }) => {
     playerRef.current.seek(stepIndex, videoTime);
+  };
+  const play = () => {
+    playerRef.current.play();
+    setIsPlaying(true);
+  };
+  const pause = () => {
+    playerRef.current.pause();
+    setIsPlaying(false);
   };
 
   return (
@@ -112,6 +121,9 @@ export default function Page() {
           videoTime={videoTime}
           stepIndex={stepIndex}
           onChange={seek}
+          play={play}
+          pause={pause}
+          isPlaying={isPlaying}
         />
       </main>
     </div>
@@ -123,6 +135,9 @@ function VideoControls({
   stepIndex,
   videoTime,
   onChange,
+  isPlaying,
+  play,
+  pause,
 }) {
   const {
     currentSeconds,
@@ -143,42 +158,49 @@ function VideoControls({
   };
 
   return (
-    <Range
-      step={0.1}
-      min={0}
-      max={totalSeconds}
-      values={[value]}
-      onChange={handleChange}
-      renderTrack={({ props, children }) => (
-        <div
-          {...props}
-          style={{
-            ...props.style,
-            height: "5px",
-            width: "100%",
-            background: getTrackBackground({
-              values: [value],
-              colors: ["red", "#ccc"],
-              min: 0,
-              max: totalSeconds,
-            }),
-          }}
-        >
-          {children}
-        </div>
+    <>
+      <Range
+        step={0.1}
+        min={0}
+        max={totalSeconds}
+        values={[value]}
+        onChange={handleChange}
+        renderTrack={({ props, children }) => (
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: "5px",
+              width: "100%",
+              background: getTrackBackground({
+                values: [value],
+                colors: ["red", "#ccc"],
+                min: 0,
+                max: totalSeconds,
+              }),
+            }}
+          >
+            {children}
+          </div>
+        )}
+        renderThumb={({ props }) => (
+          <div
+            {...props}
+            style={{
+              ...props.style,
+              height: "12px",
+              width: "12px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+            }}
+          />
+        )}
+      />
+      {isPlaying ? (
+        <button onClick={pause}>Pause</button>
+      ) : (
+        <button onClick={play}>Play</button>
       )}
-      renderThumb={({ props }) => (
-        <div
-          {...props}
-          style={{
-            ...props.style,
-            height: "12px",
-            width: "12px",
-            borderRadius: "50%",
-            backgroundColor: "red",
-          }}
-        />
-      )}
-    />
+    </>
   );
 }

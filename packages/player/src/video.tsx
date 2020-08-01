@@ -18,6 +18,8 @@ type VideoProps = {
 
 type PlayerHandle = {
   seek: (stepIndex: number, videoTime: number) => void;
+  play: () => void;
+  pause: () => void;
 };
 
 function VideoWithRef(
@@ -43,11 +45,23 @@ function VideoWithRef(
     () => ({
       seek: (stepIndex, videoTime) => {
         const newStep = steps[stepIndex];
+        const wasPaused = ref.current.paused;
         ref.current.src = getSrc(newStep);
         ref.current.currentTime = videoTime;
+        if (wasPaused) {
+          ref.current.pause();
+        } else {
+          ref.current.play();
+        }
         setState({ stepIndex, videoTime });
         onStepChange(stepIndex);
         onTimeChange(videoTime);
+      },
+      pause: () => {
+        ref.current.pause();
+      },
+      play: () => {
+        ref.current.play();
       },
     })
   );
@@ -89,16 +103,13 @@ function VideoWithRef(
             transition: "opacity 0.5s",
           }}
           key={state.stepIndex - 1}
-          id={"" + (state.stepIndex - 1)}
         />
       )}
       <video
         {...props}
         src={getSrc(currentStep)}
-        autoPlay
         ref={ref}
         key={state.stepIndex}
-        // muted
         style={{
           ...props.style,
           opacity: 1,
@@ -106,7 +117,6 @@ function VideoWithRef(
           transition: "opacity 0.5s",
         }}
         onPause={changeStep}
-        id={"" + state.stepIndex}
       />
       {nextStep && (
         <video
@@ -119,7 +129,6 @@ function VideoWithRef(
           }}
           ref={nextRef}
           key={state.stepIndex + 1}
-          id={"" + (state.stepIndex + 1)}
         />
       )}
     </>
