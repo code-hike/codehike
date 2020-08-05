@@ -196,11 +196,31 @@ function VideoControls({
           />
         )}
       />
+      <button
+        onClick={() =>
+          onChange({
+            stepIndex: stepIndex - 1,
+            videoTime: 0,
+          })
+        }
+      >
+        Prev
+      </button>
       {isPlaying ? (
         <button onClick={pause}>Pause</button>
       ) : (
         <button onClick={play}>Play</button>
       )}
+      <button
+        onClick={() =>
+          onChange({
+            stepIndex: stepIndex + 1,
+            videoTime: 0,
+          })
+        }
+      >
+        Next
+      </button>
     </>
   );
 }
