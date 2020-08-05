@@ -1,3 +1,5 @@
 {
-  "printWidth": 60
+  "printWidth": 60,
+  "semi": false,
+  "arrowParens": "avoid"
 }
