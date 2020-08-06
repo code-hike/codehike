@@ -1,42 +1,42 @@
-import React from "react";
-import s from "./index.module.css";
-import { MiniEditor } from "@code-hike/mini-editor";
-import { MiniBrowser } from "@code-hike/mini-browser";
-import { Range, getTrackBackground } from "react-range";
-import { Video, useTimeData } from "@code-hike/player";
-import { useSpring } from "use-spring";
+import React from "react"
+import s from "./index.module.css"
+import { MiniEditor } from "@code-hike/mini-editor"
+import { MiniBrowser } from "@code-hike/mini-browser"
+import { Range, getTrackBackground } from "react-range"
+import { Video, useTimeData } from "@code-hike/player"
+import { useSpring } from "use-spring"
 import {
   videoSteps,
   browserSteps,
   editorSteps,
-} from "../src/steps";
+} from "../src/steps"
 
 export default function Page() {
-  const [stepIndex, changeStep] = React.useState(0);
-  const playerRef = React.useRef();
+  const [stepIndex, changeStep] = React.useState(0)
+  const playerRef = React.useRef()
   const [videoTime, setVideoTime] = React.useState(
     videoSteps[0].start
-  );
-  const [isPlaying, setIsPlaying] = React.useState(false);
+  )
+  const [isPlaying, setIsPlaying] = React.useState(false)
   const [progress] = useSpring(stepIndex, {
     decimals: 3,
     stiffness: 80,
     damping: 48,
     mass: 8,
-  });
-  const backward = stepIndex < progress;
+  })
+  const backward = stepIndex < progress
 
   const seek = ({ stepIndex, videoTime }) => {
-    playerRef.current.seek(stepIndex, videoTime);
-  };
+    playerRef.current.seek(stepIndex, videoTime)
+  }
   const play = () => {
-    playerRef.current.play();
-    setIsPlaying(true);
-  };
+    playerRef.current.play()
+    setIsPlaying(true)
+  }
   const pause = () => {
-    playerRef.current.pause();
-    setIsPlaying(false);
-  };
+    playerRef.current.pause()
+    setIsPlaying(false)
+  }
 
   return (
     <div className={s.page}>
@@ -127,7 +127,7 @@ export default function Page() {
         />
       </main>
     </div>
-  );
+  )
 }
 
 function VideoControls({
@@ -147,15 +147,15 @@ function VideoControls({
     steps,
     stepIndex,
     videoTime,
-  });
+  })
 
-  const value = currentSeconds;
+  const value = currentSeconds
 
-  const handleChange = (values) => {
-    const value = values[0];
-    const { stepIndex, videoTime } = getStepAndTime(value);
-    onChange({ stepIndex, videoTime });
-  };
+  const handleChange = values => {
+    const value = values[0]
+    const { stepIndex, videoTime } = getStepAndTime(value)
+    onChange({ stepIndex, videoTime })
+  }
 
   return (
     <>
@@ -222,5 +222,5 @@ function VideoControls({
         Next
       </button>
     </>
-  );
+  )
 }
