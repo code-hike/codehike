@@ -1,11 +1,7 @@
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../docs/steps.3.mdx"
-import {
-  Scroller,
-  Step as ScrollerStep,
-} from "@code-hike/scroller"
-import s from "./steps.2.module.css"
+import s from "./steps.6.module.css"
 import { Terminal } from "../src/mini-terminal"
 import { Video } from "@code-hike/player"
 
@@ -39,15 +35,20 @@ function Wrapper({ children }) {
   return (
     <div className={s.main}>
       <div className={s.content}>
-        <Terminal texts={stickers} index={stepIndex} />
-        <Video
-          steps={clips}
-          style={{
-            height: "200px",
-          }}
-          muted
-          onStepChange={setIndex}
-        />
+        <div className={s.top}>
+          <Terminal texts={stickers} index={stepIndex} />
+          <div className={s.video}>
+            <Video
+              steps={clips}
+              style={{
+                height: "200px",
+              }}
+              muted
+              autoPlay
+              onStepChange={setIndex}
+            />
+          </div>
+        </div>
         <div className={s.step}>{steps[stepIndex]}</div>
       </div>
     </div>
