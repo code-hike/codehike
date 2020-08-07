@@ -128,20 +128,6 @@ export const steps = [
   },
   {
     editor: {
-      code: require("!!raw-loader!../pages/steps.3.js")
-        .default,
-      file: "pages/steps.js",
-      tabs: ["docs/steps.mdx", "pages/steps.js"],
-      lang: "jsx",
-    },
-    browser: {
-      url: "http://localhost:3000/steps.3",
-      zoom: 0.4,
-    },
-    video: { src: "000.mp4", start: 0, end: 5 },
-  },
-  {
-    editor: {
       code: require("!!raw-loader!../docs/steps.2.mdx")
         .default,
       file: "docs/steps.mdx",
@@ -161,6 +147,21 @@ export const steps = [
       file: "pages/steps.js",
       tabs: ["docs/steps.mdx", "pages/steps.js"],
       lang: "jsx",
+    },
+    browser: {
+      url: "http://localhost:3000/steps.5",
+      zoom: 0.4,
+    },
+    video: { src: "000.mp4", start: 0, end: 5 },
+  },
+  {
+    editor: {
+      code: require("!!raw-loader!../docs/steps.3.mdx")
+        .default,
+      file: "docs/steps.mdx",
+      tabs: ["docs/steps.mdx", "pages/steps.js"],
+      lang: "mdx",
+      focus: "28",
     },
     browser: {
       url: "http://localhost:3000/steps.5",
@@ -193,6 +194,25 @@ export const steps = [
     browser: {
       url: "http://localhost:3000/",
       zoom: 0.4,
+    },
+    video: { src: "000.mp4", start: 0, end: 5 },
+  },
+  {
+    editor: {
+      code: require("!!raw-loader!../package.json.copy")
+        .default,
+      file: "package.json",
+      tabs: [
+        "docs/steps.mdx",
+        "pages/steps.js",
+        "package.json",
+      ],
+      lang: "json",
+      focus: "4:15",
+    },
+    browser: {
+      url: "https://codehike.org",
+      zoom: 0.8,
     },
     video: { src: "000.mp4", start: 0, end: 5 },
   },
