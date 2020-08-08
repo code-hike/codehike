@@ -20,7 +20,10 @@ function Wrapper({ children }) {
   return (
     <div>
       {steps[stepIndex]}
-      <button onClick={() => setIndex(stepIndex + 1)}>
+      <button
+        id="next-button"
+        onClick={() => setIndex(stepIndex + 1)}
+      >
         Next
       </button>
     </div>

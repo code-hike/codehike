@@ -12,7 +12,7 @@ type Step = {
 
 type VideoProps = {
   steps: Step[]
-  onTimeChange?: (time: number) => void
+  onTimeChange?: (time: number, prevTime: number) => void
   onStepChange?: (stepIndex: number) => void
 } & React.PropsWithoutRef<JSX.IntrinsicElements["video"]>
 
@@ -55,7 +55,7 @@ function VideoWithRef(
         }
         setState({ stepIndex, videoTime })
         onStepChange(stepIndex)
-        onTimeChange(videoTime)
+        onTimeChange(videoTime, timeRef.current)
       },
       pause: () => {
         ref.current.pause()
@@ -63,7 +63,8 @@ function VideoWithRef(
       play: () => {
         ref.current.play()
       },
-    })
+    }),
+    [onStepChange, onTimeChange]
   )
 
   const currentStep = steps[state.stepIndex]
@@ -73,10 +74,10 @@ function VideoWithRef(
   useAnimationFrame(() => {
     const time = ref.current.currentTime
     if (time != timeRef.current) {
-      onTimeChange(time)
+      onTimeChange(time, timeRef.current)
       timeRef.current = time
     }
-  })
+  }, [onTimeChange])
 
   const changeStep = () => {
     const video = ref.current
@@ -140,7 +141,10 @@ function getSrc({ src, start, end }: Step) {
 }
 
 // TODO use the rAF from use-spring
-function useAnimationFrame(callback: () => void) {
+function useAnimationFrame(
+  callback: () => void,
+  deps: React.DependencyList = []
+) {
   const requestRef = React.useRef<number>()
   const previousTimeRef = React.useRef<number>()
 
@@ -155,5 +159,5 @@ function useAnimationFrame(callback: () => void) {
   React.useEffect(() => {
     requestRef.current = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(requestRef.current!)
-  }, [])
+  }, deps)
 }

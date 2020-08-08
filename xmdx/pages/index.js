@@ -38,6 +38,23 @@ export default function Page() {
     setIsPlaying(false)
   }
 
+  const onTimeChange = (newTime, oldTime) => {
+    // currentStep.actions
+    const browserStep = browserSteps[stepIndex]
+    const actions = browserStep.actions || []
+    const action = actions.find(
+      a => oldTime < a.on && a.on <= newTime
+    )
+    // simUser.run(action, document)
+
+    console.log(stepIndex, oldTime, newTime)
+    if (action) {
+      console.log(action)
+    }
+
+    setVideoTime(newTime)
+  }
+
   return (
     <div className={s.page}>
       <style global jsx>{`
@@ -82,7 +99,7 @@ export default function Page() {
                   }}
                   muted
                   onStepChange={changeStep}
-                  onTimeChange={setVideoTime}
+                  onTimeChange={onTimeChange}
                   ref={playerRef}
                 />
               </div>

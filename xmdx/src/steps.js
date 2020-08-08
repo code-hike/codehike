@@ -109,6 +109,13 @@ export const steps = [
     browser: {
       url: "http://localhost:3000/steps.1",
       zoom: 0.8,
+      actions: [
+        {
+          on: 2,
+          action: "click",
+          selector: "#next-button",
+        },
+      ],
     },
     video: { src: "000.mp4", start: 0, end: 5 },
   },
