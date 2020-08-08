@@ -12,9 +12,16 @@ type ScrollAction = {
 }
 type SimAction = ClickAction | ScrollAction
 
-function sim(action: SimAction, document?: Document) {
-  const doc = document || window.document
-  const element = doc.querySelector(action.selector)!
+function scroll(action: ScrollAction, document: Document) {
+  const element = document.querySelector(action.selector)!
+  element.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  })
+}
+
+function click(action: ClickAction, document: Document) {
+  const element = document.querySelector(action.selector)!
   // userEvent.click(element)
 
   const elemRect = element.getBoundingClientRect()
@@ -35,7 +42,7 @@ function sim(action: SimAction, document?: Document) {
   cursor.style.transform = "scale(3)"
   cursor.style.transition =
     "transform 600ms ease-in-out, opacity 500ms"
-  window.document.body.appendChild(cursor)
+  document.body.appendChild(cursor)
 
   requestAnimationFrame(() =>
     requestAnimationFrame(() => {
@@ -57,6 +64,18 @@ function sim(action: SimAction, document?: Document) {
     },
     { once: true }
   )
+}
+
+function sim(action: SimAction, document?: Document) {
+  const doc = document || window.document
+  switch (action.type) {
+    case "click":
+      click(action, doc)
+      return
+    case "scroll":
+      scroll(action, doc)
+      return
+  }
 }
 
 function createCursor() {

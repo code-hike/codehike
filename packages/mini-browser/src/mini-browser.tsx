@@ -1,37 +1,48 @@
-import React from "react";
-import { Back, Forward, Open } from "./buttons";
-import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
-import "./mini-browser.css";
+import React from "react"
+import { Back, Forward, Open } from "./buttons"
+import {
+  MiniFrame,
+  FrameButtons,
+} from "@code-hike/mini-frame"
+import "./mini-browser.css"
 
 type MiniBrowserStep = {
-  url?: string;
-  children: React.ReactNode;
-  zoom?: number;
-};
+  url?: string
+  children: React.ReactNode
+  zoom?: number
+}
 
 type MiniBrowserProps = {
-  progress?: number;
-  backward?: boolean;
-  url?: string;
-  children: React.ReactNode;
-  zoom?: number;
-  steps?: MiniBrowserStep[];
-} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+  progress?: number
+  backward?: boolean
+  url?: string
+  children: React.ReactNode
+  zoom?: number
+  steps?: MiniBrowserStep[]
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
-function MiniBrowser({
-  url = "",
-  children,
-  progress = 0,
-  backward = false,
-  zoom = 1,
-  steps: ogSteps,
-  ...props
-}: MiniBrowserProps) {
-  const steps = useSteps(ogSteps, { url, children, zoom });
+const MiniBrowser = React.forwardRef<
+  HTMLIFrameElement,
+  MiniBrowserStep
+>(MiniBrowserWithRef)
+
+function MiniBrowserWithRef(
+  {
+    url = "",
+    children,
+    progress = 0,
+    backward = false,
+    zoom = 1,
+    steps: ogSteps,
+    ...props
+  }: MiniBrowserProps,
+  ref: React.Ref<HTMLIFrameElement>
+) {
+  const steps = useSteps(ogSteps, { url, children, zoom })
   const stepIndex = backward
     ? Math.floor(progress)
-    : Math.ceil(progress);
-  const currentStep = steps[stepIndex];
+    : Math.ceil(progress)
+  const currentStep = steps[stepIndex]
   return (
     <MiniFrame
       {...props}
@@ -41,12 +52,13 @@ function MiniBrowser({
     >
       {currentStep.children || (
         <iframe
+          ref={ref}
           src={currentStep.url}
           // sandbox={sandbox}
         />
       )}
     </MiniFrame>
-  );
+  )
 }
 
 function useSteps(
@@ -55,11 +67,16 @@ function useSteps(
 ) {
   return React.useMemo(() => {
     if (!ogSteps) {
-      return [{ zoom, url, children }];
+      return [{ zoom, url, children }]
     } else {
-      return ogSteps.map((s) => ({ zoom, url, children, ...s }));
+      return ogSteps.map(s => ({
+        zoom,
+        url,
+        children,
+        ...s,
+      }))
     }
-  }, [ogSteps, zoom, url, children]);
+  }, [ogSteps, zoom, url, children])
 }
 
 function Bar({ url }: { url: string }) {
@@ -72,7 +89,7 @@ function Bar({ url }: { url: string }) {
       <input value={url} readOnly />
       <Open href={url} />
     </>
-  );
+  )
 }
 
-export { MiniBrowser };
+export { MiniBrowser }

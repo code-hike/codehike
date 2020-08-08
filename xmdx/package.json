@@ -13,6 +13,7 @@
     "@code-hike/mini-terminal": "0.0.1",
     "@code-hike/player": "0.0.1",
     "@code-hike/scroller": "0.0.1",
+    "@code-hike/sim-user": "0.0.1",
     "@mdx-js/loader": "^1.6.11",
     "@next/mdx": "^9.4.4",
     "next": "^9.4.4",

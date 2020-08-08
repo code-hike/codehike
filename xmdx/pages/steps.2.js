@@ -29,6 +29,7 @@ function Wrapper({ children }) {
           {steps.map((c, i) => (
             <ScrollerStep
               key={i}
+              id={`step-${i}`}
               index={i}
               className={s.step}
               style={{

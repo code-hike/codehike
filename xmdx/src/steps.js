@@ -112,12 +112,22 @@ export const steps = [
       actions: [
         {
           on: 2,
-          action: "click",
+          type: "click",
+          selector: "#next-button",
+        },
+        {
+          on: 3,
+          type: "click",
+          selector: "#next-button",
+        },
+        {
+          on: 4,
+          type: "click",
           selector: "#next-button",
         },
       ],
     },
-    video: { src: "000.mp4", start: 0, end: 5 },
+    video: { src: "000.mp4", start: 0, end: 6 },
   },
   {
     editor: {
@@ -130,6 +140,9 @@ export const steps = [
     browser: {
       url: "http://localhost:3000/steps.2",
       zoom: 0.4,
+      actions: [
+        { type: "scroll", on: 2, selector: "#step-1" },
+      ],
     },
     video: { src: "000.mp4", start: 0, end: 5 },
   },

@@ -10,10 +10,12 @@ import {
   browserSteps,
   editorSteps,
 } from "../src/steps"
+import { sim } from "@code-hike/sim-user"
 
 export default function Page() {
   const [stepIndex, changeStep] = React.useState(0)
   const playerRef = React.useRef()
+  const browserRef = React.useRef()
   const [videoTime, setVideoTime] = React.useState(
     videoSteps[0].start
   )
@@ -45,11 +47,11 @@ export default function Page() {
     const action = actions.find(
       a => oldTime < a.on && a.on <= newTime
     )
-    // simUser.run(action, document)
 
-    console.log(stepIndex, oldTime, newTime)
     if (action) {
-      console.log(action)
+      const document =
+        browserRef.current.contentWindow.document
+      sim(action, document)
     }
 
     setVideoTime(newTime)
@@ -81,6 +83,7 @@ export default function Page() {
               steps={browserSteps}
               progress={progress}
               backward={backward}
+              ref={browserRef}
             />
           </div>
           <div className={s.div3}>
