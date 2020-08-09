@@ -5,14 +5,97 @@ import { MiniBrowser } from "@code-hike/mini-browser"
 import { Range, getTrackBackground } from "react-range"
 import { Video, useTimeData } from "@code-hike/player"
 import { useSpring } from "use-spring"
-import {
-  videoSteps,
-  browserSteps,
-  editorSteps,
-} from "../src/steps"
 import { sim } from "@code-hike/sim-user"
+import { MDXProvider } from "@mdx-js/react"
+import Content from "../demo/cake.mdx"
+
+const components = {
+  wrapper: Wrapper,
+}
+
+function getStepsFromMDX(children) {
+  const splits = [[]]
+  React.Children.forEach(children, child => {
+    if (child.props.mdxType === "hr") {
+      splits.push([])
+    } else {
+      const lastSplit = splits[splits.length - 1]
+      lastSplit.push(child)
+    }
+  })
+  console.log(children)
+  console.log(splits)
+  const videoSteps = splits.map(split => {
+    const videoElement = split.find(
+      child => child.props.mdxType === "Video"
+    )
+    const props = videoElement.props
+    return props
+  })
+
+  const browserSteps = splits.map(split => {
+    const browserElement = split.find(
+      child => child.props.mdxType === "Browser"
+    )
+    const { url, children, ...rest } = browserElement.props
+    const actions = React.Children.map(
+      children,
+      child => child.props
+    )
+    console.log({ actions })
+    // TODO fix production url
+    return {
+      url: "http://localhost:3000" + url,
+      actions,
+      ...rest,
+    }
+  })
+
+  const editorSteps = splits.map(split => {
+    const editorElement = split.find(
+      child => child.props.mdxType === "Editor"
+    )
+    const { code, tab, ...rest } = editorElement.props
+    return {
+      code: require(`!!raw-loader!../demo/${code}`).default,
+      file: tab,
+      ...rest,
+    }
+  })
+
+  console.log({ editorSteps })
+
+  return {
+    videoSteps,
+    browserSteps,
+    editorSteps,
+  }
+}
 
 export default function Page() {
+  return (
+    <MDXProvider components={components}>
+      <Content />
+    </MDXProvider>
+  )
+}
+
+function Wrapper({ children }) {
+  const {
+    videoSteps,
+    browserSteps,
+    editorSteps,
+  } = getStepsFromMDX(children)
+  return (
+    <Talk
+      videoSteps={videoSteps}
+      browserSteps={browserSteps}
+      editorSteps={editorSteps}
+    />
+  )
+}
+
+function Talk({ videoSteps, browserSteps, editorSteps }) {
   const [stepIndex, changeStep] = React.useState(0)
   const playerRef = React.useRef()
   const browserRef = React.useRef()

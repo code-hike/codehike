@@ -39,6 +39,7 @@ function Wrapper({ children }) {
             <ScrollerStep
               key={i}
               index={i}
+              id={`step-${i}`}
               className={s.step}
               style={{
                 opacity: stepIndex === i ? 0.99 : 0.4,
