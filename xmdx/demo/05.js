@@ -15,8 +15,8 @@ const components = {
 }
 
 function Wrapper({ children }) {
-  const kids = React.Children.toArray(children)
-  const h1s = kids
+  // Get the titles from all the H1s
+  const titles = React.Children.toArray(children)
     .filter(child => child.props.mdxType === "h1")
     .map(child => child.props.children)
 
@@ -24,8 +24,8 @@ function Wrapper({ children }) {
     <main>
       Table of contents:
       <ul>
-        {h1s.map(h => (
-          <li>{h}</li>
+        {titles.map(title => (
+          <li>{title}</li>
         ))}
       </ul>
       <hr />

@@ -10,9 +10,14 @@ export default function Page() {
   )
 }
 
-// TODO show default wrapper
 const components = {
-  wrapper: props => (
-    <div style={{ background: "tomato" }} {...props} />
-  ),
+  wrapper: Wrapper,
+}
+
+function Wrapper({ children }) {
+  return (
+    <div style={{ border: "12px solid purple" }}>
+      {children}
+    </div>
+  )
 }

@@ -11,7 +11,9 @@ export default function Page() {
 }
 
 const components = {
-  h1: props => (
-    <h1 style={{ background: "tomato" }} {...props} />
+  h1: ({ children }) => (
+    <h1 style={{ border: "12px solid purple" }}>
+      {children}
+    </h1>
   ),
 }
