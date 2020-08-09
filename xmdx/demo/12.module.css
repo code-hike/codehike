@@ -1,0 +1,69 @@
+.main {
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #eee;
+}
+
+.content {
+  flex: 1;
+  margin: calc(50vh - 200px) 0;
+}
+.top {
+  display: flex;
+  margin: 0 50px;
+  justify-content: space-between;
+}
+
+.top > div:first-child {
+  flex: 1;
+  margin-right: 32px;
+}
+
+.video {
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+.step {
+  min-height: 100px;
+  background: white;
+  margin: 32px 50px;
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 32px;
+  box-sizing: border-box;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+}
+
+.sticker {
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sticker > div {
+  position: fixed;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sticker > div > div {
+  font-size: 60px;
+}
+
+.sticker > div > span {
+  font-size: 140px;
+}
+
+.sticker img {
+  width: 300px;
+}

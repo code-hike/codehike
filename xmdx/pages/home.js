@@ -5,14 +5,9 @@ import { MiniBrowser } from "@code-hike/mini-browser"
 import { Range, getTrackBackground } from "react-range"
 import { Video, useTimeData } from "@code-hike/player"
 import { useSpring } from "use-spring"
-import {
-  videoSteps,
-  browserSteps,
-  editorSteps,
-} from "../src/steps"
 import { sim } from "@code-hike/sim-user"
 import { MDXProvider } from "@mdx-js/react"
-import Content from "../src/cake.mdx"
+import Content from "../demo/cake.mdx"
 
 const components = {
   wrapper: Wrapper,
@@ -42,9 +37,18 @@ function getStepsFromMDX(children) {
     const browserElement = split.find(
       child => child.props.mdxType === "Browser"
     )
-    const { url, ...rest } = browserElement.props
+    const { url, children, ...rest } = browserElement.props
+    const actions = React.Children.map(
+      children,
+      child => child.props
+    )
+    console.log({ actions })
     // TODO fix production url
-    return { url: "http://localhost:3000" + url, ...rest }
+    return {
+      url: "http://localhost:3000" + url,
+      actions,
+      ...rest,
+    }
   })
 
   const editorSteps = splits.map(split => {
@@ -53,8 +57,7 @@ function getStepsFromMDX(children) {
     )
     const { code, tab, ...rest } = editorElement.props
     return {
-      code: require(`!!raw-loader!../pages/${code}`)
-        .default,
+      code: require(`!!raw-loader!../demo/${code}`).default,
       file: tab,
       ...rest,
     }
