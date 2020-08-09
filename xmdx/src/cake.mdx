@@ -1,46 +1,30 @@
-<Step video="000.mp4" start={0} end={5}>
-  <Editor file="hello.md" lang="md" />
-  <Browser url="/hello.0" zoom={1} />
-</Step>
-
----
-
-<Step video="000.mp4" start={0} end={5}>
-
-<Editor file="hello.0.js" name="hello.js" lang="md" />
+<Video src="000.mp4" start={0} end={5} />
 <Browser url="/hello.0" zoom={1} />
-
-```srt
-1:20 --> 123
-Hello
-```
-
-</Step>
-
----
-
-<Video src="000.mp4" start={0} end={5} />
-<Editor file="hello.0.js" name="hello.js" lang="jsx" />
-<Browser url="/hello.0" zoom={1}>
-  <Click selector="#next-page" time={2} />
-  <Click selector="#next-page" time={4} />
-</Browser>
-
-```srt
-1:20 --> 123
-Hello
-```
+<Editor
+  code="hello.0.js"
+  lang="jsx"
+  tab="docs/hello.md"
+  tabs={["docs/hello.md", "pages/hello.js"]}
+/>
 
 ---
 
 <Video src="000.mp4" start={0} end={5} />
-<Editor file="hello.0.js" name="hello.js" lang="md" />
-<Browser url="/hello.0" zoom={1}>
-  <Scroll selector="#step-0" time={2} />
-  <Scroll selector="#step-1" time={4} />
-</Browser>
+<Browser url="/hello.0" zoom={1} />
+<Editor
+  code="hello.1.js"
+  lang="jsx"
+  tab="pages/hello.js"
+  tabs={["docs/hello.md", "pages/hello.js"]}
+/>
 
-```srt
-1:20 --> 123
-Hello
-```
+---
+
+<Video src="000.mp4" start={0} end={5} />
+<Browser url="/hello.1" zoom={1} />
+<Editor
+  code="hello.2.js"
+  lang="jsx"
+  tab="pages/hello.js"
+  tabs={["docs/hello.md", "pages/hello.js"]}
+/>
