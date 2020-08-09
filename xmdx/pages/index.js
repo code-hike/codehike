@@ -149,6 +149,9 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
           height: 100%;
           margin: 0;
         }
+        .ch-frame .ch-editor-body {
+          padding: 0;
+        }
       `}</style>
       <main className={s.main}>
         <div className={s.grid}>
