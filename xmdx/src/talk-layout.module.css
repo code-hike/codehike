@@ -1,35 +1,43 @@
 .main {
   display: flex;
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
   background: #eee;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .content {
   flex: 1;
-  margin: calc(50vh - 200px) 0;
+  padding: 0 20px;
 }
+
 .top {
   display: flex;
-  margin: 0 50px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .top > div:first-child {
   flex: 1;
-  margin-right: 32px;
+  margin-right: 20px;
+  width: auto !important;
 }
 
 .video {
   box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
     0 3px 7px -3px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
 }
 
 .step {
   min-height: 100px;
   background: white;
-  margin: 32px 50px;
+  margin-top: 30px;
   box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
     0 3px 7px -3px rgba(0, 0, 0, 0.3);
   border-radius: 6px;

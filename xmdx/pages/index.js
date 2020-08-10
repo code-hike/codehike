@@ -23,8 +23,6 @@ function getStepsFromMDX(children) {
       lastSplit.push(child)
     }
   })
-  console.log(children)
-  console.log(splits)
   const videoSteps = splits.map(split => {
     const videoElement = split.find(
       child => child.props.mdxType === "Video"

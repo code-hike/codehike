@@ -10,6 +10,11 @@ function TalkLayout({ snippets, clips, steps }) {
 
   return (
     <div className={s.main}>
+      <style global jsx>{`
+        body {
+          margin: 0;
+        }
+      `}</style>
       <div className={s.content}>
         <div className={s.top}>
           <Terminal snippets={snippets} index={stepIndex} />
@@ -18,6 +23,7 @@ function TalkLayout({ snippets, clips, steps }) {
               steps={clips}
               style={{
                 height: "200px",
+                width: "355.54px",
               }}
               muted
               autoPlay
