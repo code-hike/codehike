@@ -2,7 +2,7 @@ import React, { Children } from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/steps.2.mdx"
 import { Terminal } from "../src/mini-terminal"
-import { Scrollytelling } from "../src/scrollytelling"
+import { ScrollytellingLayout } from "../src/scrollytelling"
 
 export default function Page() {
   return (
@@ -20,18 +20,18 @@ function Wrapper({ children }) {
   const steps = Children.toArray(children).map(child => {
     return Children.toArray(child.props.children).slice(1)
   })
-  const stickerList = Children.map(children, child => {
+  const stickers = Children.map(children, child => {
     return Children.toArray(child.props.children)[0]
   })
-  const texts = stickerList.map(
+  const snippets = stickers.map(
     element => element.props.children.props.children
   )
 
   return (
-    <Scrollytelling
+    <ScrollytellingLayout
       steps={steps}
       sticker={stepIndex => (
-        <Terminal texts={texts} index={stepIndex} />
+        <Terminal snippets={snippets} index={stepIndex} />
       )}
     />
   )

@@ -4,9 +4,13 @@ import {
 } from "@code-hike/scroller"
 import s from "./scrollytelling.module.css"
 
-export { Scrollytelling }
+export { ScrollytellingLayout }
 
-function Scrollytelling({ steps, stickerList, sticker }) {
+function ScrollytellingLayout({
+  steps,
+  stickers,
+  sticker,
+}) {
   const [stepIndex, setIndex] = React.useState(0)
   return (
     <div className={s.main}>
@@ -36,7 +40,7 @@ function Scrollytelling({ steps, stickerList, sticker }) {
         <div>
           {sticker
             ? sticker(stepIndex)
-            : stickerList[stepIndex]}
+            : stickers[stepIndex]}
         </div>
       </div>
     </div>

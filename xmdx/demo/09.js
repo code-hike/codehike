@@ -1,7 +1,7 @@
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/steps.2.mdx"
-import { Scrollytelling } from "../src/scrollytelling"
+import { ScrollytellingLayout } from "../src/scrollytelling"
 
 export default function Page() {
   return (
@@ -17,16 +17,16 @@ const components = {
 
 function Wrapper({ children }) {
   const steps = React.Children.toArray(children)
-  const stickerList = steps.map((_, stepIndex) => (
+  const stickers = steps.map((_, stepIndex) => (
     <>
       <div>Step</div>
       <span>{stepIndex}</span>
     </>
   ))
   return (
-    <Scrollytelling
+    <ScrollytellingLayout
       steps={steps}
-      stickerList={stickerList}
+      stickers={stickers}
     />
   )
 }

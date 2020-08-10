@@ -24,6 +24,8 @@ If we explore the children, you'll see they come with an mdxType. We can use tha
 
 In the MDX docs there's a section called "Manipulating children" with more info about this. But don't google "manipulate children", you don't want that in your google history.
 
+(OR an alternative title for this talk was "Manipulating children for fun and profit" but I guess it could be misunderstood )
+
 ---
 
 OK, quick example about this. We could get all the H1s, by filtering all the children that have an mdxType equals to h1, and prepend a table of contents to the actual content.
@@ -85,6 +87,8 @@ So the extra information we need for that kind of layout is the name of the file
 ---
 
 I also happen to have a React component for this. So we only need to extract the info from the props and pass it to the Video component.
+
+You'll see how the step changes as soon as I snap my fingers, right... now.
 
 Now, some of you may have noticed that this look similar to the layout of the video of this talk that I'm giving right now.
 

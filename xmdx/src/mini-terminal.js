@@ -2,8 +2,8 @@ import React from "react"
 import { MiniTerminal } from "@code-hike/mini-terminal"
 import { useSpring } from "use-spring"
 
-export function Terminal({ texts, index }) {
-  const steps = texts.map(text => ({ text }))
+export function Terminal({ snippets, index }) {
+  const steps = snippets.map(text => ({ text }))
   const [progress] = useSpring(index, {
     decimals: 3,
     stiffness: 34,

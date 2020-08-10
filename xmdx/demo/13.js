@@ -1,9 +1,7 @@
-import React from "react"
+import React, { Children } from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/steps.3.mdx"
-import s from "./12.module.css"
-import { Terminal } from "../src/mini-terminal"
-import { Video } from "@code-hike/player"
+import { TalkLayout } from "../src/talk-layout"
 
 export default function Page() {
   return (
@@ -18,39 +16,25 @@ const components = {
 }
 
 function Wrapper({ children }) {
-  const [stepIndex, setIndex] = React.useState(0)
-  const steps = []
-  const stickers = []
-  const clips = []
-  React.Children.forEach(children, child => {
-    console.log(child.props)
-    const { video, from, to } = child.props
-    const [code, ...step] = React.Children.toArray(
-      child.props.children
-    )
-    clips.push({ src: video, start: from, end: to })
-    steps.push(step)
-    stickers.push(code.props.children.props.children)
+  const steps = Children.toArray(children).map(child => {
+    return Children.toArray(child.props.children).slice(1)
   })
+  const stickers = Children.map(children, child => {
+    return Children.toArray(child.props.children)[0]
+  })
+  const snippets = stickers.map(
+    element => element.props.children.props.children
+  )
+  const clips = Children.map(children, child => {
+    const { video, from, to } = child.props
+    return { src: video, start: from, end: to }
+  })
+
   return (
-    <div className={s.main}>
-      <div className={s.content}>
-        <div className={s.top}>
-          <Terminal texts={stickers} index={stepIndex} />
-          <div className={s.video}>
-            <Video
-              steps={clips}
-              style={{
-                height: "200px",
-              }}
-              muted
-              autoPlay
-              onStepChange={setIndex}
-            />
-          </div>
-        </div>
-        <div className={s.step}>{steps[stepIndex]}</div>
-      </div>
-    </div>
+    <TalkLayout
+      steps={steps}
+      snippets={snippets}
+      clips={clips}
+    />
   )
 }
