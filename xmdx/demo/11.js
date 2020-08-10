@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Children } from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/steps.2.mdx"
 import { Terminal } from "../src/mini-terminal"
@@ -17,23 +17,21 @@ const components = {
 }
 
 function Wrapper({ children }) {
-  const steps = []
-  const stickers = []
-
-  React.Children.forEach(children, child => {
-    console.log(child.props)
-    const [code, ...step] = React.Children.toArray(
-      child.props.children
-    )
-    steps.push(step)
-    stickers.push(code.props.children.props.children)
+  const steps = Children.toArray(children).map(child => {
+    return Children.toArray(child.props.children).slice(1)
   })
+  const stickerList = Children.map(children, child => {
+    return Children.toArray(child.props.children)[0]
+  })
+  const texts = stickerList.map(
+    element => element.props.children.props.children
+  )
 
   return (
     <Scrollytelling
       steps={steps}
       sticker={stepIndex => (
-        <Terminal texts={stickers} index={stepIndex} />
+        <Terminal texts={texts} index={stepIndex} />
       )}
     />
   )

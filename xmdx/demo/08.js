@@ -17,13 +17,16 @@ const components = {
 
 function Wrapper({ children }) {
   const steps = React.Children.toArray(children)
-  const stickers = steps.map((_, i) => (
+  const stickerList = steps.map((_, stepIndex) => (
     <>
       <div>Step</div>
-      <span>{i}</span>
+      <span>{stepIndex}</span>
     </>
   ))
   return (
-    <Scrollytelling steps={steps} stickers={stickers} />
+    <Scrollytelling
+      steps={steps}
+      stickerList={stickerList}
+    />
   )
 }

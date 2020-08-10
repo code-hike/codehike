@@ -6,10 +6,15 @@ import s from "./scrollytelling.module.css"
 
 export { Scrollytelling }
 
-function Scrollytelling({ steps, stickers, sticker }) {
+function Scrollytelling({ steps, stickerList, sticker }) {
   const [stepIndex, setIndex] = React.useState(0)
   return (
     <div className={s.main}>
+      <style global jsx>{`
+        body {
+          margin: 0;
+        }
+      `}</style>
       <div className={s.content}>
         <Scroller onStepChange={setIndex}>
           {steps.map((c, i) => (
@@ -31,7 +36,7 @@ function Scrollytelling({ steps, stickers, sticker }) {
         <div>
           {sticker
             ? sticker(stepIndex)
-            : stickers[stepIndex]}
+            : stickerList[stepIndex]}
         </div>
       </div>
     </div>
