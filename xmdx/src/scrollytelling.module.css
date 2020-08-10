@@ -7,13 +7,13 @@
 
 .content {
   flex: 1;
-  margin: calc(50vh - 200px) 0;
+  margin: calc(50vh - 122px) 0;
 }
 
 .step {
   min-height: 100px;
   background: white;
-  margin: 50px;
+  margin: 0 10px 50px 20px;
   box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
     0 3px 7px -3px rgba(0, 0, 0, 0.3);
   border-radius: 6px;
@@ -21,10 +21,11 @@
   box-sizing: border-box;
   font-family: Ubuntu, Droid Sans, -apple-system,
     BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+  transition: opacity 0.5s;
 }
 
 .sticker {
-  width: 400px;
+  width: 320px;
   height: 100vh;
   display: flex;
   justify-content: center;

@@ -1,11 +1,7 @@
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/steps.2.mdx"
-import {
-  Scroller,
-  Step as ScrollerStep,
-} from "@code-hike/scroller"
-import s from "./09.module.css"
+import { Scrollytelling } from "../src/scrollytelling"
 
 export default function Page() {
   return (
@@ -20,39 +16,18 @@ const components = {
 }
 
 function Wrapper({ children }) {
-  const [stepIndex, setIndex] = React.useState(0)
   const steps = []
   const stickers = []
+
   React.Children.forEach(children, child => {
-    console.log(child.props)
     const [sticker, ...step] = React.Children.toArray(
       child.props.children
     )
     steps.push(step)
     stickers.push(sticker)
   })
+
   return (
-    <div className={s.main}>
-      <div className={s.content}>
-        <Scroller onStepChange={setIndex}>
-          {steps.map((c, i) => (
-            <ScrollerStep
-              key={i}
-              index={i}
-              id={`step-${i}`}
-              className={s.step}
-              style={{
-                opacity: stepIndex === i ? 0.99 : 0.4,
-              }}
-            >
-              {c}
-            </ScrollerStep>
-          ))}
-        </Scroller>
-      </div>
-      <div className={s.sticker}>
-        <div>{stickers[stepIndex]}</div>
-      </div>
-    </div>
+    <Scrollytelling steps={steps} stickers={stickers} />
   )
 }
