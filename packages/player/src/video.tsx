@@ -14,6 +14,7 @@ type VideoProps = {
   steps: Step[]
   onTimeChange?: (time: number, prevTime: number) => void
   onStepChange?: (stepIndex: number) => void
+  containerStyle: React.CSSProperties | undefined
 } & React.PropsWithoutRef<JSX.IntrinsicElements["video"]>
 
 type PlayerHandle = {
@@ -27,6 +28,7 @@ function VideoWithRef(
     steps,
     onTimeChange = () => {},
     onStepChange = () => {},
+    containerStyle,
     ...props
   }: VideoProps,
   parentRef: React.Ref<PlayerHandle>
@@ -93,7 +95,9 @@ function VideoWithRef(
   }
 
   return (
-    <>
+    <div
+      style={{ position: "relative", ...containerStyle }}
+    >
       {prevStep && (
         <video
           src={getSrc(prevStep)}
@@ -102,6 +106,8 @@ function VideoWithRef(
             opacity: 0,
             position: "absolute",
             transition: "opacity 0.5s",
+            top: 0,
+            left: 0,
           }}
           key={state.stepIndex - 1}
         />
@@ -114,8 +120,10 @@ function VideoWithRef(
         style={{
           ...props.style,
           opacity: 1,
-          position: nextStep && "absolute",
-          transition: "opacity 0.5s",
+          // position: nextStep && "absolute",
+          transition: "opacity 0.3s",
+          top: 0,
+          left: 0,
         }}
         onPause={changeStep}
       />
@@ -125,14 +133,16 @@ function VideoWithRef(
           style={{
             ...props.style,
             opacity: 0,
-            // position: "absolute",
-            transition: "opacity 0.5s",
+            position: "absolute",
+            transition: "opacity 0.2s",
+            top: 0,
+            left: 0,
           }}
           ref={nextRef}
           key={state.stepIndex + 1}
         />
       )}
-    </>
+    </div>
   )
 }
 

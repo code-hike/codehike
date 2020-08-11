@@ -181,6 +181,9 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
               >
                 <Video
                   steps={videoSteps}
+                  containerStyle={{
+                    height: "100%",
+                  }}
                   style={{
                     height: "100%",
                   }}
