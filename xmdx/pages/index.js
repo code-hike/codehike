@@ -187,7 +187,6 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
                   style={{
                     height: "100%",
                   }}
-                  muted
                   onStepChange={changeStep}
                   onTimeChange={onTimeChange}
                   ref={playerRef}
@@ -328,6 +327,7 @@ function VideoControls({
       >
         Next
       </button>
+      <div style={{ color: "white" }}>{videoTime}</div>
     </>
   )
 }

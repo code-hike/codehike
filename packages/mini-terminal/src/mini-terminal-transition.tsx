@@ -1,7 +1,7 @@
-import React from "react";
-import { TerminalContent } from "./terminal-content";
-import { MiniFrame } from "@code-hike/mini-frame";
-import "./mini-terminal-transition.css";
+import React from "react"
+import { TerminalContent } from "./terminal-content"
+import { MiniFrame } from "@code-hike/mini-frame"
+import "./mini-terminal-transition.css"
 
 function MiniTerminalTransition({
   title = "bash",
@@ -10,22 +10,27 @@ function MiniTerminalTransition({
   next,
   nextKey,
   progress,
+  className = "",
   ...rest
 }: {
-  title?: string;
-  prev: string;
-  prevKey?: React.Key;
-  next: string;
-  nextKey?: React.Key;
-  progress: number;
+  title?: string
+  prev: string
+  prevKey?: React.Key
+  next: string
+  nextKey?: React.Key
+  progress: number
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>) {
   return (
-    <MiniFrame title={title} {...rest}>
+    <MiniFrame
+      title={title}
+      {...rest}
+      className={"ch-terminal-container " + className}
+    >
       <InnerTerminalTransition
         {...{ prev, prevKey, next, nextKey, progress }}
       />
     </MiniFrame>
-  );
+  )
 }
 
 function InnerTerminalTransition({
@@ -35,11 +40,11 @@ function InnerTerminalTransition({
   nextKey,
   progress,
 }: {
-  prev: string;
-  prevKey?: React.Key;
-  next: string;
-  nextKey?: React.Key;
-  progress: number;
+  prev: string
+  prevKey?: React.Key
+  next: string
+  nextKey?: React.Key
+  progress: number
 }) {
   return (
     <div className="ch-terminal">
@@ -53,7 +58,7 @@ function InnerTerminalTransition({
           text={prev}
           progress={1}
           key={prevKey}
-        ></TerminalContent>
+        />
         <TerminalContent
           style={{ position: "absolute" }}
           text={next}
@@ -62,7 +67,7 @@ function InnerTerminalTransition({
         />
       </div>
     </div>
-  );
+  )
 }
 
-export { MiniTerminalTransition, InnerTerminalTransition };
+export { MiniTerminalTransition, InnerTerminalTransition }

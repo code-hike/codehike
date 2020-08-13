@@ -6,6 +6,10 @@
   color: #fafafa;
   overflow: hidden;
   padding: 0 8px 8px;
-  font-family: Ubuntu, Droid Sans, -apple-system, BlinkMacSystemFont, Segoe WPC,
-    Segoe UI, sans-serif;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+}
+
+.ch-terminal-container .ch-frame-content {
+  background-color: inherit;
 }

@@ -1,24 +1,32 @@
-Let's start with markdown. I'm assuming we all know markdown. There's a reason why it's so popular. It has the right balance between power and readability.
+Let's start with markdown file. I'm assuming we all know markdown. There's a reason why it's so popular, the syntax is so clean.
 
-That's why when I'm writing content for a website I try to put as much as possible inside markdown files.
+I'm sure I'm not the only one who wants to move as much content as possible to markdown, even content that doesn't originally belong to markdown. That's why we have MDX, right? We had to extend the original format so we could fit more types of content.
 
-But sometimes, the layout of the website doesn't match the linear flow of markdown. That's when we can add extra powers to markdown with MDX. and That's what this talk is about.
-
----
-
-Im going to show some MDX tricks using a small Next.js website. Nothing special about Next here, the same could be done with any React app that has a build step.
-
-Most of the magic comes from this import. Here the MDX loader transforms the markdown file into a React component that we can use anywhere in our app.
+In this talk, we'll take this to the extreme, and use MDX for more unusual content and layouts.
 
 ---
 
-There's also an MDX provider component that we can use to customize the output. For example, we can change how we render H1s. Here we are just changing the background but we could do anything with it.
+But first I need to show you how this works. So we are going to start with this small react app.
+
+This is using Next.js but the same applies to any app that has the MDX loader.
 
 ---
 
-Another component we can customize is the wrapper. We can use it to change the style of the container. But what's good about the wrapper is that you have access to the children, and you can transform them and arrange them in any layout you want.
+Most of the magic comes from this import. Here the MDX loader transforms the markdown file into a React component that we can use anywhere. And, as expected, it renders what you can see here on the right.
 
 ---
+
+If we want to change what's rendered, we can use the MDXProvider component. It has a components prop, that let us override any of the default components.
+
+For example, here we are changing all the h1s, adding a purple border.
+
+---
+
+A special component we can override is the Wrapper. The wrapper is the component that wraps the content from the markdown file. Here we are just adding a border to it. But the cool thing about this component, is that we get all the content as React elements in the children prop.
+
+---
+
+>
 
 If we explore the children, you'll see they come with an mdxType. We can use that type to reorder or change what we render.
 

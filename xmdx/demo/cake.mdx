@@ -1,4 +1,4 @@
-<Video src="000.mp4" start={0} end={5} />
+<Video src="001.mp4" start={0} end={40} />
 <Browser url="/01" zoom={0.8} />
 <Editor
   code="hello.md"
@@ -9,7 +9,7 @@
 
 ---
 
-<Video src="000.mp4" start={0} end={5} />
+<Video src="001.mp4" start={40} end={56} />
 <Browser url="/01" zoom={0.8} />
 <Editor
   code="01.js"
@@ -20,7 +20,19 @@
 
 ---
 
-<Video src="000.mp4" start={0} end={5} />
+<Video src="001.mp4" start={56} end={66} />
+<Browser url="/01" zoom={0.8} />
+<Editor
+  code="01.js"
+  focus="2,5[9:22]"
+  lang="jsx"
+  tab="pages/hello.js"
+  tabs={["demo/hello.md", "pages/hello.js"]}
+/>
+
+---
+
+<Video src="001.mp4" start={66} end={84} />
 <Browser url="/02" zoom={0.8} />
 <Editor
   code="02.js"
@@ -31,7 +43,7 @@
 
 ---
 
-<Video src="000.mp4" start={0} end={5} />
+<Video src="001.mp4" start={84} end={200} />
 <Browser url="/03" zoom={0.8} />
 <Editor
   code="03.js"
