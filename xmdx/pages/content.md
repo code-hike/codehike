@@ -22,94 +22,124 @@ For example, here we are changing all the h1s, adding a purple border.
 
 ---
 
-A special component we can override is the Wrapper. The wrapper is the component that wraps the content from the markdown file. Here we are just adding a border to it. But the cool thing about this component, is that we get all the content as React elements in the children prop.
+A special component we can override is the Wrapper. The wrapper is the component that wraps the content. Here we are just adding a border to it. But the cool thing about this component, is that, in the children prop, we get all the content from the markdown file as React elements .
 
 ---
 
->
+And React elements are just javascript objects. So here we are rendering the wrapper children as JSON, and filtering some properties to make it easier to read.
 
-If we explore the children, you'll see they come with an mdxType. We can use that type to reorder or change what we render.
-
-In the MDX docs there's a section called "Manipulating children" with more info about this. But don't google "manipulate children", you don't want that in your google history.
-
-(OR an alternative title for this talk was "Manipulating children for fun and profit" but I guess it could be misunderstood )
+You'll see that it is an array. The first element is an h1, the second a paragraph. Each element comes with an mdxType prop, we can use that type to extract information about the content or to change the elements.
 
 ---
 
-OK, quick example about this. We could get all the H1s, by filtering all the children that have an mdxType equals to h1, and prepend a table of contents to the actual content.
+For example we could get a list of all the H1s from the children, and render that list as a table of contents, before rendering the actual content.
 
-Keep in mind we are doing this on run-time. There are a lot of plugins, for both markdown and mdx, that do things like these on build-time. In fact, we could write plugins to dmove to build-time most of the things we are going to do in this talk. Plugins are a bit more messy because you manipulate the abstract syntax tree instead of React children, but you should definitly consider them if you need better performance.
+This is a simple example, but it illustrates the pattern we are going to use on the rest of the examples from this talk. First we extract some data from the children, and then we render it in a specific way.
+
+Keep in mind that this runs on every render. For most cases, it isn't a performance problem, but if it is, you can move it to a plugin, and run the transformation on build-time.
 
 ---
-
-So far we used markdown. Now let's move to MDX.
 
 I usually write content that has steps, like tutorials or any type of walkthrough where you explain something step by step.
 
-Markdown doesn't have any specific syntax for grouping things in steps. So, here, we can use MDX to fill that gap.
+Markdown doesn't have any specific syntax for grouping things in steps. But we can use MDX to extend markdown and introduce our own syntax. The implementation of the Step component we are using here doesn't matter, we are just using it for grouping elements.
 
-For those unfamiliar with MDX, this isn't the best introduction. The most common usage of MDX is to embbed interactive components inside the markdown content. Here we are using it for something different, we are using MDX for augmenting the markdown content with extra syntax or conventions.
-
----
-
-For example, we can put every step on it's own page. And add some state to the Wrapper, so the user can now change the page.
-
-That's a pretty basic example, let's try something more ambitious.
+If you are new to MDX, this may not be the best introduction. The typical use-case for MDX is embeding interactive components in markdown. But here we are taking a different approach, and using it more as a syntax extension for markdown.
 
 ---
 
-There's a technique called scrollytelling. You may have seen it on some websites. You have content in steps that can be scrolled, and you have a piece of you screen that has fixed or sticky position, and it changes when you scroll to a new step.
+Now, based on the MDX file that has steps, we can write another Wrapper component. In this case, in the children prop, we get one React element for each step.
 
-In modern browsers you can combine features like Intersection Observers and position sticky to make a scrollytelling layout, but luckily for us, I can import a React component that already does that.
+So we can keep track of what step we are showing using React state, and let the user change the current step with a button.
 
-The important thing to see here is that, using the same MDX as in the previous example, we can use it as the source to a very different layout.
+-> click
 
-Now showing the step number in the right is boring. Usually we would want to show some content also from the MDX here.
+-> click
 
----
-
-So the steps will have two parts. We already have the content we show on the left, so we need a place to add the part of step that we want to show on the sticky section on the right.
-
-We are the ones that manipulate the wrapper children, so we could put it anywhere we prefer, we could add a new component or pass it as props. I like to add the convention that the first child of the step is the sticky part and the rest is the scrollable part.
-
-For example we added some code as the first child on each step.
+Ok, now I want to show the same content but with different layout. There's a technique called scrollytelling. You may have seen it on some websites, as the user scrolls down there's some part of the layout that sticks to the screen while the rest is scrolled away. Let's do that.
 
 ---
 
-// TODO remove images step
+Since this is a lightning talk I'll import the ScrollytellingLayout component. I'll share the link to the repo later if you want to see how it works.
 
-And we can change the part where we read the wrapper children, and extract each first child to another list.
+The ScrollytellingLayout component takes two props, one for the left-side that can be scrolled, and the other for the sticky part on the right.
 
-Then we show that first child on the sticky part of the layout when the step changes.
+When the user scrolls to a new step
 
----
+--> scroll
 
-I just happen to have a specific component to show terminal code. Which is cool because it also animates the transitions.
+we show the corresponding element from the sticker list.
 
----
+--> scroll
 
-Now, I've been experimenting with another layout for walkthroughs. Instead of changing the steps using the scroll like in the scrollytelling layout, we can synchronize the steps with some media, like a video or an audio, maybe a podcast, and change the steps as the media progress.
+--> scroll
 
-So the extra information we need for that kind of layout is the name of the file, and a range of time when the step will show.
-
----
-
-I also happen to have a React component for this. So we only need to extract the info from the props and pass it to the Video component.
-
-You'll see how the step changes as soon as I snap my fingers, right... now.
-
-Now, some of you may have noticed that this look similar to the layout of the video of this talk that I'm giving right now.
+Now, instead of showing the step number, let's add the sticker content to the MDX file.
 
 ---
 
-And it is, because this talk was built using this same technique. It's all mdx. It's allways have been.
-
-In fact if you go to https://mdxconf.pomb.us you can interact with the components while you watch the talk, you can select and copy the code or interact with the iframes in the mini browser.
+Suppose we want to show some code in the sticky part of the layout. There isn't any specific syntax for this, so we need to create our own convention. Like, for example, we put the sticky part of the step as the first element.
 
 ---
 
-Ok, that's all I have. I leave you here the links to the repo of the talk. Not the slides, but the talk itself. You run yarn dev and you can watch this talk again.
+Now doing some array transformation, we get the list of steps and the list of stickers and pass them to the same Layout component.
 
-Also there's also my twitter, and the components we used, most of them come from a new project I'm working on, it's called Code Hike and it focuses on code walkthroughs, and tools for making it easy to explain code.
+So when the user scrolls
+
+--> scrolls
+
+the code on the right
+
+--> scrolls
+
+should change accordingly
+
+---
+
+Just for fun, I have a Terminal component that animates between code transitions, so we can use for the stickers.
+
+--> scrolls
+
+--> scrolls
+
+--> scrolls
+
+--> scrolls 0
+
+I've been experimenting with another layout for walkthroughs, instead of changing the steps using the scroll like in this example, we can synchronize the steps with some media, like a video or an audio, maybe a podcast, and change the steps as the media progress.
+
+---
+
+To do that, in the MDX file, we need to specify the media file and the time range for each step.
+
+---
+
+Once we have that, we can extract it from the children on the Wrapper, and pass it to another React component. This time is the TalkLayout component, that solves all the synching for us.
+
+And the steps should change every time I snap the fingers.
+
+--> snap 1
+
+--> snap 2
+
+Some of you may have noticed that this looks similar to the layout of this talk that I'm giving right now.
+
+And it is.
+
+---
+
+This talk was built using this same technique. It's all MDX.
+
+For example, here on the left you can see the code for the step you are currently watching.
+
+---
+
+And the next step.
+
+---
+
+Ok, that's all. I leave you here the links to the repo of the talk. Not the slides, but the talk itself. You run yarn dev and you can watch this talk again.
+
+Also there's my twitter, and the components we used, most of them come from a new project I'm working on, it's called Code Hike and it focuses on code walkthroughs and tools for making it easy to explain code.
 
 Thank you.

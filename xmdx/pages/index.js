@@ -187,6 +187,7 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
                   style={{
                     height: "100%",
                   }}
+                  muted
                   onStepChange={changeStep}
                   onTimeChange={onTimeChange}
                   ref={playerRef}
