@@ -40,7 +40,6 @@ function getStepsFromMDX(children) {
       children,
       child => child.props
     )
-    console.log({ actions })
     // TODO fix production url
     return {
       url: "http://localhost:3000" + url,

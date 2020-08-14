@@ -5,6 +5,7 @@ export { sim }
 type ClickAction = {
   type: "click"
   selector: string
+  offset?: number
 }
 type ScrollAction = {
   type: "scroll"
@@ -21,7 +22,8 @@ function scroll(action: ScrollAction, document: Document) {
 }
 
 function click(action: ClickAction, document: Document) {
-  const element = document.querySelector(action.selector)!
+  const { selector, offset = 100 } = action
+  const element = document.querySelector(selector)!
   // userEvent.click(element)
 
   const elemRect = element.getBoundingClientRect()
@@ -32,8 +34,8 @@ function click(action: ClickAction, document: Document) {
     window.pageXOffset +
     (2 * elemRect.width) / 3
 
-  const startTop = offsetTop + 200
-  const startLeft = offsetLeft + 200
+  const startTop = offsetTop + offset
+  const startLeft = offsetLeft + offset
   const cursor = createCursor()
   cursor.style.position = "absolute"
   cursor.style.top = startTop + "px"
@@ -47,9 +49,8 @@ function click(action: ClickAction, document: Document) {
   requestAnimationFrame(() =>
     requestAnimationFrame(() => {
       // console.log(element.offsetLeft)
-      cursor.style.transform = `translate(${-200}px, ${-200}px) scale(1)`
+      cursor.style.transform = `translate(${-offset}px, ${-offset}px) scale(1)`
       cursor.style.opacity = "1"
-      cursor.style.scale = "1"
     })
   )
 
@@ -57,10 +58,36 @@ function click(action: ClickAction, document: Document) {
     "transitionend",
     async () => {
       userEvent.click(element)
-      cursor.style.opacity = "0"
-      cursor.addEventListener("transitionend", () =>
-        cursor.parentElement!.removeChild(cursor)
+
+      const circle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
       )
+      circle.setAttribute("cx", "8")
+      circle.setAttribute("cy", "5")
+      circle.setAttribute("fill", "currentColor")
+      circle.setAttribute("r", "3")
+      circle.style.opacity = "0.99"
+      circle.style.transformOrigin = "8px 5px"
+      circle.style.transition =
+        "transform 300ms, opacity 300ms"
+
+      const svg = cursor.firstChild as SVGElement
+
+      svg.innerHTML = ""
+      svg.appendChild(circle)
+
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          circle.style.opacity = "0"
+          circle.style.transform = `scale(10)`
+        })
+      )
+
+      circle.addEventListener("transitionend", () => {
+        if (cursor.parentElement)
+          cursor.parentElement.removeChild(cursor)
+      })
     },
     { once: true }
   )
@@ -82,7 +109,7 @@ function createCursor() {
   const div = document.createElement("div")
   div.style.color = "#7387c4"
   div.innerHTML = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 
-  style="display:block; filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, .4))"
+  style="display:block; overflow:visible; filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, .4))"
   viewBox="8 5 28 28" enable-background="new 0 0 28 28" xml:space="preserve" height="28px" width="28px">
 <polygon fill="#FFFFFF" points="8.2,20.9 8.2,4.9 19.8,16.5 13,16.5 12.6,16.6 "/>
 <polygon fill="#FFFFFF" points="17.3,21.6 13.7,23.1 9,12 12.7,10.5 "/>

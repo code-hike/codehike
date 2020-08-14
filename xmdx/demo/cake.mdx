@@ -91,11 +91,21 @@
 
 ---
 
-<Video src="000.mp4" start={0} end={5} />
+<Video src="001.mp4" start={0} end={8} />
 <Browser url="/07" zoom={0.9}>
   <Action on={2} type="click" selector="button" />
-  <Action on={3} type="click" selector="button" />
-  <Action on={4} type="click" selector="button" />
+  <Action
+    on={4}
+    type="click"
+    selector="button"
+    offset={50}
+  />
+  <Action
+    on={6}
+    type="click"
+    selector="button"
+    offset={50}
+  />
 </Browser>
 <Editor
   code="07.js"
