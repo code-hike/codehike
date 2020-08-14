@@ -8,6 +8,7 @@ import { useSpring } from "use-spring"
 import { sim } from "@code-hike/sim-user"
 import { MDXProvider } from "@mdx-js/react"
 import Content from "../demo/cake.mdx"
+import Head from "next/head"
 
 const components = {
   wrapper: Wrapper,
@@ -60,7 +61,20 @@ function getStepsFromMDX(children) {
     }
   })
 
-  console.log({ editorSteps })
+  const captionSteps = splits.map(split => {
+    const pre = split.find(
+      child =>
+        child.props.mdxType === "pre" &&
+        child.props.children.props.className ===
+          "language-srt"
+    )
+    if (!pre) return []
+
+    return parseSrt(pre.props.children.props.children)
+  })
+
+  console.log(splits[0])
+  console.log(captionSteps)
 
   return {
     videoSteps,
@@ -69,9 +83,19 @@ function getStepsFromMDX(children) {
   }
 }
 
+function parseSrt(srt) {
+  const regex = /^[\d\.\:]+\s+[–\-]>\s+[\d\.\:]+$/gm
+  const times = srt.match(regex)
+  const [, ...texts] = srt.split(regex)
+  return times.map((time, i) => ({ time, text: texts[i] }))
+}
+
 export default function Page() {
   return (
     <MDXProvider components={components}>
+      <Head>
+        <title>The X in MDX</title>
+      </Head>
       <Content />
     </MDXProvider>
   )
@@ -169,13 +193,18 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
               ref={browserRef}
             />
           </div>
+          <div className={s.div4}>
+            <pre className={s.captions}>
+              there's a reason why it's so popular, <br />
+              the syntax is so clean
+            </pre>
+          </div>
           <div className={s.div3}>
             <div className={s.video}>
               <div
                 style={{
                   height: "100%",
                   float: "right",
-                  marginRight: -30,
                 }}
               >
                 <Video
@@ -186,7 +215,6 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
                   style={{
                     height: "100%",
                   }}
-                  muted
                   onStepChange={changeStep}
                   onTimeChange={onTimeChange}
                   ref={playerRef}
@@ -202,9 +230,15 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
                 }}
               >
                 <div>
-                  <span style={{ fontSize: "1.2em" }}>
+                  <a
+                    style={{
+                      fontSize: "1.2em",
+                      color: "#F19A38",
+                    }}
+                    href="https://twitter.com/pomber"
+                  >
                     @pomber
-                  </span>
+                  </a>
                   <div style={{ height: 5 }} />
                   <span style={{ fontSize: "1.8em" }}>
                     Rodrigo
@@ -214,9 +248,23 @@ function Talk({ videoSteps, browserSteps, editorSteps }) {
                     Pombo
                   </span>
                   <div style={{ height: 10 }} />
-                  <span style={{ fontSize: "1.3em" }}>
-                    FOO CONF
-                  </span>
+                  <a
+                    style={{ fontSize: "1.3em", margin: 0 }}
+                    href="https://mdxjs.com/conf/"
+                  >
+                    <span
+                      children="<"
+                      style={{
+                        color: "#F19A38",
+                        fontSize: "1.2em",
+                      }}
+                    />
+                    MDXConf
+                    <span
+                      children=" />"
+                      style={{ color: "#F19A38" }}
+                    />
+                  </a>
                 </div>
               </div>
             </div>

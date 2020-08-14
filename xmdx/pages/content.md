@@ -138,7 +138,9 @@ And the next step.
 
 ---
 
-Ok, that's all. I leave you here the links to the repo of the talk. Not the slides, but the talk itself. You run yarn dev and you can watch this talk again.
+Ok, that's all. The talk's takeaway is: you can use MDX to build your own dialect tailored for any specific layuout.
+
+I leave you here the links to the repo of the talk. Not the slides, but the talk itself. You run yarn dev and you can watch this talk again.
 
 Also there's my twitter, and the components we used, most of them come from a new project I'm working on, it's called Code Hike and it focuses on code walkthroughs and tools for making it easy to explain code.
 

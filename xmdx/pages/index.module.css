@@ -18,7 +18,7 @@
   display: grid;
   height: 100%;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   grid-column-gap: 16px;
   grid-row-gap: 16px;
   padding: 16px;
@@ -26,13 +26,34 @@
 }
 
 .div1 {
-  grid-area: 1 / 1 / 7 / 5;
+  grid-area: 1 / 1 / 8 / 5;
 }
 .div2 {
   grid-area: 1 / 5 / 5 / 8;
 }
 .div3 {
   grid-area: 5 / 5 / 7 / 8;
+}
+
+.div4 {
+  grid-area: 7 / 5 / 8 / 8;
+}
+
+.captions {
+  color: #ddd;
+  background-color: #222;
+  border-radius: 6px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+  padding: 0 16px;
+  margin: 0;
 }
 
 .author {
@@ -58,16 +79,25 @@
   position: absolute;
   display: flex;
   align-items: center;
-  text-align: right;
+  text-align: center;
   font-size: 0.8em;
   color: #bbb;
   background: linear-gradient(
     to right,
-    #222 34%,
+    #222 38%,
     transparent 75%
   );
   color: #ddd;
   padding: 32px;
   font-family: Ubuntu, Droid Sans, -apple-system,
     BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+}
+
+.details a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.details a:hover {
+  text-decoration: underline;
 }
