@@ -8,27 +8,27 @@
 />
 
 ```srt
-0.5 –> 6
+1.9 –> 6.8
 Let's start with this markdown file
 I'm assuming we all know markdown
-6 –> 15
+6.6 –> 12
 there's a reason why it's so popular,
-the syntax is so clean
-15 –> 22.5
+it has a very clean syntax
+12 –> 17.1
 I'm sure I'm not the only one who likes
 to move as much content as possible to markdown
-22.5 –> 27.5
+17.1 –> 20.7
 even content that doesn't originally
 belong to markdown
-27.5 –> 29.9
+20.7 –> 23.7
 And that's why we have MDX, right?
-29.9 –> 36
+23.7 –> 31.4
 we had to extend the original format
 so we could put more things on it
-36 –> 39.8
+31.4 –> 34
 In this talk,
 we'll take this to the extreme,
-39.8 –> 48
+34 –> 39
 we'll use MDX for more
 unusual content and layouts.
 ```
@@ -45,11 +45,11 @@ unusual content and layouts.
 />
 
 ```srt
-0.3 –> 3.9
+0.3 –> 3.7
 But first I need to show you how this works
-3.9 –> 8
+3.7 –> 7.9
 we are going to start with this small react app
-8 –> 16
+8 –> 14
 this is using Next.js but the same applies to
 any app that has the MDX loader
 ```
@@ -66,6 +66,17 @@ any app that has the MDX loader
   tabs={["demo/hello.md", "pages/hello.js"]}
 />
 
+```srt
+0.2 -> 3.9
+most of the magic comes from this import
+3.9 -> 11.5
+here the MDX loader transforms the markdown file
+into a React component that we can use anywhere
+11.5 -> 17
+and, you can see, it renders
+what you expect here on the right
+```
+
 ---
 
 <Video src="003.webm" start={0} end={20.03} />
@@ -78,11 +89,15 @@ any app that has the MDX loader
 />
 
 ```srt
-If we want to change what's rendered, we can use the MDXProvider component.
-
-It has a components prop, that let us override any of the default components.
-
-For example, here we are changing all the h1s, adding a purple border.
+0.2 -> 6.5
+if we want to change what's rendered,
+we can use the MDXProvider component
+6.5 -> 13.7
+it has a components prop,
+that let us override any of the default components
+13.7 -> 20
+for example, here we are changing all the h1s,
+and adding a purple border
 ```
 
 ---
@@ -98,11 +113,18 @@ For example, here we are changing all the h1s, adding a purple border.
 />
 
 ```srt
-A special component we can override is the Wrapper.
-
-The wrapper is the component that wraps the content. Here we are just adding a border to it.
-
-But the cool thing about this component is that in the children prop, we get all the content from the markdown file as React elements.
+1.5 -> 5.1
+A special component we can override
+is the Wrapper
+5.1 -> 16.5
+the wrapper is the component that wraps the content,
+here we are just adding a border to it
+16.5 -> 20.5
+but the cool thing about this component
+is that in the children prop
+20.5 -> 26.3
+we get all the content from the markdown file
+as React elements
 ```
 
 ---
@@ -118,15 +140,27 @@ But the cool thing about this component is that in the children prop, we get all
 />
 
 ```srt
-And React elements are just javascript objects.
-
-So here you can see what's inside the children prop.
-
-We are rendering the wrapper children as JSON, and filtering some properties to make it easier to read.
-
-You'll see that it is an array. The first element is an h1, the second a paragraph.
-
-Each element comes with an mdxType, we can, and we will, use that mdxType to extract information about the content or to change the elements.
+0.3 -> 3.9
+and React elements are just javascript objects
+3.9 -> 8.2
+so here you can see what's inside the children prop
+8.2 -> 11.8
+we are rendering the wrapper children as JSON
+11.8 -> 16.4
+and filtering some properties
+to make it easier to read
+16.4 -> 20.45
+you'll see that it is an array
+20.45 -> 24.4
+the first element is an h1,
+the second a paragraph
+24.4 -> 28.5
+each element comes with an mdxType,
+28.5 -> 34.5
+we can, and we will, use that mdxType to
+extract information about the content
+34.5 -> 36.6
+or to change the elements
 ```
 
 ---
@@ -142,13 +176,31 @@ Each element comes with an mdxType, we can, and we will, use that mdxType to ext
 />
 
 ```srt
-For example, we could get a list of all the H1s from the children, and render it as a table of contents.
-
-This is a simple example, but it illustrates the pattern we are going to use on the rest of the examples.
-
-In all of them, first, we extract some data from the children, and then we render it in a specific way.
-
-Keep in mind that this runs on every render. In most cases, it isn't a performance problem, but if it is, you can move it to a plugin, and run the transformation on build-time.
+0 -> 1.5
+For example
+1.5 -> 5.5
+we could get a list of all the H1s
+from the children,
+5.5 -> 9.5
+and render it as a table of contents
+9.5 -> 12.7
+this is a simple example,
+but it illustrates
+12.7 -> 17.3
+the pattern we are going to use
+on the rest of the examples
+17.3 -> 21
+in all of them, first,
+we extract some data from the children,
+21 -> 24.7
+and then we render it in a specific way
+24.7 -> 27.7
+keep in mind that this runs on every render
+27.7 -> 31.3
+in most cases, it isn't a performance problem,
+31.3 -> 37.7
+but if it is, you can move it to a plugin,
+and run the transformation on build-time
 ```
 
 ---
