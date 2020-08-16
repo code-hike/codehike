@@ -8,6 +8,7 @@ import "./mini-browser.css"
 
 type MiniBrowserStep = {
   url?: string
+  loadUrl?: string
   children: React.ReactNode
   zoom?: number
 }
@@ -53,7 +54,7 @@ function MiniBrowserWithRef(
       {currentStep.children || (
         <iframe
           ref={ref}
-          src={currentStep.url}
+          src={currentStep.loadUrl}
           // sandbox={sandbox}
         />
       )}
@@ -63,20 +64,21 @@ function MiniBrowserWithRef(
 
 function useSteps(
   ogSteps: MiniBrowserStep[] | undefined,
-  { zoom, url, children }: MiniBrowserStep
+  { zoom, url, children, loadUrl = url }: MiniBrowserStep
 ) {
   return React.useMemo(() => {
     if (!ogSteps) {
-      return [{ zoom, url, children }]
+      return [{ zoom, url, children, loadUrl }]
     } else {
       return ogSteps.map(s => ({
         zoom,
         url,
         children,
+        loadUrl: s.loadUrl || loadUrl || s.url || url,
         ...s,
       }))
     }
-  }, [ogSteps, zoom, url, children])
+  }, [ogSteps, zoom, url, children, loadUrl])
 }
 
 function Bar({ url }: { url: string }) {

@@ -1,5 +1,5 @@
-<Video src="000.webm" start={0} end={48} />
-<Browser url="/01" zoom={0.8} />
+<Video src="000.webm" start={0} end={39} />
+<Browser url="/hello" loadUrl="/01" zoom={0.8} />
 <Editor
   code="hello.md"
   lang="md"
@@ -35,8 +35,8 @@ unusual content and layouts.
 
 ---
 
-<Video src="001.webm" start={0} end={16} />
-<Browser url="/01" zoom={0.8} />
+<Video src="001.webm" start={0} end={14} />
+<Browser url="/hello" loadUrl="/01" zoom={0.8} />
 <Editor
   code="01.js"
   lang="jsx"
@@ -56,8 +56,8 @@ any app that has the MDX loader
 
 ---
 
-<Video src="002.webm" start={0} end={21} />
-<Browser url="/01" zoom={0.8} />
+<Video src="002.webm" start={0} end={17} />
+<Browser url="/hello" loadUrl="/01" zoom={0.8} />
 <Editor
   code="01.js"
   focus="2,5[9:22]"
@@ -68,8 +68,8 @@ any app that has the MDX loader
 
 ---
 
-<Video src="001.mp4" start={66} end={84} />
-<Browser url="/02" zoom={0.8} />
+<Video src="003.webm" start={0} end={20.03} />
+<Browser url="/hello" loadUrl="/02" zoom={0.8} />
 <Editor
   code="02.js"
   lang="jsx"
@@ -77,10 +77,18 @@ any app that has the MDX loader
   tabs={["demo/hello.md", "pages/hello.js"]}
 />
 
+```srt
+If we want to change what's rendered, we can use the MDXProvider component.
+
+It has a components prop, that let us override any of the default components.
+
+For example, here we are changing all the h1s, adding a purple border.
+```
+
 ---
 
-<Video src="001.mp4" start={84} end={200} />
-<Browser url="/03" zoom={0.8} />
+<Video src="004.webm" start={0} end={26.35} />
+<Browser url="/hello" loadUrl="/03" zoom={0.8} />
 <Editor
   code="03.js"
   focus="13:23"
@@ -89,10 +97,18 @@ any app that has the MDX loader
   tabs={["demo/hello.md", "pages/hello.js"]}
 />
 
+```srt
+A special component we can override is the Wrapper.
+
+The wrapper is the component that wraps the content. Here we are just adding a border to it.
+
+But the cool thing about this component is that in the children prop, we get all the content from the markdown file as React elements.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/04" zoom={1} />
+<Video src="005.webm" start={0} end={36.64} />
+<Browser url="/hello" loadUrl="/04" zoom={1} />
 <Editor
   code="04.js"
   focus="14:20"
@@ -101,10 +117,22 @@ any app that has the MDX loader
   tabs={["demo/hello.md", "pages/hello.js"]}
 />
 
+```srt
+And React elements are just javascript objects.
+
+So here you can see what's inside the children prop.
+
+We are rendering the wrapper children as JSON, and filtering some properties to make it easier to read.
+
+You'll see that it is an array. The first element is an h1, the second a paragraph.
+
+Each element comes with an mdxType, we can, and we will, use that mdxType to extract information about the content or to change the elements.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/05" zoom={1} />
+<Video src="006.webm" start={0} end={37.7} />
+<Browser url="/hello" loadUrl="/05" zoom={1} />
 <Editor
   code="05.js"
   focus="17:35"
@@ -113,10 +141,20 @@ any app that has the MDX loader
   tabs={["demo/hello.md", "pages/hello.js"]}
 />
 
+```srt
+For example, we could get a list of all the H1s from the children, and render it as a table of contents.
+
+This is a simple example, but it illustrates the pattern we are going to use on the rest of the examples.
+
+In all of them, first, we extract some data from the children, and then we render it in a specific way.
+
+Keep in mind that this runs on every render. In most cases, it isn't a performance problem, but if it is, you can move it to a plugin, and run the transformation on build-time.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/06" zoom={0.9} />
+<Video src="007.webm" start={0} end={47.68} />
+<Browser url="/steps" loadUrl="/06" zoom={0.9} />
 <Editor
   code="steps.mdx"
   focus="1:20"
@@ -125,19 +163,29 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+I usually write content that has steps, like tutorials or any type of walkthrough where you explain something step by step.
+
+Markdown doesn't have any specific syntax for grouping things in steps. But we can use MDX to extend markdown and introduce our syntax.
+
+The implementation of the Step component we are using here doesn't matter, we are just using it for grouping elements.
+
+If you are new to MDX, this may not be the best introduction. The typical use-case for MDX is embedding interactive components in markdown. But here we are taking a different approach, and using it more as a syntax extension for markdown.
+```
+
 ---
 
-<Video src="001.mp4" start={0} end={8} />
-<Browser url="/07" zoom={0.9}>
-  <Action on={2} type="click" selector="button" />
+<Video src="008.webm" start={0} end={46.89} />
+<Browser url="/steps" loadUrl="/07" zoom={0.9}>
+  <Action on={20.5} type="click" selector="button" />
   <Action
-    on={4}
+    on={22.5}
     type="click"
     selector="button"
     offset={50}
   />
   <Action
-    on={6}
+    on={24.5}
     type="click"
     selector="button"
     offset={50}
@@ -151,12 +199,30 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Now, based on the MDX file that has steps, we can write another Wrapper component.
+
+In this case, in the children prop, we get one React element for each step.
+
+So we can keep track of what step we are showing using React state, and let the user change the current step with a button.
+
+-> click
+
+-> click
+
+Ok, now I want to show the same content but with a different layout.
+
+There's a technique called scrollytelling. You may have seen it on some websites, as the user scrolls down there's some part of the layout that sticks to the screen while the rest is scrolled away. Let's do that.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/08" zoom={0.6}>
-  <Action on={2} type="scroll" selector="#step-1" />
-  <Action on={4} type="scroll" selector="#step-2" />
+<Video src="009.webm" start={0} end={43.36} />
+<Browser url="/steps" loadUrl="/08" zoom={0.6}>
+  <Action on={24.5} type="scroll" selector="#step-1" />
+  <Action on={30.5} type="scroll" selector="#step-2" />
+  <Action on={32.5} type="scroll" selector="#step-3" />
+  <Action on={34.5} type="scroll" selector="#step-0" />
 </Browser>
 <Editor
   code="08.js"
@@ -166,10 +232,28 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Since this is a lightning talk I'll import the ScrollytellingLayout component. I'll share the link to the repo later if you want to see how it works.
+
+The ScrollytellingLayout component takes two props, one for the left-side that can be scrolled, and the other for the sticky part on the right.
+
+When the user scrolls to a new step
+
+--> scroll
+
+we show the corresponding element from the sticker list.
+
+--> scroll
+
+--> scroll
+
+Now, instead of showing the step number, let's add the sticker content to the MDX file.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/09" zoom={0.6} />
+<Video src="010.webm" start={0} end={18.47} />
+<Browser url="/steps" loadUrl="/09" zoom={0.6} />
 <Editor
   code="steps.2.mdx"
   focus="3:9,17:23,30"
@@ -179,12 +263,19 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Suppose we want to show some code in the sticky part of the layout.
+
+There isn't any specific syntax for this, so we need to create our convention. Like, for example, we put the sticky part of the step as the first element.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/10" zoom={0.6}>
-  <Action on={2} type="scroll" selector="#step-1" />
-  <Action on={4} type="scroll" selector="#step-2" />
+<Video src="011.webm" start={0} end={18.07} />
+<Browser url="/steps" loadUrl="/10" zoom={0.6}>
+  <Action on={12} type="scroll" selector="#step-1" />
+  <Action on={14.5} type="scroll" selector="#step-2" />
+  <Action on={17} type="scroll" selector="#step-3" />
 </Browser>
 <Editor
   code="10.js"
@@ -194,12 +285,28 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Now, doing some array transformation, we get the list of steps and the list of stickers and pass them to the same Layout component.
+
+So when the user scrolls
+
+--> scrolls
+
+the code on the right
+
+--> scrolls
+
+should change accordingly.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/11" zoom={0.6}>
-  <Action on={2} type="scroll" selector="#step-1" />
-  <Action on={4} type="scroll" selector="#step-2" />
+<Video src="012.webm" start={0} end={42.43} />
+<Browser url="/steps" loadUrl="/11" zoom={0.6}>
+  <Action on={10.8} type="scroll" selector="#step-1" />
+  <Action on={12.9} type="scroll" selector="#step-2" />
+  <Action on={15} type="scroll" selector="#step-3" />
+  <Action on={18} type="scroll" selector="#step-0" />
 </Browser>
 <Editor
   code="11.js"
@@ -209,10 +316,28 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Just for fun, I have a Terminal component that animates between code transitions,
+
+so we can use it for the stickers.
+
+--> scrolls
+
+--> scrolls
+
+--> scrolls
+
+--> scrolls 0
+
+I've been experimenting with another layout for walkthroughs,
+instead of changing the steps using the scroll like in this example,
+we can synchronize the steps with some media, like a video or audio, maybe a podcast, and change the steps as the media progress.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/11" zoom={0.6} />
+<Video src="013.webm" start={0} end={8.72} />
+<Browser url="/steps" loadUrl="/11" zoom={0.6} />
 <Editor
   code="steps.3.mdx"
   focus="3,17,19,30"
@@ -221,10 +346,14 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+To do that, in the MDX file, we need to specify the media file and the time range for each step.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
-<Browser url="/13" zoom={0.6} />
+<Video src="014.webm" start={0} end={36.17} />
+<Browser url="/steps" loadUrl="/13" zoom={0.6} />
 <Editor
   code="13.js"
   focus="18,28:40"
@@ -233,9 +362,25 @@ any app that has the MDX loader
   tabs={["demo/steps.mdx", "pages/steps.js"]}
 />
 
+```srt
+Once we have that, we can extract it from the children on the Wrapper, and pass it to another React component.
+
+This time is the TalkLayout component, that solves all the synching for us.
+
+And you should see the steps changing every time I snap the fingers.
+
+--> snap 1
+
+--> snap 2
+
+Some of you may have noticed that this looks similar to the layout of this talk that I'm giving right now.
+
+And it is.
+```
+
 ---
 
-<Video src="000.mp4" start={0} end={5} />
+<Video src="015.webm" start={0} end={14.04} />
 <Browser url="/" zoom={0.4} />
 <Editor
   code="cake.mdx"
@@ -244,3 +389,50 @@ any app that has the MDX loader
   tab="demo/cake.mdx"
   tabs={["demo/cake.mdx", "pages/index.js"]}
 />
+
+```srt
+This talk was built using this same technique. It's all MDX.
+
+For example, here on the left, you can see the code for the step you are currently watching.
+```
+
+---
+
+<Video src="016.webm" start={0} end={0} />
+<Browser url="/" zoom={0.4} />
+<Editor
+  code="cake.mdx"
+  focus="23:30"
+  lang="md"
+  tab="demo/cake.mdx"
+  tabs={["demo/cake.mdx", "pages/index.js"]}
+/>
+
+```srt
+And the next step.
+```
+
+---
+
+<Video src="017.webm" start={0} end={41.53} />
+<Browser url="https://codehike.org" zoom={0.4} />
+<Editor
+  code="cake.mdx"
+  focus="23:30"
+  lang="md"
+  tab="demo/cake.mdx"
+  tabs={["demo/cake.mdx", "pages/index.js"]}
+/>
+
+```srt
+Ok, that's all.
+
+The takeaway is: you can use MDX to build your own dialect tailored for any specific layout.
+
+I leave you here the links to the repo of the talk. Not the slides, but the talk itself. You run yarn dev and you can watch this talk again.
+
+Also, there's my twitter, and the components we used.
+Most of them come from a new project I'm working on, it's called Code Hike and it focuses on code walkthroughs and tools for making it easy to explain code.
+
+Thank you.
+```

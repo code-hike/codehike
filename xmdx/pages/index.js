@@ -105,6 +105,7 @@ function getStepsFromMDX(children) {
 function parseSrt(srt) {
   const regex = /^[\d\.\:]+\s+[–\-]>\s+[\d\.\:]+$/gm
   const times = srt.match(regex)
+  if (!times) return []
   const [, ...texts] = srt.split(regex)
   return times.map((time, i) => {
     const [start, end] = time.match(/[\d\.]+/g).map(t => +t)

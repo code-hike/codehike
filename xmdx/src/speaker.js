@@ -26,7 +26,6 @@ function SpeakerPanelWithRef(
           }}
         >
           <Video
-            muted
             steps={videoSteps}
             containerStyle={{
               height: "100%",
