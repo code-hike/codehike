@@ -5,14 +5,15 @@
     "name": "Rodrigo Pombo",
     "url": "https://twitter.com/pomber"
   },
-  "homepage": "https://mdxconf.pomb.us",
-  "repository": "https://github.com/pomber/mdxconf-2020",
+  "homepage": "https://mdxconf2020.pomb.us",
+  "repository": "https://github.com/pomber/the-x-in-mdx",
   "dependencies": {
     "@code-hike/mini-browser": "0.0.1",
     "@code-hike/mini-editor": "0.0.1",
     "@code-hike/mini-terminal": "0.0.1",
     "@code-hike/player": "0.0.1",
     "@code-hike/scroller": "0.0.1",
+    "@code-hike/sim-user": "0.0.1",
     "@mdx-js/loader": "^1.6.11",
     "@next/mdx": "^9.4.4",
     "next": "^9.4.4",

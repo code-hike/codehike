@@ -1,12 +1,12 @@
 {
-  "name": "xmdx",
-  "version": "0.0.1",
+  "name": "The X in MDX",
+  "version": "2020",
   "author": {
     "name": "Rodrigo Pombo",
     "url": "https://twitter.com/pomber"
   },
-  "homepage": "https://mdxconf.pomb.us",
-  "repository": "https://github.com/pomber/mdxconf-2020",
+  "homepage": "https://mdxconf2020.pomb.us",
+  "repository": "https://github.com/pomber/the-x-in-mdx",
   "dependencies": {
     "@code-hike/mini-browser": "0.0.1",
     "@code-hike/mini-editor": "0.0.1",
