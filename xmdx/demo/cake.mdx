@@ -528,7 +528,11 @@ and here is the next step
 ---
 
 <Video src="017.webm" start={0} end={41.53} />
-<Browser url="https://codehike.org" zoom={0.4} />
+<Browser
+  url="https://codehike.org"
+  zoom={0.5}
+  prependOrigin={false}
+/>
 <Editor
   code="package.json.copy"
   focus="2:16"

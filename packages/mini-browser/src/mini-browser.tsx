@@ -11,6 +11,7 @@ type MiniBrowserStep = {
   loadUrl?: string
   children: React.ReactNode
   zoom?: number
+  prependOrigin?: boolean
 }
 
 type MiniBrowserProps = {
@@ -18,6 +19,8 @@ type MiniBrowserProps = {
   backward?: boolean
   url?: string
   children: React.ReactNode
+  loadUrl?: string
+  prependOrigin?: boolean
   zoom?: number
   steps?: MiniBrowserStep[]
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
@@ -35,11 +38,20 @@ function MiniBrowserWithRef(
     backward = false,
     zoom = 1,
     steps: ogSteps,
+    loadUrl,
+    prependOrigin,
     ...props
   }: MiniBrowserProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
-  const steps = useSteps(ogSteps, { url, children, zoom })
+  const steps = useSteps(ogSteps, {
+    url,
+    children,
+    zoom,
+    loadUrl,
+    prependOrigin,
+  })
+
   const stepIndex = backward
     ? Math.floor(progress)
     : Math.ceil(progress)
@@ -49,7 +61,12 @@ function MiniBrowserWithRef(
       {...props}
       zoom={currentStep.zoom}
       className={`ch-mini-browser ${props.className || ""}`}
-      titleBar={<Bar url={currentStep.url!} />}
+      titleBar={
+        <Bar
+          url={currentStep.url!}
+          linkUrl={currentStep.loadUrl!}
+        />
+      }
     >
       {currentStep.children || (
         <iframe
@@ -64,24 +81,45 @@ function MiniBrowserWithRef(
 
 function useSteps(
   ogSteps: MiniBrowserStep[] | undefined,
-  { zoom, url, children, loadUrl = url }: MiniBrowserStep
+  ogDefaults: MiniBrowserStep
 ) {
+  const defaults = transformStep(ogDefaults)
+  const {
+    zoom,
+    url,
+    children,
+    loadUrl,
+    prependOrigin,
+  } = defaults
+
   return React.useMemo(() => {
     if (!ogSteps) {
-      return [{ zoom, url, children, loadUrl }]
+      return [defaults]
     } else {
-      return ogSteps.map(s => ({
-        zoom,
-        url,
-        children,
-        loadUrl: s.loadUrl || loadUrl || s.url || url,
-        ...s,
-      }))
+      return ogSteps.map(s => {
+        const step = transformStep({
+          prependOrigin: prependOrigin,
+          ...s,
+        })
+        return {
+          zoom,
+          url,
+          children,
+          ...step,
+          loadUrl: step.loadUrl || step.url || loadUrl,
+        }
+      })
     }
-  }, [ogSteps, zoom, url, children, loadUrl])
+  }, [ogSteps, zoom, url, children, loadUrl, prependOrigin])
 }
 
-function Bar({ url }: { url: string }) {
+function Bar({
+  url,
+  linkUrl,
+}: {
+  url: string
+  linkUrl: string
+}) {
   return (
     <>
       <FrameButtons />
@@ -89,9 +127,24 @@ function Bar({ url }: { url: string }) {
       <Forward />
       {/* <Refresh /> */}
       <input value={url} readOnly />
-      <Open href={url} />
+      <Open href={linkUrl} />
     </>
   )
+}
+
+function transformStep(step: MiniBrowserStep) {
+  const currentOrigin =
+    typeof window !== "undefined" ? window.origin : ""
+  const url =
+    step.url && step.prependOrigin === true
+      ? currentOrigin + step.url
+      : step.url
+  const loadUrl = step.loadUrl || url
+  return {
+    ...step,
+    url,
+    loadUrl,
+  }
 }
 
 export { MiniBrowser }

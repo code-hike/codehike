@@ -57,14 +57,12 @@ function getStepsFromMDX(children) {
     const browserElement = split.find(
       child => child.props.mdxType === "Browser"
     )
-    const { url, children, ...rest } = browserElement.props
+    const { children, ...rest } = browserElement.props
     const actions = React.Children.map(
       children,
       child => child.props
     )
-    // TODO fix production url
     return {
-      url: "http://localhost:3000" + url,
       actions,
       ...rest,
     }
