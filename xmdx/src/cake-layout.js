@@ -159,7 +159,7 @@ function VideoControls({
 
   return (
     <>
-      <Range
+      {/* <Range
         step={0.1}
         min={0}
         max={totalSeconds}
@@ -195,7 +195,7 @@ function VideoControls({
             }}
           />
         )}
-      />
+      /> */}
       <button
         onClick={() =>
           onChange({

@@ -1,6 +1,6 @@
 {
   "name": "xmdx",
-  "version": "2020",
+  "version": "2020.08.24",
   "author": {
     "name": "Rodrigo Pombo",
     "url": "https://twitter.com/pomber"
@@ -8,19 +8,21 @@
   "homepage": "https://mdxconf2020.pomb.us",
   "repository": "https://github.com/pomber/the-x-in-mdx",
   "dependencies": {
-    "@code-hike/mini-browser": "0.0.1",
-    "@code-hike/mini-editor": "0.0.1",
-    "@code-hike/mini-terminal": "0.0.1",
-    "@code-hike/player": "0.0.1",
-    "@code-hike/scroller": "0.0.1",
-    "@code-hike/sim-user": "0.0.1",
+    "@code-hike/mini-browser": "0.2.1",
+    "@code-hike/mini-editor": "0.2.1",
+    "@code-hike/mini-terminal": "0.2.1",
+    "@code-hike/player": "0.2.1",
+    "@code-hike/scroller": "0.2.1",
+    "@code-hike/sim-user": "0.2.1",
     "@mdx-js/loader": "^1.6.11",
     "@next/mdx": "^9.4.4",
     "next": "^9.4.4",
+    "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-range": "^1.6.7",
-    "use-spring": "^0.2.3"
+    "use-spring": "^0.2.3",
+    "theme-ui": "0.3.1"
   },
   "scripts": {
     "dev": "next"
