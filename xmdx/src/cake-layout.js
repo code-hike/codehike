@@ -196,7 +196,7 @@ function VideoControls({
           />
         )}
       /> */}
-      <button
+      {/* <button
         onClick={() =>
           onChange({
             stepIndex: stepIndex - 1,
@@ -205,13 +205,13 @@ function VideoControls({
         }
       >
         Prev
-      </button>
+      </button> */}
       {isPlaying ? (
         <button onClick={pause}>Pause</button>
       ) : (
         <button onClick={play}>Play</button>
       )}
-      <button
+      {/* <button
         onClick={() =>
           onChange({
             stepIndex: stepIndex + 1,
@@ -221,7 +221,7 @@ function VideoControls({
       >
         Next
       </button>
-      <div style={{ color: "white" }}>{videoTime}</div>
+      <div style={{ color: "white" }}>{videoTime}</div> */}
     </>
   )
 }
