@@ -146,6 +146,11 @@
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 }
 
+.tools .sponsors {
+  width: 286px;
+  height: 165px;
+}
+
 .tools .noMedia {
   /* padding: 15px 28px 20px; */
   width: 100%;
