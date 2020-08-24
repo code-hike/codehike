@@ -18,10 +18,14 @@ function LandingPage() {
         slides, videos, workshops, docs, and so on.
       </p>
       <div className={s.experimental}>
-        <span className={s.label}>July 2020 status:</span>{" "}
+        <span className={s.label}>August 2020 status:</span>{" "}
         <p>
-          Currently working on prototypes and refining the APIs and package's
-          boundaries. No packages published to npm yet.
+          <a href="https://www.npmjs.com/org/code-hike">
+            Experimental versions on NPM
+          </a>
+          . Still very unstable, very undocumented, very
+          buggy, and not very fast. Codesandbox examples
+          coming soon for early adopters.
         </p>
         <p>
           Follow <a href="https://twitter.com/codehike_">@codehike_</a> for
