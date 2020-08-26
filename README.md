@@ -12,5 +12,6 @@
 Code Hike is an open-source toolset for building all types of **code walkthroughs**: blog posts, tutorials, quickstarts, slides, videos, workshops, docs, and so on.
 
 > **August 2020 status:** [Experimental versions on NPM](https://www.npmjs.com/org/code-hike). Still very unstable, very undocumented, very buggy, and not very fast. Codesandbox examples coming soon for early adopters.
->
-> Follow [@codehike_](https://twitter.com/codehike_) for updates. [Sponsor Code Hike](https://github.com/sponsors/code-hike) if you wanna help.
+
+
+Follow [@codehike_](https://twitter.com/codehike_) for updates. [Sponsor Code Hike](https://github.com/sponsors/code-hike) if you wanna help.
