@@ -1,11 +1,11 @@
-import React from "react";
-import s from "./landing.module.css";
-import { CodeHikeHead } from "./code-hike-head";
-import Link from "next/link";
-import { Header } from "./header";
-import { Footer } from "./footer";
+import React from "react"
+import s from "./landing.module.css"
+import { CodeHikeHead } from "./code-hike-head"
+import Link from "next/link"
+import { Header } from "./header"
+import { Footer } from "./footer"
 
-export { LandingPage };
+export { LandingPage }
 
 function LandingPage() {
   return (
@@ -13,20 +13,30 @@ function LandingPage() {
       <CodeHikeHead />
       <Header className={s.header} />
       <p className={s.description}>
-        Code Hike is an open-source toolset for building all types of{" "}
-        <strong>code walkthroughs</strong>: blog posts, tutorials, quickstarts,
-        slides, videos, workshops, docs, and so on.
+        Code Hike is an open-source toolset for building all
+        types of <strong>code walkthroughs</strong>: blog
+        posts, tutorials, quickstarts, slides, videos,
+        workshops, docs, and so on.
       </p>
       <div className={s.experimental}>
-        <span className={s.label}>July 2020 status:</span>{" "}
+        <span className={s.label}>August 2020 status:</span>{" "}
         <p>
-          Currently working on prototypes and refining the APIs and package's
-          boundaries. No packages published to npm yet.
+          <a href="https://www.npmjs.com/org/code-hike">
+            Experimental versions on NPM
+          </a>
+          . Still very unstable, very undocumented, very
+          buggy, and not very fast. Codesandbox examples
+          coming soon for early adopters.
         </p>
         <p>
-          Follow <a href="https://twitter.com/codehike_">@codehike_</a> for
-          updates.{" "}
-          <a href="https://github.com/sponsors/code-hike">Sponsor Code Hike</a>{" "}
+          Follow{" "}
+          <a href="https://twitter.com/codehike_">
+            @codehike_
+          </a>{" "}
+          for updates.{" "}
+          <a href="https://github.com/sponsors/code-hike">
+            Sponsor Code Hike
+          </a>{" "}
           if you wanna help.
         </p>
       </div>
@@ -34,7 +44,7 @@ function LandingPage() {
       <Tools />
       <Footer />
     </div>
-  );
+  )
 }
 
 function Demos() {
@@ -46,7 +56,10 @@ function Demos() {
             <Link href="demo/hooks-talk">
               <a className={s.box}>
                 <h3>Player Demo</h3>
-                <img src="/video-tutorial.png" style={{ padding: "2.32% 0" }} />
+                <img
+                  src="/video-tutorial.png"
+                  style={{ padding: "2.32% 0" }}
+                />
               </a>
             </Link>
           </li>
@@ -61,7 +74,7 @@ function Demos() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
 
 function Tools() {
@@ -74,7 +87,11 @@ function Tools() {
           img="/mini-terminal.png"
           href="mini-terminal"
         />
-        <Tool title="MINI EDITOR" img="/mini-editor.png" href="mini-editor" />
+        <Tool
+          title="MINI EDITOR"
+          img="/mini-editor.png"
+          href="mini-editor"
+        />
         <Tool
           title="MINI BROWSER"
           img="/mini-browser.png"
@@ -88,7 +105,7 @@ function Tools() {
         <Tool title="MORE COMING SOON" href="#" />
       </ul>
     </div>
-  );
+  )
 }
 
 function Tool({ title, img, href }) {
@@ -109,5 +126,5 @@ function Tool({ title, img, href }) {
         </a>
       </Link>
     </li>
-  );
+  )
 }
