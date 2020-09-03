@@ -1,16 +1,16 @@
 {
   "name": "storybook",
-  "version": "0.0.1",
+  "version": "0.2.1",
   "scripts": {
     "start": "start-storybook -c ./src",
     "build": "build-storybook -c ./src -o ./dist"
   },
   "dependencies": {
-    "@code-hike/mini-browser": "0.0.1",
-    "@code-hike/mini-frame": "0.0.1",
-    "@code-hike/mini-terminal": "0.0.1",
-    "@code-hike/player": "0.0.1",
-    "@code-hike/sim-user": "0.0.1",
+    "@code-hike/mini-browser": "0.2.1",
+    "@code-hike/mini-frame": "0.2.1",
+    "@code-hike/mini-terminal": "0.2.1",
+    "@code-hike/player": "0.2.1",
+    "@code-hike/sim-user": "0.2.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },

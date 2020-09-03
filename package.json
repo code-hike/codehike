@@ -4,8 +4,7 @@
     "packages": [
       "packages/*",
       "storybook",
-      "site",
-      "xmdx"
+      "site"
     ]
   },
   "scripts": {
