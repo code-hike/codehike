@@ -4,3 +4,6 @@
 [submodule "demos/hooks-talk-demo"]
 	path = demos/hooks-talk-demo
 	url = https://github.com/code-hike/hooks-talk-demo
+[submodule "demos/swr-minidocs-demo"]
+	path = demos/swr-minidocs-demo
+	url = https://github.com/code-hike/swr-minidocs-demo
