@@ -4,5 +4,3 @@ todo.md
 dist
 yarn-error.log
 site/out
-xmdx/public/*.mp4
-xmdx/public/*.webm

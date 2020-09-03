@@ -1,3 +1,6 @@
 [submodule "demos/the-x-in-mdx"]
 	path = demos/the-x-in-mdx
 	url = https://github.com/pomber/the-x-in-mdx
+[submodule "demos/hooks-talk-demo"]
+	path = demos/hooks-talk-demo
+	url = https://github.com/code-hike/hooks-talk-demo

@@ -8301,7 +8301,7 @@ next@^9.4.0:
     webpack "4.43.0"
     webpack-sources "1.4.3"
 
-next@^9.4.4:
+next@^9.4.4, next@^9.5.3:
   version "9.5.3"
   resolved "https://registry.yarnpkg.com/next/-/next-9.5.3.tgz#7af5270631f98d330a7f75a6e8e1ac202aa155e2"
   integrity sha512-DGrpTNGV2RNMwLaSzpgbkbaUuVk30X71/roXHS10isSXo2Gm+qWcjonDyOxf1KmOvHZRHA/Fa+LaAR7ysdYS3A==
