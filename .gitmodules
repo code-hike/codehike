@@ -1,0 +1,3 @@
+[submodule "demos/the-x-in-mdx"]
+	path = demos/the-x-in-mdx
+	url = https://github.com/pomber/the-x-in-mdx
