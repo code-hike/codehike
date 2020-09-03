@@ -3,6 +3,7 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "demos/*",
       "storybook",
       "site"
     ]
