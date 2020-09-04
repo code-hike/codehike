@@ -7,3 +7,6 @@
 [submodule "demos/swr-minidocs-demo"]
 	path = demos/swr-minidocs-demo
 	url = https://github.com/code-hike/swr-minidocs-demo
+[submodule "demos/nextjs-post-demo"]
+	path = demos/nextjs-post-demo
+	url = https://github.com/code-hike/nextjs-post-demo
