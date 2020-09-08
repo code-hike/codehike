@@ -1,13 +1,25 @@
 :root {
   --accent-color: #7387c4;
+  --accent-100: #bbc4e2; /* AAA with #333 background */
+  --accent-200: #a3b0d8;
+  --accent-300: #8b9bce; /* AA with #333 background */
+  --accent-400: #7387c4;
+  --accent-500: #5b73ba; /* AA with #fafafa background */
+  --accent-600: #4860ab;
+  --accent-700: #3e5393; /* AAA with #fafafa background */
+  --accent-800: #34467b;
+  --accent-900: #202b4b;
+  --white: #fafafa;
+  --dark: #333333;
 }
 
 body {
   margin: 0;
   /* background: #fafafa; */
   color: #4f4f4f;
-  font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
-    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
 
 @font-face {

@@ -9695,10 +9695,10 @@ react-fast-compare@^3.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-fit-to-viewport@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-fit-to-viewport/-/react-fit-to-viewport-0.1.0.tgz#ca0c1f44f27dee7f73775786dc82ad4f89c391e8"
-  integrity sha512-P+Wp7S4R87O6ptBQrWH92FEFFGupYrgl68Paw5l4k+oWJ2THPB7mjpNZWpBafvp+GPQffuJdRYWhJ7XgMRU8gQ==
+react-fit-to-viewport@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-fit-to-viewport/-/react-fit-to-viewport-0.1.1.tgz#a4d1426916dd252129eb2f858d07781e10bfe92e"
+  integrity sha512-Bpq6+/QSFwkzMkujqexXFJpGdTeP9TDBIGE5elximTA6+pGrPxErHGpStKE71ZvTKOByM6JaLtjgY6eR8dKcwQ==
 
 react-focus-lock@^2.1.0:
   version "2.4.0"

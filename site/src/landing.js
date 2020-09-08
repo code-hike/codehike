@@ -10,7 +10,7 @@ export { LandingPage }
 function LandingPage() {
   return (
     <div className={s.main}>
-      <CodeHikeHead />
+      <CodeHikeHead title="Marvellous code walkthroughs - Code Hike" />
       <Header className={s.header} />
       <p className={s.description}>
         Code Hike is an open-source toolset for building all
