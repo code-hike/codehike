@@ -10,43 +10,6 @@
   font-size: 0.7em;
 }
 
-.description {
-  /* background: #eec; */
-  max-width: 576px;
-  padding: 32px;
-  margin: 0 auto;
-  font-size: 1.62em;
-}
-
-.experimental {
-  /* background: #eec; */
-  max-width: 576px;
-  padding: 16px 32px;
-  margin: 32px auto 64px;
-  font-size: 1.1em;
-  border-radius: 6px;
-  border: 1px solid #92273c;
-}
-
-.experimental .label {
-  font-weight: bold;
-  /* text-transform: uppercase; */
-}
-
-.experimental .status {
-  font-weight: bold;
-  /* text-transform: uppercase; */
-  background: #f3c7cf;
-  color: #92273c;
-  border-radius: 2px;
-  display: inline-block;
-  padding: 2px 8px;
-}
-
-.experimental p {
-  font-size: 1rem;
-}
-
 .demos {
   /* background: #ece; */
   padding: 32px;
@@ -130,7 +93,7 @@
 }
 
 .tools .box:hover {
-  color: var(--accent-color);
+  color: var(--accent-500);
 }
 
 .tools .box h3 {
@@ -143,7 +106,8 @@
   width: 286px;
   height: 165px;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+    0 8px 16px -8px rgba(0, 0, 0, 0.3),
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 }
 
 .tools .noMedia {
@@ -181,18 +145,5 @@
 @media screen and (max-width: 725px) {
   .header {
     font-size: 0.4em;
-  }
-  .description {
-    font-size: 1.2em;
-  }
-
-  .experimental {
-    /* background: #eec; */
-    max-width: 576px;
-    padding: 16px 32px;
-    margin: 32px auto 64px;
-    font-size: 1.1em;
-    border-radius: 6px;
-    border: none;
   }
 }
