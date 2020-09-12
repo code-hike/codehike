@@ -5,9 +5,9 @@ export { Showcase }
 
 function Showcase() {
   return (
-    <section>
+    <section className={s.showcase}>
       <h2 className={s.title}>Showcase</h2>
-      <Carrousel>
+      <Carousel>
         <div>
           <div></div>
           <h3>Talk</h3>
@@ -20,27 +20,47 @@ function Showcase() {
           <div></div>
           <h3>Mini Docs</h3>
         </div>
-      </Carrousel>
+      </Carousel>
     </section>
   )
 }
 
-function Carrousel({ children }) {
+function Carousel({ children }) {
   const kids = React.Children.toArray(children)
   const [step, setStep] = React.useState(0)
   return (
-    <div>
-      <button
-        onClick={() => setStep(modulo(step - 1, kids))}
-      >
-        Prev
-      </button>
-      {kids[step]}
-      <button
-        onClick={() => setStep(modulo(step + 1, kids))}
-      >
-        Next
-      </button>
+    <div className={s.carousel}>
+      <div className={s.container}>
+        <Slide>{kids[step]}</Slide>
+        <Slide className={s.left}>
+          {kids[modulo(step - 1, kids)]}
+        </Slide>
+        <Slide className={s.right}>
+          {kids[modulo(step + 1, kids)]}
+        </Slide>
+        <button
+          className={`${s.carouselButton} ${s.left}`}
+          onClick={() => setStep(modulo(step - 1, kids))}
+        >
+          Prev
+        </button>
+        <button
+          className={`${s.carouselButton} ${s.right}`}
+          onClick={() => setStep(modulo(step + 1, kids))}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function Slide({ children, className }) {
+  return (
+    <div
+      className={`${s.slideContainer} ${className || ""}`}
+    >
+      <div className={s.slide}>{children}</div>
     </div>
   )
 }

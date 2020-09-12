@@ -1,4 +1,55 @@
+.showcase {
+  overflow: hidden;
+  background-color: salmon;
+}
+
 .title {
   text-align: center;
   font-size: 1.6em;
+}
+
+.carousel {
+  background-color: lime;
+}
+
+.carousel .container {
+  height: 300px;
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--accent-800);
+  padding: -1px;
+}
+
+.slideContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.left {
+  right: 100%;
+}
+.right {
+  left: 100%;
+}
+
+.slide {
+  --slide-margin: 16px;
+  position: absolute;
+  top: var(--slide-margin);
+  bottom: var(--slide-margin);
+  left: var(--slide-margin);
+  right: var(--slide-margin);
+  background-color: var(--accent-100);
+}
+
+.slide h3 {
+  text-align: center;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
