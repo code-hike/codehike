@@ -46,7 +46,7 @@
 }
 
 .demos .box:hover {
-  color: var(--accent-color);
+  color: var(--accent-500);
 }
 
 .demos .box h3 {

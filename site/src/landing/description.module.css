@@ -49,7 +49,7 @@
 .experimental {
   /* background: #eec; */
   max-width: 576px;
-  padding: 16px 32px;
+  padding: 32px 32px;
   font-size: 1.1em;
   border-radius: 6px;
   border: 2px solid var(--accent-500);
@@ -72,4 +72,21 @@
 
 .experimental p {
   font-size: 1rem;
+  margin-bottom: 0;
+}
+
+.getStarted {
+  margin: 0 auto;
+  display: block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  width: max-content;
+  background: var(--accent-500);
+  color: white;
+  font-size: 1.2em;
+}
+
+.getStarted:hover {
+  text-decoration: none;
 }

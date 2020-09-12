@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Header } from "./header"
 import { Footer } from "./footer"
 import { Description } from "./landing/description"
+import { Showcase } from "./landing/showcase"
 
 export { LandingPage }
 
@@ -15,6 +16,7 @@ function LandingPage() {
       <Header className={s.header} />
       <Description />
       <Showcase />
+      <ShowcaseX />
       <Sponsors />
       <Tools />
       <Footer />
@@ -22,7 +24,7 @@ function LandingPage() {
   )
 }
 
-function Showcase() {
+function ShowcaseX() {
   return (
     <div className={s.demos}>
       <h2>Showcase</h2>
