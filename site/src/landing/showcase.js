@@ -10,64 +10,78 @@ function Showcase() {
       <h2 className={s.title}>Showcase</h2>
       <Carousel>
         <div style={{ height: "100%" }}>
+          <img
+            style={{
+              opacity: "var(--opacity)",
+              width: "100%",
+              height: "auto",
+              background: "#222",
+              margin: "0 auto",
+              transform: "translateZ(-40px)",
+            }}
+            src="talk-cover.png"
+          />
           <h3
             style={{
               transform: "translateZ(20px)",
               opacity: "var(--opacity)",
+              margin: 0,
+              fontSize: "1.6em",
             }}
           >
             0 Talk
           </h3>
-          <div
+        </div>
+        <div style={{ height: "100%" }}>
+          <img
             style={{
-              width: 200,
-              height: 150,
+              opacity: "var(--opacity)",
+              width: "100%",
+              height: "auto",
               background: "#222",
               margin: "0 auto",
               transform: "translateZ(-40px)",
-              opacity: "var(--opacity)",
             }}
+            src="talk-cover.png"
           />
-        </div>
-        <div style={{ height: "100%" }}>
           <h3
             style={{
-              opacity: "var(--opacity)",
               transform: "translateZ(20px)",
+              opacity: "var(--opacity)",
+              margin: 0,
+              fontSize: "1.6em",
             }}
           >
             1 Tutorial
           </h3>
-          <div
+        </div>
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img
             style={{
               opacity: "var(--opacity)",
-              width: "50%",
-              height: "50%",
+              width: "400px",
+              height: "100%",
               background: "#222",
-              margin: "0 auto",
               transform: "translateZ(-40px)",
             }}
+            src="talk-cover.png"
           />
-        </div>
-        <div style={{ height: "100%" }}>
           <h3
             style={{
               opacity: "var(--opacity)",
               transform: "translateZ(20px)",
+              fontSize: "1.6em",
             }}
           >
-            2 Mini Docs
+            2 Mini <br /> Docs
           </h3>
-          <div
-            style={{
-              opacity: "var(--opacity)",
-              width: 200,
-              height: 150,
-              background: "#222",
-              margin: "0 auto",
-              transform: "translateZ(-40px)",
-            }}
-          />
         </div>
       </Carousel>
     </section>
@@ -77,7 +91,7 @@ function Showcase() {
 function Carousel({ children }) {
   const kids = React.Children.toArray(children)
   const [step, setStep] = React.useState(0)
-  const [progress] = useSpring(step)
+  const [progress] = useSpring(step, { decimals: 3 })
   const {
     leftIndex,
     middleIndex,

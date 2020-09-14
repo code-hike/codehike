@@ -6,13 +6,16 @@
 .title {
   text-align: center;
   font-size: 1.8em;
+  margin-bottom: 0;
 }
 
 .carousel .container {
-  height: 300px;
-  width: 500px;
+  --slide-h: 600;
+  --slide-w: 800;
+  height: calc(var(--slide-h) * 1px);
+  width: calc(var(--slide-w) * 1px);
   max-width: 80vw;
-  max-height: calc(80vw * 300 / 500);
+  max-height: calc(80vw * var(--slide-h) / var(--slide-w));
   margin: 0 auto;
   position: relative;
   perspective: 200px;
@@ -57,7 +60,12 @@
 .carouselButton {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
+}
+.carouselButton.left {
+  transform: translate(50%, -50%);
+}
+.carouselButton.right {
+  transform: translate(-50%, -50%);
 }
