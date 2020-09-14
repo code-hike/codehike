@@ -36,9 +36,17 @@ export function Description() {
         tutorials, quickstarts, slides, videos, workshops,
         docs, and so on.
       </p>
-      <a className={s.getStarted} href="#building-blocks">
-        Get Started
-      </a>
+      <div className={s.buttons}>
+        <a
+          className={s.github}
+          href="https://github.com/code-hike/codehike"
+        >
+          GitHub
+        </a>
+        <a className={s.getStarted} href="#building-blocks">
+          Get Started
+        </a>
+      </div>
     </>
   )
 }

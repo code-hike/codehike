@@ -74,19 +74,33 @@
   font-size: 1rem;
   margin-bottom: 0;
 }
-
-.getStarted {
+.buttons {
   margin: 0 auto;
-  display: block;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
   width: max-content;
-  background: var(--accent-500);
-  color: white;
-  font-size: 1.2em;
 }
 
-.getStarted:hover {
+.buttons a {
+  width: 110px;
+  display: inline-block;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin: 0 8px;
+  font-size: 1.2em;
+  border: 2px solid;
+}
+
+.github {
+  border-color: var(--dark);
+  color: var(--dark);
+}
+
+.getStarted {
+  border-color: var(--accent-500) !important;
+  background: var(--accent-500);
+  color: var(--white);
+}
+
+.buttons a:hover {
   text-decoration: none;
 }
