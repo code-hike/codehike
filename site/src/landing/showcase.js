@@ -151,13 +151,9 @@ function getIndexes(progress, listLength) {
   const left = middle - 1
   const right = middle + 1
 
-  const delta =
-    stepProgress <= 0.5 ? progress % 1 : (progress % 1) - 1
-
-  const middleOpacity =
-    stepProgress <= 0.5 ? 1 - delta : delta + 1
-  const leftOpacity = 1 - middleOpacity
-  const rightOpacity = 1 - middleOpacity
+  const middleOpacity = 1 - Math.abs(progress - middle)
+  const leftOpacity = 1 - Math.abs(progress - left)
+  const rightOpacity = 1 - Math.abs(progress - right)
 
   return {
     leftIndex: modulo(left, listLength),
@@ -166,8 +162,7 @@ function getIndexes(progress, listLength) {
     leftOpacity,
     middleOpacity,
     rightOpacity,
-
-    translatePercentage: delta * 100,
+    translatePercentage: (progress - middle) * 100,
   }
 }
 

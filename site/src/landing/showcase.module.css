@@ -1,10 +1,11 @@
 .showcase {
   overflow: hidden;
+  margin-top: 64px;
 }
 
 .title {
   text-align: center;
-  font-size: 1.6em;
+  font-size: 1.8em;
 }
 
 .carousel .container {
