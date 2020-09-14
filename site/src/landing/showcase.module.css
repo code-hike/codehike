@@ -18,7 +18,12 @@
   margin: 0 auto;
   position: relative;
   background-color: var(--accent-800);
-  padding: -1px;
+}
+
+.carousel .centerContainer {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 .slideContainer {

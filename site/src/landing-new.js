@@ -16,7 +16,7 @@ function LandingPage() {
       <Header className={s.header} />
       <Description />
       <Showcase />
-      <ShowcaseX />
+      {/* <ShowcaseX /> */}
       <Sponsors />
       <Tools />
       <Footer />
