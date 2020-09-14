@@ -65,7 +65,7 @@ function Sponsors() {
 
 function Tools() {
   return (
-    <div className={s.tools}>
+    <div className={s.tools} id="building-blocks">
       <h2>Building Blocks</h2>
       <ul className={s.list}>
         <Tool

@@ -1,6 +1,5 @@
 .showcase {
   overflow: hidden;
-  background-color: salmon;
 }
 
 .title {
@@ -8,25 +7,25 @@
   font-size: 1.6em;
 }
 
-.carousel {
-  background-color: lime;
-}
-
 .carousel .container {
   height: 300px;
   width: 500px;
+  max-width: 80vw;
+  max-height: calc(80vw * 300 / 500);
   margin: 0 auto;
   position: relative;
-  background-color: var(--accent-800);
+  perspective: 200px;
 }
 
 .carousel .centerContainer {
   height: 100%;
   width: 100%;
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .slideContainer {
+  transform-style: preserve-3d;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -40,13 +39,14 @@
 }
 
 .slide {
+  transform-style: preserve-3d;
   --slide-margin: 16px;
   position: absolute;
   top: var(--slide-margin);
   bottom: var(--slide-margin);
   left: var(--slide-margin);
   right: var(--slide-margin);
-  background-color: var(--accent-100);
+  /* border: 1px solid var(--accent-100); */
 }
 
 .slide h3 {
@@ -57,4 +57,6 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  background: none;
+  border: none;
 }
