@@ -15,9 +15,14 @@ function LandingPage() {
       <CodeHikeHead title="Marvellous code walkthroughs - Code Hike" />
       <Header className={s.header} />
       <Description />
+      <SectionTitle>Showcase</SectionTitle>
       <Showcase />
       {/* <ShowcaseX /> */}
+      <SectionTitle>Sponsors</SectionTitle>
       <Sponsors />
+      <SectionTitle id="building-blocks">
+        Building Blocks
+      </SectionTitle>
       <Tools />
       <Footer />
     </div>
@@ -66,7 +71,6 @@ function Sponsors() {
 function Tools() {
   return (
     <div className={s.tools} id="building-blocks">
-      <h2>Building Blocks</h2>
       <ul className={s.list}>
         <Tool
           title="MINI TERMINAL"
@@ -112,5 +116,17 @@ function Tool({ title, img, href }) {
         </a>
       </Link>
     </li>
+  )
+}
+
+function SectionTitle({ children, id }) {
+  return (
+    <div className={s.titleContainer}>
+      <div className={s.line} />
+      <h2 className={s.title} id={id}>
+        {children}
+      </h2>
+      <div className={s.line} />
+    </div>
   )
 }

@@ -10,6 +10,25 @@
   font-size: 0.7em;
 }
 
+.titleContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.title {
+  font-size: 1.8em;
+  margin: 0;
+}
+
+.titleContainer .line {
+  border: 1px solid var(--accent-500);
+  height: 0;
+  flex: 1;
+  margin: 0 32px;
+}
+
 .demos {
   /* background: #ece; */
   padding: 32px;
