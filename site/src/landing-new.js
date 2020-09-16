@@ -6,10 +6,11 @@ import { Header } from "./header"
 import { Footer } from "./footer"
 import { Description } from "./landing/description"
 import { Showcase } from "./landing/showcase"
+import { Sponsors } from "./landing/sponsors"
 
 export { LandingPage }
 
-function LandingPage() {
+function LandingPage({ sponsors }) {
   return (
     <div className={s.main}>
       <CodeHikeHead title="Marvellous code walkthroughs - Code Hike" />
@@ -19,7 +20,7 @@ function LandingPage() {
       <Showcase />
       {/* <ShowcaseX /> */}
       <SectionTitle>Sponsors</SectionTitle>
-      <Sponsors />
+      <Sponsors sponsors={sponsors} />
       <SectionTitle id="building-blocks">
         Building Blocks
       </SectionTitle>
@@ -57,14 +58,6 @@ function ShowcaseX() {
         </ul>
       </div>
     </div>
-  )
-}
-
-function Sponsors() {
-  return (
-    <section>
-      <h2>Sponsors</h2>
-    </section>
   )
 }
 
