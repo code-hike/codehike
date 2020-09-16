@@ -47,10 +47,21 @@
   top: 50%;
   background: none;
   border: none;
+  border-radius: 50%;
+  padding: 0;
 }
 .carouselButton.left {
   transform: translate(50%, -50%);
 }
 .carouselButton.right {
   transform: translate(-50%, -50%);
+}
+.carouselButton svg {
+  width: calc(var(--h) * 14);
+  height: calc(var(--h) * 14);
+}
+
+.carouselButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--accent-100);
 }
