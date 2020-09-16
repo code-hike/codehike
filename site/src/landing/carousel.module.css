@@ -1,5 +1,5 @@
 .carousel .container {
-  --slide-h: 600;
+  --slide-h: 520;
   --slide-w: 800;
   height: calc(var(--slide-h) * 1px);
   width: calc(var(--slide-w) * 1px);

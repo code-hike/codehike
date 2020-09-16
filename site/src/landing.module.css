@@ -23,7 +23,7 @@
 }
 
 .titleContainer .line {
-  border: 1px solid var(--accent-500);
+  border: 1px solid var(--accent-300);
   height: 0;
   flex: 1;
   margin: 0 32px;

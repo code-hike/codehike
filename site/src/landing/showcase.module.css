@@ -12,3 +12,20 @@
   height: 100%;
   transform-style: preserve-3d;
 }
+
+.phone {
+  opacity: var(--opacity);
+  height: 100%;
+  width: min-content;
+  /* transform: translateZ(-40px); */
+  border: 2px solid var(--accent-300);
+  border-radius: 30px;
+}
+
+.phone img {
+  box-sizing: border-box;
+  padding: 32px 16px;
+  height: calc(var(--slide-h) * 1px);
+  width: auto;
+  border-radius: 1px;
+}

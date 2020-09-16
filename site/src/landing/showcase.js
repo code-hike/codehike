@@ -82,16 +82,9 @@ function MiniDocsDemo() {
         alignItems: "center",
       }}
     >
-      <img
-        style={{
-          opacity: "var(--opacity)",
-          width: "auto",
-          height: "100%",
-          background: "#222",
-          transform: "translateZ(-40px)",
-        }}
-        src="minidocs-cover.png"
-      />
+      <div className={s.phone}>
+        <img src="minidocs-cover.png" />
+      </div>
       <h3
         style={{
           opacity: "var(--opacity)",
