@@ -12,6 +12,15 @@ function Showcase() {
         <TutorialDemo />
         <MiniDocsDemo />
       </Carousel>
+      {/* <div className={s.rect}>
+        <TalkDemo />
+      </div>
+      <div className={s.rect}>
+        <MiniDocsDemo />
+      </div>
+      <div className={s.rect}>
+        <TutorialDemo />
+      </div> */}
     </section>
   )
 }
@@ -19,27 +28,23 @@ function Showcase() {
 function TalkDemo() {
   return (
     <div className={s.demo}>
-      <img
-        style={{
-          opacity: "var(--opacity)",
-          width: "100%",
-          height: "auto",
-          background: "#222",
-          margin: "0 auto",
-          transform: "translateZ(-40px)",
-        }}
-        src="talk-cover.png"
-      />
-      <h3
-        style={{
-          transform: "translateZ(20px)",
-          opacity: "var(--opacity)",
-          margin: 0,
-          fontSize: "1.6em",
-        }}
-      >
-        0 Talk
-      </h3>
+      <Browser>
+        <img src="talk-cover.png" />
+      </Browser>
+      <h3>A Conference Talk</h3>
+    </div>
+  )
+}
+
+function Browser({ children }) {
+  return (
+    <div className={s.browser}>
+      <div className={s.menuBar}>
+        <div className={s.circle} />
+        <div className={s.circle} />
+        <div className={s.circle} />
+      </div>
+      {children}
     </div>
   )
 }
@@ -47,27 +52,10 @@ function TalkDemo() {
 function TutorialDemo() {
   return (
     <div className={s.demo}>
-      <img
-        style={{
-          opacity: "var(--opacity)",
-          width: "100%",
-          height: "auto",
-          background: "#222",
-          margin: "0 auto",
-          transform: "translateZ(-40px)",
-        }}
-        src="talk-cover.png"
-      />
-      <h3
-        style={{
-          transform: "translateZ(20px)",
-          opacity: "var(--opacity)",
-          margin: 0,
-          fontSize: "1.6em",
-        }}
-      >
-        Tutorial
-      </h3>
+      <Browser>
+        <img src="tutorial-cover.png" />
+      </Browser>
+      <h3>A Tutorial</h3>
     </div>
   )
 }
@@ -85,14 +73,9 @@ function MiniDocsDemo() {
       <div className={s.phone}>
         <img src="minidocs-cover.png" />
       </div>
-      <h3
-        style={{
-          opacity: "var(--opacity)",
-          transform: "translateZ(20px)",
-          fontSize: "1.6em",
-        }}
-      >
-        Mini <br /> Docs
+      <h3>
+        A <br />
+        Landing <br /> Page
       </h3>
     </div>
   )

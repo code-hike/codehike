@@ -6,20 +6,6 @@
   font-size: 1.58em;
 }
 
-@media screen and (max-width: 725px) {
-  .description {
-    font-size: 1.2em;
-  }
-
-  .experimental {
-    max-width: 576px;
-    padding: 16px 32px;
-    font-size: 1.1em;
-    border-radius: 6px;
-    border: none;
-  }
-}
-
 .overlay:global(.rc-tooltip) {
   padding: 1px 10px;
   line-height: inherit;
@@ -103,4 +89,23 @@
 
 .buttons a:hover {
   text-decoration: none;
+}
+
+@media screen and (max-width: 725px) {
+  .description {
+    font-size: 1.2em;
+  }
+
+  .experimental {
+    max-width: 576px;
+    padding: 16px 32px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: none;
+  }
+
+  .buttons a {
+    font-size: 0.9em;
+    width: 80px;
+  }
 }

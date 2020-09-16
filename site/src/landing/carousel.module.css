@@ -1,10 +1,6 @@
 .carousel .container {
-  --slide-h: 520;
-  --slide-w: 800;
-  height: calc(var(--slide-h) * 1px);
-  width: calc(var(--slide-w) * 1px);
-  max-width: 80vw;
-  max-height: calc(80vw * var(--slide-h) / var(--slide-w));
+  height: calc(var(--h) * 100);
+  width: calc(var(--w) * 100);
   margin: 0 auto;
   position: relative;
   perspective: 200px;
@@ -35,10 +31,10 @@
   transform-style: preserve-3d;
   --slide-margin: 16px;
   position: absolute;
-  top: var(--slide-margin);
-  bottom: var(--slide-margin);
-  left: var(--slide-margin);
-  right: var(--slide-margin);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   /* border: 1px solid var(--accent-100); */
 }
 

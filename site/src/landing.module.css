@@ -23,8 +23,8 @@
 }
 
 .titleContainer .line {
-  border: 1px solid var(--accent-300);
-  height: 0;
+  background-color: var(--accent-300);
+  height: 2px;
   flex: 1;
   margin: 0 32px;
 }
@@ -164,5 +164,8 @@
 @media screen and (max-width: 725px) {
   .header {
     font-size: 0.4em;
+  }
+  .title {
+    font-size: 1.4em;
   }
 }
