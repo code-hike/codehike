@@ -1,6 +1,6 @@
 .main {
   /* background: #aaa; */
-  max-width: 1024px;
+  /* max-width: 1024px; */
   margin: 0 auto;
 }
 
@@ -83,6 +83,8 @@
 .tools {
   /* background: #cee; */
   padding: 32px 32px 16px;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .tools h2 {
