@@ -14,18 +14,26 @@ function LandingPage({ sponsors }) {
   return (
     <div className={s.main}>
       <CodeHikeHead title="Marvellous code walkthroughs - Code Hike" />
-      <Header className={s.header} />
-      <Description />
-      <SectionTitle>Showcase</SectionTitle>
-      <Showcase />
+      <section>
+        <Header className={s.header} />
+        <Description />
+      </section>
+      <section className={s.dark}>
+        <SectionTitle>Showcase</SectionTitle>
+        <Showcase />
+      </section>
       {/* <ShowcaseX /> */}
-      <SectionTitle>Sponsors</SectionTitle>
-      <Sponsors sponsors={sponsors} />
-      <SectionTitle id="building-blocks">
-        Building Blocks
-      </SectionTitle>
-      <Tools />
-      <Footer />
+      <section className={s.blue}>
+        <SectionTitle>Sponsors</SectionTitle>
+        <Sponsors sponsors={sponsors} />
+      </section>
+      <section>
+        <SectionTitle id="building-blocks">
+          Building Blocks
+        </SectionTitle>
+        <Tools />
+        <Footer />
+      </section>
     </div>
   )
 }
@@ -115,11 +123,11 @@ function Tool({ title, img, href }) {
 function SectionTitle({ children, id }) {
   return (
     <div className={s.titleContainer}>
-      <div className={s.line} />
+      {/* <div className={s.line} /> */}
       <h2 className={s.title} id={id}>
         {children}
       </h2>
-      <div className={s.line} />
+      {/* <div className={s.line} /> */}
     </div>
   )
 }
