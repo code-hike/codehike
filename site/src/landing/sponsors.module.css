@@ -1,0 +1,36 @@
+.sponsors {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(256px, 1fr)
+  );
+  grid-gap: 1rem;
+  list-style-type: none;
+  margin: 32px auto 0;
+  padding: 0;
+  width: 800px;
+  max-width: 90vw;
+}
+
+.sponsor {
+  /* border: 1px solid blue; */
+  display: flex;
+}
+
+.sponsor img {
+  height: 72px;
+  width: 72px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.sponsor h4 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.sponsor .details {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}

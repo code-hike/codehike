@@ -18,12 +18,16 @@ async function fetchSponsors() {
     .then(function (response) {
       return response.json()
     })
-    .then(({ data }) => {
+    .then(({ data, errors }) => {
+      if (errors) {
+        console.error(JSON.stringify(errors))
+        return
+      }
       return data.organization.sponsorshipsAsMaintainer.nodes.map(
         node => node.sponsorEntity
       )
     })
-    .catch(function (error) {
+    .catch(error => {
       console.error("Error fetching sponsors", error)
     })
 }
@@ -53,4 +57,5 @@ const query = `
     }
   }
 }
+
 `

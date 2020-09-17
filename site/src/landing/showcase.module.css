@@ -73,7 +73,7 @@
   border-radius: 30px;
   border-radius: calc(var(--w) * 3.2);
   transform: translateZ(-40px);
-  margin-right: calc(var(--w) * 8);
+  margin-right: calc(var(--w) * 5);
 }
 
 .rect {

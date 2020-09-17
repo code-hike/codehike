@@ -4,24 +4,18 @@ import s from "./sponsors.module.css"
 export { Sponsors }
 
 function Sponsors({ sponsors }) {
-  const [lastSponsor, ...otherSponsors] = sponsors
   return (
     <section>
-      <div>
-        {lastSponsor.login} - {lastSponsor.name}
-        <img
-          src={lastSponsor.avatarUrl}
-          style={{ borderRadius: "50%" }}
-        />
-      </div>
-      <ul>
-        {otherSponsors.map(s => (
-          <li key={s.login}>
-            {s.login} - {s.name}
-            <img
-              src={s.avatarUrl}
-              style={{ borderRadius: "50%" }}
-            />
+      <ul className={s.sponsors}>
+        {sponsors.map(sponsor => (
+          <li key={s.login} tabIndex={5}>
+            <div className={s.sponsor}>
+              <img src={sponsor.avatarUrl} />
+              <div className={s.details}>
+                <h4>{sponsor.name}</h4>
+                <span>{sponsor.login}</span>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

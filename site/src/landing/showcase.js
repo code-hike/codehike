@@ -9,8 +9,8 @@ function Showcase() {
     <section className={s.showcase}>
       <Carousel>
         <TalkDemo />
-        <TutorialDemo />
         <MiniDocsDemo />
+        <TutorialDemo />
       </Carousel>
       {/* <div className={s.rect}>
         <TalkDemo />
