@@ -8,14 +8,19 @@ function Sponsors({ sponsors }) {
     <section>
       <ul className={s.sponsors}>
         {sponsors.map(sponsor => (
-          <li key={s.login} tabIndex={5}>
-            <div className={s.sponsor}>
+          <li key={s.login}>
+            <a className={s.sponsor} href={sponsor.url}>
               <img src={sponsor.avatarUrl} />
               <div className={s.details}>
                 <h4>{sponsor.name}</h4>
-                <span>{sponsor.login}</span>
+                <span className={s.login}>
+                  {sponsor.login}
+                </span>
+                <span className={s.location}>
+                  {sponsor.location}
+                </span>
               </div>
-            </div>
+            </a>
           </li>
         ))}
       </ul>

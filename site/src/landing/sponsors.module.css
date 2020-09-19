@@ -15,6 +15,13 @@
 .sponsor {
   /* border: 1px solid blue; */
   display: flex;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sponsor:hover {
+  text-decoration: none;
+  color: var(--accent-500);
 }
 
 .sponsor img {
@@ -33,4 +40,10 @@
   display: flex;
   flex-flow: column;
   justify-content: center;
+}
+
+.sponsor .location {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 2px;
 }
