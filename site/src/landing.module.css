@@ -39,9 +39,8 @@
 }
 
 .title {
-  font-size: 2em;
-  margin: 0;
-  height: 3em;
+  font-size: 2.2em;
+  margin: 0 0 24px;
   flex: 1;
   text-align: center;
 }

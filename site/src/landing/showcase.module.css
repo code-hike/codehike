@@ -13,12 +13,13 @@
 .demo {
   /* height: calc(100 * var(--w)); */
   transform-style: preserve-3d;
+  /* outline: 1px solid red; */
 }
 
 .demo h3 {
   font-size: calc(var(--w) * 3.4);
   margin: 0;
-  margin-top: calc(var(--h) * -8);
+  margin-top: calc(var(--h) * -6);
   opacity: var(--opacity);
   transform: translateZ(40px);
   text-align: center;
@@ -71,7 +72,7 @@
   background-color: var(--white);
   opacity: var(--opacity);
   height: 100%;
-  /* transform: translateZ(-40px); */
+  transform: translateZ(-40px);
   border: calc(var(--h) * 0.5) solid var(--accent-100);
   border-radius: 30px;
   border-radius: calc(var(--w) * 3.2);
@@ -89,7 +90,7 @@
 
 @media screen and (max-width: 1000px) {
   .showcase {
-    --h: 0.6vw;
-    --w: 0.8vw;
+    --h: 0.584vw;
+    --w: 0.85vw;
   }
 }
