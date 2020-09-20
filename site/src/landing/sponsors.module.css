@@ -47,3 +47,28 @@
   color: #666;
   margin-top: 2px;
 }
+
+.button {
+  width: 200px;
+  display: block;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin: 48px auto 0;
+  font-size: 1.2em;
+  border: 2px solid;
+  border-color: var(--accent-500) !important;
+  background: var(--accent-500);
+  color: var(--white);
+}
+
+.button:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 725px) {
+  .button {
+    font-size: 1em;
+    width: 160px;
+  }
+}

@@ -24,6 +24,12 @@ function Sponsors({ sponsors }) {
           </li>
         ))}
       </ul>
+      <a
+        href="https://github.com/sponsors/code-hike"
+        className={s.button}
+      >
+        Sponsor Code Hike
+      </a>
     </section>
   )
 }
