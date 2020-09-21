@@ -3,7 +3,6 @@ import s from "./landing.module.css"
 import { CodeHikeHead } from "./code-hike-head"
 import Link from "next/link"
 import { Header } from "./header"
-import { Footer } from "./footer"
 import { Description } from "./landing/description"
 import { Showcase } from "./landing/showcase"
 import { Sponsors } from "./landing/sponsors"
@@ -14,6 +13,15 @@ function LandingPage({ sponsors }) {
   return (
     <div className={s.main}>
       <CodeHikeHead title="Marvellous code walkthroughs - Code Hike" />
+      <div className={s.linksBar}>
+        <a href="https://github.com/code-hike/codehike">
+          GitHub
+        </a>
+        <a href="https://twitter.com/codehike_">Twitter</a>
+        <a href="https://opencollective.com/codehike">
+          Open Collective
+        </a>
+      </div>
       <section>
         <Header className={s.header} />
         <Description />
@@ -32,39 +40,7 @@ function LandingPage({ sponsors }) {
           Building Blocks
         </SectionTitle>
         <Tools />
-        <Footer />
       </section>
-    </div>
-  )
-}
-
-function ShowcaseX() {
-  return (
-    <div className={s.demos}>
-      <h2>Showcase</h2>
-      <div className={s.listContainer}>
-        <ul className={s.list}>
-          <li>
-            <Link href="demo/hooks-talk">
-              <a className={s.box}>
-                <h3>Player Demo</h3>
-                <img
-                  src="/video-tutorial.png"
-                  style={{ padding: "2.32% 0" }}
-                />
-              </a>
-            </Link>
-          </li>
-          <li className={s.box}>
-            <Link href="demo/blog-post">
-              <a className={s.box}>
-                <h3>Blog Demo</h3>
-                <img src="/post-thumb.png" />
-              </a>
-            </Link>
-          </li>
-        </ul>
-      </div>
     </div>
   )
 }

@@ -3,7 +3,6 @@ import s from "./landing.module.css"
 import { CodeHikeHead } from "./code-hike-head"
 import Link from "next/link"
 import { Header } from "./header"
-import { Footer } from "./footer"
 
 export { LandingPage }
 
@@ -42,7 +41,6 @@ function LandingPage() {
       </div>
       <Demos />
       <Tools />
-      <Footer />
     </div>
   )
 }

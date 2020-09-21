@@ -2,6 +2,7 @@
   /* background: #aaa; */
   /* max-width: 1024px; */
   margin: 0 auto;
+  position: relative;
 }
 
 .main > section {
@@ -24,6 +25,17 @@
     var(--white),
     #eaedf6
   );
+}
+
+.linksBar {
+  position: absolute;
+  right: 32px;
+  top: 16px;
+  display: flex;
+}
+
+.linksBar > * {
+  margin: 8px;
 }
 
 .header {
@@ -50,57 +62,6 @@
   height: 2px;
   flex: 1;
   margin: 0 64px;
-}
-
-.demos {
-  /* background: #ece; */
-  padding: 32px;
-}
-
-.demos .listContainer {
-  position: relative;
-}
-
-.demos a {
-  color: inherit;
-}
-.demos button svg {
-  display: block;
-}
-.demos .prev {
-  left: 0;
-}
-
-.demos .next {
-  right: 0;
-}
-
-.demos .list {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.demos .box {
-  display: block;
-  box-sizing: border-box;
-  padding: 0 8px;
-}
-
-.demos .box:hover {
-  color: var(--accent-500);
-}
-
-.demos .box h3 {
-  margin: 0;
-  font-size: 1.5em;
-  text-align: center;
-}
-
-.demos .box img {
-  width: 100%;
-  min-width: 300px;
-  max-width: 450px;
 }
 
 .tools {
@@ -192,5 +153,8 @@
   }
   .title {
     font-size: 1.4em;
+  }
+  .linksBar {
+    font-size: 0.8em;
   }
 }
