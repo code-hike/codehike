@@ -1,11 +1,11 @@
 import React from "react"
 import s from "./landing.module.css"
-import { CodeHikeHead } from "./code-hike-head"
+import { CodeHikeHead } from "../code-hike-head"
 import Link from "next/link"
-import { Header } from "./header"
-import { Description } from "./landing/description"
-import { Showcase } from "./landing/showcase"
-import { Sponsors } from "./landing/sponsors"
+import { Header } from "../header"
+import { Description } from "./description"
+import { Showcase } from "./showcase"
+import { Sponsors } from "./sponsors"
 
 export { LandingPage }
 

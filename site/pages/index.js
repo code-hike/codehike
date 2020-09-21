@@ -1,4 +1,4 @@
-import { LandingPage } from "src/landing-new"
+import { LandingPage } from "../src/landing"
 import { fetchSponsors } from "../src/sponsors-fetch"
 
 export async function getStaticProps() {
