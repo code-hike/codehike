@@ -8,7 +8,7 @@ function Sponsors({ sponsors }) {
     <section>
       <ul className={s.sponsors}>
         {sponsors.map(sponsor => (
-          <li key={s.login}>
+          <li key={sponsor.login}>
             <a className={s.sponsor} href={sponsor.url}>
               <img src={sponsor.avatarUrl} />
               <div className={s.details}>

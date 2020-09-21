@@ -14,6 +14,13 @@
   /* height: calc(100 * var(--w)); */
   transform-style: preserve-3d;
   /* outline: 1px solid red; */
+  color: inherit;
+  color: var(--accent-100);
+  text-decoration: none;
+}
+
+.demo:hover {
+  text-decoration: none;
 }
 
 .demo h3 {

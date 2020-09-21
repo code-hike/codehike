@@ -12,58 +12,43 @@ function Showcase() {
         <MiniDocsDemo />
         <TutorialDemo />
       </Carousel>
-      {/* <div className={s.rect}>
-        <TalkDemo />
-      </div>
-      <div className={s.rect}>
-        <MiniDocsDemo />
-      </div>
-      <div className={s.rect}>
-        <TutorialDemo />
-      </div> */}
     </section>
   )
 }
 
 function TalkDemo() {
   return (
-    <div className={s.demo}>
+    <a
+      className={s.demo}
+      href="https://egghead.io/lessons/mdx-the-x-in-mdx"
+    >
       <Browser>
         <img src="talk-cover.png" />
       </Browser>
       <h3>A Conference Talk</h3>
-    </div>
-  )
-}
-
-function Browser({ children }) {
-  return (
-    <div className={s.browser}>
-      <div className={s.menuBar}>
-        <div className={s.circle} />
-        <div className={s.circle} />
-        <div className={s.circle} />
-      </div>
-      {children}
-    </div>
+    </a>
   )
 }
 
 function TutorialDemo() {
   return (
-    <div className={s.demo}>
+    <a
+      className={s.demo}
+      href="https://pomb.us/nextjs-static-props/"
+    >
       <Browser>
         <img src="tutorial-cover.png" />
       </Browser>
       <h3>A Tutorial</h3>
-    </div>
+    </a>
   )
 }
 
 function MiniDocsDemo() {
   return (
-    <div
+    <a
       className={s.demo}
+      href="https://swr-minidocs.codehike.org/"
       style={{
         display: "flex",
         justifyContent: "center",
@@ -77,6 +62,19 @@ function MiniDocsDemo() {
         A <br />
         Landing <br /> Page
       </h3>
+    </a>
+  )
+}
+
+function Browser({ children }) {
+  return (
+    <div className={s.browser}>
+      <div className={s.menuBar}>
+        <div className={s.circle} />
+        <div className={s.circle} />
+        <div className={s.circle} />
+      </div>
+      {children}
     </div>
   )
 }
