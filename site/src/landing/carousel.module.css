@@ -1,0 +1,67 @@
+.carousel .container {
+  height: calc(var(--h) * 100);
+  width: calc(var(--w) * 100);
+  margin: 0 auto;
+  position: relative;
+  perspective: 200px;
+}
+
+.carousel .centerContainer {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.slideContainer {
+  transform-style: preserve-3d;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.left {
+  right: 100%;
+}
+.right {
+  left: 100%;
+}
+
+.slide {
+  transform-style: preserve-3d;
+  --slide-margin: 16px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* border: 1px solid var(--accent-100); */
+}
+
+.slide h3 {
+  text-align: center;
+}
+
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+}
+.carouselButton.left {
+  transform: translate(50%, -50%);
+}
+.carouselButton.right {
+  transform: translate(-50%, -50%);
+}
+.carouselButton svg {
+  width: calc(var(--h) * 14);
+  height: calc(var(--h) * 14);
+}
+
+.carouselButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--accent-100);
+}

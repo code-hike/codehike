@@ -1,0 +1,160 @@
+.main {
+  /* background: #aaa; */
+  /* max-width: 1024px; */
+  margin: 0 auto;
+  position: relative;
+}
+
+.main > section {
+  padding: 48px 0;
+}
+
+.main > .dark {
+  background-image: radial-gradient(
+    circle at 50% 20%,
+    #161d34,
+    #0c101c
+  );
+  color: var(--white);
+}
+.main > .blue {
+  background-color: #eaedf6;
+
+  background-image: radial-gradient(
+    circle at 50% 20%,
+    var(--white),
+    #eaedf6
+  );
+}
+
+.linksBar {
+  position: absolute;
+  right: 32px;
+  top: 16px;
+  display: flex;
+}
+
+.linksBar > * {
+  margin: 8px;
+}
+
+.header {
+  margin-top: 96px;
+  padding: 32px;
+  font-size: 0.7em;
+}
+
+.titleContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.title {
+  font-size: 2.2em;
+  margin: 0 0 24px;
+  flex: 1;
+  text-align: center;
+}
+
+.titleContainer .line {
+  background-color: var(--accent-100);
+  height: 2px;
+  flex: 1;
+  margin: 0 64px;
+}
+
+.tools {
+  /* background: #cee; */
+  padding: 32px 32px 16px;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.tools h2 {
+  margin: 0;
+  text-align: center;
+  padding-bottom: 16px;
+}
+
+.tools .list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tools a {
+  color: inherit;
+}
+
+.tools .box {
+  width: 316px;
+  margin: 16px 0;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.tools .box:hover {
+  color: var(--accent-500);
+}
+
+.tools .box h3 {
+  margin: 16px 0 0;
+  font-size: 1.15em;
+  text-align: center;
+}
+
+.tools .container {
+  width: 286px;
+  height: 165px;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3),
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+.tools .noMedia {
+  /* padding: 15px 28px 20px; */
+  width: 100%;
+  height: 100%;
+}
+
+.tools .noMedia > div {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 3px solid #4f4f4f;
+  border-radius: 3px;
+  font-size: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tools .box img {
+  width: 100%;
+}
+
+.box:hover {
+  text-decoration: none;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 725px) {
+  .header {
+    font-size: 0.4em;
+  }
+  .title {
+    font-size: 1.4em;
+  }
+  .linksBar {
+    font-size: 0.8em;
+  }
+}

@@ -1,0 +1,111 @@
+.description {
+  /* background: #eec; */
+  max-width: 576px;
+  padding: 32px;
+  margin: 0 auto;
+  font-size: 1.58em;
+}
+
+.overlay:global(.rc-tooltip) {
+  padding: 1px 10px;
+  line-height: inherit;
+  font-size: inherit;
+  background-color: inherit;
+  opacity: 0.95;
+}
+
+.overlay :global(.rc-tooltip-inner) {
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+  background-color: #ffffff;
+  border-radius: 0;
+  border: none;
+}
+
+.overlay:global(.rc-tooltip .rc-tooltip-arrow) {
+  border-top-color: var(--accent-500);
+}
+
+.hovereable {
+  color: var(--accent-500);
+  cursor: pointer;
+}
+
+.experimental {
+  /* background: #eec; */
+  max-width: 576px;
+  padding: 32px 32px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  border: 2px solid var(--accent-500);
+}
+
+.experimental .label {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+}
+
+.experimental .status {
+  font-weight: bold;
+  /* text-transform: uppercase; */
+  background: #f3c7cf;
+  color: #92273c;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 2px 8px;
+}
+
+.experimental p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+.buttons {
+  margin: 32px auto 0;
+  width: max-content;
+}
+
+.buttons a {
+  width: 110px;
+  display: inline-block;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin: 0 8px;
+  font-size: 1.2em;
+  border: 2px solid;
+}
+
+.github {
+  border-color: var(--dark);
+  color: var(--dark);
+}
+
+.getStarted {
+  border-color: var(--accent-500) !important;
+  background: var(--accent-500);
+  color: var(--white);
+}
+
+.buttons a:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 725px) {
+  .description {
+    font-size: 1.2em;
+  }
+
+  .experimental {
+    max-width: 576px;
+    padding: 16px 32px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: none;
+  }
+
+  .buttons a {
+    font-size: 0.9em;
+    width: 80px;
+  }
+}

@@ -14,8 +14,18 @@
 .ch-frame-content {
   background-color: #fafafa;
   flex-grow: 1;
+  flex-shrink: 1;
+  min-height: 0;
+}
+
+.ch-frame-zoom {
+  --ch-frame-zoom: 1;
   overflow: auto;
   position: relative;
+  width: calc(100% / var(--ch-frame-zoom));
+  height: calc(100% / var(--ch-frame-zoom));
+  transform: scale(var(--ch-frame-zoom));
+  transform-origin: left top;
 }
 
 .ch-title-bar {

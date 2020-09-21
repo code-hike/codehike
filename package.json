@@ -2,32 +2,26 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "packages/build",
-      "packages/mini-browser",
-      "packages/mini-frame",
-      "packages/mini-browser",
-      "packages/mini-editor",
-      "packages/mini-terminal",
-      "packages/player",
-      "packages/scroller",
-      "packages/sim-user",
-      "packages/smooth-column",
-      "packages/scroller",
+      "packages/*",
+      "demos/*",
       "storybook",
       "site"
     ]
   },
   "scripts": {
+    "dev": "yarn workspace xmdx dev",
     "mbrowser": "yarn workspace @code-hike/mini-browser",
     "mframe": "yarn workspace @code-hike/mini-frame",
     "mterminal": "yarn workspace @code-hike/mini-terminal",
     "meditor": "yarn workspace @code-hike/mini-editor",
     "scroller": "yarn workspace @code-hike/scroller",
+    "player": "yarn workspace @code-hike/player",
+    "sim-user": "yarn workspace @code-hike/sim-user",
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "ch-build": "yarn workspace @code-hike/build",
-    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn mbrowser watch & yarn meditor watch",
-    "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn mbrowser build && yarn meditor build",
+    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn sim-user watch & yarn player watch & yarn mbrowser watch & yarn meditor watch",
+    "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn sim-user build && yarn player build && yarn mbrowser build && yarn meditor build",
     "build-site": "yarn build-packages && yarn workspace site export"
   },
   "dependencies": {

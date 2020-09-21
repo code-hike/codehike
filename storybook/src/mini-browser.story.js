@@ -8,20 +8,58 @@ export default {
 
 export const basic = () => (
   <Page>
-    <MiniBrowser url="https://localhost:8000" style={{}}>
-      <div style={{ background: "beige", height: 200 }}>Lorem Ipsum</div>
+    <MiniBrowser url="https://localhost:8000">
+      <div style={{ background: "beige", height: 200 }}>
+        Lorem Ipsum
+      </div>
     </MiniBrowser>
   </Page>
 );
 
 export const iframe = () => (
   <Page>
-    <MiniBrowser url="https://whatismyviewport.com/" style={{ height: 300 }} />
+    <MiniBrowser
+      url="https://whatismyviewport.com/"
+      style={{ height: 300 }}
+    />
   </Page>
 );
+
+export const zoom = () => (
+  <Page>
+    <MiniBrowser
+      url="https://whatismyviewport.com/"
+      style={{ height: 300 }}
+      zoom={0.5}
+    />
+  </Page>
+);
+
+export const steps = () => {
+  const steps = [
+    { zoom: 0.5, url: "https://whatismyviewport.com/" },
+    { zoom: 1, url: "https://whatismyviewport.com/" },
+  ];
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniBrowser
+          style={{ height: 300 }}
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  );
+};
+
 export const video = () => (
   <Page>
-    <MiniBrowser url="https://nextjs-static-props.now.sh/" height={300}>
+    <MiniBrowser
+      url="https://nextjs-static-props.now.sh/"
+      style={{ height: 300 }}
+    >
       <video
         autoPlay
         loop
