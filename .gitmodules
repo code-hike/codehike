@@ -10,3 +10,6 @@
 [submodule "demos/nextjs-post-demo"]
 	path = demos/nextjs-post-demo
 	url = https://github.com/code-hike/nextjs-post-demo
+[submodule "demos/react-tutorial-demo"]
+	path = demos/react-tutorial-demo
+	url = https://github.com/code-hike/react-tutorial-demo
