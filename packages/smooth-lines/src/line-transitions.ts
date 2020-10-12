@@ -1,4 +1,5 @@
 import { useMemo } from "react"
+import { stagger, TweenParams } from "./tween"
 
 type Element = React.ReactNode
 type Key = number
@@ -21,29 +22,11 @@ type LineData = {
   exitIndex: number | null
 }
 
-type TweenParams =
-  | { fixed: true; value: number }
-  | {
-      fixed: false
-      from: number
-      to: number
-      start: number
-      end: number
-    }
-
 type LineTransition = {
   element: React.ReactNode
   key: number
   tweenY: TweenParams
   tweenX: TweenParams
-}
-
-export function tween(params: TweenParams, t: number) {
-  if (params.fixed) return params.value
-  if (t < params.start) return params.from
-  if (t > params.end) return params.to
-  const x = (t - params.start) / (params.end - params.start)
-  return params.from + x * (params.to - params.from)
 }
 
 export function useLineTransitions(
@@ -110,6 +93,13 @@ function getLineTransition(
   enterCount: number,
   exitCount: number
 ): LineTransition {
+  // startY is the progress when we start moving vertically
+  // endY is when we stop
+  const [startY, endY] = verticalInterval(
+    enterCount,
+    exitCount
+  )
+
   if (prevIndex == null) {
     return {
       element,
@@ -117,10 +107,12 @@ function getLineTransition(
       tweenY: { fixed: true, value: nextIndex! },
       tweenX: {
         fixed: false,
-        from: 1,
-        to: 0,
-        start: 0.75,
-        end: 1,
+        extremes: [1, 0],
+        interval: stagger(
+          [endY, 1],
+          enterIndex!,
+          enterCount
+        ),
       },
     }
   }
@@ -132,10 +124,12 @@ function getLineTransition(
       tweenY: { fixed: true, value: prevIndex },
       tweenX: {
         fixed: false,
-        from: 0,
-        to: -1,
-        start: 0,
-        end: 0.25,
+        extremes: [0, -1],
+        interval: stagger(
+          [0, startY],
+          exitIndex!,
+          exitCount
+        ),
       },
     }
   }
@@ -145,10 +139,8 @@ function getLineTransition(
     key,
     tweenY: {
       fixed: false,
-      from: prevIndex,
-      to: nextIndex,
-      start: 0.25,
-      end: 0.75,
+      extremes: [prevIndex, nextIndex],
+      interval: [startY, endY],
     },
     tweenX: { fixed: true, value: 0 },
   }
@@ -156,4 +148,14 @@ function getLineTransition(
 
 function sortUniqueConcat(a: number[], b: number[]) {
   return [...new Set(a.concat(b))].sort((x, y) => x - y)
+}
+
+function verticalInterval(
+  enterCount: number,
+  exitCount: number
+) {
+  if (enterCount <= 0 && exitCount <= 0) return [0, 1]
+  if (enterCount <= 0 && exitCount >= 1) return [0.33, 1]
+  if (enterCount >= 1 && exitCount <= 0) return [0, 0.67]
+  return [0.25, 0.75]
 }

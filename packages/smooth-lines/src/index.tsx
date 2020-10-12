@@ -1,15 +1,11 @@
 import React from "react"
 import {
-  tween,
+  Line,
   useLineTransitions,
 } from "./line-transitions"
+import { tween } from "./tween"
 
 export { SmoothLines }
-
-type Line = {
-  element: React.ReactNode
-  key: number
-}
 
 type Props = {
   progress: number
@@ -21,14 +17,6 @@ type Props = {
   nextLines: Line[]
   prevFocus: [number, number]
   nextFocus: [number, number]
-}
-
-type LineTransition = {
-  element: React.ReactNode
-  key: number
-  state: "stay" | "exit" | "enter"
-  prevIndex: number
-  nextIndex: number
 }
 
 function SmoothLines({
@@ -50,15 +38,14 @@ function SmoothLines({
   const dy =
     tween(
       {
-        from: prevCenter,
-        to: nextCenter,
-        start: 0.25,
-        end: 0.75,
         fixed: false,
+        // TODO use verticalInterval
+        interval: [0, 1],
+        extremes: [prevCenter, nextCenter],
       },
       progress
     ) * lineHeight
-
+  console.log(lines)
   return (
     <div
       style={{

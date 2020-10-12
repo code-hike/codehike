@@ -28,7 +28,6 @@ const prevLines = [
   { element: <Line>Hi</Line>, key: 1 },
   { element: <Line>Smooth</Line>, key: 2 },
   { element: <Line>Smoooth</Line>, key: 2.8 },
-  { element: <Line>Smooooth</Line>, key: 2.9 },
   { element: <Line>Lines</Line>, key: 3 },
   { element: <Line>New 2</Line>, key: 5.1 },
 ]
@@ -39,6 +38,12 @@ const nextLines = [
   { element: <Line>New 2</Line>, key: 3.1 },
   { element: <Line>Lines</Line>, key: 4 },
   { element: <Line>New 2</Line>, key: 5.1 },
+  { element: <Line>New 2</Line>, key: 6.1 },
+  { element: <Line>Lines</Line>, key: 6.2 },
+  { element: <Line>New 2</Line>, key: 6.3 },
+  { element: <Line>New 2</Line>, key: 7.1 },
+  { element: <Line>Lines</Line>, key: 7.2 },
+  { element: <Line>New 2</Line>, key: 7.3 },
 ]
 
 const lineHeight = 20
