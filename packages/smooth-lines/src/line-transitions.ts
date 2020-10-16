@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { stagger, TweenParams } from "./tween"
+import { easing, stagger, TweenParams } from "./tween"
 
 type Element = React.ReactNode
 type Key = number
@@ -101,6 +101,7 @@ function getLineTransition(
   )
 
   if (prevIndex == null) {
+    // entering line
     return {
       element,
       key,
@@ -108,6 +109,7 @@ function getLineTransition(
       tweenX: {
         fixed: false,
         extremes: [1, 0],
+        ease: easing.easeOutQuad,
         interval: stagger(
           [endY, 1],
           enterIndex!,
@@ -118,6 +120,7 @@ function getLineTransition(
   }
 
   if (nextIndex == null) {
+    // exiting line
     return {
       element,
       key,
@@ -125,6 +128,7 @@ function getLineTransition(
       tweenX: {
         fixed: false,
         extremes: [0, -1],
+        ease: easing.easeInQuad,
         interval: stagger(
           [0, startY],
           exitIndex!,

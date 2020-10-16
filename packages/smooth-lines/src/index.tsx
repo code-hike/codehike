@@ -3,7 +3,7 @@ import {
   Line,
   useLineTransitions,
 } from "./line-transitions"
-import { tween } from "./tween"
+import { easing, tween } from "./tween"
 
 export { SmoothLines }
 
@@ -17,6 +17,8 @@ type Props = {
   nextLines: Line[]
   prevFocus: [number, number]
   nextFocus: [number, number]
+  overscroll?: boolean
+  center?: boolean
 }
 
 function SmoothLines({
@@ -29,12 +31,15 @@ function SmoothLines({
   nextLines = [],
   prevFocus,
   nextFocus,
+  center,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
   const prevCenter = (prevFocus[0] + prevFocus[1]) / 2
   const nextCenter = (nextFocus[0] + nextFocus[1]) / 2
   const top = containerHeight / 2 - lineHeight / 2
-  const left = containerWidth / 2 - lineWidth / 2
+  const left = center
+    ? containerWidth / 2 - lineWidth / 2
+    : 0
   const dy =
     tween(
       {
@@ -42,10 +47,13 @@ function SmoothLines({
         // TODO use verticalInterval
         interval: [0, 1],
         extremes: [prevCenter, nextCenter],
+        ease: easing.easeInOutCubic,
       },
       progress
     ) * lineHeight
-  console.log(lines)
+
+  const focusHeight =
+    (prevFocus[1] - prevFocus[0]) * lineHeight
   return (
     <div
       style={{
@@ -60,6 +68,9 @@ function SmoothLines({
           position: "absolute",
           top: top - dy,
           left,
+          outline: "5px solid green",
+          height: focusHeight,
+          width: lineWidth,
         }}
       >
         {lines.map(({ element, key, tweenX, tweenY }) => {

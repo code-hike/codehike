@@ -10,6 +10,7 @@ export const basic = () => (
   <WithProgress>
     {progress => (
       <SmoothLines
+        center
         progress={progress}
         containerWidth={150}
         containerHeight={200}
@@ -18,7 +19,7 @@ export const basic = () => (
         lineHeight={lineHeight}
         lineWidth={lineWidth}
         prevFocus={[0, 3]}
-        nextFocus={[1, 3]}
+        nextFocus={[8, 9]}
       />
     )}
   </WithProgress>
@@ -57,6 +58,7 @@ function Line({ children }) {
         border: "2px solid blue",
         height: lineHeight,
         width: lineWidth,
+        boxSizing: "border-box",
       }}
     >
       {children}
