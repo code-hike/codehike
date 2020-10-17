@@ -10,16 +10,16 @@ export const basic = () => (
   <WithProgress>
     {progress => (
       <SmoothLines
-        center
+        center={false}
         progress={progress}
         containerWidth={150}
-        containerHeight={200}
+        containerHeight={100 + progress * 30}
         prevLines={prevLines}
         nextLines={nextLines}
         lineHeight={lineHeight}
         lineWidth={lineWidth}
-        prevFocus={[0, 3]}
-        nextFocus={[8, 9]}
+        prevFocus={[1, 1]}
+        nextFocus={[3, 11]}
       />
     )}
   </WithProgress>
@@ -27,7 +27,7 @@ export const basic = () => (
 
 const prevLines = [
   { element: <Line>Hi</Line>, key: 1 },
-  { element: <Line>Smooth</Line>, key: 2 },
+  { element: <Line>Smooth**</Line>, key: 2 },
   { element: <Line>Smoooth</Line>, key: 2.8 },
   { element: <Line>Lines</Line>, key: 3 },
   { element: <Line>New 2</Line>, key: 5.1 },
@@ -42,13 +42,13 @@ const nextLines = [
   { element: <Line>New 2</Line>, key: 6.1 },
   { element: <Line>Lines</Line>, key: 6.2 },
   { element: <Line>New 2</Line>, key: 6.3 },
-  { element: <Line>New 2</Line>, key: 7.1 },
+  { element: <Line>New 2**</Line>, key: 7.1 },
   { element: <Line>Lines</Line>, key: 7.2 },
   { element: <Line>New 2</Line>, key: 7.3 },
 ]
 
 const lineHeight = 20
-const lineWidth = 100
+const lineWidth = 80
 
 function Line({ children }) {
   return (

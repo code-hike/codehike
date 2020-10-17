@@ -19,6 +19,7 @@ type Props = {
   nextFocus: [number, number]
   overscroll?: boolean
   center?: boolean
+  maxZoom?: number
 }
 
 function SmoothLines({
@@ -32,6 +33,7 @@ function SmoothLines({
   prevFocus,
   nextFocus,
   center,
+  maxZoom = 1.2,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
   const prevCenter = (prevFocus[0] + prevFocus[1]) / 2
@@ -52,8 +54,24 @@ function SmoothLines({
       progress
     ) * lineHeight
 
-  const focusHeight =
-    (prevFocus[1] - prevFocus[0]) * lineHeight
+  const prevFocusHeight =
+    (prevFocus[1] - prevFocus[0] + 1) * lineHeight
+  const nextFocusHeight =
+    (nextFocus[1] - nextFocus[0] + 1) * lineHeight
+  const focusHeight = tween(
+    {
+      fixed: false,
+      interval: [0, 1],
+      extremes: [prevFocusHeight, nextFocusHeight],
+    },
+    progress
+  )
+
+  const zoom = Math.min(
+    containerWidth / lineWidth,
+    containerHeight / focusHeight,
+    maxZoom
+  )
   return (
     <div
       style={{
@@ -66,8 +84,10 @@ function SmoothLines({
       <div
         style={{
           position: "absolute",
-          top: top - dy,
+          top,
           left,
+          transform: `scale(${zoom}) translateY(${-dy}px) `,
+          transformOrigin: `${center ? "center" : "left"}`,
           outline: "5px solid green",
           height: focusHeight,
           width: lineWidth,
