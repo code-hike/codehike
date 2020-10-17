@@ -39,9 +39,6 @@ function SmoothLines({
   const prevCenter = (prevFocus[0] + prevFocus[1]) / 2
   const nextCenter = (nextFocus[0] + nextFocus[1]) / 2
   const top = containerHeight / 2 - lineHeight / 2
-  const left = center
-    ? containerWidth / 2 - lineWidth / 2
-    : 0
   const dy =
     tween(
       {
@@ -72,6 +69,11 @@ function SmoothLines({
     containerHeight / focusHeight,
     maxZoom
   )
+
+  const left = center
+    ? containerWidth / 2 - (lineWidth * zoom) / 2
+    : 0
+
   return (
     <div
       style={{
@@ -84,13 +86,13 @@ function SmoothLines({
       <div
         style={{
           position: "absolute",
-          top,
-          left,
-          transform: `scale(${zoom}) translateY(${-dy}px) `,
+          top: 0,
+          left: 0,
+          transform: `translateY(${
+            top - dy * zoom
+          }px) translateX(${left}px) scale(${zoom})`,
           transformOrigin: `${center ? "center" : "left"}`,
           outline: "5px solid green",
-          height: focusHeight,
-          width: lineWidth,
         }}
       >
         {lines.map(({ element, key, tweenX, tweenY }) => {

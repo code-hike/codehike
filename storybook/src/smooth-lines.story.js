@@ -4,15 +4,27 @@ import { WithProgress } from "./utils"
 
 export default {
   title: "Smooth Lines",
+  argTypes: {
+    center: { control: "boolean" },
+    containerWidth: {
+      control: {
+        type: "range",
+        min: 100,
+        max: 200,
+        step: 1,
+      },
+      defaultValue: 150,
+    },
+  },
 }
 
-export const basic = () => (
+export const basic = ({ center, containerWidth }) => (
   <WithProgress>
     {progress => (
       <SmoothLines
-        center={false}
+        center={center}
         progress={progress}
-        containerWidth={150}
+        containerWidth={containerWidth}
         containerHeight={100 + progress * 30}
         prevLines={prevLines}
         nextLines={nextLines}
@@ -48,7 +60,7 @@ const nextLines = [
 ]
 
 const lineHeight = 20
-const lineWidth = 80
+const lineWidth = 120
 
 function Line({ children }) {
   return (

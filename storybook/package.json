@@ -13,12 +13,14 @@
     "@code-hike/sim-user": "0.2.1",
     "@code-hike/smooth-column": "0.2.1",
     "@code-hike/smooth-lines": "0.2.1",
+    "@storybook/addon-controls": "^6.0.26",
+    "@storybook/addon-docs": "^6.0.26",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
-    "@storybook/react": "^5.1.9",
+    "@storybook/react": "^6.0.26",
     "babel-loader": "^8.0.6"
   }
 }

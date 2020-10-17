@@ -1,0 +1,25 @@
+{
+  "name": "@code-hike/code-diff",
+  "version": "0.2.1",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "ch-build",
+    "watch": "ch-build --watch"
+  },
+  "devDependencies": {
+    "@code-hike/build": "0.0.1"
+  },
+  "peerDependencies": {},
+  "homepage": "https://codehike.org",
+  "repository": "code-hike/codehike",
+  "license": "MIT",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/codehike"
+  }
+}
