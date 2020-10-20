@@ -9,10 +9,15 @@
   ],
   "scripts": {
     "build": "ch-build",
-    "watch": "ch-build --watch"
+    "watch": "ch-build --watch",
+    "test": "jest"
   },
   "devDependencies": {
-    "@code-hike/build": "0.0.1"
+    "@code-hike/build": "0.0.1",
+    "@types/diff": "^4.0.2",
+    "@types/jest": "^24.0.15",
+    "@types/prismjs": "^1.16.0",
+    "jest": "^26.5.3"
   },
   "peerDependencies": {},
   "homepage": "https://codehike.org",
@@ -21,5 +26,9 @@
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/codehike"
+  },
+  "dependencies": {
+    "diff": "^4.0.2",
+    "prismjs": "^1.22.0"
   }
 }
