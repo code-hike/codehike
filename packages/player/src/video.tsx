@@ -4,20 +4,20 @@ const Video = React.forwardRef(VideoWithRef)
 
 export { Video }
 
-type Step = {
+export type Step = {
   src: string
   start: number
   end: number
 }
 
-type VideoProps = {
+export type VideoProps = {
   steps: Step[]
   onTimeChange?: (time: number, prevTime: number) => void
   onStepChange?: (stepIndex: number) => void
   containerStyle: React.CSSProperties | undefined
 } & React.PropsWithoutRef<JSX.IntrinsicElements["video"]>
 
-type PlayerHandle = {
+export type PlayerHandle = {
   seek: (stepIndex: number, videoTime: number) => void
   play: () => void
   pause: () => void

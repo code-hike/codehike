@@ -1,4 +1,4 @@
-import { Controls, useTimeData } from "./controls";
-import { Video } from "./video";
+import { Controls, useTimeData } from "./controls"
+import { VideoWrapper } from "./video-wrapper"
 
-export { Video, Controls, useTimeData };
+export { VideoWrapper as Video, Controls, useTimeData }
