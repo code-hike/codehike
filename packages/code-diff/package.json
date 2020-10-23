@@ -10,14 +10,16 @@
   "scripts": {
     "build": "ch-build",
     "watch": "ch-build --watch",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch --updateSnapshot"
   },
   "devDependencies": {
     "@code-hike/build": "0.0.1",
     "@types/diff": "^4.0.2",
     "@types/jest": "^24.0.15",
     "@types/prismjs": "^1.16.0",
-    "jest": "^26.5.3"
+    "jest": "^26.5.3",
+    "ts-jest": "^26.4.1"
   },
   "peerDependencies": {},
   "homepage": "https://codehike.org",

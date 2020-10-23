@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "dev": "yarn workspace react-tutorial-demo dev",
+    "dev": "yarn workspace xmdx dev",
     "mbrowser": "yarn workspace @code-hike/mini-browser",
     "mframe": "yarn workspace @code-hike/mini-frame",
     "mterminal": "yarn workspace @code-hike/mini-terminal",

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tokenizer works 1`] = `
+Array [
+  Array [
+    Array [
+      "console",
+      "plain",
+    ],
+    Array [
+      ".",
+      "punctuation",
+    ],
+    Array [
+      "log",
+      "function",
+    ],
+    Array [
+      "(",
+      "punctuation",
+    ],
+    Array [
+      "1",
+      "number",
+    ],
+    Array [
+      ")",
+      "punctuation",
+    ],
+  ],
+  Array [
+    Array [
+      "function",
+      "keyword",
+    ],
+    Array [
+      " ",
+      "plain",
+    ],
+    Array [
+      "x",
+      "function",
+    ],
+    Array [
+      "(",
+      "punctuation",
+    ],
+    Array [
+      ")",
+      "punctuation",
+    ],
+    Array [
+      " ",
+      "plain",
+    ],
+    Array [
+      "{",
+      "punctuation",
+    ],
+  ],
+  Array [
+    Array [
+      "  ",
+      "plain",
+    ],
+    Array [
+      "return",
+      "keyword",
+    ],
+    Array [
+      " ",
+      "plain",
+    ],
+    Array [
+      "\\"foo\\"",
+      "string",
+    ],
+  ],
+  Array [
+    Array [
+      "}",
+      "punctuation",
+    ],
+  ],
+]
+`;

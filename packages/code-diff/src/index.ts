@@ -19,7 +19,11 @@ function codeDiff({
     normalize(prevCode),
     normalize(nextCode)
   )
-  return 1
+
+  const prevMap = {}
+  const nextMap = {}
+  changes.forEach(change => {})
+  return changes
 }
 
 function normalize(text: string) {
