@@ -1,17 +1,13 @@
 import { codeDiff } from "./index"
 
 const prevCode = `
-A
-B
-C
-E
+log(a)
+x = "x"
 `.trim()
 const nextCode = `
-A
-B
-C
-D
-E
+log(a)
+x = "x"
+y = "y"
 `.trim()
 
 test("basic", () => {
@@ -20,7 +16,10 @@ test("basic", () => {
       prevCode,
       nextCode,
       lang: "js",
-      lineKeys: [0, 1, 2, 3],
     })
   ).toMatchSnapshot()
 })
+
+const p = [1, 2, 3, 4]
+const n = [1, 2, 3, 3.5, 4]
+const m = { 1: "A" }

@@ -1,25 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic 1`] = `
-Array [
-  Object {
-    "count": 3,
-    "value": "A
-B
-C
-",
+Object {
+  "codeMap": Object {
+    "1": Array [
+      Array [
+        "log",
+        "function",
+      ],
+      Array [
+        "(",
+        "punctuation",
+      ],
+      Array [
+        "a",
+        "plain",
+      ],
+      Array [
+        ")",
+        "punctuation",
+      ],
+    ],
+    "2": Array [
+      Array [
+        "x ",
+        "plain",
+      ],
+      Array [
+        "=",
+        "operator",
+      ],
+      Array [
+        " ",
+        "plain",
+      ],
+      Array [
+        "\\"x\\"",
+        "string",
+      ],
+    ],
+    "2.5": Array [
+      Array [
+        "y ",
+        "plain",
+      ],
+      Array [
+        "=",
+        "operator",
+      ],
+      Array [
+        " ",
+        "plain",
+      ],
+      Array [
+        "\\"y\\"",
+        "string",
+      ],
+    ],
+    "3": Array [],
   },
-  Object {
-    "added": true,
-    "count": 1,
-    "removed": undefined,
-    "value": "D
-",
-  },
-  Object {
-    "count": 1,
-    "value": "E
-",
-  },
-]
+  "nextKeys": Array [
+    1,
+    2,
+    2.5,
+  ],
+  "prevKeys": Array [
+    1,
+    2,
+    3,
+  ],
+}
 `;
