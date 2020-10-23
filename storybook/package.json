@@ -13,6 +13,7 @@
     "@code-hike/sim-user": "0.2.1",
     "@code-hike/smooth-column": "0.2.1",
     "@code-hike/smooth-lines": "0.2.1",
+    "@code-hike/code-diff": "0.2.1",
     "@storybook/addon-controls": "^6.0.26",
     "@storybook/addon-docs": "^6.0.26",
     "react": "^16.9.0",
