@@ -79,7 +79,7 @@ function SmoothLines({
       style={{
         width: containerWidth,
         height: containerHeight,
-        background: "salmon",
+        // background: "salmon",
         position: "relative",
       }}
     >
@@ -92,7 +92,7 @@ function SmoothLines({
             top - dy * zoom
           }px) translateX(${left}px) scale(${zoom})`,
           transformOrigin: `${center ? "center" : "left"}`,
-          outline: "5px solid green",
+          // outline: "5px solid green",
         }}
       >
         {lines.map(({ element, key, tweenX, tweenY }) => {

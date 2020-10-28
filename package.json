@@ -10,23 +10,18 @@
   },
   "scripts": {
     "dev": "yarn workspace xmdx dev",
-    "mbrowser": "yarn workspace @code-hike/mini-browser",
-    "mframe": "yarn workspace @code-hike/mini-frame",
-    "mterminal": "yarn workspace @code-hike/mini-terminal",
-    "meditor": "yarn workspace @code-hike/mini-editor",
-    "scroller": "yarn workspace @code-hike/scroller",
-    "player": "yarn workspace @code-hike/player",
-    "sim-user": "yarn workspace @code-hike/sim-user",
-    "column": "yarn workspace @code-hike/smooth-column",
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
-    "ch-build": "yarn workspace @code-hike/build",
-    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn sim-user watch & yarn player watch & yarn mbrowser watch & yarn meditor watch & yarn column watch",
-    "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn sim-user build && yarn player build && yarn mbrowser build && yarn meditor build && yarn column build",
-    "build-site": "yarn build-packages && yarn workspace site export"
+    "build-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --stages -c build",
+    "watch-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' -c watch",
+    "build-site": "yarn build-packages && yarn workspace site export",
+    "storybook-watch": "yarn watch-packages & yarn storybook start"
   },
   "dependencies": {
     "@emotion/core": "10.0.7",
     "theme-ui": "0.2.31"
+  },
+  "devDependencies": {
+    "wsrun": "^5.2.4"
   }
 }

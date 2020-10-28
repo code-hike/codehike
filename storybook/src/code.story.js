@@ -2,6 +2,7 @@ import React from "react"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { WithProgress } from "./utils"
 import { codeDiff } from "@code-hike/code-diff"
+import "./theme.css"
 
 export default {
   title: "Smooth Code",
@@ -22,7 +23,7 @@ export default {
 export const basic = ({ center, containerWidth }) => (
   <WithProgress>
     {progress => (
-      <pre>
+      <pre className="language-javascript">
         <code>
           <SmoothLines
             center={center}
@@ -54,7 +55,7 @@ console.log(3)
 const nextCode = `
 console.log(1)
 console.log(3)
-console.log(4)
+const x = (y) => y++
 `.trim()
 
 const { prevKeys, nextKeys, codeMap } = codeDiff({
@@ -77,15 +78,17 @@ function Line({ line }) {
   return (
     <div
       style={{
-        background: "lightblue",
-        border: "2px solid blue",
+        // background: "lightblue",
+        // border: "2px solid blue",
         height: lineHeight,
         width: lineWidth,
         boxSizing: "border-box",
       }}
     >
-      {line.map(([token, type]) => (
-        <span className={type}>{token}</span>
+      {line.map(([token, type], i) => (
+        <span className={`token ${type}`} key={i + 1}>
+          {token}
+        </span>
       ))}
     </div>
   )

@@ -4,6 +4,8 @@
 import Prism from "prismjs"
 const newlineRe = /\r\n|\r|\n/
 
+;(Prism as any).manual = true
+
 export function tokenize(code: string, lang: string) {
   const grammar = Prism.languages[lang]
   if (!grammar) {
