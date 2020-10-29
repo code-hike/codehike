@@ -1,8 +1,6 @@
 import { diffLines } from "diff"
 import { CodeLine, tokenize } from "./tokenizer"
 
-export { codeDiff }
-
 type DiffOptions = {
   prevCode: string
   nextCode: string
@@ -13,6 +11,8 @@ type DiffOptions = {
 type CodeMap = {
   [key: number]: CodeLine
 }
+
+export { codeDiff, CodeLine, DiffOptions, CodeMap }
 
 function codeDiff({
   prevCode,

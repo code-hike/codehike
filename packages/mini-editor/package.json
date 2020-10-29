@@ -19,6 +19,8 @@
   "dependencies": {
     "@code-hike/mini-terminal": "0.2.1",
     "@code-hike/mini-frame": "0.2.1",
+    "@code-hike/smooth-lines": "0.2.1",
+    "@code-hike/code-diff": "0.2.1",
     "@code-surfer/standalone": "^3.1.1"
   },
   "peerDependencies": {

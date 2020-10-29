@@ -20,59 +20,107 @@ export default {
   },
 }
 
-export const basic = ({ center, containerWidth }) => (
-  <WithProgress>
-    {progress => (
-      <pre className="language-javascript">
-        <code>
-          <SmoothLines
-            center={center}
-            progress={progress}
-            containerWidth={containerWidth}
-            containerHeight={100 + progress * 30}
-            prevLines={prevLines}
-            nextLines={nextLines}
-            lineHeight={lineHeight}
-            lineWidth={lineWidth}
-            prevFocus={[1, 1]}
-            nextFocus={[1, 1]}
-          />
-        </code>
-      </pre>
-    )}
-  </WithProgress>
-)
-
-const lineHeight = 20
-const lineWidth = 120
-
-const prevCode = `
+export const basic = ({ center, containerWidth }) => {
+  const prevCode = `
 console.log(1)
 console.log(2)
 console.log(3)
 `.trim()
 
-const nextCode = `
+  const nextCode = `
 console.log(1)
 console.log(3)
 const x = (y) => y++
 `.trim()
+  const { prevLines, nextLines } = getLines(
+    prevCode,
+    nextCode
+  )
 
-const { prevKeys, nextKeys, codeMap } = codeDiff({
-  prevCode,
-  nextCode,
-  lang: "javascript",
-})
+  return (
+    <WithProgress>
+      {progress => (
+        <pre className="language-javascript">
+          <code>
+            <SmoothLines
+              center={center}
+              progress={progress}
+              containerWidth={containerWidth}
+              containerHeight={100 + progress * 30}
+              prevLines={prevLines}
+              nextLines={nextLines}
+              lineHeight={lineHeight}
+              lineWidth={lineWidth}
+              prevFocus={[1, 1]}
+              nextFocus={[1, 1]}
+            />
+          </code>
+        </pre>
+      )}
+    </WithProgress>
+  )
+}
 
-const prevLines = prevKeys.map(key => ({
-  key,
-  element: <Line line={codeMap[key]} />,
-}))
+export const onlyEnter = ({ center, containerWidth }) => {
+  const prevCode = `
+console.log(1)
+`.trim()
 
-const nextLines = nextKeys.map(key => ({
-  key,
-  element: <Line line={codeMap[key]} />,
-}))
+  const nextCode = `
+console.log(1)
+console.log(2)
+`.trim()
+  const { prevLines, nextLines } = getLines(
+    prevCode,
+    nextCode
+  )
+
+  return (
+    <WithProgress>
+      {progress => (
+        <pre className="language-javascript">
+          <code>
+            <SmoothLines
+              center={center}
+              progress={progress}
+              containerWidth={containerWidth}
+              containerHeight={100}
+              prevLines={prevLines}
+              nextLines={nextLines}
+              lineHeight={lineHeight}
+              lineWidth={lineWidth}
+              prevFocus={[1, 1]}
+              nextFocus={[1, 1]}
+            />
+          </code>
+        </pre>
+      )}
+    </WithProgress>
+  )
+}
+
+const lineHeight = 20
+const lineWidth = 120
+
+function getLines(prevCode, nextCode) {
+  const { prevKeys, nextKeys, codeMap } = codeDiff({
+    prevCode,
+    nextCode,
+    lang: "javascript",
+  })
+
+  const prevLines = prevKeys.map(key => ({
+    key,
+    element: <Line line={codeMap[key]} />,
+  }))
+
+  const nextLines = nextKeys.map(key => ({
+    key,
+    element: <Line line={codeMap[key]} />,
+  }))
+
+  return { prevLines, nextLines }
+}
 
 function Line({ line }) {
   return (
