@@ -51,11 +51,7 @@ function MiniEditor({
   const activeFile = (activeStep && activeStep.file) || ""
 
   const activeSteps = stepsByFile[activeFile] || []
-  const index = activeSteps.indexOf(activeStep)
-  const activeProgress = Math.min(
-    Math.max(progress - activeStepIndex + index, 0),
-    activeSteps.length - 1
-  )
+
   const tabs = activeStep.tabs || files
 
   const terminalHeight = getTerminalHeight(steps, progress)

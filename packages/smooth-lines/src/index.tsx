@@ -81,6 +81,7 @@ function SmoothLines({
         height: containerHeight,
         // background: "salmon",
         position: "relative",
+        outline: "1px solid pink",
       }}
     >
       <div

@@ -1,42 +1,54 @@
-import React from "react";
-import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
-import "./editor-frame.css";
+import React from "react"
+import {
+  MiniFrame,
+  FrameButtons,
+} from "@code-hike/mini-frame"
+import "./editor-frame.css"
 
-export { EditorFrame, TerminalPanel };
+export { EditorFrame, TerminalPanel }
+
+const DEFAULT_HEIGHT = 200
 
 type EditorFrameProps = {
-  files: string[];
-  active: string;
-  terminalPanel: React.ReactNode;
-} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+  files: string[]
+  active: string
+  terminalPanel: React.ReactNode
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function EditorFrame({
   files,
   active,
   children,
   terminalPanel,
+  style,
   ...rest
 }: EditorFrameProps) {
   return (
     <MiniFrame
-      titleBar={<TabsContainer files={files} active={active} />}
+      titleBar={
+        <TabsContainer files={files} active={active} />
+      }
+      style={{ height: DEFAULT_HEIGHT, ...style }}
       {...rest}
     >
       <div className="ch-editor-body">{children}</div>
       {terminalPanel}
     </MiniFrame>
-  );
+  )
 }
 
 type TabsContainerProps = {
-  files: string[];
-  active: string;
-};
-function TabsContainer({ files, active }: TabsContainerProps) {
+  files: string[]
+  active: string
+}
+function TabsContainer({
+  files,
+  active,
+}: TabsContainerProps) {
   return (
     <>
       <FrameButtons />
-      {files.map((fileName) => (
+      {files.map(fileName => (
         <div
           key={fileName}
           className="ch-editor-tab"
@@ -47,17 +59,25 @@ function TabsContainer({ files, active }: TabsContainerProps) {
       ))}
       <div style={{ flex: 1 }} />
     </>
-  );
+  )
 }
 
-type TerminalPanelProps = { height?: number; children: React.ReactNode };
-function TerminalPanel({ height, children }: TerminalPanelProps) {
+type TerminalPanelProps = {
+  height?: number
+  children: React.ReactNode
+}
+function TerminalPanel({
+  height,
+  children,
+}: TerminalPanelProps) {
   return !height ? null : (
     <div className="ch-editor-terminal" style={{ height }}>
       <div className="ch-editor-terminal-tab">
         <span>Terminal</span>
       </div>
-      <div className="ch-editor-terminal-content">{children}</div>
+      <div className="ch-editor-terminal-content">
+        {children}
+      </div>
     </div>
-  );
+  )
 }

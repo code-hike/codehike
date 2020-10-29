@@ -3,7 +3,7 @@
 // const Prism = require("prismjs");
 import Prism from "prismjs"
 const newlineRe = /\r\n|\r|\n/
-
+import "prismjs/components/prism-jsx"
 ;(Prism as any).manual = true
 
 export function tokenize(code: string, lang: string) {
