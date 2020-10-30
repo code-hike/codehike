@@ -2,11 +2,14 @@ type Step = {
   code: string
   file: string | undefined
   lang: string
+  focus: string | null
 }
 
 type StepTransition = {
   prevCode: string | null
+  prevFocus: string | null
   nextCode: string | null
+  nextFocus: string | null
   file: string | undefined
   lang: string
 }
@@ -16,16 +19,18 @@ export { getForwardSteps, getBackwardSteps }
 function getForwardSteps(steps: Step[]) {
   const transitions: StepTransition[] = steps.map(
     (step, i) => {
-      let prevCode = null
+      let prevStepForFile: Step | null = null
       for (let j = i - 1; j >= 0; j--) {
         if (steps[j].file === step.file) {
-          prevCode = steps[j].code
+          prevStepForFile = steps[j]
           break
         }
       }
       return {
-        prevCode,
+        prevCode: prevStepForFile && prevStepForFile.code,
+        prevFocus: prevStepForFile && prevStepForFile.focus,
         nextCode: step.code,
+        nextFocus: step.focus,
         file: step.file,
         lang: step.lang,
       }
@@ -35,7 +40,9 @@ function getForwardSteps(steps: Step[]) {
   transitions.push({
     file: lastStep.file,
     prevCode: lastStep.code,
+    prevFocus: lastStep.focus,
     nextCode: null,
+    nextFocus: null,
     lang: lastStep.lang,
   })
   return transitions
@@ -45,23 +52,27 @@ function getBackwardSteps(steps: Step[]) {
   const transitions: StepTransition[] = []
   transitions.push({
     prevCode: null,
+    prevFocus: null,
     nextCode: steps[0].code,
+    nextFocus: steps[0].focus,
     lang: steps[0].lang,
     file: steps[0].file,
   })
 
   steps.forEach((step, i) => {
-    let nextCode = null
+    let nextStepForFile: Step | null = null
     for (let j = i + 1; j < steps.length; j++) {
       if (steps[j].file === step.file) {
-        nextCode = steps[j].code
+        nextStepForFile = steps[j]
         break
       }
     }
 
     transitions.push({
       prevCode: step.code,
-      nextCode,
+      prevFocus: step.focus,
+      nextCode: nextStepForFile && nextStepForFile.code,
+      nextFocus: nextStepForFile && nextStepForFile.focus,
       lang: step.lang,
       file: step.file,
     })

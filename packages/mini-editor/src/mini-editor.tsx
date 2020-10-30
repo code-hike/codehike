@@ -145,13 +145,22 @@ function EditorContent({
 }: ContentProps) {
   const fwdTransitions = getForwardSteps(steps)
   const bwdTransitions = getBackwardSteps(steps)
-  const { prevCode, nextCode, lang } = backward
+  const {
+    prevCode,
+    nextCode,
+    prevFocus,
+    nextFocus,
+    lang,
+  } = backward
     ? bwdTransitions[Math.floor(progress) + 1]
     : fwdTransitions[Math.floor(progress) + 1]
+
   return (
     <Code
       prevCode={prevCode || nextCode!}
       nextCode={nextCode || prevCode!}
+      prevFocus={prevFocus}
+      nextFocus={nextFocus}
       language={lang}
       progress={progress % 1}
     />

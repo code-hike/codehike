@@ -5,14 +5,18 @@ import { useDimensions } from "./use-dimensions"
 
 type CodeProps = {
   prevCode: string
+  prevFocus: string | null
   nextCode: string
+  nextFocus: string | null
   progress: number
   language: string
 }
 
 export function Code({
   prevCode,
+  prevFocus,
   nextCode,
+  nextFocus,
   progress,
   language,
 }: CodeProps) {
@@ -21,6 +25,8 @@ export function Code({
     nextCode,
     lang: language,
   })
+
+  console.log({ prevFocus, nextFocus })
 
   const [ref, dimensions] = useDimensions<HTMLPreElement>()
 
@@ -46,6 +52,7 @@ export function Code({
         right: 0,
         left: 0,
         padding: 0,
+        margin: 0,
         overflow: "hidden",
       }}
     >

@@ -45,6 +45,34 @@ export const code = () => {
     </WithProgress>
   )
 }
+export const focusLine = () => {
+  const code1 = `console.log(1)
+console.log(2)
+console.log(3)
+console.log(4)
+console.log(5)
+console.log(6)
+console.log(7)
+console.log(8)`
+  const steps = [
+    { code: code1, focus: "2" },
+    { code: code1, focus: "7" },
+  ]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 200 }}
+          lang="js"
+          file="index.js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
 
 export const files = () => {
   const steps = [
