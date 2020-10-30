@@ -2,6 +2,10 @@ import React from "react"
 import { codeDiff, CodeLine } from "@code-hike/code-diff"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { useDimensions } from "./use-dimensions"
+import {
+  getFocusExtremes,
+  parseFocus,
+} from "./focus-parser"
 
 type CodeProps = {
   prevCode: string
@@ -26,8 +30,6 @@ export function Code({
     lang: language,
   })
 
-  console.log({ prevFocus, nextFocus })
-
   const [ref, dimensions] = useDimensions<HTMLPreElement>()
 
   const prevLines = prevKeys.map(key => ({
@@ -35,17 +37,26 @@ export function Code({
     element: <Line line={codeMap[key]} />,
   }))
 
+  const prevFocusPair = getFocusExtremes(
+    prevFocus,
+    prevLines
+  )
+
   const nextLines = nextKeys.map(key => ({
     key,
     element: <Line line={codeMap[key]} />,
   }))
+
+  const nextFocusPair = getFocusExtremes(
+    nextFocus,
+    nextLines
+  )
 
   return (
     <pre
       ref={ref}
       className={`language-${language}`}
       style={{
-        outline: "red 1px solid",
         position: "absolute",
         top: 0,
         bottom: 0,
@@ -67,8 +78,8 @@ export function Code({
             nextLines={nextLines}
             lineHeight={20}
             lineWidth={150}
-            prevFocus={[1, 1]}
-            nextFocus={[1, 1]}
+            prevFocus={prevFocusPair}
+            nextFocus={nextFocusPair}
             maxZoom={1}
           />
         </code>
