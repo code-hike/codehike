@@ -20,8 +20,8 @@ function codeDiff({
   lineKeys,
   lang,
 }: DiffOptions) {
-  const prevNormalCode = normalize(prevCode)
-  const nextNormalCode = normalize(nextCode)
+  const prevNormalCode = normalize(prevCode || "")
+  const nextNormalCode = normalize(nextCode || "")
 
   const prevLines = tokenize(prevNormalCode, lang)
   const nextLines = tokenize(nextNormalCode, lang)

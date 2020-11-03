@@ -106,8 +106,11 @@ console.log(8)`
 
 export const files = () => {
   const steps = [
-    { code: code1, file: "foo.js" },
-    { code: code2, file: "bar.js" },
+    { code: "log('foo',1)", file: "foo.js" },
+    { code: "log('foo',2)", file: "foo.js" },
+    { code: "log('bar',1)", file: "bar.js" },
+    { code: "log('bar',2)", file: "bar.js" },
+    { code: "log('foo',3)", file: "foo.js" },
   ]
   return (
     <WithProgress length={steps.length}>
@@ -146,3 +149,80 @@ export const terminal = () => {
     </WithProgress>
   )
 }
+
+export const xfiles = () => {
+  return (
+    <WithProgress length={xsteps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 300 }}
+          lang="js"
+          steps={xsteps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
+
+const xsteps = [
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code:
+      'function ShoppingList(props) {\n  return (\n    <div className="shopping-list">\n      <h1>Shopping List for {props.name}</h1>\n      <ul>\n        <li>Instagram</li>\n        <li>WhatsApp</li>\n        <li>Oculus</li>\n      </ul>\n    </div>\n  )\n}\n',
+    file: "index.jsx",
+    focus: "",
+    lang: "jsx",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code:
+      'function ShoppingList(props) {\n  return React.createElement(\n    "div",\n    { className: "shopping-list" },\n    React.createElement(\n      "h1", null, "Shopping List for ", props.name\n    ),\n    React.createElement(\n      "ul",\n      null,\n      React.createElement("li", null, "Instagram"),\n      React.createElement("li", null, "WhatsApp"),\n      React.createElement("li", null, "Oculus")\n    )\n  )\n}\n',
+    file: "index.jsx",
+    focus: "",
+    lang: "jsx",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+  {
+    code: "",
+    file: "",
+    focus: "",
+    lang: "javascript",
+    tabs: ["", "index.jsx"],
+  },
+]

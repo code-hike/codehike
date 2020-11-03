@@ -5,6 +5,7 @@ import { vsDark } from "@code-surfer/themes"
 import { InnerTerminal } from "@code-hike/mini-terminal"
 import { Code } from "./code"
 import { getBackwardSteps, getForwardSteps } from "./steps"
+import "./theme.css"
 
 export { MiniEditor }
 
@@ -64,6 +65,7 @@ function MiniEditor({
     { code, focus, lang, file },
     ogSteps || []
   )
+
   return (
     <EditorFrame
       files={tabs}
@@ -145,6 +147,8 @@ function EditorContent({
 }: ContentProps) {
   const fwdTransitions = getForwardSteps(steps)
   const bwdTransitions = getBackwardSteps(steps)
+
+  const transitionIndex = Math.ceil(progress)
   const {
     prevCode,
     nextCode,
@@ -152,8 +156,8 @@ function EditorContent({
     nextFocus,
     lang,
   } = backward
-    ? bwdTransitions[Math.floor(progress) + 1]
-    : fwdTransitions[Math.floor(progress) + 1]
+    ? bwdTransitions[transitionIndex]
+    : fwdTransitions[transitionIndex]
 
   return (
     <Code
@@ -162,7 +166,7 @@ function EditorContent({
       prevFocus={prevFocus}
       nextFocus={nextFocus}
       language={lang}
-      progress={progress % 1}
+      progress={progress - transitionIndex + 1}
     />
   )
 }
