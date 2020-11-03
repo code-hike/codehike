@@ -27,7 +27,11 @@ function codeDiff({
   const nextLines = tokenize(nextNormalCode, lang)
 
   const prevKeys =
-    lineKeys || Array.from(prevLines, (x, i) => i + 1)
+    lineKeys ||
+    Array.from(
+      { length: prevLines.length - 1 },
+      (x, i) => i + 1
+    )
   const nextKeys = getNextKeys(
     prevNormalCode,
     nextNormalCode,

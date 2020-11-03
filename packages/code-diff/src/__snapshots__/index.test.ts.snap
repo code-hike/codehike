@@ -57,7 +57,6 @@ Object {
         "string",
       ],
     ],
-    "3": Array [],
   },
   "nextKeys": Array [
     1,
@@ -67,7 +66,6 @@ Object {
   "prevKeys": Array [
     1,
     2,
-    3,
   ],
 }
 `;
