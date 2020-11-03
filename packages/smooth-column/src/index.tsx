@@ -52,6 +52,7 @@ function SmoothColumn({
             transform: `translateY(${translateY}px)`,
             opacity: opacity,
           }}
+          key={item.id == null ? i : item.id}
         >
           {React.cloneElement(item.element, {
             progress,

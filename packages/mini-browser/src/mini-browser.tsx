@@ -126,7 +126,7 @@ function Bar({
       <Back />
       <Forward />
       {/* <Refresh /> */}
-      <input value={url} readOnly />
+      <input value={url || ""} readOnly />
       <Open href={linkUrl} />
     </>
   )
