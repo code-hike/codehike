@@ -40,20 +40,24 @@ function getGetFrame(
       !prevItems.some(prev => prev.id === next.id)
   )
 
-  const currentHeights = currentItems.map(
+  const stayPrevHeights = currentItems.map(
     item => item.height
+  )
+  const stayNextHeights = currentItems.map(
+    prev =>
+      nextItems.find(next => next.id === prev.id)!.height
   )
   const exitHeights = exitItems.map(item => item.height)
   const enterHeights = enterItems.map(item => item.height)
 
   const prevTops = translates(
-    [...exitHeights, ...currentHeights],
+    [...exitHeights, ...stayPrevHeights],
     [],
     enterHeights,
     padding
   )
   const nextTops = translates(
-    [...currentHeights, ...enterHeights],
+    [...stayNextHeights, ...enterHeights],
     exitHeights,
     [],
     padding
