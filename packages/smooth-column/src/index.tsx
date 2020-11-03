@@ -42,24 +42,27 @@ function SmoothColumn({
         ...style,
       }}
     >
-      {frame.map(({ item, translateY, opacity }, i) => (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            width: "100%",
-            height: item.height,
-            transform: `translateY(${translateY}px)`,
-            opacity: opacity,
-          }}
-          key={item.id == null ? i : item.id}
-        >
-          {React.cloneElement(item.element, {
-            progress,
-            backward,
-          })}
-        </div>
-      ))}
+      {frame.map(
+        ({ item, itemHeight, translateY, opacity }, i) => (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              width: "100%",
+              height: item.height,
+              transform: `translateY(${translateY}px)`,
+              opacity: opacity,
+            }}
+            key={item.id == null ? i : item.id}
+          >
+            {React.cloneElement(item.element, {
+              progress,
+              backward,
+              height: itemHeight,
+            })}
+          </div>
+        )
+      )}
     </div>
   )
 }

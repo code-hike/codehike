@@ -80,12 +80,25 @@ function getGetFrame(
     ...currentItems.map(() => "stay"),
     ...enterItems.map(() => "enter"),
   ]
+  const heights = [
+    ...exitItems.map(({ height }) => [height, height]),
+    ...currentItems.map(({ id }) => [
+      prevItems.find(item => item.id === id)!.height,
+      nextItems.find(item => item.id === id)!.height,
+    ]),
+    ...enterItems.map(({ height }) => [height, height]),
+  ]
 
   return (progress: number) => {
     return {
       height,
       frame: allItems.map((item, i) => ({
         item: item,
+        itemHeight: tweenTranslate(
+          heights[i][0],
+          heights[i][1],
+          progress
+        ),
         translateY: tweenTranslate(
           prevTops[i],
           nextTops[i],

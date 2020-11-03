@@ -12,6 +12,7 @@ const DEFAULT_HEIGHT = 200
 type EditorFrameProps = {
   files: string[]
   active: string
+  height?: number
   terminalPanel: React.ReactNode
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
@@ -20,6 +21,7 @@ function EditorFrame({
   active,
   children,
   terminalPanel,
+  height,
   style,
   ...rest
 }: EditorFrameProps) {
@@ -28,7 +30,7 @@ function EditorFrame({
       titleBar={
         <TabsContainer files={files} active={active} />
       }
-      style={{ height: DEFAULT_HEIGHT, ...style }}
+      style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
       {...rest}
     >
       <div className="ch-editor-body">{children}</div>

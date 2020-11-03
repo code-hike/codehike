@@ -26,6 +26,7 @@ type MiniEditorProps = {
   lang?: string
   file?: string
   steps?: MiniEditorStep[]
+  height?: number
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function MiniEditor({
