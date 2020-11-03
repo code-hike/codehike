@@ -14,6 +14,7 @@ type CodeProps = {
   nextFocus: string | null
   progress: number
   language: string
+  parentHeight?: number
 }
 
 export function Code({
@@ -23,6 +24,7 @@ export function Code({
   nextFocus,
   progress,
   language,
+  parentHeight,
 }: CodeProps) {
   const { prevKeys, nextKeys, codeMap } = codeDiff({
     prevCode,
@@ -30,7 +32,9 @@ export function Code({
     lang: language,
   })
 
-  const [ref, dimensions] = useDimensions<HTMLPreElement>()
+  const [ref, dimensions] = useDimensions<HTMLPreElement>([
+    parentHeight,
+  ])
 
   const prevLines = prevKeys.map(key => ({
     key,

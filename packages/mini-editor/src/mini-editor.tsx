@@ -37,6 +37,7 @@ function MiniEditor({
   lang,
   file,
   steps: ogSteps,
+  height,
   ...rest
 }: MiniEditorProps) {
   const { steps, files, stepsByFile } = useSteps(ogSteps, {
@@ -79,6 +80,7 @@ function MiniEditor({
           />
         </TerminalPanel>
       }
+      height={height}
       {...rest}
     >
       {activeSteps.length > 0 && (
@@ -87,6 +89,7 @@ function MiniEditor({
           backward={backward}
           progress={progress}
           steps={contentSteps}
+          parentHeight={height}
         />
       )}
     </EditorFrame>
@@ -139,12 +142,14 @@ type ContentProps = {
   progress: number
   backward: boolean
   steps: ContentStep[]
+  parentHeight?: number
 }
 
 function EditorContent({
   progress,
   backward,
   steps,
+  parentHeight,
 }: ContentProps) {
   const fwdTransitions = getForwardSteps(steps)
   const bwdTransitions = getBackwardSteps(steps)
@@ -168,6 +173,7 @@ function EditorContent({
       nextFocus={nextFocus}
       language={lang}
       progress={progress - transitionIndex + 1}
+      parentHeight={parentHeight}
     />
   )
 }

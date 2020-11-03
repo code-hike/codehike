@@ -9,10 +9,9 @@ const useLayoutEffect =
 
 export { useDimensions }
 
-function useDimensions<T extends HTMLElement>(): [
-  React.MutableRefObject<T>,
-  Dimensions
-] {
+function useDimensions<T extends HTMLElement>(
+  deps: React.DependencyList
+): [React.MutableRefObject<T>, Dimensions] {
   const ref = React.useRef<T>(null!)
   const [dimensions, setDimensions] = React.useState<
     Dimensions
@@ -25,6 +24,6 @@ function useDimensions<T extends HTMLElement>(): [
         height: rect.height,
       })
     }
-  }, [])
+  }, deps)
   return [ref, dimensions]
 }
