@@ -2,7 +2,6 @@ import React from "react"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { WithProgress } from "./utils"
 import { codeDiff } from "@code-hike/code-diff"
-import "./theme.css"
 
 export default {
   title: "Smooth Code",
