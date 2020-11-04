@@ -37,6 +37,49 @@ export const basic = ({ center, containerWidth }) => (
   </WithProgress>
 )
 
+export const dynamicLineWidth = ({
+  center,
+  containerWidth,
+}) => {
+  const prevLines = [
+    { element: <Line>One</Line>, key: 1 },
+    { element: <Line>Two</Line>, key: 2 },
+    { element: <Line>Three</Line>, key: 3 },
+  ]
+  const nextLines = [
+    { element: <Line>One</Line>, key: 1 },
+    {
+      element: <Line width={lineWidth * 2}>Alpha</Line>,
+      key: 1.1,
+    },
+    { element: <Line>Beta</Line>, key: 1.2 },
+    { element: <Line>Three</Line>, key: 3 },
+    {
+      element: <Line width={lineWidth * 2}>Gamma</Line>,
+      key: 3.3,
+    },
+  ]
+
+  return (
+    <WithProgress>
+      {progress => (
+        <SmoothLines
+          center={center}
+          progress={progress}
+          containerWidth={containerWidth}
+          containerHeight={100 + progress * 30}
+          prevLines={prevLines}
+          nextLines={nextLines}
+          lineHeight={lineHeight}
+          lineWidth={[lineWidth, lineWidth * 2]}
+          prevFocus={[1, 1]}
+          nextFocus={[2, 2]}
+        />
+      )}
+    </WithProgress>
+  )
+}
+
 const prevLines = [
   { element: <Line>Hi</Line>, key: 1 },
   { element: <Line>Smooth**</Line>, key: 2 },
@@ -62,14 +105,14 @@ const nextLines = [
 const lineHeight = 20
 const lineWidth = 120
 
-function Line({ children }) {
+function Line({ children, width }) {
   return (
     <div
       style={{
         background: "lightblue",
         border: "2px solid blue",
         height: lineHeight,
-        width: lineWidth,
+        width: width || lineWidth,
         boxSizing: "border-box",
       }}
     >

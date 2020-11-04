@@ -12,7 +12,7 @@ type Props = {
   containerWidth: number
   containerHeight: number
   lineHeight: number
-  lineWidth: number
+  lineWidth: number | [number, number]
   prevLines: Line[]
   nextLines: Line[]
   prevFocus: [number, number]
@@ -64,14 +64,25 @@ function SmoothLines({
     progress
   )
 
+  const lw = Array.isArray(lineWidth)
+    ? tween(
+        {
+          fixed: false,
+          interval: [0, 1],
+          extremes: lineWidth,
+        },
+        progress
+      )
+    : lineWidth
+
   const zoom = Math.min(
-    containerWidth / lineWidth,
+    containerWidth / lw,
     containerHeight / focusHeight,
     maxZoom
   )
 
   const left = center
-    ? containerWidth / 2 - (lineWidth * zoom) / 2
+    ? containerWidth / 2 - (lw * zoom) / 2
     : 0
 
   return (
@@ -109,9 +120,9 @@ function SmoothLines({
                 position: "absolute",
                 top: 0,
                 left: 0,
-                transform: `translate(${
-                  dx * lineWidth
-                }px, ${dy * lineHeight}px)`,
+                transform: `translate(${dx * lw}px, ${
+                  dy * lineHeight
+                }px)`,
                 opacity,
               }}
             >
