@@ -22,7 +22,11 @@ function SmoothColumn({
   style = {},
   backward,
 }: Props) {
-  const prevIndex = Math.floor(progress)
+  const p = Math.min(
+    Math.max(0, progress),
+    steps.length - 1
+  )
+  const prevIndex = Math.floor(p)
   const nextIndex = prevIndex + 1
   const prevItems = steps[prevIndex]?.items || []
   const nextItems = steps[nextIndex]?.items || prevItems
@@ -30,7 +34,7 @@ function SmoothColumn({
   const { frame, height } = useFrame(
     prevItems,
     nextItems,
-    progress % 1,
+    p % 1,
     padding
   )
 
@@ -56,7 +60,7 @@ function SmoothColumn({
             key={item.id == null ? i : item.id}
           >
             {React.cloneElement(item.element, {
-              progress,
+              progress: p,
               backward,
               height: itemHeight,
             })}
