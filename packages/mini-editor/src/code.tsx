@@ -26,34 +26,21 @@ export function Code({
   language,
   parentHeight,
 }: CodeProps) {
-  const { prevKeys, nextKeys, codeMap } = codeDiff({
-    prevCode,
-    nextCode,
-    lang: language,
-  })
-
   const [ref, dimensions] = useDimensions<HTMLPreElement>([
     parentHeight,
   ])
 
-  const prevLines = prevKeys.map(key => ({
-    key,
-    element: <Line line={codeMap[key]} />,
-  }))
-
-  const prevFocusPair = getFocusExtremes(
+  const {
+    prevLines,
+    nextLines,
+    prevFocusPair,
+    nextFocusPair,
+  } = useLineProps(
+    prevCode,
+    nextCode,
+    language,
     prevFocus,
-    prevLines
-  )
-
-  const nextLines = nextKeys.map(key => ({
-    key,
-    element: <Line line={codeMap[key]} />,
-  }))
-
-  const nextFocusPair = getFocusExtremes(
-    nextFocus,
-    nextLines
+    nextFocus
   )
 
   return (
@@ -92,6 +79,48 @@ export function Code({
       )}
     </pre>
   )
+}
+
+function useLineProps(
+  prevCode: string,
+  nextCode: string,
+  language: string,
+  prevFocus: string | null,
+  nextFocus: string | null
+) {
+  return React.useMemo(() => {
+    const { prevKeys, nextKeys, codeMap } = codeDiff({
+      prevCode,
+      nextCode,
+      lang: language,
+    })
+
+    const prevLines = prevKeys.map(key => ({
+      key,
+      element: <Line line={codeMap[key]} />,
+    }))
+
+    const prevFocusPair = getFocusExtremes(
+      prevFocus,
+      prevLines
+    )
+
+    const nextLines = nextKeys.map(key => ({
+      key,
+      element: <Line line={codeMap[key]} />,
+    }))
+
+    const nextFocusPair = getFocusExtremes(
+      nextFocus,
+      nextLines
+    )
+    return {
+      prevLines,
+      nextLines,
+      prevFocusPair,
+      nextFocusPair,
+    }
+  }, [prevCode, nextCode, language, prevFocus, nextFocus])
 }
 
 function Line({ line }: { line: CodeLine }) {

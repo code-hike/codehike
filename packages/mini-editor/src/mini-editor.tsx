@@ -1,10 +1,11 @@
 import React from "react"
 import { EditorFrame, TerminalPanel } from "./editor-frame"
-import { CodeSurfer } from "@code-surfer/standalone"
-import { vsDark } from "@code-surfer/themes"
 import { InnerTerminal } from "@code-hike/mini-terminal"
 import { Code } from "./code"
-import { getBackwardSteps, getForwardSteps } from "./steps"
+import {
+  useBackwardTransitions,
+  useForwardTransitions,
+} from "./steps"
 import "./theme.css"
 
 export { MiniEditor }
@@ -151,8 +152,8 @@ function EditorContent({
   steps,
   parentHeight,
 }: ContentProps) {
-  const fwdTransitions = getForwardSteps(steps)
-  const bwdTransitions = getBackwardSteps(steps)
+  const fwdTransitions = useForwardTransitions(steps)
+  const bwdTransitions = useBackwardTransitions(steps)
 
   const transitionIndex = Math.ceil(progress)
   const {

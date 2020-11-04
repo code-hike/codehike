@@ -100,7 +100,7 @@ function SmoothLines({
           const dx = tween(tweenX, progress)
           const dy = tween(tweenY, progress)
 
-          const opacity = 0.99 - Math.abs(dx) * 0.6
+          const opacity = 0.99 - Math.abs(dx) * 1
 
           return (
             <div
