@@ -22,7 +22,11 @@ export function Description() {
                 </a>
                 . Still very unstable, very undocumented,
                 very buggy, and not very fast. Codesandbox
-                examples coming soon for early adopters.
+                examples coming soon for early adopters. 
+                Currently working on 
+                <a href="https://github.com/code-hike/react-tutorial-demo">
+                  this demo
+                </a>.
               </p>
             </div>
           }
