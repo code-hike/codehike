@@ -14,7 +14,7 @@ export function Description() {
           overlay={
             <div className={s.experimental}>
               <span className={s.label}>
-                September 2020 status:
+                November 2020 status:
               </span>{" "}
               <p>
                 <a href="https://www.npmjs.com/org/code-hike">
