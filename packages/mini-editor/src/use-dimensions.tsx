@@ -1,6 +1,11 @@
 import React from "react"
 
-type Dimensions = { width: number; height: number } | null
+type Dimensions = {
+  width: number
+  height: number
+  deps: React.DependencyList
+  lineWidths: [number, number]
+} | null
 
 const useLayoutEffect =
   typeof window !== "undefined"
@@ -8,6 +13,8 @@ const useLayoutEffect =
     : React.useEffect
 
 export { useDimensions }
+
+const DEFAULT_WIDTH = 200
 
 function useDimensions<T extends HTMLElement>(
   deps: React.DependencyList
@@ -19,11 +26,43 @@ function useDimensions<T extends HTMLElement>(
   useLayoutEffect(() => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect()
+
+      const pll = ref.current.querySelector(
+        ".prev-longest-line"
+      )
+      const nll = ref.current.querySelector(
+        ".next-longest-line"
+      )
+
+      // TODO is it clientWidth or clientRect?
+
+      const plw = pll?.firstElementChild?.clientWidth
+      const nlw = nll?.firstElementChild?.clientWidth
       setDimensions({
         width: rect.width,
         height: rect.height,
+        lineWidths: [
+          plw || nlw || DEFAULT_WIDTH,
+          nlw || plw || DEFAULT_WIDTH,
+        ],
+        deps,
       })
     }
   }, deps)
-  return [ref, dimensions]
+
+  if (!dimensions || depsChanged(dimensions.deps, deps)) {
+    return [ref, null]
+  } else {
+    return [ref, dimensions]
+  }
+}
+
+function depsChanged(
+  oldDeps: React.DependencyList,
+  newDeps: React.DependencyList
+) {
+  for (let i = 0; i < oldDeps.length; i++) {
+    if (oldDeps[i] !== newDeps[i]) return true
+  }
+  return false
 }

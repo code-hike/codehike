@@ -26,15 +26,13 @@ export function Code({
   language,
   parentHeight,
 }: CodeProps) {
-  const [ref, dimensions] = useDimensions<HTMLPreElement>([
-    parentHeight,
-  ])
-
   const {
     prevLines,
     nextLines,
     prevFocusPair,
     nextFocusPair,
+    prevLongestLine,
+    nextLongestLine,
   } = useLineProps(
     prevCode,
     nextCode,
@@ -42,6 +40,12 @@ export function Code({
     prevFocus,
     nextFocus
   )
+
+  const [ref, dimensions] = useDimensions<HTMLPreElement>([
+    parentHeight,
+    prevLongestLine,
+    nextLongestLine,
+  ])
 
   return (
     <pre
@@ -58,8 +62,8 @@ export function Code({
         overflow: "hidden",
       }}
     >
-      {dimensions ? (
-        <code>
+      <code>
+        {dimensions ? (
           <SmoothLines
             center={false}
             progress={progress}
@@ -68,15 +72,22 @@ export function Code({
             prevLines={prevLines}
             nextLines={nextLines}
             lineHeight={20}
-            lineWidth={150}
+            lineWidth={dimensions.lineWidths}
             prevFocus={prevFocusPair}
             nextFocus={nextFocusPair}
             maxZoom={1}
           />
-        </code>
-      ) : (
-        "..."
-      )}
+        ) : (
+          <>
+            <div className="prev-longest-line">
+              {prevLongestLine}
+            </div>
+            <div className="next-longest-line">
+              {nextLongestLine}
+            </div>
+          </>
+        )}
+      </code>
     </pre>
   )
 }
@@ -105,6 +116,15 @@ function useLineProps(
       prevLines
     )
 
+    const prevLongestLineIndex = longestLineIndex(
+      prevCode,
+      prevFocusPair
+    )
+    const prevLongestLine =
+      prevLongestLineIndex == null
+        ? null
+        : prevLines[prevLongestLineIndex]?.element
+
     const nextLines = nextKeys.map(key => ({
       key,
       element: <Line line={codeMap[key]} />,
@@ -114,11 +134,23 @@ function useLineProps(
       nextFocus,
       nextLines
     )
+
+    const nextLongestLineIndex = longestLineIndex(
+      nextCode,
+      nextFocusPair
+    )
+    const nextLongestLine =
+      nextLongestLineIndex == null
+        ? null
+        : nextLines[nextLongestLineIndex]?.element
+
     return {
       prevLines,
       nextLines,
       prevFocusPair,
       nextFocusPair,
+      prevLongestLine,
+      nextLongestLine,
     }
   }, [prevCode, nextCode, language, prevFocus, nextFocus])
 }
@@ -127,11 +159,10 @@ function Line({ line }: { line: CodeLine }) {
   return (
     <div
       style={{
-        height: 20,
-        width: 150,
         boxSizing: "border-box",
         outline: "green 1px solid",
         padding: "0 4px",
+        display: "inline-block",
       }}
     >
       {line.map(([token, type], i) => (
@@ -141,4 +172,27 @@ function Line({ line }: { line: CodeLine }) {
       ))}
     </div>
   )
+}
+const newlineRe = /\r\n|\r|\n/
+function longestLineIndex(
+  code: string,
+  [first, last]: [number, number]
+) {
+  const focusedLines = code
+    .split(newlineRe)
+    .slice(first, last + 1)
+
+  if (!focusedLines.length) {
+    return null
+  }
+  let longestIndex = 0
+  for (let i = 1; i < focusedLines.length; i++) {
+    if (
+      focusedLines[i].length >
+      focusedLines[longestIndex].length
+    ) {
+      longestIndex = i
+    }
+  }
+  return first + longestIndex
 }

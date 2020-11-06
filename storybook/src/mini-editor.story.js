@@ -8,7 +8,7 @@ export default {
 
 const code1 = `console.log(1)`
 const code2 = `console.log(1)
-console.log(2)`
+console.log(200)`
 const terminal1 = `$ lorem ipsum
 dolor sit amet
 consectetur adipiscing elit
@@ -35,6 +35,32 @@ export const code = () => {
       {(progress, backward) => (
         <MiniEditor
           style={{ height: 200 }}
+          lang="js"
+          file="index.js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
+export const changeWidth = () => {
+  const code1 = `console.log(1)
+console.log(2)
+console.log(1)`
+  const code2 = `console.log(1)
+console.log(100000000, 100000000)
+console.log(1)`
+  const steps = [
+    { code: code1, focus: "2" },
+    { code: code2, focus: "2" },
+  ]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 200, width: 200 }}
           lang="js"
           file="index.js"
           steps={steps}

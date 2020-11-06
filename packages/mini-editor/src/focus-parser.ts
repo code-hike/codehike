@@ -1,6 +1,9 @@
 type LineIndex = number
 type ColumnIndex = number
 
+/**
+ * Return the first and last indexes to focus, both included
+ */
 export function getFocusExtremes(
   focus: string | null,
   lines: any[]
