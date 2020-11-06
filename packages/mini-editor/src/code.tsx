@@ -159,8 +159,6 @@ function Line({ line }: { line: CodeLine }) {
   return (
     <div
       style={{
-        boxSizing: "border-box",
-        outline: "green 1px solid",
         padding: "0 4px",
         display: "inline-block",
       }}
