@@ -178,13 +178,15 @@ function longestLineIndex(
   code: string,
   [first, last]: [number, number]
 ) {
-  const focusedLines = code
-    .split(newlineRe)
-    .slice(first, last + 1)
+  const focusedLines =
+    code == null
+      ? []
+      : code.split(newlineRe).slice(first, last + 1)
 
   if (!focusedLines.length) {
     return null
   }
+
   let longestIndex = 0
   for (let i = 1; i < focusedLines.length; i++) {
     if (
