@@ -159,7 +159,7 @@ function Line({ line }: { line: CodeLine }) {
   return (
     <div
       style={{
-        padding: "0 4px",
+        padding: "0 8px",
         display: "inline-block",
       }}
     >
