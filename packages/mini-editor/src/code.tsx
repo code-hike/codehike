@@ -71,7 +71,7 @@ export function Code({
             containerHeight={dimensions.height}
             prevLines={prevLines}
             nextLines={nextLines}
-            lineHeight={20}
+            lineHeight={dimensions.lineHeight}
             lineWidth={dimensions.lineWidths}
             prevFocus={prevFocusPair}
             nextFocus={nextFocusPair}

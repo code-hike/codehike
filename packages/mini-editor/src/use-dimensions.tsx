@@ -5,6 +5,7 @@ type Dimensions = {
   height: number
   deps: React.DependencyList
   lineWidths: [number, number]
+  lineHeight: number
 } | null
 
 const useLayoutEffect =
@@ -38,6 +39,8 @@ function useDimensions<T extends HTMLElement>(
 
       const plw = pll?.firstElementChild?.clientWidth
       const nlw = nll?.firstElementChild?.clientWidth
+      const plh = pll?.firstElementChild?.clientHeight ?? 20
+      const nlh = nll?.firstElementChild?.clientHeight ?? 20
       setDimensions({
         width: rect.width,
         height: rect.height,
@@ -45,6 +48,7 @@ function useDimensions<T extends HTMLElement>(
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
         ],
+        lineHeight: Math.max(plh, nlh),
         deps,
       })
     }
