@@ -2,10 +2,7 @@ import React from "react"
 import { codeDiff, CodeLine } from "@code-hike/code-diff"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { useDimensions } from "./use-dimensions"
-import {
-  getFocusExtremes,
-  parseFocus,
-} from "./focus-parser"
+import { getFocusIndexes } from "./focus-parser"
 
 type CodeProps = {
   prevCode: string
@@ -15,6 +12,7 @@ type CodeProps = {
   progress: number
   language: string
   parentHeight?: number
+  minColumns: number
 }
 
 export function Code({
@@ -25,6 +23,7 @@ export function Code({
   progress,
   language,
   parentHeight,
+  minColumns,
 }: CodeProps) {
   const {
     prevLines,
@@ -47,6 +46,7 @@ export function Code({
     nextLongestLine,
   ])
 
+  console.log({ dimensions })
   return (
     <pre
       ref={ref}
@@ -72,7 +72,14 @@ export function Code({
             prevLines={prevLines}
             nextLines={nextLines}
             lineHeight={dimensions.lineHeight}
-            lineWidth={dimensions.lineWidths}
+            lineWidth={
+              dimensions.lineWidths.map(lw =>
+                Math.max(
+                  lw,
+                  dimensions.colWidth * minColumns
+                )
+              ) as [number, number]
+            }
             prevFocus={prevFocusPair}
             nextFocus={nextFocusPair}
             maxZoom={1}
@@ -111,7 +118,7 @@ function useLineProps(
       element: <Line line={codeMap[key]} />,
     }))
 
-    const prevFocusPair = getFocusExtremes(
+    const prevFocusPair = getFocusIndexes(
       prevFocus,
       prevLines
     )
@@ -130,7 +137,7 @@ function useLineProps(
       element: <Line line={codeMap[key]} />,
     }))
 
-    const nextFocusPair = getFocusExtremes(
+    const nextFocusPair = getFocusIndexes(
       nextFocus,
       nextLines
     )
@@ -174,8 +181,10 @@ function Line({ line }: { line: CodeLine }) {
 const newlineRe = /\r\n|\r|\n/
 function longestLineIndex(
   code: string,
-  [first, last]: [number, number]
+  focusIndexes: number[]
 ) {
+  const first = Math.min(...focusIndexes)
+  const last = Math.max(...focusIndexes)
   const focusedLines =
     code == null
       ? []

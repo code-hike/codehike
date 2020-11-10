@@ -14,7 +14,7 @@
     "site": "yarn workspace site",
     "build-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --stages -c build",
     "watch-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' -c watch",
-    "watch-package": "yarn wsrun -p '@code-hike/smooth-lines' -r watch ",
+    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r watch ",
     "build-site": "yarn build-packages && yarn workspace site export",
     "storybook-watch": "yarn watch-packages & yarn storybook start"
   },

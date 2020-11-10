@@ -22,6 +22,24 @@ export function getFocusExtremes(
   }
 }
 
+/**
+ * Return the first and last indexes to focus, both included
+ */
+export function getFocusIndexes(
+  focus: string | null,
+  lines: any[]
+): number[] {
+  if (!focus) {
+    return [...lines.keys()]
+  } else {
+    const parsed = parseFocus(focus)
+    const focusedIndexes = Object.keys(parsed).map(i =>
+      parseInt(i, 10)
+    )
+    return focusedIndexes
+  }
+}
+
 export function parseFocus(focus: string) {
   if (!focus) {
     throw new Error("Focus cannot be empty")

@@ -96,13 +96,6 @@ function SmoothLines({
     ? containerWidth / 2 - (lw * zoom) / 2
     : 0
 
-  console.log({
-    lineHeight,
-    prevExtremes,
-    nextExtremes,
-    yCenter,
-  })
-
   const prevFocusKeys = prevFocus.map(
     index => prevLines[index]?.key
   )

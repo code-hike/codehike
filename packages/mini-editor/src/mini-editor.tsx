@@ -175,6 +175,8 @@ function EditorContent({
       language={lang}
       progress={progress - transitionIndex + 1}
       parentHeight={parentHeight}
+      // TODO make prop
+      minColumns={50}
     />
   )
 }
