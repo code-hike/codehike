@@ -37,11 +37,14 @@ export const basic = ({ center, containerWidth }) => (
   </WithProgress>
 )
 
-export const verticalCenter = ({ containerWidth }) => (
+export const verticalCenter = ({
+  containerWidth,
+  center,
+}) => (
   <WithProgress>
     {progress => (
       <SmoothLines
-        center={false}
+        center={center}
         progress={progress}
         containerWidth={containerWidth}
         containerHeight={100 + progress * 50}

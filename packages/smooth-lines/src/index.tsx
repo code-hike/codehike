@@ -15,12 +15,14 @@ type Props = {
   lineWidth: number | [number, number]
   prevLines: Line[]
   nextLines: Line[]
-  prevFocus: [number, number]
-  nextFocus: [number, number]
+  prevFocus: number[]
+  nextFocus: number[]
   overscroll?: boolean
   center?: boolean
   maxZoom?: number
 }
+
+const OFF_OPACITY = 0.33
 
 function SmoothLines({
   progress,
@@ -36,10 +38,19 @@ function SmoothLines({
   maxZoom = 1.2,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
-  const prevCenter = (prevFocus[0] + prevFocus[1]) / 2
-  const nextCenter = (nextFocus[0] + nextFocus[1]) / 2
-  const top = containerHeight / 2 - lineHeight / 2
-  const dy =
+  const prevExtremes = [
+    Math.min(...prevFocus),
+    Math.max(...prevFocus),
+  ]
+  const nextExtremes = [
+    Math.min(...nextFocus),
+    Math.max(...nextFocus),
+  ]
+  const prevCenter =
+    (prevExtremes[0] + prevExtremes[1] + 1) / 2
+  const nextCenter =
+    (nextExtremes[0] + nextExtremes[1] + 1) / 2
+  const yCenter =
     tween(
       {
         fixed: false,
@@ -52,9 +63,9 @@ function SmoothLines({
     ) * lineHeight
 
   const prevFocusHeight =
-    (prevFocus[1] - prevFocus[0] + 1) * lineHeight
+    (prevExtremes[1] - prevExtremes[0] + 3) * lineHeight
   const nextFocusHeight =
-    (nextFocus[1] - nextFocus[0] + 1) * lineHeight
+    (nextExtremes[1] - nextExtremes[0] + 3) * lineHeight
   const focusHeight = tween(
     {
       fixed: false,
@@ -85,6 +96,20 @@ function SmoothLines({
     ? containerWidth / 2 - (lw * zoom) / 2
     : 0
 
+  console.log({
+    lineHeight,
+    prevExtremes,
+    nextExtremes,
+    yCenter,
+  })
+
+  const prevFocusKeys = prevFocus.map(
+    index => prevLines[index]?.key
+  )
+  const nextFocusKeys = nextFocus.map(
+    index => nextLines[index]?.key
+  )
+
   return (
     <div
       style={{
@@ -100,11 +125,9 @@ function SmoothLines({
           position: "absolute",
           top: 0,
           left: 0,
-          bottom: 0,
-          transform: `scale(${zoom}) translateY(${
-            top - dy * zoom
-          }px) translateX(${left}px)`,
-          transformOrigin: `${center ? "center" : "left"}`,
+          transform: `translateY(${
+            containerHeight / 2 - yCenter * zoom
+          }px) translateX(${left}px) scale(${zoom})`,
           // outline: "5px solid green",
         }}
       >
@@ -112,7 +135,23 @@ function SmoothLines({
           const dx = tween(tweenX, progress)
           const dy = tween(tweenY, progress)
 
-          const opacity = 0.99 - Math.abs(dx) * 1
+          const opacity =
+            tween(
+              {
+                fixed: false,
+                extremes: [
+                  prevFocusKeys.includes(key)
+                    ? 0.99
+                    : OFF_OPACITY,
+                  nextFocusKeys.includes(key)
+                    ? 0.99
+                    : OFF_OPACITY,
+                ],
+                interval: [0, 1],
+              },
+              progress
+            ) -
+            Math.abs(dx) * 1
 
           return (
             <div
