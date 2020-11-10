@@ -37,6 +37,35 @@ export const basic = ({ center, containerWidth }) => (
   </WithProgress>
 )
 
+export const verticalCenter = ({ containerWidth }) => (
+  <WithProgress>
+    {progress => (
+      <SmoothLines
+        center={false}
+        progress={progress}
+        containerWidth={containerWidth}
+        containerHeight={100 + progress * 50}
+        prevLines={[
+          {
+            element: <Line height={100}>One</Line>,
+            hey: 1,
+          },
+        ]}
+        nextLines={[
+          {
+            element: <Line height={100}>One</Line>,
+            hey: 1,
+          },
+        ]}
+        lineHeight={100}
+        lineWidth={lineWidth}
+        prevFocus={[0, 0]}
+        nextFocus={[0, 0]}
+      />
+    )}
+  </WithProgress>
+)
+
 export const dynamicLineWidth = ({
   center,
   containerWidth,
@@ -105,13 +134,13 @@ const nextLines = [
 const lineHeight = 20
 const lineWidth = 120
 
-function Line({ children, width }) {
+function Line({ children, width, height }) {
   return (
     <div
       style={{
         background: "lightblue",
         border: "2px solid blue",
-        height: lineHeight,
+        height: height || lineHeight,
         width: width || lineWidth,
         boxSizing: "border-box",
       }}

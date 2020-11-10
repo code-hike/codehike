@@ -100,9 +100,10 @@ function SmoothLines({
           position: "absolute",
           top: 0,
           left: 0,
-          transform: `translateY(${
+          bottom: 0,
+          transform: `scale(${zoom}) translateY(${
             top - dy * zoom
-          }px) translateX(${left}px) scale(${zoom})`,
+          }px) translateX(${left}px)`,
           transformOrigin: `${center ? "center" : "left"}`,
           // outline: "5px solid green",
         }}
