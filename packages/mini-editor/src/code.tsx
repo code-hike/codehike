@@ -46,7 +46,6 @@ export function Code({
     nextLongestLine,
   ])
 
-  console.log({ dimensions })
   return (
     <pre
       ref={ref}
@@ -55,8 +54,8 @@ export function Code({
         position: "absolute",
         top: 0,
         bottom: 0,
-        right: 0,
-        left: 0,
+        right: 16,
+        left: 16,
         padding: 0,
         margin: 0,
         overflow: "hidden",
@@ -166,7 +165,6 @@ function Line({ line }: { line: CodeLine }) {
   return (
     <div
       style={{
-        padding: "0 8px",
         display: "inline-block",
       }}
     >

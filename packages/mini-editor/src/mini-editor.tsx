@@ -31,18 +31,20 @@ type MiniEditorProps = {
   minColumns?: number
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
-function MiniEditor({
-  progress = 0,
-  backward = false,
-  code,
-  focus,
-  lang,
-  file,
-  steps: ogSteps,
-  minColumns = 50,
-  height,
-  ...rest
-}: MiniEditorProps) {
+function MiniEditor(props: MiniEditorProps) {
+  const {
+    progress = 0,
+    backward = false,
+    code,
+    focus,
+    lang,
+    file,
+    steps: ogSteps,
+    minColumns = 50,
+    height,
+    ...rest
+  } = props
+  // console.log({ props })
   const { steps, files, stepsByFile } = useSteps(ogSteps, {
     code,
     focus,

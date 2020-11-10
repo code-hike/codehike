@@ -177,14 +177,13 @@ export const terminal = () => {
   )
 }
 
-export const xfiles = () => {
+export const x = () => {
   return (
-    <WithProgress length={xsteps.length}>
+    <WithProgress length={xprops.steps.length}>
       {(progress, backward) => (
         <MiniEditor
           style={{ height: 300 }}
-          lang="js"
-          steps={xsteps}
+          {...xprops}
           progress={progress}
           backward={backward}
         />
@@ -193,63 +192,23 @@ export const xfiles = () => {
   )
 }
 
-const xsteps = [
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code:
-      'function ShoppingList(props) {\n  return (\n    <div className="shopping-list">\n      <h1>Shopping List for {props.name}</h1>\n      <ul>\n        <li>Instagram</li>\n        <li>WhatsApp</li>\n        <li>Oculus</li>\n      </ul>\n    </div>\n  )\n}\n',
-    file: "index.jsx",
-    focus: "",
-    lang: "jsx",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code:
-      'function ShoppingList(props) {\n  return React.createElement(\n    "div",\n    { className: "shopping-list" },\n    React.createElement(\n      "h1", null, "Shopping List for ", props.name\n    ),\n    React.createElement(\n      "ul",\n      null,\n      React.createElement("li", null, "Instagram"),\n      React.createElement("li", null, "WhatsApp"),\n      React.createElement("li", null, "Oculus")\n    )\n  )\n}\n',
-    file: "index.jsx",
-    focus: "",
-    lang: "jsx",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-  {
-    code: "",
-    file: "",
-    focus: "",
-    lang: "javascript",
-    tabs: ["", "index.jsx"],
-  },
-]
+const xprops = {
+  steps: [
+    {
+      code:
+        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
+    },
+    {
+      code:
+        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n        filter: blur(3px);\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
+      focus: "4,8,9",
+    },
+    {
+      code:
+        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n        filter: drop-shadow(\n          2px 2px 2px blue\n        );\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
+      focus: "4,8:11",
+    },
+  ],
+  lang: "html",
+  file: "index.html",
+}
