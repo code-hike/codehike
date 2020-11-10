@@ -28,6 +28,7 @@ type MiniEditorProps = {
   file?: string
   steps?: MiniEditorStep[]
   height?: number
+  minColumns?: number
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function MiniEditor({
@@ -38,6 +39,7 @@ function MiniEditor({
   lang,
   file,
   steps: ogSteps,
+  minColumns = 50,
   height,
   ...rest
 }: MiniEditorProps) {
@@ -91,6 +93,7 @@ function MiniEditor({
           progress={progress}
           steps={contentSteps}
           parentHeight={height}
+          minColumns={minColumns}
         />
       )}
     </EditorFrame>
@@ -144,6 +147,7 @@ type ContentProps = {
   backward: boolean
   steps: ContentStep[]
   parentHeight?: number
+  minColumns: number
 }
 
 function EditorContent({
@@ -151,6 +155,7 @@ function EditorContent({
   backward,
   steps,
   parentHeight,
+  minColumns,
 }: ContentProps) {
   const fwdTransitions = useForwardTransitions(steps)
   const bwdTransitions = useBackwardTransitions(steps)
@@ -176,7 +181,7 @@ function EditorContent({
       progress={progress - transitionIndex + 1}
       parentHeight={parentHeight}
       // TODO make prop
-      minColumns={50}
+      minColumns={minColumns}
     />
   )
 }

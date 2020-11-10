@@ -66,6 +66,7 @@ console.log(1)`
           steps={steps}
           progress={progress}
           backward={backward}
+          minColumns={10}
         />
       )}
     </WithProgress>

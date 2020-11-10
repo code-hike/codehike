@@ -85,7 +85,6 @@ function SmoothLines({
         progress
       )
     : lineWidth
-
   const zoom = Math.min(
     containerWidth / lw,
     containerHeight / focusHeight,
