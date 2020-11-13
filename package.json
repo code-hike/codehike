@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "dev": "yarn workspace screencast dev",
+    "dev": "yarn workspace react-tutorial-demo dev",
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "build-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --stages -c build",
