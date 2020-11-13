@@ -15,6 +15,7 @@
     "build-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --stages -c build",
     "watch-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' -c watch",
     "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r watch ",
+    "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary",
     "build-site": "yarn build-packages && yarn workspace site export",
     "storybook-watch": "yarn watch-packages & yarn storybook start"
   },

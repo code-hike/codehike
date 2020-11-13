@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/code-diff",
-  "version": "0.2.1",
+  "version": "0.0.0-15",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -10,6 +10,7 @@
   "scripts": {
     "build": "ch-build",
     "watch": "ch-build --watch",
+    "publish-canary": "yarn publish --tag canary --access public",
     "test": "jest",
     "test-watch": "jest --watch --updateSnapshot"
   },
