@@ -12,13 +12,13 @@
     "dev": "yarn workspace react-tutorial-demo dev",
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
-    "build-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --stages -c build",
-    "watch-packages": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' -c watch",
-    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r watch ",
+    "build": "yarn wsrun -m --stages -c script build",
+    "watch": "yarn wsrun -m -c script build --watch",
+    "version": "yarn wsrun -m --serial -c script version", 
+    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r script build --watch ",
     "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary",
-    "packages-version": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c script version",
-    "build-site": "yarn build-packages && yarn workspace site export",
-    "storybook-watch": "yarn watch-packages & yarn storybook start"
+    "build-site": "yarn build && yarn workspace site export",
+    "storybook-watch": "yarn watch & yarn storybook start"
   },
   "dependencies": {
     "@emotion/core": "10.0.7",
