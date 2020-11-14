@@ -13,6 +13,11 @@ switch (command) {
     build(args)
     break
   }
+  case "watch": {
+    const { build } = require("./build")
+    build(["--watch"])
+    break
+  }
   case "version": {
     const { changeVersion } = require("./version")
     changeVersion(args)

@@ -13,9 +13,9 @@
     "storybook": "yarn workspace storybook",
     "site": "yarn workspace site",
     "build": "yarn wsrun -m --stages -c script build",
-    "watch": "yarn wsrun -m -c script build --watch",
+    "watch": "yarn wsrun -m -c script watch",
     "version": "yarn wsrun -m --serial -c script version", 
-    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r script build --watch ",
+    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r script watch ",
     "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary",
     "build-site": "yarn build && yarn workspace site export",
     "storybook-watch": "yarn watch & yarn storybook start"

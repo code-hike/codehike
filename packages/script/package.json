@@ -1,5 +1,5 @@
 {
-  "name": "@code-hike/build",
+  "name": "@code-hike/script",
   "version": "0.0.1",
   "bin": {
     "ch-script": "./script.js"

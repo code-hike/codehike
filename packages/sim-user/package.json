@@ -12,7 +12,7 @@
     "publish-canary": "yarn publish --tag canary --access public"
   },
   "devDependencies": {
-    "@code-hike/build": "0.0.1"
+    "@code-hike/script": "0.0.1"
   },
   "dependencies": {
     "@testing-library/dom": "^7.5.7",
