@@ -8,9 +8,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "ch-build",
-    "watch": "ch-build --watch",
     "publish-canary": "yarn publish --tag canary --access public",
+    "script": "ch-script",
     "test": "jest",
     "test-watch": "jest --watch --updateSnapshot"
   },

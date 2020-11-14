@@ -8,8 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "ch-build",
-    "watch": "ch-build --watch",
+    "script": "ch-script",
     "publish-canary": "yarn publish --tag canary --access public"
   },
   "devDependencies": {

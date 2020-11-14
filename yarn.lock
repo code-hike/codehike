@@ -2896,10 +2896,51 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@code-hike/player@0.2.1":
+"@code-hike/mini-browser@0.2.1", "@code-hike/mini-browser@^0.2.1":
   version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@code-hike/player/-/player-0.2.1.tgz#3c3110d16f80246451b78d10321618d82f08a7a7"
-  integrity sha512-lYUOtG7s4gtHgaq74LXI92VGkZd6pdVNpOcsV1jQmy4AVoy6/0Rh5FwCFFCcpuUSLEwELKlhL1UumzjCSEVwCA==
+  resolved "https://registry.yarnpkg.com/@code-hike/mini-browser/-/mini-browser-0.2.1.tgz#1aa0e5aa51e0020a882546904bca800f002d2b6a"
+  integrity sha512-fI1ZSS0Y7qDZeuaDukA0Y3U7dqDGs6/Xj6cQoq5m4KCN3dVTHkiVYzRamYNL5USEFJsf57FxT/c9s2fvVP5MKg==
+  dependencies:
+    "@code-hike/mini-frame" "0.2.1"
+
+"@code-hike/mini-editor@0.2.1", "@code-hike/mini-editor@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@code-hike/mini-editor/-/mini-editor-0.2.1.tgz#d975f551918bb7f7c14db2ed9069cf08aca46ffc"
+  integrity sha512-vtX4JcjLTtaPrt8qb7xaqvCb9EIh0LA4ZuElPBmLULNIXXZOb/Vw4hwgX8r8OghsdRkJPB1gr1+5LGLbcLbYkw==
+  dependencies:
+    "@code-hike/mini-frame" "0.2.1"
+    "@code-hike/mini-terminal" "0.2.1"
+    "@code-surfer/standalone" "^3.1.1"
+
+"@code-hike/mini-frame@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@code-hike/mini-frame/-/mini-frame-0.2.1.tgz#9c16195b86119b345a9c4f5088c02fa04fe0ee5f"
+  integrity sha512-tLIXnRMEqdkGzN6IzyRbXO2W7iPkWjYL2oHe1F8w2KhByWGahCLq6GPAlSz6AdQ1VzjnlGY077YfQ4x0m8q/TA==
+
+"@code-hike/mini-terminal@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@code-hike/mini-terminal/-/mini-terminal-0.2.1.tgz#857f8a26d52bc92c2b6aa54ac614e0998c34427d"
+  integrity sha512-TUfvqxpU6xwtyFbFjFvCPM6UrBszSaASpEUL/Ng6lCUTT7QBpxXkUzoJ1JZlK8LxuYE8tTu16+lAu5qcQSE+pw==
+  dependencies:
+    "@code-hike/mini-frame" "0.2.1"
+
+"@code-hike/player@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@code-hike/player/-/player-0.2.2.tgz#19777e83191bca6359ddc85b4f7bf031a4514898"
+  integrity sha512-kNlFoCYx8FhDCHcrPpHHSYxWr5Xt2NoW9KDIB0xL/L+KbN8skqfkv/uvu9e65y6oq8w2lwL2fbdsEJmbW1DbMw==
+
+"@code-hike/scroller@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@code-hike/scroller/-/scroller-0.2.1.tgz#a0562cabb49bf168cb603f924ac7e1cfeb3c61fd"
+  integrity sha512-ON95xFzevXEkinnCmupCpDnaA8pFPJ/Me/ySk7QlY61rpKdQaQJth+qBVOPTp6E9Dy9bfG4otmpDshQ2ZfquvQ==
+
+"@code-hike/sim-user@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@code-hike/sim-user/-/sim-user-0.2.1.tgz#71c68acbbf51e18ce863c5fdad79322ad3b4e38e"
+  integrity sha512-tYyN04jLSN81CVX9kwCwZvB3d1r/8rtwxwXBIDgKjqMjsg+42qoBLvLs+qKuOJU/vFam+gmEO6YheebSP/ruyw==
+  dependencies:
+    "@testing-library/dom" "^7.5.7"
+    "@testing-library/user-event" "^10.3.1"
 
 "@code-surfer/standalone@^3.1.1":
   version "3.1.1"
@@ -7534,6 +7575,17 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+edit-json-file@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/edit-json-file/-/edit-json-file-1.5.0.tgz#da7c69640a5d4a31de3cd7c367bb69bc999a84d4"
+  integrity sha512-YysmqOok2zzUAF6g/nydRZ+o6W8Iol1nQxkdqxwNt4k7MRjTIydrt9fWSzJ0wC14t651z0ofRjQkTjip66re2g==
+  dependencies:
+    find-value "^1.0.3"
+    iterate-object "^1.3.2"
+    r-json "^1.2.5"
+    set-value "^3.0.1"
+    w-json "^1.3.5"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -8193,6 +8245,11 @@ find-up@^3.0.0:
   integrity sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==
   dependencies:
     locate-path "^3.0.0"
+
+find-value@^1.0.3:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/find-value/-/find-value-1.0.12.tgz#68b6cec84e5b2d51272965e0bf09b26c9159c26e"
+  integrity sha512-OCpo8LTk8eZ2sdDCwbU2Lc3ivYsdM6yod6jP2jHcNEFcjPhkgH0+POzTIol7xx1LZgtbI5rkO5jqxsG5MWtPjQ==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -9665,6 +9722,11 @@ iterate-iterator@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/iterate-iterator/-/iterate-iterator-1.0.1.tgz#1693a768c1ddd79c969051459453f082fe82e9f6"
   integrity sha512-3Q6tudGN05kbkDQDI4CqjaBf4qf85w6W6GnuZDtUVYwKgtC1q8yxYX7CZed7N+tLzQqS6roujWvszf13T+n9aw==
+
+iterate-object@^1.3.2:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/iterate-object/-/iterate-object-1.3.4.tgz#fa50b1d9e58e340a7dd6b4c98c8a5e182e790096"
+  integrity sha512-4dG1D1x/7g8PwHS9aK6QV5V94+ZvyP4+d19qDv43EzImmrndysIl4prmJ1hWWIGCqrZHyaHBm6BSEWHOLnpoNw==
 
 iterate-value@^1.0.0:
   version "1.0.2"
@@ -12618,6 +12680,11 @@ querystring@0.2.0, querystring@^0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
+r-json@^1.2.5:
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/r-json/-/r-json-1.2.10.tgz#62a73d9cafa7eabf670e5c2812c27bdb220a968b"
+  integrity sha512-hu9vyLjSlHXT62NAS7DjI9WazDlvjN0lgp3n431dCVnirVcLkZIpzSwA3orhZEKzdDD2jqNYI+w0yG0aFf4kpA==
+
 ramda@^0.21.0:
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.21.0.tgz#a001abedb3ff61077d4ff1d577d44de77e8d0a35"
@@ -13800,6 +13867,13 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-extendable "^0.1.1"
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
+
+set-value@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/set-value/-/set-value-3.0.2.tgz#74e8ecd023c33d0f77199d415409a40f21e61b90"
+  integrity sha512-npjkVoz+ank0zjlV9F47Fdbjfj/PfXyVhZvGALWsyIYU/qrMzpi6avjKW3/7KeSU2Df3I46BrN1xOI1+6vW0hA==
+  dependencies:
+    is-plain-object "^2.0.4"
 
 setimmediate@^1.0.4:
   version "1.0.5"
@@ -15453,6 +15527,11 @@ vm-browserify@1.1.2, vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+w-json@^1.3.5:
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/w-json/-/w-json-1.3.10.tgz#ac448a19ca22376e2753a684b52369c7b1e83313"
+  integrity sha512-XadVyw0xE+oZ5FGApXsdswv96rOhStzKqL53uSe5UaTadABGkWIg1+DTx8kiZ/VqTZTBneoL0l65RcPe4W3ecw==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
