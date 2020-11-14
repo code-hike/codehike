@@ -20,8 +20,7 @@
     "@code-hike/mini-terminal": "0.0.0-15",
     "@code-hike/mini-frame": "0.0.0-15",
     "@code-hike/smooth-lines": "0.0.0-15",
-    "@code-hike/code-diff": "0.0.0-15",
-    "@code-surfer/standalone": "^3.1.1"
+    "@code-hike/code-diff": "0.0.0-15"
   },
   "peerDependencies": {
     "react": ">=16.8"

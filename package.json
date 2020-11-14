@@ -20,10 +20,6 @@
     "build-site": "yarn build && yarn workspace site export",
     "storybook-watch": "yarn watch & yarn storybook start"
   },
-  "dependencies": {
-    "@emotion/core": "10.0.7",
-    "theme-ui": "0.2.31"
-  },
   "devDependencies": {
     "wsrun": "^5.2.4"
   }
