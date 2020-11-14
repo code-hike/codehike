@@ -1,28 +1,38 @@
 const editJsonFile = require("edit-json-file")
 
-function changeVersion(args) {
-  console.log({ cwd: process.cwd(), args })
+function changeVersion([version]) {
+  let file = editJsonFile(`./package.json`, {
+    stringify_eol: true,
+  })
 
-  let file = editJsonFile(`./package.json`)
+  console.log(`Update ${file.get("version")} to ${version}`)
+  file.set("version", version)
 
-  // // Set a couple of fields
-  // file.set("planet", "Earth")
-  // file.set("city\\.name", "anytown")
-  // file.set("name.first", "Johnny")
-  // file.set("name.last", "B.")
-  // file.set("is_student", false)
+  changeDependencies(file, "dependencies", version)
+  changeDependencies(file, "devDependencies", version)
+  changeDependencies(file, "peerDependencies", version)
 
-  // // Output the content
-  // console.log(file.get())
-  // // { planet: 'Earth',
-  // //   city.name: 'anytown',
-  // //   name: { first: 'Johnny', last: 'B.' },
-  // //   is_student: false }
+  file.save()
+}
 
-  // // Save the data to the disk
-  // file.save()
+function changeDependencies(file, depType, version) {
+  const deps = file.get(depType)
+  if (!deps) return
 
-  console.log(file.get("version"))
+  const names = Object.keys(deps).filter(
+    name =>
+      name.startsWith("@code-hike/") &&
+      name !== "@code-hike/build" &&
+      name !== "@code-hike/script"
+  )
+
+  names.forEach(name => {
+    const path = `${depType}.${name}`
+    console.log(
+      `Update ${name} dep ${file.get(path)} to ${version}`
+    )
+    file.set(path, version)
+  })
 }
 
 module.exports = {
