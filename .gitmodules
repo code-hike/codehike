@@ -1,0 +1,3 @@
+[submodule "external/react-tutorial-demo"]
+	path = external/react-tutorial-demo
+	url = git@github.com:code-hike/react-tutorial-demo.git

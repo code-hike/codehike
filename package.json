@@ -3,8 +3,7 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "demos/*",
-      "storybook",
+      "external/*",
       "site"
     ]
   },
@@ -17,8 +16,7 @@
     "version": "yarn wsrun -m --serial -c script version",
     "watch-package": "yarn wsrun -p '@code-hike/scroller' -r script watch ",
     "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary",
-    "build-site": "yarn build && yarn workspace site export",
-    "storybook-watch": "yarn watch & yarn storybook start"
+    "build-site": "yarn build && yarn workspace site export"
   },
   "devDependencies": {
     "wsrun": "^5.2.4"
