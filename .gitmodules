@@ -1,15 +1,3 @@
-[submodule "demos/the-x-in-mdx"]
-	path = demos/the-x-in-mdx
-	url = https://github.com/pomber/the-x-in-mdx
-[submodule "demos/hooks-talk-demo"]
-	path = demos/hooks-talk-demo
-	url = https://github.com/code-hike/hooks-talk-demo
-[submodule "demos/swr-minidocs-demo"]
-	path = demos/swr-minidocs-demo
-	url = https://github.com/code-hike/swr-minidocs-demo
-[submodule "demos/nextjs-post-demo"]
-	path = demos/nextjs-post-demo
-	url = https://github.com/code-hike/nextjs-post-demo
 [submodule "demos/react-tutorial-demo"]
 	path = demos/react-tutorial-demo
 	url = https://github.com/code-hike/react-tutorial-demo
