@@ -3,20 +3,17 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "external/*",
-      "site"
+      "external/*"
     ]
   },
   "scripts": {
     "dev": "yarn workspace react-tutorial-demo dev",
     "storybook": "yarn workspace storybook start",
-    "site": "yarn workspace site",
     "build": "yarn wsrun -m --stages -c script build",
     "watch": "yarn wsrun -m -c script watch",
     "version": "yarn wsrun -m --serial -c script version",
     "watch-package": "yarn wsrun -p '@code-hike/scroller' -r script watch ",
-    "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary",
-    "build-site": "yarn build && yarn workspace site export"
+    "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary"
   },
   "devDependencies": {
     "wsrun": "^5.2.4"

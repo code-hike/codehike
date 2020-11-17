@@ -1,9 +1,0 @@
-.footer {
-  padding: 16px 32px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.footer > a {
-  padding-left: 16px;
-}
