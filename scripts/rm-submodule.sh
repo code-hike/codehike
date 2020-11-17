@@ -4,14 +4,14 @@
 
 # Remove config entries:
 
-git config -f .git/config --remove-section submodule.demos/$1
-git config -f .gitmodules --remove-section submodule.demos/$1
+git config -f .git/config --remove-section submodule.external/$1
+git config -f .gitmodules --remove-section submodule.external/$1
 git add .gitmodules
 
 # Remove directory from index:
 
-git rm --cached demos/$1
+git rm --cached external/$1
 
 # Delete unused files:
-rm -rf demos/$1
-rm -rf .git/modules/demos/$1
+rm -rf external/$1
+rm -rf .git/modules/external/$1

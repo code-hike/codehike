@@ -1,6 +1,0 @@
-[submodule "demos/react-tutorial-demo"]
-	path = demos/react-tutorial-demo
-	url = https://github.com/code-hike/react-tutorial-demo
-[submodule "packages/css-filters-screencast"]
-	path = demos/css-filters-screencast
-	url = git@github.com:pomber/css-filters-screencast.git
