@@ -98,7 +98,7 @@ function useSteps(
     } else {
       return ogSteps.map(s => {
         const step = transformStep({
-          prependOrigin: prependOrigin,
+          prependOrigin,
           ...s,
         })
         return {
@@ -140,11 +140,12 @@ function transformStep(step: MiniBrowserStep) {
       ? currentOrigin + step.url
       : step.url
   const loadUrl = step.loadUrl || url
-  return {
-    ...step,
-    url,
-    loadUrl,
+
+  const transformed = { ...step, loadUrl }
+  if (step.url) {
+    transformed.url = url
   }
+  return transformed
 }
 
 export { MiniBrowser }

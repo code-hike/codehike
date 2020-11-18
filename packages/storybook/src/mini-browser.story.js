@@ -1,10 +1,10 @@
-import React from "react";
-import { MiniBrowser } from "@code-hike/mini-browser";
-import { WithProgress, Page } from "./utils";
+import React from "react"
+import { MiniBrowser } from "@code-hike/mini-browser"
+import { WithProgress, Page } from "./utils"
 
 export default {
   title: "Mini Browser",
-};
+}
 
 export const basic = () => (
   <Page>
@@ -14,7 +14,7 @@ export const basic = () => (
       </div>
     </MiniBrowser>
   </Page>
-);
+)
 
 export const iframe = () => (
   <Page>
@@ -23,7 +23,7 @@ export const iframe = () => (
       style={{ height: 300 }}
     />
   </Page>
-);
+)
 
 export const zoom = () => (
   <Page>
@@ -33,13 +33,29 @@ export const zoom = () => (
       zoom={0.5}
     />
   </Page>
-);
+)
+
+export const defaultUrl = () => (
+  <Page>
+    <MiniBrowser
+      steps={[
+        {
+          loadUrl: "https://whatismyviewport.com/",
+        },
+      ]}
+      url="/default"
+      prependOrigin={true}
+      style={{ height: 300 }}
+      zoom={0.5}
+    />
+  </Page>
+)
 
 export const steps = () => {
   const steps = [
     { zoom: 0.5, url: "https://whatismyviewport.com/" },
     { zoom: 1, url: "https://whatismyviewport.com/" },
-  ];
+  ]
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
@@ -51,8 +67,8 @@ export const steps = () => {
         />
       )}
     </WithProgress>
-  );
-};
+  )
+}
 
 export const video = () => (
   <Page>
@@ -70,4 +86,4 @@ export const video = () => (
       />
     </MiniBrowser>
   </Page>
-);
+)
