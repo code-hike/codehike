@@ -1,6 +1,8 @@
 const editJsonFile = require("edit-json-file")
 
-function changeVersion([version]) {
+function changeVersion([argVersion]) {
+  const version = argVersion || getShaVersion()
+
   let file = editJsonFile(`./package.json`, {
     stringify_eol: true,
   })
@@ -32,6 +34,14 @@ function changeDependencies(file, depType, version) {
     )
     file.set(path, version)
   })
+}
+
+function getShaVersion() {
+  const revision = require("child_process")
+    .execSync("git rev-parse --short HEAD")
+    .toString()
+    .trim()
+  return `0.0.0+${revision}`
 }
 
 module.exports = {

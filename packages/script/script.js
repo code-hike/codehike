@@ -4,9 +4,6 @@ const [command, ...args] = process.argv.slice(2)
 
 // console.log({ command, args })
 
-if (command === "build") {
-}
-
 switch (command) {
   case "build": {
     const { build } = require("./build")

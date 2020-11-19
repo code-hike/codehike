@@ -11,7 +11,7 @@
     "storybook": "yarn workspace storybook start",
     "build": "yarn wsrun -m --stages -c script build",
     "watch": "yarn wsrun -m -c script watch",
-    "version": "yarn wsrun -m --serial -c script version",
+    "new-version": "yarn wsrun -m --serial -c script version",
     "watch-package": "yarn wsrun -p '@code-hike/smooth-column' -r script watch ",
     "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary"
   },
