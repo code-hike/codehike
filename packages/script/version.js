@@ -41,7 +41,7 @@ function getShaVersion() {
     .execSync("git rev-parse --short HEAD")
     .toString()
     .trim()
-  return `0.0.0+${revision}`
+  return `0.0.0-${revision}`
 }
 
 module.exports = {
