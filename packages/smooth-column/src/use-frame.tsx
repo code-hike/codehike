@@ -98,15 +98,19 @@ function getGetFrame(
       height,
       frame: allItems.map((item, i) => ({
         item: item,
-        itemHeight: tweenTranslate(
+        itemHeight: tween(
           heights[i][0],
           heights[i][1],
-          progress
+          easing.easeInOutQuad(progress)
         ),
-        translateY: tweenTranslate(
+        translateY: tween(
           prevTops[i],
           nextTops[i],
-          progress
+          state[i] === "stay"
+            ? easing.easeInOutQuad(progress)
+            : state[i] === "exit"
+            ? easing.easeInQuad(progress)
+            : easing.easeOutQuad(progress)
         ),
         opacity:
           state[i] === "stay"
@@ -120,10 +124,10 @@ function getGetFrame(
 }
 
 function tweenOpacity(t: number) {
-  return Math.pow(t, 4)
+  return Math.pow(t, 6)
 }
 
-function tweenTranslate(p: number, n: number, t: number) {
+function tween(p: number, n: number, t: number) {
   return (n - p) * t + p
 }
 
@@ -163,4 +167,21 @@ function translates(
 
 function sum(array: number[]) {
   return array.reduce((a, b) => a + b, 0)
+}
+
+const easing = {
+  linear: function (t: number) {
+    return t
+  },
+  easeInQuad: function (t: number) {
+    return t * t
+  },
+  easeOutQuad: function (t: number) {
+    return t * (2 - t)
+  },
+  easeInOutQuad: function (t: number) {
+    return t < 0.5
+      ? 2 * t * t
+      : 1 - Math.pow(-2 * t + 2, 2) / 2
+  },
 }
