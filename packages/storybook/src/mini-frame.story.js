@@ -11,12 +11,12 @@ export default {
 
 export const basic = () => (
   <Page>
-    <MiniFrame title="This">
+    <MiniFrame title="This" style={{ height: 200 }}>
       <div
         style={{
-          height: 200,
+          height: "100%",
           background: "beige",
-          padding: 10,
+          // padding: 10,
         }}
       >
         Lorem Ipsum
@@ -27,10 +27,13 @@ export const basic = () => (
 
 export const basicZoom = () => (
   <Page>
-    <MiniFrame title="This" zoom={2}>
+    <MiniFrame
+      title="This"
+      zoom={2}
+      style={{ height: 200 }}
+    >
       <div
         style={{
-          height: 200,
           background: "beige",
           padding: 10,
         }}
@@ -42,17 +45,20 @@ export const basicZoom = () => (
 )
 
 export const longTitle = () => (
-  <Page style={{ width: 300 }}>
-    <MiniFrame title="Lets test what happens if we put a very long title">
-      <div style={{ height: 200 }} />
+  <Page>
+    <MiniFrame
+      title="Lets test what happens if we put a very long title"
+      style={{ width: 300, height: 200 }}
+    >
+      <div />
     </MiniFrame>
   </Page>
 )
 
 export const noTitle = () => (
   <Page>
-    <MiniFrame>
-      <div style={{ width: 100, height: 200 }} />
+    <MiniFrame style={{ width: 300, height: 200 }}>
+      <div />
     </MiniFrame>
   </Page>
 )
@@ -60,6 +66,7 @@ export const noTitle = () => (
 export const customTitleBar = () => (
   <Page>
     <MiniFrame
+      style={{ width: 300, height: 200 }}
       titleBar={
         <>
           <FrameButtons />
@@ -68,7 +75,7 @@ export const customTitleBar = () => (
         </>
       }
     >
-      <div style={{ width: 100, height: 200 }} />
+      <div />
     </MiniFrame>
   </Page>
 )
@@ -104,12 +111,12 @@ export const overflowYZoomOut = () => (
 )
 
 export const overflowX = () => (
-  <Page style={{ width: 200 }}>
-    <MiniFrame>
+  <Page>
+    <MiniFrame style={{ width: 200, height: 300 }}>
       <div
         style={{
-          height: 100,
           width: 240,
+          height: 100,
           background: "salmon",
         }}
       />
