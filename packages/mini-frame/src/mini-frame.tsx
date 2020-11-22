@@ -1,11 +1,11 @@
-import React from "react";
-import "./mini-frame.css";
+import React from "react"
+import "./mini-frame.css"
 
 type MiniFrameProps = {
-  title?: string;
-  titleBar?: React.ReactNode;
-  zoom?: number;
-} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+  title?: string
+  titleBar?: React.ReactNode
+  zoom?: number
+} & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 export function MiniFrame({
   title,
@@ -14,7 +14,7 @@ export function MiniFrame({
   zoom = 1,
   ...props
 }: MiniFrameProps) {
-  const bar = titleBar || <DefaultTitleBar title={title} />;
+  const bar = titleBar || <DefaultTitleBar title={title} />
   return (
     <div {...props}>
       <div className="ch-frame">
@@ -22,14 +22,18 @@ export function MiniFrame({
         <div className="ch-frame-content">
           <div
             className="ch-frame-zoom"
-            style={{ "--ch-frame-zoom": zoom } as React.CSSProperties}
+            style={
+              {
+                "--ch-frame-zoom": zoom,
+              } as React.CSSProperties
+            }
           >
             {children}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function DefaultTitleBar({ title }: { title?: string }) {
@@ -41,7 +45,7 @@ function DefaultTitleBar({ title }: { title?: string }) {
       <div className="ch-middle-bar">{title}</div>
       <div className="ch-right-bar"></div>
     </>
-  );
+  )
 }
 
 export function FrameButtons() {
@@ -53,5 +57,5 @@ export function FrameButtons() {
       <div className="ch-frame-button-space" />
       <div className="ch-frame-button green" />
     </div>
-  );
+  )
 }

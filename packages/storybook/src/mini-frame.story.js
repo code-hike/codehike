@@ -1,30 +1,45 @@
-import React from "react";
-import { MiniFrame, FrameButtons } from "@code-hike/mini-frame";
-import { Page } from "./utils";
+import React from "react"
+import {
+  MiniFrame,
+  FrameButtons,
+} from "@code-hike/mini-frame"
+import { Page } from "./utils"
 
 export default {
   title: "Mini Frame",
-};
+}
 
 export const basic = () => (
   <Page>
     <MiniFrame title="This">
-      <div style={{ height: 200, background: "beige", padding: 10 }}>
+      <div
+        style={{
+          height: 200,
+          background: "beige",
+          padding: 10,
+        }}
+      >
         Lorem Ipsum
       </div>
     </MiniFrame>
   </Page>
-);
+)
 
 export const basicZoom = () => (
   <Page>
     <MiniFrame title="This" zoom={2}>
-      <div style={{ height: 200, background: "beige", padding: 10 }}>
+      <div
+        style={{
+          height: 200,
+          background: "beige",
+          padding: 10,
+        }}
+      >
         Lorem Ipsum
       </div>
     </MiniFrame>
   </Page>
-);
+)
 
 export const longTitle = () => (
   <Page style={{ width: 300 }}>
@@ -32,7 +47,7 @@ export const longTitle = () => (
       <div style={{ height: 200 }} />
     </MiniFrame>
   </Page>
-);
+)
 
 export const noTitle = () => (
   <Page>
@@ -40,7 +55,7 @@ export const noTitle = () => (
       <div style={{ width: 100, height: 200 }} />
     </MiniFrame>
   </Page>
-);
+)
 
 export const customTitleBar = () => (
   <Page>
@@ -56,7 +71,7 @@ export const customTitleBar = () => (
       <div style={{ width: 100, height: 200 }} />
     </MiniFrame>
   </Page>
-);
+)
 
 export const overflowY = () => (
   <Page>
@@ -65,7 +80,7 @@ export const overflowY = () => (
       <div style={{ height: 200, background: "beige" }} />
     </MiniFrame>
   </Page>
-);
+)
 
 export const overflowYZoomIn = () => (
   <Page>
@@ -74,22 +89,30 @@ export const overflowYZoomIn = () => (
       <div style={{ height: 200, background: "beige" }} />
     </MiniFrame>
   </Page>
-);
+)
 
 export const overflowYZoomOut = () => (
   <Page>
     <MiniFrame style={{ height: 300 }} zoom={0.5}>
       <div style={{ height: 200, background: "salmon" }} />
       <div style={{ height: 200, background: "beige" }} />
-      <div style={{ height: 200, background: "darksalmon" }} />
+      <div
+        style={{ height: 200, background: "darksalmon" }}
+      />
     </MiniFrame>
   </Page>
-);
+)
 
 export const overflowX = () => (
   <Page style={{ width: 200 }}>
     <MiniFrame>
-      <div style={{ height: 100, width: 240, background: "salmon" }} />
+      <div
+        style={{
+          height: 100,
+          width: 240,
+          background: "salmon",
+        }}
+      />
     </MiniFrame>
   </Page>
-);
+)
