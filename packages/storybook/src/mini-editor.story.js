@@ -45,6 +45,7 @@ export const code = () => {
     </WithProgress>
   )
 }
+
 export const changeWidth = () => {
   const code1 = `console.log(1)
 console.log(2)
@@ -149,6 +150,40 @@ export const files = () => {
           progress={progress}
           backward={backward}
         />
+      )}
+    </WithProgress>
+  )
+}
+
+export const minColumns = () => {
+  const steps = [{ code: "log('foo',1)" }]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <>
+          <p>
+            minColumns 5 (it doesn't zoom because maxZoom ==
+            1)
+          </p>
+          <MiniEditor
+            style={{ height: 300 }}
+            lang="js"
+            steps={steps}
+            progress={progress}
+            minColumns={5}
+            file="index.js"
+          />
+          <p>minColumns 80</p>
+          <MiniEditor
+            style={{ height: 300 }}
+            lang="js"
+            steps={steps}
+            progress={progress}
+            backward={backward}
+            minColumns={80}
+            file="index.js"
+          />
+        </>
       )}
     </WithProgress>
   )

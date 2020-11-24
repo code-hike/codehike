@@ -44,7 +44,6 @@ function MiniEditor(props: MiniEditorProps) {
     height,
     ...rest
   } = props
-  // console.log({ props })
   const { steps, files, stepsByFile } = useSteps(ogSteps, {
     code,
     focus,
@@ -182,7 +181,6 @@ function EditorContent({
       language={lang}
       progress={progress - transitionIndex + 1}
       parentHeight={parentHeight}
-      // TODO make prop
       minColumns={minColumns}
     />
   )

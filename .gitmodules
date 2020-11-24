@@ -4,3 +4,6 @@
 [submodule "external/site"]
 	path = external/site
 	url = git@github.com:code-hike/site.git
+[submodule "external/code-sections"]
+	path = external/code-sections
+	url = git@github.com:pomber/code-sections.git
