@@ -17,10 +17,11 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/mini-terminal": "0.0.0-6a7ffe8",
+    "@code-hike/code-diff": "0.0.0-6a7ffe8",
     "@code-hike/mini-frame": "0.0.0-6a7ffe8",
+    "@code-hike/mini-terminal": "0.0.0-6a7ffe8",
     "@code-hike/smooth-lines": "0.0.0-6a7ffe8",
-    "@code-hike/code-diff": "0.0.0-6a7ffe8"
+    "use-spring": "^0.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8"

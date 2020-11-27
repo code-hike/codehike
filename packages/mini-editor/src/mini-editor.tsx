@@ -19,7 +19,7 @@ type MiniEditorStep = {
   terminal?: string
 }
 
-type MiniEditorProps = {
+export type MiniEditorProps = {
   progress?: number
   backward?: boolean
   code?: string
