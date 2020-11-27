@@ -250,16 +250,16 @@ function ColumnedLine({
     return chars.map(([char, type], i) => ({
       char,
       type,
-      fromOpacity:
-        prevFocus &&
-        (prevFocus === true || prevFocus.includes(i))
-          ? 0.99
-          : OFF_OPACITY,
-      toOpacity:
-        nextFocus &&
-        (nextFocus === true || nextFocus.includes(i))
-          ? 0.99
-          : OFF_OPACITY,
+      fromOpacity: !prevFocus
+        ? 0.99 // because the line is already transparent
+        : prevFocus === true || prevFocus.includes(i)
+        ? 0.99
+        : OFF_OPACITY,
+      toOpacity: !nextFocus
+        ? 0.99 // because the line is already transparent
+        : nextFocus === true || nextFocus.includes(i)
+        ? 0.99
+        : OFF_OPACITY,
     }))
   }, [line, prevFocus, nextFocus])
 

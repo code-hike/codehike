@@ -132,6 +132,34 @@ console.log(8)`
   )
 }
 
+export const focusByColumn = () => {
+  const code1 = `console.log(1)
+console.log(2)
+console.log(3)`
+  const code2 = `console.log(1)
+console.log(3)
+console.log(4)`
+
+  const steps = [
+    { code: code1, focus: "1[4:7,9:11],3[1:7]" },
+    { code: code1, focus: "1,2[1:7]" },
+    { code: code2, focus: "1,3[9:11]" },
+  ]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditor
+          style={{ height: 200 }}
+          lang="js"
+          file="index.js"
+          steps={steps}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
 export const files = () => {
   const steps = [
     { code: "log('foo',1)", file: "foo.js" },
