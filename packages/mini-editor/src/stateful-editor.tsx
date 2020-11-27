@@ -11,9 +11,10 @@ type StatefulEditorProps = Omit<
 
 function MiniEditorWithState({
   focus,
+  code,
   ...rest
 }: StatefulEditorProps) {
-  const [steps, progress] = usePrevFocus(focus)
+  const [steps, progress] = usePrevFocus(code, focus)
 
   return (
     <MiniEditor
@@ -24,22 +25,24 @@ function MiniEditorWithState({
   )
 }
 
-function usePrevFocus(focus: string | undefined) {
+function usePrevFocus(
+  code: string | undefined,
+  focus: string | undefined
+) {
   const [state, setState] = React.useState({
     target: 0,
-    steps: [{ focus }],
+    steps: [{ focus, code }],
   })
 
   React.useEffect(() => {
-    const lastFocus =
-      state.steps[state.steps.length - 1].focus
-    if (lastFocus !== focus) {
+    const last = state.steps[state.steps.length - 1]
+    if (last.focus !== focus || last.code !== code) {
       setState(s => ({
         target: s.target + 1,
-        steps: [...s.steps, { focus }],
+        steps: [...s.steps, { focus, code }],
       }))
     }
-  }, [focus])
+  }, [focus, code])
 
   const [progress] = useSpring(state.target, {
     stiffness: 100,
