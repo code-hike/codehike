@@ -123,45 +123,55 @@ function SmoothLines({
           // outline: "5px solid green",
         }}
       >
-        {lines.map(({ element, key, tweenX, tweenY }) => {
-          const dx = tween(tweenX, progress)
-          const dy = tween(tweenY, progress)
+        {lines.map(
+          ({
+            element,
+            key,
+            tweenX,
+            tweenY,
+            elementWithProgress,
+          }) => {
+            const dx = tween(tweenX, progress)
+            const dy = tween(tweenY, progress)
 
-          const opacity =
-            tween(
-              {
-                fixed: false,
-                extremes: [
-                  prevFocusKeys.includes(key)
-                    ? 0.99
-                    : OFF_OPACITY,
-                  nextFocusKeys.includes(key)
-                    ? 0.99
-                    : OFF_OPACITY,
-                ],
-                interval: [0, 1],
-              },
-              progress
-            ) -
-            Math.abs(dx) * 1
+            const opacity =
+              tween(
+                {
+                  fixed: false,
+                  extremes: [
+                    prevFocusKeys.includes(key)
+                      ? 0.99
+                      : OFF_OPACITY,
+                    nextFocusKeys.includes(key)
+                      ? 0.99
+                      : OFF_OPACITY,
+                  ],
+                  interval: [0, 1],
+                },
+                progress
+              ) -
+              Math.abs(dx) * 1
 
-          return (
-            <div
-              key={key}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                transform: `translate(${dx * lw}px, ${
-                  dy * lineHeight
-                }px)`,
-                opacity,
-              }}
-            >
-              {element}
-            </div>
-          )
-        })}
+            return (
+              <div
+                key={key}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  transform: `translate(${dx * lw}px, ${
+                    dy * lineHeight
+                  }px)`,
+                  opacity,
+                }}
+              >
+                {elementWithProgress
+                  ? elementWithProgress(progress)
+                  : element}
+              </div>
+            )
+          }
+        )}
       </div>
     </div>
   )

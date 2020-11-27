@@ -6,11 +6,13 @@ type Key = number
 
 export type Line = {
   element: Element
+  elementWithProgress?: (progress: number) => Element
   key: Key
 }
 
 type LineData = {
   element: Element
+  elementWithProgress?: (progress: number) => Element
   key: Key
   // the line index in prevLines (null if missing)
   prevIndex: number | null
@@ -24,6 +26,7 @@ type LineData = {
 
 type LineTransition = {
   element: React.ReactNode
+  elementWithProgress?: (progress: number) => Element
   key: number
   tweenY: TweenParams
   tweenX: TweenParams
@@ -68,13 +71,14 @@ function getLineTransitions(
       nextIndex: !nextLine ? null : nextIndex,
       enterIndex: !prevLine ? enterIndex++ : null,
       exitIndex: !nextLine ? exitIndex++ : null,
+      elementWithProgress:
+        prevLine?.elementWithProgress ||
+        nextLine?.elementWithProgress,
     }
   })
 
   const enterCount = enterIndex
   const exitCount = exitIndex
-
-  // console.log({ linesData })
 
   return linesData.map(lineData =>
     getLineTransition(lineData, enterCount, exitCount)
@@ -89,6 +93,7 @@ function getLineTransition(
     nextIndex,
     enterIndex,
     exitIndex,
+    elementWithProgress,
   }: LineData,
   enterCount: number,
   exitCount: number
@@ -104,6 +109,7 @@ function getLineTransition(
     // entering line
     return {
       element,
+      elementWithProgress,
       key,
       tweenY: { fixed: true, value: nextIndex! },
       tweenX: {
@@ -123,6 +129,7 @@ function getLineTransition(
     // exiting line
     return {
       element,
+      elementWithProgress,
       key,
       tweenY: { fixed: true, value: prevIndex },
       tweenX: {
@@ -140,6 +147,7 @@ function getLineTransition(
 
   return {
     element,
+    elementWithProgress,
     key,
     tweenY: {
       fixed: false,

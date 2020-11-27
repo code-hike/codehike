@@ -7,7 +7,7 @@
     ]
   },
   "scripts": {
-    "dev": "yarn workspace react-tutorial-demo dev",
+    "dev": "yarn workspace code-sections dev",
     "storybook": "yarn workspace storybook start",
     "build": "yarn wsrun -m --stages -c script build",
     "watch": "yarn wsrun -m -c script watch",

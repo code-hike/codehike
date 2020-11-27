@@ -22,9 +22,6 @@ export function getFocusExtremes(
   }
 }
 
-/**
- * Return the first and last indexes to focus, both included
- */
 export function getFocusIndexes(
   focus: string | null,
   lines: any[]
@@ -37,6 +34,25 @@ export function getFocusIndexes(
       parseInt(i, 10)
     )
     return focusedIndexes
+  }
+}
+
+export function getFocusByKey(
+  focus: string | null,
+  keys: number[]
+) {
+  if (!focus) {
+    // focus all lines
+    return fromEntries(keys.map(key => [key, true]))
+  } else {
+    const parsed = parseFocus(focus)
+    const byKey: Record<number, true | number[]> = {}
+    Object.keys(parsed).forEach(i => {
+      const key = keys[parseInt(i, 10)]
+      byKey[key] = parsed[parseInt(i, 10)]
+    })
+    console.log({ focus, parsed, byKey, keys })
+    return byKey
   }
 }
 

@@ -2,7 +2,10 @@ import React from "react"
 import { codeDiff, CodeLine } from "@code-hike/code-diff"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { useDimensions } from "./use-dimensions"
-import { getFocusIndexes } from "./focus-parser"
+import {
+  getFocusByKey,
+  getFocusIndexes,
+} from "./focus-parser"
 
 type CodeProps = {
   prevCode: string
@@ -28,8 +31,8 @@ export function Code({
   const {
     prevLines,
     nextLines,
-    prevFocusPair,
-    nextFocusPair,
+    prevFocusIndexes,
+    nextFocusIndexes,
     prevLongestLine,
     nextLongestLine,
   } = useLineProps(
@@ -79,8 +82,8 @@ export function Code({
                 )
               ) as [number, number]
             }
-            prevFocus={prevFocusPair}
-            nextFocus={nextFocusPair}
+            prevFocus={prevFocusIndexes}
+            nextFocus={nextFocusIndexes}
             maxZoom={1}
           />
         ) : (
@@ -112,39 +115,87 @@ function useLineProps(
       lang: language,
     })
 
-    const prevLines = prevKeys.map(key => ({
-      key,
-      element: <Line line={codeMap[key]} />,
-    }))
-
-    const prevFocusPair = getFocusIndexes(
+    const prevFocusByKey = getFocusByKey(
       prevFocus,
-      prevLines
+      prevKeys
     )
-
+    const prevFocusIndexes = getFocusIndexes(
+      prevFocus,
+      prevKeys
+    )
     const prevLongestLineIndex = longestLineIndex(
       prevCode,
-      prevFocusPair
+      prevFocusIndexes
     )
+
+    const nextFocusByKey = getFocusByKey(
+      nextFocus,
+      nextKeys
+    )
+    const nextFocusIndexes = getFocusIndexes(
+      nextFocus,
+      nextKeys
+    )
+    const nextLongestLineIndex = longestLineIndex(
+      nextCode,
+      nextFocusIndexes
+    )
+
+    const prevLines = prevKeys.map(key => {
+      const prevFocus = prevFocusByKey[key]
+      const nextFocus = nextFocusByKey[key]
+      const focusPerColumn =
+        Array.isArray(prevFocus) || Array.isArray(nextFocus)
+      if (!focusPerColumn) {
+        return {
+          key,
+          element: <Line line={codeMap[key]} />,
+        }
+      } else {
+        return {
+          key,
+          element: <Line line={codeMap[key]} />,
+          elementWithProgress: (progress: number) => (
+            <ColumnedLine
+              line={codeMap[key]}
+              progress={progress}
+              prevFocus={prevFocus}
+              nextFocus={nextFocus}
+            />
+          ),
+        }
+      }
+    })
     const prevLongestLine =
       prevLongestLineIndex == null
         ? null
         : prevLines[prevLongestLineIndex]?.element
 
-    const nextLines = nextKeys.map(key => ({
-      key,
-      element: <Line line={codeMap[key]} />,
-    }))
-
-    const nextFocusPair = getFocusIndexes(
-      nextFocus,
-      nextLines
-    )
-
-    const nextLongestLineIndex = longestLineIndex(
-      nextCode,
-      nextFocusPair
-    )
+    const nextLines = nextKeys.map(key => {
+      const prevFocus = prevFocusByKey[key]
+      const nextFocus = nextFocusByKey[key]
+      const focusPerColumn =
+        Array.isArray(prevFocus) || Array.isArray(nextFocus)
+      if (!focusPerColumn) {
+        return {
+          key,
+          element: <Line line={codeMap[key]} />,
+        }
+      } else {
+        return {
+          key,
+          element: <Line line={codeMap[key]} />,
+          elementWithProgress: (progress: number) => (
+            <ColumnedLine
+              line={codeMap[key]}
+              progress={progress}
+              prevFocus={prevFocus}
+              nextFocus={nextFocus}
+            />
+          ),
+        }
+      }
+    })
     const nextLongestLine =
       nextLongestLineIndex == null
         ? null
@@ -153,8 +204,8 @@ function useLineProps(
     return {
       prevLines,
       nextLines,
-      prevFocusPair,
-      nextFocusPair,
+      prevFocusIndexes,
+      nextFocusIndexes,
       prevLongestLine,
       nextLongestLine,
     }
@@ -162,6 +213,7 @@ function useLineProps(
 }
 
 function Line({ line }: { line: CodeLine }) {
+  console.log({ line })
   return (
     <div
       style={{
@@ -176,6 +228,68 @@ function Line({ line }: { line: CodeLine }) {
     </div>
   )
 }
+
+const OFF_OPACITY = 0.33
+
+function ColumnedLine({
+  line,
+  progress,
+  prevFocus,
+  nextFocus,
+}: {
+  line: CodeLine
+  progress: number
+  prevFocus: undefined | boolean | number[]
+  nextFocus: undefined | boolean | number[]
+}) {
+  const columns = React.useMemo(() => {
+    const chars = flatMap(line, ([token, type]) =>
+      token.split("").map(char => [char, type])
+    )
+
+    return chars.map(([char, type], i) => ({
+      char,
+      type,
+      fromOpacity:
+        prevFocus &&
+        (prevFocus === true || prevFocus.includes(i))
+          ? 0.99
+          : OFF_OPACITY,
+      toOpacity:
+        nextFocus &&
+        (nextFocus === true || nextFocus.includes(i))
+          ? 0.99
+          : OFF_OPACITY,
+    }))
+  }, [line, prevFocus, nextFocus])
+
+  return (
+    <div style={{ display: "inline-block" }}>
+      {columns.map(
+        ({ char, type, fromOpacity, toOpacity }, i) => (
+          <span
+            className={`token ${type}`}
+            key={i + 1}
+            style={{
+              opacity: tween(
+                fromOpacity,
+                toOpacity,
+                progress
+              ),
+            }}
+          >
+            {char}
+          </span>
+        )
+      )}
+    </div>
+  )
+}
+
+function tween(p: number, n: number, t: number) {
+  return (n - p) * t + p
+}
+
 const newlineRe = /\r\n|\r|\n/
 function longestLineIndex(
   code: string,
@@ -202,4 +316,11 @@ function longestLineIndex(
     }
   }
   return first + longestIndex
+}
+
+export function flatMap<T, U>(
+  array: T[],
+  callbackfn: (value: T, index: number, array: T[]) => U[]
+): U[] {
+  return Array.prototype.concat(...array.map(callbackfn))
 }
