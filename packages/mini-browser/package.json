@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-browser",
-  "version": "0.0.0-6a7ffe8",
+  "version": "0.0.0-a3f5be4",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -17,7 +17,7 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/mini-frame": "0.0.0-6a7ffe8"
+    "@code-hike/mini-frame": "0.0.0-a3f5be4"
   },
   "peerDependencies": {
     "react": ">=16.8"
