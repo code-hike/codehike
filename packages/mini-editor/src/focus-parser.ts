@@ -51,7 +51,6 @@ export function getFocusByKey(
       const key = keys[parseInt(i, 10)]
       byKey[key] = parsed[parseInt(i, 10)]
     })
-    console.log({ focus, parsed, byKey, keys })
     return byKey
   }
 }

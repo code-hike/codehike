@@ -213,7 +213,6 @@ function useLineProps(
 }
 
 function Line({ line }: { line: CodeLine }) {
-  console.log({ line })
   return (
     <div
       style={{
