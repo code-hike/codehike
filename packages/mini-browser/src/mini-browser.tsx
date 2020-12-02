@@ -9,7 +9,7 @@ import "./mini-browser.css"
 type MiniBrowserStep = {
   url?: string
   loadUrl?: string
-  children: React.ReactNode
+  children?: React.ReactNode
   zoom?: number
   prependOrigin?: boolean
 }
@@ -18,7 +18,7 @@ type MiniBrowserProps = {
   progress?: number
   backward?: boolean
   url?: string
-  children: React.ReactNode
+  children?: React.ReactNode
   loadUrl?: string
   prependOrigin?: boolean
   zoom?: number
@@ -27,7 +27,7 @@ type MiniBrowserProps = {
 
 const MiniBrowser = React.forwardRef<
   HTMLIFrameElement,
-  MiniBrowserStep
+  MiniBrowserProps
 >(MiniBrowserWithRef)
 
 function MiniBrowserWithRef(

@@ -1,3 +1,3 @@
-import { MiniBrowser } from "./mini-browser";
+import { MiniBrowser } from "./mini-browser"
 
-export { MiniBrowser };
+export { MiniBrowser }

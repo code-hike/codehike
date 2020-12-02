@@ -6,7 +6,7 @@ import {
   useBackwardTransitions,
   useForwardTransitions,
 } from "./steps"
-import "./theme.css"
+// import "./theme.css"
 
 export { MiniEditor }
 

@@ -30,9 +30,10 @@ function Scroller({
   children,
   getRootMargin = defaultRootMargin,
 }: ScrollerProps) {
-  const [observer, setObserver] = React.useState<
-    IntersectionObserver
-  >()
+  const [
+    observer,
+    setObserver,
+  ] = React.useState<IntersectionObserver>()
   const vh = useWindowHeight()
 
   useLayoutEffect(() => {
@@ -88,7 +89,8 @@ function Step({
 }: {
   as: any
   index: number
-}) {
+  children?: React.ReactNode
+} & React.HTMLProps<HTMLElement>) {
   const ref = React.useRef<HTMLElement>(null!)
   const observer = React.useContext(ObserverContext)
 
