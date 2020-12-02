@@ -29,6 +29,7 @@ export type MiniEditorProps = {
   steps?: MiniEditorStep[]
   height?: number
   minColumns?: number
+  button?: React.ReactNode
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function MiniEditor(props: MiniEditorProps) {

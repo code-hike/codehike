@@ -14,6 +14,7 @@ type EditorFrameProps = {
   active: string
   height?: number
   terminalPanel: React.ReactNode
+  button?: React.ReactNode
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function EditorFrame({
@@ -23,12 +24,17 @@ function EditorFrame({
   terminalPanel,
   height,
   style,
+  button,
   ...rest
 }: EditorFrameProps) {
   return (
     <MiniFrame
       titleBar={
-        <TabsContainer files={files} active={active} />
+        <TabsContainer
+          files={files}
+          active={active}
+          button={button}
+        />
       }
       style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
       {...rest}
@@ -42,10 +48,12 @@ function EditorFrame({
 type TabsContainerProps = {
   files: string[]
   active: string
+  button?: React.ReactNode
 }
 function TabsContainer({
   files,
   active,
+  button,
 }: TabsContainerProps) {
   return (
     <>
@@ -60,6 +68,7 @@ function TabsContainer({
         </div>
       ))}
       <div style={{ flex: 1 }} />
+      {button}
     </>
   )
 }
