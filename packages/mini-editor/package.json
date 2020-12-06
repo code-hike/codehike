@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-editor",
-  "version": "0.0.0-a3f5be4",
+  "version": "0.0.0-2a67cd7",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -17,10 +17,10 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/code-diff": "0.0.0-a3f5be4",
-    "@code-hike/mini-frame": "0.0.0-a3f5be4",
-    "@code-hike/mini-terminal": "0.0.0-a3f5be4",
-    "@code-hike/smooth-lines": "0.0.0-a3f5be4",
+    "@code-hike/code-diff": "0.0.0-2a67cd7",
+    "@code-hike/mini-frame": "0.0.0-2a67cd7",
+    "@code-hike/mini-terminal": "0.0.0-2a67cd7",
+    "@code-hike/smooth-lines": "0.0.0-2a67cd7",
     "use-spring": "^0.2.3"
   },
   "peerDependencies": {
