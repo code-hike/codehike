@@ -17,7 +17,9 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/mini-frame": "0.0.0-2a67cd7"
+    "@code-hike/mini-frame": "0.0.0-2a67cd7",
+    "@code-hike/utils": "0.0.0-2a67cd7",
+    "@emotion/react": "^11.1.2"
   },
   "peerDependencies": {
     "react": ">=16.8"

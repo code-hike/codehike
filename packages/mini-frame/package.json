@@ -12,8 +12,8 @@
     "publish-canary": "yarn publish --tag canary --access public"
   },
   "devDependencies": {
-    "@types/react": "^16.9.38",
     "@code-hike/script": "0.0.1",
+    "@types/react": "^16.9.38",
     "react": "^16.13.1"
   },
   "peerDependencies": {
@@ -28,5 +28,9 @@
   "funding": {
     "type": "opencollective",
     "url": "https://opencollective.com/codehike"
+  },
+  "dependencies": {
+    "@code-hike/utils": "0.0.0-2a67cd7",
+    "@emotion/react": "^11.1.2"
   }
 }

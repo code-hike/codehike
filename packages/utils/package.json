@@ -1,5 +1,5 @@
 {
-  "name": "@code-hike/mini-editor",
+  "name": "@code-hike/utils",
   "version": "0.0.0-2a67cd7",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -15,15 +15,6 @@
     "@code-hike/script": "0.0.1",
     "@types/react": "^16.9.38",
     "react": "^16.13.1"
-  },
-  "dependencies": {
-    "@code-hike/code-diff": "0.0.0-2a67cd7",
-    "@code-hike/mini-frame": "0.0.0-2a67cd7",
-    "@code-hike/mini-terminal": "0.0.0-2a67cd7",
-    "@code-hike/smooth-lines": "0.0.0-2a67cd7",
-    "@code-hike/utils": "0.0.0-2a67cd7",
-    "@emotion/react": "^11.1.2",
-    "use-spring": "^0.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8"

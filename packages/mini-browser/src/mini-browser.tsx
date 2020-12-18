@@ -4,7 +4,8 @@ import {
   MiniFrame,
   FrameButtons,
 } from "@code-hike/mini-frame"
-import "./mini-browser.css"
+import { Classes } from "@code-hike/utils"
+import { Global, css } from "@emotion/react"
 
 type MiniBrowserStep = {
   url?: string
@@ -23,6 +24,7 @@ type MiniBrowserProps = {
   prependOrigin?: boolean
   zoom?: number
   steps?: MiniBrowserStep[]
+  classes?: Record<string, string>
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 const MiniBrowser = React.forwardRef<
@@ -40,6 +42,7 @@ function MiniBrowserWithRef(
     steps: ogSteps,
     loadUrl,
     prependOrigin,
+    classes = {},
     ...props
   }: MiniBrowserProps,
   ref: React.Ref<HTMLIFrameElement>
@@ -61,13 +64,16 @@ function MiniBrowserWithRef(
       {...props}
       zoom={currentStep.zoom}
       className={`ch-mini-browser ${props.className || ""}`}
+      classes={classes}
       titleBar={
         <Bar
           url={currentStep.url!}
           linkUrl={currentStep.loadUrl!}
+          classes={classes}
         />
       }
     >
+      <Styles />
       {currentStep.children || (
         <iframe
           ref={ref}
@@ -116,13 +122,15 @@ function useSteps(
 function Bar({
   url,
   linkUrl,
+  classes,
 }: {
   url: string
   linkUrl: string
+  classes: Classes
 }) {
   return (
     <>
-      <FrameButtons />
+      <FrameButtons classes={classes} />
       <Back />
       <Forward />
       {/* <Refresh /> */}
@@ -149,3 +157,34 @@ function transformStep(step: MiniBrowserStep) {
 }
 
 export { MiniBrowser }
+
+function Styles() {
+  return (
+    <Global
+      styles={css`
+        .ch-mini-browser {
+          height: 100%;
+        }
+
+        .ch-mini-browser .ch-frame-content iframe,
+        .ch-mini-browser .ch-frame-content video {
+          border: none;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        }
+
+        .ch-mini-browser .ch-frame-title-bar input {
+          height: 1.4em;
+          font-size: 1em;
+          border-radius: 0.5em;
+          border: none;
+          box-shadow: none;
+          flex: 1;
+          padding: 0 10px;
+          color: #544;
+        }
+      `}
+    />
+  )
+}

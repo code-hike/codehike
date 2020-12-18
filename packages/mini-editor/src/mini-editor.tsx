@@ -26,10 +26,12 @@ export type MiniEditorProps = {
   focus?: string
   lang?: string
   file?: string
+  tabs?: string[]
   steps?: MiniEditorStep[]
   height?: number
   minColumns?: number
   button?: React.ReactNode
+  classes: Record<string, string>
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function MiniEditor(props: MiniEditorProps) {
@@ -41,6 +43,7 @@ function MiniEditor(props: MiniEditorProps) {
     lang,
     file,
     steps: ogSteps,
+    tabs: ogTabs,
     minColumns = 50,
     height,
     ...rest
@@ -50,6 +53,7 @@ function MiniEditor(props: MiniEditorProps) {
     focus,
     lang,
     file,
+    tabs: ogTabs,
   })
 
   const activeStepIndex = backward
@@ -189,7 +193,7 @@ function EditorContent({
 
 function useSteps(
   ogSteps: MiniEditorStep[] | undefined,
-  { code = "", focus, lang, file }: MiniEditorStep
+  { code = "", focus, lang, file, tabs }: MiniEditorStep
 ) {
   return React.useMemo(() => {
     const steps = ogSteps?.map(s => ({
@@ -197,8 +201,9 @@ function useSteps(
       focus,
       lang,
       file,
+      tabs,
       ...s,
-    })) || [{ code, focus, lang, file }]
+    })) || [{ code, focus, lang, file, tabs }]
 
     const files = [
       ...new Set(
@@ -218,7 +223,7 @@ function useSteps(
     })
 
     return { steps, files, stepsByFile }
-  }, [ogSteps, code, focus, lang, file])
+  }, [ogSteps, code, focus, lang, file, tabs])
 }
 
 const MAX_HEIGHT = 150

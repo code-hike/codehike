@@ -46,6 +46,7 @@ function usePrevFocus(
 
   const [progress] = useSpring(state.target, {
     stiffness: 100,
+    decimals: 3,
   })
 
   return [state.steps, progress] as const
