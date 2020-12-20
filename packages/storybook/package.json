@@ -10,6 +10,7 @@
     "@code-hike/mini-frame": "0.0.0-2a67cd7",
     "@code-hike/mini-terminal": "0.0.0-2a67cd7",
     "@code-hike/player": "0.0.0-2a67cd7",
+    "@code-hike/scrollycoding": "0.0.0-2a67cd7",
     "@code-hike/sim-user": "0.0.0-2a67cd7",
     "@code-hike/smooth-column": "0.0.0-2a67cd7",
     "@code-hike/smooth-lines": "0.0.0-2a67cd7",

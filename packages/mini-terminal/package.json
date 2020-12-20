@@ -27,6 +27,7 @@
   ],
   "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
+  "author": "Rodrigo Pombo",
   "license": "MIT",
   "funding": {
     "type": "opencollective",
