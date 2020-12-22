@@ -222,6 +222,7 @@ export function Focus({ children, focus }: FocusProps) {
       <svg
         fill="none"
         stroke="currentColor"
+        className={c("-focus-icon", classes)}
         viewBox="0 0 24 24"
         aria-hidden="true"
         focusable="false"
