@@ -301,6 +301,7 @@ function Styles() {
           display: none;
         }
 
+        /**
         @media (max-width: 640px) {
           .ch-hike-content {
             width: 100%;
@@ -321,6 +322,7 @@ function Styles() {
             margin: 16px 0;
           }
         }
+        */
       `}
     />
   )
