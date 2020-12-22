@@ -82,9 +82,54 @@ export function Hike({ steps, classes = {} }: HikeProps) {
         <div className={c("-content", classes)}>
           <Scroller onStepChange={changeStep}>
             {steps.map((step, index) => (
-              <StepContext.Provider value={step}>
-                <Step as="div" index={index} key={index}>
-                  {step.content}
+              <StepContext.Provider
+                value={step}
+                key={index}
+              >
+                <Step
+                  as="div"
+                  index={index}
+                  key={index}
+                  className={c("-step", classes)}
+                >
+                  <div
+                    className={c("-step-content", classes)}
+                  >
+                    {step.content}
+                  </div>
+                  <div
+                    className={c("-step-output", classes)}
+                  >
+                    <div
+                      className={c("-step-editor", classes)}
+                    >
+                      <Editor
+                        code={step.code}
+                        minColumns={46}
+                        file="App.js"
+                        classes={classes}
+                        lang="jsx"
+                        focus={step.focus}
+                        style={{ height: "100%" }}
+                        button={
+                          <CodeSandboxIcon
+                            url={step.demo}
+                          />
+                        }
+                      />
+                    </div>
+                    <div
+                      className={c(
+                        "-step-browser",
+                        classes
+                      )}
+                    >
+                      <MiniBrowser
+                        url={step.demo}
+                        classes={classes}
+                      />
+                    </div>
+                  </div>
                 </Step>
               </StepContext.Provider>
             ))}
@@ -104,7 +149,6 @@ export function Hike({ steps, classes = {} }: HikeProps) {
                 button={
                   <CodeSandboxIcon url={currentStep.demo} />
                 }
-                // files={['App.js', 'index.html']}
               />
             </div>
             <div className={c("-preview", classes)}>
@@ -251,6 +295,30 @@ function Styles() {
           color: #708293;
           display: inline;
           height: 1rem;
+        }
+        .ch-hike-step-output {
+          display: none;
+        }
+
+        @media (max-width: 640px) {
+          .ch-hike-content {
+            width: 100%;
+            padding-right: 0;
+          }
+          .ch-hike-sticker-column {
+            display: none;
+          }
+          .ch-hike-step-output {
+            display: block;
+          }
+          .ch-hike-step-editor {
+            height: 300px;
+            margin: 16px 0;
+          }
+          .ch-hike-step-browser {
+            height: 200px;
+            margin: 16px 0;
+          }
         }
       `}
     />

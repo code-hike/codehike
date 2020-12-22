@@ -10,7 +10,6 @@ export const basic = () => {
     <Page
       style={{
         outline: "2px solid darkblue",
-        width: 800,
         maxWidth: 800,
       }}
     >
