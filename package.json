@@ -12,7 +12,7 @@
     "build": "yarn wsrun -m --stages -c script build",
     "watch": "yarn wsrun -m -c script watch",
     "new-version": "yarn wsrun -m --serial -c script version",
-    "watch-package": "yarn wsrun -p '@code-hike/scrollycoding' -r script watch ",
+    "watch-package": "yarn wsrun -p '@code-hike/mini-editor' -r script watch ",
     "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary"
   },
   "devDependencies": {

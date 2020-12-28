@@ -163,6 +163,7 @@ function SmoothLines({
                     dy * lineHeight
                   }px)`,
                   opacity,
+                  width: lw,
                 }}
               >
                 {elementWithProgress

@@ -263,7 +263,12 @@ function ColumnedLine({
   }, [line, prevFocus, nextFocus])
 
   return (
-    <div style={{ display: "inline-block" }}>
+    <div
+      style={{
+        display: "inline-block",
+        width: "100%",
+      }}
+    >
       {columns.map(
         ({ char, type, fromOpacity, toOpacity }, i) => (
           <span
