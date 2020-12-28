@@ -1,6 +1,7 @@
 import React from "react"
 import { Page } from "./utils"
 import { Hike, Focus } from "@code-hike/scrollycoding"
+import "@code-hike/scrollycoding/dist/index.css"
 
 export default {
   title: "ScrollyCoding",

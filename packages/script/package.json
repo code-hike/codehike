@@ -4,11 +4,15 @@
   "bin": {
     "ch-script": "./script.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "autoprefixer": "^9.8.2",
     "cssnano": "^4.1.10",
     "edit-json-file": "^1.5.0",
+    "node-sass": "^5.0.0",
     "rollup": "^2.17.0",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-scss": "^2.6.1",
     "rollup-plugin-styles": "^3.8.2",
     "rollup-plugin-typescript2": "^0.27.1",
     "typescript": "^3.9.5"

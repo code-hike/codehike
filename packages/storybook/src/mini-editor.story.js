@@ -1,6 +1,7 @@
 import React from "react"
 import { MiniEditor } from "@code-hike/mini-editor"
 import { Page, WithProgress } from "./utils"
+import "@code-hike/mini-editor/dist/index.css"
 
 export default {
   title: "Mini Editor",

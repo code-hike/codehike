@@ -3,6 +3,7 @@ import {
   MiniFrame,
   FrameButtons,
 } from "@code-hike/mini-frame"
+import "@code-hike/mini-frame/dist/index.css"
 import { Page } from "./utils"
 
 export default {

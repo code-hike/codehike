@@ -1,5 +1,6 @@
 import React from "react"
 import { MiniBrowser } from "@code-hike/mini-browser"
+import "@code-hike/mini-browser/dist/index.css"
 import { WithProgress, Page } from "./utils"
 
 export default {

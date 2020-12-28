@@ -2,11 +2,11 @@ import * as React from "react"
 import { MiniEditorWithState as Editor } from "@code-hike/mini-editor"
 import { Scroller, Step } from "@code-hike/scroller"
 import { MiniBrowser } from "@code-hike/mini-browser"
-import { Global, css } from "@emotion/react"
 import {
   classNamesWithPrefix,
   Classes,
 } from "@code-hike/utils"
+import "./index.scss"
 
 const c = classNamesWithPrefix("ch-hike")
 
@@ -77,7 +77,6 @@ export function Hike({ steps, classes = {} }: HikeProps) {
         classes,
       }}
     >
-      <Styles />
       <section className={c("", classes)}>
         <div className={c("-content", classes)}>
           <Scroller onStepChange={changeStep}>
@@ -240,90 +239,5 @@ export function Focus({ children, focus }: FocusProps) {
         />
       </svg>
     </a>
-  )
-}
-
-function Styles() {
-  return (
-    <Global
-      styles={css`
-        .ch-hike {
-          display: flex;
-        }
-
-        .ch-hike-content {
-          width: 50%;
-          box-sizing: border-box;
-          padding-right: 1.2rem;
-        }
-
-        .ch-hike-sticker-column {
-          width: 50%;
-        }
-
-        .ch-hike-sticker {
-          --height: 650px;
-          position: sticky;
-          top: calc(50vh - var(--height) / 2);
-          height: var(--height);
-          margin: 0 0 0 15px;
-        }
-
-        .ch-hike-editor {
-          height: 380px;
-          margin-bottom: 20px;
-        }
-
-        .ch-hike-preview {
-          height: 250px;
-        }
-
-        /* focus component */
-        .ch-hike-focus {
-          display: inline-block;
-          cursor: pointer;
-          border-radius: 4px;
-          box-shadow: 0 0 0 2px #e4e7eb;
-          padding: 0 2px;
-        }
-        .ch-hike-focus:hover {
-          background-color: #e4e7eb;
-        }
-        .ch-hike-focus-active {
-          background-color: #eef0f2;
-        }
-        .ch-hike-focus svg {
-          color: #708293;
-          display: inline;
-          height: 1rem;
-        }
-        .ch-hike-step-output {
-          display: none;
-        }
-
-        /**
-        @media (max-width: 640px) {
-          .ch-hike-content {
-            width: 100%;
-            padding-right: 0;
-          }
-          .ch-hike-sticker-column {
-            display: none;
-          }
-          .ch-hike-step-output {
-            display: block;
-          }
-          .ch-hike-step-editor {
-            height: 300px;
-            margin: 16px 0;
-          }
-          .ch-hike-step-browser {
-            height: 200px;
-            margin: 16px 0;
-          }
-        }
-        */
-      `}
-    />
   )
 }

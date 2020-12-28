@@ -5,7 +5,6 @@ import {
   FrameButtons,
 } from "@code-hike/mini-frame"
 import { Classes } from "@code-hike/utils"
-import { Global, css } from "@emotion/react"
 
 type MiniBrowserStep = {
   url?: string
@@ -73,7 +72,6 @@ function MiniBrowserWithRef(
         />
       }
     >
-      <Styles />
       {currentStep.children || (
         <iframe
           ref={ref}
@@ -157,34 +155,3 @@ function transformStep(step: MiniBrowserStep) {
 }
 
 export { MiniBrowser }
-
-function Styles() {
-  return (
-    <Global
-      styles={css`
-        .ch-mini-browser {
-          height: 100%;
-        }
-
-        .ch-mini-browser .ch-frame-content iframe,
-        .ch-mini-browser .ch-frame-content video {
-          border: none;
-          position: absolute;
-          height: 100%;
-          width: 100%;
-        }
-
-        .ch-mini-browser .ch-frame-title-bar input {
-          height: 1.4em;
-          font-size: 1em;
-          border-radius: 0.5em;
-          border: none;
-          box-shadow: none;
-          flex: 1;
-          padding: 0 10px;
-          color: #544;
-        }
-      `}
-    />
-  )
-}

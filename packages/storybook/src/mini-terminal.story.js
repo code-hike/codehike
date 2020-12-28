@@ -1,16 +1,20 @@
-import React from "react";
-import { MiniTerminal, InnerTerminal } from "@code-hike/mini-terminal";
-import { WithProgress, Page } from "./utils";
+import React from "react"
+import {
+  MiniTerminal,
+  InnerTerminal,
+} from "@code-hike/mini-terminal"
+import { WithProgress, Page } from "./utils"
+import "@code-hike/mini-terminal/dist/index.css"
 
 export default {
   title: "Mini Terminal",
-};
+}
 
 export const basic = () => (
   <Page>
     <MiniTerminal style={{ width: 300 }} text="$ foo" />
   </Page>
-);
+)
 
 const steps = [
   {
@@ -41,18 +45,24 @@ officia deserunt
 $ mollit anim id est laborum
 $ `,
   },
-];
+]
 
 export const transitions = () => (
   <WithProgress length={steps.length}>
-    {(progress) => (
-      <MiniTerminal progress={progress} steps={steps} style={{ height: 200 }} />
+    {progress => (
+      <MiniTerminal
+        progress={progress}
+        steps={steps}
+        style={{ height: 200 }}
+      />
     )}
   </WithProgress>
-);
+)
 
 export const inner = () => (
   <WithProgress length={steps.length}>
-    {(progress) => <InnerTerminal progress={progress} steps={steps} />}
+    {progress => (
+      <InnerTerminal progress={progress} steps={steps} />
+    )}
   </WithProgress>
-);
+)

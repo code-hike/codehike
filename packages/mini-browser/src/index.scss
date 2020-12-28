@@ -1,0 +1,24 @@
+@import "~@code-hike/mini-frame/dist/index.scss";
+
+.ch-mini-browser {
+  height: 100%;
+}
+
+.ch-mini-browser .ch-frame-content iframe,
+.ch-mini-browser .ch-frame-content video {
+  border: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.ch-mini-browser .ch-frame-title-bar input {
+  height: 1.4em;
+  font-size: 1em;
+  border-radius: 0.5em;
+  border: none;
+  box-shadow: none;
+  flex: 1;
+  padding: 0 10px;
+  color: #544;
+}

@@ -1,41 +1,34 @@
-import styles from "rollup-plugin-styles";
-import autoprefixer from "autoprefixer";
-// import postcss from "rollup-plugin-postcss";
-// import embedCSS from "rollup-plugin-embed-css";
-import cssnano from "cssnano";
-import typescript from "rollup-plugin-typescript2";
+import autoprefixer from "autoprefixer"
+import postcss from "rollup-plugin-postcss"
+
+import cssnano from "cssnano"
+import typescript from "rollup-plugin-typescript2"
+import copy from "rollup-plugin-copy"
+import path from "path"
 
 const plugins = [
   typescript(),
-  styles({
+  postcss({
+    extract: path.resolve("dist/index.css"),
     plugins: [autoprefixer(), cssnano()],
-    mode: [
-      "inject",
-      {
-        // container: "body",
-        singleTag: true,
-        // prepend: true,
-        // attributes: { id: "global" },
-      },
-    ],
   }),
-  // // postcss({
-  // //   plugins: [],
-  // // }),
-];
+  copy({
+    targets: [{ src: "src/index.scss", dest: "dist" }],
+  }),
+]
 
-const createConfig = (filename) => ({
+const createConfig = filename => ({
   input: `src/${filename}.tsx`,
   output: [
     {
       file: `./dist/${filename}.js`,
       format: "umd",
-      name: "foo",
+      name: "ch", //todo get by parameter
     },
     {
       file: `./dist/${filename}.cjs.js`,
       format: "cjs",
-      name: "foo",
+      name: "ch", //todo get by parameter
     },
     {
       file: `./dist/${filename}.esm.js`,
@@ -43,8 +36,10 @@ const createConfig = (filename) => ({
     },
   ],
   plugins,
-});
+})
 
-const configs = ["index"].map((filename) => createConfig(filename));
+const configs = ["index"].map(filename =>
+  createConfig(filename)
+)
 
-export default configs;
+export default configs
