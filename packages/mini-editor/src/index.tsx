@@ -1,4 +1,12 @@
-import { MiniEditor } from "./mini-editor"
-import { MiniEditorWithState } from "./stateful-editor"
+import { MiniEditor, MiniEditorProps } from "./mini-editor"
+import {
+  MiniEditorWithState,
+  StatefulEditorProps,
+} from "./stateful-editor"
 
-export { MiniEditor, MiniEditorWithState }
+export {
+  MiniEditor,
+  MiniEditorWithState,
+  MiniEditorProps,
+  StatefulEditorProps,
+}

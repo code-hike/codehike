@@ -4,7 +4,7 @@ import { MiniEditor, MiniEditorProps } from "./mini-editor"
 
 export { MiniEditorWithState }
 
-type StatefulEditorProps = Omit<
+export type StatefulEditorProps = Omit<
   MiniEditorProps,
   "progress" | "steps" | "backward"
 >

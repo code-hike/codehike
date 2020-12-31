@@ -32,6 +32,11 @@
   height: 250px;
 }
 
+.ch-hike-step-preview,
+.ch-hike-step-code {
+  display: none;
+}
+
 /* focus component */
 .ch-hike-focus {
   display: inline-block;
@@ -50,9 +55,6 @@
   color: #708293;
   display: inline;
   height: 1rem;
-}
-.ch-hike-step-output {
-  display: none;
 }
 
 /**
