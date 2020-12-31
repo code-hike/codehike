@@ -14,7 +14,7 @@ type MiniBrowserStep = {
   prependOrigin?: boolean
 }
 
-type MiniBrowserProps = {
+export type MiniBrowserProps = {
   progress?: number
   backward?: boolean
   url?: string

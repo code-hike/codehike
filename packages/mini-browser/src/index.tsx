@@ -1,4 +1,7 @@
-import { MiniBrowser } from "./mini-browser"
+import {
+  MiniBrowser,
+  MiniBrowserProps,
+} from "./mini-browser"
 import "./index.scss"
 
-export { MiniBrowser }
+export { MiniBrowser, MiniBrowserProps }
