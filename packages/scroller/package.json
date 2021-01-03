@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/scroller",
-  "version": "0.0.0-4adbd70",
+  "version": "0.0.0-133ab88",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
