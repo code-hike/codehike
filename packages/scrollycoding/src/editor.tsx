@@ -3,26 +3,29 @@ import {
   MiniEditorWithState,
   StatefulEditorProps,
 } from "@code-hike/mini-editor"
+import { StepCode } from "./context"
 
 export { Editor }
 
 function Editor({
-  code,
   classes,
-  focus,
   codesandboxUrl,
+  stepCode,
   ...rest
 }: {
   codesandboxUrl: string
+  stepCode: StepCode
 } & StatefulEditorProps) {
+  const tabs = Object.keys(stepCode.files)
+  const file = stepCode.files[stepCode.activeFile]
   return (
     <MiniEditorWithState
-      code={code}
-      minColumns={46}
-      file="App.js"
+      code={file.code}
+      file={stepCode.activeFile}
+      tabs={tabs}
       classes={classes}
-      lang="jsx"
-      focus={focus}
+      lang={file.lang}
+      focus={stepCode.focus}
       style={{ height: "100%" }}
       button={<CodeSandboxIcon url={codesandboxUrl} />}
       {...rest}

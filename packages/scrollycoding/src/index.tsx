@@ -1,9 +1,5 @@
 import * as React from "react"
-import { Scroller, Step } from "@code-hike/scroller"
-import {
-  MiniBrowser,
-  MiniBrowserProps,
-} from "@code-hike/mini-browser"
+import { MiniBrowserProps } from "@code-hike/mini-browser"
 import "./index.scss"
 import {
   HikeContext,
@@ -14,6 +10,7 @@ import { Editor } from "./editor"
 import { Focus } from "./focus"
 import { Hike, HikeProps } from "./hike"
 import { StatefulEditorProps } from "@code-hike/mini-editor"
+import { Preview } from "./preview"
 
 export { Hike, Focus, CodeSlot, BrowserSlot, HikeProps }
 
@@ -23,9 +20,9 @@ function CodeSlot(props: StatefulEditorProps) {
   return (
     <div className={c("-step-code", classes)}>
       <Editor
-        code={step.code}
-        focus={step.focus}
-        codesandboxUrl={step.demo}
+        stepCode={step.stepCode}
+        codesandboxUrl={""}
+        minColumns={46}
         {...props}
         classes={classes}
       />
@@ -38,10 +35,10 @@ function BrowserSlot(props: MiniBrowserProps) {
   const step = React.useContext(StepContext)!
   return (
     <div className={c("-step-preview", classes)}>
-      <MiniBrowser
-        url={step.demo}
-        {...props}
+      <Preview
+        stepCode={step.stepCode}
         classes={classes}
+        {...props}
       />
     </div>
   )

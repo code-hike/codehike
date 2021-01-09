@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Scroller, Step } from "@code-hike/scroller"
-import { MiniBrowser } from "@code-hike/mini-browser"
 import { Classes } from "@code-hike/utils"
 import "./index.scss"
 import {
@@ -8,8 +7,10 @@ import {
   HikeStep,
   StepContext,
   classPrefixer as c,
+  StepCode,
 } from "./context"
 import { Editor } from "./editor"
+import { Preview } from "./preview"
 
 export { Hike }
 
@@ -19,41 +20,32 @@ export interface HikeProps {
 }
 
 function Hike({ steps, classes = {} }: HikeProps) {
-  const [{ index, focus, code }, setState] = React.useState(
-    {
-      index: 0,
-      code: steps[0].code,
-      focus: steps[0].focus,
-    }
-  )
+  const [{ index, stepCode }, setState] = React.useState({
+    index: 0,
+    stepCode: steps[0].stepCode,
+  })
 
   const currentStep = steps[index]
-  const setFocus = (
-    code: string,
-    focus: string | undefined
-  ) =>
+  const setFocus = (stepCode: StepCode) =>
     setState(({ index }) => ({
       index,
-      code,
-      focus: focus,
+      stepCode,
     }))
   const resetFocus = () =>
     setState(({ index }) => ({
       index,
-      code: steps[index].code,
-      focus: steps[index].focus,
+      stepCode: steps[index].stepCode,
     }))
   const changeStep = (newIndex: number) =>
     setState({
       index: newIndex,
-      code: steps[newIndex].code,
-      focus: steps[newIndex].focus,
+      stepCode: steps[newIndex].stepCode,
     })
 
   return (
     <HikeContext.Provider
       value={{
-        currentFocus: focus,
+        currentFocus: stepCode.focus,
         setFocus,
         resetFocus,
         classes,
@@ -87,15 +79,15 @@ function Hike({ steps, classes = {} }: HikeProps) {
           <div className={c("-sticker", classes)}>
             <div className={c("-editor", classes)}>
               <Editor
-                code={code}
+                stepCode={stepCode}
                 classes={classes}
-                focus={focus}
-                codesandboxUrl={currentStep.demo}
+                minColumns={46} //TODO param
+                codesandboxUrl={""}
               />
             </div>
             <div className={c("-preview", classes)}>
-              <MiniBrowser
-                url={currentStep.demo}
+              <Preview
+                stepCode={stepCode}
                 classes={classes}
               />
             </div>

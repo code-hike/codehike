@@ -22,19 +22,86 @@ export const basic = () => {
 const steps = [
   {
     content: <LoremIpsum number={1} />,
-    code: "console.log(1)",
+    stepCode: {
+      files: {
+        "App.js": {
+          code: `import React from 'react';
+
+export default function App() {
+  return <h1>Hello World</h1>
+}`,
+          lang: "jsx",
+        },
+      },
+      activeFile: "App.js",
+    },
   },
   {
     content: <LoremIpsum number={2} />,
-    code: "console.log(2)",
+    stepCode: {
+      files: {
+        "App.js": {
+          code: `import React from 'react';
+
+export default function Page() {
+  return <h1>Hello Planet</h1>
+}`,
+          lang: "jsx",
+        },
+      },
+      activeFile: "App.js",
+    },
   },
   {
     content: <LoremIpsum number={3} />,
-    code: "console.log(3)",
+    stepCode: {
+      files: {
+        "App.js": {
+          code: `import React from 'react';
+import Button from './Button';
+
+export default function Page() {
+  return <><h1>Hello Planet</h1><Button/></>;
+}`,
+          lang: "jsx",
+        },
+        "Button.js": {
+          code: `import React from 'react';
+
+export default function Button() {
+  return <button>Click Me</button>
+}`,
+          lang: "jsx",
+        },
+      },
+      activeFile: "App.js",
+    },
   },
   {
     content: <LoremIpsum number={4} />,
-    code: "console.log(4)",
+    stepCode: {
+      focus: "5",
+      files: {
+        "App.js": {
+          code: `import React from 'react';
+import Button from './Button';
+
+export default function Page() {
+  return <><h1>Hello Planet</h1><Button/></>;
+}`,
+          lang: "jsx",
+        },
+        "Button.js": {
+          code: `import React from 'react';
+
+export default function Button() {
+  return <button>Click Me</button>
+}`,
+          lang: "jsx",
+        },
+      },
+      activeFile: "App.js",
+    },
   },
 ]
 

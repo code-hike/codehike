@@ -6,19 +6,24 @@ import {
 
 export const classPrefixer = classNamesWithPrefix("ch-hike")
 
+export interface CodeFiles {
+  [path: string]: { lang: string; code: string }
+}
+
 export interface HikeStep {
-  focus: string | undefined
   content: React.ReactNode[]
-  code: string
-  demo: string
+  stepCode: StepCode
+}
+
+export interface StepCode {
+  files: CodeFiles
+  activeFile: string
+  focus: string | undefined
 }
 
 export const HikeContext = React.createContext<{
   currentFocus: string | undefined
-  setFocus: (
-    code: string,
-    focus: string | undefined
-  ) => void
+  setFocus: (stepCode: StepCode) => void
   resetFocus: () => void
   classes: Classes
 } | null>(null)

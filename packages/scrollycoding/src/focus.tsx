@@ -18,7 +18,7 @@ export function Focus({ children, focus }: FocusProps) {
     resetFocus,
     classes,
   } = React.useContext(HikeContext)!
-  const { code: stepCode } = React.useContext(StepContext)!
+  const { stepCode } = React.useContext(StepContext)!
 
   const isFocused = currentFocus === focus
 
@@ -33,10 +33,10 @@ export function Focus({ children, focus }: FocusProps) {
       )}
       title="Show code"
       onClick={() =>
-        isFocused ? resetFocus() : setFocus(stepCode, focus)
+        isFocused ? resetFocus() : setFocus(stepCode)
       }
     >
-      {children}{" "}
+      {children}
       <svg
         fill="none"
         stroke="currentColor"
