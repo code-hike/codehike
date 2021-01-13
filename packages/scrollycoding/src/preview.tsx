@@ -27,7 +27,6 @@ function Preview({
     files: { ...preset?.customSetup?.files, ...files },
   }
 
-  console.log({ preset, customSetup })
   return (
     <MiniBrowser {...props}>
       <CodeRunner
