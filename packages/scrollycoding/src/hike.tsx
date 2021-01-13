@@ -7,7 +7,7 @@ import {
   HikeStep,
   StepContext,
   classPrefixer as c,
-  StepCode,
+  Demo,
 } from "./context"
 import { Editor } from "./editor"
 import { Preview } from "./preview"
@@ -20,33 +20,33 @@ export interface HikeProps {
 }
 
 function Hike({ steps, classes = {} }: HikeProps) {
-  const [{ index, stepCode }, setState] = React.useState({
+  const [{ index, demo }, setState] = React.useState({
     index: 0,
-    stepCode: steps[0].stepCode,
+    demo: steps[0].demo,
   })
 
   const currentStep = steps[index]
 
-  const setFocus = (stepCode: StepCode) =>
+  const setFocus = (demo: Demo) =>
     setState(({ index }) => ({
       index,
-      stepCode,
+      demo,
     }))
   const resetFocus = () =>
     setState(({ index }) => ({
       index,
-      stepCode: steps[index].stepCode,
+      demo: steps[index].demo,
     }))
   const changeStep = (newIndex: number) =>
     setState({
       index: newIndex,
-      stepCode: steps[newIndex].stepCode,
+      demo: steps[newIndex].demo,
     })
 
   return (
     <HikeContext.Provider
       value={{
-        currentFocus: stepCode.focus,
+        currentFocus: demo.focus,
         setFocus,
         resetFocus,
         classes,
@@ -80,15 +80,14 @@ function Hike({ steps, classes = {} }: HikeProps) {
           <div className={c("-sticker", classes)}>
             <div className={c("-editor", classes)}>
               <Editor
-                stepCode={stepCode}
+                demo={demo}
                 classes={classes}
-                minColumns={46} //TODO param
                 {...currentStep.codeProps}
               />
             </div>
             <div className={c("-preview", classes)}>
               <Preview
-                stepCode={stepCode}
+                demo={demo}
                 classes={classes}
                 {...currentStep.previewProps}
               />

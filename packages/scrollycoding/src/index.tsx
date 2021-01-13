@@ -27,7 +27,7 @@ function CodeSlot(slotProps: CodeProps) {
   return (
     <div className={c("-step-code", classes)}>
       <Editor
-        stepCode={step.stepCode}
+        demo={step.demo}
         minColumns={46}
         {...props}
         classes={classes}
@@ -43,7 +43,7 @@ function PreviewSlot(slotProps: PreviewProps) {
   return (
     <div className={c("-step-preview", classes)}>
       <Preview
-        stepCode={step.stepCode}
+        demo={step.demo}
         classes={classes}
         {...props}
       />

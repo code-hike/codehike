@@ -8,17 +8,17 @@ import {
 
 export interface FocusProps {
   children?: React.ReactNode
-  focus: string
+  on: string
 }
 
-export function Focus({ children, focus }: FocusProps) {
+export function Focus({ children, on: focus }: FocusProps) {
   const {
     setFocus,
     currentFocus,
     resetFocus,
     classes,
   } = React.useContext(HikeContext)!
-  const { stepCode } = React.useContext(StepContext)!
+  const { demo } = React.useContext(StepContext)!
 
   const isFocused = currentFocus === focus
 
@@ -37,7 +37,7 @@ export function Focus({ children, focus }: FocusProps) {
       onClick={() =>
         isFocused
           ? resetFocus()
-          : setFocus({ ...stepCode, focus })
+          : setFocus({ ...demo, focus })
       }
     >
       {children}

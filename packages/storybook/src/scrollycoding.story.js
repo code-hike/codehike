@@ -22,7 +22,7 @@ export const basic = () => {
 const steps = [
   {
     content: <LoremIpsum number={1} />,
-    stepCode: {
+    demo: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -38,7 +38,7 @@ export default function App() {
   },
   {
     content: <LoremIpsum number={2} />,
-    stepCode: {
+    demo: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -54,7 +54,7 @@ export default function Page() {
   },
   {
     content: <LoremIpsum number={3} />,
-    stepCode: {
+    demo: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -79,7 +79,7 @@ export default function Button() {
   },
   {
     content: <LoremIpsum number={4} />,
-    stepCode: {
+    demo: {
       focus: "5",
       files: {
         "App.js": {
@@ -111,15 +111,15 @@ function LoremIpsum({ number }) {
       <h2>Section{number}</h2>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing
-        elit. <Focus focus="1[2:5]">Phasellus</Focus> sed
-        felis fringilla, ornare risus ac, malesuada magna.
-        Nulla ultricies mattis tortor feugiat eleifend.
-        Integer vehicula nulla in elit ornare tristique.
-        Vestibulum faucibus, enim at rutrum fermentum, nunc
-        massa pulvinar justo, ac convallis nibh mi sed
-        augue. Aenean pulvinar, odio dictum porta tempus,
-        sem lorem pretium quam, sed blandit turpis velit ut
-        mauris. Vivamus eget convallis leo.
+        elit. <Focus on="1[2:5]">Phasellus</Focus> sed felis
+        fringilla, ornare risus ac, malesuada magna. Nulla
+        ultricies mattis tortor feugiat eleifend. Integer
+        vehicula nulla in elit ornare tristique. Vestibulum
+        faucibus, enim at rutrum fermentum, nunc massa
+        pulvinar justo, ac convallis nibh mi sed augue.
+        Aenean pulvinar, odio dictum porta tempus, sem lorem
+        pretium quam, sed blandit turpis velit ut mauris.
+        Vivamus eget convallis leo.
       </p>
       <p>
         Suspendisse pretium risus at erat pellentesque

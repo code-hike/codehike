@@ -3,7 +3,7 @@ import {
   MiniEditorWithState,
   StatefulEditorProps,
 } from "@code-hike/mini-editor"
-import { StepCode } from "./context"
+import { Demo } from "./context"
 
 export { Editor, CodeProps }
 
@@ -11,21 +11,21 @@ interface CodeProps extends StatefulEditorProps {}
 
 function Editor({
   classes,
-  stepCode,
+  demo,
   ...rest
 }: {
-  stepCode: StepCode
+  demo: Demo
 } & CodeProps) {
-  const tabs = Object.keys(stepCode.files)
-  const file = stepCode.files[stepCode.activeFile]
+  const tabs = Object.keys(demo.files)
+  const file = demo.files[demo.activeFile]
   return (
     <MiniEditorWithState
       code={file.code}
-      file={stepCode.activeFile}
+      file={demo.activeFile}
       tabs={tabs}
       classes={classes}
       lang={file.lang}
-      focus={stepCode.focus}
+      focus={demo.focus}
       style={{ height: "100%" }}
       button={<CodeSandboxIcon url="" />}
       {...rest}

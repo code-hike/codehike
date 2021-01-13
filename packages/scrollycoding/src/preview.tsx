@@ -4,20 +4,20 @@ import {
   MiniBrowser,
   MiniBrowserProps,
 } from "@code-hike/mini-browser"
-import { StepCode } from "./context"
+import { Demo } from "./context"
 
 interface PreviewProps extends MiniBrowserProps {}
 
 export { Preview, PreviewProps }
 
 function Preview({
-  stepCode,
+  demo,
   ...props
-}: { stepCode: StepCode } & MiniBrowserProps) {
-  const paths = Object.keys(stepCode.files)
+}: { demo: Demo } & MiniBrowserProps) {
+  const paths = Object.keys(demo.files)
   const files = {} as Record<string, { code: string }>
   paths.forEach(path => {
-    files["/" + path] = { code: stepCode.files[path].code }
+    files["/" + path] = { code: demo.files[path].code }
   })
 
   return (

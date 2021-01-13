@@ -14,12 +14,12 @@ export interface CodeFiles {
 
 export interface HikeStep {
   content: React.ReactNode[]
-  stepCode: StepCode
+  demo: Demo
   previewProps?: MiniBrowserProps
   codeProps?: CodeProps
 }
 
-export interface StepCode {
+export interface Demo {
   files: CodeFiles
   activeFile: string
   focus: string | undefined
@@ -27,7 +27,7 @@ export interface StepCode {
 
 export const HikeContext = React.createContext<{
   currentFocus: string | undefined
-  setFocus: (stepCode: StepCode) => void
+  setFocus: (demo: Demo) => void
   resetFocus: () => void
   classes: Classes
 } | null>(null)
