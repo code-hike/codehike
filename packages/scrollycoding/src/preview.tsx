@@ -20,10 +20,19 @@ function Preview({
     files["/" + path] = { code: demo.files[path].code }
   })
 
+  const { preset } = demo
+
+  const customSetup = {
+    ...preset?.customSetup,
+    files: { ...preset?.customSetup?.files, ...files },
+  }
+
+  console.log({ preset, customSetup })
   return (
     <MiniBrowser {...props}>
       <CodeRunner
-        customSetup={{ files }}
+        {...preset}
+        customSetup={customSetup}
         customStyle={{
           minHeight: "unset",
           height: "100%",

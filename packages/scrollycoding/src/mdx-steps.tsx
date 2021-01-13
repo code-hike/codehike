@@ -1,4 +1,5 @@
 import React from "react"
+import { PresetProps } from "react-smooshpack"
 import { CodeFiles, Demo } from "./context"
 import { CodeProps } from "./editor"
 import { PreviewProps } from "./preview"
@@ -19,7 +20,8 @@ interface Step {
 function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
-  codeProps: CodeProps
+  codeProps: CodeProps,
+  preset: PresetProps = {}
 ) {
   const steps: Step[] = []
   React.Children.forEach(mdx, (child: any) => {
@@ -47,6 +49,7 @@ function useMdxSteps(
           focus: stepHeadProps.focus || "",
           files,
           activeFile,
+          preset,
         },
         previewProps: {
           ...previewProps,

@@ -5,6 +5,7 @@ import {
 } from "@code-hike/utils"
 import { MiniBrowserProps } from "@code-hike/mini-browser"
 import { CodeProps } from "./editor"
+import { PresetProps } from "react-smooshpack"
 
 export const classPrefixer = classNamesWithPrefix("ch-hike")
 
@@ -23,6 +24,7 @@ export interface Demo {
   files: CodeFiles
   activeFile: string
   focus: string | undefined
+  preset: PresetProps
 }
 
 export const HikeContext = React.createContext<{
