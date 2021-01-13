@@ -11951,10 +11951,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-8:
-  version "1.0.0-alpha-8"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-8.tgz#1df2e2d1c91b8cc452c96bbd5f791000e10eb6c7"
-  integrity sha512-kk1gqJo9TbsA2lc+LfZcHKdwGshkqUw0lT/prl1bori71ycAseutt0GvNziw9OkBOdzl2wCotAFMQgsWDVIGjQ==
+react-smooshpack@1.0.0-alpha-9:
+  version "1.0.0-alpha-9"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-9.tgz#bb14db92f6985370f8279243c3949519250c9d05"
+  integrity sha512-ZN6IP7pyFrB5H0Vbju/MBeOxuQpXeYCYBeoN3q7VfLCeGB+hOFbFI0ndhN2jV/Z2+Ih7GDxi3xxztkZbNEG6vA==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -11970,7 +11970,7 @@ react-smooshpack@1.0.0-alpha-8:
     "@stitches/react" "^0.0.2"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-8"
+    smooshpack "^1.0.0-alpha-9"
 
 react-syntax-highlighter@^12.2.1:
   version "12.2.1"
@@ -13045,10 +13045,10 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-smooshpack@^1.0.0-alpha-8:
-  version "1.0.0-alpha-8"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-8.tgz#b0258cd19a7d662cc4e21454689bcf2bdcd0ca7f"
-  integrity sha512-3dTmod+3mrW4Vx3G6EojCpbcVi2XJzIzTOXmu7T5WG0iLYzlYNE4Di6HcBi2zKk2Tpdvnq7F0GbQqEkl55ctVQ==
+smooshpack@^1.0.0-alpha-9:
+  version "1.0.0-alpha-9"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-9.tgz#663b757d7f67571a402facdbaa5d0db707d6be96"
+  integrity sha512-hINDWbd5wNcPAiU7II5rdUB9QO48Yzzy2naeOK4S4+aUQGZiP+VdvtNoYYkpBOwyj1n0QqWeEiA1Jjq/t8/p3g==
   dependencies:
     codesandbox-api "0.0.26"
     codesandbox-import-utils "^1.2.3"

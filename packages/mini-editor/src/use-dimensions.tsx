@@ -25,6 +25,10 @@ function useDimensions<T extends HTMLElement>(
   const [dimensions, setDimensions] = React.useState<
     Dimensions
   >(null)
+
+  const windowWidth = useWindowWidth()
+  const fullDeps = [...deps, windowWidth]
+
   useLayoutEffect(() => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect()
@@ -54,12 +58,15 @@ function useDimensions<T extends HTMLElement>(
         ],
         lineHeight: Math.max(plh, nlh),
         colWidth,
-        deps,
+        deps: fullDeps,
       })
     }
-  }, deps)
+  }, fullDeps)
 
-  if (!dimensions || depsChanged(dimensions.deps, deps)) {
+  if (
+    !dimensions ||
+    depsChanged(dimensions.deps, fullDeps)
+  ) {
     return [ref, null]
   } else {
     return [ref, dimensions]
@@ -74,4 +81,19 @@ function depsChanged(
     if (oldDeps[i] !== newDeps[i]) return true
   }
   return false
+}
+
+function useWindowWidth() {
+  const [width, setWidth] = React.useState<
+    number | undefined
+  >(undefined)
+  React.useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth)
+    }
+    window.addEventListener("resize", handleResize)
+    return () =>
+      window.removeEventListener("resize", handleResize)
+  }, [])
+  return width
 }
