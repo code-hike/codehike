@@ -21,7 +21,7 @@ type EditorFrameProps = {
   height?: number
   terminalPanel: React.ReactNode
   button?: React.ReactNode
-  classes: Record<string, string>
+  classes?: Record<string, string>
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function EditorFrame({

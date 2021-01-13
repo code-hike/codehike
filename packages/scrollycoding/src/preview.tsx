@@ -6,7 +6,9 @@ import {
 } from "@code-hike/mini-browser"
 import { StepCode } from "./context"
 
-export { Preview }
+interface PreviewProps extends MiniBrowserProps {}
+
+export { Preview, PreviewProps }
 
 function Preview({
   stepCode,
@@ -20,7 +22,14 @@ function Preview({
 
   return (
     <MiniBrowser {...props}>
-      <CodeRunner customSetup={{ files }} />
+      <CodeRunner
+        customSetup={{ files }}
+        customStyle={{
+          minHeight: "unset",
+          height: "100%",
+          border: 0,
+        }}
+      />
     </MiniBrowser>
   )
 }

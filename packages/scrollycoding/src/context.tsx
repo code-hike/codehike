@@ -3,6 +3,8 @@ import {
   Classes,
   classNamesWithPrefix,
 } from "@code-hike/utils"
+import { MiniBrowserProps } from "@code-hike/mini-browser"
+import { CodeProps } from "./editor"
 
 export const classPrefixer = classNamesWithPrefix("ch-hike")
 
@@ -13,6 +15,8 @@ export interface CodeFiles {
 export interface HikeStep {
   content: React.ReactNode[]
   stepCode: StepCode
+  previewProps?: MiniBrowserProps
+  codeProps?: CodeProps
 }
 
 export interface StepCode {

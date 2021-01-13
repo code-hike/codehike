@@ -5,17 +5,17 @@ import {
 } from "@code-hike/mini-editor"
 import { StepCode } from "./context"
 
-export { Editor }
+export { Editor, CodeProps }
+
+interface CodeProps extends StatefulEditorProps {}
 
 function Editor({
   classes,
-  codesandboxUrl,
   stepCode,
   ...rest
 }: {
-  codesandboxUrl: string
   stepCode: StepCode
-} & StatefulEditorProps) {
+} & CodeProps) {
   const tabs = Object.keys(stepCode.files)
   const file = stepCode.files[stepCode.activeFile]
   return (
@@ -27,7 +27,7 @@ function Editor({
       lang={file.lang}
       focus={stepCode.focus}
       style={{ height: "100%" }}
-      button={<CodeSandboxIcon url={codesandboxUrl} />}
+      button={<CodeSandboxIcon url="" />}
       {...rest}
     />
   )

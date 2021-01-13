@@ -26,6 +26,7 @@ function Hike({ steps, classes = {} }: HikeProps) {
   })
 
   const currentStep = steps[index]
+
   const setFocus = (stepCode: StepCode) =>
     setState(({ index }) => ({
       index,
@@ -82,13 +83,14 @@ function Hike({ steps, classes = {} }: HikeProps) {
                 stepCode={stepCode}
                 classes={classes}
                 minColumns={46} //TODO param
-                codesandboxUrl={""}
+                {...currentStep.codeProps}
               />
             </div>
             <div className={c("-preview", classes)}>
               <Preview
                 stepCode={stepCode}
                 classes={classes}
+                {...currentStep.previewProps}
               />
             </div>
           </div>

@@ -32,8 +32,12 @@ export function Focus({ children, focus }: FocusProps) {
         classes
       )}
       title="Show code"
+      // onMouseEnter={() => setFocus({ ...stepCode, focus })}
+      // onMouseLeave={() => resetFocus()}
       onClick={() =>
-        isFocused ? resetFocus() : setFocus(stepCode)
+        isFocused
+          ? resetFocus()
+          : setFocus({ ...stepCode, focus })
       }
     >
       {children}

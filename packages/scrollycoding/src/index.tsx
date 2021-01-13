@@ -1,27 +1,33 @@
 import * as React from "react"
-import { MiniBrowserProps } from "@code-hike/mini-browser"
 import "./index.scss"
 import {
   HikeContext,
   StepContext,
   classPrefixer as c,
 } from "./context"
-import { Editor } from "./editor"
+import { Editor, CodeProps } from "./editor"
 import { Focus } from "./focus"
 import { Hike, HikeProps } from "./hike"
-import { StatefulEditorProps } from "@code-hike/mini-editor"
-import { Preview } from "./preview"
+import { Preview, PreviewProps } from "./preview"
 
-export { Hike, Focus, CodeSlot, BrowserSlot, HikeProps }
+export {
+  Hike,
+  Focus,
+  CodeSlot,
+  PreviewSlot,
+  HikeProps,
+  CodeProps,
+  PreviewProps,
+}
 
-function CodeSlot(props: StatefulEditorProps) {
+function CodeSlot(slotProps: CodeProps) {
   const { classes } = React.useContext(HikeContext)!
   const step = React.useContext(StepContext)!
+  const props = { ...step.codeProps, ...slotProps }
   return (
     <div className={c("-step-code", classes)}>
       <Editor
         stepCode={step.stepCode}
-        codesandboxUrl={""}
         minColumns={46}
         {...props}
         classes={classes}
@@ -30,9 +36,10 @@ function CodeSlot(props: StatefulEditorProps) {
   )
 }
 
-function BrowserSlot(props: MiniBrowserProps) {
+function PreviewSlot(slotProps: PreviewProps) {
   const { classes } = React.useContext(HikeContext)!
   const step = React.useContext(StepContext)!
+  const props = { ...step.previewProps, ...slotProps }
   return (
     <div className={c("-step-preview", classes)}>
       <Preview
