@@ -9,6 +9,7 @@ import { Editor, CodeProps } from "./editor"
 import { Focus } from "./focus"
 import { Hike, HikeProps } from "./hike"
 import { Preview, PreviewProps } from "./preview"
+import { useMdxSteps, StepHead } from "./mdx-steps"
 
 export {
   Hike,
@@ -18,6 +19,8 @@ export {
   HikeProps,
   CodeProps,
   PreviewProps,
+  useMdxSteps,
+  StepHead,
 }
 
 function CodeSlot(slotProps: CodeProps) {
