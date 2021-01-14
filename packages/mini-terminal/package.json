@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-terminal",
-  "version": "0.0.0-133ab88",
+  "version": "0.0.0-6dfbe3d",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -17,7 +17,7 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/mini-frame": "0.0.0-133ab88"
+    "@code-hike/mini-frame": "0.0.0-6dfbe3d"
   },
   "peerDependencies": {
     "react": ">=16.8"
