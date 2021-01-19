@@ -30,6 +30,7 @@ function Preview({
   return (
     <MiniBrowser {...props}>
       <CodeRunner
+        template="react"
         {...preset}
         customSetup={customSetup}
         customStyle={{

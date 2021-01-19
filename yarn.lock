@@ -5069,10 +5069,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codesandbox-api@0.0.26:
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/codesandbox-api/-/codesandbox-api-0.0.26.tgz#1d684fa96b45d695520d4e6fd893d0aa15b00229"
-  integrity sha512-oAlPzM4SQ02Hf0/BMIuBPAWXLIFrWdU1v8U7tSmgllVciVE8ENFO2IKmvKqVUsJgFtac4jd37cVQASM7XnCIYQ==
+codesandbox-api@0.0.27:
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/codesandbox-api/-/codesandbox-api-0.0.27.tgz#16f5dec562aefdc8ae54e378051fe72ac2b8a3cd"
+  integrity sha512-cpRRwLCUpbnulIPERlAA6H4OcyoB/WwdnPViHlDWPrfG4dlrK7HoIp7sBqTdePE5QwTcEM/Dfqdww6zJdCoJkA==
 
 codesandbox-import-util-types@^1.3.7:
   version "1.3.7"
@@ -11951,10 +11951,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-9:
-  version "1.0.0-alpha-9"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-9.tgz#bb14db92f6985370f8279243c3949519250c9d05"
-  integrity sha512-ZN6IP7pyFrB5H0Vbju/MBeOxuQpXeYCYBeoN3q7VfLCeGB+hOFbFI0ndhN2jV/Z2+Ih7GDxi3xxztkZbNEG6vA==
+react-smooshpack@1.0.0-alpha-11:
+  version "1.0.0-alpha-11"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-11.tgz#29b14fa7d1629c1d19bfa2e64cc61836a38d8a7f"
+  integrity sha512-6NP2ympTagdb4ESLN46AMBHvxwBfJlmo0Cozz7E16thmdF55S5g7zyiEyXoVJjUGTGLEfjCQBzhs4HtVvXpk8A==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -11970,7 +11970,7 @@ react-smooshpack@1.0.0-alpha-9:
     "@stitches/react" "^0.0.2"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-9"
+    smooshpack "^1.0.0-alpha-11"
 
 react-syntax-highlighter@^12.2.1:
   version "12.2.1"
@@ -13045,12 +13045,12 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-smooshpack@^1.0.0-alpha-9:
-  version "1.0.0-alpha-9"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-9.tgz#663b757d7f67571a402facdbaa5d0db707d6be96"
-  integrity sha512-hINDWbd5wNcPAiU7II5rdUB9QO48Yzzy2naeOK4S4+aUQGZiP+VdvtNoYYkpBOwyj1n0QqWeEiA1Jjq/t8/p3g==
+smooshpack@^1.0.0-alpha-11:
+  version "1.0.0-alpha-12"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-12.tgz#a4b5c5d4b2213a5b6d113412833aaf9d5145480d"
+  integrity sha512-/LIC8xoMIjgSQZEm1DuxqsG740qLGA/W72Hac2iB9N8hem3aB1yElOcF3QAQoS1VgURdXuIXU5txlZtgDFBs+A==
   dependencies:
-    codesandbox-api "0.0.26"
+    codesandbox-api "0.0.27"
     codesandbox-import-utils "^1.2.3"
     lodash.isequal "^4.5.0"
 
