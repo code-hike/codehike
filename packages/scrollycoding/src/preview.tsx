@@ -14,21 +14,21 @@ function Preview({
   demo,
   ...props
 }: { demo: Demo } & MiniBrowserProps) {
-  const paths = Object.keys(demo.files)
-  const files = {} as Record<string, { code: string }>
-  paths.forEach(path => {
-    files["/" + path] = { code: demo.files[path].code }
-  })
+  const codeRunner = React.useMemo(() => {
+    const paths = Object.keys(demo.files)
+    const files = {} as Record<string, { code: string }>
+    paths.forEach(path => {
+      files["/" + path] = { code: demo.files[path].code }
+    })
 
-  const { preset } = demo
+    const { preset } = demo
 
-  const customSetup = {
-    ...preset?.customSetup,
-    files: { ...preset?.customSetup?.files, ...files },
-  }
+    const customSetup = {
+      ...preset?.customSetup,
+      files: { ...preset?.customSetup?.files, ...files },
+    }
 
-  return (
-    <MiniBrowser {...props}>
+    return (
       <CodeRunner
         template="react"
         {...preset}
@@ -39,6 +39,8 @@ function Preview({
           border: 0,
         }}
       />
-    </MiniBrowser>
-  )
+    )
+  }, [demo])
+
+  return <MiniBrowser {...props} children={codeRunner} />
 }
