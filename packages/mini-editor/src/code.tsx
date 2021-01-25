@@ -62,9 +62,10 @@ export function Code({
         padding: 0,
         margin: 0,
         overflow: "hidden",
+        opacity: dimensions ? 1 : 0,
       }}
     >
-      <code style={{ opacity: dimensions ? 1 : 0 }}>
+      <code>
         {dimensions ? (
           <SmoothLines
             center={false}
