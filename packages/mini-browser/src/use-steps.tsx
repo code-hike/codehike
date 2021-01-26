@@ -8,7 +8,14 @@ type MiniBrowserStep = {
   prependOrigin?: boolean
 }
 
-export { useSteps, MiniBrowserStep }
+type InternalStep = {
+  displayUrl: string
+  loadUrl?: string
+  children?: React.ReactNode
+  zoom?: number
+}
+
+export { useSteps, MiniBrowserStep, transformUrl }
 
 function useSteps(
   ogSteps: MiniBrowserStep[] | undefined,
@@ -58,4 +65,18 @@ function transformStep(step: MiniBrowserStep) {
     transformed.url = url
   }
   return transformed
+}
+
+function transformUrl(
+  url: string | undefined,
+  loadUrl: string | undefined,
+  prependOrigin: boolean | undefined
+) {
+  const currentOrigin =
+    typeof window !== "undefined" ? window.origin : ""
+  const displayUrl =
+    url && prependOrigin === true
+      ? currentOrigin + url
+      : url
+  return { displayUrl, loadUrl: loadUrl || displayUrl }
 }
