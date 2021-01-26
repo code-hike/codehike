@@ -2,17 +2,16 @@ import React from "react"
 import { MiniFrame } from "@code-hike/mini-frame"
 import { TitleBar } from "./title-bar"
 import { MiniBrowserStep, useSteps } from "./use-steps"
+import {
+  classNamesWithPrefix,
+  Classes,
+} from "@code-hike/utils"
 
 export type MiniBrowserProps = {
   progress?: number
   backward?: boolean
-  url?: string
-  children?: React.ReactNode
-  loadUrl?: string
-  prependOrigin?: boolean
-  zoom?: number
   steps?: MiniBrowserStep[]
-  classes?: Record<string, string>
+  classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 const MiniBrowserHike = React.forwardRef<
@@ -20,54 +19,58 @@ const MiniBrowserHike = React.forwardRef<
   MiniBrowserProps
 >(MiniBrowserWithRef)
 
+const c = classNamesWithPrefix("")
+
 function MiniBrowserWithRef(
   {
-    url = "",
-    children,
     progress = 0,
     backward = false,
-    zoom = 1,
     steps: ogSteps,
-    loadUrl,
-    prependOrigin,
     classes = {},
     ...props
   }: MiniBrowserProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
-  const steps = useSteps(ogSteps, {
-    url,
-    children,
-    zoom,
-    loadUrl,
-    prependOrigin,
-  })
+  const steps = useSteps(ogSteps)
 
-  const stepIndex = backward
-    ? Math.floor(progress)
-    : Math.ceil(progress)
-  const currentStep = steps[stepIndex]
+  // TODO readability and optional
+  const X = 50
+  const t = progress - Math.floor(progress)
+  const x = t <= 0.5 ? -X * t : X - X * t
+  const o = Math.abs(t - 0.5) * 2
+
+  // const stepIndex = backward
+  //   ? Math.floor(progress)
+  //   : Math.ceil(progress)
+
+  const stepIndex = Math.round(progress)
+
+  const { zoom, displayUrl, loadUrl, children } = steps[
+    stepIndex
+  ]
+
   return (
     <MiniFrame
       {...props}
-      zoom={currentStep.zoom}
-      className={`ch-mini-browser ${props.className || ""}`}
+      zoom={zoom}
+      className={`${c("ch-mini-browser", classes)} ${
+        props.className || ""
+      }`}
+      style={{
+        transform: `translateX(${x}px)`,
+        opacity: o * o,
+        ...props.style,
+      }}
       classes={classes}
       titleBar={
         <TitleBar
-          url={currentStep.url!}
-          linkUrl={currentStep.loadUrl!}
+          url={displayUrl!}
+          linkUrl={loadUrl!}
           classes={classes}
         />
       }
     >
-      {currentStep.children || (
-        <iframe
-          ref={ref}
-          src={currentStep.loadUrl}
-          // sandbox={sandbox}
-        />
-      )}
+      {children || <iframe ref={ref} src={loadUrl} />}
     </MiniFrame>
   )
 }

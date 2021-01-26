@@ -4,23 +4,35 @@ import "@code-hike/mini-browser/dist/index.css"
 import { WithProgress, Page } from "./utils"
 
 export default {
-  title: "Mini Browser",
+  title: "Mini Browser Hike",
 }
 
 export const basic = () => (
   <Page>
-    <MiniBrowser url="https://localhost:8000">
-      <div style={{ background: "beige", height: 200 }}>
-        Lorem Ipsum
-      </div>
-    </MiniBrowser>
+    <MiniBrowser
+      style={{ height: 300 }}
+      steps={[
+        {
+          children: (
+            <div
+              style={{
+                background: "beige",
+                height: "100%",
+              }}
+            >
+              Lorem Ipsum
+            </div>
+          ),
+        },
+      ]}
+    ></MiniBrowser>
   </Page>
 )
 
 export const iframe = () => (
   <Page>
     <MiniBrowser
-      url="https://whatismyviewport.com/"
+      steps={[{ url: "https://whatismyviewport.com/" }]}
       style={{ height: 300 }}
     />
   </Page>
@@ -29,9 +41,10 @@ export const iframe = () => (
 export const zoom = () => (
   <Page>
     <MiniBrowser
-      url="https://whatismyviewport.com/"
       style={{ height: 300 }}
-      zoom={0.5}
+      steps={[
+        { url: "https://whatismyviewport.com/", zoom: 0.5 },
+      ]}
     />
   </Page>
 )
@@ -41,13 +54,13 @@ export const defaultUrl = () => (
     <MiniBrowser
       steps={[
         {
+          url: "/default",
+          prependOrigin: true,
+          zoom: 0.5,
           loadUrl: "https://whatismyviewport.com/",
         },
       ]}
-      url="/default"
-      prependOrigin={true}
       style={{ height: 300 }}
-      zoom={0.5}
     />
   </Page>
 )
@@ -72,20 +85,28 @@ export const steps = () => {
   )
 }
 
-export const video = () => (
-  <Page>
-    <MiniBrowser
-      url="https://nextjs-static-props.now.sh/"
-      style={{ height: 300 }}
-    >
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        type="video/mp4"
-        src="https://pomb.us/static/demo-75c5b2395f634c494e40b8008eef20eb.mp4"
-      />
-    </MiniBrowser>
-  </Page>
-)
+export const video = () => {
+  const children = (
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      type="video/mp4"
+      src="https://pomb.us/static/demo-75c5b2395f634c494e40b8008eef20eb.mp4"
+    />
+  )
+  return (
+    <Page>
+      <MiniBrowser
+        steps={[
+          {
+            url: "https://nextjs-static-props.now.sh/",
+            children,
+          },
+        ]}
+        style={{ height: 300 }}
+      ></MiniBrowser>
+    </Page>
+  )
+}

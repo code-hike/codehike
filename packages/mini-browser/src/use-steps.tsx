@@ -9,62 +9,35 @@ type MiniBrowserStep = {
 }
 
 type InternalStep = {
-  displayUrl: string
+  displayUrl?: string
   loadUrl?: string
   children?: React.ReactNode
-  zoom?: number
+  zoom: number
 }
 
 export { useSteps, MiniBrowserStep, transformUrl }
 
 function useSteps(
-  ogSteps: MiniBrowserStep[] | undefined,
-  ogDefaults: MiniBrowserStep
-) {
-  const defaults = transformStep(ogDefaults)
-  const {
-    zoom,
-    url,
-    children,
-    loadUrl,
-    prependOrigin,
-  } = defaults
-
+  steps: MiniBrowserStep[] | undefined
+): InternalStep[] {
   return React.useMemo(() => {
-    if (!ogSteps) {
-      return [defaults]
-    } else {
-      return ogSteps.map(s => {
-        const step = transformStep({
-          prependOrigin,
-          ...s,
-        })
-        return {
-          zoom,
-          url,
-          children,
-          ...step,
-          loadUrl: step.loadUrl || step.url || loadUrl,
-        }
-      })
+    if (!steps) {
+      return [{ zoom: 1 }]
     }
-  }, [ogSteps, zoom, url, children, loadUrl, prependOrigin])
-}
-
-function transformStep(step: MiniBrowserStep) {
-  const currentOrigin =
-    typeof window !== "undefined" ? window.origin : ""
-  const url =
-    step.url && step.prependOrigin === true
-      ? currentOrigin + step.url
-      : step.url
-  const loadUrl = step.loadUrl || url
-
-  const transformed = { ...step, loadUrl }
-  if (step.url) {
-    transformed.url = url
-  }
-  return transformed
+    return steps.map(step => {
+      const { displayUrl, loadUrl } = transformUrl(
+        step.url,
+        step.loadUrl,
+        step.prependOrigin
+      )
+      return {
+        zoom: step.zoom || 1,
+        displayUrl,
+        loadUrl,
+        children: step.children,
+      }
+    })
+  }, steps)
 }
 
 function transformUrl(
