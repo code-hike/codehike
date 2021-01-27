@@ -61,7 +61,7 @@ export default function Page() {
 import Button from './Button';
 
 export default function Page() {
-  return <><h1>Hello Planet</h1><Button/></>;
+  return <div><h3>Hello Planet</h3><Button/></div>;
 }`,
           lang: "jsx",
         },

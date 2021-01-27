@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@code-hike/mini-frame": "0.0.0-211ab01",
-    "@code-hike/utils": "0.0.0-211ab01"
+    "@code-hike/utils": "0.0.0-211ab01",
+    "use-spring": "^0.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8"

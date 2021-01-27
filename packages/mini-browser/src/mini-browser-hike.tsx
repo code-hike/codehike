@@ -7,16 +7,16 @@ import {
   Classes,
 } from "@code-hike/utils"
 
-export type MiniBrowserProps = {
+export type MiniBrowserHikeProps = {
   progress?: number
   backward?: boolean
-  steps?: MiniBrowserStep[]
   classes?: Classes
+  steps?: MiniBrowserStep[]
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 const MiniBrowserHike = React.forwardRef<
   HTMLIFrameElement,
-  MiniBrowserProps
+  MiniBrowserHikeProps
 >(MiniBrowserWithRef)
 
 const c = classNamesWithPrefix("")
@@ -28,7 +28,7 @@ function MiniBrowserWithRef(
     steps: ogSteps,
     classes = {},
     ...props
-  }: MiniBrowserProps,
+  }: MiniBrowserHikeProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
   const steps = useSteps(ogSteps)

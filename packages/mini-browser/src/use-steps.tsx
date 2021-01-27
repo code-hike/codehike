@@ -37,7 +37,7 @@ function useSteps(
         children: step.children,
       }
     })
-  }, steps)
+  }, [steps])
 }
 
 function transformUrl(

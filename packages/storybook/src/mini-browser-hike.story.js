@@ -1,5 +1,5 @@
 import React from "react"
-import { MiniBrowser } from "@code-hike/mini-browser"
+import { MiniBrowserHike } from "@code-hike/mini-browser"
 import "@code-hike/mini-browser/dist/index.css"
 import { WithProgress, Page } from "./utils"
 
@@ -9,7 +9,7 @@ export default {
 
 export const basic = () => (
   <Page>
-    <MiniBrowser
+    <MiniBrowserHike
       style={{ height: 300 }}
       steps={[
         {
@@ -25,13 +25,13 @@ export const basic = () => (
           ),
         },
       ]}
-    ></MiniBrowser>
+    ></MiniBrowserHike>
   </Page>
 )
 
 export const iframe = () => (
   <Page>
-    <MiniBrowser
+    <MiniBrowserHike
       steps={[{ url: "https://whatismyviewport.com/" }]}
       style={{ height: 300 }}
     />
@@ -40,7 +40,7 @@ export const iframe = () => (
 
 export const zoom = () => (
   <Page>
-    <MiniBrowser
+    <MiniBrowserHike
       style={{ height: 300 }}
       steps={[
         { url: "https://whatismyviewport.com/", zoom: 0.5 },
@@ -51,7 +51,7 @@ export const zoom = () => (
 
 export const defaultUrl = () => (
   <Page>
-    <MiniBrowser
+    <MiniBrowserHike
       steps={[
         {
           url: "/default",
@@ -74,7 +74,7 @@ export const steps = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniBrowser
+        <MiniBrowserHike
           style={{ height: 300 }}
           steps={steps}
           progress={progress}
@@ -98,7 +98,7 @@ export const video = () => {
   )
   return (
     <Page>
-      <MiniBrowser
+      <MiniBrowserHike
         steps={[
           {
             url: "https://nextjs-static-props.now.sh/",
@@ -106,7 +106,7 @@ export const video = () => {
           },
         ]}
         style={{ height: 300 }}
-      ></MiniBrowser>
+      ></MiniBrowserHike>
     </Page>
   )
 }

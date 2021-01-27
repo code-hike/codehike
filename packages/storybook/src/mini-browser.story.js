@@ -9,8 +9,11 @@ export default {
 
 export const basic = () => (
   <Page>
-    <MiniBrowser url="https://localhost:8000">
-      <div style={{ background: "beige", height: 200 }}>
+    <MiniBrowser
+      style={{ height: 300 }}
+      url="https://localhost:8000"
+    >
+      <div style={{ background: "beige", height: "100%" }}>
         Lorem Ipsum
       </div>
     </MiniBrowser>
@@ -39,38 +42,14 @@ export const zoom = () => (
 export const defaultUrl = () => (
   <Page>
     <MiniBrowser
-      steps={[
-        {
-          loadUrl: "https://whatismyviewport.com/",
-        },
-      ]}
       url="/default"
       prependOrigin={true}
+      loadUrl="https://whatismyviewport.com/"
       style={{ height: 300 }}
       zoom={0.5}
     />
   </Page>
 )
-
-export const steps = () => {
-  const steps = [
-    { zoom: 0.5, url: "https://whatismyviewport.com/" },
-    { zoom: 1, url: "https://whatismyviewport.com/" },
-    { zoom: 0.2, url: "https://whatismyviewport.com/" },
-  ]
-  return (
-    <WithProgress length={steps.length}>
-      {(progress, backward) => (
-        <MiniBrowser
-          style={{ height: 300 }}
-          steps={steps}
-          progress={progress}
-          backward={backward}
-        />
-      )}
-    </WithProgress>
-  )
-}
 
 export const video = () => (
   <Page>
@@ -89,3 +68,24 @@ export const video = () => (
     </MiniBrowser>
   </Page>
 )
+
+export const steps = () => {
+  const [children, setChildren] = React.useState(<h1>1</h1>)
+
+  return (
+    <Page>
+      <button onClick={() => setChildren(<h1>1</h1>)}>
+        1
+      </button>
+      <button onClick={() => setChildren(<h1>2</h1>)}>
+        2
+      </button>
+      <button onClick={() => setChildren(<h1>3</h1>)}>
+        3
+      </button>
+      <MiniBrowser style={{ height: 300 }}>
+        {children}
+      </MiniBrowser>
+    </Page>
+  )
+}
