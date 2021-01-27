@@ -1,5 +1,5 @@
 import React from "react"
-import { PresetProps } from "react-smooshpack"
+import { SandpackRunnerProps } from "react-smooshpack"
 import { CodeFiles, Demo } from "./context"
 import { CodeProps } from "./editor"
 import { PreviewProps } from "./preview"
@@ -21,7 +21,7 @@ function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
   codeProps: CodeProps,
-  preset: PresetProps = {}
+  preset: SandpackRunnerProps = {}
 ) {
   const steps: Step[] = []
   React.Children.forEach(mdx, (child: any) => {

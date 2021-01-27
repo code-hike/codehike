@@ -11,14 +11,14 @@ import {
 } from "./context"
 import { Editor } from "./editor"
 import { Preview } from "./preview"
-import { PresetProps } from "react-smooshpack"
+import { SandpackRunnerProps } from "react-smooshpack"
 
 export { Hike }
 
 export interface HikeProps {
   steps: HikeStep[]
   classes?: Classes
-  preset?: PresetProps
+  preset?: SandpackRunnerProps
 }
 
 function Hike({ steps, classes = {} }: HikeProps) {

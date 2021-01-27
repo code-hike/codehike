@@ -22,7 +22,7 @@
     "@code-hike/mini-editor": "0.0.0-211ab01",
     "@code-hike/scroller": "0.0.0-211ab01",
     "@code-hike/utils": "0.0.0-211ab01",
-    "react-smooshpack": "1.0.0-alpha-11"
+    "react-smooshpack": "1.0.0-alpha-15"
   },
   "peerDependencies": {
     "react": ">=16.8"

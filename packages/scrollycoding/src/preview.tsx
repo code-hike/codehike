@@ -1,5 +1,5 @@
 import * as React from "react"
-import { CodeRunner } from "react-smooshpack"
+import { SandpackRunner } from "react-smooshpack"
 import {
   MiniBrowser,
   MiniBrowserProps,
@@ -23,16 +23,16 @@ function Preview({
 
     const { preset } = demo
 
-    const customSetup = {
-      ...preset?.customSetup,
-      files: { ...preset?.customSetup?.files, ...files },
+    const setup = {
+      ...preset?.setup,
+      files: { ...preset?.setup?.files, ...files },
     }
 
     return (
-      <CodeRunner
+      <SandpackRunner
         template="react"
         {...preset}
-        customSetup={customSetup}
+        setup={setup}
         customStyle={{
           minHeight: "unset",
           height: "100%",

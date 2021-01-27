@@ -2270,24 +2270,6 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stitches/core@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stitches/core/-/core-0.0.2.tgz#027b965cd3745ee113094279766d6e7ad777bb3e"
-  integrity sha512-fvwZcUbb/cqV52+g+nGbwo8NbLt+Zpz7TSik+EwjtJd5Y3cpPOK0UZ+3hvMLlvqIPIzzcQULgrVuU08XkTdPfw==
-  dependencies:
-    "@types/node" "^13.11.1"
-    tslib "^1.11.1"
-
-"@stitches/react@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@stitches/react/-/react-0.0.2.tgz#5cc246212b0c65df34cc2dac3320782340b518ea"
-  integrity sha512-ftd00ioQZ/gCxoR5AYVySPxVlK2J7UMc4Q0cK9IRJ+xEGBnKV+p+03E3jQt+be6k7BfRiSIlLEVHrbTN3jgqfA==
-  dependencies:
-    "@stitches/core" "^0.0.2"
-    "@types/node" "^13.11.1"
-    "@types/react-test-renderer" "^16.9.3"
-    tslib "^1.11.1"
-
 "@storybook/addon-controls@^6.0.26":
   version "6.0.28"
   resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.0.28.tgz#5872ede3d33b103c0b519304dedde1000b8c68f0"
@@ -3049,11 +3031,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.7.tgz#8ea1e8f8eae2430cf440564b98c6dfce1ec5945d"
   integrity sha512-Zw1vhUSQZYw+7u5dAwNbIA9TuTotpzY/OF7sJM9FqPOF3SPjKnxrjoTktXDZgUjybf4cWVBP7O8wvKdSaGHweg==
 
-"@types/node@^13.11.1":
-  version "13.13.39"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.39.tgz#237d071fb593d3aaa96f655a8eb2f91e0fb1480c"
-  integrity sha512-wct+WgRTTkBm2R3vbrFOqyZM5w0g+D8KnhstG9463CJBVC3UVZHMToge7iMBR1vDl/I+NWFHUeK9X+JcF0rWKw==
-
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -3127,25 +3104,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-test-renderer@^16.9.3":
-  version "16.9.4"
-  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-16.9.4.tgz#377ccf51ea25c656b08aa474fb8194661009b865"
-  integrity sha512-ZcnGz4O5I6C/gA7V8SInBDrUdhUwjc9C4n3hyeciwTc0oGYi0efYxxD0M0ASiN5SZzCBGGwb9tGtIk7270BqsQ==
-  dependencies:
-    "@types/react" "^16"
-
 "@types/react@*", "@types/react@^16.9.38":
   version "16.9.56"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.56.tgz#ea25847b53c5bec064933095fc366b1462e2adf0"
   integrity sha512-gIkl4J44G/qxbuC6r2Xh+D3CGZpJ+NdWTItAPmZbR5mUS+JQ8Zvzpl0ea5qT/ZT3ZNTUcDKUVqV3xBE8wv/DyQ==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^3.0.2"
-
-"@types/react@^16":
-  version "16.14.2"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.2.tgz#85dcc0947d0645349923c04ccef6018a1ab7538c"
-  integrity sha512-BzzcAlyDxXl2nANlabtT4thtvbbnhee8hMmH/CcJrISDBVcJS1iOsP1f0OAgSdGE0MsY9tqcrb9YoZcOFv9dbQ==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -5069,10 +5031,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codesandbox-api@0.0.27:
-  version "0.0.27"
-  resolved "https://registry.yarnpkg.com/codesandbox-api/-/codesandbox-api-0.0.27.tgz#16f5dec562aefdc8ae54e378051fe72ac2b8a3cd"
-  integrity sha512-cpRRwLCUpbnulIPERlAA6H4OcyoB/WwdnPViHlDWPrfG4dlrK7HoIp7sBqTdePE5QwTcEM/Dfqdww6zJdCoJkA==
+codesandbox-api@^0.0.28:
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/codesandbox-api/-/codesandbox-api-0.0.28.tgz#3d8d6cf40b3fbb241f613b50e1e648b86312a5df"
+  integrity sha512-dZRmgy/8LXPDfFOO/q4w0b30QhqECx5Ep8HB32wVHutE5aOEQ0tJHBF2yvE4ADxXpVlkJRvCAhOlBrYaAEwj0A==
 
 codesandbox-import-util-types@^1.3.7:
   version "1.3.7"
@@ -11951,10 +11913,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-11:
-  version "1.0.0-alpha-11"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-11.tgz#29b14fa7d1629c1d19bfa2e64cc61836a38d8a7f"
-  integrity sha512-6NP2ympTagdb4ESLN46AMBHvxwBfJlmo0Cozz7E16thmdF55S5g7zyiEyXoVJjUGTGLEfjCQBzhs4HtVvXpk8A==
+react-smooshpack@1.0.0-alpha-15:
+  version "1.0.0-alpha-15"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-15.tgz#04f93f683957484ec8944903e1256cea8a777017"
+  integrity sha512-oYeXkFew69rfVqNyPmDQZEU/EzwG4oslU0h3ffKxPNM365eSH6oYSYrGzKQquqfhYUQGa/fe4BbbEOZtpsVyLw==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -11967,10 +11929,9 @@ react-smooshpack@1.0.0-alpha-11:
     "@codemirror/lang-javascript" "^0.17.1"
     "@codemirror/language" "^0.17.2"
     "@codemirror/view" "^0.17.3"
-    "@stitches/react" "^0.0.2"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-11"
+    smooshpack "^1.0.0-alpha-15"
 
 react-syntax-highlighter@^12.2.1:
   version "12.2.1"
@@ -13045,12 +13006,12 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-3.0.0.tgz#6539be870c165adbd5240220dbe361f1bc4d4634"
   integrity sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==
 
-smooshpack@^1.0.0-alpha-11:
-  version "1.0.0-alpha-12"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-12.tgz#a4b5c5d4b2213a5b6d113412833aaf9d5145480d"
-  integrity sha512-/LIC8xoMIjgSQZEm1DuxqsG740qLGA/W72Hac2iB9N8hem3aB1yElOcF3QAQoS1VgURdXuIXU5txlZtgDFBs+A==
+smooshpack@^1.0.0-alpha-15:
+  version "1.0.0-alpha-15"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-15.tgz#60ec693c5dac41ff63390fd92c4e6d03256b51a3"
+  integrity sha512-/o6XTsXHUsdp2SCXmJXXnmyW+ph6n+h90UHkxsT0EUk9a5IDdSaJk89k9sitc9ecCqVzqErjvV7BbkT2jN4fRg==
   dependencies:
-    codesandbox-api "0.0.27"
+    codesandbox-api "^0.0.28"
     codesandbox-import-utils "^1.2.3"
     lodash.isequal "^4.5.0"
 
@@ -14042,7 +14003,7 @@ tslib@2.0.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
   integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
-tslib@^1.10.0, tslib@^1.11.1, tslib@^1.9.0:
+tslib@^1.10.0, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
