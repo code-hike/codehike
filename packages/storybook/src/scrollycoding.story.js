@@ -112,18 +112,21 @@ function LoremIpsum({ number }) {
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing
         elit. <Focus on="1[2:5]">Phasellus</Focus> sed felis
-        fringilla, ornare risus ac, malesuada magna. Nulla
-        ultricies mattis tortor feugiat eleifend. Integer
-        vehicula nulla in elit ornare tristique. Vestibulum
-        faucibus, enim at rutrum fermentum, nunc massa
-        pulvinar justo, ac convallis nibh mi sed augue.
-        Aenean pulvinar, odio dictum porta tempus, sem lorem
-        pretium quam, sed blandit turpis velit ut mauris.
-        Vivamus eget convallis leo.
+        fringilla, ornare risus{" "}
+        <Focus on="1[2:5]">ac</Focus>, malesuada magna.
+        Nulla ultricies mattis tortor feugiat eleifend.
+        Integer vehicula nulla in elit ornare tristique.
+        Vestibulum faucibus, enim at rutrum fermentum, nunc
+        massa pulvinar justo, ac convallis nibh mi sed
+        augue. Aenean pulvinar, odio dictum porta tempus,
+        sem lorem pretium quam, sed blandit turpis velit ut
+        mauris. Vivamus eget convallis leo.
       </p>
-      <p>
-        Suspendisse pretium risus at erat pellentesque
-        faucibus. Praesent placerat venenatis mollis.
+      <p style={{ lineHeight: "4rem", fontSize: "2rem" }}>
+        Suspendisse pretium risus at erat pellentesque elit.{" "}
+        <Focus on="1[2:5]">Phasellus</Focus> sed felis
+        fringilla, ornare risus{" "}
+        <Focus on="1[2:5]">ac</Focus>, malesuada magna.
         Integer dapibus tristique tincidunt. Ut eu odio
         efficitur, fermentum tellus at, aliquet arcu. Donec
         placerat vestibulum lacus. Vivamus ac urna vel massa

@@ -17,6 +17,8 @@ interface Step {
   codeProps: CodeProps
 }
 
+const defaultFilename = "App.js"
+
 function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
@@ -35,7 +37,8 @@ function useMdxSteps(
           const codeElementProps =
             preElement?.props?.children?.props || {}
           const lang = codeElementProps.className?.slice(9)
-          const filename = codeElementProps.metastring
+          const filename =
+            codeElementProps.metastring || defaultFilename
           const code = codeElementProps.children
           files[filename] = { code, lang }
           if (activeFile === "") {

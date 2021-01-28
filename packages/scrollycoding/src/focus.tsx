@@ -23,7 +23,7 @@ export function Focus({ children, on: focus }: FocusProps) {
   const isFocused = currentFocus === focus
 
   return (
-    <a
+    <button
       className={c(
         [
           "-focus",
@@ -61,6 +61,6 @@ export function Focus({ children, on: focus }: FocusProps) {
           }
         />
       </svg>
-    </a>
+    </button>
   )
 }

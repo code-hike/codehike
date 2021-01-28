@@ -30,7 +30,6 @@ function MiniBrowser({
     zoom,
   })
 
-  console.log({ steps, progress })
   return (
     <MiniBrowserHike
       {...rest}
