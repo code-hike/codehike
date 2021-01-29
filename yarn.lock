@@ -13694,10 +13694,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-15, react-smooshpack@^1.0.0-alpha-15:
-  version "1.0.0-alpha-15"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-15.tgz#04f93f683957484ec8944903e1256cea8a777017"
-  integrity sha512-oYeXkFew69rfVqNyPmDQZEU/EzwG4oslU0h3ffKxPNM365eSH6oYSYrGzKQquqfhYUQGa/fe4BbbEOZtpsVyLw==
+react-smooshpack@1.0.0-alpha-16:
+  version "1.0.0-alpha-16"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-16.tgz#da1e87336453c0597917c3a3f417ce2256749cdb"
+  integrity sha512-xYFk7uE8/JikhddW+6HKWUB5PNlojTiqPh+Ee/SJGEbgTJ+4gVa5VLIPaN1jiVnFZpYvjWAcVqJ09BIAFT7FEg==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -13712,7 +13712,7 @@ react-smooshpack@1.0.0-alpha-15, react-smooshpack@^1.0.0-alpha-15:
     "@codemirror/view" "^0.17.3"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-15"
+    smooshpack "^1.0.0-alpha-16"
 
 react-smooshpack@1.0.0-alpha-9:
   version "1.0.0-alpha-9"
@@ -13734,6 +13734,26 @@ react-smooshpack@1.0.0-alpha-9:
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
     smooshpack "^1.0.0-alpha-9"
+
+react-smooshpack@^1.0.0-alpha-15:
+  version "1.0.0-alpha-15"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-15.tgz#04f93f683957484ec8944903e1256cea8a777017"
+  integrity sha512-oYeXkFew69rfVqNyPmDQZEU/EzwG4oslU0h3ffKxPNM365eSH6oYSYrGzKQquqfhYUQGa/fe4BbbEOZtpsVyLw==
+  dependencies:
+    "@codemirror/closebrackets" "^0.17.2"
+    "@codemirror/commands" "^0.17.1"
+    "@codemirror/comment" "^0.17.1"
+    "@codemirror/gutter" "^0.17.1"
+    "@codemirror/highlight" "^0.17.1"
+    "@codemirror/history" "^0.17.1"
+    "@codemirror/lang-css" "^0.17.1"
+    "@codemirror/lang-html" "^0.17.1"
+    "@codemirror/lang-javascript" "^0.17.1"
+    "@codemirror/language" "^0.17.2"
+    "@codemirror/view" "^0.17.3"
+    codesandbox-import-utils "^1.2.3"
+    prism-react-renderer "^1.1.1"
+    smooshpack "^1.0.0-alpha-15"
 
 react-syntax-highlighter@^12.2.1:
   version "12.2.1"
@@ -14989,6 +15009,15 @@ smooshpack@^1.0.0-alpha-15:
   version "1.0.0-alpha-15"
   resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-15.tgz#60ec693c5dac41ff63390fd92c4e6d03256b51a3"
   integrity sha512-/o6XTsXHUsdp2SCXmJXXnmyW+ph6n+h90UHkxsT0EUk9a5IDdSaJk89k9sitc9ecCqVzqErjvV7BbkT2jN4fRg==
+  dependencies:
+    codesandbox-api "^0.0.28"
+    codesandbox-import-utils "^1.2.3"
+    lodash.isequal "^4.5.0"
+
+smooshpack@^1.0.0-alpha-16:
+  version "1.0.0-alpha-16"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-16.tgz#18ae38885c7e98f2fc1e82f0ae5ed2af0cd4dbd5"
+  integrity sha512-LQwHn0WFoeBo2oXS1YeivI/Ts4MqH5uII0txNj1LIUSIIBzFcv59Iuq9qpI71aYEW41MwQU30CI+/9oVl85osg==
   dependencies:
     codesandbox-api "^0.0.28"
     codesandbox-import-utils "^1.2.3"
