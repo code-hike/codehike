@@ -7,59 +7,51 @@ import {
   HikeStep,
   StepContext,
   classPrefixer as c,
-  Demo,
+  HikeState,
+  HikeAction,
 } from "./context"
-import { Editor } from "./editor"
+import { Code } from "./code"
 import { Preview } from "./preview"
-import { SandpackRunnerProps } from "react-smooshpack"
 
 export { Hike }
 
 export interface HikeProps {
   steps: HikeStep[]
   classes?: Classes
-  preset?: SandpackRunnerProps
 }
 
 function Hike({ steps, classes = {} }: HikeProps) {
-  const [{ index, demo }, setState] = React.useState({
-    index: 0,
-    demo: steps[0].demo,
-  })
+  const [state, dispatch] = React.useReducer(
+    reducer,
+    initialState
+  )
 
-  const currentStep = steps[index]
-
-  const setFocus = (demo: Demo) =>
-    setState(({ index }) => ({
-      index,
-      demo,
-    }))
-  const resetFocus = () =>
-    setState(({ index }) => ({
-      index,
-      demo: steps[index].demo,
-    }))
-  const changeStep = (newIndex: number) =>
-    setState({
-      index: newIndex,
-      demo: steps[newIndex].demo,
-    })
+  const focusStep =
+    steps[state.focusStepIndex ?? state.scrollStepIndex]
+  const codeProps = {
+    ...focusStep.codeProps,
+    ...state.focusCodeProps,
+  }
+  const previewProps = focusStep.previewProps
 
   return (
     <HikeContext.Provider
       value={{
-        currentFocus: demo.focus,
-        setFocus,
-        resetFocus,
+        hikeState: state,
+        dispatch,
         classes,
       }}
     >
       <section className={c("", classes)}>
         <div className={c("-content", classes)}>
-          <Scroller onStepChange={changeStep}>
+          <Scroller
+            onStepChange={newIndex =>
+              dispatch({ type: "change-step", newIndex })
+            }
+          >
             {steps.map((step, index) => (
               <StepContext.Provider
-                value={step}
+                value={{ stepIndex: index, step }}
                 key={index}
               >
                 <Step
@@ -81,17 +73,12 @@ function Hike({ steps, classes = {} }: HikeProps) {
         <aside className={c("-sticker-column", classes)}>
           <div className={c("-sticker", classes)}>
             <div className={c("-editor", classes)}>
-              <Editor
-                demo={demo}
-                classes={classes}
-                {...currentStep.codeProps}
-              />
+              <Code classes={classes} {...codeProps} />
             </div>
             <div className={c("-preview", classes)}>
               <Preview
-                demo={demo}
                 classes={classes}
-                {...currentStep.previewProps}
+                {...previewProps}
               />
             </div>
           </div>
@@ -99,4 +86,38 @@ function Hike({ steps, classes = {} }: HikeProps) {
       </section>
     </HikeContext.Provider>
   )
+}
+
+const initialState = {
+  scrollStepIndex: 0,
+  focusStepIndex: null,
+  focusCodeProps: {},
+}
+
+function reducer(
+  state: HikeState,
+  action: HikeAction
+): HikeState {
+  switch (action.type) {
+    case "change-step":
+      return {
+        scrollStepIndex: action.newIndex,
+        focusStepIndex: null,
+        focusCodeProps: {},
+      }
+    case "set-focus":
+      return {
+        ...state,
+        focusStepIndex: action.stepIndex,
+        focusCodeProps: action.codeProps,
+      }
+    case "reset-focus":
+      return {
+        ...state,
+        focusStepIndex: null,
+        focusCodeProps: {},
+      }
+    default:
+      throw new Error()
+  }
 }

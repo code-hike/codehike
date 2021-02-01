@@ -1,18 +1,25 @@
 import React from "react"
 import { SandpackRunnerProps } from "react-smooshpack"
-import { CodeFiles, Demo } from "./context"
-import { CodeProps } from "./editor"
+import { IFiles } from "./context"
+import { CodeProps } from "./code"
 import { PreviewProps } from "./preview"
 
 export { useMdxSteps, StepHead }
 
-function StepHead() {
+export interface StepHeadProps {
+  children: any
+  focus?: string
+  activeFile?: string
+  codeProps?: Partial<CodeProps>
+  previewProps?: Partial<PreviewProps>
+}
+
+function StepHead(props: StepHeadProps) {
   return null
 }
 
 interface Step {
   content: React.ReactNode[]
-  demo: Demo
   previewProps: PreviewProps
   codeProps: CodeProps
 }
@@ -23,45 +30,28 @@ function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
   codeProps: CodeProps,
-  preset: SandpackRunnerProps = {}
+  template: SandpackRunnerProps = {}
 ) {
   const steps: Step[] = []
   React.Children.forEach(mdx, (child: any) => {
     if (child?.props?.mdxType === "StepHead") {
       const stepHeadProps = child?.props || {}
-      const files = {} as CodeFiles
-      let activeFile = stepHeadProps.activeFile || ""
-      React.Children.forEach(
-        stepHeadProps.children,
-        preElement => {
-          const codeElementProps =
-            preElement?.props?.children?.props || {}
-          const lang = codeElementProps.className?.slice(9)
-          const filename =
-            codeElementProps.metastring || defaultFilename
-          const code = codeElementProps.children
-          files[filename] = { code, lang }
-          if (activeFile === "") {
-            activeFile = filename
-          }
-        }
-      )
+      const { files, activeFile } = getFiles(stepHeadProps)
+
       const step = {
         content: [],
-        demo: {
-          focus: stepHeadProps.focus || "",
+        previewProps: getPreviewProps(
+          stepHeadProps,
+          previewProps,
+          template,
+          files
+        ),
+        codeProps: getCodeProps(
+          stepHeadProps,
+          codeProps,
           files,
-          activeFile,
-          preset,
-        },
-        previewProps: {
-          ...previewProps,
-          ...stepHeadProps.previewProps,
-        },
-        codeProps: {
-          ...codeProps,
-          ...stepHeadProps.codeProps,
-        },
+          activeFile
+        ),
       }
       steps.push(step)
     } else {
@@ -69,4 +59,68 @@ function useMdxSteps(
     }
   })
   return steps
+}
+
+interface CodeFiles {
+  [path: string]: { lang: string; code: string }
+}
+
+function getFiles(stepHeadProps: StepHeadProps) {
+  let activeFile = stepHeadProps.activeFile || ""
+  const files = {} as CodeFiles
+  React.Children.forEach(
+    stepHeadProps.children,
+    preElement => {
+      const codeElementProps =
+        preElement?.props?.children?.props || {}
+      const lang = codeElementProps.className?.slice(9)
+      const filename =
+        codeElementProps.metastring || defaultFilename
+      const code = codeElementProps.children
+      files[filename] = { code, lang }
+      if (activeFile === "") {
+        activeFile = filename
+      }
+    }
+  )
+  return { files, activeFile }
+}
+
+function getPreviewProps(
+  stepHeadProps: StepHeadProps,
+  hikePreviewProps: PreviewProps,
+  hikeTemplate: SandpackRunnerProps,
+  codeFiles: CodeFiles
+): PreviewProps {
+  const files = {} as IFiles
+  const filenames = Object.keys(codeFiles)
+  filenames.forEach(filename => {
+    files["/" + filename] = {
+      code: codeFiles[filename].code,
+    }
+  })
+  return {
+    ...hikePreviewProps,
+    template: hikeTemplate,
+    ...stepHeadProps.previewProps,
+    files,
+  }
+}
+
+function getCodeProps(
+  stepHeadProps: StepHeadProps,
+  hikeCodeProps: CodeProps,
+  files: CodeFiles,
+  activeFile: string
+): CodeProps {
+  const file = files[activeFile]
+  return {
+    ...hikeCodeProps,
+    ...stepHeadProps.codeProps,
+    focus: stepHeadProps.focus || "",
+    code: file.code,
+    file: activeFile,
+    tabs: Object.keys(files),
+    lang: file.lang,
+  }
 }
