@@ -10,7 +10,7 @@ import { Preview, PreviewProps } from "./preview"
 
 export { CodeSlot, PreviewSlot }
 
-function CodeSlot(slotProps: CodeProps) {
+function CodeSlot({ style, ...slotProps }: CodeProps) {
   const { classes } = React.useContext(HikeContext)!
   const { step } = React.useContext(StepContext)!
   const props = {
@@ -20,13 +20,16 @@ function CodeSlot(slotProps: CodeProps) {
     ...slotProps,
   }
   return (
-    <div className={c("-step-code", classes)}>
+    <div className={c("-step-code", classes)} style={style}>
       <Code {...props} />
     </div>
   )
 }
 
-function PreviewSlot(slotProps: PreviewProps) {
+function PreviewSlot({
+  style,
+  ...slotProps
+}: PreviewProps) {
   const { classes } = React.useContext(HikeContext)!
   const { step } = React.useContext(StepContext)!
   const props = {
@@ -35,7 +38,10 @@ function PreviewSlot(slotProps: PreviewProps) {
     ...slotProps,
   }
   return (
-    <div className={c("-step-preview", classes)}>
+    <div
+      className={c("-step-preview", classes)}
+      style={style}
+    >
       <Preview {...props} />
     </div>
   )

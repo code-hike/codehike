@@ -21,9 +21,11 @@ export interface HikeProps
   > {
   steps: HikeStep[]
   classes?: Classes
+  noPreview?: boolean
 }
 
 function Hike({
+  noPreview,
   steps,
   classes = {},
   ...props
@@ -82,12 +84,14 @@ function Hike({
             <div className={c("-editor", classes)}>
               <Code classes={classes} {...codeProps} />
             </div>
-            <div className={c("-preview", classes)}>
-              <Preview
-                classes={classes}
-                {...previewProps}
-              />
-            </div>
+            {noPreview || (
+              <div className={c("-preview", classes)}>
+                <Preview
+                  classes={classes}
+                  {...previewProps}
+                />
+              </div>
+            )}
           </div>
         </aside>
       </section>
