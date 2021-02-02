@@ -3,6 +3,8 @@
 
 .ch-hike {
   display: flex;
+  --sticker-height: 650px;
+  --page-header-height: 0px;
 }
 
 .ch-hike-content {
@@ -13,14 +15,20 @@
 
 .ch-hike-sticker-column {
   width: 50%;
+  min-width: 400px;
 }
 
 .ch-hike-sticker {
-  --height: 650px;
   position: sticky;
-  top: calc(50vh - var(--height) / 2);
-  height: var(--height);
+  top: calc(
+    50vh - var(--sticker-height) / 2 +
+      var(--page-header-height) / 2
+  );
+  height: var(--sticker-height);
   margin: 0 0 0 15px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .ch-hike-editor {

@@ -10,17 +10,24 @@ import {
   HikeState,
   HikeAction,
 } from "./context"
-import { Code } from "./code"
+import { Code, CodeProps } from "./code"
 import { Preview } from "./preview"
 
 export { Hike }
 
-export interface HikeProps {
+export interface HikeProps
+  extends React.PropsWithoutRef<
+    JSX.IntrinsicElements["section"]
+  > {
   steps: HikeStep[]
   classes?: Classes
 }
 
-function Hike({ steps, classes = {} }: HikeProps) {
+function Hike({
+  steps,
+  classes = {},
+  ...props
+}: HikeProps) {
   const [state, dispatch] = React.useReducer(
     reducer,
     initialState
@@ -28,7 +35,7 @@ function Hike({ steps, classes = {} }: HikeProps) {
 
   const focusStep =
     steps[state.focusStepIndex ?? state.scrollStepIndex]
-  const codeProps = {
+  const codeProps: CodeProps = {
     ...focusStep.codeProps,
     ...state.focusCodeProps,
   }
@@ -42,7 +49,7 @@ function Hike({ steps, classes = {} }: HikeProps) {
         classes,
       }}
     >
-      <section className={c("", classes)}>
+      <section className={c("", classes)} {...props}>
         <div className={c("-content", classes)}>
           <Scroller
             onStepChange={newIndex =>
