@@ -1,5 +1,6 @@
 import { Classes } from "@code-hike/utils"
 import * as React from "react"
+import { CodeProps } from "./code"
 
 import {
   HikeContext,
@@ -25,6 +26,11 @@ export function Focus({
   const currentFocus = hikeState.focusCodeProps.focus
   const isFocused = currentFocus === focus
 
+  const codeProps: Partial<CodeProps> = { focus }
+  if (file) {
+    codeProps.activeFile = file
+  }
+
   return (
     <button
       className={c(
@@ -41,7 +47,7 @@ export function Focus({
           : dispatch({
               type: "set-focus",
               stepIndex,
-              codeProps: { focus, activeFile: file },
+              codeProps,
             })
       }
     >
