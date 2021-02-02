@@ -3770,6 +3770,13 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.0.tgz#7036640b4e21cc2f259ae826ce843d277dad8cff"
   integrity sha512-RJJrrySY7A8havqpGObOB4W92QXKJo63/jFLLgpvOtsGUqbQZ9Sbgl35KMm1DjC6j7AvmmU2bIno+3IyEaemaw==
 
+"@types/styled-jsx@^2.2.8":
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/@types/styled-jsx/-/styled-jsx-2.2.8.tgz#b50d13d8a3c34036282d65194554cf186bab7234"
+  integrity sha512-Yjye9VwMdYeXfS71ihueWRSxrruuXTwKCbzue4+5b2rjnQ//AtyM7myZ1BEhNhBQ/nL/RE7bdToUoLln2miKvg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/tapable@*", "@types/tapable@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.6.tgz#a9ca4b70a18b270ccb2bc0aaafefd1d486b7ea74"
@@ -13955,10 +13962,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-16:
-  version "1.0.0-alpha-16"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-16.tgz#da1e87336453c0597917c3a3f417ce2256749cdb"
-  integrity sha512-xYFk7uE8/JikhddW+6HKWUB5PNlojTiqPh+Ee/SJGEbgTJ+4gVa5VLIPaN1jiVnFZpYvjWAcVqJ09BIAFT7FEg==
+react-smooshpack@1.0.0-alpha-17:
+  version "1.0.0-alpha-17"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-17.tgz#21ddbec7a4673f6a7e3738df055ae630e7126d02"
+  integrity sha512-LJaIzHxKLNUX3QcwZCbWJCgJb9yuQw9UnaQWac+2tbmntJjqBiLJrRRyM4IiEz/RhAfumOwdKVOFeC2WZ8aQWQ==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -13973,7 +13980,7 @@ react-smooshpack@1.0.0-alpha-16:
     "@codemirror/view" "^0.17.3"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-16"
+    smooshpack "^1.0.0-alpha-17"
 
 react-smooshpack@1.0.0-alpha-9:
   version "1.0.0-alpha-9"
@@ -15295,10 +15302,10 @@ smooshpack@^1.0.0-alpha-15:
     codesandbox-import-utils "^1.2.3"
     lodash.isequal "^4.5.0"
 
-smooshpack@^1.0.0-alpha-16:
-  version "1.0.0-alpha-16"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-16.tgz#18ae38885c7e98f2fc1e82f0ae5ed2af0cd4dbd5"
-  integrity sha512-LQwHn0WFoeBo2oXS1YeivI/Ts4MqH5uII0txNj1LIUSIIBzFcv59Iuq9qpI71aYEW41MwQU30CI+/9oVl85osg==
+smooshpack@^1.0.0-alpha-17:
+  version "1.0.0-alpha-17"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-17.tgz#aaec67f60dc77d6272b3f7cad1bb0c18566847e1"
+  integrity sha512-9cWzC1wehE2ob2g3nOFg+jzmpfrgtMX7V+bcTFn+nmIj1CcGnQ29OLWkpYWuSqiVNx2SPOyd2kTzI/rqzfKGEg==
   dependencies:
     codesandbox-api "^0.0.28"
     codesandbox-import-utils "^1.2.3"

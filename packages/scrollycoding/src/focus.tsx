@@ -10,9 +10,14 @@ import {
 export interface FocusProps {
   children?: React.ReactNode
   on: string
+  file?: string
 }
 
-export function Focus({ children, on: focus }: FocusProps) {
+export function Focus({
+  children,
+  on: focus,
+  file,
+}: FocusProps) {
   const { dispatch, hikeState, classes } = React.useContext(
     HikeContext
   )!
@@ -36,7 +41,7 @@ export function Focus({ children, on: focus }: FocusProps) {
           : dispatch({
               type: "set-focus",
               stepIndex,
-              codeProps: { focus },
+              codeProps: { focus, activeFile: file },
             })
       }
     >

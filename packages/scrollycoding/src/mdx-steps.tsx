@@ -1,6 +1,6 @@
 import React from "react"
 import { SandpackRunnerProps } from "react-smooshpack"
-import { IFiles } from "./context"
+import { CodeFiles, IFiles } from "./context"
 import { CodeProps } from "./code"
 import { PreviewProps } from "./preview"
 
@@ -61,10 +61,6 @@ function useMdxSteps(
   return steps
 }
 
-interface CodeFiles {
-  [path: string]: { lang: string; code: string }
-}
-
 function getFiles(stepHeadProps: StepHeadProps) {
   let activeFile = stepHeadProps.activeFile || ""
   const files = {} as CodeFiles
@@ -113,14 +109,11 @@ function getCodeProps(
   files: CodeFiles,
   activeFile: string
 ): CodeProps {
-  const file = files[activeFile]
   return {
     ...hikeCodeProps,
     ...stepHeadProps.codeProps,
     focus: stepHeadProps.focus || "",
-    code: file.code,
-    file: activeFile,
-    tabs: Object.keys(files),
-    lang: file.lang,
+    activeFile,
+    files,
   }
 }

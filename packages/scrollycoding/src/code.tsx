@@ -3,16 +3,26 @@ import {
   MiniEditorWithState,
   StatefulEditorProps,
 } from "@code-hike/mini-editor"
+import { CodeFiles } from "./context"
 
 export { Code, CodeProps }
 
-interface CodeProps extends StatefulEditorProps {}
+type CodeProps = {
+  files: CodeFiles
+  activeFile: string
+} & Omit<StatefulEditorProps, "file" | "code" | "lang">
 
-function Code(props: CodeProps) {
+function Code({ files, activeFile, ...props }: CodeProps) {
+  const file = files[activeFile]
   return (
     <MiniEditorWithState
+      key={activeFile}
       style={{ height: "100%" }}
       button={<CodeSandboxIcon url="" />}
+      file={activeFile}
+      tabs={Object.keys(files)}
+      lang={file.lang}
+      code={file.code}
       {...props}
     />
   )

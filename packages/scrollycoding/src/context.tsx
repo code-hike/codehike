@@ -15,6 +15,9 @@ export interface IFile {
 export interface IFiles {
   [path: string]: IFile
 }
+export interface CodeFiles {
+  [path: string]: { lang: string; code: string }
+}
 
 export interface PreviewProps extends MiniBrowserProps {
   template: SandpackRunnerProps
@@ -24,7 +27,7 @@ export interface PreviewProps extends MiniBrowserProps {
 export interface HikeStep {
   content: React.ReactNode[]
   previewProps: PreviewProps
-  codeProps?: CodeProps
+  codeProps: CodeProps
 }
 
 export interface HikeState {
