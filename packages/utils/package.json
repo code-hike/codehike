@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/utils",
-  "version": "0.0.0-b57b267",
+  "version": "0.0.0-aa6efee",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
