@@ -10,22 +10,44 @@
 .ch-hike-content {
   width: 50%;
   box-sizing: border-box;
-  padding-right: 1.2rem;
+  padding-right: 3rem;
 }
 
-// .ch-hike-step-content {
-//   background: linear-gradient(
-//     45deg,
-//     rgba(0, 161, 151, 0) -20px,
-//     rgba(86, 177, 152, 0.69) 100%
-//   );
-//   border-radius: 8px;
-//   outline: 2px solid red;
-// }
+/* content steps */
+.ch-hike-step {
+  display: flex;
+  min-height: 400px;
+  align-items: center;
+  // outline: 2px solid red;
+  margin-bottom: 3rem;
+}
+
+.ch-hike-step-content {
+  // background: linear-gradient(
+  //   45deg,
+  //   rgba(0, 161, 151, 0) -20px,
+  //   rgba(86, 177, 152, 0.69) 100%
+  // );
+  // background-color: #f5f7fa;
+  border-radius: 8px;
+  margin: 0 -1rem 0 -1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  border: 1.5px solid transparent;
+  // border-left: 4px solid transparent;
+  // outline: 2px solid green;
+}
+
+.ch-hike-step-content-focused {
+  border-color: #81d8f7;
+  // background-color: #fafafa;
+}
+.ch-hike-step-content-unfocused {
+  // border-color: #f5f7fa;
+}
 
 .ch-hike-sticker-column {
   width: 50%;
-  min-width: 400px;
+  min-width: 300px;
 }
 
 .ch-hike-sticker {
@@ -99,25 +121,46 @@
   margin-left: 0.3ch;
 }
 
-/**
-@media (max-width: 640px) {
-  .ch-hike-content {
-    width: 100%;
-    padding-right: 0;
-  }
+@media (max-width: 920px, print) {
   .ch-hike-sticker-column {
     display: none;
   }
-  .ch-hike-step-output {
+  .ch-hike-content {
+    width: 100%;
+    padding-right: 0;
+    margin: 0;
+  }
+  .ch-hike-step-code {
     display: block;
-  }
-  .ch-hike-step-editor {
     height: 300px;
-    margin: 16px 0;
+    margin: 30px 0;
   }
-  .ch-hike-step-browser {
+  .ch-hike-step-preview {
+    display: block;
     height: 200px;
-    margin: 16px 0;
+    margin: 30px 0;
+  }
+  .ch-hike-focus {
+    padding: 0;
+    background-color: unset;
+    box-shadow: none;
+  }
+  .ch-hike-focus:hover {
+    background-color: unset;
+  }
+  .ch-hike-focus-icon {
+    display: none;
+  }
+
+  .ch-hike-step {
+    display: block;
+    min-height: unset;
+    margin: 0;
+  }
+
+  .ch-hike-step-content {
+    margin: 0;
+    padding: 0;
+    border: none;
   }
 }
-*/

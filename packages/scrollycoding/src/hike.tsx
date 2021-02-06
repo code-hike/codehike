@@ -35,8 +35,10 @@ function Hike({
     initialState
   )
 
-  const focusStep =
-    steps[state.focusStepIndex ?? state.scrollStepIndex]
+  const focusStepIndex =
+    state.focusStepIndex ?? state.scrollStepIndex
+
+  const focusStep = steps[focusStepIndex]
   const codeProps: CodeProps = {
     ...focusStep.codeProps,
     ...state.focusCodeProps,
@@ -67,10 +69,26 @@ function Hike({
                   as="div"
                   index={index}
                   key={index}
-                  className={c("-step", classes)}
+                  className={c(
+                    [
+                      "-step",
+                      index === focusStepIndex
+                        ? "-step-focused"
+                        : "-step-unfocused",
+                    ],
+                    classes
+                  )}
                 >
                   <div
-                    className={c("-step-content", classes)}
+                    className={c(
+                      [
+                        "-step-content",
+                        index === focusStepIndex
+                          ? "-step-content-focused"
+                          : "-step-content-unfocused",
+                      ],
+                      classes
+                    )}
                   >
                     {step.content}
                   </div>
