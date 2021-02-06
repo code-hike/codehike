@@ -121,7 +121,7 @@
   margin-left: 0.3ch;
 }
 
-@media (max-width: 920px, print) {
+@media (max-width: 920px), (print) {
   .ch-hike-sticker-column {
     display: none;
   }
