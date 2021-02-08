@@ -5,6 +5,7 @@
   display: flex;
   --sticker-height: 650px;
   --page-header-height: 0px;
+  margin: 2rem 0;
 }
 
 .ch-hike-content {
@@ -17,9 +18,13 @@
 .ch-hike-step {
   display: flex;
   min-height: 400px;
-  align-items: center;
+  justify-content: center;
+  flex-flow: column;
   // outline: 2px solid red;
-  margin-bottom: 3rem;
+}
+
+.ch-hike-step-gap {
+  height: 3rem;
 }
 
 .ch-hike-step-content {
@@ -30,11 +35,16 @@
   // );
   // background-color: #f5f7fa;
   border-radius: 8px;
-  margin: 0 -1rem 0 -1rem;
-  padding: 1rem 1rem 1rem 1rem;
+  margin: 0 -1.5rem 0 -2rem;
+  padding: 1rem 1.5rem 1rem 2rem;
   border: 1.5px solid transparent;
   // border-left: 4px solid transparent;
   // outline: 2px solid green;
+}
+
+.ch-hike-step-content > :first-child {
+  // TODO reset for mobile
+  margin-top: 0;
 }
 
 .ch-hike-step-content-focused {
@@ -56,7 +66,7 @@
     50vh - var(--sticker-height) / 2 +
       var(--page-header-height) / 2
   );
-  height: var(--sticker-height);
+  // height: var(--sticker-height);
   margin: 0 0 0 15px;
   display: flex;
   flex-flow: column;
@@ -77,51 +87,11 @@
   display: none;
 }
 
-/* focus component */
-.ch-hike-focus {
-  border: none;
-  margin: 0;
-  width: auto;
-  overflow: visible;
-
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  -webkit-font-smoothing: inherit;
-  -moz-osx-font-smoothing: inherit;
-  -webkit-appearance: none;
-
-  display: inline;
-  cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 0 0 0 2px #e4e7eb;
-  // box-shadow: 0 0 0 2px red;
-  padding: 3px;
-  outline: none;
-}
-
-.ch-hike-focus code {
-  padding-bottom: 0;
-}
-.ch-hike-focus:hover {
-  background-color: #e4e7eb;
-}
-.ch-hike-focus-active {
-  background-color: #eef0f2;
-  box-shadow: 0 0 0 2px #708293;
-}
-.ch-hike-focus-icon {
-  color: #708293;
-  display: inline;
-  position: relative;
-  height: 0.9em;
-  top: 0.15em;
-  vertical-align: unset;
-  margin-left: 0.3ch;
-}
-
 @media (max-width: 920px), (print) {
+  .ch-hike {
+    margin: 0;
+  }
+
   .ch-hike-sticker-column {
     display: none;
   }
@@ -129,6 +99,10 @@
     width: 100%;
     padding-right: 0;
     margin: 0;
+  }
+
+  .ch-hike-step-gap {
+    display: none;
   }
   .ch-hike-step-code {
     display: block;
@@ -139,17 +113,6 @@
     display: block;
     height: 200px;
     margin: 30px 0;
-  }
-  .ch-hike-focus {
-    padding: 0;
-    background-color: unset;
-    box-shadow: none;
-  }
-  .ch-hike-focus:hover {
-    background-color: unset;
-  }
-  .ch-hike-focus-icon {
-    display: none;
   }
 
   .ch-hike-step {
@@ -164,3 +127,6 @@
     border: none;
   }
 }
+
+@import "focus.scss";
+// @import "focus-b.scss";

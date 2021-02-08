@@ -79,6 +79,11 @@ function Hike({
                     classes
                   )}
                 >
+                  {index > 0 && (
+                    <div
+                      className={c("-step-gap", classes)}
+                    />
+                  )}
                   <div
                     className={c(
                       [

@@ -1,0 +1,67 @@
+/* focus component */
+.ch-hike-focus {
+  border: none;
+  margin: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+
+  display: inline;
+  cursor: pointer;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px #e4e7eb;
+  // box-shadow: 0 0 0 2px red;
+  padding: 3px;
+  outline: none;
+}
+
+.ch-hike-focus code {
+  padding-bottom: 0;
+}
+.ch-hike-focus:hover {
+  background-color: #e4e7eb;
+}
+.ch-hike-focus-active {
+  background-color: #eef0f2;
+  box-shadow: 0 0 0 2px #708293;
+}
+.ch-hike-focus-icon {
+  color: #708293;
+  display: inline;
+  position: relative;
+  height: 0.9em;
+  top: 0.15em;
+  vertical-align: unset;
+  margin-left: 0.3ch;
+}
+
+.ch-hike-step-content {
+  margin: 0 -1.5rem 0 -1.5rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+@media (max-width: 920px), (print) {
+  .ch-hike-focus {
+    padding: 0;
+    background-color: unset;
+    box-shadow: none;
+  }
+  .ch-hike-focus:hover {
+    background-color: unset;
+  }
+  .ch-hike-focus-icon {
+    display: none;
+  }
+
+  .ch-hike-step-content {
+    margin: 0;
+    padding: 0;
+  }
+}
