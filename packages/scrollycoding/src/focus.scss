@@ -19,6 +19,7 @@
   cursor: pointer;
   border-radius: 3px;
   padding: 3px;
+  margin: -3px;
   outline: none;
 }
 
@@ -47,6 +48,7 @@
 @media (max-width: 920px), (print) {
   .ch-hike-focus {
     padding: 0;
+    margin: 0;
     background-color: unset;
     box-shadow: none;
   }
