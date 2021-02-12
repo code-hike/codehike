@@ -1596,29 +1596,12 @@
     diff "^4.0.2"
     prismjs "^1.22.0"
 
-"@code-hike/code-diff@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/code-diff/-/code-diff-0.0.0-b57b267.tgz#84fa5d944b213788a00a4123d5fb9489ace120fd"
-  integrity sha512-zVpaOPRlwrIh5+hn9fx6dnIheeYL0OF23ruR7NWRHCVPi2oO2ZvJMO2DKEWL3LGT9fg+WC9B+m8rQtU1n/rqqw==
-  dependencies:
-    diff "^4.0.2"
-    prismjs "^1.22.0"
-
 "@code-hike/mini-browser@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/mini-browser/-/mini-browser-0.0.0-6a7ffe8.tgz#9f15f984b8abc28354ba2f036ce394100310de8f"
   integrity sha512-SwxCbz7kJFVaGixQtv+NT/VTf7ZeDUI4AIhqzGCC1EyGAHxnc2dKkM4qsHITOUFARQYVRipDJ4jeffudP/RzGg==
   dependencies:
     "@code-hike/mini-frame" "0.0.0-6a7ffe8"
-
-"@code-hike/mini-browser@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-browser/-/mini-browser-0.0.0-b57b267.tgz#c015b23c4bb105438cad8ab44c58b75acc89fd43"
-  integrity sha512-HJ24sq/9ilRntldO6TXQb5L4OT/sjG58QpDrCXk3smKmzDLhM/pKa6xwaLc+ltawngwXbBc4hfa5Gnfyqw9a4Q==
-  dependencies:
-    "@code-hike/mini-frame" "0.0.0-b57b267"
-    "@code-hike/utils" "0.0.0-b57b267"
-    use-spring "^0.2.3"
 
 "@code-hike/mini-editor@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
@@ -1630,29 +1613,10 @@
     "@code-hike/mini-terminal" "0.0.0-6a7ffe8"
     "@code-hike/smooth-lines" "0.0.0-6a7ffe8"
 
-"@code-hike/mini-editor@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-editor/-/mini-editor-0.0.0-b57b267.tgz#ec4965664e96ed4cd5bd5f08f0c2058e62bf2b9a"
-  integrity sha512-GDXI5EXOqn619iDW6lgyD45w0k9MMr42LyQPkDy05+WHwrPBZPUB2kT+BsL6Q9bUvnqHokKRU5G1I1Z0x5rYlg==
-  dependencies:
-    "@code-hike/code-diff" "0.0.0-b57b267"
-    "@code-hike/mini-frame" "0.0.0-b57b267"
-    "@code-hike/mini-terminal" "0.0.0-b57b267"
-    "@code-hike/smooth-lines" "0.0.0-b57b267"
-    "@code-hike/utils" "0.0.0-b57b267"
-    use-spring "^0.2.3"
-
 "@code-hike/mini-frame@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/mini-frame/-/mini-frame-0.0.0-6a7ffe8.tgz#f757e7c39ea33b656249eda2af8a29b18f0d8f65"
   integrity sha512-DVlpgTIRirsTqr2yZnDDTt70i1yDgKYOgPtst3oQk8AOnlZSHs17FhBE0/EnsHjdNqOTQLkJfikRo10/bOBd+Q==
-
-"@code-hike/mini-frame@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-frame/-/mini-frame-0.0.0-b57b267.tgz#9f2a12ecfd33ade68263c0be20eb0bc0d595a0ee"
-  integrity sha512-JW6s5AkUUBtIiyt90YOi+zUAqUx0ajdbPUAUGtRiE6gHbAk23zBqD39U6pIq0B1DfPS081/kejmN2zXqniaZ9Q==
-  dependencies:
-    "@code-hike/utils" "0.0.0-b57b267"
 
 "@code-hike/mini-terminal@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
@@ -1661,71 +1625,20 @@
   dependencies:
     "@code-hike/mini-frame" "0.0.0-6a7ffe8"
 
-"@code-hike/mini-terminal@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-terminal/-/mini-terminal-0.0.0-b57b267.tgz#aa3a9aff3eebbb35fad63ee7c0d9acf1727b2bb6"
-  integrity sha512-waKFuR+16dbcR8N+6t7v/mODlWZ9lXY7hAPkCmWzeliA9QnCIAb8ZmXJjAL9o2/KobGIQ+7Q1AoC3bRkYDJySg==
-  dependencies:
-    "@code-hike/mini-frame" "0.0.0-b57b267"
-
-"@code-hike/player@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/player/-/player-0.0.0-b57b267.tgz#4097cf715c7e5f22c87fb70f65466ad3d71c2d46"
-  integrity sha512-yw76mi4WmhShnIzj+MjyTpZDV9sTlPS+LJa7ryU+GXOrE92QVuMS4vzGTJ3PWEAQIE7YjnfT+UpHBXn57Hmq2g==
-
 "@code-hike/scroller@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/scroller/-/scroller-0.0.0-6a7ffe8.tgz#670f61a88083be803da7fea12fab81e6e5cc8506"
   integrity sha512-Xpmgq6MaWHD/PZ52va299HDF47TrlHQot7T9E1R/xxIvVZs9YWrwRb66z3Nzp3fQMNboXLFaJu6TZovT8nv+rQ==
-
-"@code-hike/scroller@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/scroller/-/scroller-0.0.0-b57b267.tgz#8e2def6a7721f1ac2c685fb22973379b8ca87e80"
-  integrity sha512-iedSbXMpihT4/ZWsD8KhpLjS/3rk9nP+BVawUzpK4rzbx4GnVG11CGdB0hAmXn8SvNetItzcyWcHA2/f3eSoFA==
-
-"@code-hike/scrollycoding@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/scrollycoding/-/scrollycoding-0.0.0-b57b267.tgz#3eb5ecb22115e6328f469bacd7c4d18e6a944e70"
-  integrity sha512-Abs9QWpEA9PW2CBQ+W60otwlOVvOPIbIRiVmxSLwFQTmRXQAdL02BAgOu3dCB01l/s/T52xh7ITrK0+cmzsRvg==
-  dependencies:
-    "@code-hike/mini-browser" "0.0.0-b57b267"
-    "@code-hike/mini-editor" "0.0.0-b57b267"
-    "@code-hike/scroller" "0.0.0-b57b267"
-    "@code-hike/utils" "0.0.0-b57b267"
-    react-smooshpack "1.0.0-alpha-18"
-
-"@code-hike/sim-user@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/sim-user/-/sim-user-0.0.0-b57b267.tgz#c84ee59742f0e4ff7d7d03514b1a67409aee2972"
-  integrity sha512-lwkwgsdv9chOE+P4VHuD2+Q2PtUOy+cbYxVEK8eh4TSbsf/wtNmMULQ73Blhj7jNsHH2d3AgcVy9dlj11yOx/A==
-  dependencies:
-    "@testing-library/dom" "^7.5.7"
-    "@testing-library/user-event" "^10.3.1"
 
 "@code-hike/smooth-column@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/smooth-column/-/smooth-column-0.0.0-6a7ffe8.tgz#27f151eee70274cf07246ee868c37555e03a8842"
   integrity sha512-MeXYAdaytnwM2IDyOW1dW/OzXXBot4F1OBZrknCgxbvJePHcnkvknCij1an/aWVEDqwOTcJL4607mfLPMc3Jfw==
 
-"@code-hike/smooth-column@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/smooth-column/-/smooth-column-0.0.0-b57b267.tgz#9c8da2b11d7447d7385f4d9464b27f232f98f759"
-  integrity sha512-E4TOozetv61qCs3sXPLjRCr4aQxtVEUCGcxYvL7HK16OMRzxUAci4iwHkefhu88H2Zv3sOp8UwNmEs+3dyKOmQ==
-
 "@code-hike/smooth-lines@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/smooth-lines/-/smooth-lines-0.0.0-6a7ffe8.tgz#6e7bba8a2b8650e33b595553cdc00460b2d7b9df"
   integrity sha512-vUVbgcCLek5mbRKlnxVlsgyevYEzvjXTbSJMf0sgtmiE+XX0kLq2ABtVYnALpBxQZY5xxJs7qk3sBMvPmdBlhA==
-
-"@code-hike/smooth-lines@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/smooth-lines/-/smooth-lines-0.0.0-b57b267.tgz#15c99bd99fa7837efaafee9445e3544f2fa2c279"
-  integrity sha512-n/9vq6bmtgr04w1QAd7mJL5k1FAqbJ7nl5VNAuGMyHSF4tIIPnFSH8Uc5+2jcwPQXk1h/FRXTfV7JSaITcM+ew==
-
-"@code-hike/utils@0.0.0-b57b267":
-  version "0.0.0-b57b267"
-  resolved "https://registry.yarnpkg.com/@code-hike/utils/-/utils-0.0.0-b57b267.tgz#cf5336012ab598629a26ffe0ed0c2f136842146e"
-  integrity sha512-tKiKM2aDQB62sETleMSJz41KFjn4UrpdsNYoehJvvRTKICkp+6jHfDamAon8rmYzFrOcp+mleLiask2xvzcRJA==
 
 "@codemirror/autocomplete@^0.17.0":
   version "0.17.2"
@@ -13650,26 +13563,6 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-18:
-  version "1.0.0-alpha-18"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-18.tgz#bcadcee2478bac2aa46ae9bed071668bfd91840c"
-  integrity sha512-Y9aK4G/Gg+x6CjCa+H3tMWsCjxeKnC2Kac27xuh9XkXrnp2quTKDRkBOkQmHGrloqfTqS+yHSegGrb7NvSh4kA==
-  dependencies:
-    "@codemirror/closebrackets" "^0.17.2"
-    "@codemirror/commands" "^0.17.1"
-    "@codemirror/comment" "^0.17.1"
-    "@codemirror/gutter" "^0.17.1"
-    "@codemirror/highlight" "^0.17.1"
-    "@codemirror/history" "^0.17.1"
-    "@codemirror/lang-css" "^0.17.1"
-    "@codemirror/lang-html" "^0.17.1"
-    "@codemirror/lang-javascript" "^0.17.1"
-    "@codemirror/language" "^0.17.2"
-    "@codemirror/view" "^0.17.3"
-    codesandbox-import-utils "^1.2.3"
-    prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-18"
-
 react-smooshpack@1.0.0-alpha-21:
   version "1.0.0-alpha-21"
   resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-21.tgz#f6417c8747e2bd24582d2a186812d9208feb275a"
@@ -14968,15 +14861,6 @@ smooshpack@^1.0.0-alpha-15:
   version "1.0.0-alpha-15"
   resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-15.tgz#60ec693c5dac41ff63390fd92c4e6d03256b51a3"
   integrity sha512-/o6XTsXHUsdp2SCXmJXXnmyW+ph6n+h90UHkxsT0EUk9a5IDdSaJk89k9sitc9ecCqVzqErjvV7BbkT2jN4fRg==
-  dependencies:
-    codesandbox-api "^0.0.28"
-    codesandbox-import-utils "^1.2.3"
-    lodash.isequal "^4.5.0"
-
-smooshpack@^1.0.0-alpha-18:
-  version "1.0.0-alpha-18"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-18.tgz#8a98626e0a7db465e50941619ed51fef4585d715"
-  integrity sha512-VhHuGfvnR7P7D7YacEQ/kWdjN4wkJI4H619QtseG00ZJpELGJYGti7Af75I7Db78+gy5Oei1cC3xTOH9Bhygkg==
   dependencies:
     codesandbox-api "^0.0.28"
     codesandbox-import-utils "^1.2.3"

@@ -1,4 +1,6 @@
 import React from "react"
+import { debugEntries } from "./debugger"
+import { useWindowHeight } from "./use-window-height"
 
 export { Scroller, Step }
 
@@ -15,20 +17,18 @@ type ScrollerProps = {
   onStepChange: (stepIndex: number) => void
   children: React.ReactNode
   getRootMargin?: (vh: number) => string
+  debug?: boolean
 }
 
 type StepElement = {
   stepIndex: any
 }
 
-function defaultRootMargin(vh: number) {
-  return `-${vh / 2 - 2}px 0px`
-}
-
 function Scroller({
   onStepChange,
   children,
   getRootMargin = defaultRootMargin,
+  debug = false,
 }: ScrollerProps) {
   const [
     observer,
@@ -39,6 +39,9 @@ function Scroller({
   useLayoutEffect(() => {
     const windowHeight = vh || 0
     const handleIntersect: IntersectionObserverCallback = entries => {
+      if (debug || (window as any).chDebugScroller) {
+        debugEntries(entries)
+      }
       entries.forEach(entry => {
         if (entry.intersectionRatio > 0) {
           const stepElement = (entry.target as unknown) as StepElement
@@ -60,26 +63,6 @@ function Scroller({
       {children}
     </ObserverContext.Provider>
   )
-}
-
-function newIntersectionObserver(
-  handleIntersect: IntersectionObserverCallback,
-  rootMargin: string
-) {
-  try {
-    return new IntersectionObserver(handleIntersect, {
-      rootMargin,
-      threshold: 0.000001,
-      root: document as any,
-    })
-  } catch {
-    // firefox doesn't like passing `document` as the root
-    // it's a shame because it break the scroller inside iframes
-    return new IntersectionObserver(handleIntersect, {
-      rootMargin,
-      threshold: 0.000001,
-    })
-  }
 }
 
 function Step({
@@ -109,27 +92,17 @@ function Step({
   return React.createElement(as, { ...props, ref })
 }
 
-function useWindowHeight() {
-  const isClient = typeof window === "object"
-  function getHeight() {
-    return isClient
-      ? document.documentElement.clientHeight
-      : undefined
-  }
-  const [windowHeight, setWindowHeight] = React.useState(
-    getHeight
-  )
-  React.useEffect(() => {
-    function handleResize() {
-      setWindowHeight(getHeight())
-    }
-    window.addEventListener("resize", handleResize)
-    return () =>
-      window.removeEventListener("resize", handleResize)
-  }, [])
-  useLayoutEffect(() => {
-    // FIX when a horizontal scrollbar is added after the first layout
-    setWindowHeight(getHeight())
-  }, [])
-  return windowHeight
+function newIntersectionObserver(
+  handleIntersect: IntersectionObserverCallback,
+  rootMargin: string
+) {
+  return new IntersectionObserver(handleIntersect, {
+    rootMargin,
+    threshold: 0.000001,
+    root: null,
+  })
+}
+
+function defaultRootMargin(vh: number) {
+  return `-${vh / 2 - 2}px 0px`
 }
