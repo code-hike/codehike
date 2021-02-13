@@ -5,7 +5,21 @@ import {
 } from "@code-hike/utils"
 import { MiniBrowserProps } from "@code-hike/mini-browser"
 import { CodeProps } from "./code"
-import { SandpackRunnerProps } from "react-smooshpack"
+import { SandboxEnviornment } from "react-smooshpack"
+
+export interface TemplateProps {
+  files: IFiles
+  activePath?: string
+  entry: string
+  openPaths?: string[]
+  dependencies?: Record<string, string>
+  environment?: SandboxEnviornment
+  recompileMode?: "immediate" | "delayed"
+  recompileDelay?: number
+  autorun?: boolean
+  bundlerURL?: string
+  skipEval?: boolean
+}
 
 export const classPrefixer = classNamesWithPrefix("ch-hike")
 
@@ -20,7 +34,7 @@ export interface CodeFiles {
 }
 
 export interface PreviewProps extends MiniBrowserProps {
-  template: SandpackRunnerProps
+  template: Partial<TemplateProps>
   files: IFiles
 }
 

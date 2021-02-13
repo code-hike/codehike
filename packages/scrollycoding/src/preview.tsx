@@ -1,7 +1,11 @@
 import * as React from "react"
-import { SandpackRunner } from "react-smooshpack"
+import {
+  Preview as SandpackPreview,
+  OpenInCodeSandboxButton,
+} from "react-smooshpack"
 import { MiniBrowser } from "@code-hike/mini-browser"
 import { PreviewProps } from "./context"
+import { CodeContext } from "./code-context"
 
 export { Preview, PreviewProps }
 
@@ -11,26 +15,22 @@ function Preview({
   ...props
 }: PreviewProps) {
   const codeRunner = React.useMemo(() => {
-    const runnerProps = {
-      ...defaultRunnerProps,
-      ...template,
-      setup: {
-        ...template?.setup,
-        files: { ...template?.setup?.files, ...files },
-      },
-    }
-
-    return <SandpackRunner {...runnerProps} />
+    return (
+      <CodeContext preset={{ template, files }}>
+        {/* <OpenInCodeSandboxButton /> */}
+        <SandpackPreview
+          showNavigator={false}
+          showRefreshButton={false}
+          showOpenInCodeSandbox={false}
+          customStyle={{
+            minHeight: "unset",
+            height: "100%",
+            border: 0,
+          }}
+        />
+      </CodeContext>
+    )
   }, [template, files])
 
   return <MiniBrowser {...props} children={codeRunner} />
-}
-
-const defaultRunnerProps = {
-  template: "react" as const,
-  customStyle: {
-    minHeight: "unset",
-    height: "100%",
-    border: 0,
-  },
 }

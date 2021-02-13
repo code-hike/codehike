@@ -13563,10 +13563,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-smooshpack@1.0.0-alpha-21:
-  version "1.0.0-alpha-21"
-  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-21.tgz#f6417c8747e2bd24582d2a186812d9208feb275a"
-  integrity sha512-mm+bIY2frXVY5CfJ4KRdZ89T75oMkH1vBdx+HHTbGM+9tyQqwcBNPwBZ7z95Yte2tYFgK7C8H+eZDuP88mutyg==
+react-smooshpack@1.0.0-alpha-26:
+  version "1.0.0-alpha-26"
+  resolved "https://registry.yarnpkg.com/react-smooshpack/-/react-smooshpack-1.0.0-alpha-26.tgz#74efd93a2b6dc5d50197d404eeba1e076e5e1466"
+  integrity sha512-1VJ0nZeKW6FU1kNiiFK+VM5PIByDhyz2VkA50Svvn+ob7m31goA6P7aft3136A/cQCemfqhem24gpU6HsY5vcA==
   dependencies:
     "@codemirror/closebrackets" "^0.17.2"
     "@codemirror/commands" "^0.17.1"
@@ -13581,7 +13581,7 @@ react-smooshpack@1.0.0-alpha-21:
     "@codemirror/view" "^0.17.3"
     codesandbox-import-utils "^1.2.3"
     prism-react-renderer "^1.1.1"
-    smooshpack "^1.0.0-alpha-21"
+    smooshpack "^1.0.0-alpha-26"
 
 react-smooshpack@^1.0.0-alpha-15:
   version "1.0.0-alpha-15"
@@ -14866,10 +14866,10 @@ smooshpack@^1.0.0-alpha-15:
     codesandbox-import-utils "^1.2.3"
     lodash.isequal "^4.5.0"
 
-smooshpack@^1.0.0-alpha-21:
-  version "1.0.0-alpha-21"
-  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-21.tgz#4266ce9fe4931d7ce5ad8de394fad148f5536d9e"
-  integrity sha512-CAcxLrYpDGBQAEJG6sQ+0tQ6aBqZQiF2faaPnkZW3LDGZDNdxBJVJXnMMfYfc2p0rHLfw5icHnAEu94e3gJyEQ==
+smooshpack@^1.0.0-alpha-26:
+  version "1.0.0-alpha-26"
+  resolved "https://registry.yarnpkg.com/smooshpack/-/smooshpack-1.0.0-alpha-26.tgz#7262e233f8c25b7a743dd992ced063199e80040f"
+  integrity sha512-0kuoqHlFmngPMrPrGm0FUT/2LpDYczaMlw8lsqTyeCGC10J4sFe2T7E8Sf+rAZfHqIlgLfvGG/IP363sETl/Nw==
   dependencies:
     codesandbox-api "^0.0.30"
     codesandbox-import-utils "^1.2.3"
