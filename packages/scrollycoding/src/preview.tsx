@@ -10,27 +10,25 @@ import { CodeContext } from "./code-context"
 export { Preview, PreviewProps }
 
 function Preview({
-  template,
+  preset,
   files,
   ...props
 }: PreviewProps) {
   const codeRunner = React.useMemo(() => {
     return (
-      <CodeContext preset={{ template, files }}>
-        {/* <OpenInCodeSandboxButton /> */}
-        <SandpackPreview
-          showNavigator={false}
-          showRefreshButton={false}
-          showOpenInCodeSandbox={false}
-          customStyle={{
-            minHeight: "unset",
-            height: "100%",
-            border: 0,
-          }}
-        />
-      </CodeContext>
+      <SandpackPreview
+        showNavigator={false}
+        showRefreshButton={false}
+        showOpenInCodeSandbox={false}
+        customStyle={{
+          minHeight: "unset",
+          height: "100%",
+          border: 0,
+          margin: 0,
+        }}
+      />
     )
-  }, [template, files])
+  }, [preset, files])
 
   return <MiniBrowser {...props} children={codeRunner} />
 }

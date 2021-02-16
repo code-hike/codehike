@@ -1,6 +1,11 @@
 @import "~@code-hike/mini-editor/dist/index.scss";
 @import "~@code-hike/mini-browser/dist/index.scss";
 
+.ch-hike-preview .sp-preview-frame {
+  height: 100%;
+  display: flex;
+}
+
 .ch-hike {
   display: flex;
   --sticker-height: 650px;

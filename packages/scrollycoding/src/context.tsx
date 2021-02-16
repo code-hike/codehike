@@ -1,7 +1,12 @@
 import * as React from "react"
 import { MiniBrowserProps } from "@code-hike/mini-browser"
 import { CodeProps } from "./code"
-import { SandboxEnviornment } from "react-smooshpack"
+import {
+  SandboxEnviornment,
+  SandpackFiles,
+  SandpackPredefinedTemplate,
+  SandpackSetup,
+} from "react-smooshpack"
 
 export interface TemplateProps {
   files: IFiles
@@ -17,6 +22,11 @@ export interface TemplateProps {
   skipEval?: boolean
 }
 
+export interface Preset {
+  template?: SandpackPredefinedTemplate
+  customSetup?: SandpackSetup
+}
+
 export interface IFile {
   code: string
 }
@@ -28,8 +38,8 @@ export interface CodeFiles {
 }
 
 export interface PreviewProps extends MiniBrowserProps {
-  template?: Partial<TemplateProps>
-  files: IFiles
+  preset?: Partial<Preset>
+  files: SandpackFiles
 }
 
 export interface HikeStep {

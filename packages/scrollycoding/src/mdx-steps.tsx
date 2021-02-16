@@ -1,6 +1,10 @@
 import React from "react"
-import { SandpackRunnerProps } from "react-smooshpack"
-import { CodeFiles, IFiles, TemplateProps } from "./context"
+import {
+  CodeFiles,
+  IFiles,
+  Preset,
+  TemplateProps,
+} from "./context"
 import { CodeProps } from "./code"
 import { PreviewProps } from "./preview"
 
@@ -30,7 +34,7 @@ function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
   codeProps: CodeProps,
-  template: Partial<TemplateProps> = {}
+  preset?: Partial<Preset>
 ) {
   const steps: Step[] = []
   React.Children.forEach(mdx, (child: any) => {
@@ -43,7 +47,7 @@ function useMdxSteps(
         previewProps: getPreviewProps(
           stepHeadProps,
           previewProps,
-          template,
+          preset,
           files
         ),
         codeProps: getCodeProps(
@@ -85,7 +89,7 @@ function getFiles(stepHeadProps: StepHeadProps) {
 function getPreviewProps(
   stepHeadProps: StepHeadProps,
   hikePreviewProps: PreviewProps,
-  hikeTemplate: Partial<TemplateProps>,
+  hikePreset: Partial<Preset> | undefined,
   codeFiles: CodeFiles
 ): PreviewProps {
   const files = {} as IFiles
@@ -97,7 +101,7 @@ function getPreviewProps(
   })
   return {
     ...hikePreviewProps,
-    template: hikeTemplate,
+    preset: hikePreset,
     ...stepHeadProps.previewProps,
     files,
   }

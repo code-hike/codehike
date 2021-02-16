@@ -6,7 +6,8 @@ import "@code-hike/scrollycoding/dist/index.css"
 export default {
   title: "ScrollyCoding",
 }
-export const basic = () => {
+
+export function basic() {
   return (
     <Page
       style={{
@@ -28,7 +29,7 @@ const steps = fillProps([
           code: `import React from 'react';
 
 export default function App() {
-  return <h1>Hello World</h1>
+  return <h1>1. Hello World</h1>
 }`,
           lang: "jsx",
         },
@@ -44,7 +45,7 @@ export default function App() {
           code: `import React from 'react';
 
 export default function Page() {
-  return <h1>Hello Planet</h1>
+  return <h1>2. Hello Planet</h1>
 }`,
           lang: "jsx",
         },
@@ -61,7 +62,7 @@ export default function Page() {
 import Button from './Button';
 
 export default function Page() {
-  return <div><h3>Hello Planet</h3><Button/></div>;
+  return <div><h3>3. Hello Planet</h3><Button/></div>;
 }`,
           lang: "jsx",
         },
@@ -87,7 +88,7 @@ export default function Button() {
 import Button from './Button';
 
 export default function Page() {
-  return <><h1>Hello Planet</h1><Button/></>;
+  return <><h1>4. Hello Planet</h1><Button/></>;
 }`,
           lang: "jsx",
         },
@@ -140,11 +141,21 @@ function LoremIpsum({ number }) {
 }
 
 function fillProps(preSteps) {
-  return preSteps.map(({ codeProps, ...rest }) => ({
-    codeProps,
-    ...rest,
-    previewProps: {
-      files: { "/dApp.js": { code: "" } },
-    },
-  }))
+  return preSteps.map(({ codeProps, ...rest }) => {
+    const files = {}
+    const filenames = Object.keys(codeProps.files)
+    filenames.forEach(filename => {
+      files["/" + filename] = {
+        code: codeProps.files[filename].code,
+      }
+    })
+    console.log({ files })
+    return {
+      codeProps,
+      ...rest,
+      previewProps: {
+        files,
+      },
+    }
+  })
 }

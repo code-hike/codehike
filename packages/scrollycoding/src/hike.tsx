@@ -15,6 +15,7 @@ import {
 } from "./context"
 import { Code, CodeProps } from "./code"
 import { Preview } from "./preview"
+import { CodeContext } from "./code-context"
 
 export { Hike }
 
@@ -49,6 +50,9 @@ function Hike({
   }
   const previewProps = focusStep.previewProps
 
+  const onStepChange = (newIndex: number) =>
+    dispatch({ type: "change-step", newIndex })
+
   return (
     <ClasserProvider classes={classes}>
       <HikeContext.Provider
@@ -59,60 +63,88 @@ function Hike({
       >
         <section className={c("")} {...props}>
           <div className={c("content")}>
-            <Scroller
-              onStepChange={newIndex =>
-                dispatch({ type: "change-step", newIndex })
-              }
-            >
+            <Scroller onStepChange={onStepChange}>
               {steps.map((step, index) => (
-                <StepContext.Provider
-                  value={{ stepIndex: index, step }}
-                  key={index}
+                <CodeContext
+                  files={previewProps.files}
+                  preset={previewProps.preset}
                 >
-                  <Step
-                    as="div"
-                    index={index}
+                  <StepContent
+                    step={step}
+                    stepIndex={index}
                     key={index}
-                    className={c(
-                      "step",
-                      index === focusStepIndex
-                        ? "step-focused"
-                        : "step-unfocused"
-                    )}
-                  >
-                    {index > 0 && (
-                      <div className={c("step-gap")} />
-                    )}
-                    <div
-                      className={c(
-                        "step-content",
-                        index === focusStepIndex
-                          ? "step-content-focused"
-                          : "step-content-unfocused"
-                      )}
-                    >
-                      {step.content}
-                    </div>
-                  </Step>
-                </StepContext.Provider>
+                  />
+                </CodeContext>
               ))}
             </Scroller>
           </div>
           <aside className={c("sticker-column")}>
             <div className={c("sticker")}>
-              <div className={c("editor")}>
-                <Code {...codeProps} />
-              </div>
-              {noPreview || (
-                <div className={c("preview")}>
-                  <Preview {...previewProps} />
+              <CodeContext
+                files={previewProps.files}
+                preset={previewProps.preset}
+              >
+                <div className={c("editor")}>
+                  <Code {...codeProps} />
                 </div>
-              )}
+                {noPreview || (
+                  <div className={c("preview")}>
+                    <Preview {...previewProps} />
+                  </div>
+                )}
+              </CodeContext>
             </div>
           </aside>
         </section>
       </HikeContext.Provider>
     </ClasserProvider>
+  )
+}
+
+function ContentColumn() {
+  return <div />
+}
+function StickerColumn() {
+  return <div />
+}
+
+function StepContent({
+  step,
+  stepIndex,
+}: {
+  step: HikeStep
+  stepIndex: number
+}) {
+  const c = useClasser("ch-hike-step")
+
+  const { hikeState } = React.useContext(HikeContext)!
+
+  const focusStepIndex =
+    hikeState.focusStepIndex ?? hikeState.scrollStepIndex
+
+  const isOn = stepIndex === focusStepIndex
+
+  return (
+    <StepContext.Provider
+      value={{ stepIndex, step }}
+      key={stepIndex}
+    >
+      <Step
+        as="div"
+        index={stepIndex}
+        className={c("", isOn ? "focused" : "unfocused")}
+      >
+        {stepIndex > 0 && <div className={c("gap")} />}
+        <div
+          className={c(
+            "content",
+            isOn ? "content-focused" : "content-unfocused"
+          )}
+        >
+          {step.content}
+        </div>
+      </Step>
+    </StepContext.Provider>
   )
 }
 
