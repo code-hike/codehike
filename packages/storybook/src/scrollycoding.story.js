@@ -19,10 +19,10 @@ export const basic = () => {
   )
 }
 
-const steps = [
+const steps = fillProps([
   {
     content: <LoremIpsum number={1} />,
-    demo: {
+    codeProps: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -38,7 +38,7 @@ export default function App() {
   },
   {
     content: <LoremIpsum number={2} />,
-    demo: {
+    codeProps: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -54,7 +54,7 @@ export default function Page() {
   },
   {
     content: <LoremIpsum number={3} />,
-    demo: {
+    codeProps: {
       files: {
         "App.js": {
           code: `import React from 'react';
@@ -79,7 +79,7 @@ export default function Button() {
   },
   {
     content: <LoremIpsum number={4} />,
-    demo: {
+    codeProps: {
       focus: "5",
       files: {
         "App.js": {
@@ -103,7 +103,7 @@ export default function Button() {
       activeFile: "App.js",
     },
   },
-]
+])
 
 function LoremIpsum({ number }) {
   return (
@@ -137,4 +137,14 @@ function LoremIpsum({ number }) {
       </p>
     </div>
   )
+}
+
+function fillProps(preSteps) {
+  return preSteps.map(({ codeProps, ...rest }) => ({
+    codeProps,
+    ...rest,
+    previewProps: {
+      files: { "/dApp.js": { code: "" } },
+    },
+  }))
 }

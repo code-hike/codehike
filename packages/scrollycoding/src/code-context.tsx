@@ -14,7 +14,7 @@ export function CodeContext({
   const { files, template } = preset
   const mergedFiles = {
     ...defaultTemplate.files,
-    ...template.files,
+    ...template?.files,
     ...files,
   }
 

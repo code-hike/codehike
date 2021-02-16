@@ -28,7 +28,7 @@ export interface CodeFiles {
 }
 
 export interface PreviewProps extends MiniBrowserProps {
-  template: Partial<TemplateProps>
+  template?: Partial<TemplateProps>
   files: IFiles
 }
 
