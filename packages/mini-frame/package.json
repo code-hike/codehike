@@ -32,6 +32,6 @@
     "url": "https://opencollective.com/codehike"
   },
   "dependencies": {
-    "@code-hike/utils": "0.0.0-aa6efee"
+    "@code-hike/classer": "0.0.0-aa6efee"
   }
 }

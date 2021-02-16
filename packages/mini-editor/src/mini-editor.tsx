@@ -6,6 +6,7 @@ import {
   useBackwardTransitions,
   useForwardTransitions,
 } from "./steps"
+import { Classes } from "@code-hike/classer"
 // import "./theme.css"
 
 export { MiniEditor }
@@ -31,7 +32,7 @@ export type MiniEditorProps = {
   height?: number
   minColumns?: number
   button?: React.ReactNode
-  classes?: Record<string, string>
+  classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function MiniEditor(props: MiniEditorProps) {

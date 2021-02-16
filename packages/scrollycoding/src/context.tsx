@@ -1,8 +1,4 @@
 import * as React from "react"
-import {
-  Classes,
-  classNamesWithPrefix,
-} from "@code-hike/utils"
 import { MiniBrowserProps } from "@code-hike/mini-browser"
 import { CodeProps } from "./code"
 import { SandboxEnviornment } from "react-smooshpack"
@@ -20,8 +16,6 @@ export interface TemplateProps {
   bundlerURL?: string
   skipEval?: boolean
 }
-
-export const classPrefixer = classNamesWithPrefix("ch-hike")
 
 export interface IFile {
   code: string
@@ -66,7 +60,6 @@ export type HikeAction =
 export const HikeContext = React.createContext<{
   dispatch: React.Dispatch<HikeAction>
   hikeState: HikeState
-  classes: Classes
 } | null>(null)
 
 export const StepContext = React.createContext<{

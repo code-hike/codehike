@@ -3,13 +3,8 @@ import {
   MiniFrame,
   FrameButtons,
 } from "@code-hike/mini-frame"
-import {
-  classNamesWithPrefix,
-  Classes,
-} from "@code-hike/utils"
+import { Classes, useClasser } from "@code-hike/classer"
 import "./index.scss"
-
-const c = classNamesWithPrefix("ch-editor")
 
 export { EditorFrame, TerminalPanel }
 
@@ -21,7 +16,7 @@ type EditorFrameProps = {
   height?: number
   terminalPanel: React.ReactNode
   button?: React.ReactNode
-  classes?: Record<string, string>
+  classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 function EditorFrame({
@@ -35,6 +30,7 @@ function EditorFrame({
   classes,
   ...rest
 }: EditorFrameProps) {
+  const c = useClasser("ch-editor")
   return (
     <MiniFrame
       titleBar={
@@ -49,7 +45,7 @@ function EditorFrame({
       style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
       {...rest}
     >
-      <div className={c("-body", classes)}>{children}</div>
+      <div className={c("body")}>{children}</div>
       {terminalPanel}
     </MiniFrame>
   )
@@ -67,20 +63,16 @@ function TabsContainer({
   button,
   classes,
 }: TabsContainerProps) {
+  const c = useClasser("ch-editor-tab")
   return (
     <>
-      <FrameButtons classes={classes} />
+      <FrameButtons />
       {files.map(fileName => (
         <div
           key={fileName}
           className={c(
-            [
-              "-tab",
-              fileName === active
-                ? "-tab-active"
-                : "-tab-inactive",
-            ],
-            classes
+            "",
+            fileName === active ? "active" : "inactive"
           )}
         >
           <div>{fileName}</div>

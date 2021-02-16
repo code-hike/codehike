@@ -1,12 +1,15 @@
 import * as React from "react"
 import { Scroller, Step } from "@code-hike/scroller"
-import { Classes } from "@code-hike/utils"
+import {
+  Classes,
+  ClasserProvider,
+  useClasser,
+} from "@code-hike/classer"
 import "./index.scss"
 import {
   HikeContext,
   HikeStep,
   StepContext,
-  classPrefixer as c,
   HikeState,
   HikeAction,
 } from "./context"
@@ -27,9 +30,10 @@ export interface HikeProps
 function Hike({
   noPreview,
   steps,
-  classes = {},
+  classes,
   ...props
 }: HikeProps) {
+  const c = useClasser("ch-hike", classes)
   const [state, dispatch] = React.useReducer(
     reducer,
     initialState
@@ -46,79 +50,69 @@ function Hike({
   const previewProps = focusStep.previewProps
 
   return (
-    <HikeContext.Provider
-      value={{
-        hikeState: state,
-        dispatch,
-        classes,
-      }}
-    >
-      <section className={c("", classes)} {...props}>
-        <div className={c("-content", classes)}>
-          <Scroller
-            onStepChange={newIndex =>
-              dispatch({ type: "change-step", newIndex })
-            }
-          >
-            {steps.map((step, index) => (
-              <StepContext.Provider
-                value={{ stepIndex: index, step }}
-                key={index}
-              >
-                <Step
-                  as="div"
-                  index={index}
+    <ClasserProvider classes={classes}>
+      <HikeContext.Provider
+        value={{
+          hikeState: state,
+          dispatch,
+        }}
+      >
+        <section className={c("")} {...props}>
+          <div className={c("content")}>
+            <Scroller
+              onStepChange={newIndex =>
+                dispatch({ type: "change-step", newIndex })
+              }
+            >
+              {steps.map((step, index) => (
+                <StepContext.Provider
+                  value={{ stepIndex: index, step }}
                   key={index}
-                  className={c(
-                    [
-                      "-step",
-                      index === focusStepIndex
-                        ? "-step-focused"
-                        : "-step-unfocused",
-                    ],
-                    classes
-                  )}
                 >
-                  {index > 0 && (
-                    <div
-                      className={c("-step-gap", classes)}
-                    />
-                  )}
-                  <div
+                  <Step
+                    as="div"
+                    index={index}
+                    key={index}
                     className={c(
-                      [
-                        "-step-content",
-                        index === focusStepIndex
-                          ? "-step-content-focused"
-                          : "-step-content-unfocused",
-                      ],
-                      classes
+                      "step",
+                      index === focusStepIndex
+                        ? "step-focused"
+                        : "step-unfocused"
                     )}
                   >
-                    {step.content}
-                  </div>
-                </Step>
-              </StepContext.Provider>
-            ))}
-          </Scroller>
-        </div>
-        <aside className={c("-sticker-column", classes)}>
-          <div className={c("-sticker", classes)}>
-            <div className={c("-editor", classes)}>
-              <Code classes={classes} {...codeProps} />
-            </div>
-            {noPreview || (
-              <div className={c("-preview", classes)}>
-                <Preview
-                  classes={classes}
-                  {...previewProps}
-                />
-              </div>
-            )}
+                    {index > 0 && (
+                      <div className={c("step-gap")} />
+                    )}
+                    <div
+                      className={c(
+                        "step-content",
+                        index === focusStepIndex
+                          ? "step-content-focused"
+                          : "step-content-unfocused"
+                      )}
+                    >
+                      {step.content}
+                    </div>
+                  </Step>
+                </StepContext.Provider>
+              ))}
+            </Scroller>
           </div>
-        </aside>
-      </section>
-    </HikeContext.Provider>
+          <aside className={c("sticker-column")}>
+            <div className={c("sticker")}>
+              <div className={c("editor")}>
+                <Code {...codeProps} />
+              </div>
+              {noPreview || (
+                <div className={c("preview")}>
+                  <Preview {...previewProps} />
+                </div>
+              )}
+            </div>
+          </aside>
+        </section>
+      </HikeContext.Provider>
+    </ClasserProvider>
   )
 }
 

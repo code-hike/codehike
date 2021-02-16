@@ -1,12 +1,8 @@
-import { Classes } from "@code-hike/utils"
+import { useClasser } from "@code-hike/classer"
 import * as React from "react"
 import { CodeProps } from "./code"
 
-import {
-  HikeContext,
-  StepContext,
-  classPrefixer as c,
-} from "./context"
+import { HikeContext, StepContext } from "./context"
 
 export interface FocusProps {
   children?: React.ReactNode
@@ -19,7 +15,8 @@ export function Focus({
   on: focus,
   file,
 }: FocusProps) {
-  const { dispatch, hikeState, classes } = React.useContext(
+  const c = useClasser("ch-hike")
+  const { dispatch, hikeState } = React.useContext(
     HikeContext
   )!
   const { stepIndex } = React.useContext(StepContext)!
@@ -34,11 +31,8 @@ export function Focus({
   return (
     <button
       className={c(
-        [
-          "-focus",
-          isFocused ? "-focus-active" : "-focus-inactive",
-        ],
-        classes
+        "focus",
+        isFocused ? "focus-active" : "focus-inactive"
       )}
       title="Show code"
       onClick={() =>
@@ -52,23 +46,18 @@ export function Focus({
       }
     >
       {children}
-      <Icon classes={classes} isFocused={isFocused} />
+      <Icon isFocused={isFocused} />
     </button>
   )
 }
 
-function Icon({
-  isFocused,
-  classes,
-}: {
-  isFocused: boolean
-  classes: Classes
-}) {
+function Icon({ isFocused }: { isFocused: boolean }) {
+  const c = useClasser("ch-hike")
   return (
     <svg
       fill="none"
       stroke="currentColor"
-      className={c("-focus-icon", classes)}
+      className={c("focus-icon")}
       viewBox="0 0 24 24"
       aria-hidden="true"
       focusable="false"

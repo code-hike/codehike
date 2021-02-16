@@ -1,10 +1,9 @@
 import React from "react"
 import {
-  classNamesWithPrefix,
+  ClasserProvider,
+  useClasser,
   Classes,
-} from "@code-hike/utils"
-
-const c = classNamesWithPrefix("ch-frame")
+} from "@code-hike/classer"
 
 type MiniFrameProps = {
   title?: string
@@ -17,77 +16,55 @@ export function MiniFrame({
   title,
   children,
   titleBar,
-  classes = {},
+  classes,
   zoom = 1,
   ...props
 }: MiniFrameProps) {
-  const bar = titleBar || (
-    <DefaultTitleBar title={title} classes={classes} />
-  )
+  const c = useClasser("ch-frame", classes)
+
+  const bar = titleBar || <DefaultTitleBar title={title} />
+  const zoomStyle = {
+    "--ch-frame-zoom": zoom,
+  } as React.CSSProperties
+
   return (
-    <div {...props}>
-      <div className={c("", classes)}>
-        <div className={c("-title-bar", classes)}>
-          {bar}
-        </div>
-        <div className={c("-content", classes)}>
-          <div
-            className={c("-zoom", classes)}
-            style={
-              {
-                "--ch-frame-zoom": zoom,
-              } as React.CSSProperties
-            }
-          >
-            {children}
+    <ClasserProvider classes={classes}>
+      <div {...props}>
+        <div className={c("")}>
+          <div className={c("title-bar")}>{bar}</div>
+          <div className={c("content")}>
+            <div className={c("zoom")} style={zoomStyle}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ClasserProvider>
   )
 }
 
-function DefaultTitleBar({
-  title,
-  classes,
-}: {
-  title?: string
-  classes: Classes
-}) {
+function DefaultTitleBar({ title }: { title?: string }) {
+  const c = useClasser("ch-frame")
   return (
     <>
-      <div className={c("-left-bar", classes)}>
-        <FrameButtons classes={classes} />
+      <div className={c("left-bar")}>
+        <FrameButtons />
       </div>
-      <div className={c("-middle-bar", classes)}>
-        {title}
-      </div>
-      <div className={c("-right-bar", classes)}></div>
+      <div className={c("middle-bar")}>{title}</div>
+      <div className={c("right-bar")}></div>
     </>
   )
 }
 
-export function FrameButtons({
-  classes = {},
-}: {
-  classes: Classes | undefined
-}) {
+export function FrameButtons() {
+  const c = useClasser("ch-frame")
   return (
-    <div className={c("-buttons", classes)}>
-      <div
-        className={c(["-button", "-button-left"], classes)}
-      />
-      <div className={c("-button-space", classes)} />
-      <div
-        className={c(
-          ["-button", "-button-middle"],
-          classes
-        )}
-      />
-      <div className={c("-button-space", classes)} />
-      <div
-        className={c(["-button", "-button-right"], classes)}
-      />
+    <div className={c("buttons")}>
+      <div className={c("button", "button-left")} />
+      <div className={c("button-space")} />
+      <div className={c("button", "button-middle")} />
+      <div className={c("button-space")} />
+      <div className={c("button", "button-right")} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@code-hike/utils",
+  "name": "@code-hike/classer",
   "version": "0.0.0-aa6efee",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -8,8 +8,8 @@
     "dist"
   ],
   "scripts": {
-    "script": "ch-script",
-    "publish-canary": "yarn publish --tag canary --access public"
+    "publish-canary": "yarn publish --tag canary --access public",
+    "script": "ch-script"
   },
   "devDependencies": {
     "@code-hike/script": "0.0.1",
@@ -19,9 +19,6 @@
   "peerDependencies": {
     "react": ">=16.8"
   },
-  "keywords": [
-    "react"
-  ],
   "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
   "author": "Rodrigo Pombo",

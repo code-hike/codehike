@@ -2,10 +2,7 @@ import React from "react"
 import { MiniFrame } from "@code-hike/mini-frame"
 import { TitleBar } from "./title-bar"
 import { MiniBrowserStep, useSteps } from "./use-steps"
-import {
-  classNamesWithPrefix,
-  Classes,
-} from "@code-hike/utils"
+import { useClasser, Classes } from "@code-hike/classer"
 
 export type MiniBrowserHikeProps = {
   progress?: number
@@ -19,18 +16,17 @@ const MiniBrowserHike = React.forwardRef<
   MiniBrowserHikeProps
 >(MiniBrowserWithRef)
 
-const c = classNamesWithPrefix("")
-
 function MiniBrowserWithRef(
   {
     progress = 0,
     backward = false,
     steps: ogSteps,
-    classes = {},
+    classes,
     ...props
   }: MiniBrowserHikeProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
+  const c = useClasser("ch-mini-browser", classes)
   const steps = useSteps(ogSteps)
 
   // TODO readability and optional
@@ -53,9 +49,7 @@ function MiniBrowserWithRef(
     <MiniFrame
       {...props}
       zoom={zoom}
-      className={`${c("ch-mini-browser", classes)} ${
-        props.className || ""
-      }`}
+      className={`${c("")} ${props.className || ""}`}
       style={{
         transform: `translateX(${x}px)`,
         opacity: o * o,
@@ -63,11 +57,7 @@ function MiniBrowserWithRef(
       }}
       classes={classes}
       titleBar={
-        <TitleBar
-          url={displayUrl!}
-          linkUrl={loadUrl!}
-          classes={classes}
-        />
+        <TitleBar url={displayUrl!} linkUrl={loadUrl!} />
       }
     >
       {children || <iframe ref={ref} src={loadUrl} />}

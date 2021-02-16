@@ -22,7 +22,7 @@
     "@code-hike/mini-frame": "0.0.0-aa6efee",
     "@code-hike/mini-terminal": "0.0.0-aa6efee",
     "@code-hike/smooth-lines": "0.0.0-aa6efee",
-    "@code-hike/utils": "0.0.0-aa6efee",
+    "@code-hike/classer": "0.0.0-aa6efee",
     "use-spring": "^0.2.3"
   },
   "peerDependencies": {
