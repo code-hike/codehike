@@ -1,6 +1,6 @@
 > Classer is a tool from [Code Hike](https://codehike.org)
 
-A little package to make React component libraries interoperable with most styling solutions.
+A little package to make React component libraries interoperable with most styling solutions. ([See this twitter thread explaining why this is useful](https://twitter.com/pomber/status/1362125599607820290))
 
 You write your library code like this:
 
@@ -84,6 +84,20 @@ function FirstChild() {
 function SecondChild() {
   const c = useClasser("foo-second")
   return <h1 className={c("title")}>Ho</h1>
+}
+```
+
+```jsx
+import { Foo } from "./foo-library"
+import styles from "./app.module.css"
+
+const classes = {
+  "foo-title": styles.myTitle,
+  "foo-img": styles.myImage,
+}
+
+function MyApp() {
+  return <Foo classes={classes} />
 }
 ```
 
