@@ -1,10 +1,37 @@
 import * as React from "react"
+import "./index.scss"
 import { StepContext } from "./context"
 import { Code, CodeProps } from "./code"
 import { Preview, PreviewProps } from "./preview"
 import { useClasser } from "@code-hike/classer"
+import { HikeProps } from "./hike"
+import { CodeContext } from "./code-context"
 
-export { CodeSlot, PreviewSlot }
+export { HikeBook, CodeSlot, PreviewSlot }
+
+function HikeBook({ steps, ...props }: HikeProps) {
+  const c = useClasser("ch-hike")
+
+  return (
+    <section className={c("")} {...props}>
+      <div className={c("content")}>
+        {steps.map((step, index) => (
+          <CodeContext
+            files={step.previewProps.files}
+            preset={step.previewProps.preset}
+            key={index}
+          >
+            <StepContext.Provider
+              value={{ stepIndex: index, step }}
+            >
+              {step.content}
+            </StepContext.Provider>
+          </CodeContext>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 function CodeSlot({ style, ...slotProps }: CodeProps) {
   const c = useClasser("ch-hike")

@@ -1,7 +1,7 @@
 @import "~@code-hike/mini-editor/dist/index.scss";
 @import "~@code-hike/mini-browser/dist/index.scss";
 
-.ch-hike-preview .sp-preview-frame {
+.ch-hike .sp-preview-frame {
   height: 100%;
   display: flex;
 }
@@ -10,19 +10,20 @@
   display: flex;
   --sticker-height: 650px;
   --page-header-height: 0px;
-  margin: 2rem 0;
+  margin: 32px 0;
+  position: relative;
 }
 
 .ch-hike-content {
   width: 50%;
   box-sizing: border-box;
-  padding-right: 3rem;
+  padding-right: 48px;
 }
 
 /* content steps */
 .ch-hike-step {
   display: flex;
-  min-height: 400px;
+  min-height: 350px;
   justify-content: center;
   flex-flow: column;
   // outline: 2px solid red;
@@ -53,7 +54,8 @@
 }
 
 .ch-hike-step-content-focused {
-  border-color: #81d8f7;
+  // border-color: #81d8f7;
+  border-color: #252526;
   // background-color: #fafafa;
 }
 .ch-hike-step-content-unfocused {
@@ -90,6 +92,11 @@
 .ch-hike-step-preview,
 .ch-hike-step-code {
   display: none;
+}
+
+.ch-frame {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 @media (max-width: 920px), (print) {

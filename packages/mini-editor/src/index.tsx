@@ -1,3 +1,5 @@
+import "./index.scss"
+
 import { MiniEditor, MiniEditorProps } from "./mini-editor"
 import {
   MiniEditorWithState,

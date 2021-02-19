@@ -29,18 +29,24 @@
 .ch-hike-focus:hover {
   background-color: #e4e7eb;
 }
-.ch-hike-focus-active {
+.ch-hike-focus-active,
+.ch-hike-focus-active:hover {
   --icon-color: #81d8f7;
   background-color: #81d8f766;
+
+  --icon-color: #252526;
+  background-color: #252526;
+  color: #fafafa;
   // color: #81d8f7;
   // box-shadow: 0 0 0 2px #81d8f7;
 }
+
 .ch-hike-focus-icon {
   color: var(--icon-color);
   display: inline;
   position: absolute;
   height: 1em;
-  left: 1.8em;
+  left: -18px;
   margin-top: 0.1em;
   vertical-align: unset;
 }
