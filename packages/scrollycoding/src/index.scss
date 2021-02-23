@@ -1,6 +1,11 @@
 @import "~@code-hike/mini-editor/dist/index.scss";
 @import "~@code-hike/mini-browser/dist/index.scss";
 
+.ch-hike {
+  --sp-colors-bg-default: #f8f9fb;
+  --sp-colors-fg-default: #999999;
+}
+
 .ch-hike .sp-preview-frame {
   height: 100%;
   display: flex;
