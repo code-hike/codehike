@@ -24,8 +24,8 @@
     "@code-hike/mini-editor": "0.0.0-aa6efee",
     "@code-hike/scroller": "0.0.0-aa6efee",
     "object-hash": "^2.1.1",
-    "react-smooshpack": "1.0.0-alpha-30",
-    "server-side-media-queries-for-react": "^0.0.4"
+    "react-smooshpack": "1.0.0-alpha-31",
+    "server-side-media-queries-for-react": "^0.0.5"
   },
   "peerDependencies": {
     "react": ">=16.8"

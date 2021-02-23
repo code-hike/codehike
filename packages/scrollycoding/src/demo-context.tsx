@@ -57,7 +57,6 @@ export function DemoProvider({
   return (
     <SandpackProvider
       template="react"
-      renderRootContainer={true}
       recompileMode="immediate"
       {...newPreset}
     >
