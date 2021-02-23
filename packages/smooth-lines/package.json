@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/smooth-lines",
-  "version": "0.0.0-aa6efee",
+  "version": "0.0.0-cde697c",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
