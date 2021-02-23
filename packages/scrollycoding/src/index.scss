@@ -6,7 +6,7 @@
   display: flex;
 }
 
-.ch-hike {
+.ch-hike-fluid {
   display: flex;
   --sticker-height: 650px;
   --page-header-height: 0px;
@@ -89,56 +89,68 @@
   height: 250px;
 }
 
-.ch-hike-step-preview,
+// .ch-hike-step-preview,
+// .ch-hike-step-code {
+//   display: none;
+// }
+
 .ch-hike-step-code {
-  display: none;
+  display: block;
+  height: 300px;
+  margin: 30px 0;
+}
+.ch-hike-step-preview {
+  display: block;
+  height: 200px;
+  margin: 30px 0;
 }
 
 .ch-frame {
   max-width: 400px;
+  min-width: 400px;
   margin: 0 auto;
 }
 
-@media (max-width: 920px), (print) {
-  .ch-hike {
-    margin: 0;
-  }
+// @media (max-width: 920px), (print) {
+//   .ch-hike {
+//     margin: 0;
+//   }
 
-  .ch-hike-sticker-column {
-    display: none;
-  }
-  .ch-hike-content {
-    width: 100%;
-    padding-right: 0;
-    margin: 0;
-  }
+//   .ch-hike-sticker-column {
+//     display: none;
+//   }
+//   .ch-hike-content {
+//     width: 100%;
+//     padding-right: 0;
+//     margin: 0;
+//   }
 
-  .ch-hike-step-gap {
-    display: none;
-  }
-  .ch-hike-step-code {
-    display: block;
-    height: 300px;
-    margin: 30px 0;
-  }
-  .ch-hike-step-preview {
-    display: block;
-    height: 200px;
-    margin: 30px 0;
-  }
+//   .ch-hike-step-gap {
+//     display: none;
+//   }
+//   .ch-hike-step-code {
+//     display: block;
+//     height: 300px;
+//     margin: 30px 0;
+//   }
+//   .ch-hike-step-preview {
+//     display: block;
+//     height: 200px;
+//     margin: 30px 0;
+//   }
 
-  .ch-hike-step {
-    display: block;
-    min-height: unset;
-    margin: 0;
-  }
+//   .ch-hike-step {
+//     display: block;
+//     min-height: unset;
+//     margin: 0;
+//   }
 
-  .ch-hike-step-content {
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
-}
+//   .ch-hike-step-content {
+//     margin: 0;
+//     padding: 0;
+//     border: none;
+//   }
+// }
 
 @import "focus.scss";
 // @import "focus-b.scss";

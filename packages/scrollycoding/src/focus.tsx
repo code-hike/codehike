@@ -1,8 +1,11 @@
 import { useClasser } from "@code-hike/classer"
 import * as React from "react"
-import { CodeProps } from "./code"
-
-import { HikeContext, StepContext } from "./context"
+import { useStepIndex } from "./demo-context"
+import {
+  useHikeContext,
+  FluidHikeContext,
+  CodeProps,
+} from "./hike-context"
 
 export interface FocusProps {
   children?: React.ReactNode
@@ -10,16 +13,28 @@ export interface FocusProps {
   file?: string
 }
 
-export function Focus({
+export function Focus({ children, ...props }: FocusProps) {
+  const hikeContext = useHikeContext()
+  return hikeContext.layout === "fixed" ? (
+    children
+  ) : (
+    <FocusButton
+      context={hikeContext}
+      children={children}
+      {...props}
+    />
+  )
+}
+
+function FocusButton({
   children,
   on: focus,
   file,
-}: FocusProps) {
+  context,
+}: FocusProps & { context: FluidHikeContext }) {
   const c = useClasser("ch-hike")
-  const { dispatch, hikeState } = React.useContext(
-    HikeContext
-  )!
-  const { stepIndex } = React.useContext(StepContext)!
+  const { dispatch, hikeState } = context
+  const stepIndex = useStepIndex()
   const currentFocus = hikeState.focusCodeProps.focus
   const isFocused = currentFocus === focus
 

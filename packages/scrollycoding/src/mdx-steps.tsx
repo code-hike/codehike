@@ -1,12 +1,10 @@
 import React from "react"
 import {
   CodeFiles,
-  IFiles,
+  CodeProps,
   Preset,
-  TemplateProps,
-} from "./context"
-import { CodeProps } from "./code"
-import { PreviewProps } from "./preview"
+  PreviewProps,
+} from "./hike-context"
 
 export { useMdxSteps, StepHead }
 
@@ -47,8 +45,7 @@ function useMdxSteps(
         previewProps: getPreviewProps(
           stepHeadProps,
           previewProps,
-          preset,
-          files
+          preset
         ),
         codeProps: getCodeProps(
           stepHeadProps,
@@ -89,21 +86,12 @@ function getFiles(stepHeadProps: StepHeadProps) {
 function getPreviewProps(
   stepHeadProps: StepHeadProps,
   hikePreviewProps: PreviewProps,
-  hikePreset: Partial<Preset> | undefined,
-  codeFiles: CodeFiles
+  hikePreset: Partial<Preset> | undefined
 ): PreviewProps {
-  const files = {} as IFiles
-  const filenames = Object.keys(codeFiles)
-  filenames.forEach(filename => {
-    files["/" + filename] = {
-      code: codeFiles[filename].code,
-    }
-  })
   return {
     ...hikePreviewProps,
     preset: hikePreset,
     ...stepHeadProps.previewProps,
-    files,
   }
 }
 

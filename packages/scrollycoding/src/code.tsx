@@ -1,16 +1,8 @@
 import * as React from "react"
-import {
-  MiniEditorWithState,
-  StatefulEditorProps,
-} from "@code-hike/mini-editor"
-import { CodeFiles } from "./context"
+import { MiniEditorWithState } from "@code-hike/mini-editor"
+import { CodeProps } from "./hike-context"
 
-export { Code, CodeProps }
-
-type CodeProps = {
-  files: CodeFiles
-  activeFile: string
-} & Omit<StatefulEditorProps, "file" | "code" | "lang">
+export { Code }
 
 function Code({ files, activeFile, ...props }: CodeProps) {
   const file = files[activeFile]

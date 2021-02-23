@@ -1,20 +1,15 @@
 import * as React from "react"
 import {
-  Preview as SandpackPreview,
+  SandpackPreview,
   OpenInCodeSandboxButton,
 } from "react-smooshpack"
 import { MiniBrowser } from "@code-hike/mini-browser"
-import { PreviewProps } from "./context"
-import { CodeContext } from "./code-context"
+import { PreviewProps } from "./hike-context"
 
 export { Preview, PreviewProps }
 
-function Preview({
-  preset,
-  files,
-  ...props
-}: PreviewProps) {
-  const codeRunner = React.useMemo(() => {
+function Preview({ filesHash, ...props }: PreviewProps) {
+  const preview = React.useMemo(() => {
     return (
       <SandpackPreview
         showNavigator={false}
@@ -28,7 +23,7 @@ function Preview({
         }}
       />
     )
-  }, [preset, files])
+  }, [filesHash])
 
-  return <MiniBrowser {...props} children={codeRunner} />
+  return <MiniBrowser {...props} children={preview} />
 }
