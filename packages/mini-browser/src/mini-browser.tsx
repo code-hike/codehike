@@ -59,8 +59,7 @@ function useSteps({
       last.url !== url ||
       last.loadUrl !== loadUrl ||
       last.prependOrigin !== prependOrigin ||
-      last.children !== children ||
-      last.zoom !== zoom
+      last.children !== children
     ) {
       setState(s => ({
         target: s.target + 1,

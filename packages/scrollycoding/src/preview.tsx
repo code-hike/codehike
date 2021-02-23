@@ -9,6 +9,7 @@ import { PreviewProps } from "./hike-context"
 export { Preview, PreviewProps }
 
 function Preview({ filesHash, ...props }: PreviewProps) {
+  const link = useCodeSandboxLink()
   const preview = React.useMemo(() => {
     return (
       <SandpackPreview
@@ -23,12 +24,12 @@ function Preview({ filesHash, ...props }: PreviewProps) {
         }}
       />
     )
-  }, [filesHash])
+  }, [link])
 
   return (
     <MiniBrowser
       url=""
-      loadUrl={useCodeSandboxLink()}
+      loadUrl={link}
       {...props}
       children={preview}
     />
