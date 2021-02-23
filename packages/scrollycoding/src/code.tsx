@@ -1,6 +1,7 @@
 import * as React from "react"
 import { MiniEditorWithState } from "@code-hike/mini-editor"
 import { CodeProps } from "./hike-context"
+import { useCodeSandboxLink } from "react-smooshpack"
 
 export { Code }
 
@@ -10,7 +11,9 @@ function Code({ files, activeFile, ...props }: CodeProps) {
     <MiniEditorWithState
       key={activeFile}
       style={{ height: "100%" }}
-      button={<CodeSandboxIcon url="" />}
+      button={
+        <CodeSandboxIcon url={useCodeSandboxLink()} />
+      }
       file={activeFile}
       tabs={Object.keys(files)}
       lang={file.lang}

@@ -1,7 +1,7 @@
 import * as React from "react"
 import {
   SandpackPreview,
-  OpenInCodeSandboxButton,
+  useCodeSandboxLink,
 } from "react-smooshpack"
 import { MiniBrowser } from "@code-hike/mini-browser"
 import { PreviewProps } from "./hike-context"
@@ -25,5 +25,12 @@ function Preview({ filesHash, ...props }: PreviewProps) {
     )
   }, [filesHash])
 
-  return <MiniBrowser {...props} children={preview} />
+  return (
+    <MiniBrowser
+      url=""
+      loadUrl={useCodeSandboxLink()}
+      {...props}
+      children={preview}
+    />
+  )
 }
