@@ -16,8 +16,8 @@ export interface StepHeadProps {
   previewProps?: Partial<PreviewProps>
 }
 
-function StepHead(props: StepHeadProps) {
-  return null
+function StepHead(props: StepHeadProps): JSX.Element {
+  return (null as any) as JSX.Element
 }
 
 interface Step {

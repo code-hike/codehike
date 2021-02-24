@@ -13,10 +13,13 @@ export interface FocusProps {
   file?: string
 }
 
-export function Focus({ children, ...props }: FocusProps) {
+export function Focus({
+  children,
+  ...props
+}: FocusProps): JSX.Element {
   const hikeContext = useHikeContext()
   return hikeContext.layout === "fixed" ? (
-    children
+    (children as JSX.Element)
   ) : (
     <FocusButton
       context={hikeContext}
@@ -89,5 +92,33 @@ function Icon({ isFocused }: { isFocused: boolean }) {
         }
       />
     </svg>
+  )
+}
+
+export function withFocusHandler(type: any = "a") {
+  function AnchorWithFocus(props: any) {
+    return <AnchorOrFocus type={type} {...props} />
+  }
+  return AnchorWithFocus
+}
+
+export function AnchorOrFocus({
+  type = "a",
+  href,
+  ...props
+}: any) {
+  if (!href.startsWith("focus://")) {
+    return React.createElement(type, { href, ...props })
+  }
+
+  const [firstPart, secondPart] = decodeURI(href)
+    .substr("focus://".length)
+    .split("#")
+  const hasFile = Boolean(secondPart)
+
+  return hasFile ? (
+    <Focus on={secondPart} file={firstPart} {...props} />
+  ) : (
+    <Focus on={firstPart} {...props} />
   )
 }
