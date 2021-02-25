@@ -2,7 +2,6 @@ import React from "react"
 import {
   CodeFiles,
   CodeProps,
-  Preset,
   PreviewProps,
 } from "./hike-context"
 
@@ -31,8 +30,7 @@ const defaultFilename = "App.js"
 function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
-  codeProps: CodeProps,
-  preset?: Partial<Preset>
+  codeProps: CodeProps
 ) {
   const steps: Step[] = []
   React.Children.forEach(mdx, (child: any) => {
@@ -44,8 +42,7 @@ function useMdxSteps(
         content: [],
         previewProps: getPreviewProps(
           stepHeadProps,
-          previewProps,
-          preset
+          previewProps
         ),
         codeProps: getCodeProps(
           stepHeadProps,
@@ -85,12 +82,10 @@ function getFiles(stepHeadProps: StepHeadProps) {
 
 function getPreviewProps(
   stepHeadProps: StepHeadProps,
-  hikePreviewProps: PreviewProps,
-  hikePreset: Partial<Preset> | undefined
+  hikePreviewProps: PreviewProps
 ): PreviewProps {
   return {
     ...hikePreviewProps,
-    preset: hikePreset,
     ...stepHeadProps.previewProps,
   }
 }

@@ -9,7 +9,8 @@ import {
   useMdxSteps,
 } from "@code-hike/scrollycoding"
 import "@code-hike/scrollycoding/dist/index.css"
-import Content from "./assets/scrollycoding.mdx"
+import Basic from "./assets/scrollycoding.basic.mdx"
+import WithDeps from "./assets/scrollycoding.deps.mdx"
 import { MDXProvider } from "@mdx-js/react"
 
 export default {
@@ -25,7 +26,21 @@ export function basic() {
       }}
     >
       <MDXProvider components={components}>
-        <Content />
+        <Basic />
+      </MDXProvider>
+    </Page>
+  )
+}
+
+export function withDeps() {
+  return (
+    <Page
+      style={{
+        maxWidth: 800,
+      }}
+    >
+      <MDXProvider components={components}>
+        <WithDeps />
       </MDXProvider>
     </Page>
   )
@@ -45,10 +60,21 @@ function Hike({
   codeProps,
   ...props
 }) {
-  const steps = useMdxSteps(children, previewProps, {
-    minColumns: 46,
-    ...codeProps,
-  })
+  const steps = useMdxSteps(
+    children,
+    {
+      ...previewProps,
+      preset: {
+        customSetup: {
+          dependencies: { "react-svg-curve": "latest" },
+        },
+      },
+    },
+    {
+      minColumns: 46,
+      ...codeProps,
+    }
+  )
 
   return <HikeComponent steps={steps} {...props} />
 }
