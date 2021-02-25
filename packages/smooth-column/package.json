@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/smooth-column",
-  "version": "0.0.0-1f0ad83",
+  "version": "0.0.0-e48fa74",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",

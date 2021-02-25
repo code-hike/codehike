@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/scrollycoding",
-  "version": "0.0.0-1f0ad83",
+  "version": "0.0.0-e48fa74",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -19,10 +19,10 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/classer": "0.0.0-1f0ad83",
-    "@code-hike/mini-browser": "0.0.0-1f0ad83",
-    "@code-hike/mini-editor": "0.0.0-1f0ad83",
-    "@code-hike/scroller": "0.0.0-1f0ad83",
+    "@code-hike/classer": "0.0.0-e48fa74",
+    "@code-hike/mini-browser": "0.0.0-e48fa74",
+    "@code-hike/mini-editor": "0.0.0-e48fa74",
+    "@code-hike/scroller": "0.0.0-e48fa74",
     "object-hash": "^2.1.1",
     "react-smooshpack": "1.0.0-alpha-31",
     "server-side-media-queries-for-react": "^0.0.5"
