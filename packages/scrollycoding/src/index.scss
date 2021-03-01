@@ -38,19 +38,10 @@
 }
 
 .ch-hike-step-content {
-  // background: linear-gradient(
-  //   45deg,
-  //   rgba(0, 161, 151, 0) -20px,
-  //   rgba(86, 177, 152, 0.69) 100%
-  // );
-  // background-color: #f5f7fa;
   border-radius: 8px;
   margin: 0 -1.5rem 0 -2rem;
   padding: 1rem 1.5rem 1rem 2rem;
   border: 1.5px solid transparent;
-  // border-left: 4px solid transparent;
-  // outline: 2px solid green;
-}
 
 .ch-hike-step-content > :first-child {
   margin-top: 0;
@@ -80,7 +71,6 @@
     50vh - var(--sticker-height) / 2 +
       var(--page-header-height) / 2
   );
-  // height: var(--sticker-height);
   margin: 0 0 0 15px;
   display: flex;
   flex-flow: column;
@@ -118,46 +108,5 @@
   margin: 0 auto;
 }
 
-// @media (max-width: 920px), (print) {
-//   .ch-hike {
-//     margin: 0;
-//   }
-
-//   .ch-hike-sticker-column {
-//     display: none;
-//   }
-//   .ch-hike-content {
-//     width: 100%;
-//     padding-right: 0;
-//     margin: 0;
-//   }
-
-//   .ch-hike-step-gap {
-//     display: none;
-//   }
-//   .ch-hike-step-code {
-//     display: block;
-//     height: 300px;
-//     margin: 30px 0;
-//   }
-//   .ch-hike-step-preview {
-//     display: block;
-//     height: 200px;
-//     margin: 30px 0;
-//   }
-
-//   .ch-hike-step {
-//     display: block;
-//     min-height: unset;
-//     margin: 0;
-//   }
-
-//   .ch-hike-step-content {
-//     margin: 0;
-//     padding: 0;
-//     border: none;
-//   }
-// }
 
 @import "focus.scss";
-// @import "focus-b.scss";
