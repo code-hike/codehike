@@ -26,12 +26,11 @@
 }
 
 /* content steps */
-.ch-hike-step {
+.ch-hike-fluid .ch-hike-step {
   display: flex;
   min-height: 350px;
   justify-content: center;
   flex-flow: column;
-  // outline: 2px solid red;
 }
 
 .ch-hike-step-gap {
@@ -54,8 +53,11 @@
 }
 
 .ch-hike-step-content > :first-child {
-  // TODO reset for mobile
   margin-top: 0;
+}
+
+.ch-hike-step-content > :last-child {
+  margin-bottom: 0;
 }
 
 .ch-hike-step-content-focused {

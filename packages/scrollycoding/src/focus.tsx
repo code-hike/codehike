@@ -107,7 +107,7 @@ export function AnchorOrFocus({
   href,
   ...props
 }: any) {
-  if (!href.startsWith("focus://")) {
+  if (!href?.startsWith("focus://")) {
     return React.createElement(type, { href, ...props })
   }
 
