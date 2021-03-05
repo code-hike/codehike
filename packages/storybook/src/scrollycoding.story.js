@@ -11,6 +11,7 @@ import {
 import "@code-hike/scrollycoding/dist/index.css"
 import Basic from "./assets/scrollycoding.basic.mdx"
 import WithDeps from "./assets/scrollycoding.deps.mdx"
+import RepeatedSteps from "./assets/scrollycoding.repeat.mdx"
 import { MDXProvider } from "@mdx-js/react"
 
 export default {
@@ -41,6 +42,20 @@ export function withDeps() {
     >
       <MDXProvider components={components}>
         <WithDeps />
+      </MDXProvider>
+    </Page>
+  )
+}
+
+export function repeatedSteps() {
+  return (
+    <Page
+      style={{
+        maxWidth: 800,
+      }}
+    >
+      <MDXProvider components={components}>
+        <RepeatedSteps />
       </MDXProvider>
     </Page>
   )

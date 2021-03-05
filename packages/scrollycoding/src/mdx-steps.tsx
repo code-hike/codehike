@@ -33,11 +33,16 @@ function useMdxSteps(
   codeProps: CodeProps
 ) {
   const steps: Step[] = []
+  let prevFiles: CodeFiles = {}
+  let prevActiveFile = ""
   React.Children.forEach(mdx, (child: any) => {
     if (child?.props?.mdxType === "StepHead") {
       const stepHeadProps = child?.props || {}
-      const { files, activeFile } = getFiles(stepHeadProps)
-
+      const { files, activeFile } = getFiles(
+        stepHeadProps,
+        prevFiles,
+        prevActiveFile
+      )
       const step = {
         content: [],
         previewProps: getPreviewProps(
@@ -52,6 +57,8 @@ function useMdxSteps(
         ),
       }
       steps.push(step)
+      prevFiles = files
+      prevActiveFile = activeFile
     } else {
       steps[steps.length - 1].content.push(child)
     }
@@ -59,9 +66,13 @@ function useMdxSteps(
   return steps
 }
 
-function getFiles(stepHeadProps: StepHeadProps) {
+function getFiles(
+  stepHeadProps: StepHeadProps,
+  prevFiles: CodeFiles = {},
+  prevActiveFile: string = ""
+) {
   let activeFile = stepHeadProps.activeFile || ""
-  const files = {} as CodeFiles
+  const files = { ...prevFiles }
   React.Children.forEach(
     stepHeadProps.children,
     preElement => {
@@ -77,6 +88,9 @@ function getFiles(stepHeadProps: StepHeadProps) {
       }
     }
   )
+  if (activeFile === "") {
+    activeFile = prevActiveFile
+  }
   return { files, activeFile }
 }
 
