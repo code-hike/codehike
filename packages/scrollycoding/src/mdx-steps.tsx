@@ -79,10 +79,11 @@ function getFiles(
       const codeElementProps =
         preElement?.props?.children?.props || {}
       const lang = codeElementProps.className?.slice(9)
-      const filename =
+      const { filename, hideTab } = parseMetastring(
         codeElementProps.metastring || defaultFilename
+      )
       const code = codeElementProps.children
-      files[filename] = { code, lang }
+      files[filename] = { code, lang, hideTab }
       if (activeFile === "") {
         activeFile = filename
       }
@@ -92,6 +93,11 @@ function getFiles(
     activeFile = prevActiveFile
   }
   return { files, activeFile }
+}
+
+function parseMetastring(metastring: string) {
+  const [filename, ...params] = metastring.split(" ")
+  return { filename, hideTab: params.includes("hidden") }
 }
 
 function getPreviewProps(

@@ -18,7 +18,11 @@ export interface PreviewProps extends MiniBrowserProps {
 }
 
 export interface CodeFiles {
-  [path: string]: { lang: string; code: string }
+  [path: string]: {
+    lang: string
+    code: string
+    hideTab?: boolean
+  }
 }
 
 export type CodeProps = {

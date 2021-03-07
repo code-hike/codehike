@@ -7,6 +7,9 @@ export { Code }
 
 function Code({ files, activeFile, ...props }: CodeProps) {
   const file = files[activeFile]
+  const tabs = Object.keys(files).filter(
+    filename => !files[filename].hideTab
+  )
   return (
     <MiniEditorWithState
       key={activeFile}
@@ -15,7 +18,7 @@ function Code({ files, activeFile, ...props }: CodeProps) {
         <CodeSandboxIcon url={useCodeSandboxLink()} />
       }
       file={activeFile}
-      tabs={Object.keys(files)}
+      tabs={tabs}
       lang={file.lang}
       code={file.code}
       {...props}
