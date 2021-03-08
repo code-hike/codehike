@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-frame",
-  "version": "0.0.0-6a4ea1c",
+  "version": "0.0.0-4333a8b",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -32,6 +32,6 @@
     "url": "https://opencollective.com/codehike"
   },
   "dependencies": {
-    "@code-hike/classer": "0.0.0-6a4ea1c"
+    "@code-hike/classer": "0.0.0-4333a8b"
   }
 }

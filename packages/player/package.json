@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/player",
-  "version": "0.0.0-6a4ea1c",
+  "version": "0.0.0-4333a8b",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",

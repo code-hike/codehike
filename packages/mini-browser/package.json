@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-browser",
-  "version": "0.0.0-6a4ea1c",
+  "version": "0.0.0-4333a8b",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -23,8 +23,8 @@
     "ts-jest": "^26.4.1"
   },
   "dependencies": {
-    "@code-hike/mini-frame": "0.0.0-6a4ea1c",
-    "@code-hike/classer": "0.0.0-6a4ea1c",
+    "@code-hike/mini-frame": "0.0.0-4333a8b",
+    "@code-hike/classer": "0.0.0-4333a8b",
     "use-spring": "^0.2.3"
   },
   "peerDependencies": {
