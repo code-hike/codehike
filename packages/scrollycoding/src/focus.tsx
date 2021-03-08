@@ -53,7 +53,7 @@ function FocusButton({
         isFocused ? "focus-active" : "focus-inactive"
       )}
       title="Show code"
-      onClick={() =>
+      onClick={e => {
         isFocused
           ? dispatch({ type: "reset-focus" })
           : dispatch({
@@ -61,7 +61,8 @@ function FocusButton({
               stepIndex,
               codeProps,
             })
-      }
+        e.stopPropagation()
+      }}
     >
       {children}
       <Icon isFocused={isFocused} />

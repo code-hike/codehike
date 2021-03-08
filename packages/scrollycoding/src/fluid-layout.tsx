@@ -139,7 +139,7 @@ function StepContent({
   stepIndex: number
 }) {
   const c = useClasser("ch-hike-step")
-  const { hikeState } = useFluidContext()
+  const { dispatch, hikeState } = useFluidContext()
   const focusStepIndex =
     hikeState.focusStepIndex ?? hikeState.scrollStepIndex
   const isOn = stepIndex === focusStepIndex
@@ -147,6 +147,13 @@ function StepContent({
     <Step
       as="div"
       index={stepIndex}
+      onClick={() =>
+        dispatch({
+          type: "set-focus",
+          stepIndex,
+          codeProps: {},
+        })
+      }
       className={c("", isOn ? "focused" : "unfocused")}
     >
       {stepIndex > 0 && <div className={c("gap")} />}
