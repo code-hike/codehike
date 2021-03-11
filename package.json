@@ -15,7 +15,7 @@
     "release": "auto shipit"
   },
   "devDependencies": {
-    "auto": "^10.18.4",
+    "auto": "^10.18.5",
     "lerna": "^4.0.0"
   },
   "repository": "code-hike/codehike",
@@ -25,6 +25,6 @@
       "npm",
       "released"
     ],
-    "onlyPublishWithReleaseLabel": false
+    "onlyPublishWithReleaseLabel": true
   }
 }
