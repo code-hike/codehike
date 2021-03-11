@@ -14,6 +14,7 @@
     "storybook": "lerna run --scope storybook start --stream"
   },
   "devDependencies": {
+    "auto": "^10.18.4",
     "lerna": "^4.0.0"
   }
 }

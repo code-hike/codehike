@@ -4,3 +4,4 @@ todo.md
 dist
 yarn-error.log
 .prettierignore
+.env

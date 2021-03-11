@@ -1,5 +1,6 @@
 {
   "name": "@code-hike/script",
+  "private": "true",
   "version": "0.0.1",
   "bin": {
     "x": "./script.js"
