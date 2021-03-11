@@ -9,8 +9,6 @@ function build(args) {
     "rollup.config.js"
   )
 
-  // console.log({ configPath, cwd: process.cwd(), args: process.argv.slice(2) });
-
   spawn("yarn", ["rollup", "-c", configPath, ...args], {
     stdio: "inherit",
     // cwd: "foo"

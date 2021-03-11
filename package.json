@@ -11,10 +11,20 @@
     "watch": "lerna run --since HEAD --parallel x -- watch",
     "watch-package": "lerna run --scope @*/mini-frame --include-dependencies --parallel x -- watch",
     "watch-all": "lerna run --parallel x -- watch",
-    "storybook": "lerna run --scope storybook start --stream"
+    "storybook": "lerna run --scope storybook start --stream",
+    "release": "auto shipit"
   },
   "devDependencies": {
     "auto": "^10.18.4",
     "lerna": "^4.0.0"
+  },
+  "repository": "code-hike/codehike",
+  "author": "pomber <pombopombopombo@gmail.com>",
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": false
   }
 }
