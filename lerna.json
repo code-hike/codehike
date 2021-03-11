@@ -1,8 +1,11 @@
 {
   "version": "0.3.0-next.0",
   "npmClient": "yarn",
-  "packages": [
-    "packages/*"
-  ],
-  "useWorkspaces": true
+  "packages": ["packages/*"],
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "verifyAccess": false
+    }
+  }
 }
