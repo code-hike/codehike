@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/code-diff",
-  "version": "0.0.0-4333a8b",
+  "version": "0.3.0-next.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -16,12 +16,11 @@
   "devDependencies": {
     "@code-hike/script": "0.0.1",
     "@types/diff": "^4.0.2",
-    "@types/prismjs": "^1.16.0",
     "@types/jest": "^24.0.15",
+    "@types/prismjs": "^1.16.0",
     "jest": "^26.5.3",
     "ts-jest": "^26.4.1"
   },
-  "peerDependencies": {},
   "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
   "author": "Rodrigo Pombo",
