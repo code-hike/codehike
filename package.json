@@ -25,6 +25,6 @@
       "npm",
       "released"
     ],
-    "onlyPublishWithReleaseLabel": true
+    "onlyPublishWithReleaseLabel": false
   }
 }
