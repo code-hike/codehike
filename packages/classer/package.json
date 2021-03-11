@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "publish-canary": "yarn publish --tag canary --access public",
-    "script": "ch-script"
+    "x": "x"
   },
   "devDependencies": {
     "@code-hike/script": "0.0.1",

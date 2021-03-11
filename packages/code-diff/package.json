@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "publish-canary": "yarn publish --tag canary --access public",
-    "script": "ch-script",
+    "x": "x",
     "test": "jest",
     "test-watch": "jest --watch --updateSnapshot"
   },

@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "script": "ch-script",
+    "x": "x",
     "publish-canary": "yarn publish --tag canary --access public"
   },
   "devDependencies": {

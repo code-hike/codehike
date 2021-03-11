@@ -7,16 +7,13 @@
     ]
   },
   "scripts": {
-    "dev": "yarn workspace react-website dev",
-    "storybook": "yarn workspace storybook start",
-    "build": "yarn wsrun -m --stages -c script build",
-    "watch": "yarn wsrun -m -c script watch",
-    "new-version": "yarn wsrun -m --serial -c script version",
-    "watch-package": "yarn wsrun -p '@code-hike/scrollycoding' -r script watch ",
-    "publish-canary": "yarn wsrun -p '@code-hike/*' --exclude '@code-hike/build' --serial -c publish-canary"
+    "build": "lerna run --stream x -- build",
+    "watch": "lerna run --since HEAD --parallel x -- watch",
+    "watch-package": "lerna run --scope @*/mini-frame --include-dependencies --parallel x -- watch",
+    "watch-all": "lerna run --parallel x -- watch",
+    "storybook": "lerna run --scope storybook start --stream"
   },
   "devDependencies": {
-    "wsrun": "^5.2.4"
-  },
-  "version": "0.0.0"
+    "lerna": "^4.0.0"
+  }
 }

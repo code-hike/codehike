@@ -2,7 +2,7 @@
   "name": "@code-hike/script",
   "version": "0.0.1",
   "bin": {
-    "ch-script": "./script.js"
+    "x": "./script.js"
   },
   "devDependencies": {
     "autoprefixer": "^9.8.2",
