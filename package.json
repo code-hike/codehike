@@ -15,7 +15,7 @@
     "release": "auto shipit"
   },
   "devDependencies": {
-    "auto": "^10.18.5",
+    "auto": "^10.18.7",
     "lerna": "^4.0.0"
   },
   "repository": "code-hike/codehike",
