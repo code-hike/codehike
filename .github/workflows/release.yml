@@ -1,10 +1,7 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
-      - next
+  push
   pull_request:
     types: [opened, labeled]
     branches:
