@@ -1,6 +1,12 @@
 name: Release
 
-on: [push]
+on:
+  push:
+  pull_request:
+    types: [opened, labeled]
+    branches:
+      - main
+      - next
 
 jobs:
   release:
