@@ -7,7 +7,7 @@
   border-right: 1px solid rgb(37, 37, 38);
   width: 120px;
   min-width: fit-content;
-  flex-shrink: 0;
+  flex-shrink: 1;
   position: relative;
   display: flex;
   white-space: nowrap;
@@ -18,11 +18,13 @@
   padding-right: 15px;
   background-color: rgb(45, 45, 45);
   color: rgba(255, 255, 255, 0.5);
+  min-width: 0;
 }
 
 .ch-editor-tab-active {
   background-color: rgb(30, 30, 30);
   color: rgb(255, 255, 255);
+  min-width: unset;
 }
 
 .ch-editor-tab > div {
@@ -31,6 +33,7 @@
   font-size: 12px;
   line-height: 1.4em;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /** body */

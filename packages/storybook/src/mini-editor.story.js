@@ -280,6 +280,63 @@ function CodeSandboxIcon() {
   )
 }
 
+export const manyTabs = () => {
+  return (
+    <Page>
+      <h2>Three tabs</h2>
+      <MiniEditor
+        style={{ height: 200 }}
+        lang="js"
+        file="index.js"
+        steps={[{ code: code1 }]}
+        progress={0}
+        tabs={["index.js", "two.css", "three.html"]}
+      />
+      <h2>With button</h2>
+      <MiniEditor
+        style={{ height: 200 }}
+        lang="js"
+        file="index.js"
+        steps={[{ code: code1 }]}
+        progress={0}
+        tabs={["index.js", "two.css", "three.html"]}
+        button={<CodeSandboxIcon />}
+      />
+      <h2>Long name</h2>
+      <MiniEditor
+        style={{ height: 200 }}
+        lang="js"
+        file="index-with-long-name.js"
+        steps={[{ code: code1 }]}
+        progress={0}
+        tabs={[
+          "index-with-long-name.js",
+          "two.css",
+          "three.html",
+        ]}
+        button={<CodeSandboxIcon />}
+      />
+      <h2>Six tabs</h2>
+      <MiniEditor
+        style={{ height: 200 }}
+        lang="js"
+        file="two.js"
+        steps={[{ code: code1 }]}
+        progress={0}
+        tabs={[
+          "index.js",
+          "two.js",
+          "three.html",
+          "four.js",
+          "five.css",
+          "six.html",
+        ]}
+        button={<CodeSandboxIcon />}
+      />
+    </Page>
+  )
+}
+
 export const x = () => {
   return (
     <WithProgress length={xprops.steps.length}>
