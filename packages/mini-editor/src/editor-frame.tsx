@@ -38,7 +38,6 @@ function EditorFrame({
           files={files}
           active={active}
           button={button}
-          classes={classes}
         />
       }
       classes={classes}
@@ -55,13 +54,11 @@ type TabsContainerProps = {
   files: string[]
   active: string
   button?: React.ReactNode
-  classes?: Classes
 }
 function TabsContainer({
   files,
   active,
   button,
-  classes,
 }: TabsContainerProps) {
   const c = useClasser("ch-editor-tab")
   return (
@@ -70,6 +67,7 @@ function TabsContainer({
       {files.map(fileName => (
         <div
           key={fileName}
+          title={fileName}
           className={c(
             "",
             fileName === active ? "active" : "inactive"

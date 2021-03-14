@@ -8,10 +8,11 @@
   },
   "scripts": {
     "build": "lerna run --stream x -- build",
-    "watch": "lerna run --since HEAD --parallel x -- watch",
+    "watch": "lerna run --since HEAD --exclude-dependents --parallel x -- watch",
     "watch-package": "lerna run --scope @*/mini-frame --include-dependencies --parallel x -- watch",
     "watch-all": "lerna run --parallel x -- watch",
     "storybook": "lerna run --scope storybook start --stream",
+    "dev": "lerna run --scope react-website dev --stream",
     "release": "auto shipit"
   },
   "devDependencies": {

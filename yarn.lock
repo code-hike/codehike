@@ -1602,19 +1602,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@code-hike/classer@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/classer/-/classer-0.0.0-4333a8b.tgz#4e2bb3a304453b5ebcc8fdfaa976f4f2467016a6"
-  integrity sha512-mMrpIUZuI9X2kwpA9iGvO8zobC5ygYMCpieqvGKLAhZ8Tk+SZJW/i8AMPAqMPt0nGeG4TiEa9spKSVsnID+iTw==
-
-"@code-hike/code-diff@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/code-diff/-/code-diff-0.0.0-4333a8b.tgz#cf88546357a181103658d7d46721a8f8185e76d8"
-  integrity sha512-CNuaeVywnz4+FLQv7ogDfhzgqgOmbbDwCA4FwFFMCscDk39hw+LdcOrY+f2OFk1A/Q75gS9s3TRl4eH94VBIng==
-  dependencies:
-    diff "^4.0.2"
-    prismjs "^1.22.0"
-
 "@code-hike/code-diff@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/code-diff/-/code-diff-0.0.0-6a7ffe8.tgz#b5c635bc013abdd71f6503dc3b6cb17a9978bd7c"
@@ -1623,33 +1610,12 @@
     diff "^4.0.2"
     prismjs "^1.22.0"
 
-"@code-hike/mini-browser@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-browser/-/mini-browser-0.0.0-4333a8b.tgz#fb1cb2e5e96e002cc866d89f6c0f129ed0376c0e"
-  integrity sha512-QImpj5/M2HzdKlY/3Fc8+Vz8tqw+UNpsrEgtoXsSDGYJdoL6TnVBYpn/5R99FtYPNs62nRn8+jHtYIITXYtNfQ==
-  dependencies:
-    "@code-hike/classer" "0.0.0-4333a8b"
-    "@code-hike/mini-frame" "0.0.0-4333a8b"
-    use-spring "^0.2.3"
-
 "@code-hike/mini-browser@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/mini-browser/-/mini-browser-0.0.0-6a7ffe8.tgz#9f15f984b8abc28354ba2f036ce394100310de8f"
   integrity sha512-SwxCbz7kJFVaGixQtv+NT/VTf7ZeDUI4AIhqzGCC1EyGAHxnc2dKkM4qsHITOUFARQYVRipDJ4jeffudP/RzGg==
   dependencies:
     "@code-hike/mini-frame" "0.0.0-6a7ffe8"
-
-"@code-hike/mini-editor@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-editor/-/mini-editor-0.0.0-4333a8b.tgz#0c6f66edf84e33222dbfbf8f662928bf56c6eceb"
-  integrity sha512-uMb9dK6JklllNEwzKU3tFxUG2J0+DIivX2d6xeICUugBLXBcQH9fPQzWudBR9zK3qBDzIYyvrj+ZrvY7qgnaNw==
-  dependencies:
-    "@code-hike/classer" "0.0.0-4333a8b"
-    "@code-hike/code-diff" "0.0.0-4333a8b"
-    "@code-hike/mini-frame" "0.0.0-4333a8b"
-    "@code-hike/mini-terminal" "0.0.0-4333a8b"
-    "@code-hike/smooth-lines" "0.0.0-4333a8b"
-    use-spring "^0.2.3"
 
 "@code-hike/mini-editor@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
@@ -1661,24 +1627,10 @@
     "@code-hike/mini-terminal" "0.0.0-6a7ffe8"
     "@code-hike/smooth-lines" "0.0.0-6a7ffe8"
 
-"@code-hike/mini-frame@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-frame/-/mini-frame-0.0.0-4333a8b.tgz#92068b8da326ebbd6a77fae2d7d92f10d35fc985"
-  integrity sha512-5yr4LZAqMpHtOm3ASkQNdo7aYJ1SlZ94f/trqQD9bMTuwaTH0zmywoL6yg1LMUBkyhnHs9aZ4mbNaLFyrdsJ6Q==
-  dependencies:
-    "@code-hike/classer" "0.0.0-4333a8b"
-
 "@code-hike/mini-frame@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/mini-frame/-/mini-frame-0.0.0-6a7ffe8.tgz#f757e7c39ea33b656249eda2af8a29b18f0d8f65"
   integrity sha512-DVlpgTIRirsTqr2yZnDDTt70i1yDgKYOgPtst3oQk8AOnlZSHs17FhBE0/EnsHjdNqOTQLkJfikRo10/bOBd+Q==
-
-"@code-hike/mini-terminal@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/mini-terminal/-/mini-terminal-0.0.0-4333a8b.tgz#43f86d206e19dc4a99ecd0db9573550509c0cf20"
-  integrity sha512-y8T6KF06b2z8dnivzN7m16FC3CQr0CYfTnR7M1FtEqg0hkkUMYffJPT18tjiw9JSVVHSJ/Gdg6k75+BJZKD2lw==
-  dependencies:
-    "@code-hike/mini-frame" "0.0.0-4333a8b"
 
 "@code-hike/mini-terminal@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
@@ -1687,33 +1639,10 @@
   dependencies:
     "@code-hike/mini-frame" "0.0.0-6a7ffe8"
 
-"@code-hike/scroller@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/scroller/-/scroller-0.0.0-4333a8b.tgz#07a0c8a6981bb593441d581fb3952205beb8ba74"
-  integrity sha512-0ToJiEPWZM+5swz6+GSYi3NU4dZycgPfQE5rwJ3NbupqMhICt8eGzSfrdoEaQVyFnZgAbSW4kE8r0eU+TY9dHA==
-
 "@code-hike/scroller@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
   resolved "https://registry.yarnpkg.com/@code-hike/scroller/-/scroller-0.0.0-6a7ffe8.tgz#670f61a88083be803da7fea12fab81e6e5cc8506"
   integrity sha512-Xpmgq6MaWHD/PZ52va299HDF47TrlHQot7T9E1R/xxIvVZs9YWrwRb66z3Nzp3fQMNboXLFaJu6TZovT8nv+rQ==
-
-"@code-hike/scrollycoding@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/scrollycoding/-/scrollycoding-0.0.0-4333a8b.tgz#6942887e71a7c36912d8756fcd49a30f714b291b"
-  integrity sha512-ZkpUqT0+0hj6NKX26aWCcKj+sE/8mWgXWKlBEpkUPkFtykonAfyM0z2z7s0FtqSrAhMnDNqCPhRJdTQUdoW8nA==
-  dependencies:
-    "@code-hike/classer" "0.0.0-4333a8b"
-    "@code-hike/mini-browser" "0.0.0-4333a8b"
-    "@code-hike/mini-editor" "0.0.0-4333a8b"
-    "@code-hike/scroller" "0.0.0-4333a8b"
-    object-hash "^2.1.1"
-    react-smooshpack "1.0.0-alpha-31"
-    server-side-media-queries-for-react "^0.0.5"
-
-"@code-hike/smooth-lines@0.0.0-4333a8b":
-  version "0.0.0-4333a8b"
-  resolved "https://registry.yarnpkg.com/@code-hike/smooth-lines/-/smooth-lines-0.0.0-4333a8b.tgz#131533ec7d3fbdbb23c116a788a84342fafd9ed1"
-  integrity sha512-V4Q/2PVUbdEyeIhcAlVz23sbag6pKObv/L9JDkRM7GB0sVIA/7X3akPOLXpH82KVVMuq6h6dZvoOSk4FzPxAUA==
 
 "@code-hike/smooth-lines@0.0.0-6a7ffe8":
   version "0.0.0-6a7ffe8"
