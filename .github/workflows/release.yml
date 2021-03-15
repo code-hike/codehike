@@ -2,11 +2,6 @@ name: Release
 
 on:
   push:
-  pull_request:
-    types: [opened, labeled]
-    branches:
-      - main
-      - next
 
 jobs:
   release:
@@ -36,6 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          yarn install --frozen-lockfile
+          yarn install --frozen-lockfile 2>&1 | grep -v '^[warning|info]' 
           yarn build
           yarn release
