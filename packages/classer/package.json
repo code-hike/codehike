@@ -1,14 +1,13 @@
 {
   "name": "@code-hike/classer",
   "version": "0.3.0-next.0",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "publish-canary": "yarn publish --tag canary --access public",
     "x": "x"
   },
   "devDependencies": {

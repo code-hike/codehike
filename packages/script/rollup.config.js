@@ -20,21 +20,21 @@ const plugins = [
 const createConfig = filename => ({
   input: `src/${filename}.tsx`,
   output: [
-    {
-      file: `./dist/${filename}.js`,
-      format: "umd",
-      name: "ch", //todo get by parameter
-    },
+    // {
+    //   file: `./dist/${filename}.js`,
+    //   format: "umd",
+    //   name: "ch", //todo get by parameter
+    // },
     {
       file: `./dist/${filename}.cjs.js`,
       format: "cjs",
-      name: "ch", //todo get by parameter
     },
     {
       file: `./dist/${filename}.esm.js`,
       format: "es",
     },
   ],
+  // external: ["react"],
   plugins,
 })
 

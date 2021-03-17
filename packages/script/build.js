@@ -9,10 +9,14 @@ function build(args) {
     "rollup.config.js"
   )
 
-  spawn("yarn", ["rollup", "-c", configPath, ...args], {
-    stdio: "inherit",
-    // cwd: "foo"
-  })
+  spawn(
+    "yarn",
+    ["rollup", "--silent", "-c", configPath, ...args],
+    {
+      stdio: "inherit",
+      // cwd: "foo"
+    }
+  )
 }
 
 module.exports = {
