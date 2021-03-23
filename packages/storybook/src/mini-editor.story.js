@@ -52,7 +52,7 @@ export const changeWidth = () => {
 console.log(2)
 console.log(1)`
   const code2 = `console.log(1)
-console.log(100000000, 100000000)
+console.log(10000000000000000, 100000000000000)
 console.log(1)`
   const steps = [
     { code: code1, focus: "2" },
