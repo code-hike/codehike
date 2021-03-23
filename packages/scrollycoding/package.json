@@ -22,8 +22,8 @@
     "@code-hike/mini-browser": "^0.3.0-next.0",
     "@code-hike/mini-editor": "^0.3.0-next.0",
     "@code-hike/scroller": "^0.3.0-next.0",
+    "@codesandbox/sandpack-react": "^0.0.1",
     "object-hash": "^2.1.1",
-    "react-smooshpack": "1.0.0-alpha-31",
     "server-side-media-queries-for-react": "^0.0.5"
   },
   "peerDependencies": {

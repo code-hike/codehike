@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import {
   SandpackFiles,
   SandpackProvider,
-} from "react-smooshpack"
+} from "@codesandbox/sandpack-react"
 import {
   CodeFiles,
   CodeProps,

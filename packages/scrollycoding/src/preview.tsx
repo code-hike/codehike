@@ -2,9 +2,10 @@ import * as React from "react"
 import {
   SandpackPreview,
   useCodeSandboxLink,
-} from "react-smooshpack"
+} from "@codesandbox/sandpack-react"
 import { MiniBrowser } from "@code-hike/mini-browser"
 import { PreviewProps } from "./hike-context"
+import { LoadingOverlay } from "./preview-loader"
 
 export { Preview, PreviewProps }
 
@@ -12,17 +13,20 @@ function Preview({ filesHash, ...props }: PreviewProps) {
   const link = useCodeSandboxLink()
   const preview = React.useMemo(() => {
     return (
-      <SandpackPreview
-        showNavigator={false}
-        showRefreshButton={false}
-        showOpenInCodeSandbox={false}
-        customStyle={{
-          minHeight: "unset",
-          height: "100%",
-          border: 0,
-          margin: 0,
-        }}
-      />
+      <>
+        <LoadingOverlay />
+        <SandpackPreview
+          showNavigator={false}
+          showRefreshButton={false}
+          showOpenInCodeSandbox={false}
+          customStyle={{
+            minHeight: "unset",
+            height: "100%",
+            border: 0,
+            margin: 0,
+          }}
+        />
+      </>
     )
   }, [link])
 
