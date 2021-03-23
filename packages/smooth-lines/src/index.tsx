@@ -3,6 +3,7 @@ import {
   Line,
   useLineTransitions,
 } from "./line-transitions"
+import { Lines } from "./lines"
 import { easing, tween } from "./tween"
 
 export { SmoothLines }
@@ -19,10 +20,9 @@ type Props = {
   nextFocus: number[]
   overscroll?: boolean
   center?: boolean
+  minZoom?: number
   maxZoom?: number
 }
-
-const OFF_OPACITY = 0.33
 
 function SmoothLines({
   progress,
@@ -35,47 +35,12 @@ function SmoothLines({
   prevFocus,
   nextFocus,
   center,
+  minZoom = 0,
   maxZoom = 1.2,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
-  const prevExtremes = [
-    Math.min(...prevFocus),
-    Math.max(...prevFocus),
-  ]
-  const nextExtremes = [
-    Math.min(...nextFocus),
-    Math.max(...nextFocus),
-  ]
-  const prevCenter =
-    (prevExtremes[0] + prevExtremes[1] + 1) / 2
-  const nextCenter =
-    (nextExtremes[0] + nextExtremes[1] + 1) / 2
-  const yCenter =
-    tween(
-      {
-        fixed: false,
-        // TODO use verticalInterval
-        interval: [0, 1],
-        extremes: [prevCenter, nextCenter],
-        ease: easing.easeInOutCubic,
-      },
-      progress
-    ) * lineHeight
 
-  const prevFocusHeight =
-    (prevExtremes[1] - prevExtremes[0] + 3) * lineHeight
-  const nextFocusHeight =
-    (nextExtremes[1] - nextExtremes[0] + 3) * lineHeight
-  const focusHeight = tween(
-    {
-      fixed: false,
-      interval: [0, 1],
-      extremes: [prevFocusHeight, nextFocusHeight],
-    },
-    progress
-  )
-
-  const lw = Array.isArray(lineWidth)
+  const focusWidth = Array.isArray(lineWidth)
     ? tween(
         {
           fixed: false,
@@ -85,14 +50,88 @@ function SmoothLines({
         progress
       )
     : lineWidth
+
+  const prevExtremes = [
+    Math.min(...prevFocus),
+    Math.max(...prevFocus),
+  ]
+  const nextExtremes = [
+    Math.min(...nextFocus),
+    Math.max(...nextFocus),
+  ]
+  const prevFocusHeight =
+    prevExtremes[1] - prevExtremes[0] + 3
+  const nextFocusHeight =
+    nextExtremes[1] - nextExtremes[0] + 3
+  const focusHeight =
+    tween(
+      {
+        fixed: false,
+        interval: [0, 1],
+        extremes: [prevFocusHeight, nextFocusHeight],
+        ease: easing.easeInOutCubic,
+      },
+      progress
+    ) * lineHeight
+
   const zoom = Math.min(
-    containerWidth / lw,
+    containerWidth / focusWidth,
     containerHeight / focusHeight,
     maxZoom
   )
 
+  const contentHeight =
+    tween(
+      {
+        fixed: false,
+        interval: [0, 1],
+        extremes: [prevLines.length, nextLines.length],
+        ease: easing.easeInOutCubic,
+      },
+      progress
+    ) *
+    lineHeight *
+    zoom
+  const focusStart =
+    tween(
+      {
+        fixed: false,
+        interval: [0, 1],
+        extremes: [
+          prevExtremes[0] - 1,
+          nextExtremes[0] - 1,
+        ],
+        ease: easing.easeInOutCubic,
+      },
+      progress
+    ) *
+    lineHeight *
+    zoom
+  const focusEnd =
+    tween(
+      {
+        fixed: false,
+        interval: [0, 1],
+        extremes: [
+          prevExtremes[1] + 2,
+          nextExtremes[1] + 2,
+        ],
+        ease: easing.easeInOutCubic,
+      },
+      progress
+    ) *
+    lineHeight *
+    zoom
+
+  const dy = getDY(
+    containerHeight,
+    contentHeight,
+    focusStart,
+    focusEnd
+  )
+
   const left = center
-    ? containerWidth / 2 - (lw * zoom) / 2
+    ? containerWidth / 2 - (focusWidth * zoom) / 2
     : 0
 
   const prevFocusKeys = prevFocus.map(
@@ -103,77 +142,88 @@ function SmoothLines({
   )
 
   return (
+    <Container
+      width={containerWidth}
+      height={containerHeight}
+    >
+      <Content dx={left} dy={dy} scale={zoom}>
+        <Lines
+          lines={lines}
+          prevFocusKeys={prevFocusKeys}
+          nextFocusKeys={nextFocusKeys}
+          focusWidth={focusWidth}
+          lineHeight={lineHeight}
+          progress={progress}
+        />
+      </Content>
+    </Container>
+  )
+}
+
+function getDY(
+  containerHeight: number,
+  contentHeight: number,
+  focusStart: number,
+  focusEnd: number
+) {
+  if (containerHeight > contentHeight) {
+    return (containerHeight - contentHeight) / 2
+  }
+  const focusCenter = (focusEnd + focusStart) / 2
+  return clamp(
+    containerHeight / 2 - focusCenter,
+    containerHeight - contentHeight,
+    0
+  )
+}
+
+function Container({
+  width,
+  height,
+  children,
+}: {
+  width: number
+  height: number
+  children: React.ReactNode
+}) {
+  return (
     <div
       style={{
-        width: containerWidth,
-        height: containerHeight,
-        // background: "salmon",
+        width,
+        height,
         position: "relative",
-        // outline: "1px solid pink",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          transform: `translateY(${
-            containerHeight / 2 - yCenter * zoom
-          }px) translateX(${left}px) scale(${zoom})`,
-          // outline: "5px solid green",
-        }}
-      >
-        {lines.map(
-          ({
-            element,
-            key,
-            tweenX,
-            tweenY,
-            elementWithProgress,
-          }) => {
-            const dx = tween(tweenX, progress)
-            const dy = tween(tweenY, progress)
-
-            const opacity =
-              tween(
-                {
-                  fixed: false,
-                  extremes: [
-                    prevFocusKeys.includes(key)
-                      ? 0.99
-                      : OFF_OPACITY,
-                    nextFocusKeys.includes(key)
-                      ? 0.99
-                      : OFF_OPACITY,
-                  ],
-                  interval: [0, 1],
-                },
-                progress
-              ) -
-              Math.abs(dx) * 1
-
-            return (
-              <div
-                key={key}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  transform: `translate(${dx * lw}px, ${
-                    dy * lineHeight
-                  }px)`,
-                  opacity,
-                  width: lw,
-                }}
-              >
-                {elementWithProgress
-                  ? elementWithProgress(progress)
-                  : element}
-              </div>
-            )
-          }
-        )}
-      </div>
+      {children}
     </div>
   )
+}
+
+function Content({
+  dx,
+  dy,
+  scale,
+  children,
+}: {
+  dx: number
+  dy: number
+  scale: number
+  children: React.ReactNode
+}) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function clamp(num: number, min: number, max: number) {
+  return num <= min ? min : num >= max ? max : num
 }

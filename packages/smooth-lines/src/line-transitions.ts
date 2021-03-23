@@ -24,7 +24,7 @@ type LineData = {
   exitIndex: number | null
 }
 
-type LineTransition = {
+export type LineTransition = {
   element: React.ReactNode
   elementWithProgress?: (progress: number) => Element
   key: number

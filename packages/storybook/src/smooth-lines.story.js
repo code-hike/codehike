@@ -21,18 +21,25 @@ export default {
 export const basic = ({ center, containerWidth }) => (
   <WithProgress>
     {progress => (
-      <SmoothLines
-        center={center}
-        progress={progress}
-        containerWidth={containerWidth}
-        containerHeight={100 + progress * 30}
-        prevLines={prevLines}
-        nextLines={nextLines}
-        lineHeight={lineHeight}
-        lineWidth={lineWidth}
-        prevFocus={[1, 1]}
-        nextFocus={[3, 11]}
-      />
+      <div
+        style={{
+          outline: "1px solid salmon",
+          alignSelf: "center",
+        }}
+      >
+        <SmoothLines
+          center={center}
+          progress={progress}
+          containerWidth={containerWidth}
+          containerHeight={100 + progress * 30}
+          prevLines={prevLines}
+          nextLines={nextLines}
+          lineHeight={lineHeight}
+          lineWidth={lineWidth}
+          prevFocus={[1, 1]}
+          nextFocus={[3, 11]}
+        />
+      </div>
     )}
   </WithProgress>
 )
@@ -43,28 +50,35 @@ export const verticalCenter = ({
 }) => (
   <WithProgress>
     {progress => (
-      <SmoothLines
-        center={center}
-        progress={progress}
-        containerWidth={containerWidth}
-        containerHeight={100 + progress * 50}
-        prevLines={[
-          {
-            element: <Line height={100}>One</Line>,
-            hey: 1,
-          },
-        ]}
-        nextLines={[
-          {
-            element: <Line height={100}>One</Line>,
-            hey: 1,
-          },
-        ]}
-        lineHeight={100}
-        lineWidth={lineWidth}
-        prevFocus={[0, 0]}
-        nextFocus={[0, 0]}
-      />
+      <div
+        style={{
+          outline: "1px solid salmon",
+          alignSelf: "center",
+        }}
+      >
+        <SmoothLines
+          center={center}
+          progress={progress}
+          containerWidth={containerWidth}
+          containerHeight={100 + progress * 50}
+          prevLines={[
+            {
+              element: <Line height={100}>One</Line>,
+              hey: 1,
+            },
+          ]}
+          nextLines={[
+            {
+              element: <Line height={100}>One</Line>,
+              hey: 1,
+            },
+          ]}
+          lineHeight={100}
+          lineWidth={lineWidth}
+          prevFocus={[0, 0]}
+          nextFocus={[0, 0]}
+        />
+      </div>
     )}
   </WithProgress>
 )
@@ -95,18 +109,25 @@ export const dynamicLineWidth = ({
   return (
     <WithProgress>
       {progress => (
-        <SmoothLines
-          center={center}
-          progress={progress}
-          containerWidth={containerWidth}
-          containerHeight={100 + progress * 30}
-          prevLines={prevLines}
-          nextLines={nextLines}
-          lineHeight={lineHeight}
-          lineWidth={[lineWidth, lineWidth * 2]}
-          prevFocus={[1, 1]}
-          nextFocus={[2, 2]}
-        />
+        <div
+          style={{
+            outline: "1px solid salmon",
+            alignSelf: "center",
+          }}
+        >
+          <SmoothLines
+            center={center}
+            progress={progress}
+            containerWidth={containerWidth}
+            containerHeight={100 + progress * 30}
+            prevLines={prevLines}
+            nextLines={nextLines}
+            lineHeight={lineHeight}
+            lineWidth={[lineWidth, lineWidth * 2]}
+            prevFocus={[1, 1]}
+            nextFocus={[2, 2]}
+          />
+        </div>
       )}
     </WithProgress>
   )
