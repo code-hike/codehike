@@ -35,104 +35,14 @@ function SmoothLines({
   prevFocus,
   nextFocus,
   center,
-  minZoom = 0,
+  minZoom = 0, // TODO use minZoom
   maxZoom = 1.2,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
 
   const focusWidth = Array.isArray(lineWidth)
-    ? tween(
-        {
-          fixed: false,
-          interval: [0, 1],
-          extremes: lineWidth,
-        },
-        progress
-      )
+    ? tweenProp(lineWidth[0], lineWidth[1], progress)
     : lineWidth
-
-  const prevExtremes = [
-    Math.min(...prevFocus),
-    Math.max(...prevFocus),
-  ]
-  const nextExtremes = [
-    Math.min(...nextFocus),
-    Math.max(...nextFocus),
-  ]
-  const prevFocusHeight =
-    prevExtremes[1] - prevExtremes[0] + 3
-  const nextFocusHeight =
-    nextExtremes[1] - nextExtremes[0] + 3
-  const focusHeight =
-    tween(
-      {
-        fixed: false,
-        interval: [0, 1],
-        extremes: [prevFocusHeight, nextFocusHeight],
-        ease: easing.easeInOutCubic,
-      },
-      progress
-    ) * lineHeight
-
-  const zoom = Math.min(
-    containerWidth / focusWidth,
-    containerHeight / focusHeight,
-    maxZoom
-  )
-
-  const contentHeight =
-    tween(
-      {
-        fixed: false,
-        interval: [0, 1],
-        extremes: [prevLines.length, nextLines.length],
-        ease: easing.easeInOutCubic,
-      },
-      progress
-    ) *
-    lineHeight *
-    zoom
-  const focusStart =
-    tween(
-      {
-        fixed: false,
-        interval: [0, 1],
-        extremes: [
-          prevExtremes[0] - 1,
-          nextExtremes[0] - 1,
-        ],
-        ease: easing.easeInOutCubic,
-      },
-      progress
-    ) *
-    lineHeight *
-    zoom
-  const focusEnd =
-    tween(
-      {
-        fixed: false,
-        interval: [0, 1],
-        extremes: [
-          prevExtremes[1] + 2,
-          nextExtremes[1] + 2,
-        ],
-        ease: easing.easeInOutCubic,
-      },
-      progress
-    ) *
-    lineHeight *
-    zoom
-
-  const dy = getDY(
-    containerHeight,
-    contentHeight,
-    focusStart,
-    focusEnd
-  )
-
-  const left = center
-    ? containerWidth / 2 - (focusWidth * zoom) / 2
-    : 0
 
   const prevFocusKeys = prevFocus.map(
     index => prevLines[index]?.key
@@ -141,12 +51,41 @@ function SmoothLines({
     index => nextLines[index]?.key
   )
 
+  const [prevZoom, prevDX, prevDY] = getContentProps({
+    containerWidth,
+    containerHeight,
+    lineWidth: Array.isArray(lineWidth)
+      ? lineWidth[0]
+      : lineWidth,
+    lineHeight,
+    maxZoom,
+    horizontalCenter: !!center,
+    focusLineIndexList: prevFocus,
+    originalContentHeight: prevLines.length * lineHeight,
+  })
+  const [nextZoom, nextDX, nextDY] = getContentProps({
+    containerWidth,
+    containerHeight,
+    lineWidth: Array.isArray(lineWidth)
+      ? lineWidth[1]
+      : lineWidth,
+    lineHeight,
+    maxZoom,
+    horizontalCenter: !!center,
+    focusLineIndexList: nextFocus,
+    originalContentHeight: nextLines.length * lineHeight,
+  })
+
+  const zoom = tweenProp(prevZoom, nextZoom, progress)
+  const dx = tweenProp(prevDX, nextDX, progress)
+  const dy = tweenProp(prevDY, nextDY, progress)
+
   return (
     <Container
       width={containerWidth}
       height={containerHeight}
     >
-      <Content dx={left} dy={dy} scale={zoom}>
+      <Content dx={dx} dy={dy} scale={zoom}>
         <Lines
           lines={lines}
           prevFocusKeys={prevFocusKeys}
@@ -160,21 +99,57 @@ function SmoothLines({
   )
 }
 
-function getDY(
-  containerHeight: number,
-  contentHeight: number,
-  focusStart: number,
-  focusEnd: number
-) {
-  if (containerHeight > contentHeight) {
-    return (containerHeight - contentHeight) / 2
-  }
-  const focusCenter = (focusEnd + focusStart) / 2
-  return clamp(
-    containerHeight / 2 - focusCenter,
-    containerHeight - contentHeight,
-    0
+function getContentProps({
+  containerWidth,
+  containerHeight,
+  lineWidth,
+  lineHeight,
+  maxZoom,
+  focusLineIndexList,
+  originalContentHeight,
+  horizontalCenter,
+}: {
+  containerWidth: number
+  containerHeight: number
+  lineWidth: number
+  lineHeight: number
+  maxZoom: number
+  focusLineIndexList: number[]
+  originalContentHeight: number
+  horizontalCenter: boolean
+}) {
+  const extremes = [
+    Math.min(...focusLineIndexList),
+    Math.max(...focusLineIndexList),
+  ]
+  const originalFocusHeight =
+    (extremes[1] - extremes[0] + 3) * lineHeight
+  const zoom = Math.min(
+    containerWidth / lineWidth,
+    containerHeight / originalFocusHeight,
+    maxZoom
   )
+
+  const contentHeight = originalContentHeight * zoom
+
+  const focusStart = (extremes[0] - 1) * lineHeight * zoom
+  const focusEnd = (extremes[1] + 2) * lineHeight * zoom
+  const focusCenter = (focusEnd + focusStart) / 2
+
+  const dy =
+    containerHeight > contentHeight
+      ? (containerHeight - contentHeight) / 2
+      : clamp(
+          containerHeight / 2 - focusCenter,
+          containerHeight - contentHeight,
+          0
+        )
+
+  const dx = horizontalCenter
+    ? containerWidth / 2 - (lineWidth * zoom) / 2
+    : 0
+
+  return [zoom, dx, dy] as const
 }
 
 function Container({
@@ -221,6 +196,22 @@ function Content({
     >
       {children}
     </div>
+  )
+}
+
+function tweenProp(
+  start: number,
+  end: number,
+  progress: number
+) {
+  return tween(
+    {
+      fixed: false,
+      interval: [0, 1],
+      extremes: [start, end],
+      ease: easing.easeInOutCubic,
+    },
+    progress
   )
 }
 
