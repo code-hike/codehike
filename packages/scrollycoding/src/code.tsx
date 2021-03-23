@@ -1,7 +1,7 @@
 import * as React from "react"
 import { MiniEditorWithState } from "@code-hike/mini-editor"
 import { CodeProps } from "./hike-context"
-import { useCodeSandboxLink } from "react-smooshpack"
+import { useCodeSandboxLink } from "@codesandbox/sandpack-react"
 
 export { Code }
 

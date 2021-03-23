@@ -4,7 +4,7 @@ import { StatefulEditorProps } from "@code-hike/mini-editor"
 import {
   SandpackPredefinedTemplate,
   SandpackSetup,
-} from "react-smooshpack"
+} from "@codesandbox/sandpack-react"
 import React from "react"
 
 export interface Preset {

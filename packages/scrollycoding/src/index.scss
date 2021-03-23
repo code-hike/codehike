@@ -6,11 +6,6 @@
   --sp-colors-fg-default: #999999;
 }
 
-.ch-hike .sp-preview-frame {
-  height: 100%;
-  display: flex;
-}
-
 .ch-hike-fluid {
   display: flex;
   --sticker-height: 650px;
@@ -110,3 +105,46 @@
 }
 
 @import "focus.scss";
+@import "preview-loader.scss";
+
+// sandpack
+
+.ch-hike .sp-preview-frame {
+  height: 100%;
+  display: flex;
+}
+
+.ch-hike .sp-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 0;
+  overflow: auto;
+  height: 100%;
+  z-index: 3;
+}
+
+.ch-hike .sp-loading {
+  display: none;
+}
+
+.ch-hike .sp-error {
+  box-sizing: border-box;
+  padding: 16px;
+  white-space: pre-wrap;
+  font-family: "Fira Mono", "DejaVu Sans Mono", Menlo,
+    Consolas, "Liberation Mono", Monaco, "Lucida Console",
+    monospace;
+  background-color: rgb(255, 205, 202);
+}
+
+.ch-hike .sp-error-message {
+  color: #811e18;
+  font-size: 0.75em;
+}
+
+.ch-hike .sp-preview-iframe {
+  min-height: unset;
+}
