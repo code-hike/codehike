@@ -15,10 +15,23 @@ export default {
       },
       defaultValue: 150,
     },
+    minZoom: {
+      control: {
+        type: "range",
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
+      defaultValue: 0.2,
+    },
   },
 }
 
-export const basic = ({ center, containerWidth }) => (
+export const basic = ({
+  center,
+  containerWidth,
+  minZoom,
+}) => (
   <WithProgress>
     {progress => (
       <div
@@ -38,6 +51,7 @@ export const basic = ({ center, containerWidth }) => (
           lineWidth={lineWidth}
           prevFocus={[1, 1]}
           nextFocus={[3, 11]}
+          minZoom={minZoom}
         />
       </div>
     )}
@@ -86,6 +100,7 @@ export const verticalCenter = ({
 export const dynamicLineWidth = ({
   center,
   containerWidth,
+  minZoom,
 }) => {
   const prevLines = [
     { element: <Line>One</Line>, key: 1 },
@@ -126,6 +141,7 @@ export const dynamicLineWidth = ({
             lineWidth={[lineWidth, lineWidth * 2]}
             prevFocus={[1, 1]}
             nextFocus={[2, 2]}
+            minZoom={minZoom}
           />
         </div>
       )}
