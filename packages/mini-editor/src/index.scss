@@ -43,9 +43,20 @@
   height: 100%;
   color: #cccccc;
   font-size: 15px;
-  padding: 5px 10px;
+  // padding: 5px 10px;
   line-height: 1.1rem;
   box-sizing: border-box;
+}
+
+.ch-editor-body pre {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 16px;
+  margin: 0;
+  overflow: auto;
 }
 
 .ch-editor-body code {

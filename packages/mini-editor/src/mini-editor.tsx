@@ -31,6 +31,8 @@ export type MiniEditorProps = {
   steps?: MiniEditorStep[]
   height?: number
   minColumns?: number
+  minZoom?: number
+  maxZoom?: number
   button?: React.ReactNode
   classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
@@ -46,6 +48,8 @@ function MiniEditor(props: MiniEditorProps) {
     steps: ogSteps,
     tabs: ogTabs,
     minColumns = 50,
+    minZoom = 0.2,
+    maxZoom = 1,
     height,
     ...rest
   } = props
@@ -101,6 +105,8 @@ function MiniEditor(props: MiniEditorProps) {
           steps={contentSteps}
           parentHeight={height}
           minColumns={minColumns}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
         />
       )}
     </EditorFrame>
@@ -155,6 +161,8 @@ type ContentProps = {
   steps: ContentStep[]
   parentHeight?: number
   minColumns: number
+  minZoom: number
+  maxZoom: number
 }
 
 function EditorContent({
@@ -163,6 +171,8 @@ function EditorContent({
   steps,
   parentHeight,
   minColumns,
+  minZoom,
+  maxZoom,
 }: ContentProps) {
   const fwdTransitions = useForwardTransitions(steps)
   const bwdTransitions = useBackwardTransitions(steps)
@@ -188,6 +198,8 @@ function EditorContent({
       progress={progress - transitionIndex + 1}
       parentHeight={parentHeight}
       minColumns={minColumns}
+      minZoom={minZoom}
+      maxZoom={maxZoom}
     />
   )
 }

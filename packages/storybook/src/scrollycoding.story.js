@@ -87,6 +87,7 @@ function Hike({
     },
     {
       minColumns: 46,
+      minZoom: 0.9,
       ...codeProps,
     }
   )

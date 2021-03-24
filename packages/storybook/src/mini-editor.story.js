@@ -69,6 +69,7 @@ console.log(1)`
           progress={progress}
           backward={backward}
           minColumns={10}
+          minZoom={1}
         />
       )}
     </WithProgress>
@@ -127,6 +128,7 @@ console.log(8)`
           steps={steps}
           progress={progress}
           backward={backward}
+          minZoom={0.8}
         />
       )}
     </WithProgress>

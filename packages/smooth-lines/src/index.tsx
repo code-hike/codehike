@@ -208,7 +208,7 @@ function Container({
         width,
         height,
         position: "relative",
-        overflow: "auto",
+        // overflow: "auto",
       }}
     >
       {children}
