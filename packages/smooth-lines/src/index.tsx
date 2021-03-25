@@ -35,14 +35,10 @@ function SmoothLines({
   prevFocus,
   nextFocus,
   center,
-  minZoom = 0, // TODO use minZoom
+  minZoom = 0,
   maxZoom = 1.2,
 }: Props) {
   const lines = useLineTransitions(prevLines, nextLines)
-
-  const focusWidth = Array.isArray(lineWidth)
-    ? tweenProp(lineWidth[0], lineWidth[1], progress)
-    : lineWidth
 
   const prevFocusKeys = prevFocus.map(
     index => prevLines[index]?.key
@@ -51,25 +47,39 @@ function SmoothLines({
     index => nextLines[index]?.key
   )
 
-  const [prevZoom, prevDX, prevDY] = getContentProps({
+  const [
+    prevZoom,
+    prevDX,
+    prevDY,
+    prevContentHeight,
+    prevContentWidth,
+  ] = getContentProps({
     containerWidth,
     containerHeight,
     lineWidth: Array.isArray(lineWidth)
       ? lineWidth[0]
       : lineWidth,
     lineHeight,
+    minZoom,
     maxZoom,
     horizontalCenter: !!center,
     focusLineIndexList: prevFocus,
     originalContentHeight: prevLines.length * lineHeight,
   })
-  const [nextZoom, nextDX, nextDY] = getContentProps({
+  const [
+    nextZoom,
+    nextDX,
+    nextDY,
+    nextContentHeight,
+    nextContentWidth,
+  ] = getContentProps({
     containerWidth,
     containerHeight,
     lineWidth: Array.isArray(lineWidth)
       ? lineWidth[1]
       : lineWidth,
     lineHeight,
+    minZoom,
     maxZoom,
     horizontalCenter: !!center,
     focusLineIndexList: nextFocus,
@@ -79,13 +89,29 @@ function SmoothLines({
   const zoom = tweenProp(prevZoom, nextZoom, progress)
   const dx = tweenProp(prevDX, nextDX, progress)
   const dy = tweenProp(prevDY, nextDY, progress)
+  const focusHeight = tweenProp(
+    prevContentHeight,
+    nextContentHeight,
+    progress
+  )
+  const focusWidth = tweenProp(
+    prevContentWidth,
+    nextContentWidth,
+    progress
+  )
 
   return (
     <Container
       width={containerWidth}
       height={containerHeight}
     >
-      <Content dx={dx} dy={dy} scale={zoom}>
+      <Content
+        dx={dx}
+        dy={dy}
+        scale={zoom}
+        height={Math.max(focusHeight, containerHeight)}
+        width={Math.max(focusWidth, containerWidth)}
+      >
         <Lines
           lines={lines}
           prevFocusKeys={prevFocusKeys}
@@ -104,6 +130,7 @@ function getContentProps({
   containerHeight,
   lineWidth,
   lineHeight,
+  minZoom,
   maxZoom,
   focusLineIndexList,
   originalContentHeight,
@@ -113,6 +140,7 @@ function getContentProps({
   containerHeight: number
   lineWidth: number
   lineHeight: number
+  minZoom: number
   maxZoom: number
   focusLineIndexList: number[]
   originalContentHeight: number
@@ -124,10 +152,13 @@ function getContentProps({
   ]
   const originalFocusHeight =
     (extremes[1] - extremes[0] + 3) * lineHeight
-  const zoom = Math.min(
-    containerWidth / lineWidth,
-    containerHeight / originalFocusHeight,
-    maxZoom
+  const zoom = Math.max(
+    Math.min(
+      containerWidth / lineWidth,
+      containerHeight / originalFocusHeight,
+      maxZoom
+    ),
+    minZoom
   )
 
   const contentHeight = originalContentHeight * zoom
@@ -135,13 +166,17 @@ function getContentProps({
   const focusStart = (extremes[0] - 1) * lineHeight * zoom
   const focusEnd = (extremes[1] + 2) * lineHeight * zoom
   const focusCenter = (focusEnd + focusStart) / 2
+  const focusHeight = focusEnd - focusStart
 
   const dy =
     containerHeight > contentHeight
       ? (containerHeight - contentHeight) / 2
       : clamp(
           containerHeight / 2 - focusCenter,
-          containerHeight - contentHeight,
+          Math.max(
+            containerHeight - contentHeight,
+            -focusStart // to ensure first focus line is shown when focus is bigger than container
+          ),
           0
         )
 
@@ -149,7 +184,13 @@ function getContentProps({
     ? containerWidth / 2 - (lineWidth * zoom) / 2
     : 0
 
-  return [zoom, dx, dy] as const
+  return [
+    zoom,
+    dx,
+    dy,
+    focusHeight,
+    lineWidth * zoom,
+  ] as const
 }
 
 function Container({
@@ -167,6 +208,7 @@ function Container({
         width,
         height,
         position: "relative",
+        // overflow: "auto",
       }}
     >
       {children}
@@ -178,11 +220,15 @@ function Content({
   dx,
   dy,
   scale,
+  height,
+  width,
   children,
 }: {
   dx: number
   dy: number
   scale: number
+  height: number
+  width: number
   children: React.ReactNode
 }) {
   return (
@@ -191,10 +237,23 @@ function Content({
         position: "absolute",
         top: 0,
         left: 0,
-        transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
+        transformOrigin: "top left",
+        width: width,
+        height: height,
+        overflow: "hidden",
       }}
     >
-      {children}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
+          transformOrigin: "top left",
+        }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

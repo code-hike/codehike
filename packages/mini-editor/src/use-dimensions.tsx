@@ -31,8 +31,6 @@ function useDimensions<T extends HTMLElement>(
 
   useLayoutEffect(() => {
     if (ref.current) {
-      const rect = ref.current.getBoundingClientRect()
-
       const pll = ref.current.querySelector(
         ".prev-longest-line"
       )
@@ -50,8 +48,8 @@ function useDimensions<T extends HTMLElement>(
         ? plw! / (pll.textContent?.length || 1)
         : nlw! / (nll!.textContent?.length || 1)
       setDimensions({
-        width: rect.width,
-        height: rect.height,
+        width: getWidthWithoutPadding(ref.current),
+        height: getHeightWithoutPadding(ref.current),
         lineWidths: [
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
@@ -71,6 +69,23 @@ function useDimensions<T extends HTMLElement>(
   } else {
     return [ref, dimensions]
   }
+}
+
+function getWidthWithoutPadding(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element)
+  return (
+    element.clientWidth -
+    parseFloat(computedStyle.paddingLeft) -
+    parseFloat(computedStyle.paddingRight)
+  )
+}
+function getHeightWithoutPadding(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element)
+  return (
+    element.clientHeight -
+    parseFloat(computedStyle.paddingTop) -
+    parseFloat(computedStyle.paddingBottom)
+  )
 }
 
 function depsChanged(

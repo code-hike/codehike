@@ -16,6 +16,8 @@ type CodeProps = {
   language: string
   parentHeight?: number
   minColumns: number
+  minZoom: number
+  maxZoom: number
 }
 
 export function Code({
@@ -27,6 +29,8 @@ export function Code({
   language,
   parentHeight,
   minColumns,
+  minZoom,
+  maxZoom,
 }: CodeProps) {
   const {
     prevLines,
@@ -53,17 +57,7 @@ export function Code({
     <pre
       ref={ref}
       className={`language-${language}`}
-      style={{
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        right: 16,
-        left: 16,
-        padding: 0,
-        margin: 0,
-        overflow: "hidden",
-        opacity: dimensions ? 1 : 0,
-      }}
+      style={{ opacity: dimensions ? 1 : 0 }}
     >
       <code>
         {dimensions ? (
@@ -85,7 +79,8 @@ export function Code({
             }
             prevFocus={prevFocusIndexes}
             nextFocus={nextFocusIndexes}
-            maxZoom={1}
+            minZoom={minZoom}
+            maxZoom={maxZoom}
           />
         ) : (
           <>
