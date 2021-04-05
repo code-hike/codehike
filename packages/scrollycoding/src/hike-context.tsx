@@ -1,6 +1,6 @@
 import { Classes } from "@code-hike/classer"
 import { MiniBrowserProps } from "@code-hike/mini-browser"
-import { StatefulEditorProps } from "@code-hike/mini-editor"
+import { MiniEditorProps } from "@code-hike/mini-editor"
 import {
   SandpackPredefinedTemplate,
   SandpackSetup,
@@ -28,7 +28,7 @@ export interface CodeFiles {
 export type CodeProps = {
   files: CodeFiles
   activeFile: string
-} & Omit<StatefulEditorProps, "file" | "code" | "lang">
+} & Omit<MiniEditorProps, "file" | "code" | "lang">
 
 export interface HikeStep {
   content: React.ReactNode[]

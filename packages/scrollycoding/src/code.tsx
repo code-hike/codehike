@@ -1,5 +1,5 @@
 import * as React from "react"
-import { MiniEditorWithState } from "@code-hike/mini-editor"
+import { MiniEditor } from "@code-hike/mini-editor"
 import { CodeProps } from "./hike-context"
 import { useCodeSandboxLink } from "@codesandbox/sandpack-react"
 
@@ -11,7 +11,7 @@ function Code({ files, activeFile, ...props }: CodeProps) {
     filename => !files[filename].hideTab
   )
   return (
-    <MiniEditorWithState
+    <MiniEditor
       key={activeFile}
       style={{ height: "100%" }}
       button={
