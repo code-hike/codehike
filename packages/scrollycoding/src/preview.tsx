@@ -34,6 +34,7 @@ function Preview({ filesHash, ...props }: PreviewProps) {
     <MiniBrowser
       url=""
       loadUrl={link}
+      transition="slide"
       {...props}
       children={preview}
     />
