@@ -181,7 +181,10 @@ function getContentProps({
         )
 
   const dx = horizontalCenter
-    ? containerWidth / 2 - (lineWidth * zoom) / 2
+    ? Math.max(
+        containerWidth / 2 - (lineWidth * zoom) / 2,
+        0
+      )
     : 0
 
   return [
