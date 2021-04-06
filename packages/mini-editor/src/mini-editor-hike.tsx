@@ -34,6 +34,7 @@ export type MiniEditorHikeProps = {
   minZoom?: number
   maxZoom?: number
   button?: React.ReactNode
+  horizontalCenter?: boolean
   classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
@@ -51,6 +52,7 @@ function MiniEditorHike(props: MiniEditorHikeProps) {
     minZoom = 0.2,
     maxZoom = 1,
     height,
+    horizontalCenter = false,
     ...rest
   } = props
   const { steps, files, stepsByFile } = useSteps(ogSteps, {
@@ -107,6 +109,7 @@ function MiniEditorHike(props: MiniEditorHikeProps) {
           minColumns={minColumns}
           minZoom={minZoom}
           maxZoom={maxZoom}
+          horizontalCenter={horizontalCenter}
         />
       )}
     </EditorFrame>
@@ -163,6 +166,7 @@ type ContentProps = {
   minColumns: number
   minZoom: number
   maxZoom: number
+  horizontalCenter: boolean
 }
 
 function EditorContent({
@@ -173,6 +177,7 @@ function EditorContent({
   minColumns,
   minZoom,
   maxZoom,
+  horizontalCenter,
 }: ContentProps) {
   const fwdTransitions = useForwardTransitions(steps)
   const bwdTransitions = useBackwardTransitions(steps)
@@ -200,6 +205,7 @@ function EditorContent({
       minColumns={minColumns}
       minZoom={minZoom}
       maxZoom={maxZoom}
+      horizontalCenter={horizontalCenter}
     />
   )
 }

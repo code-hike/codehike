@@ -18,6 +18,7 @@ type CodeProps = {
   minColumns: number
   minZoom: number
   maxZoom: number
+  horizontalCenter: boolean
 }
 
 export function Code({
@@ -31,6 +32,7 @@ export function Code({
   minColumns,
   minZoom,
   maxZoom,
+  horizontalCenter,
 }: CodeProps) {
   const {
     prevLines,
@@ -62,7 +64,6 @@ export function Code({
       <code>
         {dimensions ? (
           <SmoothLines
-            center={false}
             progress={progress}
             containerWidth={dimensions.width}
             containerHeight={dimensions.height}
@@ -81,6 +82,7 @@ export function Code({
             nextFocus={nextFocusIndexes}
             minZoom={minZoom}
             maxZoom={maxZoom}
+            center={horizontalCenter}
           />
         ) : (
           <>

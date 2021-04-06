@@ -70,6 +70,7 @@ console.log(1)`
           backward={backward}
           minColumns={10}
           minZoom={1}
+          horizontalCenter={true}
         />
       )}
     </WithProgress>
