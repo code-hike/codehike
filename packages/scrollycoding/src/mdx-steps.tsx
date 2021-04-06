@@ -25,12 +25,15 @@ interface Step {
   codeProps: CodeProps
 }
 
-const defaultFilename = "App.js"
+interface Options {
+  defaultFileName?: string
+}
 
 function useMdxSteps(
   mdx: React.ReactNode,
   previewProps: PreviewProps,
-  codeProps: CodeProps
+  codeProps: CodeProps,
+  options: Options = {}
 ) {
   const steps: Step[] = []
   let prevFiles: CodeFiles = {}
@@ -41,7 +44,8 @@ function useMdxSteps(
       const { files, activeFile } = getFiles(
         stepHeadProps,
         prevFiles,
-        prevActiveFile
+        prevActiveFile,
+        options.defaultFileName
       )
       const step = {
         content: [],
@@ -69,7 +73,8 @@ function useMdxSteps(
 function getFiles(
   stepHeadProps: StepHeadProps,
   prevFiles: CodeFiles = {},
-  prevActiveFile: string = ""
+  prevActiveFile: string = "",
+  defaultFileName: string = "App.js"
 ) {
   let activeFile = stepHeadProps.activeFile || ""
   const files = { ...prevFiles }
@@ -80,7 +85,7 @@ function getFiles(
         preElement?.props?.children?.props || {}
       const lang = codeElementProps.className?.slice(9)
       const { filename, hideTab } = parseMetastring(
-        codeElementProps.metastring || defaultFilename
+        codeElementProps.metastring || defaultFileName
       )
       const code = codeElementProps.children
       files[filename] = { code, lang, hideTab }
