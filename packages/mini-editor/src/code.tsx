@@ -59,7 +59,10 @@ export function Code({
     <pre
       ref={ref}
       className={`language-${language}`}
-      style={{ opacity: dimensions ? 1 : 0 }}
+      style={{
+        opacity: dimensions ? 1 : 0,
+        overflow: dimensions ? undefined : "hidden", // avoid scrollbars when measuring
+      }}
     >
       <code>
         {dimensions ? (

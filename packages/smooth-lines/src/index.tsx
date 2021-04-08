@@ -38,7 +38,10 @@ function SmoothLines({
   minZoom = 0,
   maxZoom = 1.2,
 }: Props) {
-  const lines = useLineTransitions(prevLines, nextLines)
+  const { lines, verticalInterval } = useLineTransitions(
+    prevLines,
+    nextLines
+  )
 
   const prevFocusKeys = prevFocus.map(
     index => prevLines[index]?.key
@@ -88,7 +91,13 @@ function SmoothLines({
 
   const zoom = tweenProp(prevZoom, nextZoom, progress)
   const dx = tweenProp(prevDX, nextDX, progress)
-  const dy = tweenProp(prevDY, nextDY, progress)
+  const dy = tweenProp(
+    prevDY,
+    nextDY,
+    progress,
+    verticalInterval
+  )
+
   const focusHeight = tweenProp(
     prevContentHeight,
     nextContentHeight,
@@ -264,12 +273,13 @@ function Content({
 function tweenProp(
   start: number,
   end: number,
-  progress: number
+  progress: number,
+  interval: [number, number] = [0, 1]
 ) {
   return tween(
     {
       fixed: false,
-      interval: [0, 1],
+      interval,
       extremes: [start, end],
       ease: easing.easeInOutCubic,
     },

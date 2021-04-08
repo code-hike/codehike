@@ -349,6 +349,7 @@ export const x = () => {
           {...xprops}
           progress={progress}
           backward={backward}
+          minColumns={50}
         />
       )}
     </WithProgress>
@@ -358,20 +359,70 @@ export const x = () => {
 const xprops = {
   steps: [
     {
-      code:
-        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
+      code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+      focus: "1",
     },
     {
-      code:
-        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n        filter: blur(3px);\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
-      focus: "4,8,9",
+      code: `function MyComponent() {
+  return (
+    <div>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+      focus: "1:7",
     },
     {
-      code:
-        "<html>\n  <body>\n    <style>\n      h1 {\n        border: 4px solid black;\n        padding: 20px 7px;\n        margin: 0;\n        filter: drop-shadow(\n          2px 2px 2px blue\n        );\n      }\n    </style>\n    <h1>Lorem ipsum dolor sit amet</h1>\n  </body>\n</html>\n",
-      focus: "4,8:11",
+      code: `function MyComponent() {
+  return (
+    <div>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+      focus: "1:7",
+    },
+    {
+      code: `function MyComponent() {
+  return (
+    <div>
+      <button>Bye</button>
+      <button>Bye</button>
+      <button>Bye</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+      focus: "7",
+    },
+    {
+      code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+      focus: "1",
     },
   ],
-  lang: "html",
-  file: "index.html",
+  lang: "jsx",
+  file: "index.js",
 }

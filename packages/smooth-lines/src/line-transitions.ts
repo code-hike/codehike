@@ -80,9 +80,15 @@ function getLineTransitions(
   const enterCount = enterIndex
   const exitCount = exitIndex
 
-  return linesData.map(lineData =>
-    getLineTransition(lineData, enterCount, exitCount)
-  )
+  return {
+    lines: linesData.map(lineData =>
+      getLineTransition(lineData, enterCount, exitCount)
+    ),
+    verticalInterval: verticalInterval(
+      enterCount,
+      exitCount
+    ),
+  }
 }
 
 function getLineTransition(
@@ -153,6 +159,7 @@ function getLineTransition(
       fixed: false,
       extremes: [prevIndex, nextIndex],
       interval: [startY, endY],
+      ease: easing.easeInOutCubic,
     },
     tweenX: { fixed: true, value: 0 },
   }
@@ -165,7 +172,7 @@ function sortUniqueConcat(a: number[], b: number[]) {
 function verticalInterval(
   enterCount: number,
   exitCount: number
-) {
+): [number, number] {
   if (enterCount <= 0 && exitCount <= 0) return [0, 1]
   if (enterCount <= 0 && exitCount >= 1) return [0.33, 1]
   if (enterCount >= 1 && exitCount <= 0) return [0, 0.67]
