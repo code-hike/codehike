@@ -225,6 +225,7 @@ function Line({ line }: { line: CodeLine }) {
           {token}
         </span>
       ))}
+      <br />
     </div>
   )
 }
@@ -287,6 +288,7 @@ function ColumnedLine({
           </span>
         )
       )}
+      <br />
     </div>
   )
 }
