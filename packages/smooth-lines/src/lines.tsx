@@ -81,6 +81,7 @@ function LineContainer({
         transform: `translate(${dx}px, ${dy}px)`,
         opacity,
         width,
+        display: opacity <= 0 ? "none" : undefined,
       }}
     >
       {children}
