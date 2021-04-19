@@ -10,5 +10,8 @@
 
 Code Hike is an open-source toolset for building all types of **code walkthroughs**: blog posts, tutorials, quickstarts, slides, videos, workshops, docs, and so on.
 
-
 > Follow [@codehike\_](https://twitter.com/codehike_) for updates. [Sponsor Code Hike](https://github.com/sponsors/code-hike) if you wanna help.
+
+Videos:
+
+- [Scrollycoding - A new tool for dev blogs and docs](https://www.youtube.com/watch?v=7O2b7vfk-mo)
