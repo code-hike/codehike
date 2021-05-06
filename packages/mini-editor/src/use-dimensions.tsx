@@ -82,7 +82,7 @@ function getWidthWithoutPadding(element: HTMLElement) {
 function getHeightWithoutPadding(element: HTMLElement) {
   const computedStyle = getComputedStyle(element)
   return (
-    element.clientHeight -
+    parseFloat(computedStyle.height) -
     parseFloat(computedStyle.paddingTop) -
     parseFloat(computedStyle.paddingBottom)
   )
