@@ -189,6 +189,7 @@ function getPanelStyles(
     prev.southHeight === null &&
     next.southHeight === null
   ) {
+    console.log("1")
     return {
       northStyle: {
         height: prev.northHeight,
@@ -204,8 +205,9 @@ function getPanelStyles(
   if (
     prev.southHeight !== null &&
     next.southHeight === null &&
-    prev.northKey === next.northKey
+    next.northKey !== prev.southKey
   ) {
+    console.log("2")
     return {
       northStyle: {
         height: tween(
@@ -230,6 +232,7 @@ function getPanelStyles(
     next.southHeight === null &&
     prev.southKey === next.northKey
   ) {
+    console.log("3")
     return {
       northStyle: {
         height: prev.northHeight,
@@ -258,8 +261,9 @@ function getPanelStyles(
   if (
     prev.southHeight === null &&
     next.southHeight !== null &&
-    prev.northKey === next.northKey
+    prev.northKey !== next.southKey
   ) {
+    console.log("Hey")
     return {
       northStyle: {
         height: tween(
@@ -285,6 +289,7 @@ function getPanelStyles(
     next.southHeight !== null &&
     prev.northKey === next.southKey
   ) {
+    console.log("5")
     return {
       northStyle: {
         height: next.northHeight,
@@ -305,6 +310,7 @@ function getPanelStyles(
     }
   }
 
+  console.log("6")
   // +---+---+
   // | x | x |
   // +---+---+

@@ -8,7 +8,7 @@ export default {
 }
 
 // TODO
-// Fix south height when should be fixed
+// Fix south height when should be fixed (12N, 21N)
 // Fix displayed code in 12S and 21S
 
 export const oneToOne = () => {
