@@ -7,12 +7,16 @@ export default {
   title: "Editor Transition",
 }
 
+// TODO
+// Fix south height when should be fixed
+// Fix displayed code in 12S and 21S
+
 export const oneToOne = () => {
   return (
     // prettier-ignore
     <TestTransition
       tabs={[
-        ["foo.js", "x.js"], ["foo.js", "x.js"],
+        ["foo.js", "y.js", "x.js"], ["foo.js", "x.js"],
       ]}
       actives={[
         ["foo.js", "foo.js"],
@@ -23,7 +27,6 @@ export const oneToOne = () => {
 }
 
 export const oneToOneTabs = () => {
-  // FIX show all tabs
   return (
     // prettier-ignore
     <TestTransition
@@ -44,8 +47,8 @@ export const oneToTwoNorth = () => {
     // prettier-ignore
     <TestTransition
       tabs={[
-        ["foo.js", "x.js"], ["foo.js", "x.js"],
-                          , ["y.js", "bar.js"]
+        ["foo.js", "x.js", "y.js"], ["foo.js", "x.js"],
+                                  , ["y.js", "bar.js"]
       ]}
       actives={[
         ["foo.js", "x.js"],
@@ -60,17 +63,15 @@ export const oneToTwoNorth = () => {
 }
 
 export const oneToTwoSouth = () => {
-  // FIX south starting y
-  // FIX tabs
   return (
     // prettier-ignore
     <TestTransition
       tabs={[
-        ["foo.js", "x.js"], ["y.js"],
-                          , ["foo.js", "x.js"]
+        ["foo.js", "x.js", "y.js"], ["bar.js", "y.js"],
+                                  , ["foo.js", "x.js"]
       ]}
       actives={[
-        ["foo.js", "x.js"],
+        ["foo.js", "y.js"],
         [        , "foo.js"],
       ]}
       ratios={[
@@ -87,7 +88,7 @@ export const twoToOneNorth = () => {
     // prettier-ignore
     <TestTransition
       tabs={[
-        ["foo.js", "x.js"], ["foo.js", "x.js"],
+        ["foo.js", "x.js"], ["foo.js", "x.js", "y.js"],
         ["y.js", "bar.js"], 
       ]}
       actives={[
@@ -108,7 +109,7 @@ export const twoToOneSouth = () => {
     // prettier-ignore
     <TestTransition
       tabs={[
-        ["y.js", "bar.js"], ["foo.js", "x.js"],
+        ["y.js", "bar.js"], ["y.js", "foo.js", "x.js"],
         ["foo.js", "x.js"], 
       ]}
       actives={[
@@ -128,16 +129,16 @@ export const twoToTwo = () => {
     <TestTransition
       // prettier-ignore
       tabs={[
-        ["foo.js", "x.js"], ["foo.js", "x.js"],
-        ["y.js", "bar.js"], ["y.js", "bar.js"]
+        ["foo.js", "x.js"], ["y.js", "foo.js", "x.js"],
+        ["y.js", "bar.js"], ["bar.js"]
       ]}
       actives={[
         ["foo.js", "foo.js"],
         ["bar.js", "bar.js"],
       ]}
       ratios={[
-        [0.5, 0.6],
-        [0.5, 0.4],
+        [0.5, 0.5],
+        [0.5, 0.5],
       ]}
     />
   )
@@ -243,13 +244,46 @@ function TestTransition({
   return (
     <WithProgress length={2}>
       {(progress, backward) => (
-        <EditorTransition
-          style={{ height: 300 }}
-          prev={prev}
-          next={next}
-          t={progress}
-          backward={backward}
-        />
+        <>
+          <EditorTransition
+            style={{ height: 300 }}
+            prev={prev}
+            next={next}
+            t={progress}
+            backward={backward}
+          />
+          <table
+            style={{
+              width: "fit-content",
+              margin: "0 auto",
+            }}
+          >
+            <tr>
+              <td>
+                <b>{prevNorthActive}</b>
+                <br />
+                {JSON.stringify(prevNorthTabs)}
+              </td>
+              <td>
+                <b>{nextNorthActive}</b>
+                <br />
+                {JSON.stringify(nextNorthTabs)}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>{prevSouthActive}</b>
+                <br />
+                {JSON.stringify(prevSouthTabs)}
+              </td>
+              <td>
+                <b>{nextSouthActive}</b>
+                <br />
+                {JSON.stringify(nextSouthTabs)}
+              </td>
+            </tr>
+          </table>
+        </>
       )}
     </WithProgress>
   )

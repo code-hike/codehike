@@ -3,31 +3,17 @@ import {
   EditorFrame,
   EditorFrameProps,
   getPanelStyles,
-  Snapshot,
+  OutputPanel,
 } from "./editor-frame"
 import { Code } from "../code"
+import {
+  EditorStep,
+  StepFile,
+  useSnapshots,
+} from "./use-snapshots"
+import { getTabs } from "./tabs"
 
 export { EditorTransition }
-
-type StepFile = {
-  code: string
-  focus?: string
-  lang: string
-  name: string
-}
-
-type EditorPanel = {
-  tabs: string[]
-  active: string
-  heightRatio: number
-}
-
-type EditorStep = {
-  files: StepFile[]
-  northPanel: EditorPanel
-  southPanel?: EditorPanel
-  terminal?: string
-}
 
 type EditorTransitionProps = {
   prev: EditorStep
@@ -61,13 +47,18 @@ function EditorTransition({
   )
 }
 
+type Transition = {
+  northPanel: OutputPanel
+  southPanel?: OutputPanel | null
+}
+
 function useTransition(
   ref: React.RefObject<HTMLDivElement>,
   prev: EditorStep,
   next: EditorStep,
   t: number,
   backward: boolean
-) {
+): Transition {
   const { prevSnapshot, nextSnapshot } = useSnapshots(
     ref,
     prev,
@@ -89,7 +80,6 @@ function useTransition(
   if (t === 1) {
     return endingPosition(prev, next)
   }
-  const inputNorthPanel = prev.northPanel || next.northPanel
   const inputSouthPanel = prev.southPanel || next.southPanel
 
   const {
@@ -104,11 +94,18 @@ function useTransition(
     nextSnapshot,
     t
   )
+  const { northTabs, southTabs } = getTabs(
+    prevSnapshot,
+    nextSnapshot,
+    prevNorthFile.name,
+    prevSouthFile?.name,
+    t
+  )
+  console.log({ northTabs, southTabs })
 
   return {
     northPanel: {
-      tabs: inputNorthPanel.tabs,
-      active: prevNorthFile.name,
+      tabs: northTabs,
       style: northStyle,
       children: (
         <CodeTransition
@@ -119,8 +116,7 @@ function useTransition(
       ),
     },
     southPanel: inputSouthPanel && {
-      tabs: inputSouthPanel.tabs,
-      active: prevSouthFile!.name,
+      tabs: southTabs!,
       style: southStyle!,
       children: (
         <CodeTransition
@@ -133,81 +129,11 @@ function useTransition(
   }
 }
 
-function useSnapshots(
-  ref: React.RefObject<HTMLDivElement>,
-  prev: EditorStep,
-  next: EditorStep
-) {
-  const [
-    { prevSnapshot, nextSnapshot },
-    setState,
-  ] = React.useState<{
-    prevSnapshot: Snapshot | null
-    nextSnapshot: Snapshot | null
-  }>({
-    prevSnapshot: null,
-    nextSnapshot: null,
-  })
-
-  React.useLayoutEffect(() => {
-    if (prevSnapshot || nextSnapshot) {
-      setState({
-        prevSnapshot: null,
-        nextSnapshot: null,
-      })
-    }
-  }, [prev, next])
-
-  React.useLayoutEffect(() => {
-    if (!prevSnapshot) {
-      const northElement = ref.current?.querySelector(
-        "[data-ch-panel='north']"
-      )
-      const southElement = ref.current?.querySelector(
-        "[data-ch-panel='south']"
-      )
-      setState(s => ({
-        ...s,
-        prevSnapshot: {
-          northHeight: northElement!.getBoundingClientRect()
-            .height,
-          northKey: prev.northPanel.active,
-          southHeight:
-            southElement?.getBoundingClientRect().height ||
-            null,
-          southKey: prev.southPanel?.active,
-        },
-      }))
-    } else if (!nextSnapshot) {
-      const northElement = ref.current?.querySelector(
-        "[data-ch-panel='north']"
-      )
-      const southElement = ref.current?.querySelector(
-        "[data-ch-panel='south']"
-      )
-      setState(s => ({
-        ...s,
-        nextSnapshot: {
-          northHeight: northElement!.getBoundingClientRect()
-            .height,
-          northKey: next.northPanel.active,
-          southHeight:
-            southElement?.getBoundingClientRect().height ||
-            null,
-          southKey: next.southPanel?.active,
-        },
-      }))
-    }
-  })
-
-  return { prevSnapshot, nextSnapshot }
-}
-
 // Returns the t=0 state of the transition
 function startingPosition(
   prev: EditorStep,
   next: EditorStep
-) {
+): Transition {
   const inputNorthPanel = prev.northPanel
   const inputSouthPanel = prev.southPanel
 
@@ -220,8 +146,11 @@ function startingPosition(
 
   return {
     northPanel: {
-      tabs: inputNorthPanel.tabs,
-      active: inputNorthPanel.active,
+      tabs: inputNorthPanel.tabs.map(title => ({
+        title,
+        active: title === inputNorthPanel.active,
+        style: {},
+      })),
       style: {
         height: inputSouthPanel
           ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
@@ -236,8 +165,11 @@ function startingPosition(
       ),
     },
     southPanel: inputSouthPanel && {
-      tabs: inputSouthPanel.tabs,
-      active: inputSouthPanel.active,
+      tabs: inputSouthPanel.tabs.map(title => ({
+        title,
+        active: title === inputSouthPanel.active,
+        style: {},
+      })),
       style: {
         height: `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel.heightRatio} + var(--ch-title-bar-height))`,
       },
@@ -255,7 +187,7 @@ function startingPosition(
 function endingPosition(
   prev: EditorStep,
   next: EditorStep
-) {
+): Transition {
   const inputNorthPanel = next.northPanel
   const inputSouthPanel = next.southPanel
 
@@ -268,8 +200,11 @@ function endingPosition(
 
   return {
     northPanel: {
-      tabs: inputNorthPanel.tabs,
-      active: inputNorthPanel.active,
+      tabs: inputNorthPanel.tabs.map(title => ({
+        title,
+        active: title === inputNorthPanel.active,
+        style: {},
+      })),
       style: {
         height: inputSouthPanel
           ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
@@ -284,8 +219,11 @@ function endingPosition(
       ),
     },
     southPanel: inputSouthPanel && {
-      tabs: inputSouthPanel.tabs,
-      active: inputSouthPanel.active,
+      tabs: inputSouthPanel.tabs.map(title => ({
+        title,
+        active: title === inputSouthPanel.active,
+        style: {},
+      })),
       style: {
         height: `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel.heightRatio} + var(--ch-title-bar-height))`,
       },
@@ -384,8 +322,4 @@ function getStepFiles(
     prevSouthFile,
     nextSouthFile,
   }
-}
-
-function tween(a: number, b: number, t: number) {
-  return a + (b - a) * t
 }

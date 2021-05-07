@@ -5,11 +5,23 @@ import {
 } from "@code-hike/mini-frame"
 import { useClasser, Classes } from "@code-hike/classer"
 
-export { EditorFrameProps, getPanelStyles, Snapshot }
+export {
+  EditorFrameProps,
+  getPanelStyles,
+  Snapshot,
+  OutputPanel,
+  TabsSnapshot,
+  Tab,
+}
+
+type Tab = {
+  title: string
+  active: boolean
+  style: React.CSSProperties
+}
 
 type OutputPanel = {
-  tabs: string[]
-  active: string
+  tabs: Tab[]
   style: React.CSSProperties
   children: React.ReactNode
 }
@@ -45,13 +57,14 @@ export const EditorFrame = React.forwardRef<
     <MiniFrame
       ref={ref}
       style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
-      overflow="hidden"
+      overflow="unset"
+      className={c("frame")}
       titleBar={
         <TabsContainer
-          files={northPanel.tabs}
-          active={northPanel.active}
+          tabs={northPanel.tabs}
           showFrameButtons={true}
           button={button}
+          panel="north"
         />
       }
       {...rest}
@@ -71,12 +84,15 @@ export const EditorFrame = React.forwardRef<
             ...southPanel.style,
           }}
         >
-          <div className={"ch-frame-title-bar"}>
+          <div
+            className={"ch-frame-title-bar"}
+            style={{ background: "none" }}
+          >
             <TabsContainer
-              files={southPanel.tabs}
-              active={southPanel.active}
+              tabs={southPanel.tabs}
               showFrameButtons={false}
               topBorder={true}
+              panel="south"
             />
           </div>
           <div
@@ -96,18 +112,18 @@ export const EditorFrame = React.forwardRef<
 })
 
 type TabsContainerProps = {
-  files: string[]
-  active: string
+  tabs: Tab[]
   button?: React.ReactNode
   showFrameButtons: boolean
   topBorder?: boolean
+  panel: "north" | "south"
 }
 function TabsContainer({
-  files,
-  active,
+  tabs,
   button,
   showFrameButtons,
   topBorder,
+  panel,
 }: TabsContainerProps) {
   const c = useClasser("ch-editor-tab")
   return (
@@ -124,21 +140,16 @@ function TabsContainer({
           }}
         />
       )}
-      {showFrameButtons ? (
-        <FrameButtons />
-      ) : (
-        <div style={{ width: "30px" }} />
-      )}
-      {files.map(fileName => (
+      {showFrameButtons ? <FrameButtons /> : <div />}
+      {tabs.map(({ title, active, style }) => (
         <div
-          key={fileName}
-          title={fileName}
-          className={c(
-            "",
-            fileName === active ? "active" : "inactive"
-          )}
+          key={title}
+          title={title}
+          data-ch-tab={panel}
+          className={c("", active ? "active" : "inactive")}
+          style={style}
         >
-          <div>{fileName}</div>
+          <div>{title}</div>
         </div>
       ))}
       <div style={{ flex: 1 }} />
@@ -147,11 +158,18 @@ function TabsContainer({
   )
 }
 
+type TabsSnapshot = Record<
+  string,
+  { left: number; active: boolean }
+>
 type Snapshot = {
+  titleBarHeight: number
   northKey: any
   northHeight: number
+  northTabs: TabsSnapshot
   southKey: any
   southHeight: number | null
+  southTabs: TabsSnapshot | null
 }
 
 function getPanelStyles(
@@ -220,12 +238,12 @@ function getPanelStyles(
         position: "relative",
         height: tween(
           prev.southHeight,
-          next.northHeight,
+          next.northHeight + next.titleBarHeight,
           t
         ),
         transform: `translateY(${tween(
           0,
-          -prev.northHeight,
+          -(prev.northHeight + prev.titleBarHeight),
           t
         )}px)`,
       },
@@ -274,12 +292,12 @@ function getPanelStyles(
       southStyle: {
         position: "relative",
         height: tween(
-          prev.northHeight,
+          prev.northHeight + prev.titleBarHeight,
           next.southHeight!,
           t
         ),
         transform: `translateY(${tween(
-          -next.northHeight,
+          -(next.northHeight + next.titleBarHeight),
           0,
           t
         )}px)`,
