@@ -7,10 +7,6 @@ export default {
   title: "Editor Transition",
 }
 
-// TODO
-// Fix south height when should be fixed (12N, 21N)
-// Fix displayed code in 12S and 21S
-
 export const oneToOne = () => {
   return (
     // prettier-ignore
@@ -42,7 +38,6 @@ export const oneToOneTabs = () => {
 }
 
 export const oneToTwoNorth = () => {
-  // FIX south panel should have fixed height
   return (
     // prettier-ignore
     <TestTransition
@@ -83,7 +78,6 @@ export const oneToTwoSouth = () => {
 }
 
 export const twoToOneNorth = () => {
-  // FIX south panel should have fixed height
   return (
     // prettier-ignore
     <TestTransition
@@ -104,7 +98,6 @@ export const twoToOneNorth = () => {
 }
 
 export const twoToOneSouth = () => {
-  // FIX south ending y
   return (
     // prettier-ignore
     <TestTransition

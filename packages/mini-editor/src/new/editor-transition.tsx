@@ -298,8 +298,29 @@ function getStepFiles(
     ? prev.files.find(f => f.name === ns)
     : null
 
+  const oneToTwoSouth = !ps && pn === ns
+  if (oneToTwoSouth) {
+    return {
+      prevNorthFile: nnFile,
+      nextNorthFile: nnFile,
+      prevSouthFile: pnFile,
+      nextSouthFile: nsFile,
+    }
+  }
+
+  const twoToOneSouth = !ns && nn === ps
+  if (twoToOneSouth) {
+    return {
+      prevNorthFile: pnFile,
+      nextNorthFile: pnFile,
+      prevSouthFile: psFile,
+      nextSouthFile: nnFile,
+    }
+  }
+
   const prevNorthFile =
     pn === nn ? pnFile : backward ? pnFile : nnFile
+
   const nextNorthFile =
     pn === nn ? nnFile : backward ? pnFile : nnFile
 
