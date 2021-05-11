@@ -36,7 +36,10 @@ export function WithProgress({
       <div style={{ display: "flex", margin: "10px 0" }}>
         <button
           onClick={() => {
-            const newProgress = progress - 1
+            const newProgress =
+              Math.floor(progress) === progress
+                ? progress - 1
+                : Math.floor(progress)
             setState(oldState => ({
               progress: newProgress,
               backward: oldState.progress > newProgress,
@@ -47,7 +50,10 @@ export function WithProgress({
         </button>
         <button
           onClick={() => {
-            const newProgress = progress + 1
+            const newProgress =
+              Math.ceil(progress) === progress
+                ? progress + 1
+                : Math.ceil(progress)
             setState(oldState => ({
               progress: newProgress,
               backward: oldState.progress > newProgress,
