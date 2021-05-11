@@ -86,14 +86,13 @@ function MiniEditorHike(props: MiniEditorHikeProps) {
   }
   console.log({ t, prev, next })
 
-  return (
-    <EditorTransition
-      t={t}
-      prev={prev}
-      next={next}
-      backward={backward}
-    />
-  )
+  return null
+  // <EditorTransition
+  //   t={t}
+  //   prev={prev}
+  //   next={next}
+  //   backward={backward}
+  // />
 }
 
 // function MiniEditorHikeOld(props: MiniEditorHikeProps) {

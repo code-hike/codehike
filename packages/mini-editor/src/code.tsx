@@ -7,7 +7,7 @@ import {
   getFocusIndexes,
 } from "./focus-parser"
 
-type CodeProps = {
+export type CodeProps = {
   prevCode: string
   prevFocus: string | null
   nextCode: string
@@ -15,10 +15,10 @@ type CodeProps = {
   progress: number
   language: string
   parentHeight?: number
-  minColumns: number
-  minZoom: number
-  maxZoom: number
-  horizontalCenter: boolean
+  minColumns?: number
+  minZoom?: number
+  maxZoom?: number
+  horizontalCenter?: boolean
 }
 
 export function Code({
@@ -29,10 +29,10 @@ export function Code({
   progress,
   language,
   parentHeight,
-  minColumns,
-  minZoom,
-  maxZoom,
-  horizontalCenter,
+  minColumns = 40,
+  minZoom = 0.5,
+  maxZoom = 1.5,
+  horizontalCenter = false,
 }: CodeProps) {
   const {
     prevLines,

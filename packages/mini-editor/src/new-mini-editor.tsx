@@ -5,21 +5,23 @@ import {
   EditorTransitionProps,
 } from "./editor-transition"
 import { EditorStep } from "./use-snapshots"
+import { CodeProps } from "./code"
 
 type FullMiniEditorProps = EditorStep
 
 export { FullMiniEditor, FullMiniEditorHike }
 
 function FullMiniEditor(step: FullMiniEditorProps) {
-  const { prev, next, t } = useStepSpring(step)
-  return (
-    <EditorTransition
-      t={t}
-      backward={false}
-      prev={prev}
-      next={next}
-    />
-  )
+  // const { prev, next, t } = useStepSpring(step)
+  // return (
+  //   <EditorTransition
+  //     t={t}
+  //     backward={false}
+  //     prev={prev}
+  //     next={next}
+  //   />
+  // )
+  return null
 }
 
 function FullMiniEditorHike({
@@ -27,11 +29,13 @@ function FullMiniEditorHike({
   progress,
   backward,
   frameProps,
+  codeProps,
 }: {
   steps: EditorStep[]
   progress: number
   backward: boolean
   frameProps: Partial<EditorTransitionProps>
+  codeProps: Partial<CodeProps>
 }) {
   const prevIndex = clamp(
     Math.floor(progress),
@@ -51,11 +55,12 @@ function FullMiniEditorHike({
 
   return (
     <EditorTransition
+      {...frameProps}
+      codeProps={codeProps}
       prev={prev}
       next={next}
       backward={backward}
       t={t}
-      {...frameProps}
     />
   )
 }

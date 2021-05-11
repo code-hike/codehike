@@ -47,7 +47,7 @@ function Wrapper({ children }) {
     <WithProgress
       length={steps.length}
       style={{ maxWidth: 821 }}
-      className="no-max-width"
+      className="steps-story"
     >
       {(progress, backward) => (
         <FullMiniEditorHike
@@ -56,6 +56,10 @@ function Wrapper({ children }) {
               height: 688,
               width: 821,
             },
+          }}
+          codeProps={{
+            minColumns: 20,
+            maxZoom: 1.5,
           }}
           progress={progress}
           backward={backward}

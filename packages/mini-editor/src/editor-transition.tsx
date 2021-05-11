@@ -5,7 +5,7 @@ import {
   getPanelStyles,
   OutputPanel,
 } from "./editor-frame"
-import { Code } from "./code"
+import { Code, CodeProps } from "./code"
 import {
   EditorStep,
   StepFile,
@@ -20,6 +20,7 @@ type EditorTransitionProps = {
   next: EditorStep
   t: number
   backward: boolean
+  codeProps: Partial<CodeProps>
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
 function EditorTransition({
@@ -27,6 +28,7 @@ function EditorTransition({
   next,
   t,
   backward,
+  codeProps,
   ...rest
 }: EditorTransitionProps) {
   const ref = React.createRef<HTMLDivElement>()
@@ -35,7 +37,8 @@ function EditorTransition({
     prev,
     next,
     t,
-    backward
+    backward,
+    codeProps
   )
   return (
     <EditorFrame
@@ -57,7 +60,8 @@ function useTransition(
   prev: EditorStep,
   next: EditorStep,
   t: number,
-  backward: boolean
+  backward: boolean,
+  codeProps: Partial<CodeProps>
 ): Transition {
   const { prevSnapshot, nextSnapshot } = useSnapshots(
     ref,
@@ -66,19 +70,19 @@ function useTransition(
   )
 
   if (!prevSnapshot) {
-    return startingPosition(prev, next)
+    return startingPosition(prev, next, codeProps)
   }
 
   if (!nextSnapshot) {
-    return endingPosition(prev, next)
+    return endingPosition(prev, next, codeProps)
   }
 
   if (t === 0) {
-    return startingPosition(prev, next)
+    return startingPosition(prev, next, codeProps)
   }
 
   if (t === 1) {
-    return endingPosition(prev, next)
+    return endingPosition(prev, next, codeProps)
   }
   const inputSouthPanel = prev.southPanel || next.southPanel
 
@@ -108,6 +112,7 @@ function useTransition(
       style: northStyle,
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={t}
@@ -119,6 +124,7 @@ function useTransition(
       style: southStyle!,
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={t}
@@ -131,7 +137,8 @@ function useTransition(
 // Returns the t=0 state of the transition
 function startingPosition(
   prev: EditorStep,
-  next: EditorStep
+  next: EditorStep,
+  codeProps: Partial<CodeProps>
 ): Transition {
   const inputNorthPanel = prev.northPanel
   const inputSouthPanel = prev.southPanel
@@ -157,6 +164,7 @@ function startingPosition(
       },
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={0}
@@ -174,6 +182,7 @@ function startingPosition(
       },
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={0}
@@ -185,7 +194,8 @@ function startingPosition(
 // Returns the t=1 state of the transition
 function endingPosition(
   prev: EditorStep,
-  next: EditorStep
+  next: EditorStep,
+  codeProps: Partial<CodeProps>
 ): Transition {
   const inputNorthPanel = next.northPanel
   const inputSouthPanel = next.southPanel
@@ -211,6 +221,7 @@ function endingPosition(
       },
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={1}
@@ -228,6 +239,7 @@ function endingPosition(
       },
       children: (
         <CodeTransition
+          codeProps={codeProps}
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={1}
@@ -241,23 +253,22 @@ function CodeTransition({
   prevFile,
   nextFile,
   t,
+  codeProps,
 }: {
   prevFile: StepFile
   nextFile: StepFile
   t: number
+  codeProps: Partial<CodeProps>
 }) {
   return (
     <Code
+      {...codeProps}
       prevCode={prevFile.code}
       nextCode={nextFile.code}
       progress={t}
       language={prevFile.lang}
       prevFocus={prevFile.focus || null}
       nextFocus={nextFile.focus || null}
-      minColumns={20}
-      minZoom={1}
-      maxZoom={1}
-      horizontalCenter={false}
       parentHeight={t}
     />
   )
