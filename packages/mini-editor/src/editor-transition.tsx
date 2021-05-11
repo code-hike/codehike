@@ -77,9 +77,9 @@ function useTransition(
     return endingPosition(prev, next, codeProps)
   }
 
-  if (t === 0) {
-    return startingPosition(prev, next, codeProps)
-  }
+  // if (t === 0) {
+  //   return startingPosition(prev, next, codeProps)
+  // }
 
   if (t === 1) {
     return endingPosition(prev, next, codeProps)
@@ -91,7 +91,7 @@ function useTransition(
     prevSouthFile,
     nextNorthFile,
     nextSouthFile,
-  } = getStepFiles(prev, next, backward)
+  } = getStepFiles(prev, next, t == 0 || backward)
 
   const { northStyle, southStyle } = getPanelStyles(
     prevSnapshot,

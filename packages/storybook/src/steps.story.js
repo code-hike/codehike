@@ -48,7 +48,7 @@ function Wrapper({ children }) {
       length={steps.length}
       style={{ maxWidth: 821 }}
       className="steps-story"
-      start={4}
+      start={0}
     >
       {(progress, backward) => (
         <FullMiniEditorHike

@@ -1,4 +1,14 @@
-<StepHead>
+<Step>
+
+```svelte App.svelte
+<h1>Hello Svelte</h1>
+```
+
+</Step>
+
+^0
+
+<Step>
 
 ```svelte App.svelte
 <script>
@@ -8,9 +18,11 @@
 <h1>{name}</h1>
 ```
 
-</StepHead>
+</Step>
 
-<StepHead>
+^1
+
+<Step>
 
 ```svelte App.svelte
 <script>
@@ -19,6 +31,16 @@
 
 <MyComponent name="Messi" />
 <MyComponent name="Ronaldo" />
+```
+
+</Step>
+
+^2
+
+<Step>
+
+```svelte App.svelte focus=2
+
 ```
 
 ---
@@ -33,4 +55,180 @@
 </div>
 ```
 
-</StepHead>
+</Step>
+
+^3 Each svelte file is a different component
+
+<Step>
+
+```svelte App.svelte
+
+```
+
+```svelte MyComponent.svelte focus=2 active
+<script>
+  export let name;
+</script>
+
+<div>
+  <button>{name}</button>
+</div>
+```
+
+</Step>
+
+^4 You can declare props with the export keyword.
+
+<Step>
+
+```svelte MyComponent.svelte focus=3,8
+<script>
+  export let name;
+  let goalCount = 2;
+</script>
+
+<div>
+  <button>{name}</button>
+  {"⚽".repeat(goalCount)}
+</div>
+```
+
+</Step>
+
+^5 using js inside curly braces
+
+<Step>
+
+```svelte MyComponent.svelte
+MC6
+```
+
+</Step>
+
+^6 adding event handlers
+
+<Step>
+
+```svelte MyComponent.svelte
+MC7
+```
+
+</Step>
+
+^7 firing custom events
+
+<Step>
+
+```svelte App.svelte
+APP 8
+```
+
+---
+
+```svelte MyComponent.svelte
+MC8
+```
+
+</Step>
+
+^8 handling custom events
+
+<Step>
+
+```svelte App.svelte
+APP 9
+```
+
+---
+
+```svelte MyBox.svelte
+MB 9
+```
+
+</Step>
+
+adding style
+
+<Step focus="3,9,12">
+
+```svelte App.svelte
+<script>
+  import MyComponent from './MyComponent.svelte'
+  import MyBox from './MyBox.svelte'
+  function onGoal(event) {
+    console.log(event.detail.player)
+  }
+</script>
+
+<MyBox>
+  <MyComponent name="Messi" on:goal={onGoal}/>
+  <MyComponent name="Ronaldo" on:goal={onGoal}/>
+</MyBox>
+```
+
+</Step>
+
+...
+
+<Step focus="2">
+
+```svelte MyBox.svelte
+<div>
+  <slot />
+</div>
+
+<style>
+  div {
+    border: 8px solid hotpink;
+  }
+</style>
+```
+
+</Step>
+
+using slot
+
+<Step focus="4">
+
+```svelte App.svelte
+<script>
+  import MyComponent from './MyComponent.svelte'
+  import MyBox from './MyBox.svelte'
+  const players = ['Messi', 'Ronaldo', 'Laspada']
+  function onGoal(event) {
+    console.log(event.detail.player)
+  }
+</script>
+
+<MyBox>
+  <MyComponent name="Messi" on:goal={onGoal}/>
+  <MyComponent name="Ronaldo" on:goal={onGoal}/>
+</MyBox>
+```
+
+</Step>
+
+rendering lists
+
+<Step focus="4,11,12[18:30],13">
+
+```svelte App.svelte
+<script>
+  import MyComponent from './MyComponent.svelte'
+  import MyBox from './MyBox.svelte'
+  const players = ['Messi', 'Ronaldo', 'Laspada']
+  function onGoal(event) {
+    console.log(event.detail.player)
+  }
+</script>
+
+<MyBox>
+  {#each players as player}
+    <MyComponent name={player} on:goal={onGoal}/>
+  {/each}
+</MyBox>
+```
+
+</Step>
+
+...

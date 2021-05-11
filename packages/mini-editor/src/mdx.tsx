@@ -42,8 +42,6 @@ function mdxToStep(
     preToFile(pre, prev ? prev.files : [])
   )
 
-  console.log({ northFiles, southFiles })
-
   return {
     files: [...northFiles, ...(southFiles || [])],
     northPanel: {

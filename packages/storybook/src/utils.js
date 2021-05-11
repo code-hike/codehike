@@ -1,4 +1,5 @@
 import React from "react"
+import { useSpring } from "use-spring"
 
 export function Page({ children, style, ...rest }) {
   return (
@@ -24,40 +25,40 @@ export function WithProgress({
   start = 0,
   ...rest
 }) {
-  const [{ progress, backward }, setState] = React.useState(
-    {
-      progress: start,
-      backward: false,
-    }
-  )
+  const [{ target, backward }, setState] = React.useState({
+    target: start,
+    backward: false,
+  })
+
+  const [progress] = useSpring(target)
 
   return (
     <Page {...rest}>
       <div style={{ display: "flex", margin: "10px 0" }}>
         <button
           onClick={() => {
-            const newProgress =
-              Math.floor(progress) === progress
-                ? progress - 1
-                : Math.floor(progress)
-            setState(oldState => ({
-              progress: newProgress,
-              backward: oldState.progress > newProgress,
-            }))
+            const newTarget =
+              Math.floor(target) === target
+                ? target - 1
+                : Math.floor(target)
+            setState({
+              target: newTarget,
+              backward: progress > newTarget,
+            })
           }}
         >
           {"<"}
         </button>
         <button
           onClick={() => {
-            const newProgress =
-              Math.ceil(progress) === progress
-                ? progress + 1
-                : Math.ceil(progress)
-            setState(oldState => ({
-              progress: newProgress,
-              backward: oldState.progress > newProgress,
-            }))
+            const newTarget =
+              Math.ceil(target) === target
+                ? target + 1
+                : Math.ceil(target)
+            setState({
+              target: newTarget,
+              backward: progress > newTarget,
+            })
           }}
         >
           {">"}
@@ -69,11 +70,11 @@ export function WithProgress({
           max={length - 1}
           step={0.01}
           onChange={e => {
-            const newProgress = +e.target.value
-            setState(oldState => ({
-              progress: newProgress,
-              backward: oldState.progress > newProgress,
-            }))
+            const newTarget = +e.target.value
+            setState({
+              target: newTarget,
+              backward: progress > newTarget,
+            })
           }}
         />
         <span style={{ width: 40, textAlign: "right" }}>
