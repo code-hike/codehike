@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 export function Page({ children, style }) {
   return (
@@ -14,29 +14,58 @@ export function Page({ children, style }) {
     >
       {children}
     </div>
-  );
+  )
 }
 
-export function WithProgress({ children, length = 2 }) {
-  const [{ progress, backward }, setState] = React.useState({
-    progress: 0,
-    backward: false,
-  });
+export function WithProgress({
+  children,
+  length = 2,
+  start = 0,
+}) {
+  const [{ progress, backward }, setState] = React.useState(
+    {
+      progress: start,
+      backward: false,
+    }
+  )
+
   return (
     <Page>
       <div style={{ display: "flex", margin: "10px 0" }}>
+        <button
+          onClick={() => {
+            const newProgress = progress - 1
+            setState(oldState => ({
+              progress: newProgress,
+              backward: oldState.progress > newProgress,
+            }))
+          }}
+        >
+          {"<"}
+        </button>
+        <button
+          onClick={() => {
+            const newProgress = progress + 1
+            setState(oldState => ({
+              progress: newProgress,
+              backward: oldState.progress > newProgress,
+            }))
+          }}
+        >
+          {">"}
+        </button>
         <input
           style={{ flex: "1" }}
           type="range"
           value={progress}
           max={length - 1}
           step={0.01}
-          onChange={(e) => {
-            const newProgress = +e.target.value;
-            setState((oldState) => ({
+          onChange={e => {
+            const newProgress = +e.target.value
+            setState(oldState => ({
               progress: newProgress,
               backward: oldState.progress > newProgress,
-            }));
+            }))
           }}
         />
         <span style={{ width: 40, textAlign: "right" }}>
@@ -45,5 +74,5 @@ export function WithProgress({ children, length = 2 }) {
       </div>
       {children(progress, backward)}
     </Page>
-  );
+  )
 }

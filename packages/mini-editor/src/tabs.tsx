@@ -1,212 +1,199 @@
 import React from "react"
-import { useClasser } from "@code-hike/classer"
+import { Snapshot, TabsSnapshot, Tab } from "./editor-frame"
 
-export { TabsContainer }
+export { getTabs }
 
-type TabsContainerProps = {
-  prevFiles: string[]
-  nextFiles: string[]
-  prevActive: string
-  nextActive: string
-  append?: React.ReactNode
-  prepend?: React.ReactNode
-  progress: number
-  backward?: boolean
-}
-
-function TabsContainer({
-  prevFiles,
-  prevActive,
-  nextFiles,
-  nextActive,
-  progress,
-  backward,
-  append,
-  prepend = <div style={{ width: "30px" }} />,
-}: TabsContainerProps) {
-  const c = useClasser("ch-editor-tab")
-  const ref = React.useRef<HTMLDivElement>(null!)
-  const tabs = useTabs(ref, prevFiles, nextFiles, progress)
-  const active =
-    (backward && progress === 1) ||
-    (!backward && progress > 0)
-      ? nextActive
-      : prevActive
-
-  return (
-    <>
-      {prepend}
-      <div
-        style={{
-          display: "flex",
-          position: "relative",
-          flex: 1,
-          minWidth: 0,
-        }}
-        ref={ref}
-      >
-        {tabs.map(
-          ({
-            filename,
-            tweenX,
-            tweenOpacity,
-            position,
-          }) => (
-            <div
-              key={filename}
-              title={filename}
-              className={c(
-                "",
-                filename === active ? "active" : "inactive"
-              )}
-              style={{
-                transform: `translateX(${tweenX(
-                  progress
-                )}px)`,
-                opacity: tweenOpacity(progress),
-                position,
-              }}
-            >
-              <div>{filename}</div>
-            </div>
-          )
-        )}
-      </div>
-      {append}
-    </>
-  )
-}
-
-type Tab = {
-  filename: string
-  position: "static" | "absolute"
-  tweenX: (t: number) => number
-  tweenOpacity: (t: number) => number
-}
-type Snapshot = Record<string, { left: number }>
-type DimensionsState = {
-  prevSnapshot: Snapshot | null
-  nextSnapshot: Snapshot | null
-  tabs: Tab[]
-}
-
-function useTabs(
-  ref: React.MutableRefObject<HTMLDivElement>,
-  prevFiles: string[],
-  nextFiles: string[],
-  progress: number
-): Tab[] {
-  const [
-    { prevSnapshot, nextSnapshot, tabs },
-    setState,
-  ] = React.useState<DimensionsState>({
-    prevSnapshot: null,
-    nextSnapshot: null,
-    tabs: [],
-  })
-
-  React.useLayoutEffect(() => {
-    if (!prevSnapshot) {
-      setState(s => ({
-        ...s,
-        prevSnapshot: getSnapshot(ref),
-      }))
-    } else if (!nextSnapshot) {
-      const nextSnapshot = getSnapshot(ref)
-      const tabs = merge(prevSnapshot, nextSnapshot)
-
-      setState(s => ({
-        ...s,
-        nextSnapshot,
-        tabs,
-      }))
-    }
-  })
-
-  if (!prevSnapshot) {
-    return prevFiles.map(filename => ({
-      filename,
-      position: "static",
-      tweenX: () => 0,
-      tweenOpacity: () => 1,
-    }))
-  }
-
-  if (!nextSnapshot || progress === 1) {
-    return nextFiles.map(filename => ({
-      filename,
-      position: "static",
-      tweenX: () => 0,
-      tweenOpacity: () => 1,
-    }))
-  }
-
-  return tabs
-}
-
-function getSnapshot(
-  ref: React.MutableRefObject<HTMLDivElement>
-) {
-  const parentLeft = ref.current.getBoundingClientRect()
-    .left
-  const children = Array.from(ref.current.children)
-  const dimensions = {} as Snapshot
-  children.forEach(child => {
-    const filename = child.getAttribute("title")!
-    dimensions[filename] = {
-      left: child.getBoundingClientRect().left - parentLeft,
-    }
-  })
-  return dimensions
-}
-
-function merge(
+function getTabs(
   prevSnapshot: Snapshot,
-  nextSnapshot: Snapshot
-): Tab[] {
-  const newFilenames = Object.keys(nextSnapshot).filter(
-    filename => !(filename in prevSnapshot)
-  )
-
-  const newTabs = newFilenames.map(filename => {
+  nextSnapshot: Snapshot,
+  northActive: string,
+  southActive: string | undefined,
+  t: number
+) {
+  // TODO simplify
+  if (
+    !prevSnapshot.southTabs &&
+    isPresent(southActive, prevSnapshot.northTabs)
+  ) {
+    /// one to two south
     return {
-      filename,
-      position: "absolute",
-      tweenX: () => nextSnapshot[filename].left,
-      tweenOpacity: (t: number) => t,
-    } as Tab
-  })
-
-  const oldTabs = Object.keys(prevSnapshot).map(
-    filename => {
-      const prev = prevSnapshot[filename]
-      const next = nextSnapshot[filename]
-
-      if (!next) {
-        return {
-          filename,
-          position: "static",
-          tweenX: () => 0,
-          tweenOpacity: (t: number) => 1 - t,
-        } as Tab
-      }
-
-      if (next.left === prev.left) {
-        return {
-          filename,
-          position: "static",
-          tweenX: () => 0,
-          tweenOpacity: () => 1,
-        } as Tab
-      }
-
-      return {
-        filename,
-        position: "static",
-        tweenX: (t: number) => t * (next.left - prev.left),
-        tweenOpacity: () => 1,
-      } as Tab
+      northTabs: getPanelTabs(
+        nextSnapshot.northTabs,
+        nextSnapshot.southTabs,
+        prevSnapshot.southTabs,
+        prevSnapshot.northTabs,
+        northActive,
+        t
+      )!,
+      southTabs: getPanelTabs(
+        nextSnapshot.southTabs,
+        nextSnapshot.northTabs,
+        prevSnapshot.northTabs,
+        prevSnapshot.southTabs,
+        southActive,
+        t
+      ),
     }
-  )
-  return [...newTabs, ...oldTabs]
+  }
+  if (
+    !nextSnapshot.southTabs &&
+    isPresent(southActive, nextSnapshot.northTabs)
+  ) {
+    /// two to one south
+    return {
+      northTabs: getPanelTabs(
+        nextSnapshot.southTabs,
+        nextSnapshot.northTabs,
+        prevSnapshot.northTabs,
+        prevSnapshot.southTabs,
+        northActive,
+        t
+      )!,
+      southTabs: getPanelTabs(
+        nextSnapshot.northTabs,
+        nextSnapshot.southTabs,
+        prevSnapshot.southTabs,
+        prevSnapshot.northTabs,
+        southActive,
+        t
+      ),
+    }
+  }
+
+  return {
+    northTabs: getPanelTabs(
+      nextSnapshot.northTabs,
+      nextSnapshot.southTabs,
+      prevSnapshot.northTabs,
+      prevSnapshot.southTabs,
+      northActive,
+      t
+    )!,
+    southTabs: getPanelTabs(
+      nextSnapshot.southTabs,
+      nextSnapshot.northTabs,
+      prevSnapshot.southTabs,
+      prevSnapshot.northTabs,
+      southActive,
+      t
+    ),
+  }
+}
+
+function getPanelTabs(
+  nextSnapshot: TabsSnapshot | null,
+  otherNextSnapshot: TabsSnapshot | null,
+  prevSnapshot: TabsSnapshot | null,
+  otherPrevSnapshot: TabsSnapshot | null,
+  active: string | undefined,
+  t: number
+): Tab[] {
+  // For each tab bar there are four types of tabs
+  // - oldTabs: tabs that are present in both prev and next versions of the bar
+  // - totallyNewTabs: tabs that are totally new (present in next
+  // but not in any prev)
+  // - migratingTabs: tabs that are come from the other bar (present
+  // in next and in otherPrev)
+  // - disappearingTabs: present in prev but not in next or otherNext
+  const oldTabs = !nextSnapshot
+    ? []
+    : Object.keys(nextSnapshot)
+        .filter(
+          filename =>
+            isPresent(filename, prevSnapshot) ||
+            !prevSnapshot
+        )
+        .map(filename => {
+          const prev =
+            prevSnapshot && prevSnapshot[filename]
+          const next = nextSnapshot![filename]
+          const dx = prev
+            ? prev.left + (next.left - prev.left) * t
+            : next.left
+          return {
+            active: filename === active,
+            title: filename,
+            style: {
+              position: "absolute" as const,
+              transform: `translateX(${dx}px)`,
+            },
+          }
+        })
+
+  const totallyNewTabs = !nextSnapshot
+    ? []
+    : Object.keys(nextSnapshot)
+        .filter(
+          filename =>
+            prevSnapshot &&
+            !isPresent(filename, prevSnapshot)
+          // && !isPresent(filename, otherPrevSnapshot)
+        )
+        .map(filename => {
+          const next = nextSnapshot[filename]
+
+          return {
+            active: filename === active,
+            title: filename,
+            style: {
+              position: "absolute" as const,
+              transform: `translateX(${next.left}px)`,
+              opacity: t,
+            },
+          }
+        })
+
+  const migratingTabs = !nextSnapshot
+    ? []
+    : Object.keys(nextSnapshot)
+        .filter(filename =>
+          isPresent(filename, otherPrevSnapshot)
+        )
+        .map(filename => {
+          const prev = otherPrevSnapshot![filename]
+          const next = nextSnapshot![filename]
+          const dx = next.left - prev.left
+          return {
+            active: filename === active,
+            title: filename,
+            style: {
+              position: "absolute" as const,
+              transform: `translateX(${dx}px)`,
+            },
+          }
+        })
+
+  const disappearingTabs = !prevSnapshot
+    ? []
+    : Object.keys(prevSnapshot)
+        .filter(
+          filename => !isPresent(filename, nextSnapshot)
+          // && !isPresent(filename, otherNextSnapshot)
+        )
+        .map(filename => {
+          const prev = prevSnapshot[filename]
+          return {
+            active: filename === active,
+            title: filename,
+            style: {
+              position: "absolute" as const,
+              opacity: 1 - t,
+              transform: `translateX(${prev.left}px)`,
+            },
+          }
+        })
+
+  return [
+    ...totallyNewTabs,
+    // ...migratingTabs,
+    ...oldTabs,
+    ...disappearingTabs,
+  ]
+}
+
+function isPresent(
+  filename: string | undefined,
+  snapshot: TabsSnapshot | null
+) {
+  return snapshot && filename && filename in snapshot
 }

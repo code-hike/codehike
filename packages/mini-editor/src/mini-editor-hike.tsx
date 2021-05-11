@@ -7,6 +7,7 @@ import {
   useForwardTransitions,
 } from "./steps"
 import { Classes } from "@code-hike/classer"
+import { EditorTransition } from "./editor-transition"
 // import "./theme.css"
 
 export { MiniEditorHike }
@@ -55,7 +56,11 @@ function MiniEditorHike(props: MiniEditorHikeProps) {
     horizontalCenter = false,
     ...rest
   } = props
-  const { steps, files, stepsByFile } = useSteps(ogSteps, {
+  const t = progress % 1
+  const prevStep = ogSteps![0]
+  const nextStep = ogSteps![1] || ogSteps![0]
+
+  const { steps, files } = useSteps(ogSteps, {
     code,
     focus,
     lang,
@@ -63,58 +68,111 @@ function MiniEditorHike(props: MiniEditorHikeProps) {
     tabs: ogTabs,
   })
 
-  const activeStepIndex = backward
-    ? Math.floor(progress)
-    : Math.ceil(progress)
-  const activeStep = steps[activeStepIndex]
-  const activeFile = (activeStep && activeStep.file) || ""
-
-  const activeSteps = stepsByFile[activeFile] || []
-
-  const tabs = activeStep.tabs || files
-
-  const terminalHeight = getTerminalHeight(steps, progress)
-
-  const terminalSteps = steps.map(s => ({
-    text: (s && s.terminal) || "",
-  }))
-
-  const contentSteps = useStepsWithDefaults(
-    { code, focus, lang, file },
-    ogSteps || []
-  )
+  const prev = {
+    files: [{ name: "A.js", code: "a", lang: "js" }],
+    northPanel: {
+      tabs: ["A.js"],
+      active: "A.js",
+      heightRatio: 0.5,
+    },
+  }
+  const next = {
+    files: [{ name: "A.js", code: "b", lang: "js" }],
+    northPanel: {
+      tabs: ["A.js"],
+      active: "A.js",
+      heightRatio: 0.5,
+    },
+  }
+  console.log({ t, prev, next })
 
   return (
-    <EditorFrame
-      files={tabs}
-      active={activeFile}
-      terminalPanel={
-        <TerminalPanel height={terminalHeight}>
-          <InnerTerminal
-            steps={terminalSteps}
-            progress={progress}
-          />
-        </TerminalPanel>
-      }
-      height={height}
-      {...rest}
-    >
-      {activeSteps.length > 0 && (
-        <EditorContent
-          key={activeFile}
-          backward={backward}
-          progress={progress}
-          steps={contentSteps}
-          parentHeight={height}
-          minColumns={minColumns}
-          minZoom={minZoom}
-          maxZoom={maxZoom}
-          horizontalCenter={horizontalCenter}
-        />
-      )}
-    </EditorFrame>
+    <EditorTransition
+      t={t}
+      prev={prev}
+      next={next}
+      backward={backward}
+    />
   )
 }
+
+// function MiniEditorHikeOld(props: MiniEditorHikeProps) {
+//   const {
+//     progress = 0,
+//     backward = false,
+//     code,
+//     focus,
+//     lang,
+//     file,
+//     steps: ogSteps,
+//     tabs: ogTabs,
+//     minColumns = 50,
+//     minZoom = 0.2,
+//     maxZoom = 1,
+//     height,
+//     horizontalCenter = false,
+//     ...rest
+//   } = props
+//   const { steps, files, stepsByFile } = useSteps(ogSteps, {
+//     code,
+//     focus,
+//     lang,
+//     file,
+//     tabs: ogTabs,
+//   })
+
+//   const activeStepIndex = backward
+//     ? Math.floor(progress)
+//     : Math.ceil(progress)
+//   const activeStep = steps[activeStepIndex]
+//   const activeFile = (activeStep && activeStep.file) || ""
+
+//   const activeSteps = stepsByFile[activeFile] || []
+
+//   const tabs = activeStep.tabs || files
+
+//   const terminalHeight = getTerminalHeight(steps, progress)
+
+//   const terminalSteps = steps.map(s => ({
+//     text: (s && s.terminal) || "",
+//   }))
+
+//   const contentSteps = useStepsWithDefaults(
+//     { code, focus, lang, file },
+//     ogSteps || []
+//   )
+
+//   return (
+//     <EditorFrame
+//       files={tabs}
+//       active={activeFile}
+//       terminalPanel={
+//         <TerminalPanel height={terminalHeight}>
+//           <InnerTerminal
+//             steps={terminalSteps}
+//             progress={progress}
+//           />
+//         </TerminalPanel>
+//       }
+//       height={height}
+//       {...rest}
+//     >
+//       {activeSteps.length > 0 && (
+//         <EditorContent
+//           key={activeFile}
+//           backward={backward}
+//           progress={progress}
+//           steps={contentSteps}
+//           parentHeight={height}
+//           minColumns={minColumns}
+//           minZoom={minZoom}
+//           maxZoom={maxZoom}
+//           horizontalCenter={horizontalCenter}
+//         />
+//       )}
+//     </EditorFrame>
+//   )
+// }
 
 function useStepsWithDefaults(
   defaults: MiniEditorStep,

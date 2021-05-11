@@ -1,0 +1,36 @@
+<StepHead>
+
+```svelte App.svelte
+<script>
+  let name = "Svelte"
+</script>
+
+<h1>{name}</h1>
+```
+
+</StepHead>
+
+<StepHead>
+
+```svelte App.svelte
+<script>
+  import MyComponent from './MyComponent.svelte';
+</script>
+
+<MyComponent name="Messi" />
+<MyComponent name="Ronaldo" />
+```
+
+---
+
+```svelte MyComponent.svelte
+<script>
+  export let name;
+</script>
+
+<div>
+  <button>{name}</button>
+</div>
+```
+
+</StepHead>

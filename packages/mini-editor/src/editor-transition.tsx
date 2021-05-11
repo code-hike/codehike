@@ -5,7 +5,7 @@ import {
   getPanelStyles,
   OutputPanel,
 } from "./editor-frame"
-import { Code } from "../code"
+import { Code } from "./code"
 import {
   EditorStep,
   StepFile,
@@ -13,7 +13,7 @@ import {
 } from "./use-snapshots"
 import { getTabs } from "./tabs"
 
-export { EditorTransition }
+export { EditorTransition, EditorTransitionProps }
 
 type EditorTransitionProps = {
   prev: EditorStep
@@ -101,7 +101,6 @@ function useTransition(
     prevSouthFile?.name,
     t
   )
-  console.log({ northTabs, southTabs })
 
   return {
     northPanel: {
@@ -295,7 +294,7 @@ function getStepFiles(
     ? prev.files.find(f => f.name === ps)
     : null
   const nsFile = ns
-    ? prev.files.find(f => f.name === ns)
+    ? next.files.find(f => f.name === ns)
     : null
 
   const oneToTwoSouth = !ps && pn === ns
@@ -330,6 +329,7 @@ function getStepFiles(
       : backward
       ? psFile || nsFile
       : nsFile || psFile
+
   const nextSouthFile =
     ps === ns
       ? nsFile
