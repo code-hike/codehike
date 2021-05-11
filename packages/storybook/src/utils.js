@@ -1,8 +1,9 @@
 import React from "react"
 
-export function Page({ children, style }) {
+export function Page({ children, style, ...rest }) {
   return (
     <div
+      {...rest}
       style={{
         display: "flex",
         flexFlow: "column",
@@ -21,6 +22,7 @@ export function WithProgress({
   children,
   length = 2,
   start = 0,
+  ...rest
 }) {
   const [{ progress, backward }, setState] = React.useState(
     {
@@ -30,7 +32,7 @@ export function WithProgress({
   )
 
   return (
-    <Page>
+    <Page {...rest}>
       <div style={{ display: "flex", margin: "10px 0" }}>
         <button
           onClick={() => {

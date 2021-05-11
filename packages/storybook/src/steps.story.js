@@ -9,6 +9,7 @@ import {
   mdxToSteps,
 } from "@code-hike/mini-editor"
 import "prism-svelte"
+import "./assets/styles.css"
 
 export default {
   title: "Steps From MDX",
@@ -43,10 +44,19 @@ function Wrapper({ children }) {
 
   console.log(steps)
   return (
-    <WithProgress length={steps.length}>
+    <WithProgress
+      length={steps.length}
+      style={{ maxWidth: 821 }}
+      className="no-max-width"
+    >
       {(progress, backward) => (
         <FullMiniEditorHike
-          frameProps={{ style: { height: 500 } }}
+          frameProps={{
+            style: {
+              height: 688,
+              width: 821,
+            },
+          }}
           progress={progress}
           backward={backward}
           steps={steps}
