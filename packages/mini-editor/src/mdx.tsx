@@ -3,19 +3,27 @@ import { EditorStep, StepFile } from "./use-snapshots"
 
 export { mdxToStep, mdxToSteps }
 
-function mdxToSteps(children: any[]) {
+type Settings = {
+  defaultFileName?: string
+}
+
+function mdxToSteps(
+  children: any[],
+  settings: Settings = {}
+) {
   const steps = [] as EditorStep[]
   children.forEach((child, i) => {
-    steps.push(mdxToStep(child, steps[i - 1]))
+    steps.push(mdxToStep(child, steps[i - 1], settings))
   })
   return steps
 }
 
-const defaultFileName = "App.js"
+const defaultFileName = "index.js"
 
 function mdxToStep(
   child: any,
-  prev?: EditorStep
+  prev: EditorStep | undefined,
+  settings: Settings = {}
 ): EditorStep {
   const stepProps = child?.props || {}
   const stepChildren = React.Children.toArray(
@@ -36,10 +44,10 @@ function mdxToStep(
     : null
 
   const northFiles = northChildren.map(pre =>
-    preToFile(pre, prev ? prev.files : [])
+    preToFile(pre, prev ? prev.files : [], settings)
   )
   const southFiles = southChildren?.map(pre =>
-    preToFile(pre, prev ? prev.files : [])
+    preToFile(pre, prev ? prev.files : [], settings)
   )
 
   return {
@@ -124,13 +132,16 @@ type FileWithOptions = StepFile & FileOptions
 
 function preToFile(
   preElement: any,
-  prevFiles: StepFile[]
+  prevFiles: StepFile[],
+  settings: Settings
 ): FileWithOptions {
   const codeElementProps =
     preElement?.props?.children?.props || {}
   const lang = codeElementProps.className?.slice(9)
   const { name, ...options } = parseMetastring(
-    codeElementProps.metastring || defaultFileName
+    codeElementProps.metastring ||
+      settings?.defaultFileName ||
+      defaultFileName
   )
   const code = codeElementProps.children
 
