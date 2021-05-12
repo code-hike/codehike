@@ -49,6 +49,7 @@ export const EditorFrame = React.forwardRef<
     style,
     height,
     button,
+    className,
     ...rest
   },
   ref
@@ -58,8 +59,8 @@ export const EditorFrame = React.forwardRef<
     <MiniFrame
       ref={ref}
       style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
+      className={c("frame") + " " + className}
       overflow="unset"
-      className={c("frame")}
       titleBar={
         <TabsContainer
           tabs={northPanel.tabs}

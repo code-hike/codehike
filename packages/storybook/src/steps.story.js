@@ -53,6 +53,7 @@ function Wrapper({ children }) {
       {(progress, backward) => (
         <FullMiniEditorHike
           frameProps={{
+            className: "",
             style: {
               height: 688,
               width: 821,
