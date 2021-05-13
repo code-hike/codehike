@@ -50,8 +50,19 @@ function mdxToStep(
     preToFile(pre, prev ? prev.files : [], settings)
   )
 
+  const prevFiles = prev?.files || []
+  const files = [
+    ...prevFiles.filter(
+      f =>
+        !northFiles.some(nf => nf.name === f.name) &&
+        !southFiles?.some(sf => sf.name === f.name)
+    ),
+    ...northFiles,
+    ...(southFiles || []),
+  ]
+
   return {
-    files: [...northFiles, ...(southFiles || [])],
+    files,
     northPanel: {
       tabs: chooseNorthTabs(prev, northFiles, southFiles),
       active: chooseActiveFile(northFiles, prev),
@@ -167,6 +178,5 @@ function parseMetastring(
     const [key, value] = param.split("=")
     ;(options as any)[key] = value != null ? value : true
   })
-  console.log(metastring, options)
   return { name, ...options }
 }
