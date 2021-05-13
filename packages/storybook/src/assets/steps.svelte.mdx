@@ -1,14 +1,14 @@
-<Step>
+<StepHead>
 
 ```svelte App.svelte
 <h1>Hello Svelte</h1>
 ```
 
-</Step>
+</StepHead>
 
 ^0
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte
 <script>
@@ -18,11 +18,11 @@
 <h1>{name}</h1>
 ```
 
-</Step>
+</StepHead>
 
 ^1
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte
 <script>
@@ -33,11 +33,11 @@
 <MyComponent name="Ronaldo" />
 ```
 
-</Step>
+</StepHead>
 
 ^2
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=2
 
@@ -55,11 +55,11 @@
 </div>
 ```
 
-</Step>
+</StepHead>
 
 ^3 Each svelte file is a different component
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte
 
@@ -75,11 +75,11 @@
 </div>
 ```
 
-</Step>
+</StepHead>
 
 ^4 You can declare props with the export keyword.
 
-<Step>
+<StepHead>
 
 ```svelte MyComponent.svelte focus=3,8
 <script>
@@ -93,11 +93,11 @@
 </div>
 ```
 
-</Step>
+</StepHead>
 
 ^5 using js inside curly braces
 
-<Step>
+<StepHead>
 
 ```svelte MyComponent.svelte focus=5:7,11[11:32]
 <script>
@@ -115,11 +115,11 @@
 </div>
 ```
 
-</Step>
+</StepHead>
 
 ^6 adding event handlers
 
-<Step>
+<StepHead>
 
 ```svelte MyComponent.svelte focus=2:3,8,10,11
 <script>
@@ -141,11 +141,11 @@
 </div>
 ```
 
-</Step>
+</StepHead>
 
 ^7 firing custom events
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=4:6,9[27:42],10[29:44]
 <script>
@@ -160,11 +160,11 @@
 <MyComponent name="Ronaldo" on:goal={onGoal}/>
 ```
 
-</Step>
+</StepHead>
 
 handling custom events
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=3,9,12
 <script>
@@ -184,11 +184,11 @@ handling custom events
 
 ---
 
-</Step>
+</StepHead>
 
 adding style
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=9,12
 
@@ -208,11 +208,11 @@ adding style
 </style>
 ```
 
-</Step>
+</StepHead>
 
 ...
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=9,12
 
@@ -232,11 +232,11 @@ adding style
 </style>
 ```
 
-</Step>
+</StepHead>
 
 using slot
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=4
 <script>
@@ -254,11 +254,11 @@ using slot
 </MyBox>
 ```
 
-</Step>
+</StepHead>
 
 rendering lists
 
-<Step>
+<StepHead>
 
 ```svelte App.svelte focus=4,11,12[18:30],13
 <script>
@@ -277,6 +277,6 @@ rendering lists
 </MyBox>
 ```
 
-</Step>
+</StepHead>
 
 ...

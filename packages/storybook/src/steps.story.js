@@ -4,6 +4,7 @@ import { WithProgress } from "./utils"
 import { MDXProvider } from "@mdx-js/react"
 import BasicSteps from "./assets/steps.basic.mdx"
 import SvelteSteps from "./assets/steps.svelte.mdx"
+import ReactSteps from "./assets/steps.react.mdx"
 import {
   FullMiniEditorHike,
   mdxToSteps,
@@ -31,6 +32,14 @@ export function svelte() {
   )
 }
 
+export function react() {
+  return (
+    <MDXProvider components={components}>
+      <ReactSteps />
+    </MDXProvider>
+  )
+}
+
 const components = {
   wrapper: Wrapper,
   StepHead,
@@ -39,8 +48,10 @@ const components = {
 function Wrapper({ children }) {
   const stepChildren = React.Children.toArray(
     children
-  ).filter(child => child?.props?.mdxType === "Step")
-  const steps = mdxToSteps(stepChildren)
+  ).filter(child => child?.props?.mdxType === "StepHead")
+  const steps = mdxToSteps(stepChildren, {
+    defaultFileName: "App.js",
+  })
 
   console.log(steps)
   return (

@@ -65,7 +65,10 @@ function mdxToStep(
     files,
     northPanel: {
       tabs: chooseNorthTabs(prev, northFiles, southFiles),
-      active: chooseActiveFile(northFiles, prev),
+      active: chooseActiveFile(
+        northFiles,
+        prev?.northPanel.active
+      ),
       heightRatio: 0.5,
     },
     southPanel:
@@ -76,7 +79,10 @@ function mdxToStep(
               northFiles,
               southFiles
             ),
-            active: chooseActiveFile(southFiles, prev),
+            active: chooseActiveFile(
+              southFiles,
+              prev?.southPanel?.active
+            ),
             heightRatio: 0.5,
           }
         : undefined,
@@ -125,12 +131,16 @@ function chooseSouthTabs(
 
 function chooseActiveFile(
   panelFiles: FileWithOptions[],
-  prev?: EditorStep
+  prev?: string
 ) {
-  return (
+  const active =
     panelFiles.find(file => file.active)?.name ||
-    panelFiles[0].name
-  )
+    panelFiles[0]?.name ||
+    prev
+  if (!active) {
+    throw new Error("Something is wrong with Code Hike")
+  }
+  return active
 }
 
 type FileOptions = {
@@ -150,33 +160,40 @@ function preToFile(
     preElement?.props?.children?.props || {}
   const lang = codeElementProps.className?.slice(9)
   const { name, ...options } = parseMetastring(
-    codeElementProps.metastring ||
-      settings?.defaultFileName ||
-      defaultFileName
+    codeElementProps.metastring || ""
   )
+  const fileName =
+    name || settings?.defaultFileName || defaultFileName
   const code = codeElementProps.children
 
   const prevFile = prevFiles.find(
-    file => file.name === name
+    file => file.name === fileName
   )
 
   return {
     code:
       code.trim() === "" && prevFile ? prevFile.code : code,
     lang,
-    name,
+    name: fileName,
     ...options,
   }
 }
 
 function parseMetastring(
   metastring: string
-): { name: string } & FileOptions {
-  const [name, ...params] = metastring.split(" ")
+): { name: string | null } & FileOptions {
+  const params = metastring.split(" ")
   const options = {} as FileOptions
+  let name: string | null = null
   params.forEach(param => {
     const [key, value] = param.split("=")
-    ;(options as any)[key] = value != null ? value : true
+    if (value != null) {
+      ;(options as any)[key] = value
+    } else if (name === null) {
+      name = key
+    } else {
+      ;(options as any)[key] = true
+    }
   })
   return { name, ...options }
 }
