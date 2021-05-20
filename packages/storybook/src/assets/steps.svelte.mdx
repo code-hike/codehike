@@ -1,12 +1,12 @@
 <StepHead>
 
 ```svelte App.svelte
-<h1>Hello Svelte</h1>
+<h1>Svelte</h1>
 ```
 
 </StepHead>
 
-^0
+Svelte uses a custom file format, similar to HTML
 
 <StepHead>
 
@@ -15,16 +15,57 @@
   let name = "Svelte"
 </script>
 
-<h1>{name}</h1>
+<h1>Hello {name}</h1>
 ```
 
 </StepHead>
 
-^1
+You can use curly braces to render data.
 
 <StepHead>
 
 ```svelte App.svelte
+
+```
+
+---
+
+```svelte MyComponent.svelte
+<div>
+  <button>Hello</button>
+</div>
+```
+
+</StepHead>
+
+Each svelte file is a different component
+
+<StepHead>
+
+```svelte App.svelte focus=2,5,6
+<script>
+  import MyComponent from './MyComponent.svelte'
+</script>
+
+<MyComponent />
+<MyComponent />
+```
+
+---
+
+```svelte MyComponent.svelte focus=2[1]
+<div>
+  <button>Hello</button>
+</div>
+```
+
+</StepHead>
+
+You can add imports inside the script tag
+
+<StepHead>
+
+```svelte App.svelte focus=5[14:26],6[14:28]
 <script>
   import MyComponent from './MyComponent.svelte'
 </script>
@@ -33,19 +74,32 @@
 <MyComponent name="Ronaldo" />
 ```
 
+---
+
+```svelte MyComponent.svelte focus=2[1]
+<div>
+  <button>Hello</button>
+</div>
+```
+
 </StepHead>
 
-^2
+To share data with children components
 
 <StepHead>
 
-```svelte App.svelte focus=2
+```svelte App.svelte focus=5[14:26],6[14:28]
+<script>
+  import MyComponent from './MyComponent.svelte'
+</script>
 
+<MyComponent name="Messi" />
+<MyComponent name="Ronaldo" />
 ```
 
 ---
 
-```svelte MyComponent.svelte
+```svelte MyComponent.svelte focus=2,6
 <script>
   export let name;
 </script>
@@ -57,27 +111,7 @@
 
 </StepHead>
 
-^3 Each svelte file is a different component
-
-<StepHead>
-
-```svelte App.svelte
-
-```
-
-```svelte MyComponent.svelte focus=2 active
-<script>
-  export let name;
-</script>
-
-<div>
-  <button>{name}</button>
-</div>
-```
-
-</StepHead>
-
-^4 You can declare props with the export keyword.
+you can create props using the export keyword
 
 <StepHead>
 
@@ -95,7 +129,29 @@
 
 </StepHead>
 
-^5 using js inside curly braces
+Inside curly braces you can put any javascript expression
+
+<StepHead>
+
+```svelte MyComponent.svelte focus=11[11:32]
+<script>
+  export let name;
+  let goalCount = 2;
+
+  function handleClick() {
+    // TODO
+  }
+</script>
+
+<div>
+  <button on:click={handleClick}>{name}</button>
+  {"⚽".repeat(goalCount)}
+</div>
+```
+
+</StepHead>
+
+With the on directive you can listen to events
 
 <StepHead>
 
@@ -117,7 +173,7 @@
 
 </StepHead>
 
-^6 adding event handlers
+here, when the goalcount changes after a click, svelte will rerender the component (show)
 
 <StepHead>
 
@@ -143,7 +199,32 @@
 
 </StepHead>
 
-^7 firing custom events
+You can also use a custom event to share data with the parent
+
+<StepHead>
+
+```svelte App.svelte focus=9[27:42],10[29:44]
+<script>
+  import MyComponent from './MyComponent.svelte'
+
+  function onGoal(event) {
+    console.log(event.detail.player)
+  }
+</script>
+
+<MyComponent name="Messi" on:goal={onGoal}/>
+<MyComponent name="Ronaldo" on:goal={onGoal}/>
+```
+
+---
+
+```svelte MyComponent.svelte focus=10
+
+```
+
+</StepHead>
+
+and use the on directive again to handle it
 
 <StepHead>
 
@@ -162,121 +243,81 @@
 
 </StepHead>
 
-handling custom events
+and do something with the data
 
 <StepHead>
 
-```svelte App.svelte focus=3,9,12
+```svelte App.svelte focus=3
 <script>
   import MyComponent from './MyComponent.svelte'
-  import MyBox from './MyBox.svelte'
-  function onGoal(event) {
-    console.log(event.detail.player)
-  }
-</script>
-
-<MyBox>
-  <MyComponent name="Messi" on:goal={onGoal}/>
-  <MyComponent name="Ronaldo" on:goal={onGoal}/>
-</MyBox>
-
-```
-
----
-
-</StepHead>
-
-adding style
-
-<StepHead>
-
-```svelte App.svelte focus=9,12
-
-```
-
----
-
-```svelte MyBox.svelte
-<div>
-  something
-</div>
-
-<style>
-  div {
-    border: 8px solid hotpink;
-  }
-</style>
-```
-
-</StepHead>
-
-...
-
-<StepHead>
-
-```svelte App.svelte focus=9,12
-
-```
-
----
-
-```svelte MyBox.svelte focus=2
-<div>
-  <slot />
-</div>
-
-<style>
-  div {
-    border: 8px solid hotpink;
-  }
-</style>
-```
-
-</StepHead>
-
-using slot
-
-<StepHead>
-
-```svelte App.svelte focus=4
-<script>
-  import MyComponent from './MyComponent.svelte'
-  import MyBox from './MyBox.svelte'
   const players = ['Messi', 'Ronaldo', 'Laspada']
   function onGoal(event) {
     console.log(event.detail.player)
   }
 </script>
 
-<MyBox>
-  <MyComponent name="Messi" on:goal={onGoal}/>
-  <MyComponent name="Ronaldo" on:goal={onGoal}/>
-</MyBox>
+<MyComponent name="Messi" on:goal={onGoal}/>
+<MyComponent name="Ronaldo" on:goal={onGoal}/>
 ```
 
 </StepHead>
 
-rendering lists
+If you want to render a list
 
 <StepHead>
 
-```svelte App.svelte focus=4,11,12[18:30],13
+```svelte App.svelte focus=3,9,10[16:28],11
 <script>
   import MyComponent from './MyComponent.svelte'
-  import MyBox from './MyBox.svelte'
   const players = ['Messi', 'Ronaldo', 'Laspada']
   function onGoal(event) {
     console.log(event.detail.player)
   }
 </script>
 
-<MyBox>
-  {#each players as player}
-    <MyComponent name={player} on:goal={onGoal}/>
-  {/each}
-</MyBox>
+{#each players as player}
+  <MyComponent name={player} on:goal={onGoal}/>
+{/each}
 ```
 
 </StepHead>
 
-...
+you can use the each block.
+
+<StepHead>
+
+```svelte App.svelte focus=9:13
+<script>
+  import MyComponent from './MyComponent.svelte'
+  const players = ['Messi', 'Ronaldo', 'Laspada']
+  function onGoal(event) {
+    console.log(event.detail.player)
+  }
+</script>
+
+<style>
+  div {
+    border: 8px solid hotpink;
+  }
+</style>
+
+<div>
+{#each players as player}
+  <MyComponent name={player} on:goal={onGoal}/>
+{/each}
+</div>
+```
+
+</StepHead>
+
+Svelte also support style tags,
+
+<StepHead>
+
+```svelte App.svelte focus=10:12,15,19
+
+```
+
+</StepHead>
+
+Here the style only applies to the div from the current component and not others.
