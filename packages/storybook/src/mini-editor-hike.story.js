@@ -1,5 +1,8 @@
 import React from "react"
-import { MiniEditorHike } from "@code-hike/mini-editor"
+import {
+  MiniEditorHike,
+  FullMiniEditorHike,
+} from "@code-hike/mini-editor"
 import { Page, WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 
@@ -19,25 +22,26 @@ ut labore et dolore`
 
 export const empty = () => (
   <Page>
-    <MiniEditorHike />
-  </Page>
-)
-
-export const justCode = () => (
-  <Page>
-    <MiniEditorHike code={code1} />
+    <FullMiniEditorHike />
   </Page>
 )
 
 export const code = () => {
-  const steps = [{ code: code1 }, { code: code2 }]
+  const steps = [
+    {
+      files: [{ code: code1, name: "hi.js", lang: "js" }],
+      northPanel: { active: "hi.js", tabs: ["hi.js"] },
+    },
+    {
+      files: [{ code: code2, name: "hi.js", lang: "js" }],
+      northPanel: { active: "hi.js", tabs: ["hi.js"] },
+    },
+  ]
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 200 }}
-          lang="js"
-          file="index.js"
+        <FullMiniEditorHike
+          frameProps={{ height: 200 }}
           steps={steps}
           progress={progress}
           backward={backward}
@@ -54,23 +58,23 @@ console.log(1)`
   const code2 = `console.log(1)
 console.log(10000000000000000, 100000000000000)
 console.log(1)`
-  const steps = [
+  const steps = toSteps([
     { code: code1, focus: "2" },
     { code: code2, focus: "2" },
-  ]
+  ])
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 200, width: 200 }}
-          lang="js"
-          file="index.js"
+        <FullMiniEditorHike
           steps={steps}
           progress={progress}
           backward={backward}
-          minColumns={10}
-          minZoom={1}
-          horizontalCenter={true}
+          frameProps={{ height: 200, width: 200 }}
+          codeProps={{
+            minColumns: 10,
+            minZoom: 1,
+            horizontalCenter: true,
+          }}
         />
       )}
     </WithProgress>
@@ -93,11 +97,9 @@ console.log(8)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 200 }}
-          lang="js"
-          file="index.js"
-          steps={steps}
+        <FullMiniEditorHike
+          frameProps={{ style: { height: 200 } }}
+          steps={toSteps(steps)}
           progress={progress}
           backward={backward}
         />
@@ -122,14 +124,14 @@ console.log(8)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 100 }}
-          lang="js"
-          file="index.js"
-          steps={steps}
+        <FullMiniEditorHike
+          frameProps={{ style: { height: 100 } }}
+          steps={toSteps(steps)}
           progress={progress}
           backward={backward}
-          minZoom={0.8}
+          codeProps={{
+            minZoom: 0.8,
+          }}
         />
       )}
     </WithProgress>
@@ -152,11 +154,9 @@ console.log(4)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 200 }}
-          lang="js"
-          file="index.js"
-          steps={steps}
+        <FullMiniEditorHike
+          frameProps={{ style: { height: 200 } }}
+          steps={toSteps(steps)}
           progress={progress}
           backward={backward}
         />
@@ -164,6 +164,7 @@ console.log(4)`
     </WithProgress>
   )
 }
+
 export const files = () => {
   const steps = [
     { code: "log('foo',1)", file: "foo.js" },
@@ -175,12 +176,12 @@ export const files = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 300 }}
-          lang="js"
-          steps={steps}
+        <FullMiniEditorHike
+          frameProps={{ style: { height: 300 } }}
+          steps={toSteps(steps, ["foo.js", "bar.js"])}
           progress={progress}
           backward={backward}
+          codeProps={{}}
         />
       )}
     </WithProgress>
@@ -197,23 +198,20 @@ export const minColumns = () => {
             minColumns 5 (it doesn't zoom because maxZoom ==
             1)
           </p>
-          <MiniEditorHike
-            style={{ height: 300 }}
-            lang="js"
-            steps={steps}
-            progress={progress}
-            minColumns={5}
-            file="index.js"
-          />
-          <p>minColumns 80</p>
-          <MiniEditorHike
-            style={{ height: 300 }}
-            lang="js"
-            steps={steps}
+          <FullMiniEditorHike
+            frameProps={{ style: { height: 300 } }}
+            steps={toSteps(steps)}
             progress={progress}
             backward={backward}
-            minColumns={80}
-            file="index.js"
+            codeProps={{ minColumns: 5, maxZoom: 1 }}
+          />
+          <p>minColumns 80</p>
+          <FullMiniEditorHike
+            frameProps={{ style: { height: 300 } }}
+            steps={toSteps(steps)}
+            progress={progress}
+            backward={backward}
+            codeProps={{ minColumns: 80 }}
           />
         </>
       )}
@@ -231,11 +229,9 @@ export const terminal = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 300 }}
-          lang="js"
-          file="foo.js"
-          steps={steps}
+        <FullMiniEditorHike
+          frameProps={{ style: { height: 300 } }}
+          steps={toSteps(steps)}
           progress={progress}
           backward={backward}
         />
@@ -247,22 +243,215 @@ export const terminal = () => {
 export const withButton = () => {
   return (
     <Page>
-      <MiniEditorHike
-        style={{ height: 200 }}
-        lang="js"
-        file="index.js"
-        steps={[{ code: code1 }]}
+      <FullMiniEditorHike
+        frameProps={{
+          style: { height: 200 },
+          button: <CodeSandboxIcon />,
+        }}
+        steps={toSteps([{ code: code1 }])}
         progress={0}
-        button={<CodeSandboxIcon />}
       />
     </Page>
   )
 }
 
+export const manyTabs = () => {
+  return (
+    <Page>
+      <h2>Three tabs</h2>
+      <FullMiniEditorHike
+        frameProps={{
+          style: { height: 200 },
+        }}
+        steps={toSteps(
+          [{ code: code1 }],
+          ["index.js", "two.css", "three.html"]
+        )}
+        progress={0}
+      />
+      <h2>With button</h2>
+      <FullMiniEditorHike
+        frameProps={{
+          style: { height: 200 },
+          button: <CodeSandboxIcon />,
+        }}
+        steps={toSteps(
+          [{ code: code1 }],
+          ["index.js", "two.css", "three.html"]
+        )}
+        progress={0}
+      />
+      <h2>Long name</h2>
+      <FullMiniEditorHike
+        frameProps={{
+          style: { height: 200 },
+          button: <CodeSandboxIcon />,
+        }}
+        steps={toSteps(
+          [
+            {
+              code: code1,
+              file: "index-with-long-name.js",
+            },
+          ],
+          [
+            "index-with-long-name.js",
+            "two.css",
+            "three.html",
+          ]
+        )}
+        progress={0}
+      />
+      <h2>Six tabs</h2>
+      <FullMiniEditorHike
+        frameProps={{
+          style: { height: 200 },
+          button: <CodeSandboxIcon />,
+        }}
+        steps={toSteps(
+          [
+            {
+              code: code1,
+              file: "two.js",
+            },
+          ],
+          [
+            "index.js",
+            "two.js",
+            "three.html",
+            "four.js",
+            "five.css",
+            "six.html",
+          ]
+        )}
+        progress={0}
+      />
+    </Page>
+  )
+}
+
+export const x = () => {
+  return (
+    <WithProgress length={xsteps.length}>
+      {(progress, backward) => (
+        <FullMiniEditorHike
+          steps={toSteps(
+            xsteps,
+            ["index.js"],
+            "index.js",
+            "jsx"
+          )}
+          progress={progress}
+          backward={backward}
+          frameProps={{
+            style: { height: 300 },
+          }}
+          codeProps={{ minColumns: 50 }}
+        />
+      )}
+    </WithProgress>
+  )
+}
+
+function toSteps(
+  codeSteps,
+  tabs = null,
+  name = "index.js",
+  lang = "js"
+) {
+  return codeSteps.map(codeStep => ({
+    files: [
+      {
+        name: codeStep.file || name,
+        lang,
+        code: codeStep.code,
+        focus: codeStep.focus,
+      },
+    ],
+    northPanel: {
+      active: codeStep.file || name,
+      tabs: tabs || [codeStep.file || name],
+      heightRatio: 1,
+    },
+    terminal: codeStep.terminal,
+  }))
+}
+
+const xsteps = [
+  {
+    code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+    focus: "1",
+  },
+  {
+    code: `function MyComponent() {
+  return (
+    <div>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+    focus: "1:7",
+  },
+  {
+    code: `function MyComponent() {
+  return (
+    <div>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+      <button>Hello</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+    focus: "1:7",
+  },
+  {
+    code: `function MyComponent() {
+  return (
+    <div>
+      <button>Bye</button>
+      <button>Bye</button>
+      <button>Bye</button>
+    </div>
+  )
+}
+
+const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+    focus: "7",
+  },
+  {
+    code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
+
+ReactDOM.render(app, document.getElementById('root'))`,
+    focus: "1",
+  },
+]
+
 function CodeSandboxIcon() {
   return (
     <a
-      style={{ margin: "0 1em 0 1em", color: "inherit" }}
+      style={{
+        margin: "0 1em 0 1em",
+        color: "inherit",
+        minWidth: "1.3em",
+      }}
       title="Open in CodeSandbox"
       href={"sandboxurl"}
       target="_blank"
@@ -281,148 +470,4 @@ function CodeSandboxIcon() {
       </svg>
     </a>
   )
-}
-
-export const manyTabs = () => {
-  return (
-    <Page>
-      <h2>Three tabs</h2>
-      <MiniEditorHike
-        style={{ height: 200 }}
-        lang="js"
-        file="index.js"
-        steps={[{ code: code1 }]}
-        progress={0}
-        tabs={["index.js", "two.css", "three.html"]}
-      />
-      <h2>With button</h2>
-      <MiniEditorHike
-        style={{ height: 200 }}
-        lang="js"
-        file="index.js"
-        steps={[{ code: code1 }]}
-        progress={0}
-        tabs={["index.js", "two.css", "three.html"]}
-        button={<CodeSandboxIcon />}
-      />
-      <h2>Long name</h2>
-      <MiniEditorHike
-        style={{ height: 200 }}
-        lang="js"
-        file="index-with-long-name.js"
-        steps={[{ code: code1 }]}
-        progress={0}
-        tabs={[
-          "index-with-long-name.js",
-          "two.css",
-          "three.html",
-        ]}
-        button={<CodeSandboxIcon />}
-      />
-      <h2>Six tabs</h2>
-      <MiniEditorHike
-        style={{ height: 200 }}
-        lang="js"
-        file="two.js"
-        steps={[{ code: code1 }]}
-        progress={0}
-        tabs={[
-          "index.js",
-          "two.js",
-          "three.html",
-          "four.js",
-          "five.css",
-          "six.html",
-        ]}
-        button={<CodeSandboxIcon />}
-      />
-    </Page>
-  )
-}
-
-export const x = () => {
-  return (
-    <WithProgress length={xprops.steps.length}>
-      {(progress, backward) => (
-        <MiniEditorHike
-          style={{ height: 300 }}
-          {...xprops}
-          progress={progress}
-          backward={backward}
-          minColumns={50}
-        />
-      )}
-    </WithProgress>
-  )
-}
-
-const xprops = {
-  steps: [
-    {
-      code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
-
-ReactDOM.render(app, document.getElementById('root'))`,
-      focus: "1",
-    },
-    {
-      code: `function MyComponent() {
-  return (
-    <div>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-    </div>
-  )
-}
-
-const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
-
-ReactDOM.render(app, document.getElementById('root'))`,
-      focus: "1:7",
-    },
-    {
-      code: `function MyComponent() {
-  return (
-    <div>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-      <button>Hello</button>
-    </div>
-  )
-}
-
-const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
-
-ReactDOM.render(app, document.getElementById('root'))`,
-      focus: "1:7",
-    },
-    {
-      code: `function MyComponent() {
-  return (
-    <div>
-      <button>Bye</button>
-      <button>Bye</button>
-      <button>Bye</button>
-    </div>
-  )
-}
-
-const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
-
-ReactDOM.render(app, document.getElementById('root'))`,
-      focus: "7",
-    },
-    {
-      code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
-
-ReactDOM.render(app, document.getElementById('root'))`,
-      focus: "1",
-    },
-  ],
-  lang: "jsx",
-  file: "index.js",
 }
