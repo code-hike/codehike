@@ -161,7 +161,7 @@ function TabsContainer({
 
 type TabsSnapshot = Record<
   string,
-  { left: number; active: boolean }
+  { left: number; active: boolean; width: number }
 >
 type Snapshot = {
   titleBarHeight: number

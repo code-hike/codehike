@@ -131,8 +131,10 @@ function getTabsDimensions(
   const dimensions = {} as TabsSnapshot
   tabElements.forEach(child => {
     const filename = child.getAttribute("title")!
+    const rect = child.getBoundingClientRect()
     dimensions[filename] = {
-      left: child.getBoundingClientRect().left - parentLeft,
+      left: rect.left - parentLeft,
+      width: rect.width,
       active: filename === active,
     }
   })

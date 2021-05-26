@@ -110,12 +110,16 @@ function getPanelTabs(
           const dx = prev
             ? prev.left + (next.left - prev.left) * t
             : next.left
+          const width = prev
+            ? prev.width + (next.width - prev.width) * t
+            : next.width
           return {
             active: filename === active,
             title: filename,
             style: {
               position: "absolute" as const,
               transform: `translateX(${dx}px)`,
+              width,
             },
           }
         })
@@ -139,6 +143,7 @@ function getPanelTabs(
               position: "absolute" as const,
               transform: `translateX(${next.left}px)`,
               opacity: t,
+              width: next.width,
             },
           }
         })
@@ -179,6 +184,7 @@ function getPanelTabs(
               position: "absolute" as const,
               opacity: 1 - t,
               transform: `translateX(${prev.left}px)`,
+              width: prev.width,
             },
           }
         })
