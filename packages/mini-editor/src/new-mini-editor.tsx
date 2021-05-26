@@ -25,9 +25,9 @@ function FullMiniEditor(step: FullMiniEditorProps) {
 }
 
 function FullMiniEditorHike({
-  steps,
-  progress,
-  backward,
+  steps = [],
+  progress = 0,
+  backward = false,
   frameProps,
   codeProps,
 }: {

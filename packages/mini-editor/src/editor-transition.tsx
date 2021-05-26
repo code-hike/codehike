@@ -16,16 +16,21 @@ import { getTabs } from "./tabs"
 export { EditorTransition, EditorTransitionProps }
 
 type EditorTransitionProps = {
-  prev: EditorStep
-  next: EditorStep
+  prev?: EditorStep
+  next?: EditorStep
   t: number
   backward: boolean
   codeProps: Partial<CodeProps>
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
+const DEFAULT_STEP: EditorStep = {
+  files: [{ code: "", lang: "js", name: "" }],
+  northPanel: { active: "", tabs: [""], heightRatio: 1 },
+}
+
 function EditorTransition({
-  prev,
-  next,
+  prev = DEFAULT_STEP,
+  next = DEFAULT_STEP,
   t,
   backward,
   codeProps,
