@@ -12,7 +12,6 @@ export {
   OutputPanel,
   TabsSnapshot,
   Tab,
-  TerminalPanel,
 }
 
 type Tab = {
@@ -328,25 +327,4 @@ function getPanelStyles(
 
 function tween(a: number, b: number, t: number) {
   return a + (b - a) * t
-}
-
-type TerminalPanelProps = {
-  height?: number
-  children: React.ReactNode
-}
-
-function TerminalPanel({
-  height,
-  children,
-}: TerminalPanelProps) {
-  return !height ? null : (
-    <div className="ch-editor-terminal" style={{ height }}>
-      <div className="ch-editor-terminal-tab">
-        <span>Terminal</span>
-      </div>
-      <div className="ch-editor-terminal-content">
-        {children}
-      </div>
-    </div>
-  )
 }

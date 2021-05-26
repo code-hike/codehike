@@ -12,6 +12,7 @@ import {
   useSnapshots,
 } from "./use-snapshots"
 import { getTabs } from "./tabs"
+import { TerminalPanel } from "./terminal-panel"
 
 export { EditorTransition, EditorTransitionProps }
 
@@ -45,11 +46,21 @@ function EditorTransition({
     backward,
     codeProps
   )
+
+  const terminalPanel = (
+    <TerminalPanel
+      prev={prev.terminal}
+      next={next.terminal}
+      t={t}
+      backward={backward}
+    />
+  )
   return (
     <EditorFrame
       ref={ref}
       northPanel={northPanel}
       southPanel={southPanel}
+      terminalPanel={terminalPanel}
       {...rest}
     />
   )

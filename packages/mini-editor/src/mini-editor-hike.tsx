@@ -1,5 +1,5 @@
 import React from "react"
-import { EditorFrame, TerminalPanel } from "./editor-frame"
+import { EditorFrame } from "./editor-frame"
 import { InnerTerminal } from "@code-hike/mini-terminal"
 import { Code } from "./code"
 import {
