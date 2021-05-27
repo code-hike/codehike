@@ -4,22 +4,21 @@ import {
   MiniEditorHike,
   MiniEditorHikeProps,
 } from "./mini-editor-hike"
-import { MiniEditor, MiniEditorProps } from "./mini-editor"
 import { EditorTransition } from "./editor-transition"
-import {
-  FullMiniEditor,
-  FullMiniEditorHike,
-} from "./new-mini-editor"
+import { FullMiniEditorHike } from "./new-mini-editor"
 import { mdxToStep, mdxToSteps } from "./mdx"
+import {
+  MiniEditor,
+  MiniEditorProps,
+} from "./mini-editor-spring"
 
 export {
   mdxToStep,
   mdxToSteps,
-  MiniEditorHike,
   MiniEditor,
-  MiniEditorHikeProps,
   MiniEditorProps,
+  MiniEditorHike,
+  MiniEditorHikeProps,
   EditorTransition,
-  FullMiniEditor,
   FullMiniEditorHike,
 }

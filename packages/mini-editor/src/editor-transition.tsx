@@ -21,7 +21,7 @@ type EditorTransitionProps = {
   next?: EditorStep
   t: number
   backward: boolean
-  codeProps: Partial<CodeProps>
+  codeProps?: Partial<CodeProps>
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
 const DEFAULT_STEP: EditorStep = {
@@ -34,7 +34,7 @@ function EditorTransition({
   next = DEFAULT_STEP,
   t,
   backward,
-  codeProps,
+  codeProps = {},
   ...rest
 }: EditorTransitionProps) {
   const ref = React.createRef<HTMLDivElement>()
