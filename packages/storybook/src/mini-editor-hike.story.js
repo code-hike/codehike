@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  MiniEditorHike,
-  FullMiniEditorHike,
-} from "@code-hike/mini-editor"
+import { MiniEditorHike } from "@code-hike/mini-editor"
 import { Page, WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 
@@ -22,7 +19,7 @@ ut labore et dolore`
 
 export const empty = () => (
   <Page>
-    <FullMiniEditorHike />
+    <MiniEditorHike />
   </Page>
 )
 
@@ -40,7 +37,7 @@ export const code = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ height: 200 }}
           steps={steps}
           progress={progress}
@@ -65,7 +62,7 @@ console.log(1)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           steps={steps}
           progress={progress}
           backward={backward}
@@ -97,7 +94,7 @@ console.log(8)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ style: { height: 200 } }}
           steps={toSteps(steps)}
           progress={progress}
@@ -124,7 +121,7 @@ console.log(8)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ style: { height: 100 } }}
           steps={toSteps(steps)}
           progress={progress}
@@ -154,7 +151,7 @@ console.log(4)`
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ style: { height: 200 } }}
           steps={toSteps(steps)}
           progress={progress}
@@ -176,7 +173,7 @@ export const files = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ style: { height: 300 } }}
           steps={toSteps(steps, ["foo.js", "bar.js"])}
           progress={progress}
@@ -198,7 +195,7 @@ export const minColumns = () => {
             minColumns 5 (it doesn't zoom because maxZoom ==
             1)
           </p>
-          <FullMiniEditorHike
+          <MiniEditorHike
             frameProps={{ style: { height: 300 } }}
             steps={toSteps(steps)}
             progress={progress}
@@ -206,7 +203,7 @@ export const minColumns = () => {
             codeProps={{ minColumns: 5, maxZoom: 1 }}
           />
           <p>minColumns 80</p>
-          <FullMiniEditorHike
+          <MiniEditorHike
             frameProps={{ style: { height: 300 } }}
             steps={toSteps(steps)}
             progress={progress}
@@ -229,7 +226,7 @@ export const terminal = () => {
   return (
     <WithProgress length={steps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{ style: { height: 300 } }}
           steps={toSteps(steps)}
           progress={progress}
@@ -243,7 +240,7 @@ export const terminal = () => {
 export const withButton = () => {
   return (
     <Page>
-      <FullMiniEditorHike
+      <MiniEditorHike
         frameProps={{
           style: { height: 200 },
           button: <CodeSandboxIcon />,
@@ -259,7 +256,7 @@ export const manyTabs = () => {
   return (
     <Page>
       <h2>Three tabs</h2>
-      <FullMiniEditorHike
+      <MiniEditorHike
         frameProps={{
           style: { height: 200 },
         }}
@@ -270,7 +267,7 @@ export const manyTabs = () => {
         progress={0}
       />
       <h2>With button</h2>
-      <FullMiniEditorHike
+      <MiniEditorHike
         frameProps={{
           style: { height: 200 },
           button: <CodeSandboxIcon />,
@@ -282,7 +279,7 @@ export const manyTabs = () => {
         progress={0}
       />
       <h2>Long name</h2>
-      <FullMiniEditorHike
+      <MiniEditorHike
         frameProps={{
           style: { height: 200 },
           button: <CodeSandboxIcon />,
@@ -303,7 +300,7 @@ export const manyTabs = () => {
         progress={0}
       />
       <h2>Six tabs</h2>
-      <FullMiniEditorHike
+      <MiniEditorHike
         frameProps={{
           style: { height: 200 },
           button: <CodeSandboxIcon />,
@@ -334,7 +331,7 @@ export const x = () => {
   return (
     <WithProgress length={xsteps.length}>
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           steps={toSteps(
             xsteps,
             ["index.js"],

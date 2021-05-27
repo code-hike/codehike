@@ -1,11 +1,9 @@
 import React from "react"
 import { useSpring } from "use-spring"
-import {
-  EditorTransition,
-  EditorTransitionProps,
-} from "./editor-transition"
+import { MiniEditorTween } from "./mini-editor-tween"
 import { EditorStep, StepFile } from "./use-snapshots"
 import { CodeProps } from "./code"
+import { EditorFrameProps } from "./editor-frame"
 
 export { MiniEditor, MiniEditorProps }
 
@@ -15,18 +13,18 @@ type SingleFileEditorProps = {
   focus?: string
   filename?: string
   terminal?: string
-  frameProps: Partial<EditorTransitionProps>
+  frameProps: Partial<EditorFrameProps>
   codeProps: Partial<CodeProps>
 }
 type SinglePanelEditorProps = {
   files: StepFile[]
   active: string
   terminal?: string
-  frameProps: Partial<EditorTransitionProps>
+  frameProps: Partial<EditorFrameProps>
   codeProps: Partial<CodeProps>
 }
 type TwoPanelEditorProps = EditorStep & {
-  frameProps: Partial<EditorTransitionProps>
+  frameProps: Partial<EditorFrameProps>
   codeProps: Partial<CodeProps>
 }
 type MiniEditorProps =
@@ -68,8 +66,8 @@ function SingleFileEditor({
 
   const { prev, next, t } = useStepSpring(step)
   return (
-    <EditorTransition
-      {...frameProps}
+    <MiniEditorTween
+      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}
@@ -101,8 +99,8 @@ function SinglePanelEditor({
 
   const { prev, next, t } = useStepSpring(step)
   return (
-    <EditorTransition
-      {...frameProps}
+    <MiniEditorTween
+      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}
@@ -130,8 +128,8 @@ function TwoPanelEditor({
 
   const { prev, next, t } = useStepSpring(step)
   return (
-    <EditorTransition
-      {...frameProps}
+    <MiniEditorTween
+      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}

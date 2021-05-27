@@ -1,10 +1,10 @@
 import React from "react"
-import { EditorTransition } from "@code-hike/mini-editor"
+import { MiniEditorTween } from "@code-hike/mini-editor"
 import { WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 
 export default {
-  title: "Editor Transition",
+  title: "Mini Editor Tween",
 }
 
 export const oneToOne = () => {
@@ -238,7 +238,7 @@ function TestTransition({
     <WithProgress length={2}>
       {(progress, backward) => (
         <>
-          <EditorTransition
+          <MiniEditorTween
             style={{ height: 300 }}
             prev={prev}
             next={next}

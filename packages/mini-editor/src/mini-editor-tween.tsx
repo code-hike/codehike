@@ -14,7 +14,12 @@ import {
 import { getTabs } from "./tabs"
 import { TerminalPanel } from "./terminal-panel"
 
-export { EditorTransition, EditorTransitionProps }
+export {
+  EditorTransition,
+  EditorTransitionProps,
+  MiniEditorTween,
+  MiniEditorTweenProps,
+}
 
 type EditorTransitionProps = {
   prev?: EditorStep
@@ -24,9 +29,55 @@ type EditorTransitionProps = {
   codeProps?: Partial<CodeProps>
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
+type MiniEditorTweenProps = {
+  prev?: EditorStep
+  next?: EditorStep
+  t: number
+  backward: boolean
+  codeProps?: Partial<CodeProps>
+  frameProps?: Partial<EditorFrameProps>
+}
+
 const DEFAULT_STEP: EditorStep = {
   files: [{ code: "", lang: "js", name: "" }],
   northPanel: { active: "", tabs: [""], heightRatio: 1 },
+}
+
+function MiniEditorTween({
+  prev = DEFAULT_STEP,
+  next = DEFAULT_STEP,
+  t,
+  backward,
+  codeProps = {},
+  frameProps = {},
+}: MiniEditorTweenProps) {
+  const ref = React.createRef<HTMLDivElement>()
+  const { northPanel, southPanel } = useTransition(
+    ref,
+    prev,
+    next,
+    t,
+    backward,
+    codeProps
+  )
+
+  const terminalPanel = (
+    <TerminalPanel
+      prev={prev.terminal}
+      next={next.terminal}
+      t={t}
+      backward={backward}
+    />
+  )
+  return (
+    <EditorFrame
+      ref={ref}
+      {...frameProps}
+      northPanel={northPanel}
+      southPanel={southPanel}
+      terminalPanel={terminalPanel}
+    />
+  )
 }
 
 function EditorTransition({
