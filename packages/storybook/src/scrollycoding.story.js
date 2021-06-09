@@ -6,7 +6,7 @@ import {
   Focus,
   CodeSlot,
   PreviewSlot,
-  useMdxSteps,
+  AnchorOrFocus,
 } from "@code-hike/scrollycoding"
 import "@code-hike/scrollycoding/dist/index.css"
 import Basic from "./assets/scrollycoding.basic.mdx"
@@ -67,30 +67,26 @@ const components = {
   Focus,
   CodeSlot,
   PreviewSlot,
+  a: AnchorOrFocus,
 }
 
-function Hike({
-  children,
-  previewProps,
-  codeProps,
-  ...props
-}) {
-  const steps = useMdxSteps(
-    children,
-    {
-      ...previewProps,
-      preset: {
-        customSetup: {
-          dependencies: { "react-svg-curve": "latest" },
-        },
-      },
+function Hike({ codeProps, ...props }) {
+  const preset = {
+    template: "react",
+    customSetup: {
+      dependencies: { "react-svg-curve": "latest" },
     },
-    {
-      minColumns: 46,
-      minZoom: 0.9,
-      ...codeProps,
-    }
-  )
+  }
 
-  return <HikeComponent steps={steps} {...props} />
+  return (
+    <HikeComponent
+      {...props}
+      preset={preset}
+      codeProps={{
+        minColumns: 46,
+        minZoom: 0.9,
+        ...codeProps,
+      }}
+    />
+  )
 }

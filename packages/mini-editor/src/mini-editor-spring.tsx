@@ -13,19 +13,19 @@ type SingleFileEditorProps = {
   focus?: string
   filename?: string
   terminal?: string
-  frameProps: Partial<EditorFrameProps>
-  codeProps: Partial<CodeProps>
+  frameProps?: Partial<EditorFrameProps>
+  codeProps?: Partial<CodeProps>
 }
 type SinglePanelEditorProps = {
   files: StepFile[]
   active: string
   terminal?: string
-  frameProps: Partial<EditorFrameProps>
-  codeProps: Partial<CodeProps>
+  frameProps?: Partial<EditorFrameProps>
+  codeProps?: Partial<CodeProps>
 }
 type TwoPanelEditorProps = EditorStep & {
-  frameProps: Partial<EditorFrameProps>
-  codeProps: Partial<CodeProps>
+  frameProps?: Partial<EditorFrameProps>
+  codeProps?: Partial<CodeProps>
 }
 type MiniEditorProps =
   | SingleFileEditorProps

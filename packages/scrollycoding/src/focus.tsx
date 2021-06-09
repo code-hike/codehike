@@ -1,19 +1,21 @@
-import { useClasser } from "@code-hike/classer"
-import * as React from "react"
-import { useStepIndex } from "./demo-context"
+import React from "react"
 import {
   useHikeContext,
   FluidHikeContext,
-  CodeProps,
 } from "./hike-context"
+import { useClasser } from "@code-hike/classer"
+import { useStepData } from "./content-column"
+import { EditorStep } from "@code-hike/mini-editor"
 
-export interface FocusProps {
+interface FocusProps {
   children?: React.ReactNode
   on: string
   file?: string
 }
 
-export function Focus({
+export { Focus, withFocusHandler, AnchorOrFocus }
+
+function Focus({
   children,
   ...props
 }: FocusProps): JSX.Element {
@@ -37,14 +39,13 @@ function FocusButton({
 }: FocusProps & { context: FluidHikeContext }) {
   const c = useClasser("ch-hike")
   const { dispatch, hikeState } = context
-  const stepIndex = useStepIndex()
-  const currentFocus = hikeState.focusCodeProps.focus
-  const isFocused = currentFocus === focus
 
-  const codeProps: Partial<CodeProps> = { focus }
-  if (file) {
-    codeProps.activeFile = file
-  }
+  const [stepIndex, newEditorStep] = useEditorStep(
+    file,
+    focus
+  )
+  const oldEditorStep = hikeState.focusEditorStep
+  const isFocused = newEditorStep === oldEditorStep
 
   return (
     <button
@@ -59,7 +60,7 @@ function FocusButton({
           : dispatch({
               type: "set-focus",
               stepIndex,
-              codeProps,
+              editorStep: newEditorStep,
             })
         e.stopPropagation()
       }}
@@ -96,14 +97,51 @@ function Icon({ isFocused }: { isFocused: boolean }) {
   )
 }
 
-export function withFocusHandler(type: any = "a") {
+function useEditorStep(
+  file: string | undefined,
+  focus: string
+): [number, EditorStep] {
+  // we merge the editor state from the step with the changes
+  // requested by the Focus
+  return React.useMemo(() => {
+    const { stepIndex, editorStep } = useStepData()
+
+    const fileName = file || editorStep.northPanel.active
+    const fileIndex = editorStep.files.findIndex(
+      f => f.name === fileName
+    )
+    const newFiles = editorStep.files.slice()
+    newFiles[fileIndex] = { ...newFiles[fileIndex], focus }
+
+    const newEditorStep = { ...editorStep, files: newFiles }
+
+    const isInSouthPanel = editorStep.southPanel?.tabs.includes(
+      fileName
+    )
+
+    if (isInSouthPanel) {
+      newEditorStep.southPanel = {
+        ...newEditorStep.southPanel!,
+        active: fileName,
+      }
+    } else {
+      newEditorStep.northPanel = {
+        ...newEditorStep.northPanel,
+        active: fileName,
+      }
+    }
+    return [stepIndex, newEditorStep]
+  }, [file, focus])
+}
+
+function withFocusHandler(type: any = "a") {
   function AnchorWithFocus(props: any) {
     return <AnchorOrFocus type={type} {...props} />
   }
   return AnchorWithFocus
 }
 
-export function AnchorOrFocus({
+function AnchorOrFocus({
   type = "a",
   href,
   ...props

@@ -1,54 +1,20 @@
-import { Classes } from "@code-hike/classer"
-import { MiniBrowserProps } from "@code-hike/mini-browser"
-import { MiniEditorProps } from "@code-hike/mini-editor"
-import {
-  SandpackPredefinedTemplate,
-  SandpackSetup,
-} from "@codesandbox/sandpack-react"
 import React from "react"
-
-export interface Preset {
-  template?: SandpackPredefinedTemplate
-  customSetup?: SandpackSetup
-}
-
-export interface PreviewProps extends MiniBrowserProps {
-  preset?: Partial<Preset>
-  filesHash?: string
-}
-
-export interface CodeFiles {
-  [path: string]: {
-    lang: string
-    code: string
-    hideTab?: boolean
-  }
-}
-
-export type CodeProps = {
-  files: CodeFiles
-  activeFile: string
-} & Omit<MiniEditorProps, "file" | "code" | "lang">
-
-export interface HikeStep {
-  content: React.ReactNode[]
-  previewProps: PreviewProps
-  codeProps: CodeProps
-}
-
-export interface HikeProps
-  extends React.PropsWithoutRef<
-    JSX.IntrinsicElements["section"]
-  > {
-  steps: HikeStep[]
-  classes?: Classes
-  noPreview?: boolean
-}
+import { EditorProps } from "./editor"
+import { PreviewProps } from "./preview"
+import { PreviewPreset } from "./demo-provider"
+import { EditorStep } from "@code-hike/mini-editor"
 
 export interface HikeState {
   scrollStepIndex: number
+  focusEditorStep: EditorStep | null
   focusStepIndex: number | null
-  focusCodeProps: Partial<CodeProps>
+}
+
+export type HikeStep = {
+  previewProps: PreviewProps
+  editorProps: EditorProps
+  previewPreset: PreviewPreset
+  content: React.ReactNode
 }
 
 export type HikeAction =
@@ -60,7 +26,7 @@ export type HikeAction =
   | {
       type: "set-focus"
       stepIndex: number
-      codeProps: Partial<CodeProps>
+      editorStep: EditorStep | null
     }
   | { type: "reset-focus" }
 

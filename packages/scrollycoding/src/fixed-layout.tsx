@@ -1,35 +1,31 @@
 import React from "react"
-import { useClasser } from "@code-hike/classer"
 import {
-  CodeProps,
-  HikeProps,
+  HikeStep,
   HikeProvider,
-  PreviewProps,
   useHikeContext,
 } from "./hike-context"
+import { useClasser } from "@code-hike/classer"
 import {
   DemoProvider,
-  useCodeProps,
+  useEditorProps,
   usePreviewProps,
-} from "./demo-context"
-import { Code } from "./code"
-import { Preview } from "./preview"
+} from "./demo-provider"
+import { EditorProps, Editor } from "./editor"
+import { PreviewProps, Preview } from "./preview"
 
 export { FixedLayout, CodeSlot, PreviewSlot }
 
-function FixedLayout({ steps, ...props }: HikeProps) {
+function FixedLayout({ steps }: { steps: HikeStep[] }) {
   const c = useClasser("ch")
 
   return (
     <HikeProvider value={{ layout: "fixed" }}>
-      <section
-        className={c("hike", "hike-fixed")}
-        {...props}
-      >
+      <section className={c("hike", "hike-fixed")}>
         {steps.map((step, index) => (
           <DemoProvider
-            codeProps={step.codeProps}
+            editorProps={step.editorProps}
             previewProps={step.previewProps}
+            previewPreset={step.previewPreset}
             key={index}
           >
             <div className={c("hike-step")}>
@@ -42,7 +38,7 @@ function FixedLayout({ steps, ...props }: HikeProps) {
   )
 }
 
-function CodeSlot(props: CodeProps) {
+function CodeSlot(props: EditorProps & { style?: any }) {
   const { layout } = useHikeContext()
   return layout === "fixed" ? (
     <CodeSlotContent {...props} />
@@ -52,22 +48,23 @@ function CodeSlot(props: CodeProps) {
 function CodeSlotContent({
   style,
   ...slotProps
-}: CodeProps) {
+}: EditorProps & { style?: any }) {
   const c = useClasser("ch-hike")
-  const stepCodeProps = useCodeProps()
+  const stepEditorProps = useEditorProps()
   const props = {
-    minColumns: 46,
-    ...stepCodeProps,
+    ...stepEditorProps,
     ...slotProps,
   }
   return (
     <div className={c("step-code")} style={style}>
-      <Code {...props} />
+      <Editor {...props} />
     </div>
   )
 }
 
-function PreviewSlot(props: PreviewProps) {
+function PreviewSlot(
+  props: PreviewProps & { style?: any }
+) {
   const { layout } = useHikeContext()
   return layout === "fixed" ? (
     <PreviewSlotContent {...props} />

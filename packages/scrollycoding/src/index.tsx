@@ -1,6 +1,6 @@
 import * as React from "react"
 import "./index.scss"
-import { Hike } from "./hike"
+import { Hike, HikeWithSteps, StepHead } from "./hike"
 
 import {
   Focus,
@@ -8,22 +8,13 @@ import {
   withFocusHandler,
 } from "./focus"
 import { CodeSlot, PreviewSlot } from "./fixed-layout"
-import { useMdxSteps, StepHead } from "./mdx-steps"
-import {
-  HikeProps,
-  CodeProps,
-  PreviewProps,
-} from "./hike-context"
 
 export {
   Hike,
+  HikeWithSteps,
   Focus,
   CodeSlot,
   PreviewSlot,
-  HikeProps,
-  CodeProps,
-  PreviewProps,
-  useMdxSteps,
   StepHead,
   AnchorOrFocus,
   withFocusHandler,

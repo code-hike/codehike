@@ -7,6 +7,7 @@ import {
 import {
   MiniEditorHike,
   MiniEditorHikeProps,
+  EditorStep,
 } from "./mini-editor-hike"
 import {
   MiniEditor,
@@ -23,4 +24,5 @@ export {
   MiniEditorProps,
   MiniEditorHike,
   MiniEditorHikeProps,
+  EditorStep,
 }

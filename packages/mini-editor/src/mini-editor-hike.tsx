@@ -4,14 +4,14 @@ import { EditorStep } from "./use-snapshots"
 import { CodeProps } from "./code"
 import { EditorFrameProps } from "./editor-frame"
 
-export { MiniEditorHike, MiniEditorHikeProps }
+export { MiniEditorHike, MiniEditorHikeProps, EditorStep }
 
 type MiniEditorHikeProps = {
   steps: EditorStep[]
   progress: number
   backward: boolean
-  frameProps: Partial<EditorFrameProps>
-  codeProps: Partial<CodeProps>
+  frameProps?: Partial<EditorFrameProps>
+  codeProps?: Partial<CodeProps>
 }
 
 function MiniEditorHike({

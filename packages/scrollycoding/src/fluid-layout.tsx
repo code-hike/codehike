@@ -1,31 +1,22 @@
 import React from "react"
 import { useClasser } from "@code-hike/classer"
-import { Code } from "./code"
-import { Preview } from "./preview"
+import { ContentColumn } from "./content-column"
+import { StickerColumn } from "./sticker-column"
 import {
-  CodeProps,
-  HikeAction,
-  HikeProps,
   HikeProvider,
   HikeState,
+  HikeAction,
   HikeStep,
-  PreviewProps,
-  useFluidContext,
 } from "./hike-context"
-import { Scroller, Step } from "@code-hike/scroller"
-import {
-  DemoProvider,
-  StepContext,
-  usePreviewProps,
-} from "./demo-context"
+import { EditorProps } from "./editor"
 
-export { FluidLayout }
-
-function FluidLayout({
-  noPreview = false,
+export function FluidLayout({
   steps,
-  ...props
-}: HikeProps) {
+  noPreview = false,
+}: {
+  steps: HikeStep[]
+  noPreview: boolean
+}) {
   const c = useClasser("ch")
   const [state, dispatch] = React.useReducer(
     reducer,
@@ -36,11 +27,14 @@ function FluidLayout({
     state.focusStepIndex ?? state.scrollStepIndex
 
   const focusStep = steps[focusStepIndex]
-  const codeProps: CodeProps = {
-    ...focusStep.codeProps,
-    ...state.focusCodeProps,
+
+  const editorProps: EditorProps = {
+    ...focusStep.editorProps,
+    contentProps:
+      state.focusEditorStep ||
+      focusStep.editorProps.contentProps,
   }
-  const previewProps = focusStep.previewProps
+  const { previewProps, previewPreset } = focusStep
 
   const onStepChange = (newIndex: number) =>
     dispatch({ type: "change-step", newIndex })
@@ -53,17 +47,15 @@ function FluidLayout({
         dispatch,
       }}
     >
-      <section
-        className={c("hike", "hike-fluid")}
-        {...props}
-      >
+      <section className={c("hike", "hike-fluid")}>
         <ContentColumn
           steps={steps}
           onStepChange={onStepChange}
         />
         <StickerColumn
           previewProps={previewProps}
-          codeProps={codeProps}
+          previewPreset={previewPreset}
+          editorProps={editorProps}
           noPreview={noPreview}
         />
       </section>
@@ -71,108 +63,10 @@ function FluidLayout({
   )
 }
 
-function ContentColumn({
-  steps,
-  onStepChange,
-}: {
-  steps: HikeStep[]
-  onStepChange: (index: number) => void
-}) {
-  const c = useClasser("ch")
-  return (
-    <div className={c("hike-content")}>
-      <Scroller onStepChange={onStepChange}>
-        {steps.map((step, index) => (
-          <StepContext.Provider
-            value={{ stepIndex: index }}
-            key={index}
-          >
-            <StepContent step={step} stepIndex={index} />
-          </StepContext.Provider>
-        ))}
-      </Scroller>
-    </div>
-  )
-}
-
-function StickerColumn({
-  previewProps,
-  codeProps,
-  noPreview,
-}: {
-  previewProps: PreviewProps
-  codeProps: CodeProps
-  noPreview: boolean
-}) {
-  const c = useClasser("ch")
-  return (
-    <aside className={c("hike-sticker-column")}>
-      <div className={c("hike-sticker")}>
-        <DemoProvider
-          codeProps={codeProps}
-          previewProps={previewProps}
-        >
-          <div className={c("hike-editor")}>
-            <Code {...codeProps} />
-          </div>
-          {noPreview || (
-            <div className={c("hike-preview")}>
-              <PreviewWrapper />
-            </div>
-          )}
-        </DemoProvider>
-      </div>
-    </aside>
-  )
-}
-
-function PreviewWrapper() {
-  const previewProps = usePreviewProps()
-  return <Preview {...previewProps} />
-}
-
-function StepContent({
-  step,
-  stepIndex,
-}: {
-  step: HikeStep
-  stepIndex: number
-}) {
-  const c = useClasser("ch-hike-step")
-  const { dispatch, hikeState } = useFluidContext()
-  const focusStepIndex =
-    hikeState.focusStepIndex ?? hikeState.scrollStepIndex
-  const isOn = stepIndex === focusStepIndex
-  return (
-    <Step
-      as="div"
-      index={stepIndex}
-      onClick={() =>
-        dispatch({
-          type: "set-focus",
-          stepIndex,
-          codeProps: {},
-        })
-      }
-      className={c("", isOn ? "focused" : "unfocused")}
-    >
-      {stepIndex > 0 && <div className={c("gap")} />}
-      <div
-        className={c(
-          "content",
-          isOn ? "content-focused" : "content-unfocused"
-        )}
-      >
-        {step.content}
-      </div>
-    </Step>
-  )
-}
-
 const initialState = {
   scrollStepIndex: 0,
   focusStepIndex: null,
-  focusCodeProps: {},
+  focusEditorStep: null,
 }
 
 function reducer(
@@ -184,19 +78,19 @@ function reducer(
       return {
         scrollStepIndex: action.newIndex,
         focusStepIndex: null,
-        focusCodeProps: {},
+        focusEditorStep: null,
       }
     case "set-focus":
       return {
         ...state,
         focusStepIndex: action.stepIndex,
-        focusCodeProps: action.codeProps,
+        focusEditorStep: action.editorStep,
       }
     case "reset-focus":
       return {
         ...state,
         focusStepIndex: null,
-        focusCodeProps: {},
+        focusEditorStep: null,
       }
     default:
       throw new Error()
