@@ -3,6 +3,11 @@ import { Snapshot, TabsSnapshot } from "./editor-frame"
 
 export { EditorStep, StepFile, useSnapshots }
 
+const useLayoutEffect =
+  typeof window !== "undefined"
+    ? React.useLayoutEffect
+    : React.useEffect
+
 type StepFile = {
   code: string
   focus?: string
@@ -39,7 +44,7 @@ function useSnapshots(
     nextSnapshot: null,
   })
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (prevSnapshot || nextSnapshot) {
       setState({
         prevSnapshot: null,
@@ -48,7 +53,7 @@ function useSnapshots(
     }
   }, [prev, next])
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!prevSnapshot) {
       setState(s => ({
         ...s,
