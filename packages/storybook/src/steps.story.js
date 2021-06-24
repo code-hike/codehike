@@ -6,7 +6,7 @@ import BasicSteps from "./assets/steps.basic.mdx"
 import SvelteSteps from "./assets/steps.svelte.mdx"
 import ReactSteps from "./assets/steps.react.mdx"
 import {
-  FullMiniEditorHike,
+  MiniEditorHike,
   mdxToSteps,
 } from "@code-hike/mini-editor"
 import "prism-svelte"
@@ -62,7 +62,7 @@ function Wrapper({ children }) {
       start={0}
     >
       {(progress, backward) => (
-        <FullMiniEditorHike
+        <MiniEditorHike
           frameProps={{
             className: "",
             style: {
