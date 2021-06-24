@@ -128,3 +128,77 @@ export const twoPanelEditor = () => {
     </Page>
   )
 }
+
+export const twoToOneSouth = () => {
+  const [first, setFirst] = React.useState(true)
+  const files = [
+    {
+      name: "index.js",
+      lang: "js",
+      code: "console.log('index')",
+    },
+    {
+      name: "app.js",
+      lang: "js",
+      code: "function app() {}",
+    },
+  ]
+
+  const props = first
+    ? {
+        files: [
+          {
+            name: "index.js",
+            lang: "js",
+            code: "console.log('index 1')",
+          },
+          {
+            name: "app.js",
+            lang: "js",
+            code: "function app1() {}",
+          },
+        ],
+        northPanel: {
+          active: "app.js",
+          tabs: ["app.js"],
+          heightRatio: 0.5,
+        },
+        southPanel: {
+          active: "index.js",
+          tabs: ["index.js"],
+          heightRatio: 0.5,
+        },
+      }
+    : {
+        files: [
+          {
+            name: "index.js",
+            lang: "js",
+            code: "console.log('index 2')",
+          },
+          {
+            name: "app.js",
+            lang: "js",
+            code: "function app2() {}",
+          },
+        ],
+        northPanel: {
+          active: "index.js",
+          tabs: ["app.js", "index.js"],
+          heightRatio: 0.5,
+        },
+      }
+
+  return (
+    <Page>
+      <Editor
+        {...props}
+        codeProps={{ maxZoom: 1.2, minColumns: 10 }}
+        frameProps={{ height: 500 }}
+      />
+      <button onClick={() => setFirst(!first)}>
+        Toggle
+      </button>
+    </Page>
+  )
+}

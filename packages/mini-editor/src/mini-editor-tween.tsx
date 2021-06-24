@@ -267,12 +267,17 @@ function endingPosition(
   const inputNorthPanel = next.northPanel
   const inputSouthPanel = next.southPanel
 
-  const {
+  let {
     prevNorthFile,
     prevSouthFile,
     nextNorthFile,
     nextSouthFile,
   } = getStepFiles(prev, next, false)
+
+  // getStepFiles return the intermediate files, we need to patch the ending state (2to1south)
+  if (!inputSouthPanel && nextSouthFile) {
+    nextNorthFile = nextSouthFile
+  }
 
   return {
     northPanel: {
