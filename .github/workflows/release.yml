@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
+          fetch-depth: 10 # 👈 Required to retrieve git history
 
       - name: Prepare repository
         run: git fetch --unshallow --tags
