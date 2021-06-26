@@ -1,7 +1,7 @@
 import React from "react"
 import { MiniEditorTween } from "./mini-editor-tween"
 import { EditorStep } from "./use-snapshots"
-import { CodeProps } from "./code"
+import { CodeProps } from "@code-hike/smooth-code"
 import { EditorFrameProps } from "./editor-frame"
 
 export { MiniEditorHike, MiniEditorHikeProps, EditorStep }

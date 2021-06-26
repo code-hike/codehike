@@ -2,7 +2,7 @@ import React from "react"
 import { useSpring } from "use-spring"
 import { MiniEditorTween } from "./mini-editor-tween"
 import { EditorStep, StepFile } from "./use-snapshots"
-import { CodeProps } from "./code"
+import { CodeProps } from "@code-hike/smooth-code"
 import { EditorFrameProps } from "./editor-frame"
 
 export { MiniEditor, MiniEditorProps }

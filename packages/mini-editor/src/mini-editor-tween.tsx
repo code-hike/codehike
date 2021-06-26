@@ -5,7 +5,7 @@ import {
   getPanelStyles,
   OutputPanel,
 } from "./editor-frame"
-import { Code, CodeProps } from "./code"
+import { Code, CodeProps } from "@code-hike/smooth-code"
 import {
   EditorStep,
   StepFile,
