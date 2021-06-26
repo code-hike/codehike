@@ -17,12 +17,14 @@
   padding-left: 15px;
   padding-right: 15px;
   background-color: rgb(45, 45, 45);
+  // background-color: maroon;
   color: rgba(255, 255, 255, 0.5);
   min-width: 0;
 }
 
 .ch-editor-tab-active {
   background-color: rgb(30, 30, 30);
+  // background-color: lightseagreen;
   color: rgb(255, 255, 255);
   min-width: unset;
 }
@@ -36,16 +38,20 @@
   overflow: hidden;
 }
 
+.ch-editor-frame {
+  --ch-content-background: rgb(37, 37, 38);
+}
+
 /** body */
 
 .ch-editor-body {
   background-color: rgb(30, 30, 30);
-  height: 100%;
   color: #cccccc;
   font-size: 15px;
   // padding: 5px 10px;
   line-height: 1.1rem;
   box-sizing: border-box;
+  position: relative;
 }
 
 .ch-editor-body pre {

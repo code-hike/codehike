@@ -10,26 +10,35 @@ type MiniFrameProps = {
   titleBar?: React.ReactNode
   zoom?: number
   classes?: Classes
+  overflow?: string
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
-export function MiniFrame({
-  title,
-  children,
-  titleBar,
-  classes,
-  zoom = 1,
-  ...props
-}: MiniFrameProps) {
+export const MiniFrame = React.forwardRef<
+  HTMLDivElement,
+  MiniFrameProps
+>(function (
+  {
+    title,
+    children,
+    titleBar,
+    classes,
+    zoom = 1,
+    overflow,
+    ...props
+  },
+  ref
+) {
   const c = useClasser("ch-frame", classes)
 
   const bar = titleBar || <DefaultTitleBar title={title} />
   const zoomStyle = {
     "--ch-frame-zoom": zoom,
+    overflow,
   } as React.CSSProperties
 
   return (
     <ClasserProvider classes={classes}>
-      <div {...props}>
+      <div {...props} ref={ref}>
         <div className={c("")}>
           <div className={c("title-bar")}>{bar}</div>
           <div className={c("content")}>
@@ -41,7 +50,7 @@ export function MiniFrame({
       </div>
     </ClasserProvider>
   )
-}
+})
 
 function DefaultTitleBar({ title }: { title?: string }) {
   const c = useClasser("ch-frame")

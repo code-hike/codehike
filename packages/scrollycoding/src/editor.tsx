@@ -1,27 +1,38 @@
 import * as React from "react"
-import { MiniEditor } from "@code-hike/mini-editor"
-import { CodeProps } from "./hike-context"
+import {
+  MiniEditor,
+  MiniEditorProps,
+  EditorStep,
+} from "@code-hike/mini-editor"
 import { useCodeSandboxLink } from "@codesandbox/sandpack-react"
 
-export { Code }
+export { Editor, EditorProps }
 
-function Code({ files, activeFile, ...props }: CodeProps) {
-  const file = files[activeFile]
-  const tabs = Object.keys(files).filter(
-    filename => !files[filename].hideTab
-  )
+type EditorProps = {
+  contentProps: EditorStep
+  frameProps: MiniEditorProps["frameProps"]
+  codeProps: MiniEditorProps["codeProps"]
+}
+
+function Editor({
+  contentProps,
+  codeProps,
+  frameProps,
+}: EditorProps) {
+  const finalFrameProps = {
+    button: <CodeSandboxIcon url={useCodeSandboxLink()} />,
+    ...frameProps,
+    style: { height: "100%", ...frameProps?.style },
+  }
+  const finalCodeProps = {
+    minColumns: 46,
+    ...codeProps,
+  }
   return (
     <MiniEditor
-      key={activeFile}
-      style={{ height: "100%" }}
-      button={
-        <CodeSandboxIcon url={useCodeSandboxLink()} />
-      }
-      file={activeFile}
-      tabs={tabs}
-      lang={file.lang}
-      code={file.code}
-      {...props}
+      {...contentProps}
+      frameProps={finalFrameProps}
+      codeProps={finalCodeProps}
     />
   )
 }

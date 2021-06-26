@@ -11,10 +11,11 @@
   flex-direction: column;
   background-color: rgb(37, 37, 38);
   break-inside: avoid;
+  --ch-title-bar-height: 30px;
 }
 
 .ch-frame-content {
-  background-color: #fafafa;
+  background-color: var(--ch-content-background, #fafafa);
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
@@ -34,14 +35,15 @@
 .ch-frame-title-bar {
   font-size: 12px;
   width: 100%;
-  height: 2.5em;
-  min-height: 2.5em;
+  height: var(--ch-title-bar-height);
+  min-height: var(--ch-title-bar-height);
   flex-grow: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   background-color: rgb(37, 37, 38);
   color: #ebebed;
+  position: relative;
 }
 
 .ch-frame-middle-bar {

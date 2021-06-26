@@ -3,13 +3,18 @@ import {
   SandpackPreview,
   useCodeSandboxLink,
 } from "@codesandbox/sandpack-react"
-import { MiniBrowser } from "@code-hike/mini-browser"
-import { PreviewProps } from "./hike-context"
-import { LoadingOverlay } from "./preview-loader"
+import {
+  MiniBrowser,
+  MiniBrowserProps,
+} from "@code-hike/mini-browser"
+import { useLoadingOverlayState } from "@codesandbox/sandpack-react"
+import { useClasser } from "@code-hike/classer"
+
+interface PreviewProps extends MiniBrowserProps {}
 
 export { Preview, PreviewProps }
 
-function Preview({ filesHash, ...props }: PreviewProps) {
+function Preview(props: PreviewProps) {
   const link = useCodeSandboxLink()
   const preview = React.useMemo(() => {
     return (
@@ -39,4 +44,19 @@ function Preview({ filesHash, ...props }: PreviewProps) {
       children={preview}
     />
   )
+}
+
+function LoadingOverlay() {
+  const c = useClasser("ch-hike")
+  const loadingOverlayState = useLoadingOverlayState()
+  return loadingOverlayState === "visible" ? (
+    <div className={c("loading")}>
+      <div className={c("loading-cubes")}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  ) : null
 }
