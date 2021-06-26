@@ -4,7 +4,7 @@
   "version": "0.3.0-next.0",
   "scripts": {
     "start": "start-storybook -c ./src",
-    "build": "build-storybook -c ./src -o ./dist"
+    "build-storybook": "build-storybook -c ./src -o ./dist"
   },
   "dependencies": {
     "@code-hike/code-diff": "0.3.0-next.0",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@storybook/react": "^6.0.26",
-    "babel-loader": "^8.0.6"
+    "babel-loader": "^8.0.6",
+    "chromatic": "^5.9.2"
   }
 }
