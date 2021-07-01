@@ -15,5 +15,6 @@ Code Hike is an open-source toolset for building all types of **code walkthrough
 Videos:
 
 - [Scrollycoding - A new tool for dev blogs and docs](https://www.youtube.com/watch?v=7O2b7vfk-mo)
+- [Make coding videos with markdown](https://www.youtube.com/watch?v=EYyw4oyAJgY)
 
 Most of Code Hike's work is streamed on [Twitch](https://twitch.tv/pomber__).
