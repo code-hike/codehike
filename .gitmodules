@@ -1,6 +1,0 @@
-[submodule "external/site"]
-	path = external/site
-	url = git@github.com:code-hike/site.git
-[submodule "external/new-react-website"]
-	path = external/new-react-website
-	url = git@github.com:pomber/new-react-website.git
