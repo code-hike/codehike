@@ -3,7 +3,7 @@ import { Page } from "./utils"
 import { sim } from "@code-hike/sim-user"
 
 export default {
-  title: "Sim User",
+  title: "Test/Sim User",
 }
 export const click = () => {
   const [count, setCount] = React.useState(0)

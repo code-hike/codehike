@@ -4,7 +4,7 @@ import { WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 
 export default {
-  title: "Mini Editor Tween",
+  title: "Test/Mini Editor Tween",
 }
 
 export const oneToOne = () => {

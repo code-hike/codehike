@@ -3,7 +3,7 @@ import { Page } from "./utils"
 import { Scroller, Step } from "@code-hike/scroller"
 
 export default {
-  title: "Scroller",
+  title: "Test/Scroller",
 }
 
 const steps = [1, 2, 3, 4, 5, 6, 7]

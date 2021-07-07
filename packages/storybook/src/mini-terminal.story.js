@@ -7,7 +7,7 @@ import { WithProgress, Page } from "./utils"
 import "@code-hike/mini-terminal/dist/index.css"
 
 export default {
-  title: "Mini Terminal",
+  title: "Test/Mini Terminal",
 }
 
 export const basic = () => (

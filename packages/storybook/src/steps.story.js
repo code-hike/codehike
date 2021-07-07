@@ -13,7 +13,7 @@ import "prism-svelte"
 import "./assets/styles.css"
 
 export default {
-  title: "Steps From MDX",
+  title: "Test/Steps From MDX",
 }
 
 export function basic() {

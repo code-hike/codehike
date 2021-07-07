@@ -1,5 +1,9 @@
 module.exports = {
-  stories: ["*.story.js"],
+  stories: [
+    "mini-editor.docs.story.js",
+    "*.story.mdx",
+    "*.story.js",
+  ],
   addons: [
     "@storybook/addon-docs",
     "@storybook/addon-controls",

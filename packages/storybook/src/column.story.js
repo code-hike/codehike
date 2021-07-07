@@ -3,7 +3,7 @@ import { WithProgress } from "./utils"
 import { SmoothColumn } from "@code-hike/smooth-column"
 
 export default {
-  title: "Smooth Column",
+  title: "Test/Smooth Column",
 }
 export const oneExitOneEnter = () => {
   const padding = 10

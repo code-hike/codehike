@@ -4,7 +4,7 @@ import "@code-hike/mini-browser/dist/index.css"
 import { WithProgress, Page } from "./utils"
 
 export default {
-  title: "Mini Browser Hike",
+  title: "Test/Mini Browser Hike",
 }
 
 export const basic = () => (
