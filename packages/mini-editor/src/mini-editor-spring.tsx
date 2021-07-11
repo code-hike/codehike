@@ -7,6 +7,15 @@ import { EditorFrameProps } from "./editor-frame"
 
 export { MiniEditor, MiniEditorProps }
 
+type SpringConfig = Parameters<typeof useSpring>[1]
+
+const defaultSpring = {
+  stiffness: 256,
+  damping: 24,
+  mass: 0.2,
+  decimals: 3,
+}
+
 type SingleFileEditorProps = {
   code: string
   lang: string
@@ -15,6 +24,7 @@ type SingleFileEditorProps = {
   terminal?: string
   frameProps?: Partial<EditorFrameProps>
   codeProps?: Partial<CodeProps>
+  springConfig?: SpringConfig
 }
 type SinglePanelEditorProps = {
   files: StepFile[]
@@ -22,10 +32,12 @@ type SinglePanelEditorProps = {
   terminal?: string
   frameProps?: Partial<EditorFrameProps>
   codeProps?: Partial<CodeProps>
+  springConfig?: SpringConfig
 }
 type TwoPanelEditorProps = EditorStep & {
   frameProps?: Partial<EditorFrameProps>
   codeProps?: Partial<CodeProps>
+  springConfig?: SpringConfig
 }
 type MiniEditorProps =
   | SingleFileEditorProps
@@ -48,8 +60,8 @@ function SingleFileEditor({
   focus,
   filename = "",
   terminal,
-  frameProps,
-  codeProps,
+  springConfig,
+  ...props
 }: SingleFileEditorProps) {
   const step = React.useMemo(() => {
     const step: EditorStep = {
@@ -64,15 +76,17 @@ function SingleFileEditor({
     return step
   }, [code, lang, focus, filename, terminal])
 
-  const { prev, next, t } = useStepSpring(step)
+  const { prev, next, t } = useStepSpring(
+    step,
+    springConfig
+  )
   return (
     <MiniEditorTween
-      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}
       next={next}
-      codeProps={codeProps}
+      {...props}
     />
   )
 }
@@ -80,8 +94,8 @@ function SinglePanelEditor({
   files,
   active,
   terminal,
-  frameProps,
-  codeProps,
+  springConfig,
+  ...props
 }: SinglePanelEditorProps) {
   const step = React.useMemo(() => {
     const tabs = files.map(file => file.name)
@@ -97,25 +111,27 @@ function SinglePanelEditor({
     return step
   }, [files, active, terminal])
 
-  const { prev, next, t } = useStepSpring(step)
+  const { prev, next, t } = useStepSpring(
+    step,
+    springConfig
+  )
   return (
     <MiniEditorTween
-      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}
       next={next}
-      codeProps={codeProps}
+      {...props}
     />
   )
 }
 function TwoPanelEditor({
-  frameProps,
-  codeProps,
   northPanel,
   southPanel,
   files,
   terminal,
+  springConfig,
+  ...props
 }: TwoPanelEditorProps) {
   const step = React.useMemo(() => {
     return {
@@ -126,20 +142,25 @@ function TwoPanelEditor({
     }
   }, [northPanel, southPanel, files, terminal])
 
-  const { prev, next, t } = useStepSpring(step)
+  const { prev, next, t } = useStepSpring(
+    step,
+    springConfig
+  )
   return (
     <MiniEditorTween
-      frameProps={frameProps}
       t={t}
       backward={false}
       prev={prev}
       next={next}
-      codeProps={codeProps}
+      {...props}
     />
   )
 }
 
-function useStepSpring(step: EditorStep) {
+function useStepSpring(
+  step: EditorStep,
+  springConfig: SpringConfig = defaultSpring
+) {
   const [{ target, prev, next }, setState] = React.useState(
     {
       target: 0,
@@ -158,12 +179,7 @@ function useStepSpring(step: EditorStep) {
     }
   }, [step])
 
-  const [progress] = useSpring(target, {
-    stiffness: 256,
-    damping: 24,
-    mass: 0.2,
-    decimals: 3,
-  })
+  const [progress] = useSpring(target, springConfig)
 
   const t = progress % 1
 
