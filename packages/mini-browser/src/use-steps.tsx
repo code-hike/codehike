@@ -1,11 +1,26 @@
 import React from "react"
 
 type MiniBrowserStep = {
+  /**
+   * The url to display on the navigation bar.
+   */
   url?: string
+  /**
+   * Override the url used for the iframe and "Open in new tab" button.
+   */
   loadUrl?: string
-  children?: React.ReactNode
+  /**
+   * Scale the content of the browser.
+   */
   zoom?: number
+  /**
+   * Prepend the current origin to the url.
+   */
   prependOrigin?: boolean
+  /**
+   * The content to display in the browser. If not provided, an iframe for the url will be displayed.
+   */
+  children?: React.ReactNode
 }
 
 type InternalStep = {

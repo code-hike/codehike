@@ -15,7 +15,7 @@ import RepeatedSteps from "./assets/scrollycoding.repeat.mdx"
 import { MDXProvider } from "@mdx-js/react"
 
 export default {
-  title: "ScrollyCoding",
+  title: "Test/ScrollyCoding",
 }
 
 export function basic() {

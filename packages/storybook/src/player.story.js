@@ -4,7 +4,7 @@ import { Video, Controls } from "@code-hike/player"
 import videoSrc from "./assets/timer.mp4"
 
 export default {
-  title: "Player",
+  title: "Test/Player",
 }
 
 const src = videoSrc

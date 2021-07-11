@@ -3,7 +3,7 @@ import { SmoothLines } from "@code-hike/smooth-lines"
 import { WithProgress } from "./utils"
 
 export default {
-  title: "Smooth Lines",
+  title: "Test/Smooth Lines",
   argTypes: {
     center: { control: "boolean" },
     containerWidth: {

@@ -7,7 +7,7 @@ import "@code-hike/mini-frame/dist/index.css"
 import { Page } from "./utils"
 
 export default {
-  title: "Mini Frame",
+  title: "Test/Mini Frame",
 }
 
 export const basic = () => (

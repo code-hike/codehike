@@ -4,7 +4,7 @@ import { Page, WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 
 export default {
-  title: "Mini Editor Hike",
+  title: "Test/Mini Editor Hike",
 }
 
 const code1 = `console.log(1)`

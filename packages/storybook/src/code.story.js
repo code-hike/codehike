@@ -4,7 +4,7 @@ import { WithProgress } from "./utils"
 import { codeDiff } from "@code-hike/code-diff"
 
 export default {
-  title: "Smooth Code",
+  title: "Test/Smooth Code",
   argTypes: {
     center: { control: "boolean" },
     containerWidth: {
