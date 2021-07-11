@@ -10,7 +10,7 @@ export { MiniEditor, MiniEditorProps }
 type SpringConfig = Parameters<typeof useSpring>[1]
 
 const defaultSpring = {
-  stiffness: 256,
+  stiffness: 120,
   damping: 24,
   mass: 0.2,
   decimals: 3,
