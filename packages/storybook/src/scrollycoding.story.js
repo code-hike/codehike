@@ -82,10 +82,12 @@ function Hike({ codeProps, ...props }) {
     <HikeComponent
       {...props}
       preset={preset}
-      codeProps={{
-        minColumns: 46,
-        minZoom: 0.9,
-        ...codeProps,
+      editorProps={{
+        codeProps: {
+          minColumns: 40,
+          minZoom: 0.9,
+          ...codeProps,
+        },
       }}
     />
   )

@@ -141,6 +141,7 @@ function useStepsFromChildren({
           ...editorProps?.frameProps,
           ...stepFrameProps,
         },
+        springConfig: editorProps?.springConfig,
       },
       previewPreset: preset,
       previewProps: {
