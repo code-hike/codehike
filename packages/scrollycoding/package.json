@@ -22,7 +22,7 @@
     "@code-hike/mini-browser": "^0.3.0-next.0",
     "@code-hike/mini-editor": "^0.3.0-next.0",
     "@code-hike/scroller": "^0.3.0-next.0",
-    "@codesandbox/sandpack-react": "^0.0.1",
+    "@codesandbox/sandpack-react": "0.1.2",
     "object-hash": "^2.1.1",
     "server-side-media-queries-for-react": "^0.0.5"
   },
@@ -34,6 +34,9 @@
   ],
   "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Rodrigo Pombo",
   "license": "MIT",
   "funding": {

@@ -103,9 +103,8 @@ function useEditorStep(
 ): [number, EditorStep] {
   // we merge the editor state from the step with the changes
   // requested by the Focus
+  const { stepIndex, editorStep } = useStepData()
   return React.useMemo(() => {
-    const { stepIndex, editorStep } = useStepData()
-
     const fileName = file || editorStep.northPanel.active
     const fileIndex = editorStep.files.findIndex(
       f => f.name === fileName

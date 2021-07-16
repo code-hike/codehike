@@ -12,12 +12,14 @@ type EditorProps = {
   contentProps: EditorStep
   frameProps: MiniEditorProps["frameProps"]
   codeProps: MiniEditorProps["codeProps"]
+  springConfig: MiniEditorProps["springConfig"]
 }
 
 function Editor({
   contentProps,
   codeProps,
   frameProps,
+  springConfig,
 }: EditorProps) {
   const finalFrameProps = {
     button: <CodeSandboxIcon url={useCodeSandboxLink()} />,
@@ -33,6 +35,7 @@ function Editor({
       {...contentProps}
       frameProps={finalFrameProps}
       codeProps={finalCodeProps}
+      springConfig={springConfig}
     />
   )
 }
