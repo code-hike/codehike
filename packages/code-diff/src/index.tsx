@@ -1,52 +1,73 @@
 import { diffLines } from "diff"
-import { CodeLine, tokenize } from "./tokenizer"
+import { IRawTheme } from "vscode-textmate"
+import { useHighlighter } from "./highlighter"
+import React from "react"
 
 type DiffOptions = {
   prevCode: string
   nextCode: string
   lineKeys?: number[]
   lang: string
+  theme: IRawTheme
 }
+
+type CodeToken = [
+  string,
+  {
+    className?: string
+    style?: { color: string | undefined }
+  }
+]
+type CodeLine = CodeToken[]
 
 type CodeMap = {
   [key: number]: CodeLine
 }
 
-export { codeDiff, CodeLine, DiffOptions, CodeMap }
+export { CodeLine, DiffOptions, CodeMap, useCodeDiff }
 
-function codeDiff({
+function useCodeDiff({
   prevCode,
   nextCode,
-  lineKeys,
   lang,
+  theme,
 }: DiffOptions) {
   const prevNormalCode = normalize(prevCode || "")
   const nextNormalCode = normalize(nextCode || "")
+  const { prevLines, nextLines, bg, fg } = useHighlighter(
+    prevNormalCode,
+    nextNormalCode,
+    lang,
+    theme
+  )
 
-  const prevLines = tokenize(prevNormalCode, lang)
-  const nextLines = tokenize(nextNormalCode, lang)
-
-  const prevKeys =
-    lineKeys ||
-    Array.from(
+  return React.useMemo(() => {
+    const prevKeys = Array.from(
       { length: prevLines.length - 1 },
       (x, i) => i + 1
     )
-  const nextKeys = getNextKeys(
-    prevNormalCode,
-    nextNormalCode,
-    prevKeys
-  )
+    const nextKeys = getNextKeys(
+      prevNormalCode,
+      nextNormalCode,
+      prevKeys
+    )
 
-  const codeMap: CodeMap = {}
-  prevKeys.forEach(
-    (key, index) => (codeMap[key] = prevLines[index])
-  )
-  nextKeys.forEach(
-    (key, index) => (codeMap[key] = nextLines[index])
-  )
+    const codeMap: CodeMap = {}
+    prevKeys.forEach(
+      (key, index) => (codeMap[key] = prevLines[index])
+    )
+    nextKeys.forEach(
+      (key, index) => (codeMap[key] = nextLines[index])
+    )
 
-  return { prevKeys, nextKeys, codeMap }
+    return {
+      prevKeys,
+      nextKeys,
+      codeMap,
+      backgroundColor: bg,
+      color: fg,
+    }
+  }, [prevLines, nextLines, bg, fg])
 }
 
 function getNextKeys(

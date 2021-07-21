@@ -11,6 +11,9 @@ export function Page({ children, style, ...rest }) {
         maxWidth: "500px",
         margin: "0 auto",
         justifyContent: "center",
+        backgroundColor: "#fafafa",
+        borderRadius: "5px",
+        padding: "10px",
         ...style,
       }}
     >

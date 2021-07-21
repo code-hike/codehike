@@ -6,6 +6,7 @@
     "x": "./script.js"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
     "autoprefixer": "^9.8.2",
     "cssnano": "^4.1.10",
     "edit-json-file": "^1.5.0",

@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "diff": "^4.0.2",
-    "prismjs": "^1.22.0"
+    "prismjs": "^1.22.0",
+    "shiki": "^0.9.5"
   }
 }

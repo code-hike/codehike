@@ -1,6 +1,7 @@
 node_modules
 .next
 todo.md
+current.md
 dist
 yarn-error.log
 .prettierignore

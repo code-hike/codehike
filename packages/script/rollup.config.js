@@ -5,8 +5,10 @@ import cssnano from "cssnano"
 import typescript from "rollup-plugin-typescript2"
 import copy from "rollup-plugin-copy"
 import path from "path"
+import json from "@rollup/plugin-json"
 
 const plugins = [
+  json({ compact: true }),
   typescript(),
   postcss({
     extract: path.resolve("dist/index.css"),
