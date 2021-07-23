@@ -379,7 +379,7 @@ const xsteps = [
     code: `const app = <h1 style={{ color: 'blue' }}>Hello World</h1>
 
 ReactDOM.render(app, document.getElementById('root'))`,
-    focus: "1",
+    focus: "3",
   },
   {
     code: `function MyComponent() {

@@ -39,13 +39,17 @@ export function Code({
   htmlProps,
   theme = (DEFAULT_THEME as unknown) as IRawTheme,
 }: CodeProps) {
+  const { element, dimensions } = useDimensions(
+    { prev: prevCode, next: nextCode },
+    { prev: prevFocus, next: nextFocus },
+    [parentHeight]
+  )
+
   const {
     prevLines,
     nextLines,
     prevFocusIndexes,
     nextFocusIndexes,
-    prevLongestLine,
-    nextLongestLine,
     backgroundColor,
     color,
   } = useLineProps(
@@ -57,15 +61,8 @@ export function Code({
     theme
   )
 
-  const [ref, dimensions] = useDimensions<HTMLPreElement>([
-    parentHeight,
-    prevLongestLine,
-    nextLongestLine,
-  ])
-
   return (
     <pre
-      ref={ref}
       {...htmlProps}
       className={`language-${language}`}
       style={{
@@ -83,8 +80,6 @@ export function Code({
             progress={progress}
             containerWidth={dimensions.width}
             containerHeight={dimensions.height}
-            prevLines={prevLines}
-            nextLines={nextLines}
             lineHeight={dimensions.lineHeight}
             lineWidth={
               dimensions.lineWidths.map(lw =>
@@ -94,6 +89,8 @@ export function Code({
                 )
               ) as [number, number]
             }
+            prevLines={prevLines}
+            nextLines={nextLines}
             prevFocus={prevFocusIndexes}
             nextFocus={nextFocusIndexes}
             minZoom={minZoom}
@@ -101,14 +98,7 @@ export function Code({
             center={horizontalCenter}
           />
         ) : (
-          <>
-            <div className="prev-longest-line">
-              {prevLongestLine}
-            </div>
-            <div className="next-longest-line">
-              {nextLongestLine}
-            </div>
-          </>
+          element
         )}
       </code>
     </pre>

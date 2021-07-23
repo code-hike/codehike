@@ -1,4 +1,8 @@
 import React from "react"
+import {
+  FocusString,
+  getFocusIndexes,
+} from "./focus-parser"
 
 type Dimensions = {
   width: number
@@ -18,25 +22,64 @@ export { useDimensions }
 
 const DEFAULT_WIDTH = 200
 
-function useDimensions<T extends HTMLElement>(
+// type DimensionsResult = {
+//   width: number
+//   height: number
+//   lineWidths: { prev: number; next: number }
+//   lineHeight: number
+//   colWidth: number
+// }
+
+function useDimensions(
+  code: { prev: string; next: string },
+  focus: { prev: FocusString; next: FocusString },
   deps: React.DependencyList
-): [React.MutableRefObject<T>, Dimensions] {
-  const ref = React.useRef<T>(null!)
-  const [dimensions, setDimensions] = React.useState<
-    Dimensions
-  >(null)
+) {
+  const [
+    dimensions,
+    setDimensions,
+  ] = React.useState<Dimensions>(null)
 
   const windowWidth = useWindowWidth()
-  const fullDeps = [...deps, windowWidth]
+  const prevLongestLine = getLongestLine(
+    code.prev,
+    focus.prev
+  )
+  const nextLongestLine = getLongestLine(
+    code.next,
+    focus.next
+  )
+  const prevLineRef = React.useRef<HTMLDivElement>(null!)
+  const nextLineRef = React.useRef<HTMLDivElement>(null!)
+
+  const element = (
+    <>
+      <div ref={prevLineRef}>
+        <div style={{ display: "inline-block" }}>
+          <span>{prevLongestLine}</span>
+        </div>
+      </div>
+      <div ref={nextLineRef}>
+        <div style={{ display: "inline-block" }}>
+          <span>{nextLongestLine}</span>
+        </div>
+      </div>
+    </>
+  )
+
+  const allDeps = [
+    ...deps,
+    windowWidth,
+    prevLongestLine,
+    nextLongestLine,
+  ]
 
   useLayoutEffect(() => {
-    if (ref.current) {
-      const pll = ref.current.querySelector(
-        ".prev-longest-line"
-      )
-      const nll = ref.current.querySelector(
-        ".next-longest-line"
-      )
+    if (prevLineRef.current) {
+      const pll = prevLineRef.current
+      const nll = nextLineRef.current
+      const codeElement =
+        pll?.parentElement || nll?.parentElement!
 
       // TODO is it clientWidth or clientRect?
 
@@ -47,28 +90,53 @@ function useDimensions<T extends HTMLElement>(
       const colWidth = pll
         ? plw! / (pll.textContent?.length || 1)
         : nlw! / (nll!.textContent?.length || 1)
-      setDimensions({
-        width: getWidthWithoutPadding(ref.current),
-        height: getHeightWithoutPadding(ref.current),
+
+      const d: Dimensions = {
+        width: getWidthWithoutPadding(
+          codeElement.parentElement!
+        ),
+        height: getHeightWithoutPadding(
+          codeElement.parentElement!
+        ),
         lineWidths: [
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
         ],
         lineHeight: Math.max(plh, nlh),
         colWidth,
-        deps: fullDeps,
-      })
+        deps: allDeps,
+      }
+      setDimensions(d)
     }
-  }, fullDeps)
+  }, [allDeps])
 
   if (
     !dimensions ||
-    depsChanged(dimensions.deps, fullDeps)
+    depsChanged(dimensions.deps, allDeps)
   ) {
-    return [ref, null]
+    return { element, dimensions: null }
   } else {
-    return [ref, dimensions]
+    return { element, dimensions }
   }
+}
+
+const newlineRe = /\r\n|\r|\n/
+function getLongestLine(
+  code: string,
+  focus: FocusString
+): string {
+  const lines = code.split(newlineRe)
+  const focusIndexes = getFocusIndexes(focus, lines)
+  let longestLine = ""
+  lines.forEach((line, index) => {
+    if (
+      focusIndexes.includes(index) &&
+      line.length > longestLine.length
+    ) {
+      longestLine = line
+    }
+  })
+  return longestLine
 }
 
 function getWidthWithoutPadding(element: HTMLElement) {

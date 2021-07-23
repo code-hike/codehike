@@ -1,11 +1,13 @@
 type LineIndex = number
 type ColumnIndex = number
 
+export type FocusString = string | null
+
 /**
  * Return the first and last indexes to focus, both included
  */
 export function getFocusExtremes(
-  focus: string | null,
+  focus: FocusString,
   lines: any[]
 ): [number, number] {
   if (!focus) {
@@ -23,7 +25,7 @@ export function getFocusExtremes(
 }
 
 export function getFocusIndexes(
-  focus: string | null,
+  focus: FocusString,
   lines: any[]
 ): number[] {
   if (!focus) {
@@ -38,7 +40,7 @@ export function getFocusIndexes(
 }
 
 export function getFocusByKey(
-  focus: string | null,
+  focus: FocusString,
   keys: number[]
 ) {
   if (!focus) {

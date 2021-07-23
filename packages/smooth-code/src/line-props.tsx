@@ -35,31 +35,20 @@ export function useLineProps(
     return something(
       prevFocus,
       prevKeys,
-      prevCode,
       nextFocus,
       nextKeys,
-      nextCode,
       codeMap,
       backgroundColor,
       color
     )
-  }, [
-    prevCode,
-    nextCode,
-    language,
-    prevFocus,
-    nextFocus,
-    codeMap,
-  ])
+  }, [prevFocus, prevKeys, nextFocus, nextKeys, codeMap])
 }
 
 function something(
   prevFocus: string | null,
   prevKeys: number[],
-  prevCode: string,
   nextFocus: string | null,
   nextKeys: number[],
-  nextCode: string,
   codeMap: CodeMap,
   backgroundColor: string,
   color: string
@@ -69,19 +58,11 @@ function something(
     prevFocus,
     prevKeys
   )
-  const prevLongestLineIndex = longestLineIndex(
-    prevCode,
-    prevFocusIndexes
-  )
 
   const nextFocusByKey = getFocusByKey(nextFocus, nextKeys)
   const nextFocusIndexes = getFocusIndexes(
     nextFocus,
     nextKeys
-  )
-  const nextLongestLineIndex = longestLineIndex(
-    nextCode,
-    nextFocusIndexes
   )
 
   const prevLines = prevKeys.map(key => {
@@ -109,10 +90,6 @@ function something(
       }
     }
   })
-  const prevLongestLine =
-    prevLongestLineIndex == null
-      ? null
-      : prevLines[prevLongestLineIndex]?.element
 
   const nextLines = nextKeys.map(key => {
     const prevFocus = prevFocusByKey[key]
@@ -139,18 +116,12 @@ function something(
       }
     }
   })
-  const nextLongestLine =
-    nextLongestLineIndex == null
-      ? null
-      : nextLines[nextLongestLineIndex]?.element
 
   return {
     prevLines,
     nextLines,
     prevFocusIndexes,
     nextFocusIndexes,
-    prevLongestLine,
-    nextLongestLine,
     backgroundColor,
     color,
   }
@@ -188,7 +159,9 @@ function ColumnedLine({
 }) {
   const columns = React.useMemo(() => {
     const chars = flatMap(line, ([token, tokenProps]) =>
-      token.split("").map(char => [char, tokenProps])
+      token
+        .split("")
+        .map(char => [char, tokenProps] as const)
     )
 
     return chars.map(([char, tokenProps], i) => ({
@@ -223,6 +196,7 @@ function ColumnedLine({
             {...tokenProps}
             key={i + 1}
             style={{
+              ...tokenProps?.style,
               opacity: tween(
                 fromOpacity,
                 toOpacity,
@@ -241,34 +215,6 @@ function ColumnedLine({
 
 function tween(p: number, n: number, t: number) {
   return (n - p) * t + p
-}
-
-const newlineRe = /\r\n|\r|\n/
-function longestLineIndex(
-  code: string,
-  focusIndexes: number[]
-) {
-  const first = Math.min(...focusIndexes)
-  const last = Math.max(...focusIndexes)
-  const focusedLines =
-    code == null
-      ? []
-      : code.split(newlineRe).slice(first, last + 1)
-
-  if (!focusedLines.length) {
-    return null
-  }
-
-  let longestIndex = 0
-  for (let i = 1; i < focusedLines.length; i++) {
-    if (
-      focusedLines[i].length >
-      focusedLines[longestIndex].length
-    ) {
-      longestIndex = i
-    }
-  }
-  return first + longestIndex
 }
 
 export function flatMap<T, U>(
