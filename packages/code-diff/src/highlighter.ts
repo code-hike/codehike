@@ -42,7 +42,9 @@ export function useHighlighter(
 } {
   return useAsyncMemo(
     {
-      loader: () => highlight(code, lang, theme),
+      isReady: isHighlighterReady(lang, theme),
+      load: () => loadHighlighter(lang, theme),
+      run: () => highlight(code, lang, theme),
       placeholder: () => {
         const { bg, fg } = getBasicThemedCode("", theme)
         const lines = mapWithDefault(
@@ -57,8 +59,18 @@ export function useHighlighter(
   )
 }
 
-async function highlight(
-  code: Tween<string>,
+function isHighlighterReady(
+  lang: string,
+  theme: IRawTheme
+) {
+  return (
+    highlighter != null &&
+    !missingTheme(highlighter, theme) &&
+    !missingLang(highlighter, lang)
+  )
+}
+
+async function loadHighlighter(
   lang: string,
   theme: IRawTheme
 ) {
@@ -79,8 +91,16 @@ async function highlight(
   if (missingLang(highlighter, lang)) {
     await highlighter.loadLanguage(lang as Lang)
   }
+}
 
-  const { fg, bg } = highlighter.getTheme(theme.name)
+function highlight(
+  code: Tween<string>,
+  lang: string,
+  theme: IRawTheme
+) {
+  // assumes highlighter isReady
+
+  const { fg, bg } = highlighter!.getTheme(theme.name)
 
   const lines = mapWithDefault(code, "", code =>
     getCodeLines(highlighter!, code, lang, theme)
