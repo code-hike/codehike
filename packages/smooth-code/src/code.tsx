@@ -1,11 +1,15 @@
 import React from "react"
 import { SmoothLines } from "@code-hike/smooth-lines"
 import { useDimensions, Dimensions } from "./use-dimensions"
-import { useLineProps } from "line-props"
+import { useLines } from "line-props"
 import { IRawTheme } from "vscode-textmate"
 import DEFAULT_THEME from "shiki/themes/dark-plus.json"
-import { FocusString } from "./focus-parser"
-import { Tween } from "@code-hike/utils"
+import {
+  FocusString,
+  getFocusIndexes,
+} from "./focus-parser"
+import { Tween, withDefault } from "@code-hike/utils"
+import { useCodeDiff } from "@code-hike/code-diff"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLPreElement>,
@@ -26,34 +30,20 @@ export type CodeProps = {
   htmlProps?: HTMLProps
 }
 
-export function Code({
-  code,
-  focus,
-  parentHeight,
-  htmlProps,
-  ...rest
-}: CodeProps) {
+export function Code(props: CodeProps) {
+  const { code, focus, parentHeight, htmlProps } = props
   const { element, dimensions } = useDimensions(
     code,
     focus,
     [parentHeight]
   )
-
-  return dimensions ? (
-    <AfterDimensions
-      {...{
-        code,
-        focus,
-        dimensions,
-        htmlProps,
-      }}
-      {...rest}
-    />
-  ) : (
+  return !dimensions ? (
     <BeforeDimensions
       element={element}
       htmlProps={htmlProps}
     />
+  ) : (
+    <AfterDimensions dimensions={dimensions} {...props} />
   )
 }
 
@@ -89,13 +79,33 @@ function AfterDimensions({
   dimensions,
 }: CodeProps & { dimensions: NonNullable<Dimensions> }) {
   const {
-    prevLines,
-    nextLines,
-    prevFocusIndexes,
-    nextFocusIndexes,
+    keys,
+    codeMap,
     backgroundColor,
     color,
-  } = useLineProps(code, focus, language, theme)
+  } = useCodeDiff({ code, lang: language, theme })
+
+  const {
+    prevFocusIndexes,
+    nextFocusIndexes,
+  } = React.useMemo(() => {
+    return {
+      prevFocusIndexes: getFocusIndexes(
+        focus.prev,
+        keys.prev
+      ),
+      nextFocusIndexes: getFocusIndexes(
+        focus.next,
+        keys.next
+      ),
+    }
+  }, [focus.prev, focus.next, keys])
+
+  const lines = useLines(
+    withDefault(focus, null),
+    keys,
+    codeMap
+  )
 
   return (
     <Wrapper
@@ -112,8 +122,8 @@ function AfterDimensions({
             Math.max(lw, dimensions.colWidth * minColumns)
           ) as [number, number]
         }
-        prevLines={prevLines}
-        nextLines={nextLines}
+        prevLines={lines.prev}
+        nextLines={lines.next}
         prevFocus={prevFocusIndexes}
         nextFocus={nextFocusIndexes}
         minZoom={minZoom}
