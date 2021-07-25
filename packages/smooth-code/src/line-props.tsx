@@ -7,65 +7,75 @@ import {
 import {
   getFocusByKey,
   getFocusIndexes,
+  FocusString,
 } from "./focus-parser"
 import { IRawTheme } from "vscode-textmate"
+import {
+  Tween,
+  FullTween,
+  withDefault,
+} from "@code-hike/utils"
 
 export function useLineProps(
-  prevCode: string,
-  nextCode: string,
+  code: Tween<string>,
+  focus: Tween<FocusString>,
   language: string,
-  prevFocus: string | null,
-  nextFocus: string | null,
   theme: IRawTheme
 ) {
   const {
-    prevKeys,
-    nextKeys,
+    keys,
     codeMap,
     backgroundColor,
     color,
   } = useCodeDiff({
-    prevCode,
-    nextCode,
+    code,
     lang: language,
     theme,
   })
 
   return React.useMemo(() => {
     return something(
-      prevFocus,
-      prevKeys,
-      nextFocus,
-      nextKeys,
+      withDefault(focus, null),
+      keys,
       codeMap,
       backgroundColor,
       color
     )
-  }, [prevFocus, prevKeys, nextFocus, nextKeys, codeMap])
+  }, [
+    focus.prev,
+    keys.prev,
+    focus.next,
+    keys.next,
+    codeMap,
+  ])
 }
 
 function something(
-  prevFocus: string | null,
-  prevKeys: number[],
-  nextFocus: string | null,
-  nextKeys: number[],
+  focus: FullTween<FocusString>,
+  keys: FullTween<number[]>,
   codeMap: CodeMap,
   backgroundColor: string,
   color: string
 ) {
-  const prevFocusByKey = getFocusByKey(prevFocus, prevKeys)
+  const prevFocusByKey = getFocusByKey(
+    focus.prev,
+    keys.prev
+  )
   const prevFocusIndexes = getFocusIndexes(
-    prevFocus,
-    prevKeys
+    focus.prev,
+    keys.prev
   )
 
-  const nextFocusByKey = getFocusByKey(nextFocus, nextKeys)
+  const nextFocusByKey = getFocusByKey(
+    focus.next,
+    keys.next
+  )
   const nextFocusIndexes = getFocusIndexes(
-    nextFocus,
-    nextKeys
+    focus.next,
+    keys.next
   )
 
-  const prevLines = prevKeys.map(key => {
+  const prevLines = keys.prev.map(key => {
     const prevFocus = prevFocusByKey[key]
     const nextFocus = nextFocusByKey[key]
     const focusPerColumn =
@@ -91,7 +101,7 @@ function something(
     }
   })
 
-  const nextLines = nextKeys.map(key => {
+  const nextLines = keys.next.map(key => {
     const prevFocus = prevFocusByKey[key]
     const nextFocus = nextFocusByKey[key]
     const focusPerColumn =

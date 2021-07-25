@@ -13,6 +13,11 @@ import {
   Lang,
 } from "shiki"
 import { useAsyncMemo } from "./use-async-memo"
+import {
+  Tween,
+  FullTween,
+  mapWithDefault,
+} from "@code-hike/utils"
 
 type CodeToken = [
   string,
@@ -27,35 +32,33 @@ let highlighterPromise: Promise<Highlighter> | null = null
 let highlighter: Highlighter | null = null
 
 export function useHighlighter(
-  prevCode: string,
-  nextCode: string,
+  code: Tween<string>,
   lang: string,
   theme: IRawTheme
 ): {
-  prevLines: CodeLine[]
-  nextLines: CodeLine[]
+  lines: FullTween<CodeLine[]>
   bg: string
   fg: string
 } {
   return useAsyncMemo(
     {
-      loader: () => {
-        return highlight(prevCode, nextCode, lang, theme)
-      },
+      loader: () => highlight(code, lang, theme),
       placeholder: () => {
         const { bg, fg } = getBasicThemedCode("", theme)
-        const prevLines = tokenizePlaceholder(prevCode)
-        const nextLines = tokenizePlaceholder(nextCode)
-        return { prevLines, nextLines, bg, fg }
+        const lines = mapWithDefault(
+          code,
+          "",
+          tokenizePlaceholder
+        )
+        return { lines, bg, fg }
       },
     },
-    [prevCode, nextCode, lang, theme]
+    [code.prev, code.next, lang, theme]
   )
 }
 
 async function highlight(
-  prevCode: string,
-  nextCode: string,
+  code: Tween<string>,
   lang: string,
   theme: IRawTheme
 ) {
@@ -78,20 +81,12 @@ async function highlight(
   }
 
   const { fg, bg } = highlighter.getTheme(theme.name)
-  const prevLines = getCodeLines(
-    highlighter,
-    prevCode,
-    lang,
-    theme
-  )
-  const nextLines = getCodeLines(
-    highlighter,
-    nextCode,
-    lang,
-    theme
+
+  const lines = mapWithDefault(code, "", code =>
+    getCodeLines(highlighter!, code, lang, theme)
   )
 
-  return { prevLines, nextLines, bg, fg }
+  return { lines, bg, fg }
 }
 
 function getCodeLines(

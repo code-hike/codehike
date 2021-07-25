@@ -1,7 +1,7 @@
 type LineIndex = number
 type ColumnIndex = number
 
-export type FocusString = string | null
+export type FocusString = string | null | undefined
 
 /**
  * Return the first and last indexes to focus, both included

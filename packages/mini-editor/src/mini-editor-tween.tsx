@@ -338,12 +338,10 @@ function CodeTransition({
   return (
     <Code
       {...codeProps}
-      prevCode={prevFile.code}
-      nextCode={nextFile.code}
+      code={{ prev: prevFile.code, next: nextFile.code }}
+      focus={{ prev: prevFile.focus, next: nextFile.focus }}
       progress={t}
       language={prevFile.lang}
-      prevFocus={prevFile.focus || null}
-      nextFocus={nextFile.focus || null}
       parentHeight={t}
     />
   )

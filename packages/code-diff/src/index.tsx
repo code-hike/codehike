@@ -2,11 +2,10 @@ import { diffLines } from "diff"
 import { IRawTheme } from "vscode-textmate"
 import { useHighlighter } from "./highlighter"
 import React from "react"
+import { Tween, mapWithDefault } from "@code-hike/utils"
 
 type DiffOptions = {
-  prevCode: string
-  nextCode: string
-  lineKeys?: number[]
+  code: Tween<string>
   lang: string
   theme: IRawTheme
 }
@@ -26,48 +25,40 @@ type CodeMap = {
 
 export { CodeLine, DiffOptions, CodeMap, useCodeDiff }
 
-function useCodeDiff({
-  prevCode,
-  nextCode,
-  lang,
-  theme,
-}: DiffOptions) {
-  const prevNormalCode = normalize(prevCode || "")
-  const nextNormalCode = normalize(nextCode || "")
-  const { prevLines, nextLines, bg, fg } = useHighlighter(
-    prevNormalCode,
-    nextNormalCode,
+function useCodeDiff({ code, lang, theme }: DiffOptions) {
+  const normalCode = mapWithDefault(code, "", normalize)
+  const { lines, bg, fg } = useHighlighter(
+    normalCode,
     lang,
     theme
   )
 
   return React.useMemo(() => {
     const prevKeys = Array.from(
-      { length: prevLines.length - 1 },
+      { length: lines.prev.length - 1 },
       (x, i) => i + 1
     )
     const nextKeys = getNextKeys(
-      prevNormalCode,
-      nextNormalCode,
+      normalCode.prev,
+      normalCode.next,
       prevKeys
     )
 
     const codeMap: CodeMap = {}
     prevKeys.forEach(
-      (key, index) => (codeMap[key] = prevLines[index])
+      (key, index) => (codeMap[key] = lines.prev[index])
     )
     nextKeys.forEach(
-      (key, index) => (codeMap[key] = nextLines[index])
+      (key, index) => (codeMap[key] = lines.next[index])
     )
 
     return {
-      prevKeys,
-      nextKeys,
+      keys: { prev: prevKeys, next: nextKeys },
       codeMap,
       backgroundColor: bg,
       color: fg,
     }
-  }, [prevLines, nextLines, bg, fg])
+  }, [lines.prev, lines.next, bg, fg])
 }
 
 function getNextKeys(
@@ -105,6 +96,6 @@ function getNextKeys(
   return nextKeys
 }
 
-function normalize(text: string) {
-  return text && text.trimEnd().concat("\n")
+function normalize(text: string | null | undefined) {
+  return (text || "").trimEnd().concat("\n")
 }

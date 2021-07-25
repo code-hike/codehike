@@ -40,10 +40,8 @@ const x = (y) => y++
         >
           <Code
             progress={progress}
-            prevCode={prevCode}
-            prevFocus={"1"}
-            nextCode={nextCode}
-            nextFocus={"1"}
+            code={{ prev: prevCode, next: nextCode }}
+            focus={{ prev: "1", next: "1" }}
             horizontalCenter={center}
             language="js"
             htmlProps={{ style: { height: "100%" } }}

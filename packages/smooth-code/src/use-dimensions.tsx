@@ -3,6 +3,7 @@ import {
   FocusString,
   getFocusIndexes,
 } from "./focus-parser"
+import { Tween } from "@code-hike/utils"
 
 type Dimensions = {
   width: number
@@ -18,7 +19,7 @@ const useLayoutEffect =
     ? React.useLayoutEffect
     : React.useEffect
 
-export { useDimensions }
+export { useDimensions, Dimensions }
 
 const DEFAULT_WIDTH = 200
 
@@ -31,10 +32,10 @@ const DEFAULT_WIDTH = 200
 // }
 
 function useDimensions(
-  code: { prev: string; next: string },
-  focus: { prev: FocusString; next: FocusString },
+  code: Tween<string>,
+  focus: Tween<FocusString>,
   deps: React.DependencyList
-) {
+): { element: React.ReactNode; dimensions: Dimensions } {
   const [
     dimensions,
     setDimensions,
@@ -122,10 +123,10 @@ function useDimensions(
 
 const newlineRe = /\r\n|\r|\n/
 function getLongestLine(
-  code: string,
+  code: string | undefined,
   focus: FocusString
 ): string {
-  const lines = code.split(newlineRe)
+  const lines = code ? code.split(newlineRe) : [""]
   const focusIndexes = getFocusIndexes(focus, lines)
   let longestLine = ""
   lines.forEach((line, index) => {
