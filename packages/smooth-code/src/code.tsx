@@ -1,5 +1,8 @@
 import React from "react"
-import { SmoothLines } from "@code-hike/smooth-lines"
+import {
+  SmoothLines,
+  LinesAnnotation,
+} from "@code-hike/smooth-lines"
 import { useDimensions, Dimensions } from "./use-dimensions"
 import { useLines } from "line-props"
 import { IRawTheme } from "vscode-textmate"
@@ -7,8 +10,14 @@ import DEFAULT_THEME from "shiki/themes/dark-plus.json"
 import {
   FocusString,
   getFocusIndexes,
+  getFocusExtremes,
 } from "./focus-parser"
-import { Tween, withDefault } from "@code-hike/utils"
+import {
+  Tween,
+  withDefault,
+  FullTween,
+  mapWithDefault,
+} from "@code-hike/utils"
 import { useCodeDiff } from "@code-hike/code-diff"
 
 type HTMLProps = React.DetailedHTMLProps<
@@ -28,6 +37,12 @@ export type CodeProps = {
   horizontalCenter?: boolean
   theme?: IRawTheme
   htmlProps?: HTMLProps
+  annotations?: Tween<CodeAnnotation[]>
+}
+
+type CodeAnnotation = {
+  focus: FocusString
+  Component?: LinesAnnotation["Component"]
 }
 
 export function Code(props: CodeProps) {
@@ -77,6 +92,7 @@ function AfterDimensions({
   htmlProps,
   theme = (DEFAULT_THEME as unknown) as IRawTheme,
   dimensions,
+  annotations,
 }: CodeProps & { dimensions: NonNullable<Dimensions> }) {
   const {
     keys,
@@ -107,6 +123,11 @@ function AfterDimensions({
     codeMap
   )
 
+  const linesAnnotations = useAnnotations(
+    annotations,
+    theme
+  )
+
   return (
     <Wrapper
       htmlProps={htmlProps}
@@ -129,9 +150,80 @@ function AfterDimensions({
         minZoom={minZoom}
         maxZoom={maxZoom}
         center={horizontalCenter}
+        annotations={linesAnnotations}
       />
     </Wrapper>
   )
+}
+
+function useAnnotations(
+  codeAnnotations: Tween<CodeAnnotation[]> | undefined,
+  theme: IRawTheme
+): FullTween<LinesAnnotation[]> {
+  return React.useMemo(() => {
+    if (!codeAnnotations) {
+      return {
+        prev: [] as LinesAnnotation[],
+        next: [] as LinesAnnotation[],
+      }
+    }
+    return mapWithDefault(
+      codeAnnotations,
+      [],
+      codeAnnotations => {
+        return codeAnnotations.map(a =>
+          toLinesAnnotation(a, theme)
+        )
+      }
+    )
+  }, [codeAnnotations])
+}
+
+function toLinesAnnotation(
+  codeAnnotation: CodeAnnotation,
+  theme: IRawTheme
+): LinesAnnotation {
+  const [startIndex, endIndex] = getFocusExtremes(
+    codeAnnotation.focus,
+    []
+  )
+
+  // TODO handle missing bg
+  const bg = ((theme as any).colors[
+    "editor.lineHighlightBackground"
+  ] ||
+    (theme as any).colors[
+      "editor.selectionHighlightBackground"
+    ]) as string
+
+  console.log({ theme, bg })
+
+  function Component({
+    style,
+    children,
+  }: {
+    style: React.CSSProperties
+    children: React.ReactNode
+  }) {
+    return (
+      <div
+        style={{
+          ...style,
+          background: bg,
+          cursor: "pointer",
+        }}
+        onClick={_ => alert("clicked")}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  return {
+    Component,
+    startIndex,
+    endIndex,
+  }
 }
 
 function Wrapper({

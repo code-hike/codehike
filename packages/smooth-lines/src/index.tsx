@@ -3,10 +3,11 @@ import {
   Line,
   useLineTransitions,
 } from "./line-transitions"
-import { Lines } from "./lines"
+import { Lines, LinesAnnotation } from "./lines"
 import { easing, tween } from "./tween"
+import { FullTween } from "@code-hike/utils"
 
-export { SmoothLines }
+export { SmoothLines, LinesAnnotation }
 
 type Props = {
   progress: number
@@ -22,6 +23,7 @@ type Props = {
   center?: boolean
   minZoom?: number
   maxZoom?: number
+  annotations: FullTween<LinesAnnotation[]>
 }
 
 function SmoothLines({
@@ -37,6 +39,7 @@ function SmoothLines({
   center,
   minZoom = 0,
   maxZoom = 1.2,
+  annotations,
 }: Props) {
   const { lines, verticalInterval } = useLineTransitions(
     prevLines,
@@ -89,6 +92,7 @@ function SmoothLines({
     originalContentHeight: nextLines.length * lineHeight,
   })
 
+  // all these tweens depends on annotations now (t instead of progress)
   const zoom = tweenProp(prevZoom, nextZoom, progress)
   const dx = tweenProp(prevDX, nextDX, progress)
   const dy = tweenProp(
@@ -97,7 +101,6 @@ function SmoothLines({
     progress,
     verticalInterval
   )
-
   const focusHeight = tweenProp(
     prevContentHeight,
     nextContentHeight,
@@ -128,6 +131,7 @@ function SmoothLines({
           focusWidth={focusWidth}
           lineHeight={lineHeight}
           progress={progress}
+          annotations={annotations}
         />
       </Content>
     </Container>
@@ -262,6 +266,7 @@ function Content({
           left: 0,
           transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
           transformOrigin: "top left",
+          width: "100%",
         }}
       >
         {children}

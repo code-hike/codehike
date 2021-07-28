@@ -18,6 +18,9 @@
   "peerDependencies": {
     "react": ">=16.8"
   },
+  "dependencies": {
+    "@code-hike/utils": "^0.3.0-next.0"
+  },
   "keywords": [
     "react"
   ],

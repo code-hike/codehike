@@ -30,6 +30,8 @@ export type LineTransition = {
   key: number
   tweenY: TweenParams
   tweenX: TweenParams
+  prevIndex: number | null
+  nextIndex: number | null
 }
 
 export function useLineTransitions(
@@ -117,6 +119,8 @@ function getLineTransition(
       element,
       elementWithProgress,
       key,
+      prevIndex,
+      nextIndex,
       tweenY: { fixed: true, value: nextIndex! },
       tweenX: {
         fixed: false,
@@ -137,6 +141,8 @@ function getLineTransition(
       element,
       elementWithProgress,
       key,
+      prevIndex,
+      nextIndex,
       tweenY: { fixed: true, value: prevIndex },
       tweenX: {
         fixed: false,
@@ -155,6 +161,8 @@ function getLineTransition(
     element,
     elementWithProgress,
     key,
+    prevIndex,
+    nextIndex,
     tweenY: {
       fixed: false,
       extremes: [prevIndex, nextIndex],
