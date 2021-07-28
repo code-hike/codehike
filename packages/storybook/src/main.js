@@ -17,4 +17,9 @@ module.exports = {
       },
     },
   },
+  webpackFinal: config => {
+    // until https://github.com/shikijs/shiki/issues/177 is fixed
+    config.node = { fs: "empty", path: "empty" }
+    return config
+  },
 }
