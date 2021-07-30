@@ -94,12 +94,11 @@ function AfterDimensions({
   dimensions,
   annotations,
 }: CodeProps & { dimensions: NonNullable<Dimensions> }) {
-  const {
-    keys,
-    codeMap,
-    backgroundColor,
-    color,
-  } = useCodeDiff({ code, lang: language, theme })
+  const { codeMap, backgroundColor, color } = useCodeDiff({
+    code,
+    lang: language,
+    theme,
+  })
 
   const {
     prevFocusIndexes,
@@ -108,20 +107,16 @@ function AfterDimensions({
     return {
       prevFocusIndexes: getFocusIndexes(
         focus.prev,
-        keys.prev
+        codeMap.keys.prev
       ),
       nextFocusIndexes: getFocusIndexes(
         focus.next,
-        keys.next
+        codeMap.keys.next
       ),
     }
-  }, [focus.prev, focus.next, keys])
+  }, [focus.prev, focus.next, codeMap.keys])
 
-  const lines = useLines(
-    withDefault(focus, null),
-    keys,
-    codeMap
-  )
+  const lines = useLines(withDefault(focus, null), codeMap)
 
   const linesAnnotations = useAnnotations(
     annotations,
@@ -195,8 +190,6 @@ function toLinesAnnotation(
     (theme as any).colors[
       "editor.selectionHighlightBackground"
     ]) as string
-
-  console.log({ theme, bg })
 
   function Component({
     style,

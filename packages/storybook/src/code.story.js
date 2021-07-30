@@ -1,7 +1,7 @@
 import React from "react"
 import { WithProgress } from "./utils"
 import { Code, CodeTween } from "@code-hike/smooth-code"
-import poimandres from "shiki/themes/solarized-dark.json"
+import poimandres from "shiki/themes/poimandres.json"
 
 export default {
   title: "Test/Smooth Code",
@@ -19,7 +19,7 @@ export default {
   },
 }
 
-export const basic = ({ center, containerWidth }) => {
+export const basic = ({ center }) => {
   const prevCode = `
 console.log(1)
 console.log(2)

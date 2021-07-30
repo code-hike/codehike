@@ -4,6 +4,15 @@ type ColumnIndex = number
 export type FocusString = string | null | undefined
 
 /**
+ * Start 2 and end 4 means for the line "lorem"
+ * means "ORE" is focused
+ */
+export type ColumnExtremes = {
+  start: number
+  end: number
+}
+
+/**
  * Return the first and last indexes to focus, both included
  */
 export function getFocusExtremes(

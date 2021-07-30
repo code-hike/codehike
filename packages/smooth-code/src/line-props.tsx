@@ -6,21 +6,20 @@ import { ColumnedLine, Line } from "./line-components"
 
 export function useLines(
   focus: FullTween<FocusString>,
-  keys: FullTween<number[]>,
   codeMap: CodeMap
 ) {
   return React.useMemo(() => {
     const prevFocusByKey = getFocusByKey(
       focus.prev,
-      keys.prev
+      codeMap.keys.prev
     )
 
     const nextFocusByKey = getFocusByKey(
       focus.next,
-      keys.next
+      codeMap.keys.next
     )
 
-    return map(keys, keys => {
+    return map(codeMap.keys, keys => {
       return keys.map(key => {
         const focus = {
           prev: prevFocusByKey[key],
@@ -32,15 +31,15 @@ export function useLines(
         if (!focusPerColumn) {
           return {
             key,
-            element: <Line line={codeMap[key]} />,
+            element: <Line line={codeMap.lines[key]} />,
           }
         } else {
           return {
             key,
-            element: <Line line={codeMap[key]} />,
+            element: <Line line={codeMap.lines[key]} />,
             elementWithProgress: (progress: number) => (
               <ColumnedLine
-                line={codeMap[key]}
+                line={codeMap.lines[key]}
                 focus={focus}
                 progress={progress}
               />
@@ -49,5 +48,5 @@ export function useLines(
         }
       })
     })
-  }, [focus.prev, focus.next, keys, codeMap])
+  }, [focus.prev, focus.next, codeMap])
 }

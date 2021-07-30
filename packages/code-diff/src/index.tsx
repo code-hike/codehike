@@ -2,7 +2,11 @@ import { diffLines } from "diff"
 import { IRawTheme } from "vscode-textmate"
 import { useHighlighter } from "./highlighter"
 import React from "react"
-import { Tween, mapWithDefault } from "@code-hike/utils"
+import {
+  Tween,
+  mapWithDefault,
+  FullTween,
+} from "@code-hike/utils"
 
 type DiffOptions = {
   code: Tween<string>
@@ -10,20 +14,28 @@ type DiffOptions = {
   theme: IRawTheme
 }
 
-type CodeToken = [
-  string,
-  {
-    className?: string
-    style?: { color: string | undefined }
-  }
-]
-type CodeLine = CodeToken[]
-
-type CodeMap = {
-  [key: number]: CodeLine
+type CodeTokenData = {
+  className?: string
+  style?: { color: string | undefined }
 }
 
-export { CodeLine, DiffOptions, CodeMap, useCodeDiff }
+type CodeToken = [string, CodeTokenData]
+type CodeLine = { tokens: CodeToken[] }
+type LineKey = number
+
+type CodeMap = {
+  keys: FullTween<LineKey[]>
+  lines: Record<LineKey, CodeLine>
+}
+
+export {
+  CodeLine,
+  CodeToken,
+  CodeTokenData,
+  DiffOptions,
+  CodeMap,
+  useCodeDiff,
+}
 
 function useCodeDiff({ code, lang, theme }: DiffOptions) {
   const normalCode = mapWithDefault(code, "", normalize)
@@ -44,16 +56,20 @@ function useCodeDiff({ code, lang, theme }: DiffOptions) {
       prevKeys
     )
 
-    const codeMap: CodeMap = {}
+    const codeMap: CodeMap = {
+      keys: { prev: prevKeys, next: nextKeys },
+      lines: {} as Record<LineKey, CodeLine>,
+    }
     prevKeys.forEach(
-      (key, index) => (codeMap[key] = lines.prev[index])
+      (key, index) =>
+        (codeMap.lines[key] = { tokens: lines.prev[index] })
     )
     nextKeys.forEach(
-      (key, index) => (codeMap[key] = lines.next[index])
+      (key, index) =>
+        (codeMap.lines[key] = { tokens: lines.next[index] })
     )
 
     return {
-      keys: { prev: prevKeys, next: nextKeys },
       codeMap,
       backgroundColor: bg,
       color: fg,
@@ -65,7 +81,7 @@ function getNextKeys(
   prevCode: string,
   nextCode: string,
   prevKeys: number[]
-) {
+): LineKey[] {
   const changes = diffLines(prevCode, nextCode)
   const nextKeys: number[] = []
   let prevIndex = 0
