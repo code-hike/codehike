@@ -6,10 +6,11 @@ import {
 import { Tween } from "@code-hike/utils"
 
 type Dimensions = {
-  width: number
-  height: number
+  containerWidth: number
+  containerHeight: number
   deps: React.DependencyList
   lineWidths: [number, number]
+  lineWidth: [number, number]
   lineHeight: number
   colWidth: number
 } | null
@@ -34,6 +35,7 @@ const DEFAULT_WIDTH = 200
 function useDimensions(
   code: Tween<string>,
   focus: Tween<FocusString>,
+  minColumns: number,
   deps: React.DependencyList
 ): { element: React.ReactNode; dimensions: Dimensions } {
   const [
@@ -73,6 +75,7 @@ function useDimensions(
     windowWidth,
     prevLongestLine,
     nextLongestLine,
+    minColumns,
   ]
 
   useLayoutEffect(() => {
@@ -93,15 +96,25 @@ function useDimensions(
         : nlw! / (nll!.textContent?.length || 1)
 
       const d: Dimensions = {
-        width: getWidthWithoutPadding(
+        containerWidth: getWidthWithoutPadding(
           codeElement.parentElement!
         ),
-        height: getHeightWithoutPadding(
+        containerHeight: getHeightWithoutPadding(
           codeElement.parentElement!
         ),
         lineWidths: [
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
+        ],
+        lineWidth: [
+          Math.max(
+            plw || nlw || DEFAULT_WIDTH,
+            colWidth * minColumns
+          ),
+          Math.max(
+            nlw || plw || DEFAULT_WIDTH,
+            colWidth * minColumns
+          ),
         ],
         lineHeight: Math.max(plh, nlh),
         colWidth,

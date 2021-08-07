@@ -27,17 +27,17 @@ function map<T, R>(
 export { map }
 
 export function withDefault<T>(
-  t: Tween<T>,
+  t: Tween<T> | undefined,
   deft: T
 ): FullTween<T> {
   return {
-    prev: t.prev === undefined ? deft : t.prev,
-    next: t.next === undefined ? deft : t.next,
+    prev: t?.prev === undefined ? deft : t.prev,
+    next: t?.next === undefined ? deft : t.next,
   }
 }
 
 export function mapWithDefault<T, R>(
-  tween: Tween<T>,
+  tween: Tween<T> | undefined,
   deft: T,
   fn: (t: T) => R
 ): FullTween<R> {

@@ -1,6 +1,6 @@
 import React from "react"
 import {
-  SmoothLines,
+  SmoothLines as OldSmoothLines,
   LinesAnnotation,
 } from "@code-hike/smooth-lines"
 import { useDimensions, Dimensions } from "./use-dimensions"
@@ -19,6 +19,11 @@ import {
   mapWithDefault,
 } from "@code-hike/utils"
 import { useCodeDiff } from "@code-hike/code-diff"
+import {
+  useStepParser,
+  CodeAnnotation,
+} from "./step-parser"
+import { SmoothLines } from "./smooth-lines"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLPreElement>,
@@ -40,16 +45,20 @@ export type CodeProps = {
   annotations?: Tween<CodeAnnotation[]>
 }
 
-type CodeAnnotation = {
-  focus: FocusString
-  Component?: LinesAnnotation["Component"]
-}
+const DEFAULT_MIN_COLUMNS = 40
 
 export function Code(props: CodeProps) {
-  const { code, focus, parentHeight, htmlProps } = props
+  const {
+    code,
+    focus,
+    parentHeight,
+    htmlProps,
+    minColumns = DEFAULT_MIN_COLUMNS,
+  } = props
   const { element, dimensions } = useDimensions(
     code,
     focus,
+    minColumns,
     [parentHeight]
   )
   return !dimensions ? (
@@ -85,7 +94,7 @@ function AfterDimensions({
   focus,
   progress,
   language,
-  minColumns = 40,
+  minColumns = DEFAULT_MIN_COLUMNS,
   minZoom = 0.5,
   maxZoom = 1.5,
   horizontalCenter = false,
@@ -98,6 +107,14 @@ function AfterDimensions({
     code,
     lang: language,
     theme,
+  })
+
+  const stepInfo = useStepParser({
+    code,
+    theme,
+    lang: language,
+    focus,
+    annotations,
   })
 
   const {
@@ -124,30 +141,43 @@ function AfterDimensions({
   )
 
   return (
-    <Wrapper
-      htmlProps={htmlProps}
-      style={{ opacity: 1, backgroundColor, color }}
-    >
-      <SmoothLines
-        progress={progress}
-        containerWidth={dimensions.width}
-        containerHeight={dimensions.height}
-        lineHeight={dimensions.lineHeight}
-        lineWidth={
-          dimensions.lineWidths.map(lw =>
-            Math.max(lw, dimensions.colWidth * minColumns)
-          ) as [number, number]
-        }
-        prevLines={lines.prev}
-        nextLines={lines.next}
-        prevFocus={prevFocusIndexes}
-        nextFocus={nextFocusIndexes}
-        minZoom={minZoom}
-        maxZoom={maxZoom}
-        center={horizontalCenter}
-        annotations={linesAnnotations}
-      />
-    </Wrapper>
+    <>
+      {/* <Wrapper
+        htmlProps={htmlProps}
+        style={{ opacity: 1, backgroundColor, color }}
+      >
+        <OldSmoothLines
+          progress={progress}
+          containerWidth={dimensions.containerWidth}
+          containerHeight={dimensions.containerHeight}
+          lineHeight={dimensions.lineHeight}
+          lineWidth={dimensions.lineWidth}
+          prevLines={lines.prev}
+          nextLines={lines.next}
+          prevFocus={prevFocusIndexes}
+          nextFocus={nextFocusIndexes}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
+          center={horizontalCenter}
+          annotations={linesAnnotations}
+        />
+      </Wrapper> */}
+      <Wrapper
+        htmlProps={htmlProps}
+        style={{ opacity: 1, backgroundColor, color }}
+      >
+        <SmoothLines
+          progress={progress}
+          dimensions={dimensions}
+          //
+          minZoom={minZoom}
+          maxZoom={maxZoom}
+          center={horizontalCenter}
+          //
+          codeStep={stepInfo}
+        />
+      </Wrapper>
+    </>
   )
 }
 
@@ -233,6 +263,7 @@ function Wrapper({
       {...htmlProps}
       style={{
         margin: 0,
+        outline: "red 1px solid",
         ...style,
         ...htmlProps?.style,
       }}

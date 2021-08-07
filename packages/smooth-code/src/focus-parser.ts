@@ -1,5 +1,7 @@
 type LineIndex = number
 type ColumnIndex = number
+type LineNumber = number
+type ColumnNumber = number
 
 export type FocusString = string | null | undefined
 
@@ -8,8 +10,85 @@ export type FocusString = string | null | undefined
  * means "ORE" is focused
  */
 export type ColumnExtremes = {
-  start: number
-  end: number
+  start: ColumnNumber
+  end: ColumnNumber
+}
+
+type FocusMap = Record<LineNumber, true | ColumnExtremes[]>
+
+export function mapFocusToLineNumbers(
+  focus: FocusString,
+  lines: any[]
+): FocusMap {
+  if (!focus) {
+    // focus all lines
+    return mergeToObject(
+      [...lines.keys()].map(lineIndex => ({
+        [lineIndex + 1]: true,
+      }))
+    )
+  } else {
+    return mergeToObject(
+      focus.split(/,(?![^\[]*\])/g).map(parsePartToObject)
+    )
+  }
+}
+
+function mergeToObject<K extends string | number, T>(
+  entries: Record<K, T>[]
+) {
+  return entries.reduce(
+    (acc, obj) => Object.assign(acc, obj),
+    {}
+  )
+}
+
+function parsePartToObject(part: string): FocusMap {
+  // a part could be
+  // - a line number: "2"
+  // - a line range: "5:9"
+  // - a line number with a column selector: "2[1,3:5,9]"
+  const columnsMatch = part.match(/(\d+)\[(.+)\]/)
+  if (columnsMatch) {
+    const [, line, columns] = columnsMatch
+    const columnsList = columns
+      .split(",")
+      .map(parseExtremes)
+    const lineNumber = Number(line)
+    return { [lineNumber]: columnsList }
+  } else {
+    return mergeToObject(
+      expandString(part).map(lineNumber => ({
+        [lineNumber]: true,
+      }))
+    )
+  }
+}
+
+export function parseExtremes(part: string) {
+  // Transforms something like
+  // - "1:3" to {start:1, end: 3}
+  // - "4" to {start:4, end:4}
+  const [start, end] = part.split(":")
+
+  if (!isNaturalNumber(start)) {
+    throw new FocusNumberError(start)
+  }
+
+  const startNumber = Number(start)
+
+  if (startNumber < 1) {
+    throw new LineOrColumnNumberError()
+  }
+
+  if (!end) {
+    return { start: startNumber, end: startNumber }
+  } else {
+    if (!isNaturalNumber(end)) {
+      throw new FocusNumberError(end)
+    }
+    return { start: startNumber, end: +end }
+  }
 }
 
 /**

@@ -20,7 +20,10 @@ type CodeTokenData = {
 }
 
 type CodeToken = [string, CodeTokenData]
-type CodeLine = { tokens: CodeToken[] }
+type CodeLine = {
+  tokens: CodeToken[]
+  lineNumber: Tween<number>
+}
 type LineKey = number
 
 type CodeMap = {
@@ -62,12 +65,21 @@ function useCodeDiff({ code, lang, theme }: DiffOptions) {
     }
     prevKeys.forEach(
       (key, index) =>
-        (codeMap.lines[key] = { tokens: lines.prev[index] })
+        (codeMap.lines[key] = {
+          tokens: lines.prev[index],
+          lineNumber: { prev: index + 1 },
+        })
     )
-    nextKeys.forEach(
-      (key, index) =>
-        (codeMap.lines[key] = { tokens: lines.next[index] })
-    )
+    nextKeys.forEach((key, index) => {
+      if (key in codeMap.lines) {
+        codeMap.lines[key].lineNumber.next = index + 1
+      } else {
+        codeMap.lines[key] = {
+          tokens: lines.next[index],
+          lineNumber: { next: index + 1 },
+        }
+      }
+    })
 
     return {
       codeMap,

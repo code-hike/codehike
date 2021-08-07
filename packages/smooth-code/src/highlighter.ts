@@ -1,8 +1,3 @@
-import { IRawTheme } from "vscode-textmate"
-import {
-  getBasicThemedCode,
-  tokenizePlaceholder,
-} from "./placeholder"
 import {
   Highlighter,
   setCDN,
@@ -18,6 +13,10 @@ import {
   FullTween,
   mapWithDefault,
 } from "@code-hike/utils"
+import {
+  getThemeDefaultColors,
+  EditorTheme,
+} from "./themes"
 
 type CodeToken = [
   string,
@@ -34,11 +33,9 @@ let highlighter: Highlighter | null = null
 export function useHighlighter(
   code: Tween<string>,
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ): {
   lines: FullTween<CodeLine[]>
-  bg: string
-  fg: string
 } {
   return useAsyncMemo(
     {
@@ -46,22 +43,21 @@ export function useHighlighter(
       load: () => loadHighlighter(lang, theme),
       run: () => highlight(code, lang, theme),
       placeholder: () => {
-        const { bg, fg } = getBasicThemedCode("", theme)
         const lines = mapWithDefault(
           code,
           "",
           tokenizePlaceholder
         )
-        return { lines, bg, fg }
+        return { lines }
       },
     },
     [code.prev, code.next, lang, theme]
   )
 }
 
-function isHighlighterReady(
+export function isHighlighterReady(
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ) {
   return (
     highlighter != null &&
@@ -70,9 +66,9 @@ function isHighlighterReady(
   )
 }
 
-async function loadHighlighter(
+export async function loadHighlighter(
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ) {
   if (highlighterPromise === null) {
     setCDN("https://unpkg.com/shiki/")
@@ -96,7 +92,7 @@ async function loadHighlighter(
 export function highlightOrPlaceholder(
   code: string,
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ) {
   if (isHighlighterReady(lang, theme)) {
     return getCodeLines(highlighter!, code, lang, theme)
@@ -108,7 +104,7 @@ export function highlightOrPlaceholder(
 function highlight(
   code: Tween<string>,
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ) {
   // assumes highlighter isReady
 
@@ -125,7 +121,7 @@ function getCodeLines(
   highlighter: Highlighter,
   code: string,
   lang: string,
-  theme: IRawTheme
+  theme: EditorTheme
 ): CodeLine[] {
   const lines = highlighter.codeToThemedTokens(
     code,
@@ -146,7 +142,7 @@ function getCodeLines(
 
 function missingTheme(
   highlighter: Highlighter,
-  theme: IRawTheme
+  theme: EditorTheme
 ) {
   return !highlighter
     .getLoadedThemes()
@@ -177,5 +173,31 @@ function getStyle(token: IThemedToken) {
   return {
     color: token.color,
     ...fontStyle,
+  }
+}
+
+type ThemedCode = {
+  lines: IThemedToken[][]
+  fg: string
+  bg: string
+}
+
+export function tokenizePlaceholder(
+  code: string
+): CodeLine[] {
+  const lines = code.split("\n")
+  return lines.map(line => [[line, {}]])
+}
+
+export function getBasicThemedCode(
+  code: string,
+  theme: EditorTheme
+): ThemedCode {
+  const lines = code.split("\n")
+  const { fg, bg } = getThemeDefaultColors(theme)
+  return {
+    lines: lines.map(line => [{ content: line }]),
+    fg,
+    bg,
   }
 }
