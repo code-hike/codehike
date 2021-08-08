@@ -69,44 +69,64 @@ function LineGroup({
 }) {
   return (
     <>
-      {lines.map(
-        (
-          {
-            element,
-            tweenX,
-            tweenY,
-            elementWithProgress,
-            focused,
-          },
-          key
-        ) => {
-          const dx = tween(tweenX, t)
-          const dy = tween(tweenY, t)
+      {lines.map((line, key) => {
+        const { tweenX, tweenY, focused } = line
+        const dx = tween(tweenX, t)
+        const dy = tween(tweenY, t)
+        const opacity = getOpacity(
+          map(focused, focused => !!focused),
+          t,
+          dx
+        )
 
-          const opacity = getOpacity(
-            map(focused, focused => !!focused),
-            t,
-            dx
-          )
-          return (
-            <LineContainer
-              key={key}
-              dx={dx * focusWidth}
-              dy={(dy - startY) * lineHeight}
-              opacity={opacity}
-              width={focusWidth}
-            >
-              {elementWithProgress
-                ? elementWithProgress(t)
-                : element}
-            </LineContainer>
-          )
-        }
-      )}
+        return (
+          <LineContainer
+            key={key}
+            dx={dx * focusWidth}
+            dy={(dy - startY) * lineHeight}
+            width={focusWidth}
+            opacity={opacity}
+          >
+            <LineContent line={line} progress={t} dx={dx} />
+          </LineContainer>
+        )
+      })}
     </>
   )
 }
 
+function LineContent({
+  line,
+  progress,
+  dx,
+}: {
+  line: CodeStep["lines"][number]
+  progress: number
+  dx: number
+}) {
+  return (
+    <div
+      style={{
+        display: "inline-block",
+        width: "100%",
+      }}
+    >
+      {line.groups.map((group, i) => {
+        const opacity = getOpacity(
+          group.focused,
+          progress,
+          dx
+        )
+        return (
+          <span style={{ opacity }} key={i + 1}>
+            {group.element}
+          </span>
+        )
+      })}
+      <br />
+    </div>
+  )
+}
 function LineContainer({
   children,
   dx,
@@ -117,8 +137,8 @@ function LineContainer({
   children: React.ReactNode
   dx: number
   dy: number
-  opacity: number
   width: number
+  opacity: number
 }) {
   return (
     <div
@@ -127,7 +147,6 @@ function LineContainer({
         top: 0,
         left: 0,
         transform: `translate(${dx}px, ${dy}px)`,
-        opacity,
         width,
         display: opacity <= 0 ? "none" : undefined,
       }}

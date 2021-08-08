@@ -148,17 +148,23 @@ function merge(
 
 // 3 - split lines by focus
 
-type FocusedToken = HighlightedToken & {
+type FocusedToken = HighlightedToken
+
+export type TokenGroup = {
+  tokens: HighlightedToken[]
   focused: FullTween<boolean>
+  element: React.ReactNode
 }
 
-export interface FocusedLine extends MergedLine {
-  tokens: FocusedToken[]
+export interface FocusedLine
+  extends Omit<MergedLine, "tokens"> {
+  groups: TokenGroup[]
   lineNumber: Tween<number>
   focused: FullTween<boolean | "by-column">
 }
 
-export interface FocusedCode extends MergedCode {
+export interface FocusedCode
+  extends Omit<MergedCode, "lines"> {
   lines: FocusedLine[]
   firstFocusedLineNumber: FullTween<number>
   lastFocusedLineNumber: FullTween<number>
@@ -238,8 +244,25 @@ function toLinesAnnotation(
 
 // 5 - add annotations
 
-type LineGroup = {
-  annotation: CodeAnnotation
+type InlineAnnotation = {
+  Component: any
+}
+
+type AnnotatedTokenGroups = {
+  groups: TokenGroup[]
+  annotation: InlineAnnotation
+}
+
+type AnnotatedLine = {
+  annotatedGroups: Tween<AnnotatedTokenGroups[]>[]
+  lineNumber: Tween<number>
+  focused: FullTween<boolean | "by-column"> // probably don't need this
+}
+
+// ---
+
+export type LineGroup = {
+  annotation?: CodeAnnotation
   lines: FocusedLine[]
 }
 interface AnnotatedCode extends FocusedCode {
@@ -253,23 +276,18 @@ function addAnnotations(
   focusedCode: FocusedCode,
   annotations: FullTween<MultiLineAnnotation[]>
 ): AnnotatedCode {
-  return (splitByAnnotations(
-    focusedCode,
-    annotations
-  ) as unknown) as AnnotatedCode
+  return splitByAnnotations(focusedCode, annotations)
 }
 
 // - add extra stuff
 
 export type LineWithElement = FocusedLine & {
   key: number
-  element: React.ReactNode
-  elementWithProgress?: (t: number) => React.ReactNode
   tweenX: TweenParams
   tweenY: TweenParams
 }
 type LineGroupWithElement = {
-  annotation: CodeAnnotation
+  annotation?: CodeAnnotation
   lines: LineWithElement[]
 }
 

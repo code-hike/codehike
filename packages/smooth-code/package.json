@@ -9,12 +9,17 @@
     "dist"
   ],
   "scripts": {
-    "x": "x"
+    "x": "x",
+    "test": "jest",
+    "test-watch": "jest --watch --updateSnapshot"
   },
   "devDependencies": {
     "@code-hike/script": "0.0.1",
     "@types/diff": "^4.0.2",
     "@types/react": "^16.9.38",
+    "@types/jest": "^24.0.15",
+    "jest": "^26.5.3",
+    "ts-jest": "^26.4.1",
     "react": "^16.13.1"
   },
   "dependencies": {

@@ -263,7 +263,6 @@ function Wrapper({
       {...htmlProps}
       style={{
         margin: 0,
-        outline: "red 1px solid",
         ...style,
         ...htmlProps?.style,
       }}

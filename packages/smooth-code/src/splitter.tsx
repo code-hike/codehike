@@ -8,33 +8,22 @@ import {
   FocusString,
   parseExtremes,
   mapFocusToLineNumbers,
+  ColumnExtremes,
 } from "./focus-parser"
 import {
   MergedCode,
   FocusedCode,
   FocusedLine,
   MergedLine,
+  TokenGroup,
+  LineGroup,
+  CodeAnnotation,
 } from "./step-parser"
+import React from "react"
 
-type Token = {
-  content: string
-}
-type Line = {
-  tokens: Token[]
-  lineNumber: Tween<number>
-}
-type Annotation = {
-  focus: string
-}
-
-type LineGroup = {
-  lines: Line[]
-  annotation?: any
-}
-
-export function splitByAnnotations<T extends Annotation>(
-  { lines, ...rest }: { lines: Line[] },
-  annotations?: FullTween<T[]>
+export function splitByAnnotations(
+  { lines, ...rest }: FocusedCode,
+  annotations?: FullTween<CodeAnnotation[]>
 ) {
   const prevLines = lines.filter(
     ({ lineNumber }) => lineNumber.prev != undefined
@@ -59,8 +48,8 @@ export function splitByAnnotations<T extends Annotation>(
 }
 
 function splitLinesByAnnotations(
-  lines: Line[],
-  annotations: Annotation[]
+  lines: FocusedCode["lines"],
+  annotations: CodeAnnotation[]
 ) {
   const annotationExtremes = annotations.map(
     ({ focus, ...annotation }) => ({
@@ -77,10 +66,10 @@ function splitLinesByAnnotations(
       a => a.start === lineNumber
     )
 
-    const group: LineGroup = {
-      lines: [] as Line[],
+    const group = {
+      lines: [],
       annotation: extremes?.annotation,
-    }
+    } as LineGroup
 
     groups.push(group)
 
@@ -116,12 +105,7 @@ export function splitByFocus(
       ? focusByLineNumber.next[line.lineNumber.next]
       : false
 
-    let newTokens = splitByFocusObjects(tokens, {
-      prev: prevLineFocus,
-      next: nextLineFocus,
-    })
     return {
-      tokens: newTokens,
       focused: {
         prev: Array.isArray(prevLineFocus)
           ? ("by-column" as const)
@@ -130,6 +114,10 @@ export function splitByFocus(
           ? ("by-column" as const)
           : nextLineFocus,
       },
+      groups: getTokenGroups(tokens, {
+        prev: prevLineFocus,
+        next: nextLineFocus,
+      }),
       ...rest,
     } as FocusedLine
   })
@@ -158,57 +146,112 @@ export function splitByFocus(
   }
 }
 
+type TokenGroupWithoutElement = Omit<TokenGroup, "element">
 /**
- * Splits the tokens that have different prev focus or next focus.
+ * Get the least amount of groups where no consecutive groups have
+ * the same combination of prevFocus and nextFocus.
  */
-function splitByFocusObjects(
+function getTokenGroups(
   tokens: MergedLine["tokens"],
-  focus: Tween<{ start: number; end: number }[] | boolean>
+  focus: FullTween<boolean | ColumnExtremes[]>
 ) {
-  let breakindexes = [] as number[]
-  mapWithDefault(focus, [], columns => {
-    if (Array.isArray(columns)) {
-      columns.forEach(({ start, end }) => {
-        breakindexes.push(start - 1)
-        breakindexes.push(end)
-      })
-    }
-  })
+  const extremes = map(focus, focus =>
+    Array.isArray(focus) ? focus : []
+  )
+  const allExtremes = [...extremes.prev, ...extremes.next]
+  const splittedTokens = splitTokens(tokens, allExtremes)
 
-  let i = 0
-  let newTokens = [] as FocusedLine["tokens"]
+  console.log({ splittedTokens })
 
-  tokens.forEach(token => {
-    const { content, ...rest } = token
-    let newContent = ""
-    for (let j = 0; j < content.length; j++) {
-      if (i + j > 0 && breakindexes.includes(i + j)) {
-        newTokens.push({
-          content: newContent,
-          ...rest,
-          focused: {
-            prev:
-              !focus.prev || isIn(i + j - 1, focus.prev),
-            next:
-              !focus.next || isIn(i + j - 1, focus.next),
-          },
-        })
-        newContent = ""
+  let startIndex = 0
+  let currentGroup = null as TokenGroupWithoutElement | null
+  const groups = [] as TokenGroupWithoutElement[]
+  splittedTokens.forEach(token => {
+    const newPrevFocus = isIn(startIndex, focus.prev)
+    const newNextFocus = isIn(startIndex, focus.next)
+
+    if (
+      !currentGroup ||
+      currentGroup.focused.prev !== newPrevFocus ||
+      currentGroup.focused.next !== newNextFocus
+    ) {
+      currentGroup = {
+        focused: {
+          prev: newPrevFocus,
+          next: newNextFocus,
+        },
+        tokens: [],
       }
-      newContent += content[j]
+      groups.push(currentGroup)
     }
-    i += content.length
-    newTokens.push({
-      content: newContent,
-      ...rest,
-      focused: {
-        prev: !focus.prev || isIn(i - 1, focus.prev),
-        next: !focus.next || isIn(i - 1, focus.next),
-      },
-    })
+
+    currentGroup?.tokens.push(token)
+
+    startIndex += token.content.length
   })
 
-  return newTokens
+  return groups.map(
+    group =>
+      ({
+        ...group,
+        element: getGroupElement(group),
+      } as TokenGroup)
+  )
+}
+
+function getGroupElement(group: TokenGroupWithoutElement) {
+  return (
+    <>
+      {group.tokens.map(({ content, props }, i) => (
+        <span {...props} key={i + 1}>
+          {content}
+        </span>
+      ))}
+    </>
+  )
+}
+
+/**
+ * Split a list of tokens into a more fine-graned list of tokens
+ *
+ * tokens: [abc][defg]
+ * extremes: [1:2,2:5]
+ * result tokens: [ab][c][de][fg]
+ *
+ */
+export function splitTokens(
+  tokens: MergedLine["tokens"],
+  extremes: ColumnExtremes[]
+) {
+  const splitIndexes = [
+    ...extremes.map(e => e.start - 1),
+    ...extremes.map(e => e.end),
+  ]
+
+  let oldTokens = tokens
+  splitIndexes.forEach(splitIndex => {
+    const newTokens = [] as MergedLine["tokens"]
+    let i = 0
+    oldTokens.forEach(token => {
+      const startIndex = i
+      const endIndex = i + token.content.length
+      const shouldSplit =
+        startIndex < splitIndex && splitIndex < endIndex
+      if (shouldSplit) {
+        const sliceIndex = splitIndex - startIndex
+        const content0 = token.content.slice(0, sliceIndex)
+        const content1 = token.content.slice(sliceIndex)
+        newTokens.push({ ...token, content: content0 })
+        newTokens.push({ ...token, content: content1 })
+      } else {
+        newTokens.push(token)
+      }
+      i = endIndex
+    })
+    oldTokens = newTokens
+  })
+
+  return oldTokens
 }
 
 function isIn(
