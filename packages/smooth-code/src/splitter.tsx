@@ -17,13 +17,15 @@ import {
   MergedLine,
   TokenGroup,
   LineGroup,
-  CodeAnnotation,
+  AnnotatedLine,
+  MultiLineAnnotation,
+  InlineAnnotation,
 } from "./step-parser"
 import React from "react"
 
 export function splitByAnnotations(
-  { lines, ...rest }: FocusedCode,
-  annotations?: FullTween<CodeAnnotation[]>
+  lines: AnnotatedLine[],
+  annotations?: FullTween<MultiLineAnnotation[]>
 ) {
   const prevLines = lines.filter(
     ({ lineNumber }) => lineNumber.prev != undefined
@@ -32,28 +34,24 @@ export function splitByAnnotations(
     ({ lineNumber }) => lineNumber.next != undefined
   )
   return {
-    lines,
-    groups: {
-      prev: splitLinesByAnnotations(
-        prevLines,
-        annotations?.prev || []
-      ),
-      next: splitLinesByAnnotations(
-        nextLines,
-        annotations?.next || []
-      ),
-    },
-    ...rest,
+    prev: splitLinesByAnnotations(
+      prevLines,
+      annotations?.prev || []
+    ),
+    next: splitLinesByAnnotations(
+      nextLines,
+      annotations?.next || []
+    ),
   }
 }
 
 function splitLinesByAnnotations(
-  lines: FocusedCode["lines"],
-  annotations: CodeAnnotation[]
+  lines: AnnotatedLine[],
+  annotations: MultiLineAnnotation[]
 ) {
   const annotationExtremes = annotations.map(
-    ({ focus, ...annotation }) => ({
-      ...parseExtremes(focus),
+    ({ lineNumbers, ...annotation }) => ({
+      ...lineNumbers,
       annotation,
     })
   )
@@ -89,7 +87,10 @@ function splitLinesByAnnotations(
 
 export function splitByFocus(
   mergedCode: MergedCode,
-  focus: FullTween<FocusString>
+  focus: FullTween<FocusString>,
+  annotations: FullTween<
+    Record<number, InlineAnnotation[] | undefined>
+  >
 ): FocusedCode {
   const { lines, ...mergedCodeRest } = mergedCode
   const focusByLineNumber = map(focus, focus =>
@@ -98,26 +99,32 @@ export function splitByFocus(
 
   const splittedLines = lines.map(line => {
     const { tokens, ...rest } = line
-    const prevLineFocus = line.lineNumber.prev
-      ? focusByLineNumber.prev[line.lineNumber.prev]
-      : false
-    const nextLineFocus = line.lineNumber.next
-      ? focusByLineNumber.next[line.lineNumber.next]
-      : false
+
+    const lineFocus = {
+      prev: line.lineNumber.prev
+        ? focusByLineNumber.prev[line.lineNumber.prev]
+        : false,
+      next: line.lineNumber.next
+        ? focusByLineNumber.next[line.lineNumber.next]
+        : false,
+    }
+
+    const lineAnnotations = {
+      prev: line.lineNumber.prev
+        ? annotations.prev[line.lineNumber.prev] || []
+        : [],
+      next: line.lineNumber.next
+        ? annotations.next[line.lineNumber.next] || []
+        : [],
+    }
 
     return {
-      focused: {
-        prev: Array.isArray(prevLineFocus)
-          ? ("by-column" as const)
-          : prevLineFocus,
-        next: Array.isArray(nextLineFocus)
-          ? ("by-column" as const)
-          : nextLineFocus,
-      },
-      groups: getTokenGroups(tokens, {
-        prev: prevLineFocus,
-        next: nextLineFocus,
-      }),
+      focused: map(lineFocus, focus => !!focus),
+      groups: getTokenGroups(
+        tokens,
+        lineFocus,
+        lineAnnotations
+      ),
       ...rest,
     } as FocusedLine
   })
@@ -146,22 +153,37 @@ export function splitByFocus(
   }
 }
 
-type TokenGroupWithoutElement = Omit<TokenGroup, "element">
+interface TokenGroupWithoutElement
+  extends Omit<TokenGroup, "element"> {
+  annotation: Tween<InlineAnnotation | undefined>
+}
 /**
  * Get the least amount of groups where no consecutive groups have
- * the same combination of prevFocus and nextFocus.
+ * the same combination of prevFocus, nextFocus, prevAnnotation, nextAnnotation.
  */
 function getTokenGroups(
   tokens: MergedLine["tokens"],
-  focus: FullTween<boolean | ColumnExtremes[]>
+  focus: FullTween<boolean | ColumnExtremes[]>,
+  annotations: FullTween<InlineAnnotation[]>
 ) {
-  const extremes = map(focus, focus =>
+  const focusExtremes = map(focus, focus =>
     Array.isArray(focus) ? focus : []
   )
-  const allExtremes = [...extremes.prev, ...extremes.next]
-  const splittedTokens = splitTokens(tokens, allExtremes)
 
-  console.log({ splittedTokens })
+  const annotationExtremes = map(annotations, annotations =>
+    annotations.map(
+      ({ columnNumbers }) => columnNumbers as ColumnExtremes
+    )
+  )
+
+  const allExtremes = [
+    ...focusExtremes.prev,
+    ...focusExtremes.next,
+    ...annotationExtremes.prev,
+    ...annotationExtremes.next,
+  ]
+
+  const splittedTokens = splitTokens(tokens, allExtremes)
 
   let startIndex = 0
   let currentGroup = null as TokenGroupWithoutElement | null
@@ -169,11 +191,21 @@ function getTokenGroups(
   splittedTokens.forEach(token => {
     const newPrevFocus = isIn(startIndex, focus.prev)
     const newNextFocus = isIn(startIndex, focus.next)
+    const newPrevAnnotation = getAnnotation(
+      startIndex,
+      annotations.prev
+    )
+    const newNextAnnotation = getAnnotation(
+      startIndex,
+      annotations.next
+    )
 
     if (
       !currentGroup ||
       currentGroup.focused.prev !== newPrevFocus ||
-      currentGroup.focused.next !== newNextFocus
+      currentGroup.focused.next !== newNextFocus ||
+      currentGroup.annotation.prev !== newPrevAnnotation ||
+      currentGroup.annotation.next !== newNextAnnotation
     ) {
       currentGroup = {
         focused: {
@@ -181,6 +213,10 @@ function getTokenGroups(
           next: newNextFocus,
         },
         tokens: [],
+        annotation: {
+          prev: newPrevAnnotation,
+          next: newNextAnnotation,
+        },
       }
       groups.push(currentGroup)
     }
@@ -193,7 +229,8 @@ function getTokenGroups(
   return groups.map(
     group =>
       ({
-        ...group,
+        focused: group.focused,
+        tokens: group.tokens,
         element: getGroupElement(group),
       } as TokenGroup)
   )
@@ -263,5 +300,16 @@ function isIn(
   }
   return intervals.some(
     ({ start, end }) => start - 1 <= index && index < end
+  )
+}
+
+function getAnnotation(
+  index: number,
+  annotations: InlineAnnotation[]
+) {
+  return annotations.find(
+    ({ columnNumbers }) =>
+      columnNumbers.start - 1 <= index &&
+      index < columnNumbers.end
   )
 }

@@ -1,9 +1,12 @@
 import React from "react"
 import { Dimensions } from "./use-dimensions"
-import { CodeStep } from "./step-parser"
+import {
+  CodeStep,
+  AnnotatedTokenGroups,
+} from "./step-parser"
 import { SmoothContainer } from "./smooth-container"
 import { tween } from "./tween"
-import { FullTween, map } from "@code-hike/utils"
+import { FullTween, map, Tween } from "@code-hike/utils"
 
 type SmoothLinesProps = {
   progress: number
@@ -73,11 +76,7 @@ function LineGroup({
         const { tweenX, tweenY, focused } = line
         const dx = tween(tweenX, t)
         const dy = tween(tweenY, t)
-        const opacity = getOpacity(
-          map(focused, focused => !!focused),
-          t,
-          dx
-        )
+        const opacity = getOpacity(focused, t, dx)
 
         return (
           <LineContainer
@@ -111,22 +110,50 @@ function LineContent({
         width: "100%",
       }}
     >
-      {line.groups.map((group, i) => {
-        const opacity = getOpacity(
-          group.focused,
-          progress,
-          dx
-        )
-        return (
-          <span style={{ opacity }} key={i + 1}>
-            {group.element}
-          </span>
-        )
-      })}
+      {line.annotatedGroups.map((annotatedGroup, i) => (
+        <AnnotatedTokens
+          annotatedGroup={annotatedGroup}
+          progress={progress}
+          dx={dx}
+          key={i}
+        />
+      ))}
       <br />
     </div>
   )
 }
+
+function AnnotatedTokens({
+  annotatedGroup,
+  progress,
+  dx,
+}: {
+  annotatedGroup: Tween<AnnotatedTokenGroups>
+  progress: number
+  dx: number
+}) {
+  const annotated =
+    progress < 0.5
+      ? annotatedGroup.prev
+      : annotatedGroup.next
+  const tokenGroups = annotated?.groups || []
+  const Component = annotated?.annotation?.Component
+  const children = tokenGroups.map((group, i) => {
+    const opacity = getOpacity(group.focused, progress, dx)
+    return (
+      <span style={{ opacity }} key={i + 1}>
+        {group.element}
+      </span>
+    )
+  })
+
+  return Component ? (
+    <Component children={children} />
+  ) : (
+    <>{children}</>
+  )
+}
+
 function LineContainer({
   children,
   dx,

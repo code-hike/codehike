@@ -8,19 +8,19 @@ type AnyTween<T> = Tween<T> | FullTween<T>
 
 function map<T, R>(
   tween: FullTween<T>,
-  fn: (t: T) => R
+  fn: (t: T, key: "prev" | "next") => R
 ): FullTween<R>
 function map<T, R>(
   tween: Tween<T>,
-  fn: (t: T | undefined) => R
+  fn: (t: T | undefined, key: "prev" | "next") => R
 ): Tween<R>
 function map<T, R>(
   tween: AnyTween<T>,
-  fn: (t: T | undefined) => R
+  fn: (t: T | undefined, key: "prev" | "next") => R
 ): AnyTween<R> {
   return {
-    prev: fn(tween.prev),
-    next: fn(tween.next),
+    prev: fn(tween.prev, "prev"),
+    next: fn(tween.next, "next"),
   }
 }
 
@@ -39,7 +39,7 @@ export function withDefault<T>(
 export function mapWithDefault<T, R>(
   tween: Tween<T> | undefined,
   deft: T,
-  fn: (t: T) => R
+  fn: (t: T, key: "prev" | "next") => R
 ): FullTween<R> {
   return map(withDefault(tween, deft), fn)
 }

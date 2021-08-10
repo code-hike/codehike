@@ -43,7 +43,11 @@ function mergeToObject<K extends string | number, T>(
   )
 }
 
-function parsePartToObject(part: string): FocusMap {
+export function hasColumns(part: string) {
+  return !!part.match(/(\d+)\[(.+)\]/)
+}
+
+export function parsePartToObject(part: string): FocusMap {
   // a part could be
   // - a line number: "2"
   // - a line range: "5:9"

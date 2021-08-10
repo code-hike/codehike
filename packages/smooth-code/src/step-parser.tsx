@@ -18,14 +18,20 @@ import {
   splitByAnnotations,
 } from "./splitter"
 import { useAsyncMemo } from "./use-async-memo"
-import { LinesAnnotation } from "@code-hike/smooth-lines"
 import React from "react"
 import { TweenParams } from "./tween"
 import { getLinesWithElements } from "./line-elements"
+import {
+  parseAnnotations,
+  annotateInline,
+} from "./annotations"
 
 export type CodeAnnotation = {
   focus: string
-  Component?: LinesAnnotation["Component"]
+  Component?: (props: {
+    style?: React.CSSProperties
+    children: React.ReactNode
+  }) => React.ReactElement
 }
 type ParseInput = {
   code: Tween<string>
@@ -63,19 +69,21 @@ function parse({
 
   const mergedCode = merge(normalCode, highlightedLines)
 
+  const {
+    inlineAnnotations,
+    multilineAnnotations,
+  } = parseAllAnnotations(annotations, theme)
+
   const focusedCode = splitLinesByFocus(
     mergedCode,
-    withDefault(focus, null)
-  )
-
-  const completeAnnotations = parseAnnotations(
-    annotations,
-    theme
+    withDefault(focus, null),
+    inlineAnnotations
   )
 
   const annotatedCode = addAnnotations(
     focusedCode,
-    completeAnnotations
+    inlineAnnotations,
+    multilineAnnotations
   )
 
   const codeStep = addExtraStuff(annotatedCode)
@@ -146,9 +154,34 @@ function merge(
   return mergeLines(code, highlightedLines)
 }
 
-// 3 - split lines by focus
+// 3 - parse annotationss
 
-type FocusedToken = HighlightedToken
+export type MultiLineAnnotation = {
+  /* line numbers (starting at 1) */
+  lineNumbers: { start: number; end: number }
+  Component: (props: {
+    style: React.CSSProperties
+    children: React.ReactNode
+  }) => React.ReactElement
+}
+
+export type InlineAnnotation = {
+  /* column numbers (starting at 1) */
+  columnNumbers: { start: number; end: number }
+  Component: (props: {
+    style?: React.CSSProperties
+    children: React.ReactNode
+  }) => React.ReactElement
+}
+
+function parseAllAnnotations(
+  annotations: Tween<CodeAnnotation[]> | undefined,
+  theme: EditorTheme
+) {
+  return parseAnnotations(annotations, theme)
+}
+
+// 4 - split lines by focus
 
 export type TokenGroup = {
   tokens: HighlightedToken[]
@@ -160,7 +193,7 @@ export interface FocusedLine
   extends Omit<MergedLine, "tokens"> {
   groups: TokenGroup[]
   lineNumber: Tween<number>
-  focused: FullTween<boolean | "by-column">
+  focused: FullTween<boolean>
 }
 
 export interface FocusedCode
@@ -172,116 +205,122 @@ export interface FocusedCode
 
 function splitLinesByFocus(
   mergedCode: MergedCode,
-  focus: FullTween<FocusString>
+  focus: FullTween<FocusString>,
+  annotations: FullTween<
+    Record<number, InlineAnnotation[] | undefined>
+  >
 ): FocusedCode {
-  return splitByFocus(mergedCode, focus)
+  return splitByFocus(mergedCode, focus, annotations)
 }
 
 // 4 - convert annotations
 
-type MultiLineAnnotation = {
-  focus: string
-  Component: (props: {
-    style: React.CSSProperties
-    children: React.ReactNode
-  }) => React.ReactElement
-}
+// function parseAnnotations(
+//   annotations: Tween<CodeAnnotation[]> | undefined,
+//   theme: EditorTheme
+// ): FullTween<MultiLineAnnotation[]> {
+//   return mapWithDefault(annotations, [], annotations => {
+//     return annotations.map(a => toLinesAnnotation(a, theme))
+//   })
+// }
 
-function parseAnnotations(
-  annotations: Tween<CodeAnnotation[]> | undefined,
-  theme: EditorTheme
-): FullTween<MultiLineAnnotation[]> {
-  return mapWithDefault(annotations, [], annotations => {
-    return annotations.map(a => toLinesAnnotation(a, theme))
-  })
-}
+// function toLinesAnnotation(
+//   annotation: CodeAnnotation,
+//   theme: EditorTheme
+// ): MultiLineAnnotation {
+//   if (annotation.Component) {
+//     return {
+//       Component: annotation.Component,
+//       focus: annotation.focus,
+//     }
+//   }
 
-function toLinesAnnotation(
-  annotation: CodeAnnotation,
-  theme: EditorTheme
-): MultiLineAnnotation {
-  if (annotation.Component) {
-    return {
-      Component: annotation.Component,
-      focus: annotation.focus,
-    }
-  }
+//   // TODO handle missing bg
+//   const bg = ((theme as any).colors[
+//     "editor.lineHighlightBackground"
+//   ] ||
+//     (theme as any).colors[
+//       "editor.selectionHighlightBackground"
+//     ]) as string
 
-  // TODO handle missing bg
-  const bg = ((theme as any).colors[
-    "editor.lineHighlightBackground"
-  ] ||
-    (theme as any).colors[
-      "editor.selectionHighlightBackground"
-    ]) as string
+//   function Component({
+//     style,
+//     children,
+//   }: {
+//     style: React.CSSProperties
+//     children: React.ReactNode
+//   }) {
+//     return (
+//       <div
+//         style={{
+//           ...style,
+//           background: bg,
+//           cursor: "pointer",
+//         }}
+//         onClick={_ => alert("clicked")}
+//       >
+//         {children}
+//       </div>
+//     )
+//   }
 
-  function Component({
-    style,
-    children,
-  }: {
-    style: React.CSSProperties
-    children: React.ReactNode
-  }) {
-    return (
-      <div
-        style={{
-          ...style,
-          background: bg,
-          cursor: "pointer",
-        }}
-        onClick={_ => alert("clicked")}
-      >
-        {children}
-      </div>
-    )
-  }
-
-  return {
-    Component,
-    focus: annotation.focus,
-  }
-}
+//   return {
+//     Component,
+//     focus: annotation.focus,
+//   }
+// }
 
 // 5 - add annotations
 
-type InlineAnnotation = {
-  Component: any
-}
-
-type AnnotatedTokenGroups = {
+export type AnnotatedTokenGroups = {
   groups: TokenGroup[]
-  annotation: InlineAnnotation
+  annotation?: InlineAnnotation
 }
 
-type AnnotatedLine = {
-  annotatedGroups: Tween<AnnotatedTokenGroups[]>[]
-  lineNumber: Tween<number>
-  focused: FullTween<boolean | "by-column"> // probably don't need this
+export interface AnnotatedLine
+  extends Omit<FocusedLine, "groups"> {
+  annotatedGroups: Tween<AnnotatedTokenGroups>[]
 }
-
-// ---
 
 export type LineGroup = {
   annotation?: CodeAnnotation
-  lines: FocusedLine[]
+  lines: AnnotatedLine[]
 }
-interface AnnotatedCode extends FocusedCode {
-  lines: FocusedLine[]
+export interface AnnotatedCode
+  extends Omit<FocusedCode, "lines"> {
+  lines: AnnotatedLine[]
   groups: FullTween<LineGroup[]>
   firstFocusedLineNumber: FullTween<number>
   lastFocusedLineNumber: FullTween<number>
 }
 
 function addAnnotations(
-  focusedCode: FocusedCode,
+  { lines, ...focusedCode }: FocusedCode,
+  inlineAnnotations: FullTween<
+    Record<number, InlineAnnotation[] | undefined>
+  >,
   annotations: FullTween<MultiLineAnnotation[]>
 ): AnnotatedCode {
-  return splitByAnnotations(focusedCode, annotations)
+  const annotatedLines = annotateInline(
+    lines,
+    inlineAnnotations
+  ) as AnnotatedLine[]
+
+  const lineGroups = splitByAnnotations(
+    annotatedLines,
+    annotations
+  )
+
+  return {
+    ...focusedCode,
+    lines: annotatedLines,
+    groups: lineGroups,
+  }
 }
 
 // - add extra stuff
 
-export type LineWithElement = FocusedLine & {
+export type LineWithElement = AnnotatedLine & {
   key: number
   tweenX: TweenParams
   tweenY: TweenParams

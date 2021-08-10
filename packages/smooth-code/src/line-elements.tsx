@@ -1,10 +1,13 @@
 import React from "react"
-import { FocusedLine, LineWithElement } from "./step-parser"
+import {
+  AnnotatedCode,
+  LineWithElement,
+} from "./step-parser"
 import { map } from "@code-hike/utils"
 import { easing, stagger } from "./tween"
 
 export function getLinesWithElements(
-  lines: FocusedLine[],
+  lines: AnnotatedCode["lines"],
   verticalInterval: [number, number],
   enterCount: number,
   exitCount: number

@@ -103,7 +103,7 @@ function AfterDimensions({
   dimensions,
   annotations,
 }: CodeProps & { dimensions: NonNullable<Dimensions> }) {
-  const { codeMap, backgroundColor, color } = useCodeDiff({
+  const { backgroundColor, color } = useCodeDiff({
     code,
     lang: language,
     theme,
@@ -117,67 +117,20 @@ function AfterDimensions({
     annotations,
   })
 
-  const {
-    prevFocusIndexes,
-    nextFocusIndexes,
-  } = React.useMemo(() => {
-    return {
-      prevFocusIndexes: getFocusIndexes(
-        focus.prev,
-        codeMap.keys.prev
-      ),
-      nextFocusIndexes: getFocusIndexes(
-        focus.next,
-        codeMap.keys.next
-      ),
-    }
-  }, [focus.prev, focus.next, codeMap.keys])
-
-  const lines = useLines(withDefault(focus, null), codeMap)
-
-  const linesAnnotations = useAnnotations(
-    annotations,
-    theme
-  )
-
   return (
-    <>
-      {/* <Wrapper
-        htmlProps={htmlProps}
-        style={{ opacity: 1, backgroundColor, color }}
-      >
-        <OldSmoothLines
-          progress={progress}
-          containerWidth={dimensions.containerWidth}
-          containerHeight={dimensions.containerHeight}
-          lineHeight={dimensions.lineHeight}
-          lineWidth={dimensions.lineWidth}
-          prevLines={lines.prev}
-          nextLines={lines.next}
-          prevFocus={prevFocusIndexes}
-          nextFocus={nextFocusIndexes}
-          minZoom={minZoom}
-          maxZoom={maxZoom}
-          center={horizontalCenter}
-          annotations={linesAnnotations}
-        />
-      </Wrapper> */}
-      <Wrapper
-        htmlProps={htmlProps}
-        style={{ opacity: 1, backgroundColor, color }}
-      >
-        <SmoothLines
-          progress={progress}
-          dimensions={dimensions}
-          //
-          minZoom={minZoom}
-          maxZoom={maxZoom}
-          center={horizontalCenter}
-          //
-          codeStep={stepInfo}
-        />
-      </Wrapper>
-    </>
+    <Wrapper
+      htmlProps={htmlProps}
+      style={{ opacity: 1, backgroundColor, color }}
+    >
+      <SmoothLines
+        progress={progress}
+        dimensions={dimensions}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
+        center={horizontalCenter}
+        codeStep={stepInfo}
+      />
+    </Wrapper>
   )
 }
 

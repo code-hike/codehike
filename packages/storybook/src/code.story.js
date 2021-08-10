@@ -46,6 +46,17 @@ const x = (y) => y++
             language="js"
             htmlProps={{ style: { height: "100%" } }}
             theme={poimandres}
+            annotations={{
+              prev: [
+                { focus: "1[10:11]" },
+                { focus: "2[1:5]" },
+                { focus: "3[8]" },
+              ],
+              next: [
+                { focus: "1[6:10]" },
+                { focus: "2[1:5]" },
+              ],
+            }}
           />
         </div>
       )}
