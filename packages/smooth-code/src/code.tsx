@@ -1,29 +1,16 @@
 import React from "react"
-import {
-  SmoothLines as OldSmoothLines,
-  LinesAnnotation,
-} from "@code-hike/smooth-lines"
 import { useDimensions, Dimensions } from "./use-dimensions"
-import { useLines } from "line-props"
 import { IRawTheme } from "vscode-textmate"
 import DEFAULT_THEME from "shiki/themes/dark-plus.json"
-import {
-  FocusString,
-  getFocusIndexes,
-  getFocusExtremes,
-} from "./focus-parser"
-import {
-  Tween,
-  withDefault,
-  FullTween,
-  mapWithDefault,
-} from "@code-hike/utils"
-import { useCodeDiff } from "@code-hike/code-diff"
+import { FocusString } from "./focus-parser"
+import { Tween } from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,
+  CodeStep,
 } from "./step-parser"
 import { SmoothLines } from "./smooth-lines"
+import { getThemeDefaultColors } from "./themes"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLPreElement>,
@@ -35,7 +22,8 @@ export type CodeProps = {
   focus: Tween<FocusString>
   progress: number
   language: string
-  parentHeight?: number
+  /* not really the height, when this changes we measure everything again */
+  parentHeight?: any
   minColumns?: number
   minZoom?: number
   maxZoom?: number
@@ -53,21 +41,38 @@ export function Code(props: CodeProps) {
     focus,
     parentHeight,
     htmlProps,
+    theme = (DEFAULT_THEME as unknown) as IRawTheme,
+    language,
+    annotations,
     minColumns = DEFAULT_MIN_COLUMNS,
   } = props
+
   const { element, dimensions } = useDimensions(
     code,
     focus,
     minColumns,
     [parentHeight]
   )
+
+  const stepInfo = useStepParser({
+    code,
+    theme,
+    lang: language,
+    focus,
+    annotations,
+  })
+
   return !dimensions ? (
     <BeforeDimensions
       element={element}
       htmlProps={htmlProps}
     />
   ) : (
-    <AfterDimensions dimensions={dimensions} {...props} />
+    <AfterDimensions
+      dimensions={dimensions}
+      stepInfo={stepInfo}
+      {...props}
+    />
   )
 }
 
@@ -90,117 +95,105 @@ function BeforeDimensions({
 }
 
 function AfterDimensions({
-  code,
-  focus,
   progress,
-  language,
-  minColumns = DEFAULT_MIN_COLUMNS,
   minZoom = 0.5,
   maxZoom = 1.5,
   horizontalCenter = false,
   htmlProps,
   theme = (DEFAULT_THEME as unknown) as IRawTheme,
   dimensions,
-  annotations,
-}: CodeProps & { dimensions: NonNullable<Dimensions> }) {
-  const { backgroundColor, color } = useCodeDiff({
-    code,
-    lang: language,
-    theme,
-  })
-
-  const stepInfo = useStepParser({
-    code,
-    theme,
-    lang: language,
-    focus,
-    annotations,
-  })
+  stepInfo,
+}: CodeProps & {
+  dimensions: NonNullable<Dimensions>
+  stepInfo: CodeStep
+}) {
+  const { bg, fg } = getThemeDefaultColors(theme)
 
   return (
     <Wrapper
       htmlProps={htmlProps}
-      style={{ opacity: 1, backgroundColor, color }}
+      style={{ opacity: 1, backgroundColor: bg, color: fg }}
     >
       <SmoothLines
+        codeStep={stepInfo}
         progress={progress}
         dimensions={dimensions}
+        // TODO move to dimensions?
         minZoom={minZoom}
         maxZoom={maxZoom}
         center={horizontalCenter}
-        codeStep={stepInfo}
       />
     </Wrapper>
   )
 }
 
-function useAnnotations(
-  codeAnnotations: Tween<CodeAnnotation[]> | undefined,
-  theme: IRawTheme
-): FullTween<LinesAnnotation[]> {
-  return React.useMemo(() => {
-    if (!codeAnnotations) {
-      return {
-        prev: [] as LinesAnnotation[],
-        next: [] as LinesAnnotation[],
-      }
-    }
-    return mapWithDefault(
-      codeAnnotations,
-      [],
-      codeAnnotations => {
-        return codeAnnotations.map(a =>
-          toLinesAnnotation(a, theme)
-        )
-      }
-    )
-  }, [codeAnnotations])
-}
+// function useAnnotations(
+//   codeAnnotations: Tween<CodeAnnotation[]> | undefined,
+//   theme: IRawTheme
+// ): FullTween<LinesAnnotation[]> {
+//   return React.useMemo(() => {
+//     if (!codeAnnotations) {
+//       return {
+//         prev: [] as LinesAnnotation[],
+//         next: [] as LinesAnnotation[],
+//       }
+//     }
+//     return mapWithDefault(
+//       codeAnnotations,
+//       [],
+//       codeAnnotations => {
+//         return codeAnnotations.map(a =>
+//           toLinesAnnotation(a, theme)
+//         )
+//       }
+//     )
+//   }, [codeAnnotations])
+// }
 
-function toLinesAnnotation(
-  codeAnnotation: CodeAnnotation,
-  theme: IRawTheme
-): LinesAnnotation {
-  const [startIndex, endIndex] = getFocusExtremes(
-    codeAnnotation.focus,
-    []
-  )
+// function toLinesAnnotation(
+//   codeAnnotation: CodeAnnotation,
+//   theme: IRawTheme
+// ): LinesAnnotation {
+//   const [startIndex, endIndex] = getFocusExtremes(
+//     codeAnnotation.focus,
+//     []
+//   )
 
-  // TODO handle missing bg
-  const bg = ((theme as any).colors[
-    "editor.lineHighlightBackground"
-  ] ||
-    (theme as any).colors[
-      "editor.selectionHighlightBackground"
-    ]) as string
+//   // TODO handle missing bg
+//   const bg = ((theme as any).colors[
+//     "editor.lineHighlightBackground"
+//   ] ||
+//     (theme as any).colors[
+//       "editor.selectionHighlightBackground"
+//     ]) as string
 
-  function Component({
-    style,
-    children,
-  }: {
-    style: React.CSSProperties
-    children: React.ReactNode
-  }) {
-    return (
-      <div
-        style={{
-          ...style,
-          background: bg,
-          cursor: "pointer",
-        }}
-        onClick={_ => alert("clicked")}
-      >
-        {children}
-      </div>
-    )
-  }
+//   function Component({
+//     style,
+//     children,
+//   }: {
+//     style: React.CSSProperties
+//     children: React.ReactNode
+//   }) {
+//     return (
+//       <div
+//         style={{
+//           ...style,
+//           background: bg,
+//           cursor: "pointer",
+//         }}
+//         onClick={_ => alert("clicked")}
+//       >
+//         {children}
+//       </div>
+//     )
+//   }
 
-  return {
-    Component,
-    startIndex,
-    endIndex,
-  }
-}
+//   return {
+//     Component,
+//     startIndex,
+//     endIndex,
+//   }
+// }
 
 function Wrapper({
   htmlProps,

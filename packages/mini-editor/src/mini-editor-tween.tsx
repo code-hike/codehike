@@ -183,6 +183,7 @@ function useTransition(
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={t}
+          parentHeight={northStyle.height as string}
         />
       ),
     },
@@ -195,6 +196,7 @@ function useTransition(
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={t}
+          parentHeight={southStyle?.height as string}
         />
       ),
     },
@@ -217,6 +219,12 @@ function startingPosition(
     nextSouthFile,
   } = getStepFiles(prev, next, true)
 
+  const northHeight = inputSouthPanel
+    ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
+    : "100%"
+
+  const southHeight = `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel?.heightRatio} + var(--ch-title-bar-height))`
+
   return {
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
@@ -225,9 +233,7 @@ function startingPosition(
         style: {},
       })),
       style: {
-        height: inputSouthPanel
-          ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
-          : "100%",
+        height: northHeight,
       },
       children: (
         <CodeTransition
@@ -235,6 +241,7 @@ function startingPosition(
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={0}
+          parentHeight={northHeight}
         />
       ),
     },
@@ -253,6 +260,7 @@ function startingPosition(
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={0}
+          parentHeight={southHeight}
         />
       ),
     },
@@ -282,6 +290,12 @@ function endingPosition(
     nextNorthFile = nextSouthFile!
   }
 
+  const northHeight = inputSouthPanel
+    ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
+    : "100%"
+
+  const southHeight = `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel?.heightRatio} + var(--ch-title-bar-height))`
+
   return {
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
@@ -290,9 +304,7 @@ function endingPosition(
         style: {},
       })),
       style: {
-        height: inputSouthPanel
-          ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
-          : "100%",
+        height: northHeight,
       },
       children: (
         <CodeTransition
@@ -300,6 +312,7 @@ function endingPosition(
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={1}
+          parentHeight={northHeight}
         />
       ),
     },
@@ -310,7 +323,7 @@ function endingPosition(
         style: {},
       })),
       style: {
-        height: `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel.heightRatio} + var(--ch-title-bar-height))`,
+        height: southHeight,
       },
       children: (
         <CodeTransition
@@ -318,6 +331,7 @@ function endingPosition(
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={1}
+          parentHeight={southHeight}
         />
       ),
     },
@@ -329,10 +343,12 @@ function CodeTransition({
   nextFile,
   t,
   codeProps,
+  parentHeight,
 }: {
   prevFile: StepFile
   nextFile: StepFile
   t: number
+  parentHeight: string
   codeProps: Partial<CodeProps>
 }) {
   return (
@@ -342,7 +358,7 @@ function CodeTransition({
       focus={{ prev: prevFile.focus, next: nextFile.focus }}
       progress={t}
       language={prevFile.lang}
-      parentHeight={t}
+      parentHeight={parentHeight}
     />
   )
 }
