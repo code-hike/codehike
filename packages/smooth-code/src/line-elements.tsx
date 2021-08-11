@@ -1,13 +1,13 @@
 import React from "react"
 import {
-  AnnotatedCode,
   LineWithElement,
+  AnnotatedLine,
 } from "./step-parser"
 import { map } from "@code-hike/utils"
 import { easing, stagger } from "./tween"
 
 export function getLinesWithElements(
-  lines: AnnotatedCode["lines"],
+  lines: AnnotatedLine[],
   verticalInterval: [number, number],
   enterCount: number,
   exitCount: number

@@ -43,19 +43,64 @@ function Lines({
   lineHeight: number
   progress: number
 }) {
-  // TODO annotated:
-  // if (codeStep.groups.prev && progress < 0.1) {
-  // }
+  const groups =
+    progress < 0.5
+      ? codeStep.groups.prev
+      : codeStep.groups.next
 
   return (
-    <LineGroup
-      lines={codeStep.lines}
-      t={progress}
-      focusWidth={focusWidth}
-      lineHeight={lineHeight}
-    />
+    <>
+      {groups.map((group, i) => {
+        if (!group.annotation) {
+          return (
+            <LineGroup
+              lines={group.lines}
+              t={progress}
+              focusWidth={focusWidth}
+              lineHeight={lineHeight}
+              key={i}
+            />
+          )
+        }
+
+        const startY = tween(
+          group.lines[0]!.tweenY,
+          progress
+        )
+
+        const lineCount =
+          group.annotation.lineNumbers.end -
+          group.annotation.lineNumbers.start +
+          1
+
+        const Component = group.annotation.Component
+        return (
+          <Component
+            style={{
+              position: "absolute",
+              height: lineCount * lineHeight,
+              width: "100%",
+              transform: `translateY(${
+                startY * lineHeight
+              }px)`,
+            }}
+            key={i}
+          >
+            <LineGroup
+              lines={group.lines}
+              t={progress}
+              focusWidth={focusWidth}
+              lineHeight={lineHeight}
+              startY={startY}
+            />
+          </Component>
+        )
+      })}
+    </>
   )
 }
+
+type CodeLine = CodeStep["groups"]["prev"][number]["lines"][number]
 
 function LineGroup({
   lines,
@@ -64,7 +109,7 @@ function LineGroup({
   t,
   startY = 0,
 }: {
-  lines: CodeStep["lines"]
+  lines: CodeLine[]
   focusWidth: number
   lineHeight: number
   t: number
@@ -99,7 +144,7 @@ function LineContent({
   progress,
   dx,
 }: {
-  line: CodeStep["lines"][number]
+  line: CodeLine
   progress: number
   dx: number
 }) {

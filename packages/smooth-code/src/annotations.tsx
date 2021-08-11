@@ -6,6 +6,7 @@ import {
   AnnotatedTokenGroups,
   FocusedLine,
   AnnotatedLine,
+  LineGroup,
 } from "./step-parser"
 import {
   Tween,
@@ -18,6 +19,7 @@ import {
   hasColumns,
   parsePartToObject,
   ColumnExtremes,
+  parseExtremes,
 } from "./focus-parser"
 import React from "react"
 
@@ -100,9 +102,129 @@ function defaultInlineComponent(
 function parseMultilineAnnotations(
   annotations: CodeAnnotation[],
   theme: EditorTheme
-) {
-  return []
+): MultiLineAnnotation[] {
+  return annotations.map(annotation => {
+    return {
+      lineNumbers: parseExtremes(annotation.focus),
+      Component:
+        annotation.Component ||
+        defaultMultilineComponent(annotation, theme),
+    }
+  })
 }
+
+function defaultMultilineComponent(
+  annotation: CodeAnnotation,
+  theme: EditorTheme
+): MultiLineAnnotation["Component"] {
+  // TODO handle missing bg
+  const bg = ((theme as any).colors[
+    "editor.lineHighlightBackground"
+  ] ||
+    (theme as any).colors[
+      "editor.selectionHighlightBackground"
+    ]) as string
+
+  return ({ children, style }) => (
+    <div
+      style={{
+        ...style,
+        background: bg,
+        cursor: "pointer",
+      }}
+      onClick={_ => alert("clicked")}
+    >
+      {children}
+    </div>
+  )
+}
+
+// --- multiline
+
+export function annotateMultiline(
+  lines: AnnotatedLine[],
+  annotations: FullTween<MultiLineAnnotation[]>
+): FullTween<LineGroup[]> {
+  return {
+    prev: annotateMultilineSide(
+      lines,
+      annotations.prev,
+      line => line.lineNumber.prev
+    ),
+    next: annotateMultilineSide(
+      lines,
+      annotations.next,
+      line => line.lineNumber.next
+    ),
+  }
+}
+
+function annotateMultilineSide(
+  lines: AnnotatedLine[],
+  ogAnnotations: MultiLineAnnotation[],
+  getLineNumber: (line: AnnotatedLine) => number | undefined
+): LineGroup[] {
+  const annotations = [...ogAnnotations]
+  annotations.sort(
+    (a, b) => a.lineNumbers.start - b.lineNumbers.start
+  )
+
+  let lineIndex = 0
+  const groups = [] as LineGroup[]
+
+  while (lineIndex < lines.length) {
+    const annotation = annotations[0]
+    let line = lines[lineIndex]
+    if (
+      annotation &&
+      getLineNumber(line) === annotation.lineNumbers.start
+    ) {
+      // create annotation group
+      const group = {
+        lines: [],
+        annotation,
+      } as LineGroup
+
+      while (
+        line &&
+        (!getLineNumber(line) ||
+          getLineNumber(line)! <=
+            annotation.lineNumbers.end)
+      ) {
+        group.lines.push(line)
+        line = lines[++lineIndex]
+      }
+
+      groups.push(group)
+      annotations.shift()
+    } else if (!annotation) {
+      // create unannotated group until the end
+      groups.push({ lines: lines.slice(lineIndex) })
+      lineIndex = lines.length
+    } else {
+      // create unannotated group until next annotation
+      const group = {
+        lines: [],
+      } as LineGroup
+
+      while (
+        line &&
+        (!getLineNumber(line) ||
+          getLineNumber(line)! <
+            annotation.lineNumbers.start)
+      ) {
+        group.lines.push(line)
+        line = lines[++lineIndex]
+      }
+
+      groups.push(group)
+    }
+  }
+
+  return groups
+}
+
+// --- inline
 
 export function annotateInline(
   lines: FocusedLine[],

@@ -157,9 +157,7 @@ function getTweenContentProps({
         codeStep.lastFocusedLineNumber.prev - 1,
       ],
       originalContentHeight:
-        codeStep.lines.filter(
-          l => l.lineNumber.prev != null
-        ).length * lineHeight,
+        codeStep.lineCount.prev * lineHeight,
       lineWidth: lineWidth[0],
     },
     next: {
@@ -168,9 +166,7 @@ function getTweenContentProps({
         codeStep.lastFocusedLineNumber.next - 1,
       ],
       originalContentHeight:
-        codeStep.lines.filter(
-          l => l.lineNumber.next != null
-        ).length * lineHeight,
+        codeStep.lineCount.next * lineHeight,
       lineWidth: lineWidth[1],
     },
   }

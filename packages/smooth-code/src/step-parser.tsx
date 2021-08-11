@@ -24,6 +24,7 @@ import { getLinesWithElements } from "./line-elements"
 import {
   parseAnnotations,
   annotateInline,
+  annotateMultiline,
 } from "./annotations"
 
 export type CodeAnnotation = {
@@ -213,63 +214,6 @@ function splitLinesByFocus(
   return splitByFocus(mergedCode, focus, annotations)
 }
 
-// 4 - convert annotations
-
-// function parseAnnotations(
-//   annotations: Tween<CodeAnnotation[]> | undefined,
-//   theme: EditorTheme
-// ): FullTween<MultiLineAnnotation[]> {
-//   return mapWithDefault(annotations, [], annotations => {
-//     return annotations.map(a => toLinesAnnotation(a, theme))
-//   })
-// }
-
-// function toLinesAnnotation(
-//   annotation: CodeAnnotation,
-//   theme: EditorTheme
-// ): MultiLineAnnotation {
-//   if (annotation.Component) {
-//     return {
-//       Component: annotation.Component,
-//       focus: annotation.focus,
-//     }
-//   }
-
-//   // TODO handle missing bg
-//   const bg = ((theme as any).colors[
-//     "editor.lineHighlightBackground"
-//   ] ||
-//     (theme as any).colors[
-//       "editor.selectionHighlightBackground"
-//     ]) as string
-
-//   function Component({
-//     style,
-//     children,
-//   }: {
-//     style: React.CSSProperties
-//     children: React.ReactNode
-//   }) {
-//     return (
-//       <div
-//         style={{
-//           ...style,
-//           background: bg,
-//           cursor: "pointer",
-//         }}
-//         onClick={_ => alert("clicked")}
-//       >
-//         {children}
-//       </div>
-//     )
-//   }
-
-//   return {
-//     Component,
-//     focus: annotation.focus,
-//   }
-// }
-
 // 5 - add annotations
 
 export type AnnotatedTokenGroups = {
@@ -283,15 +227,15 @@ export interface AnnotatedLine
 }
 
 export type LineGroup = {
-  annotation?: CodeAnnotation
+  annotation?: MultiLineAnnotation
   lines: AnnotatedLine[]
 }
 export interface AnnotatedCode
   extends Omit<FocusedCode, "lines"> {
-  lines: AnnotatedLine[]
-  groups: FullTween<LineGroup[]>
+  lineGroups: FullTween<LineGroup[]>
   firstFocusedLineNumber: FullTween<number>
   lastFocusedLineNumber: FullTween<number>
+  lineCount: FullTween<number>
 }
 
 function addAnnotations(
@@ -306,15 +250,20 @@ function addAnnotations(
     inlineAnnotations
   ) as AnnotatedLine[]
 
-  const lineGroups = splitByAnnotations(
+  const lineGroups = annotateMultiline(
     annotatedLines,
     annotations
   )
 
   return {
     ...focusedCode,
-    lines: annotatedLines,
-    groups: lineGroups,
+    lineGroups: lineGroups,
+    lineCount: {
+      prev: lines.filter(l => l.lineNumber.prev != null)
+        .length,
+      next: lines.filter(l => l.lineNumber.next != null)
+        .length,
+    },
   }
 }
 
@@ -326,16 +275,16 @@ export type LineWithElement = AnnotatedLine & {
   tweenY: TweenParams
 }
 type LineGroupWithElement = {
-  annotation?: CodeAnnotation
+  annotation?: MultiLineAnnotation
   lines: LineWithElement[]
 }
 
 export type CodeStep = {
-  lines: LineWithElement[]
   groups: FullTween<LineGroupWithElement[]>
   firstFocusedLineNumber: FullTween<number>
   lastFocusedLineNumber: FullTween<number>
   verticalInterval: [number, number]
+  lineCount: FullTween<number>
 }
 
 function addExtraStuff(codeStep: AnnotatedCode): CodeStep {
@@ -344,17 +293,9 @@ function addExtraStuff(codeStep: AnnotatedCode): CodeStep {
     codeStep.exitCount
   )
 
-  const newLines = getLinesWithElements(
-    codeStep.lines,
-    vInterval,
-    codeStep.enterCount,
-    codeStep.exitCount
-  )
-
-  const newGroups = map(codeStep.groups, groups =>
+  const newGroups = map(codeStep.lineGroups, groups =>
     groups.map(group => ({
       ...group,
-      // TODO add annotations
       lines: getLinesWithElements(
         group.lines,
         vInterval,
@@ -366,7 +307,6 @@ function addExtraStuff(codeStep: AnnotatedCode): CodeStep {
 
   return {
     ...codeStep,
-    lines: newLines,
     groups: newGroups,
     verticalInterval: vInterval,
   }
