@@ -80,6 +80,7 @@ function parseInlineAnnotations(
     const lineAnnotations = annotationMap[lineNumber] || []
     lineAnnotations.push({
       columnNumbers: columnNumbersList[0],
+      data: annotation.data,
       Component:
         annotation.Component ||
         defaultInlineComponent(annotation, theme),
@@ -108,6 +109,7 @@ function parseMultilineAnnotations(
   return annotations.map(annotation => {
     return {
       lineNumbers: parseExtremes(annotation.focus),
+      data: annotation.data,
       Component:
         annotation.Component ||
         defaultMultilineComponent(annotation, theme),

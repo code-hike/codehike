@@ -1,7 +1,7 @@
 import React from "react"
 import { WithProgress } from "./utils"
 import { Code, CodeTween } from "@code-hike/smooth-code"
-import poimandres from "shiki/themes/poimandres.json"
+import theme from "shiki/themes/poimandres.json"
 
 export default {
   title: "Test/Smooth Code",
@@ -45,7 +45,7 @@ const x = (y) => y++
             horizontalCenter={center}
             language="js"
             htmlProps={{ style: { height: "100%" } }}
-            theme={poimandres}
+            theme={theme}
             annotations={{
               prev: [
                 { focus: "1[10:11]" },
@@ -93,7 +93,18 @@ function App() {
 }
 `.trim()
 
-  const prevAnnotations = [{ focus: "3:5" }]
+  const prevAnnotations = [
+    {
+      focus: "3",
+      Component: Annotate,
+      data: { caption: "lorem ipsum" },
+    },
+    {
+      focus: "4",
+      Component: Annotate,
+      data: { caption: "dolor sit amet" },
+    },
+  ]
 
   const nextCode = `
 console.log(1)
@@ -114,7 +125,7 @@ const x = (y) => y++
             horizontalCenter={false}
             language="js"
             htmlProps={{ style: { height: "100%" } }}
-            theme={poimandres}
+            theme={theme}
             minZoom={1}
             maxZoom={1}
             annotations={{
@@ -125,5 +136,42 @@ const x = (y) => y++
         </div>
       )}
     </WithProgress>
+  )
+}
+
+function Annotate({ style, children, data }) {
+  const [hover, setHover] = React.useState(false)
+
+  return (
+    <div
+      style={{
+        ...style,
+        background: hover
+          ? selectedBackground(theme)
+          : undefined,
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {children}
+      <div
+        style={{
+          position: "absolute",
+          right: 0,
+          paddingRight: 10,
+          display: hover ? "block" : "none",
+          opacity: 0.7,
+        }}
+      >
+        {data.caption}
+      </div>
+    </div>
+  )
+}
+
+function selectedBackground(theme) {
+  return (
+    theme.colors["editor.lineHighlightBackground"] ||
+    theme.colors["editor.selectionHighlightBackground"]
   )
 }

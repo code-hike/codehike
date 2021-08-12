@@ -85,6 +85,7 @@ function Lines({
               }px)`,
             }}
             key={i}
+            data={group.annotation.data}
           >
             <LineGroup
               lines={group.lines}
@@ -193,7 +194,10 @@ function AnnotatedTokens({
   })
 
   return Component ? (
-    <Component children={children} />
+    <Component
+      children={children}
+      data={annotated?.annotation?.data}
+    />
   ) : (
     <>{children}</>
   )

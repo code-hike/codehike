@@ -32,7 +32,9 @@ export type CodeAnnotation = {
   Component?: (props: {
     style?: React.CSSProperties
     children: React.ReactNode
+    data: any
   }) => React.ReactElement
+  data?: any
 }
 type ParseInput = {
   code: Tween<string>
@@ -167,18 +169,22 @@ function merge(
 export type MultiLineAnnotation = {
   /* line numbers (starting at 1) */
   lineNumbers: { start: number; end: number }
+  data: any
   Component: (props: {
     style: React.CSSProperties
     children: React.ReactNode
+    data: any
   }) => React.ReactElement
 }
 
 export type InlineAnnotation = {
   /* column numbers (starting at 1) */
   columnNumbers: { start: number; end: number }
+  data: any
   Component: (props: {
     style?: React.CSSProperties
     children: React.ReactNode
+    data: any
   }) => React.ReactElement
 }
 
