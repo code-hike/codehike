@@ -88,6 +88,8 @@ function Container({
         width,
         height,
         position: "relative",
+        // padding: "0 16px",
+        // boxSizing: "border-box",
         // overflow: "auto",
       }}
     >

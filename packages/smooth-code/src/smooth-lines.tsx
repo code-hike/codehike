@@ -126,7 +126,7 @@ function LineGroup({
         return (
           <LineContainer
             key={key}
-            dx={dx * focusWidth}
+            dx={16 + dx * focusWidth} // 16 is the left padding, it should be configurable
             dy={(dy - startY) * lineHeight}
             width={focusWidth}
             opacity={opacity}

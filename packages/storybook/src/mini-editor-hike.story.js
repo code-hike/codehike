@@ -231,6 +231,7 @@ console.log(4)`
           steps={toSteps(steps)}
           progress={progress}
           backward={backward}
+          codeProps={{ maxZoom: 1, minZoom: 1 }}
         />
       )}
     </WithProgress>

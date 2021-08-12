@@ -43,7 +43,7 @@ type ParseInput = {
 }
 
 export function useStepParser(input: ParseInput) {
-  const { lang, theme, code } = input
+  const { lang, theme, code, focus } = input
   return useAsyncMemo(
     {
       isReady: isHighlighterReady(lang, theme),
@@ -51,7 +51,14 @@ export function useStepParser(input: ParseInput) {
       run: () => parse(input),
       placeholder: () => parse(input),
     },
-    [code.prev, code.next, lang, theme]
+    [
+      code.prev,
+      code.next,
+      focus.prev,
+      focus.next,
+      lang,
+      theme,
+    ]
   )
 }
 

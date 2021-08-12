@@ -127,28 +127,3 @@ const x = (y) => y++
     </WithProgress>
   )
 }
-
-export const withShiki = () => {
-  const sampleCode = `import * as React from 'react';
-
-function App() {
-  return <div className="App"/>
-}`
-
-  return (
-    <WithProgress>
-      {progress => (
-        <div
-          style={{ height: 300, outline: "1px solid red" }}
-        >
-          <CodeTween
-            code={sampleCode}
-            lang={"js"}
-            theme={poimandres}
-            htmlProps={{ style: { height: "100%" } }}
-          />
-        </div>
-      )}
-    </WithProgress>
-  )
-}
