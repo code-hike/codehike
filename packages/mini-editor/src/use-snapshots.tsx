@@ -1,5 +1,6 @@
 import React from "react"
 import { Snapshot, TabsSnapshot } from "./editor-frame"
+import { CodeAnnotation } from "@code-hike/smooth-code"
 
 export { EditorStep, StepFile, useSnapshots }
 
@@ -13,6 +14,7 @@ type StepFile = {
   focus?: string
   lang: string
   name: string
+  annotations?: CodeAnnotation[]
 }
 
 type EditorPanel = {

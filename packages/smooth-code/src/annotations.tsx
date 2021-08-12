@@ -24,7 +24,9 @@ import {
 import React from "react"
 
 export function parseAnnotations(
-  annotations: Tween<CodeAnnotation[]> | undefined,
+  annotations:
+    | Tween<CodeAnnotation[] | undefined>
+    | undefined,
   theme: EditorTheme
 ): {
   inlineAnnotations: FullTween<
@@ -35,12 +37,12 @@ export function parseAnnotations(
   const inlineCodeAnnotations = mapWithDefault(
     annotations,
     [],
-    annotations => annotations.filter(isInline)
+    annotations => annotations!.filter(isInline)
   )
   const multilineCodeAnnotations = mapWithDefault(
     annotations,
     [],
-    annotations => annotations.filter(a => !isInline(a))
+    annotations => annotations!.filter(a => !isInline(a))
   )
   return {
     inlineAnnotations: map(

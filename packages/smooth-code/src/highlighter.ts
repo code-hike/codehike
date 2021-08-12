@@ -182,10 +182,11 @@ type ThemedCode = {
   bg: string
 }
 
+const newlineRe = /\r\n|\r|\n/
 export function tokenizePlaceholder(
   code: string
 ): CodeLine[] {
-  const lines = code.split("\n")
+  const lines = code.split(newlineRe)
   return lines.map(line => [[line, {}]])
 }
 
@@ -193,7 +194,7 @@ export function getBasicThemedCode(
   code: string,
   theme: EditorTheme
 ): ThemedCode {
-  const lines = code.split("\n")
+  const lines = code.split(newlineRe)
   const { fg, bg } = getThemeDefaultColors(theme)
   return {
     lines: lines.map(line => [{ content: line }]),

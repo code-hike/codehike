@@ -39,7 +39,7 @@ type ParseInput = {
   theme: EditorTheme
   lang: string
   focus: Tween<FocusString>
-  annotations?: Tween<CodeAnnotation[]>
+  annotations?: Tween<CodeAnnotation[] | undefined>
 }
 
 export function useStepParser(input: ParseInput) {
@@ -176,7 +176,9 @@ export type InlineAnnotation = {
 }
 
 function parseAllAnnotations(
-  annotations: Tween<CodeAnnotation[]> | undefined,
+  annotations:
+    | Tween<CodeAnnotation[] | undefined>
+    | undefined,
   theme: EditorTheme
 ) {
   return parseAnnotations(annotations, theme)

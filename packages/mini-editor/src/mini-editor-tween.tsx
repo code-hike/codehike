@@ -356,6 +356,10 @@ function CodeTransition({
       {...codeProps}
       code={{ prev: prevFile.code, next: nextFile.code }}
       focus={{ prev: prevFile.focus, next: nextFile.focus }}
+      annotations={{
+        prev: prevFile.annotations,
+        next: nextFile.annotations,
+      }}
       progress={t}
       language={prevFile.lang}
       parentHeight={parentHeight}

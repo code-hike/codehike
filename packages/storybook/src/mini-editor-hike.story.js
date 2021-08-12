@@ -162,6 +162,81 @@ console.log(4)`
   )
 }
 
+export const withInlineAnnotations = () => {
+  const code1 = `console.log(1)
+console.log(2)
+console.log(3)`
+  const code2 = `console.log(1)
+console.log(3)
+console.log(4)`
+
+  const steps = [
+    {
+      code: code1,
+      annotations: [{ focus: "2[3:5]" }],
+    },
+    {
+      code: code1,
+      focus: "1,2[1:7]",
+      annotations: [{ focus: "1[3:5]" }],
+    },
+    {
+      code: code2,
+      focus: "1,3[9:11]",
+      annotations: [{ focus: "3[3:5]" }],
+    },
+  ]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditorHike
+          frameProps={{ style: { height: 200 } }}
+          steps={toSteps(steps)}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
+export const withMultilineAnnotations = () => {
+  const code1 = `console.log(1)
+console.log(2)
+console.log(3)`
+  const code2 = `console.log(1)
+console.log(3)
+console.log(4)`
+
+  const steps = [
+    {
+      code: code1,
+      annotations: [{ focus: "2" }],
+    },
+    {
+      code: code1,
+      focus: "1,2[1:7]",
+      annotations: [{ focus: "1:2" }],
+    },
+    {
+      code: code2,
+      focus: "1,3[9:11]",
+      annotations: [{ focus: "3" }],
+    },
+  ]
+  return (
+    <WithProgress length={steps.length}>
+      {(progress, backward) => (
+        <MiniEditorHike
+          frameProps={{ style: { height: 200 } }}
+          steps={toSteps(steps)}
+          progress={progress}
+          backward={backward}
+        />
+      )}
+    </WithProgress>
+  )
+}
+
 export const files = () => {
   const steps = [
     { code: "log('foo',1)", file: "foo.js" },
@@ -363,6 +438,7 @@ function toSteps(
         lang,
         code: codeStep.code,
         focus: codeStep.focus,
+        annotations: codeStep.annotations,
       },
     ],
     northPanel: {

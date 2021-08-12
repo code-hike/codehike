@@ -30,7 +30,7 @@ export type CodeProps = {
   horizontalCenter?: boolean
   theme?: IRawTheme
   htmlProps?: HTMLProps
-  annotations?: Tween<CodeAnnotation[]>
+  annotations?: Tween<CodeAnnotation[] | undefined>
 }
 
 const DEFAULT_MIN_COLUMNS = 40
