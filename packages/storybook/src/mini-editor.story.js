@@ -57,6 +57,19 @@ export const codeEditor = () => {
   )
 }
 
+export const annotations = () => {
+  return (
+    <Page>
+      <Editor
+        code={code1}
+        filename="index.js"
+        lang="js"
+        annotations={[{ focus: "2:3" }]}
+      />
+    </Page>
+  )
+}
+
 export const singlePanelEditor = () => {
   const [input, setInput] = React.useState(code1)
   const [code, setCode] = React.useState(code1)

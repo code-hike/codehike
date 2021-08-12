@@ -2,7 +2,10 @@ import React from "react"
 import { useSpring } from "use-spring"
 import { MiniEditorTween } from "./mini-editor-tween"
 import { EditorStep, StepFile } from "./use-snapshots"
-import { CodeProps } from "@code-hike/smooth-code"
+import {
+  CodeProps,
+  CodeAnnotation,
+} from "@code-hike/smooth-code"
 import { EditorFrameProps } from "./editor-frame"
 
 export { MiniEditor, MiniEditorProps }
@@ -20,6 +23,7 @@ type SingleFileEditorProps = {
   code: string
   lang: string
   focus?: string
+  annotations?: CodeAnnotation[]
   filename?: string
   terminal?: string
   frameProps?: Partial<EditorFrameProps>
@@ -59,13 +63,16 @@ function SingleFileEditor({
   lang = "js",
   focus,
   filename = "",
+  annotations,
   terminal,
   springConfig,
   ...props
 }: SingleFileEditorProps) {
   const step = React.useMemo(() => {
     const step: EditorStep = {
-      files: [{ name: filename, code, lang, focus }],
+      files: [
+        { name: filename, code, lang, focus, annotations },
+      ],
       northPanel: {
         active: filename,
         tabs: [filename],
