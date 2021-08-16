@@ -13,6 +13,8 @@ import {
 } from "./use-snapshots"
 import { getTabs } from "./tabs"
 import { TerminalPanel } from "./terminal-panel"
+import DEFAULT_THEME from "shiki/themes/dark-plus.json"
+import { EditorTheme } from "@code-hike/smooth-code/dist/themes"
 
 export {
   EditorTransition,
@@ -76,6 +78,10 @@ function MiniEditorTween({
       northPanel={northPanel}
       southPanel={southPanel}
       terminalPanel={terminalPanel}
+      theme={
+        codeProps.theme ||
+        ((DEFAULT_THEME as unknown) as EditorTheme)
+      }
     />
   )
 }

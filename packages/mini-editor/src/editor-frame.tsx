@@ -4,6 +4,8 @@ import {
   FrameButtons,
 } from "@code-hike/mini-frame"
 import { useClasser, Classes } from "@code-hike/classer"
+import { EditorTheme } from "@code-hike/smooth-code/dist/themes"
+import { getColor, ColorName } from "./theme-colors"
 
 export {
   EditorFrameProps,
@@ -29,6 +31,7 @@ type OutputPanel = {
 type EditorFrameProps = {
   northPanel: OutputPanel
   southPanel?: OutputPanel | null
+  theme: EditorTheme
   terminalPanel?: React.ReactNode
   height?: number
   button?: React.ReactNode
@@ -48,6 +51,7 @@ export const EditorFrame = React.forwardRef<
     style,
     height,
     button,
+    theme,
     className,
     ...rest
   },
@@ -57,7 +61,14 @@ export const EditorFrame = React.forwardRef<
   return (
     <MiniFrame
       ref={ref}
-      style={{ height: height ?? DEFAULT_HEIGHT, ...style }}
+      style={{
+        height: height ?? DEFAULT_HEIGHT,
+        ["--ch-content-background" as any]: getColor(
+          theme,
+          ColorName.EditorGroupHeaderBackground
+        ),
+        ...style,
+      }}
       className={c("frame") + " " + className}
       overflow="unset"
       titleBar={
@@ -66,6 +77,7 @@ export const EditorFrame = React.forwardRef<
           showFrameButtons={true}
           button={button}
           panel="north"
+          theme={theme}
         />
       }
       {...rest}
@@ -94,6 +106,7 @@ export const EditorFrame = React.forwardRef<
               showFrameButtons={false}
               topBorder={true}
               panel="south"
+              theme={theme}
             />
           </div>
           <div
@@ -118,6 +131,7 @@ type TabsContainerProps = {
   showFrameButtons: boolean
   topBorder?: boolean
   panel: "north" | "south"
+  theme: EditorTheme
 }
 function TabsContainer({
   tabs,
@@ -125,6 +139,7 @@ function TabsContainer({
   showFrameButtons,
   topBorder,
   panel,
+  theme,
 }: TabsContainerProps) {
   const c = useClasser("ch-editor-tab")
   return (
@@ -134,7 +149,10 @@ function TabsContainer({
           style={{
             position: "absolute",
             height: "1px",
-            background: "#151515",
+            background: getColor(
+              theme,
+              ColorName.EditorGroupBorder
+            ),
             width: "100%",
             top: 0,
             zIndex: 1,
@@ -148,7 +166,31 @@ function TabsContainer({
           title={title}
           data-ch-tab={panel}
           className={c("", active ? "active" : "inactive")}
-          style={style}
+          style={{
+            ...style,
+            background: getColor(
+              theme,
+              active
+                ? ColorName.ActiveTabBackground
+                : ColorName.InactiveTabBackground
+            ),
+            color: getColor(
+              theme,
+              active
+                ? ColorName.ActiveTabForeground
+                : ColorName.InactiveTabForeground
+            ),
+            borderRightColor: getColor(
+              theme,
+              ColorName.TabBorder
+            ),
+            borderBottomColor: getColor(
+              theme,
+              active
+                ? ColorName.ActiveTabBottomBorder
+                : ColorName.InactiveTabBackground
+            ),
+          }}
         >
           <div>{title}</div>
         </div>
