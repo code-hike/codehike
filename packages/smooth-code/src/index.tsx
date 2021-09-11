@@ -1,5 +1,14 @@
-import { Code, CodeProps } from "./code"
+import { HeavyCode, CodeProps } from "./heavy-code"
 import { CodeTween } from "./code-tween"
 import { CodeAnnotation } from "./step-parser"
+import { highlight } from "./highlighter"
+import { Code } from "./code"
 
-export { Code, CodeProps, CodeTween, CodeAnnotation }
+export {
+  HeavyCode,
+  Code,
+  CodeProps,
+  CodeTween,
+  CodeAnnotation,
+  highlight,
+}

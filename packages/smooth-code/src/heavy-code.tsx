@@ -1,17 +1,16 @@
 import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
 import { IRawTheme } from "vscode-textmate"
-import { DEFAULT_THEME } from "./themes"
+import DEFAULT_THEME from "shiki/themes/dark-plus.json"
 import { FocusString } from "./focus-parser"
-import { Tween, FullTween } from "@code-hike/utils"
+import { Tween } from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,
   CodeStep,
-} from "./partial-step-parser"
+} from "./step-parser"
 import { SmoothLines } from "./smooth-lines"
 import { getThemeDefaultColors } from "./themes"
-import { HighlightedLine } from "./partial-step-parser"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLPreElement>,
@@ -19,9 +18,10 @@ type HTMLProps = React.DetailedHTMLProps<
 >
 
 export type CodeProps = {
-  highlightedLines: FullTween<HighlightedLine[]>
+  code: Tween<string>
   focus: Tween<FocusString>
   progress: number
+  language: string
   /* not really the height, when this changes we measure everything again */
   parentHeight?: any
   minColumns?: number
@@ -35,30 +35,32 @@ export type CodeProps = {
 
 const DEFAULT_MIN_COLUMNS = 40
 
-export function Code(props: CodeProps) {
+export function HeavyCode(props: CodeProps) {
   const {
-    highlightedLines,
+    code,
     focus,
     parentHeight,
     htmlProps,
     theme = (DEFAULT_THEME as unknown) as IRawTheme,
+    language,
     annotations,
     minColumns = DEFAULT_MIN_COLUMNS,
   } = props
 
+  const { element, dimensions } = useDimensions(
+    code,
+    focus,
+    minColumns,
+    [parentHeight]
+  )
+
   const stepInfo = useStepParser({
-    highlightedLines,
+    code,
     theme,
+    lang: language,
     focus,
     annotations,
   })
-
-  const {
-    element,
-    dimensions,
-  } = useDimensions(stepInfo.code, focus, minColumns, [
-    parentHeight,
-  ])
 
   return !dimensions ? (
     <BeforeDimensions

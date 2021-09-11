@@ -5,7 +5,10 @@ import {
   getPanelStyles,
   OutputPanel,
 } from "./editor-frame"
-import { Code, CodeProps } from "@code-hike/smooth-code"
+import {
+  HeavyCode,
+  CodeProps,
+} from "@code-hike/smooth-code"
 import {
   EditorStep,
   StepFile,
@@ -358,7 +361,7 @@ function CodeTransition({
   codeProps: Partial<CodeProps>
 }) {
   return (
-    <Code
+    <HeavyCode
       {...codeProps}
       code={{ prev: prevFile.code, next: nextFile.code }}
       focus={{ prev: prevFile.focus, next: nextFile.focus }}

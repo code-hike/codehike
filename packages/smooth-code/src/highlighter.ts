@@ -12,6 +12,7 @@ import {
   Tween,
   FullTween,
   mapWithDefault,
+  map,
 } from "@code-hike/utils"
 import {
   getThemeDefaultColors,
@@ -41,7 +42,7 @@ export function useHighlighter(
     {
       isReady: isHighlighterReady(lang, theme),
       load: () => loadHighlighter(lang, theme),
-      run: () => highlight(code, lang, theme),
+      run: () => highlightSync(code, lang, theme),
       placeholder: () => {
         const lines = mapWithDefault(
           code,
@@ -101,7 +102,24 @@ export function highlightOrPlaceholder(
   }
 }
 
-function highlight(
+export async function highlight(
+  code: Tween<string>,
+  lang: string,
+  theme: EditorTheme
+) {
+  await loadHighlighter(lang, theme)
+  const { lines } = highlightSync(code, lang, theme)
+  return map(lines, lines =>
+    lines.map((line, i) => ({
+      tokens: line.map(([content, props]) => ({
+        content,
+        props,
+      })),
+    }))
+  )
+}
+
+function highlightSync(
   code: Tween<string>,
   lang: string,
   theme: EditorTheme

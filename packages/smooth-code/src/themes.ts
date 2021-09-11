@@ -1,10 +1,11 @@
 import { IRawTheme } from "vscode-textmate"
+import DEFAULT_THEME from "shiki/themes/dark-plus.json"
 
 interface EditorTheme extends IRawTheme {
   type?: string
 }
 
-export { getThemeDefaultColors, EditorTheme }
+export { getThemeDefaultColors, EditorTheme, DEFAULT_THEME }
 
 /**
  * From https://github.com/shikijs/shiki/blob/HEAD/packages/shiki/src/loader.ts

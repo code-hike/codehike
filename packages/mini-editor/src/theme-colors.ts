@@ -16,6 +16,8 @@ type Color = string | undefined
 
 const contrastBorder = "#6FC3DF"
 
+// defaults from: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/common/theme.ts
+// keys from : https://code.visualstudio.com/api/references/theme-color#editor-groups-tabs
 export function getColor(
   theme: EditorTheme,
   colorName: ColorName
@@ -127,5 +129,3 @@ function getDefault(
     : "dark") as "dark" | "light" | "hc"
   return defaults[themeType]
 }
-
-// defaults from: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/common/theme.ts
