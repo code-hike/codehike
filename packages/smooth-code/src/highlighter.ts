@@ -102,7 +102,26 @@ export function highlightOrPlaceholder(
   }
 }
 
-export async function highlight(
+export async function highlightCode(
+  code: string,
+  lang: string,
+  theme: EditorTheme
+) {
+  await loadHighlighter(lang, theme)
+  const { lines } = highlightSync(
+    { prev: code },
+    lang,
+    theme
+  )
+  return lines.prev.map(line => ({
+    tokens: line.map(([content, props]) => ({
+      content,
+      props,
+    })),
+  }))
+}
+
+export async function highlightTween(
   code: Tween<string>,
   lang: string,
   theme: EditorTheme

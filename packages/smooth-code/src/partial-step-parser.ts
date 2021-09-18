@@ -86,7 +86,7 @@ function getCode(
 ): FullTween<string> {
   return map(highlightedLines, lines =>
     lines
-      .map(line => line.tokens.map(t => t.content))
+      .map(line => line.tokens.map(t => t.content).join(""))
       .join("\n")
   )
 }

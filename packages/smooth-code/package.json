@@ -24,8 +24,6 @@
     "react": "^16.13.1"
   },
   "dependencies": {
-    "@code-hike/code-diff": "^0.3.0-next.0",
-    "@code-hike/smooth-lines": "^0.3.0-next.0",
     "@code-hike/utils": "^0.3.0-next.0",
     "diff": "^4.0.2",
     "shiki": "^0.9.5"
