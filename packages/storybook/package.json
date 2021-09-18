@@ -8,7 +8,7 @@
     "build-docs": "build-storybook -c ./src -s ./public --docs"
   },
   "dependencies": {
-    "@code-hike/code-diff": "0.3.0-next.0",
+    "@code-hike/highlighter": "0.3.0-next.0",
     "@code-hike/mini-browser": "0.3.0-next.0",
     "@code-hike/mini-frame": "0.3.0-next.0",
     "@code-hike/mini-terminal": "0.3.0-next.0",
@@ -17,7 +17,6 @@
     "@code-hike/scrollycoding": "0.3.0-next.0",
     "@code-hike/sim-user": "0.3.0-next.0",
     "@code-hike/smooth-column": "0.3.0-next.0",
-    "@code-hike/smooth-lines": "0.3.0-next.0",
     "prism-svelte": "^0.4.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"

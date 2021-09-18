@@ -7,7 +7,7 @@ import { Tween, FullTween } from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,
-  CodeStep,
+  CodeShift,
 } from "./partial-step-parser"
 import { SmoothLines } from "./smooth-lines"
 import { getThemeDefaultColors } from "./themes"
@@ -103,7 +103,7 @@ function AfterDimensions({
   stepInfo,
 }: CodeProps & {
   dimensions: NonNullable<Dimensions>
-  stepInfo: CodeStep
+  stepInfo: CodeShift
 }) {
   const { bg, fg } = getThemeDefaultColors(theme)
 

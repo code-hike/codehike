@@ -5,7 +5,8 @@ import {
   highlightTween,
   highlightCode,
 } from "./highlighter"
-import { Code } from "./code"
+import { Code } from "./oldcode"
+import { CodeSpring } from "./code-spring"
 
 export {
   HeavyCode,
@@ -15,4 +16,5 @@ export {
   CodeAnnotation,
   highlightCode,
   highlightTween,
+  CodeSpring,
 }

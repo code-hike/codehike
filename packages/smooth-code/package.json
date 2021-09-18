@@ -24,9 +24,10 @@
     "react": "^16.13.1"
   },
   "dependencies": {
+    "@code-hike/highlighter": "^0.3.0-next.0",
     "@code-hike/utils": "^0.3.0-next.0",
     "diff": "^4.0.2",
-    "shiki": "^0.9.5"
+    "use-spring": "^0.2.3"
   },
   "peerDependencies": {
     "react": ">=16.8"

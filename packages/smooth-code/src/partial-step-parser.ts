@@ -257,7 +257,7 @@ type LineGroupWithElement = {
   lines: LineWithElement[]
 }
 
-export type CodeStep = {
+export type CodeShift = {
   groups: FullTween<LineGroupWithElement[]>
   firstFocusedLineNumber: FullTween<number>
   lastFocusedLineNumber: FullTween<number>
@@ -269,7 +269,7 @@ export type CodeStep = {
 function addExtraStuff(
   codeStep: AnnotatedCode,
   code: FullTween<string>
-): CodeStep {
+): CodeShift {
   const vInterval = verticalInterval(
     codeStep.enterCount,
     codeStep.exitCount
