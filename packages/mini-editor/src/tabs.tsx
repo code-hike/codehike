@@ -1,4 +1,3 @@
-import React from "react"
 import { Snapshot, TabsSnapshot, Tab } from "./editor-frame"
 
 export { getTabs }

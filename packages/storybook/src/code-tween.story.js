@@ -1,10 +1,6 @@
 import React from "react"
 import { WithProgress } from "./utils"
-import {
-  Code,
-  HeavyCode,
-  CodeTween,
-} from "@code-hike/smooth-code"
+import { CodeTween } from "@code-hike/smooth-code"
 import theme from "shiki/themes/poimandres.json"
 import { highlight } from "@code-hike/highlighter"
 

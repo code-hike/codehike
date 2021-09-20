@@ -15,7 +15,13 @@ import {
 } from "./mini-editor-spring"
 import { mdxToStep, mdxToSteps } from "./mdx"
 
+import { EditorTween } from "./editor-tween"
+import { EditorSpring } from "./editor-spring"
+
 export {
+  EditorTween,
+  EditorSpring,
+  // deprecate:
   mdxToStep,
   mdxToSteps,
   MiniEditorTween,
