@@ -71,6 +71,21 @@ export function CodeTween({
     theme: config.theme,
   })
 
+  const defaultHeight = React.useMemo(() => {
+    const focusedLinesCount =
+      stepInfo.lastFocusedLineNumber.prev -
+      stepInfo.firstFocusedLineNumber.prev +
+      3
+    return `${focusedLinesCount * 1.1}rem`
+  }, [])
+  const htmlProps = {
+    ...config?.htmlProps,
+    style: {
+      height: defaultHeight,
+      ...config?.htmlProps?.style,
+    },
+  }
+
   const { element, dimensions } = useDimensions(
     stepInfo.code,
     map(tween, tween => tween.focus),
@@ -81,13 +96,13 @@ export function CodeTween({
   return !dimensions ? (
     <BeforeDimensions
       element={element}
-      htmlProps={config.htmlProps}
+      htmlProps={htmlProps}
     />
   ) : (
     <AfterDimensions
       dimensions={dimensions}
       stepInfo={stepInfo}
-      config={config}
+      config={{ ...config, htmlProps }}
       progress={progress}
     />
   )
@@ -113,8 +128,8 @@ function BeforeDimensions({
 
 function AfterDimensions({
   config: {
-    minZoom = 0.5,
-    maxZoom = 1.5,
+    minZoom = 1,
+    maxZoom = 1,
     horizontalCenter = false,
     htmlProps,
     theme = (DEFAULT_THEME as unknown) as IRawTheme,

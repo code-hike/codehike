@@ -79,7 +79,6 @@ const x = (y) => y++
             step={steps[index]}
             config={{
               horizontalCenter: center,
-              htmlProps: { style: { height: "100%" } },
               theme,
             }}
           />

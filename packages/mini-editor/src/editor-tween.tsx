@@ -5,7 +5,10 @@ import {
 } from "./editor-frame"
 import { TerminalPanel } from "./terminal-panel"
 import { useTransition, EditorStep } from "./editor-shift"
-import { CodeConfig } from "@code-hike/smooth-code"
+import {
+  CodeConfig,
+  mapFocusToLineNumbers,
+} from "@code-hike/smooth-code"
 
 export {
   EditorTransition,
@@ -44,26 +47,33 @@ const DEFAULT_STEP: EditorStep = {
 
 function EditorTween({
   prev = DEFAULT_STEP,
-  next = DEFAULT_STEP,
+  next,
   t,
   backward,
   codeConfig,
   frameProps = {},
 }: EditorTweenProps) {
+  console.log("2", { prev })
   const ref = React.createRef<HTMLDivElement>()
   const { northPanel, southPanel } = useTransition(
     ref,
     prev,
-    next,
+    next || prev,
     t,
     backward,
     codeConfig
   )
 
+  const defaultHeight = useDefaultHeight(prev)
+  const framePropsWithHeight = {
+    ...frameProps,
+    style: { height: defaultHeight, ...frameProps?.style },
+  }
+
   const terminalPanel = (
     <TerminalPanel
       prev={prev.terminal}
-      next={next.terminal}
+      next={(next || prev).terminal}
       t={t}
       backward={backward}
     />
@@ -71,7 +81,7 @@ function EditorTween({
   return (
     <EditorFrame
       ref={ref}
-      {...frameProps}
+      {...framePropsWithHeight}
       northPanel={northPanel}
       southPanel={southPanel}
       terminalPanel={terminalPanel}
@@ -115,4 +125,40 @@ function EditorTransition({
       {...rest}
     />
   )
+}
+
+function useDefaultHeight({
+  files,
+  northPanel,
+  southPanel,
+}: EditorStep): string {
+  return React.useMemo(() => {
+    const northFile = files.find(
+      ({ name }) => name === northPanel.active
+    )
+    const southFile = files.find(
+      ({ name }) => name === southPanel?.active
+    )
+    let focusedLines = getFocusedLineCount(northFile!) + 6
+    if (southFile) {
+      focusedLines += getFocusedLineCount(southFile!) + 6
+    }
+    return `${focusedLines * 1.1}rem`
+  }, [])
+}
+
+function getFocusedLineCount({
+  code,
+  focus,
+}: EditorStep["files"][0]): number {
+  const focusByLineNumber = mapFocusToLineNumbers(
+    focus,
+    code.lines
+  )
+  const focusedLineNumbers = Object.keys(
+    focusByLineNumber
+  ).map(k => Number(k))
+  const min = Math.min(...focusedLineNumbers)
+  const max = Math.max(...focusedLineNumbers)
+  return max - min + 1
 }

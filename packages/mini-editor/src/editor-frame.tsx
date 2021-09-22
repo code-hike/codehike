@@ -38,8 +38,6 @@ type EditorFrameProps = {
   classes?: Classes
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
-const DEFAULT_HEIGHT = 200
-
 export const EditorFrame = React.forwardRef<
   HTMLDivElement,
   EditorFrameProps
@@ -62,7 +60,7 @@ export const EditorFrame = React.forwardRef<
     <MiniFrame
       ref={ref}
       style={{
-        height: height ?? DEFAULT_HEIGHT,
+        height,
         ["--ch-content-background" as any]: getColor(
           theme,
           ColorName.EditorGroupHeaderBackground

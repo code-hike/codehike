@@ -1,12 +1,12 @@
 import React from "react"
 import { EditorTween } from "@code-hike/mini-editor"
-import { WithProgress } from "./utils"
+import { Page } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 import theme from "shiki/themes/poimandres.json"
 import { highlight } from "@code-hike/highlighter"
 
 export default {
-  title: "Test/Editor Tween",
+  title: "Test/Editor",
 }
 
 export const oneToOne = () => {
@@ -266,52 +266,13 @@ function TestTransition({
         }
       : undefined,
   }
-
   return (
-    <WithProgress length={2}>
-      {(progress, backward) => (
-        <>
-          <EditorTween
-            frameProps={{ style: { height: 300 } }}
-            prev={prev}
-            next={next}
-            t={progress}
-            backward={backward}
-            codeConfig={{ theme }}
-          />
-          <table
-            style={{
-              width: "fit-content",
-              margin: "0 auto",
-            }}
-          >
-            <tr>
-              <td>
-                <b>{prevNorthActive}</b>
-                <br />
-                {JSON.stringify(prevNorthTabs)}
-              </td>
-              <td>
-                <b>{nextNorthActive}</b>
-                <br />
-                {JSON.stringify(nextNorthTabs)}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <b>{prevSouthActive}</b>
-                <br />
-                {JSON.stringify(prevSouthTabs)}
-              </td>
-              <td>
-                <b>{nextSouthActive}</b>
-                <br />
-                {JSON.stringify(nextSouthTabs)}
-              </td>
-            </tr>
-          </table>
-        </>
-      )}
-    </WithProgress>
+    <Page>
+      <EditorTween
+        prev={prev}
+        t={0}
+        codeConfig={{ theme }}
+      />
+    </Page>
   )
 }

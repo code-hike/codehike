@@ -283,22 +283,20 @@ function CodeTransition({
   codeConfig: CodeConfig
 }) {
   return (
-    // <HeavyCode
-    //   {...codeConfig}
-    //   code={{ prev: prevFile.code, next: nextFile.code }}
-    //   focus={{ prev: prevFile.focus, next: nextFile.focus }}
-    //   annotations={{
-    //     prev: prevFile.annotations,
-    //     next: nextFile.annotations,
-    //   }}
-    //   progress={t}
-    //   language={prevFile.lang}
-    //   parentHeight={parentHeight}
-    // />
     <CodeTween
       progress={t}
       tween={{ prev: prevFile, next: nextFile }}
-      config={{ ...codeConfig, parentHeight }}
+      config={{
+        ...codeConfig,
+        parentHeight,
+        htmlProps: {
+          ...codeConfig?.htmlProps,
+          style: {
+            height: "unset",
+            ...codeConfig?.htmlProps?.style,
+          },
+        },
+      }}
     />
   )
 }
