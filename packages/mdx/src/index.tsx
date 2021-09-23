@@ -4,16 +4,17 @@ import { Node } from "unist"
 import { CodeSpring } from "@code-hike/smooth-code"
 import { EditorSpring } from "@code-hike/mini-editor"
 import { highlight } from "@code-hike/highlighter"
-import theme from "shiki/themes/github-dark.json"
 
 export function Code({
   code,
   meta,
+  theme,
 }: {
   code: string
   meta: string
+  theme: string
 }) {
-  const { name } = parseMetastring(meta)
+  const { name, focus } = parseMetastring(meta)
   return name ? (
     <EditorSpring
       northPanel={{
@@ -25,33 +26,33 @@ export function Code({
         {
           name,
           code: JSON.parse(code),
-          focus: "",
+          focus,
           annotations: [],
         },
       ]}
       codeConfig={{
-        theme: theme as any,
+        theme: JSON.parse(theme),
         // TODO calculate line height (in CodeSpring) depending on focused lines
-        htmlProps: { style: { height: "18em" } },
+        // htmlProps: { style: { height: "18em" } },
       }}
     />
   ) : (
     <CodeSpring
       config={{
-        theme: theme as any,
+        theme: JSON.parse(theme),
         // TODO calculate line height (in CodeSpring) depending on focused lines
-        htmlProps: { style: { height: "16em" } },
+        // htmlProps: { style: { height: "16em" } },
       }}
       step={{
         code: JSON.parse(code),
-        focus: "",
+        focus,
         annotations: [],
       }}
     />
   )
 }
 
-export function remarkCodeHike(options = {}) {
+export function remarkCodeHike({ theme }: { theme: any }) {
   return async function transformer(tree: Node) {
     console.log(tree)
     let useCodeComponent = false
@@ -93,7 +94,15 @@ export function remarkCodeHike(options = {}) {
           {
             type: "mdxJsxAttribute",
             name: "meta",
-            value: node.meta,
+            value:
+              typeof node.meta === "string"
+                ? node.meta
+                : "",
+          },
+          {
+            type: "mdxJsxAttribute",
+            name: "theme",
+            value: JSON.stringify(theme),
           },
         ]
         node.children = []

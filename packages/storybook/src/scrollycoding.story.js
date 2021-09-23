@@ -8,7 +8,7 @@ import {
   PreviewSlot,
   AnchorOrFocus,
 } from "@code-hike/scrollycoding"
-import "@code-hike/scrollycoding/dist/index.css"
+// import "@code-hike/scrollycoding/dist/index.css"
 import Basic from "./assets/scrollycoding.basic.mdx"
 import WithDeps from "./assets/scrollycoding.deps.mdx"
 import RepeatedSteps from "./assets/scrollycoding.repeat.mdx"

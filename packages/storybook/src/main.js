@@ -1,4 +1,5 @@
 const { remarkCodeHike } = require("@code-hike/mdx")
+const theme = require("shiki/themes/github-light.json")
 
 module.exports = {
   stories: ["intro.story.mdx", "*.story.@(js|mdx|tsx)"],
@@ -30,7 +31,9 @@ module.exports = {
     mdxRule.use = [
       {
         loader: "xdm/webpack.cjs",
-        options: { remarkPlugins: [remarkCodeHike] },
+        options: {
+          remarkPlugins: [[remarkCodeHike, { theme }]],
+        },
       },
     ]
 

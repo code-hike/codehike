@@ -3,6 +3,24 @@ import { Code } from "@code-hike/mdx"
 # Hello
 
 ```js index.js
+function lorem(ipsum, dolor = 1) {}
+```
+
+---
+
+```js index.js
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit
+  dolor = sit - amet(dolor)
+  return sit
+    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
+    : []
+}
+```
+
+---
+
+```js index.js focus=9:15
 function lorem(ipsum, dolor = 1) {
   const sit = ipsum == null ? 0 : ipsum.sit
   dolor = sit - amet(dolor)
@@ -23,7 +41,21 @@ function adipiscing(...elit) {
 
 ## Hi
 
-```py focus=2
+```py
 def hello():
+  print("Hello")
+```
+
+---
+
+```py focus=4:6
+def hello_1():
+  print("Hello")
+
+def hello_2():
+  print("Hello")
+  pring("World")
+
+def hello_3():
   print("Hello")
 ```
