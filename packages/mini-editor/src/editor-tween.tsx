@@ -53,7 +53,6 @@ function EditorTween({
   codeConfig,
   frameProps = {},
 }: EditorTweenProps) {
-  console.log("2", { prev })
   const ref = React.createRef<HTMLDivElement>()
   const { northPanel, southPanel } = useTransition(
     ref,
