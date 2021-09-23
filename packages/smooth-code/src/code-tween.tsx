@@ -176,6 +176,7 @@ function Wrapper({
     <pre
       {...htmlProps}
       style={{
+        overflow: "auto",
         margin: 0,
         ...style,
         ...htmlProps?.style,

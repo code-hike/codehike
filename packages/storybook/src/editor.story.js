@@ -1,5 +1,8 @@
 import React from "react"
-import { EditorTween } from "@code-hike/mini-editor"
+import {
+  EditorTween,
+  EditorSpring,
+} from "@code-hike/mini-editor"
 import { Page } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 import theme from "shiki/themes/poimandres.json"
@@ -7,6 +10,74 @@ import { highlight } from "@code-hike/highlighter"
 
 export default {
   title: "Test/Editor",
+}
+
+export const overflow = () => {
+  const code = `
+console.log(1)
+console.log(2)
+console.log(3)
+console.log(4)
+console.log(5)
+console.log(6)
+console.log(7)
+console.log(8)
+console.log(9)
+console.log(10)
+`.trim()
+  return (
+    <Page>
+      <SingleEditor
+        inputCode={code}
+        lang="js"
+        focus="2:7"
+        frameProps={{ style: { height: 100 } }}
+      />
+    </Page>
+  )
+}
+
+function SingleEditor({
+  inputCode,
+  focus = "",
+  annotations = [],
+  frameProps,
+}) {
+  const [code, setCode] = React.useState(null)
+
+  React.useEffect(() => {
+    highlight({
+      code: inputCode,
+      lang: "js",
+      theme,
+    }).then(code => setCode(code))
+  }, [inputCode])
+
+  const step = {
+    files: [
+      {
+        name: "index.js",
+        code,
+        focus,
+        annotations,
+      },
+    ],
+    northPanel: {
+      tabs: ["index.js"],
+      active: "index.js",
+      heightRatio: 1,
+    },
+  }
+
+  return code ? (
+    <EditorSpring
+      {...step}
+      codeConfig={{ theme }}
+      frameProps={frameProps}
+    />
+  ) : (
+    "Loading..."
+  )
 }
 
 export const oneToOne = () => {
@@ -217,8 +288,6 @@ function TestTransition({
   if (!files) {
     return "Loading..."
   }
-
-  console.log(files)
 
   const [
     prevNorthTabs,

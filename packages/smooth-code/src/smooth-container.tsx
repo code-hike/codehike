@@ -49,6 +49,11 @@ export function SmoothContainer({
     progress
   )
 
+  const width = Math.max(
+    focusWidth + 16, // 16 is the left padding
+    dimensions!.containerWidth
+  )
+
   return (
     <Container
       width={dimensions!.containerWidth}
@@ -62,10 +67,7 @@ export function SmoothContainer({
           focusHeight,
           dimensions!.containerHeight
         )}
-        width={Math.max(
-          focusWidth,
-          dimensions!.containerWidth
-        )}
+        width={width}
       >
         {children(focusWidth)}
       </Content>
@@ -88,6 +90,7 @@ function Container({
         width,
         height,
         position: "relative",
+        overflowX: "auto",
         // padding: "0 16px",
         // boxSizing: "border-box",
         // overflow: "auto",

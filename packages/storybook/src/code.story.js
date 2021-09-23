@@ -8,7 +8,7 @@ export default {
   title: "Test/Code",
 }
 
-export const autoHeigth = ({}) => {
+export const autoHeigth = () => {
   const oneLine = `
 console.log(1)
 `.trim()
@@ -42,7 +42,77 @@ console.log(3)
   )
 }
 
-function CodePage({ code, focus, annotations }) {
+export const overflow = () => {
+  const verticalCode = `
+console.log(1)
+console.log(2)
+console.log(3)
+console.log(4)
+console.log(5)
+console.log(6)
+console.log(7)
+console.log(8)
+console.log(9)
+console.log(10)
+`.trim()
+  const horizontalCode = `
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet lorem ipsum lorem ipsum lorem ipsum")
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet")
+`.trim()
+
+  const both = `
+console.log(1)
+console.log(2)
+console.log(3)
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet lorem ipsum lorem ipsum lorem ipsum")
+console.log("lorem ipsum dolor sit amet")
+console.log(6)
+console.log(7)
+console.log(8)
+console.log(9)
+console.log(10)
+`.trim()
+
+  return (
+    <Page>
+      <CodePage
+        code={verticalCode}
+        focus="2:7"
+        config={{
+          htmlProps: {
+            style: { height: 100 },
+          },
+        }}
+      />
+      <hr />
+      <CodePage
+        code={horizontalCode}
+        focus=""
+        config={{
+          htmlProps: {
+            style: { height: 100 },
+          },
+        }}
+      />
+      <hr />
+
+      <CodePage
+        code={both}
+        focus="2:7"
+        config={{
+          htmlProps: {
+            style: { height: 100 },
+          },
+        }}
+      />
+    </Page>
+  )
+}
+
+function CodePage({ code, focus, annotations, config }) {
   const [step, setStep] = React.useState(null)
 
   React.useEffect(() => {
@@ -60,7 +130,7 @@ function CodePage({ code, focus, annotations }) {
   }, [])
 
   return step ? (
-    <CodeSpring step={step} config={{ theme }} />
+    <CodeSpring step={step} config={{ theme, ...config }} />
   ) : (
     "Loading..."
   )
