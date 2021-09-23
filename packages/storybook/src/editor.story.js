@@ -13,7 +13,7 @@ export default {
 }
 
 export const overflow = () => {
-  const code = `
+  const verticalCode = `
 console.log(1)
 console.log(2)
 console.log(3)
@@ -25,10 +25,43 @@ console.log(8)
 console.log(9)
 console.log(10)
 `.trim()
+  const horizontalCode = `
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet lorem ipsum lorem ipsum lorem ipsum")
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet")
+`.trim()
+
+  const both = `
+console.log(1)
+console.log(2)
+console.log(3)
+console.log("lorem ipsum dolor sit amet")
+console.log("lorem ipsum dolor sit amet lorem ipsum lorem ipsum lorem ipsum")
+console.log("lorem ipsum dolor sit amet")
+console.log(6)
+console.log(7)
+console.log(8)
+console.log(9)
+console.log(10)
+`.trim()
   return (
     <Page>
       <SingleEditor
-        inputCode={code}
+        inputCode={verticalCode}
+        lang="js"
+        focus="2:7"
+        frameProps={{ style: { height: 100 } }}
+      />
+      <hr />
+      <SingleEditor
+        inputCode={horizontalCode}
+        lang="js"
+        focus="2:7"
+      />
+      <hr />
+      <SingleEditor
+        inputCode={both}
         lang="js"
         focus="2:7"
         frameProps={{ style: { height: 100 } }}
