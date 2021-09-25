@@ -1,18 +1,21 @@
 import React from "react"
 import visit from "unist-util-visit"
-import { Node } from "unist"
+import { Node, Parent } from "unist"
 import { CodeSpring } from "@code-hike/smooth-code"
 import { EditorSpring } from "@code-hike/mini-editor"
 import { highlight } from "@code-hike/highlighter"
+import { extractLinks } from "./links"
 
 export function Code({
   code,
   meta,
   theme,
+  annotations,
 }: {
   code: string
   meta: string
   theme: string
+  annotations: string
 }) {
   const { name, focus } = parseMetastring(meta)
   return name ? (
@@ -27,34 +30,63 @@ export function Code({
           name,
           code: JSON.parse(code),
           focus,
-          annotations: [],
+          annotations: parseAnnotations(annotations),
         },
       ]}
-      codeConfig={{
-        theme: JSON.parse(theme),
-        // TODO calculate line height (in CodeSpring) depending on focused lines
-        // htmlProps: { style: { height: "18em" } },
-      }}
+      codeConfig={{ theme: JSON.parse(theme) }}
     />
   ) : (
     <CodeSpring
-      config={{
-        theme: JSON.parse(theme),
-        // TODO calculate line height (in CodeSpring) depending on focused lines
-        // htmlProps: { style: { height: "16em" } },
-      }}
+      config={{ theme: JSON.parse(theme) }}
       step={{
         code: JSON.parse(code),
         focus,
-        annotations: [],
+        annotations: parseAnnotations(annotations),
       }}
     />
   )
 }
 
+function parseAnnotations(annotations: string) {
+  const list = JSON.parse(annotations) || []
+  console.log({ list })
+  return list.map(
+    ({ type, ...rest }: { type: string }) => ({
+      Component: CodeLink,
+      ...rest,
+    })
+  )
+}
+
+function CodeLink({
+  children,
+  data,
+}: {
+  data: {
+    url: string
+    title: string | undefined
+  }
+  children: React.ReactNode
+}) {
+  return (
+    <a
+      href={data.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={data.title}
+      style={{
+        textDecoration: "underline",
+        textDecorationStyle: "dotted",
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async function transformer(tree: Node) {
-    console.log(tree)
+    // console.log(tree)
     let useCodeComponent = false
     visit(tree, "mdxjsEsm", node => {
       if (
@@ -70,14 +102,21 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       return
     }
 
-    const codeNodes = [] as Node[]
-    visit(tree, "code", node => {
-      codeNodes.push(node)
+    const codeNodes = [] as [Node, number, Parent][]
+    visit(tree, "code", (node, index, parent) => {
+      codeNodes.push([node, index, parent!])
     })
 
     await Promise.all(
-      codeNodes.map(async node => {
-        // console.log("code", node);
+      codeNodes.map(async ([node, index, parent]) => {
+        // links
+        const annotations = extractLinks(
+          node,
+          index,
+          parent,
+          node.value as string
+        )
+
         const code = await highlight({
           code: node.value as string,
           lang: node.lang as string,
@@ -104,8 +143,15 @@ export function remarkCodeHike({ theme }: { theme: any }) {
             name: "theme",
             value: JSON.stringify(theme),
           },
+          {
+            type: "mdxJsxAttribute",
+            name: "annotations",
+            value: JSON.stringify(annotations),
+          },
         ]
         node.children = []
+
+        // console.log({ annotations })
       })
     )
   }

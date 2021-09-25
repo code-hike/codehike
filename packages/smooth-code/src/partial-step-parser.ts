@@ -88,6 +88,8 @@ function getCode(
     lines
       .map(line => line.tokens.map(t => t.content).join(""))
       .join("\n")
+      .trimEnd()
+      .concat("\n")
   )
 }
 
