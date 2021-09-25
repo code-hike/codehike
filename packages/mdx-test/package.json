@@ -1,0 +1,17 @@
+{
+  "name": "@code-hike/mdx-test",
+  "version": "0.3.0-next.0",
+  "private": "true",
+  "scripts": {
+    "dev": "next"
+  },
+  "dependencies": {
+    "@code-hike/mdx": "^0.3.0-next.0",
+    "esbuild": "^0.13.2",
+    "mdx-bundler": "^6.0.1",
+    "next": "^11.1.2",
+    "react": "^16",
+    "react-dom": "^16",
+    "react-json-view": "^1.21.3"
+  }
+}
