@@ -107,7 +107,6 @@ export default function Page({
           code={postCodeHike}
           hide={!state[0]["Post Code Hike"]}
         />
-        {/* <pre>{result}</pre> */}
         <div
           style={{
             outline: "2px solid violet",
