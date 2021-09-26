@@ -38,9 +38,14 @@ export async function getStaticProps(context) {
     [remarkCodeHike, { theme }],
   ])
 
+  const shiki = await import("shiki")
+  const highlighter = await shiki.getHighlighter({
+    theme: "github-light",
+  })
+
   return {
     props: {
-      source: mdxSource,
+      source: highlighter.codeToHtml(mdxSource, "mdx"),
       preCodeHike,
       postCodeHike,
       result,
@@ -95,10 +100,10 @@ export default function Page({
         <pre
           style={{
             display: state[0]["MDX"] ? "block" : "none",
+            flex: 1,
           }}
-        >
-          {source}
-        </pre>
+          dangerouslySetInnerHTML={{ __html: source }}
+        ></pre>
         <MDXComponent
           code={preCodeHike}
           hide={!state[0]["Pre Code Hike"]}
@@ -118,7 +123,9 @@ export default function Page({
             boxSizing: "border-box",
           }}
         >
-          <MDXComponent code={result} />
+          <ErrorBoundary>
+            <MDXComponent code={result} />
+          </ErrorBoundary>
         </div>
       </div>
     </main>
@@ -150,8 +157,9 @@ function MDXComponent({ code, hide }) {
   return (
     <div
       style={{
-        minWidth: "24vw",
         display: hide ? "none" : "block",
+        flex: 1,
+        minWidth: "25vw",
       }}
     >
       <Component components={{ JSONView }} />
@@ -176,4 +184,47 @@ function JSONView({ src }) {
       collapseStringsAfterLength={12}
     />
   )
+}
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { show: false, hasError: false }
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    // console.log("getDerivedStateFromError", error)
+    return {
+      hasError: true,
+      error: JSON.stringify(error, null, 2),
+    }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    // logErrorToMyService(error, errorInfo)
+  }
+
+  componentDidMount() {
+    this.setState({ show: true })
+  }
+
+  render() {
+    // ErrorBoundary doesn't work with SSR
+    if (!this.state.show) {
+      return ""
+    }
+
+    if (this.state.hasError) {
+      return (
+        <div>
+          <h1>Something went wrong.</h1>
+          <pre>{this.state.error}</pre>
+        </div>
+      )
+    }
+
+    return this.props.children
+  }
 }

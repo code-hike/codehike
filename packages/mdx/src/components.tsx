@@ -1,52 +1,100 @@
 import React from "react"
 import { CodeSpring } from "@code-hike/smooth-code"
 import { EditorSpring } from "@code-hike/mini-editor"
+import { Code } from "@code-hike/utils"
+
+// export function Code({
+//   code,
+//   meta,
+//   theme,
+//   annotations,
+// }: {
+//   code: string
+//   meta: string
+//   theme: string
+//   annotations: string
+// }) {
+//   const { name, focus } = parseMetastring(meta)
+//   return name ? (
+//     <EditorSpring
+//       northPanel={{
+//         tabs: [name],
+//         active: name,
+//         heightRatio: 1,
+//       }}
+//       files={[
+//         {
+//           name,
+//           code: JSON.parse(code),
+//           focus,
+//           annotations: parseAnnotations(annotations),
+//         },
+//       ]}
+//       codeConfig={{ theme: JSON.parse(theme) }}
+//     />
+//   ) : (
+//     <CodeSpring
+//       config={{ theme: JSON.parse(theme) }}
+//       step={{
+//         code: JSON.parse(code),
+//         focus,
+//         annotations: parseAnnotations(annotations),
+//       }}
+//     />
+//   )
+// }
 
 export function Code({
-  code,
-  meta,
+  files,
   theme,
-  annotations,
 }: {
-  code: string
-  meta: string
+  files: string
   theme: string
-  annotations: string
 }) {
-  const { name, focus } = parseMetastring(meta)
-  return name ? (
-    <EditorSpring
-      northPanel={{
-        tabs: [name],
-        active: name,
-        heightRatio: 1,
-      }}
-      files={[
-        {
-          name,
-          code: JSON.parse(code),
-          focus,
-          annotations: parseAnnotations(annotations),
-        },
-      ]}
-      codeConfig={{ theme: JSON.parse(theme) }}
-    />
-  ) : (
-    <CodeSpring
-      config={{ theme: JSON.parse(theme) }}
-      step={{
-        code: JSON.parse(code),
-        focus,
-        annotations: parseAnnotations(annotations),
-      }}
-    />
-  )
+  const filesData = JSON.parse(files) as {
+    meta: string
+    code: Code
+    annotations: {
+      type: string
+      data: any
+      focus?: string
+    }
+  }[]
+
+  const parsedFiles = filesData.map(data => {
+    const { name, focus } = parseMetastring(data.meta)
+    return {
+      name,
+      code: data.code,
+      focus,
+      annotations: parseAnnotations(data.annotations),
+    }
+  })
+
+  if (parsedFiles.length <= 1 && !parsedFiles[0]?.name) {
+    return (
+      <CodeSpring
+        config={{ theme: JSON.parse(theme) }}
+        step={parsedFiles[0]}
+      />
+    )
+  } else {
+    return (
+      <EditorSpring
+        northPanel={{
+          tabs: parsedFiles.map(x => x.name) as any,
+          active: parsedFiles[0].name as any,
+          heightRatio: 1,
+        }}
+        files={parsedFiles as any}
+        codeConfig={{ theme: JSON.parse(theme) }}
+      />
+    )
+  }
 }
 
-function parseAnnotations(annotations: string) {
-  const list = JSON.parse(annotations) || []
-  console.log({ list })
-  return list.map(
+function parseAnnotations(annotations: any) {
+  return annotations.map(
     ({ type, ...rest }: { type: string }) => ({
       Component: CodeLink,
       ...rest,

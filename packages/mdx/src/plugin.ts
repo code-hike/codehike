@@ -19,6 +19,7 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       return
     }
 
+    await transformEditorNodes(tree, theme)
     await transformCodeNodes(tree, theme)
   }
 }
@@ -28,65 +29,117 @@ async function transformEditorNodes(
   theme: any
 ) {
   const editorNodes = [] as [Node, number, Parent][]
-  visit(
+  await visitAsync(
     tree,
     "mdxJsxFlowElement",
-    (node, index, parent) => {
-      if (node.name === "Code")
-        editorNodes.push([node, index, parent!])
+    async (editorNode, index, parent) => {
+      if (editorNode.name === "Code") {
+        const codeFileNodes = [] as [Node, number, Parent][]
+        visit(editorNode, "code", (node, index, parent) =>
+          codeFileNodes.push([node, index, parent!])
+        )
+        const files = await Promise.all(
+          codeFileNodes.map(([node, index, parent]) =>
+            transformCodeFile(node, index, parent, theme)
+          )
+        )
+        editorNode.type = "mdxJsxFlowElement"
+        editorNode.name = "Code"
+        editorNode.children = []
+        editorNode.attributes = [
+          {
+            type: "mdxJsxAttribute",
+            name: "files",
+            value: JSON.stringify(files),
+          },
+          {
+            type: "mdxJsxAttribute",
+            name: "theme",
+            value: JSON.stringify(theme),
+          },
+        ]
+      }
     }
+  )
+
+  await Promise.all(
+    editorNodes.map(async ([editorNode, index, parent]) => {
+      visit(editorNode, "code", (node, index, parent) => {})
+    })
   )
 }
 
 async function transformCodeNodes(tree: Node, theme: any) {
-  const codeNodes = [] as [Node, number, Parent][]
-  visit(tree, "code", (node, index, parent) => {
-    codeNodes.push([node, index, parent!])
-  })
-
-  await Promise.all(
-    codeNodes.map(async ([node, index, parent]) => {
-      // links
-      const annotations = extractLinks(
+  await visitAsync(
+    tree,
+    "code",
+    async (node, index, parent) => {
+      const file = await transformCodeFile(
         node,
         index,
-        parent,
-        node.value as string
+        parent!,
+        theme
       )
-
-      const code = await highlight({
-        code: node.value as string,
-        lang: node.lang as string,
-        theme,
-      })
       node.type = "mdxJsxFlowElement"
       node.name = "Code"
+      node.children = []
       node.attributes = [
         {
           type: "mdxJsxAttribute",
-          name: "code",
-          value: JSON.stringify(code),
-        },
-        {
-          type: "mdxJsxAttribute",
-          name: "meta",
-          value:
-            typeof node.meta === "string" ? node.meta : "",
+          name: "files",
+          value: JSON.stringify([file]),
         },
         {
           type: "mdxJsxAttribute",
           name: "theme",
           value: JSON.stringify(theme),
         },
-        {
-          type: "mdxJsxAttribute",
-          name: "annotations",
-          value: JSON.stringify(annotations),
-        },
       ]
-      node.children = []
-
-      // console.log({ annotations })
-    })
+    }
   )
+}
+
+async function transformCodeFile(
+  node: Node,
+  index: number,
+  parent: Parent,
+  theme: any
+) {
+  const annotations = extractLinks(
+    node,
+    index,
+    parent,
+    node.value as string
+  )
+
+  const code = await highlight({
+    code: node.value as string,
+    lang: node.lang as string,
+    theme,
+  })
+
+  return {
+    meta: typeof node.meta === "string" ? node.meta : "",
+    code,
+    annotations,
+  }
+}
+
+async function visitAsync(
+  tree: Node,
+  type: string,
+  visitor: (
+    node: Node,
+    index: number,
+    parent: Parent | undefined
+  ) => Promise<any>
+) {
+  const promises = [] as Promise<any>[]
+  visit(tree, type, (node, index, parent) => {
+    const result = visitor(node, index, parent)
+    if (result) {
+      promises.push(result)
+    }
+  })
+  await Promise.all(promises)
 }
