@@ -9,8 +9,7 @@ export function remarkCodeHike({ theme }: { theme: any }) {
     visit(tree, "mdxjsEsm", node => {
       if (
         // TODO too fragile:
-        node.value ===
-        `import { Code } from "@code-hike/mdx"`
+        node.value === `import { CH } from "@code-hike/mdx"`
       ) {
         useCodeComponent = true
       }
@@ -33,7 +32,7 @@ async function transformEditorNodes(
     tree,
     "mdxJsxFlowElement",
     async (editorNode, index, parent) => {
-      if (editorNode.name === "Code") {
+      if (editorNode.name === "CH.Code") {
         const northNodes = [] as any[]
         const southNodes = [] as any[]
         let breakNode = false
@@ -66,7 +65,7 @@ async function transformEditorNodes(
         )
 
         editorNode.type = "mdxJsxFlowElement"
-        editorNode.name = "Code"
+        editorNode.name = "CH.Code"
         editorNode.children = []
         editorNode.attributes = [
           {
@@ -108,7 +107,7 @@ async function transformCodeNodes(tree: Node, theme: any) {
         theme
       )
       node.type = "mdxJsxFlowElement"
-      node.name = "Code"
+      node.name = "CH.Code"
       node.children = []
       node.attributes = [
         {

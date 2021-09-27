@@ -1,2 +1,2 @@
 export { remarkCodeHike } from "./plugin"
-export { Code } from "./components"
+export { CH } from "./components"

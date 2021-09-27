@@ -3,7 +3,11 @@ import { CodeSpring } from "@code-hike/smooth-code"
 import { EditorSpring } from "@code-hike/mini-editor"
 import { Code } from "@code-hike/utils"
 
-export function Code({
+export const CH = {
+  Code,
+}
+
+function Code({
   northFiles,
   southFiles,
   theme,
