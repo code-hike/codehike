@@ -3,54 +3,68 @@ import { CodeSpring } from "@code-hike/smooth-code"
 import { EditorSpring } from "@code-hike/mini-editor"
 import { Code } from "@code-hike/utils"
 
-// export function Code({
-//   code,
-//   meta,
-//   theme,
-//   annotations,
-// }: {
-//   code: string
-//   meta: string
-//   theme: string
-//   annotations: string
-// }) {
-//   const { name, focus } = parseMetastring(meta)
-//   return name ? (
-//     <EditorSpring
-//       northPanel={{
-//         tabs: [name],
-//         active: name,
-//         heightRatio: 1,
-//       }}
-//       files={[
-//         {
-//           name,
-//           code: JSON.parse(code),
-//           focus,
-//           annotations: parseAnnotations(annotations),
-//         },
-//       ]}
-//       codeConfig={{ theme: JSON.parse(theme) }}
-//     />
-//   ) : (
-//     <CodeSpring
-//       config={{ theme: JSON.parse(theme) }}
-//       step={{
-//         code: JSON.parse(code),
-//         focus,
-//         annotations: parseAnnotations(annotations),
-//       }}
-//     />
-//   )
-// }
-
 export function Code({
-  files,
+  northFiles,
+  southFiles,
   theme,
 }: {
-  files: string
+  northFiles: string
+  southFiles?: string
   theme: string
 }) {
+  const north = parseFiles(northFiles)
+  const south = parseFiles(southFiles || "[]")
+  console.log({ north, south })
+
+  const allFiles = [...north, ...south]
+
+  if (allFiles.length <= 1 && !allFiles[0]?.name) {
+    return (
+      <CodeSpring
+        config={{ theme: JSON.parse(theme) }}
+        step={allFiles[0]}
+      />
+    )
+  } else {
+    const northActive =
+      north.find(f => f.active) || north[0]
+    const southActive = south.length
+      ? south.find(f => f.active) || south[0]
+      : null
+
+    const northLines = northActive.code.lines.length || 1
+    const southLines = southActive?.code.lines.length || 0
+
+    const northRatio = southActive
+      ? (northLines + 3.33) /
+        (southLines + northLines + 6.66)
+      : 1
+    const southRatio = 1 - northRatio
+
+    return (
+      <EditorSpring
+        northPanel={{
+          tabs: north.map(x => x.name) as any,
+          active: northActive.name as any,
+          heightRatio: northRatio,
+        }}
+        southPanel={
+          south.length
+            ? {
+                tabs: south.map(x => x.name) as any,
+                active: southActive!.name as any,
+                heightRatio: southRatio,
+              }
+            : undefined
+        }
+        files={allFiles as any}
+        codeConfig={{ theme: JSON.parse(theme) }}
+      />
+    )
+  }
+}
+
+function parseFiles(files: string) {
   const filesData = JSON.parse(files) as {
     meta: string
     code: Code
@@ -61,36 +75,18 @@ export function Code({
     }
   }[]
 
-  const parsedFiles = filesData.map(data => {
-    const { name, focus } = parseMetastring(data.meta)
+  return filesData.map(data => {
+    const { name, focus, active } = parseMetastring(
+      data.meta
+    )
     return {
+      active,
       name,
       code: data.code,
       focus,
       annotations: parseAnnotations(data.annotations),
     }
   })
-
-  if (parsedFiles.length <= 1 && !parsedFiles[0]?.name) {
-    return (
-      <CodeSpring
-        config={{ theme: JSON.parse(theme) }}
-        step={parsedFiles[0]}
-      />
-    )
-  } else {
-    return (
-      <EditorSpring
-        northPanel={{
-          tabs: parsedFiles.map(x => x.name) as any,
-          active: parsedFiles[0].name as any,
-          heightRatio: 1,
-        }}
-        files={parsedFiles as any}
-        codeConfig={{ theme: JSON.parse(theme) }}
-      />
-    )
-  }
 }
 
 function parseAnnotations(annotations: any) {

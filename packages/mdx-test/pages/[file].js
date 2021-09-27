@@ -121,6 +121,7 @@ export default function Page({
             maxWidth: "50vw",
             width: "50vw",
             boxSizing: "border-box",
+            flex: 0,
           }}
         >
           <ErrorBoundary>

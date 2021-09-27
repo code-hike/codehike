@@ -34,23 +34,50 @@ async function transformEditorNodes(
     "mdxJsxFlowElement",
     async (editorNode, index, parent) => {
       if (editorNode.name === "Code") {
-        const codeFileNodes = [] as [Node, number, Parent][]
-        visit(editorNode, "code", (node, index, parent) =>
-          codeFileNodes.push([node, index, parent!])
+        const northNodes = [] as any[]
+        const southNodes = [] as any[]
+        let breakNode = false
+        visit(
+          editorNode,
+          ["code", "thematicBreak"],
+          (node, index, parent) => {
+            if (node.type === "thematicBreak") {
+              breakNode = true
+              return
+            }
+
+            if (breakNode) {
+              southNodes.push([node, index, parent])
+            } else {
+              northNodes.push([node, index, parent])
+            }
+          }
         )
-        const files = await Promise.all(
-          codeFileNodes.map(([node, index, parent]) =>
+
+        const northFiles = await Promise.all(
+          northNodes.map(([node, index, parent]) =>
             transformCodeFile(node, index, parent, theme)
           )
         )
+        const southFiles = await Promise.all(
+          southNodes.map(([node, index, parent]) =>
+            transformCodeFile(node, index, parent, theme)
+          )
+        )
+
         editorNode.type = "mdxJsxFlowElement"
         editorNode.name = "Code"
         editorNode.children = []
         editorNode.attributes = [
           {
             type: "mdxJsxAttribute",
-            name: "files",
-            value: JSON.stringify(files),
+            name: "northFiles",
+            value: JSON.stringify(northFiles),
+          },
+          {
+            type: "mdxJsxAttribute",
+            name: "southFiles",
+            value: JSON.stringify(southFiles),
           },
           {
             type: "mdxJsxAttribute",
@@ -86,7 +113,7 @@ async function transformCodeNodes(tree: Node, theme: any) {
       node.attributes = [
         {
           type: "mdxJsxAttribute",
-          name: "files",
+          name: "northFiles",
           value: JSON.stringify([file]),
         },
         {
@@ -127,12 +154,12 @@ async function transformCodeFile(
 
 async function visitAsync(
   tree: Node,
-  type: string,
+  type: string | string[],
   visitor: (
     node: Node,
     index: number,
     parent: Parent | undefined
-  ) => Promise<any>
+  ) => void | Promise<any>
 ) {
   const promises = [] as Promise<any>[]
   visit(tree, type, (node, index, parent) => {
