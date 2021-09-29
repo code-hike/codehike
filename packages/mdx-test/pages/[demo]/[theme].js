@@ -2,15 +2,15 @@ import { bundleMDX } from "mdx-bundler"
 import { getMDXComponent } from "mdx-bundler/client"
 import React from "react"
 import fs from "fs/promises"
-import { remarkShowTree } from "../src/plugin"
+import { remarkShowTree } from "../../src/plugin"
 import dynamic from "next/dynamic"
 import { remarkCodeHike } from "@code-hike/mdx"
-import theme from "shiki/themes/github-light.json"
 import { useRouter } from "next/router"
 import Head from "next/head"
 
 async function getDemoList() {
   const files = await fs.readdir("./content/")
+
   return files
     .filter(filename => filename.endsWith(".mdx"))
     .map(filename => filename.slice(0, -4))
@@ -18,18 +18,25 @@ async function getDemoList() {
 
 export async function getStaticPaths() {
   const demos = await getDemoList()
+  const { BUNDLED_THEMES } = await import("shiki")
   return {
-    paths: demos.map(file => ({
-      params: { file },
-    })),
+    paths: demos.flatMap(demo =>
+      BUNDLED_THEMES.map(theme => ({
+        params: { demo, theme },
+      }))
+    ),
     fallback: false,
   }
 }
 
 export async function getStaticProps(context) {
-  const { file } = context.params
+  const { demo, theme } = context.params
+  const loadedTheme = await import(
+    `shiki/themes/${theme}.json`
+  )
+
   const mdxSource = await fs.readFile(
-    `./content/${file}.mdx`,
+    `./content/${demo}.mdx`,
     "utf8"
   )
   const preCodeHike = await bundle(mdxSource, [
@@ -37,12 +44,12 @@ export async function getStaticProps(context) {
   ])
 
   const postCodeHike = await bundle(mdxSource, [
-    [remarkCodeHike, { theme }],
+    [remarkCodeHike, { theme: loadedTheme }],
     remarkShowTree,
   ])
 
   const result = await bundle(mdxSource, [
-    [remarkCodeHike, { theme }],
+    [remarkCodeHike, { theme: loadedTheme }],
   ])
 
   const shiki = await import("shiki")
@@ -60,6 +67,8 @@ export async function getStaticProps(context) {
       result,
       demos,
       themes: shiki.BUNDLED_THEMES,
+      currentTheme: theme,
+      currentDemo: demo,
     },
   }
 }
@@ -90,6 +99,8 @@ export default function Page({
   result,
   demos,
   themes,
+  currentTheme,
+  currentDemo,
 }) {
   const state = React.useState({
     MDX: true,
@@ -138,8 +149,11 @@ export default function Page({
         <label>
           Demo
           <select
+            value={currentDemo}
             onChange={e => {
-              router.push(`/${e.target.value}`)
+              router.push(
+                `/${e.target.value}/${currentTheme}`
+              )
             }}
           >
             {demos.map(demo => (
@@ -150,8 +164,11 @@ export default function Page({
         <label>
           Theme
           <select
+            value={currentTheme}
             onChange={e => {
-              router.push(`/${e.target.value}`)
+              router.push(
+                `/${currentDemo}/${e.target.value}`
+              )
             }}
           >
             {themes.map(theme => (
