@@ -2,6 +2,7 @@ import visit from "unist-util-visit"
 import { Node, Parent } from "unist"
 import { highlight } from "@code-hike/highlighter"
 import { extractLinks } from "./links"
+import { visitAsync, toJSX } from "./unist-utils"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async function transformer(tree: Node) {
@@ -18,16 +19,34 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       return
     }
 
+    transformSections(tree)
+
     await transformEditorNodes(tree, theme)
     await transformCodeNodes(tree, theme)
   }
+}
+
+function transformSections(tree: Node) {
+  visit(tree, "mdxJsxFlowElement", sectionNode => {
+    if (sectionNode.name === "CH.Section")
+      visit(sectionNode, "link", (linkNode: any) => {
+        const url = decodeURI(linkNode["url"])
+        if (url.startsWith("focus://")) {
+          const focus = url.slice(8)
+          toJSX(linkNode, {
+            type: "mdxJsxTextElement",
+            name: "CH.SectionLink",
+            props: { focus },
+          })
+        }
+      })
+  })
 }
 
 async function transformEditorNodes(
   tree: Node,
   theme: any
 ) {
-  const editorNodes = [] as [Node, number, Parent][]
   await visitAsync(
     tree,
     "mdxJsxFlowElement",
@@ -64,34 +83,13 @@ async function transformEditorNodes(
           )
         )
 
-        editorNode.type = "mdxJsxFlowElement"
-        editorNode.name = "CH.Code"
         editorNode.children = []
-        editorNode.attributes = [
-          {
-            type: "mdxJsxAttribute",
-            name: "northFiles",
-            value: JSON.stringify(northFiles),
-          },
-          {
-            type: "mdxJsxAttribute",
-            name: "southFiles",
-            value: JSON.stringify(southFiles),
-          },
-          {
-            type: "mdxJsxAttribute",
-            name: "theme",
-            value: JSON.stringify(theme),
-          },
-        ]
+        toJSX(editorNode, {
+          name: "CH.Code",
+          props: { northFiles, southFiles, theme },
+        })
       }
     }
-  )
-
-  await Promise.all(
-    editorNodes.map(async ([editorNode, index, parent]) => {
-      visit(editorNode, "code", (node, index, parent) => {})
-    })
   )
 }
 
@@ -106,21 +104,12 @@ async function transformCodeNodes(tree: Node, theme: any) {
         parent!,
         theme
       )
-      node.type = "mdxJsxFlowElement"
-      node.name = "CH.Code"
+
       node.children = []
-      node.attributes = [
-        {
-          type: "mdxJsxAttribute",
-          name: "northFiles",
-          value: JSON.stringify([file]),
-        },
-        {
-          type: "mdxJsxAttribute",
-          name: "theme",
-          value: JSON.stringify(theme),
-        },
-      ]
+      toJSX(node, {
+        name: "CH.Code",
+        props: { northFiles: [file], theme },
+      })
     }
   )
 }
@@ -149,23 +138,4 @@ async function transformCodeFile(
     code,
     annotations,
   }
-}
-
-async function visitAsync(
-  tree: Node,
-  type: string | string[],
-  visitor: (
-    node: Node,
-    index: number,
-    parent: Parent | undefined
-  ) => void | Promise<any>
-) {
-  const promises = [] as Promise<any>[]
-  visit(tree, type, (node, index, parent) => {
-    const result = visitor(node, index, parent)
-    if (result) {
-      promises.push(result)
-    }
-  })
-  await Promise.all(promises)
 }

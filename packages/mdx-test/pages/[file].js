@@ -6,15 +6,22 @@ import { remarkShowTree } from "../src/plugin"
 import dynamic from "next/dynamic"
 import { remarkCodeHike } from "@code-hike/mdx"
 import theme from "shiki/themes/github-light.json"
+import { useRouter } from "next/router"
+import Head from "next/head"
+
+async function getDemoList() {
+  const files = await fs.readdir("./content/")
+  return files
+    .filter(filename => filename.endsWith(".mdx"))
+    .map(filename => filename.slice(0, -4))
+}
 
 export async function getStaticPaths() {
-  const files = await fs.readdir("./content/")
+  const demos = await getDemoList()
   return {
-    paths: files
-      .filter(filename => filename.endsWith(".mdx"))
-      .map(filename => ({
-        params: { file: filename.slice(0, -4) },
-      })),
+    paths: demos.map(file => ({
+      params: { file },
+    })),
     fallback: false,
   }
 }
@@ -40,15 +47,19 @@ export async function getStaticProps(context) {
 
   const shiki = await import("shiki")
   const highlighter = await shiki.getHighlighter({
-    theme: "github-light",
+    theme: "light-plus",
   })
+
+  const demos = await getDemoList()
 
   return {
     props: {
-      source: highlighter.codeToHtml(mdxSource, "mdx"),
+      source: highlighter.codeToHtml(mdxSource, "markdown"),
       preCodeHike,
       postCodeHike,
       result,
+      demos,
+      themes: shiki.BUNDLED_THEMES,
     },
   }
 }
@@ -77,59 +88,100 @@ export default function Page({
   preCodeHike,
   postCodeHike,
   result,
+  demos,
+  themes,
 }) {
   const state = React.useState({
-    MDX: false,
-    "Pre Code Hike": true,
-    "Post Code Hike": true,
+    MDX: true,
+    "Pre Code Hike": false,
+    "Post Code Hike": false,
     Result: true,
   })
+  const router = useRouter()
 
   return (
-    <main>
-      <div
-        style={{ textAlign: "center", marginBottom: 20 }}
-      >
-        <Toggle state={state} value="MDX" />
-        <Toggle state={state} value="Pre Code Hike" />
-        <Toggle state={state} value="Post Code Hike" />
-        <Toggle state={state} value="Result" />
-      </div>
-
-      <div style={{ display: "flex" }}>
-        <pre
-          style={{
-            display: state[0]["MDX"] ? "block" : "none",
-            flex: 1,
-          }}
-          dangerouslySetInnerHTML={{ __html: source }}
-        ></pre>
-        <MDXComponent
-          code={preCodeHike}
-          hide={!state[0]["Pre Code Hike"]}
-        />
-        <MDXComponent
-          code={postCodeHike}
-          hide={!state[0]["Post Code Hike"]}
-        />
-        <div
-          style={{
-            outline: "2px solid violet",
-            padding: "0 10px",
-            display: state[0]["Result"] ? "block" : "none",
-            minWidth: "50vw",
-            maxWidth: "50vw",
-            width: "50vw",
-            boxSizing: "border-box",
-            flex: 0,
-          }}
-        >
-          <ErrorBoundary>
-            <MDXComponent code={result} />
-          </ErrorBoundary>
+    <div>
+      <Head>
+        <title>Code Hike Playground</title>
+      </Head>
+      <main>
+        <div className="columns">
+          <Column show={state[0]["MDX"]} title="MDX">
+            <div
+              dangerouslySetInnerHTML={{ __html: source }}
+            />
+          </Column>
+          <Column
+            show={state[0]["Pre Code Hike"]}
+            title="MDAST before CH"
+          >
+            <MDXComponent code={preCodeHike} />
+          </Column>
+          <Column
+            show={state[0]["Post Code Hike"]}
+            title="MDAST after CH"
+          >
+            <MDXComponent code={postCodeHike} />
+          </Column>
+          <Column
+            show={state[0]["Result"]}
+            className="result"
+            title="Result"
+          >
+            <ErrorBoundary>
+              <MDXComponent code={result} />
+            </ErrorBoundary>
+          </Column>
         </div>
-      </div>
-    </main>
+      </main>
+      <nav>
+        <label>
+          Demo
+          <select
+            onChange={e => {
+              router.push(`/${e.target.value}`)
+            }}
+          >
+            {demos.map(demo => (
+              <option key={demo}>{demo}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Theme
+          <select
+            onChange={e => {
+              router.push(`/${e.target.value}`)
+            }}
+          >
+            {themes.map(theme => (
+              <option key={theme}>{theme}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Columns
+          <div className="radio">
+            <Toggle state={state} value="MDX" />
+            <Toggle state={state} value="Pre Code Hike" />
+            <Toggle state={state} value="Post Code Hike" />
+            <Toggle state={state} value="Result" />
+          </div>
+        </label>
+      </nav>
+    </div>
+  )
+}
+
+function Column({ children, show, className, title }) {
+  return (
+    <div
+      className={"column " + (className || "")}
+      style={{ display: show ? "block" : "none" }}
+    >
+      <h2>{title}</h2>
+      <div className="content">{children}</div>
+    </div>
   )
 }
 
@@ -139,9 +191,8 @@ function Toggle({ state: [show, setShow], value }) {
       onClick={() =>
         setShow({ ...show, [value]: !show[value] })
       }
+      className={show[value] ? "selected" : ""}
       style={{
-        background: show[value] ? "#ebf3ff" : "#ededed",
-        border: "none",
         padding: "4px 8px",
       }}
     >
@@ -150,22 +201,12 @@ function Toggle({ state: [show, setShow], value }) {
   )
 }
 
-function MDXComponent({ code, hide }) {
+function MDXComponent({ code }) {
   const Component = React.useMemo(
     () => getMDXComponent(code, { react: React }),
     [code]
   )
-  return (
-    <div
-      style={{
-        display: hide ? "none" : "block",
-        flex: 1,
-        minWidth: "25vw",
-      }}
-    >
-      <Component components={{ JSONView }} />
-    </div>
-  )
+  return <Component components={{ JSONView }} />
 }
 
 const BrowserReactJsonView = dynamic(

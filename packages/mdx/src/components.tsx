@@ -5,6 +5,42 @@ import { Code } from "@code-hike/utils"
 
 export const CH = {
   Code,
+  Section,
+  SectionLink,
+}
+
+const SectionContext = React.createContext({})
+
+function Section({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <section style={{ outline: "1px solid red" }}>
+      <div>{children}</div>
+    </section>
+  )
+}
+
+function SectionLink({
+  focus,
+  children,
+}: {
+  focus: string
+  children: React.ReactNode
+}) {
+  return (
+    <span
+      style={{
+        textDecoration: "underline",
+        textDecorationStyle: "dotted",
+      }}
+      title={focus}
+    >
+      {children}
+    </span>
+  )
 }
 
 function Code({

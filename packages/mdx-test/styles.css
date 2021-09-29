@@ -1,0 +1,102 @@
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  margin: 0;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  background-color: #444;
+}
+
+nav {
+  height: 40px;
+}
+
+main {
+  flex: 1;
+  overflow: auto;
+}
+
+/* main */
+
+.columns {
+  display: flex;
+  min-height: 100%;
+}
+
+.column {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 0 6px 6px;
+  min-width: 25vw;
+}
+
+.column h2 {
+  padding: 6px;
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+  color: #ccc;
+}
+
+.column > .content {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 6px;
+}
+
+/* nav */
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #222;
+}
+
+.radio {
+  text-align: center;
+  border: 1px solid #222;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.radio button {
+  border: none;
+  background-color: #444;
+  color: #ccc;
+  height: 24px;
+}
+.radio button.selected {
+  background-color: #fafafa;
+  color: #222;
+}
+
+nav label {
+  color: #ccc;
+}
+
+nav select {
+  margin-left: 6px;
+  border-radius: 4px;
+  background-color: #fafafa;
+  height: 24px;
+  /* overflow: hidden; */
+}
+
+/* result */
+
+.result {
+  min-width: 800px;
+  width: 800px;
+}
+
+pre.shiki {
+  white-space: pre-wrap;
+}
