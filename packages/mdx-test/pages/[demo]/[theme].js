@@ -54,7 +54,7 @@ export async function getStaticProps(context) {
 
   const shiki = await import("shiki")
   const highlighter = await shiki.getHighlighter({
-    theme: "light-plus",
+    theme: "github-light",
   })
 
   const demos = await getDemoList()
@@ -102,118 +102,192 @@ export default function Page({
   currentTheme,
   currentDemo,
 }) {
-  const state = React.useState({
-    MDX: true,
-    "Pre Code Hike": false,
-    "Post Code Hike": false,
-    Result: true,
-  })
-  const router = useRouter()
-
   return (
     <div>
       <Head>
         <title>Code Hike Playground</title>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
       </Head>
-      <main>
-        <div className="columns">
-          <Column show={state[0]["MDX"]} title="MDX">
-            <div
-              dangerouslySetInnerHTML={{ __html: source }}
-            />
-          </Column>
-          <Column
-            show={state[0]["Pre Code Hike"]}
-            title="MDAST before CH"
-          >
-            <MDXComponent code={preCodeHike} />
-          </Column>
-          <Column
-            show={state[0]["Post Code Hike"]}
-            title="MDAST after CH"
-          >
-            <MDXComponent code={postCodeHike} />
-          </Column>
-          <Column
-            show={state[0]["Result"]}
-            className="result"
-            title="Result"
-          >
-            <ErrorBoundary>
-              <MDXComponent code={result} />
-            </ErrorBoundary>
-          </Column>
-        </div>
-      </main>
-      <nav>
-        <label>
-          Demo
-          <select
-            value={currentDemo}
-            onChange={e => {
-              router.push(
-                `/${e.target.value}/${currentTheme}`
-              )
-            }}
-          >
-            {demos.map(demo => (
-              <option key={demo}>{demo}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Theme
-          <select
-            value={currentTheme}
-            onChange={e => {
-              router.push(
-                `/${currentDemo}/${e.target.value}`
-              )
-            }}
-          >
-            {themes.map(theme => (
-              <option key={theme}>{theme}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Columns
-          <div className="radio">
-            <Toggle state={state} value="MDX" />
-            <Toggle state={state} value="Pre Code Hike" />
-            <Toggle state={state} value="Post Code Hike" />
-            <Toggle state={state} value="Result" />
-          </div>
-        </label>
-      </nav>
+      <Main
+        {...{ source, preCodeHike, postCodeHike, result }}
+      />
+      <Nav
+        {...{ currentDemo, currentTheme, demos, themes }}
+      />
     </div>
   )
 }
 
-function Column({ children, show, className, title }) {
+const Main = React.memo(function Main({
+  source,
+  preCodeHike,
+  postCodeHike,
+  result,
+}) {
   return (
+    <main>
+      <div className="columns">
+        <Column column="mdx">
+          <div
+            dangerouslySetInnerHTML={{ __html: source }}
+          />
+        </Column>
+        <Column column="pre-ch">
+          <MDXComponent code={preCodeHike} />
+        </Column>
+        <Column column="post-ch">
+          <MDXComponent code={postCodeHike} />
+        </Column>
+        <Column column="result">
+          <ErrorBoundary>
+            <MDXComponent code={result} />
+          </ErrorBoundary>
+        </Column>
+      </div>
+    </main>
+  )
+})
+
+function Nav({ currentDemo, currentTheme, demos, themes }) {
+  const router = useRouter()
+  return (
+    <nav>
+      <label>
+        Demo
+        <select
+          value={currentDemo}
+          onChange={e => {
+            router.push({
+              pathname: `/${e.target.value}/${currentTheme}`,
+              query: router.query.columns
+                ? {
+                    columns: router.query.columns,
+                  }
+                : {},
+            })
+          }}
+        >
+          {demos.map(demo => (
+            <option key={demo}>{demo}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Theme
+        <select
+          value={currentTheme}
+          onChange={e => {
+            router.push({
+              pathname: `/${currentDemo}/${e.target.value}`,
+              query: router.query.columns
+                ? {
+                    columns: router.query.columns,
+                  }
+                : {},
+            })
+          }}
+        >
+          {themes.map(theme => (
+            <option key={theme}>{theme}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Columns
+        <div className="radio">
+          <Toggle column="mdx" />
+          <Toggle column="pre-ch" />
+          <Toggle column="post-ch" />
+          <Toggle column="result" />
+        </div>
+      </label>
+    </nav>
+  )
+}
+const COLUMNS = {
+  mdx: {
+    label: "MDX",
+  },
+  "pre-ch": {
+    title: "MDAST before CH",
+    label: "Pre Code Hike",
+  },
+  "post-ch": {
+    title: "MDAST before CH",
+    label: "Post Code Hike",
+  },
+  result: {
+    label: "Result",
+  },
+}
+const DEFAULT_COLUMNS = ["mdx", "result"]
+
+function useColumns() {
+  const { query } = useRouter()
+  return query.columns
+    ? query.columns.split(",")
+    : DEFAULT_COLUMNS
+}
+
+function Column({ children, column }) {
+  const showColumns = useColumns()
+  return COLUMNS[column] ? (
     <div
-      className={"column " + (className || "")}
-      style={{ display: show ? "block" : "none" }}
+      className={"column " + column}
+      style={{
+        display: showColumns.includes(column)
+          ? "block"
+          : "none",
+      }}
     >
-      <h2>{title}</h2>
+      <h2>
+        {COLUMNS[column].title || COLUMNS[column].label}
+      </h2>
       <div className="content">{children}</div>
     </div>
-  )
+  ) : null
 }
 
-function Toggle({ state: [show, setShow], value }) {
+function Toggle({ column }) {
+  const showColumns = useColumns()
+  const router = useRouter()
   return (
     <button
-      onClick={() =>
-        setShow({ ...show, [value]: !show[value] })
+      onClick={() => {
+        const newColumns = showColumns.includes(column)
+          ? showColumns.filter(c => c !== column)
+          : [...showColumns, column]
+
+        const { demo, theme } = router.query
+        const newRoute = {
+          pathname: `/${demo}/${theme}`,
+          query: {
+            columns: newColumns.join(","),
+          },
+        }
+        router.replace(newRoute, newRoute, {
+          shallow: true,
+        })
+      }}
+      className={
+        showColumns.includes(column) ? "selected" : ""
       }
-      className={show[value] ? "selected" : ""}
       style={{
         padding: "4px 8px",
       }}
     >
-      {value}
+      {COLUMNS[column].label}
     </button>
   )
 }
