@@ -224,7 +224,7 @@ const COLUMNS = {
     label: "Pre Code Hike",
   },
   "post-ch": {
-    title: "MDAST before CH",
+    title: "MDAST after CH",
     label: "Post Code Hike",
   },
   result: {
@@ -310,7 +310,7 @@ function JSONView({ src }) {
   return (
     <BrowserReactJsonView
       src={JSON.parse(src)}
-      enableClipboard={false}
+      enableClipboard={true}
       displayDataTypes={false}
       displayObjectSize={false}
       collapsed={4}

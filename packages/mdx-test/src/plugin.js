@@ -30,7 +30,12 @@ export function remarkShowTree() {
 }
 
 function replacer(key, value) {
-  if (["position", "estree"].includes(key)) {
+  if (
+    [
+      "position",
+      // "estree"
+    ].includes(key)
+  ) {
     return
   }
   return value

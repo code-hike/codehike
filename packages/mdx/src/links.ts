@@ -36,11 +36,6 @@ export function extractLinks(
       })
     })
 
-    console.log("definition", {
-      identifier,
-      url,
-      title,
-    })
     parent.children.splice(nextIndex, 1)
   }
   return annotations
