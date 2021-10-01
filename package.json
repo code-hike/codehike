@@ -12,7 +12,7 @@
     "watch-package": "lerna run --scope @*/mini-frame --include-dependencies --parallel x -- watch",
     "watch-all": "lerna run --parallel x -- watch",
     "storybook": "lerna run --scope storybook start --stream",
-    "mdx-test": "lerna run --scope @*/mdx-test dev --stream",
+    "playground": "lerna run --scope @*/mdx-test dev --stream",
     "docs": "lerna run build-docs --stream",
     "dev": "lerna run --scope react-website dev --stream",
     "release": "auto shipit"

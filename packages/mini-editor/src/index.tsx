@@ -16,11 +16,12 @@ import {
 import { mdxToStep, mdxToSteps } from "./mdx"
 
 import { EditorTween } from "./editor-tween"
-import { EditorSpring } from "./editor-spring"
+import { EditorSpring, EditorProps } from "./editor-spring"
 
 export {
   EditorTween,
   EditorSpring,
+  EditorProps,
   // deprecate:
   mdxToStep,
   mdxToSteps,

@@ -4,8 +4,15 @@ import { highlight } from "@code-hike/highlighter"
 import { extractLinks } from "./links"
 import { visitAsync, toJSX } from "./unist-utils"
 import React from "react"
+import {
+  EditorSpring,
+  EditorProps,
+} from "@code-hike/mini-editor"
 
-const SectionContext = React.createContext({})
+const SectionContext = React.createContext<{
+  props: EditorProps
+  setFocus: (x: { file: string; focus: string }) => void
+}>(null!)
 
 export function Section({
   children,
@@ -17,6 +24,19 @@ export function Section({
       <div>{children}</div>
     </section>
   )
+}
+
+// function RealSection({}) {
+//   return (
+//     <SectionContext.Provider value={{ setFocus }}>
+//       {children}
+//     </SectionContext.Provider>
+//   )
+// }
+
+function CodePlaceholder() {
+  const { props } = React.useContext(SectionContext)
+  return <EditorSpring {...props} />
 }
 
 export function transformSections(
