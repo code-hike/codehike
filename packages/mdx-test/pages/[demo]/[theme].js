@@ -34,7 +34,6 @@ export async function getStaticProps(context) {
   const loadedTheme = await import(
     `shiki/themes/${theme}.json`
   ).then(module => module.default)
-  console.log({ loadedTheme })
 
   const mdxSource = await fs.readFile(
     `./content/${demo}.mdx`,
