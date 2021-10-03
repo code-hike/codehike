@@ -1,5 +1,6 @@
 import { Node, Parent } from "unist"
 import visit from "unist-util-visit"
+import { valueToEstree } from "estree-util-value-to-estree"
 
 export async function visitAsync(
   tree: Node,
@@ -37,6 +38,21 @@ export function toJSX(
   node.attributes = Object.keys(props).map(key => ({
     type: "mdxJsxAttribute",
     name: key,
-    value: JSON.stringify(props[key]),
+    value: {
+      type: "mdxJsxAttributeValueExpression",
+      value: JSON.stringify(props[key]),
+      data: {
+        estree: {
+          type: "Program",
+          body: [
+            {
+              type: "ExpressionStatement",
+              expression: valueToEstree(props[key]),
+            },
+          ],
+          sourceType: "module",
+        },
+      },
+    },
   }))
 }

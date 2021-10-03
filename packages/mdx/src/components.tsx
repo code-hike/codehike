@@ -13,10 +13,10 @@ export const CH = {
 }
 
 type EditorSerializedProps = {
-  northPanel: string
-  southPanel?: string
-  files: string
-  codeConfig: string
+  northPanel: any
+  southPanel?: any
+  files: any
+  codeConfig: any
 }
 
 function Code(serializedProps: EditorSerializedProps) {
@@ -32,11 +32,10 @@ function parseEditorProps({
 }: EditorSerializedProps): EditorProps {
   console.log({ northPanel, southPanel, files, codeConfig })
   return {
-    northPanel: JSON.parse(northPanel) as any,
-    southPanel:
-      southPanel && (JSON.parse(southPanel) as any),
+    northPanel: northPanel as any,
+    southPanel: southPanel as any,
     files: parseFiles(files),
-    codeConfig: JSON.parse(codeConfig),
+    codeConfig: codeConfig as any,
   }
 }
 
@@ -56,9 +55,7 @@ function ParsedEditor(props: EditorProps) {
     return <EditorSpring {...props} />
   }
 }
-function parseFiles(files: string) {
-  const filesWithoutAnnotations = JSON.parse(files)
-
+function parseFiles(filesWithoutAnnotations: any[]) {
   return filesWithoutAnnotations.map((data: any) => {
     return {
       ...data,

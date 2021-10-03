@@ -33,44 +33,53 @@ export async function getStaticProps(context) {
   const { demo, theme } = context.params
   const loadedTheme = await import(
     `shiki/themes/${theme}.json`
-  )
+  ).then(module => module.default)
+  console.log({ loadedTheme })
 
   const mdxSource = await fs.readFile(
     `./content/${demo}.mdx`,
     "utf8"
   )
-  const preCodeHike = await bundle(mdxSource, [
-    remarkShowTree,
-  ])
+  try {
+    const preCodeHike = await bundle(mdxSource, [
+      remarkShowTree,
+    ])
 
-  const postCodeHike = await bundle(mdxSource, [
-    [remarkCodeHike, { theme: loadedTheme }],
-    remarkShowTree,
-  ])
+    const postCodeHike = await bundle(mdxSource, [
+      [remarkCodeHike, { theme: loadedTheme }],
+      remarkShowTree,
+    ])
 
-  const result = await bundle(mdxSource, [
-    [remarkCodeHike, { theme: loadedTheme }],
-  ])
+    const result = await bundle(mdxSource, [
+      [remarkCodeHike, { theme: loadedTheme }],
+    ])
 
-  const shiki = await import("shiki")
-  const highlighter = await shiki.getHighlighter({
-    theme: "github-light",
-  })
+    const shiki = await import("shiki")
+    const highlighter = await shiki.getHighlighter({
+      theme: "github-light",
+    })
 
-  const demos = await getDemoList()
+    const demos = await getDemoList()
 
-  return {
-    props: {
-      source: highlighter.codeToHtml(mdxSource, "markdown"),
-      preCodeHike,
-      postCodeHike,
-      result,
-      demos,
-      themes: shiki.BUNDLED_THEMES,
-      currentTheme: theme,
-      currentDemo: demo,
-    },
+    return {
+      props: {
+        source: highlighter.codeToHtml(
+          mdxSource,
+          "markdown"
+        ),
+        preCodeHike,
+        postCodeHike,
+        result,
+        demos,
+        themes: shiki.BUNDLED_THEMES,
+        currentTheme: theme,
+        currentDemo: demo,
+      },
+    }
+  } catch (e) {
+    console.error("catch", JSON.stringify(e, null, 2))
   }
+  return { props: { error: true } }
 }
 async function bundle(source, plugins) {
   const { code } = await bundleMDX(source, {
@@ -93,6 +102,7 @@ async function bundle(source, plugins) {
 }
 
 export default function Page({
+  error,
   source,
   preCodeHike,
   postCodeHike,
@@ -102,6 +112,9 @@ export default function Page({
   currentTheme,
   currentDemo,
 }) {
+  if (error) {
+    return <div>Compilation Error</div>
+  }
   return (
     <div>
       <Head>

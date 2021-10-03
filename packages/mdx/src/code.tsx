@@ -21,32 +21,6 @@ export async function transformCodeNodes(
   )
 }
 
-export async function transformCodeFile(
-  node: Node,
-  index: number,
-  parent: Parent,
-  { theme }: { theme: any }
-) {
-  const annotations = extractLinks(
-    node,
-    index,
-    parent,
-    node.value as string
-  )
-
-  const code = await highlight({
-    code: node.value as string,
-    lang: node.lang as string,
-    theme,
-  })
-
-  return {
-    meta: typeof node.meta === "string" ? node.meta : "",
-    code,
-    annotations,
-  }
-}
-
 // new stuff
 
 async function transformCode(
