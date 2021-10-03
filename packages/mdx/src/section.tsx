@@ -8,46 +8,104 @@ import {
   EditorSpring,
   EditorProps,
 } from "@code-hike/mini-editor"
+import { mapEditor } from "./code"
+import { Code } from "./components"
 
 const SectionContext = React.createContext<{
   props: EditorProps
-  setFocus: (x: { file: string; focus: string }) => void
-}>(null!)
+  setFocus: (x: {
+    fileName?: string
+    focus: string
+  }) => void
+}>({ props: null!, setFocus: () => {} })
 
 export function Section({
   children,
+  ...props
 }: {
   children: React.ReactNode
 }) {
+  const [state, setState] = React.useState<any>(props)
+
+  const setFocus = ({
+    fileName,
+    focus,
+  }: {
+    fileName?: string
+    focus: string
+  }) => {
+    const newFiles = state.files.map((file: any) =>
+      !fileName || file.name === fileName
+        ? { ...file, focus }
+        : file
+    )
+    setState({
+      ...state,
+      files: newFiles,
+    })
+  }
+
   return (
-    <section style={{ outline: "1px solid violet" }}>
-      <div>{children}</div>
-    </section>
+    <SectionContext.Provider
+      value={{ props: state as any, setFocus }}
+    >
+      <section style={{ outline: "1px solid violet" }}>
+        <div>{children}</div>
+      </section>
+    </SectionContext.Provider>
   )
 }
 
-// function RealSection({}) {
-//   return (
-//     <SectionContext.Provider value={{ setFocus }}>
-//       {children}
-//     </SectionContext.Provider>
-//   )
-// }
-
-function CodePlaceholder() {
+export function SectionCode() {
   const { props } = React.useContext(SectionContext)
-  return <EditorSpring {...props} />
+  return <Code {...props} />
 }
 
-export function transformSections(
+export async function transformSections(
   tree: Node,
   config: { theme: any }
 ) {
-  visit(tree, "mdxJsxFlowElement", sectionNode => {
-    if (sectionNode.name === "CH.Section")
-      transformLinks(sectionNode)
-  })
+  await visitAsync(
+    tree,
+    "mdxJsxFlowElement",
+    async sectionNode => {
+      if (sectionNode.name === "CH.Section") {
+        await transformSection(sectionNode, config)
+      }
+    }
+  )
 }
+
+async function transformSection(
+  node: Node,
+  config: { theme: any }
+) {
+  console.log("transforming section")
+  let props
+  await visitAsync(
+    node,
+    "mdxJsxFlowElement",
+    async (node, index, parent) => {
+      if (node.name === "CH.Code") {
+        props = await mapEditor(
+          { node, index, parent: parent! },
+          config
+        )
+        console.log({ props })
+        toJSX(node, { name: "CH.SectionCode", props: {} })
+      }
+    }
+  )
+
+  transformLinks(node)
+
+  if (props) {
+    toJSX(node, { name: "CH.Section", props: props as any })
+  } else {
+    toJSX(node, { name: "div", props: {} })
+  }
+}
+
 function transformLinks(tree: Node) {
   visit(tree, "link", (linkNode: any) => {
     const url = decodeURI(linkNode["url"])
@@ -68,13 +126,16 @@ export function SectionLink({
   focus: string
   children: React.ReactNode
 }) {
+  const { setFocus } = React.useContext(SectionContext)
   return (
     <span
       style={{
         textDecoration: "underline",
         textDecorationStyle: "dotted",
+        cursor: "pointer",
       }}
       title={focus}
+      onClick={() => setFocus({ focus })}
     >
       {children}
     </span>

@@ -4,12 +4,17 @@ import {
   EditorSpring,
   EditorProps,
 } from "@code-hike/mini-editor"
-import { Section, SectionLink } from "./section"
+import {
+  Section,
+  SectionLink,
+  SectionCode,
+} from "./section"
 
 export const CH = {
   Code,
   Section,
   SectionLink,
+  SectionCode,
 }
 
 type EditorSerializedProps = {
@@ -19,7 +24,9 @@ type EditorSerializedProps = {
   codeConfig: any
 }
 
-function Code(serializedProps: EditorSerializedProps) {
+export function Code(
+  serializedProps: EditorSerializedProps
+) {
   const props = parseEditorProps(serializedProps)
   return <ParsedEditor {...props} />
 }

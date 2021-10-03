@@ -12,7 +12,7 @@ export async function transformEditorNodes(
     "mdxJsxFlowElement",
     async (node, index, parent) => {
       if (node.name === "CH.Code") {
-        transformEditor(
+        await transformEditor(
           { node, index, parent: parent! },
           { theme }
         )

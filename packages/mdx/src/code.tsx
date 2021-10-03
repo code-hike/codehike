@@ -21,8 +21,6 @@ export async function transformCodeNodes(
   )
 }
 
-// new stuff
-
 async function transformCode(
   nodeInfo: NodeInfo,
   config: { theme: any }
@@ -51,6 +49,18 @@ type NodeInfo = {
   parent: Parent
 }
 export async function transformEditor(
+  nodeInfo: NodeInfo,
+  config: { theme: any }
+) {
+  const props = await mapEditor(nodeInfo, config)
+
+  toJSX(nodeInfo.node, {
+    name: "CH.Code",
+    props,
+  })
+}
+
+export async function mapEditor(
   { node }: NodeInfo,
   config: { theme: any }
 ) {
@@ -100,27 +110,7 @@ export async function transformEditor(
       theme: config.theme,
     },
   }
-
-  toJSX(node, {
-    name: "CH.Code",
-    props,
-  })
-}
-
-function splitChildren(parent: Parent, type: string) {
-  const north: NodeInfo[] = []
-  const south: NodeInfo[] = []
-  let breakNode = false
-  parent.children.forEach((node, index) => {
-    if (node.type === type) {
-      breakNode = true
-    } else if (breakNode) {
-      south.push({ node, index, parent })
-    } else {
-      north.push({ node, index, parent })
-    }
-  })
-  return [north, south]
+  return props
 }
 
 // should I edit the node or return the file?
@@ -156,6 +146,22 @@ async function mapFile(
   }
 
   return file
+}
+
+function splitChildren(parent: Parent, type: string) {
+  const north: NodeInfo[] = []
+  const south: NodeInfo[] = []
+  let breakNode = false
+  parent.children.forEach((node, index) => {
+    if (node.type === type) {
+      breakNode = true
+    } else if (breakNode) {
+      south.push({ node, index, parent })
+    } else {
+      north.push({ node, index, parent })
+    }
+  })
+  return [north, south]
 }
 
 type CodeFile = {

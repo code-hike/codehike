@@ -19,7 +19,7 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       return
     }
 
-    transformSections(tree, { theme })
+    await transformSections(tree, { theme })
     await transformEditorNodes(tree, { theme })
     await transformCodeNodes(tree, { theme })
   }

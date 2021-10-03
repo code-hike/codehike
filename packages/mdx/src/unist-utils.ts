@@ -33,6 +33,7 @@ export function toJSX(
     name: string
   }
 ) {
+  console.log(`transforming ${node.name} to ${name}`)
   node.type = type
   node.name = name
   node.attributes = Object.keys(props).map(key => ({
