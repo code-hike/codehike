@@ -1,10 +1,10 @@
 import React from "react"
-import fs from "fs/promises"
+import fs from "fs"
 import Link from "next/link"
 import Head from "next/head"
 
 export async function getStaticProps() {
-  const files = await fs.readdir("./content/")
+  const files = await fs.promises.readdir("./content/")
   const filenames = files
     .filter(filename => filename.endsWith(".mdx"))
     .map(filename => filename.slice(0, -4))
