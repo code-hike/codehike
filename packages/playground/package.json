@@ -14,5 +14,8 @@
     "react": "^16",
     "react-dom": "^16",
     "react-json-view": "^1.21.3"
+  },
+  "devDependencies": {
+    "critters": "^0.0.10"
   }
 }
