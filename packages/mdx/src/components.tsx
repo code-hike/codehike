@@ -37,7 +37,6 @@ function parseEditorProps({
   files,
   codeConfig,
 }: EditorSerializedProps): EditorProps {
-  console.log({ northPanel, southPanel, files, codeConfig })
   return {
     northPanel: northPanel as any,
     southPanel: southPanel as any,

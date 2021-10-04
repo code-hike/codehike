@@ -80,7 +80,6 @@ async function transformSection(
   node: Node,
   config: { theme: any }
 ) {
-  console.log("transforming section")
   let props
   await visitAsync(
     node,
@@ -91,7 +90,6 @@ async function transformSection(
           { node, index, parent: parent! },
           config
         )
-        console.log({ props })
         toJSX(node, { name: "CH.SectionCode", props: {} })
       }
     }

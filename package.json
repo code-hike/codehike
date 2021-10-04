@@ -14,7 +14,7 @@
     "storybook": "lerna run --scope storybook start --stream",
     "playground": "lerna run --scope @*/playground dev --stream",
     "docs": "lerna run build-docs --stream",
-    "dev": "lerna run --scope react-website dev --stream",
+    "export-playground": "lerna run --scope @*/playground export --stream",
     "release": "auto shipit"
   },
   "devDependencies": {

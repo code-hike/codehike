@@ -25,6 +25,21 @@ export default function Page({ files }) {
         backgroundColor: "#fafafa",
       }}
     >
+      <Head>
+        <title>Code Hike Playground</title>
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+      </Head>
       <h1>Code Hike Demos</h1>
       <div style={{ fontSize: "1.2em" }}>
         {files.map(file => (
