@@ -55,9 +55,22 @@ main {
 
 nav {
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   align-items: center;
   background-color: #222;
+  color: #ccc;
+}
+
+nav h1 {
+  margin: 0 24px;
+}
+nav h1 a {
+  color: unset;
+  text-decoration: none;
+}
+
+nav .version {
+  color: #aaa;
 }
 
 .radio {
@@ -81,7 +94,7 @@ nav {
 }
 
 nav label {
-  color: #ccc;
+  margin-right: 24px;
 }
 
 nav select {

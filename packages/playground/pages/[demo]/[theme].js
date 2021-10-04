@@ -7,6 +7,7 @@ import dynamic from "next/dynamic"
 import { remarkCodeHike } from "@code-hike/mdx"
 import { useRouter } from "next/router"
 import Head from "next/head"
+import Link from "next/link"
 
 async function getDemoList() {
   const files = await fs.readdir("./content/")
@@ -175,6 +176,15 @@ function Nav({ currentDemo, currentTheme, demos, themes }) {
   const router = useRouter()
   return (
     <nav>
+      <h1>
+        <Link href="/">
+          <a>Code Hike Playground</a>
+        </Link>
+      </h1>
+      <span className="version">
+        v0.3.0--canary.77.2616b6b.0
+      </span>
+      <div style={{ flex: 1 }} />
       <label>
         Demo
         <select
