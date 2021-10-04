@@ -1,10 +1,10 @@
-import fs from "fs/promises"
+import fs from "fs"
 import { bundleMDX } from "mdx-bundler"
 import { remarkShowTree } from "./plugin"
 import { remarkCodeHike } from "@code-hike/mdx"
 
 async function getDemoList() {
-  const files = await fs.readdir("./content/")
+  const files = await fs.promises.readdir("./content/")
 
   return files
     .filter(filename => filename.endsWith(".mdx"))
@@ -16,7 +16,7 @@ export async function toProps({ demo, theme }) {
     `shiki/themes/${theme}.json`
   ).then(module => module.default)
 
-  const mdxSource = await fs.readFile(
+  const mdxSource = await fs.promises.readFile(
     `./content/${demo}.mdx`,
     "utf8"
   )
