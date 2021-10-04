@@ -4,8 +4,7 @@
   "private": "true",
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "export": "next export"
+    "export": "next build && next export"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.3.0-next.0",
