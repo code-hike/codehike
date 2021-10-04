@@ -1,104 +1,23 @@
-import { bundleMDX } from "mdx-bundler"
 import { getMDXComponent } from "mdx-bundler/client"
 import React from "react"
-import fs from "fs/promises"
-import { remarkShowTree } from "../../src/plugin"
 import dynamic from "next/dynamic"
-import { remarkCodeHike } from "@code-hike/mdx"
 import { useRouter } from "next/router"
 import Head from "next/head"
 import Link from "next/link"
+import { toProps } from "../../src/page-data"
 
-async function getDemoList() {
-  const files = await fs.readdir("./content/")
-
-  return files
-    .filter(filename => filename.endsWith(".mdx"))
-    .map(filename => filename.slice(0, -4))
-}
-
-export async function getStaticPaths() {
-  const demos = await getDemoList()
-  const { BUNDLED_THEMES } = await import("shiki")
-  return {
-    paths: demos.flatMap(demo =>
-      BUNDLED_THEMES.map(theme => ({
-        params: { demo, theme },
-      }))
-    ),
-    fallback: false,
-  }
-}
-
-export async function getStaticProps(context) {
-  const { demo, theme } = context.params
-  const loadedTheme = await import(
-    `shiki/themes/${theme}.json`
-  ).then(module => module.default)
-
-  const mdxSource = await fs.readFile(
-    `./content/${demo}.mdx`,
-    "utf8"
-  )
+export async function getServerSideProps({ params }) {
   try {
-    const preCodeHike = await bundle(mdxSource, [
-      remarkShowTree,
-    ])
-
-    const postCodeHike = await bundle(mdxSource, [
-      [remarkCodeHike, { theme: loadedTheme }],
-      remarkShowTree,
-    ])
-
-    const result = await bundle(mdxSource, [
-      [remarkCodeHike, { theme: loadedTheme }],
-    ])
-
-    const shiki = await import("shiki")
-    const highlighter = await shiki.getHighlighter({
-      theme: "github-light",
-    })
-
-    const demos = await getDemoList()
-
-    return {
-      props: {
-        source: highlighter.codeToHtml(
-          mdxSource,
-          "markdown"
-        ),
-        preCodeHike,
-        postCodeHike,
-        result,
-        demos,
-        themes: shiki.BUNDLED_THEMES,
-        currentTheme: theme,
-        currentDemo: demo,
-      },
-    }
+    const { demo, theme } = params
+    const props = await toProps({ theme, demo })
+    return { props }
   } catch (e) {
-    console.error("catch", JSON.stringify(e, null, 2))
+    console.error(
+      "server side props error",
+      JSON.stringify(e, null, 2)
+    )
   }
   return { props: { error: true } }
-}
-async function bundle(source, plugins) {
-  const { code } = await bundleMDX(source, {
-    esbuildOptions(options) {
-      options.platform = "node"
-      return options
-    },
-    xdmOptions(options) {
-      options.remarkPlugins = [
-        ...(options.remarkPlugins ?? []),
-        ...plugins,
-      ]
-      return options
-    },
-    globals: {
-      react: "react",
-    },
-  })
-  return code
 }
 
 export default function Page({

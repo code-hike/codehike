@@ -1,6 +1,7 @@
 import React from "react"
 import fs from "fs/promises"
 import Link from "next/link"
+import Head from "next/head"
 
 export async function getStaticProps() {
   const files = await fs.readdir("./content/")

@@ -62,7 +62,7 @@ nav {
 }
 
 nav h1 {
-  margin: 0 24px;
+  margin: 0 16px 0 24px;
 }
 nav h1 a {
   color: unset;
@@ -71,6 +71,7 @@ nav h1 a {
 
 nav .version {
   color: #aaa;
+  font-size: 14px;
 }
 
 .radio {
