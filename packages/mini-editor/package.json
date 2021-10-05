@@ -24,7 +24,7 @@
     "use-spring": "^0.2.3"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": "^16.8.3 || ^17 || ^18"
   },
   "keywords": [
     "react"

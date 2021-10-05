@@ -27,7 +27,7 @@
     "server-side-media-queries-for-react": "^0.0.5"
   },
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": "^16.8.3 || ^17 || ^18"
   },
   "keywords": [
     "react"
