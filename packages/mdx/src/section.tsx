@@ -8,8 +8,7 @@ import {
   EditorSpring,
   EditorProps,
 } from "@code-hike/mini-editor"
-import { mapEditor } from "./code"
-import { Code } from "./components"
+import { Code, mapEditor } from "./code"
 
 const SectionContext = React.createContext<{
   props: EditorProps

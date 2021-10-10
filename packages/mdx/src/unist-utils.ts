@@ -1,6 +1,7 @@
 import { Node, Parent } from "unist"
 import visit from "unist-util-visit"
-import { valueToEstree } from "estree-util-value-to-estree"
+import { valueToEstree } from "./to-estree"
+import { EditorProps } from "@code-hike/mini-editor"
 
 export async function visitAsync(
   tree: Node,
@@ -57,3 +58,5 @@ export function toJSX(
     },
   }))
 }
+
+function editorPropsToEstree(editorProps: EditorProps) {}
