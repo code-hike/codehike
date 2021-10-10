@@ -3,12 +3,16 @@ import { Node, Parent } from "unist"
 import { highlight } from "@code-hike/highlighter"
 import { extractLinks } from "./links"
 import { visitAsync, toJSX } from "./unist-utils"
-import { Code as CodeType } from "@code-hike/utils"
 import React from "react"
-import { CodeSpring } from "@code-hike/smooth-code"
+import {
+  CodeSpring,
+  CodeStep,
+} from "@code-hike/smooth-code"
 import {
   EditorSpring,
   EditorProps,
+  EditorStep,
+  CodeFile,
 } from "@code-hike/mini-editor"
 
 export async function transformCodeNodes(
@@ -27,34 +31,7 @@ export async function transformCodeNodes(
   )
 }
 
-type EditorSerializedProps = {
-  northPanel: any
-  southPanel?: any
-  files: any
-  codeConfig: any
-}
-
-export function Code(
-  serializedProps: EditorSerializedProps
-) {
-  const props = parseEditorProps(serializedProps)
-  return <ParsedEditor {...props} />
-}
-function parseEditorProps({
-  northPanel,
-  southPanel,
-  files,
-  codeConfig,
-}: EditorSerializedProps): EditorProps {
-  return {
-    northPanel: northPanel as any,
-    southPanel: southPanel as any,
-    files: parseFiles(files),
-    codeConfig: codeConfig as any,
-  }
-}
-
-function ParsedEditor(props: EditorProps) {
+export function Code(props: EditorProps) {
   if (
     !props.southPanel &&
     props.files.length === 1 &&
@@ -69,49 +46,6 @@ function ParsedEditor(props: EditorProps) {
   } else {
     return <EditorSpring {...props} />
   }
-}
-function parseFiles(filesWithoutAnnotations: any[]) {
-  return filesWithoutAnnotations.map((data: any) => {
-    return {
-      ...data,
-      annotations: parseAnnotations(data.annotations),
-    }
-  })
-}
-
-function parseAnnotations(annotations: any) {
-  return (annotations || []).map(
-    ({ type, ...rest }: { type: string }) => ({
-      Component: CodeLink,
-      ...rest,
-    })
-  )
-}
-
-export function CodeLink({
-  children,
-  data,
-}: {
-  data: {
-    url: string
-    title: string | undefined
-  }
-  children: React.ReactNode
-}) {
-  return (
-    <a
-      href={data.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      title={data.title}
-      style={{
-        textDecoration: "underline",
-        textDecorationStyle: "dotted",
-      }}
-    >
-      {children}
-    </a>
-  )
 }
 
 // remark:
@@ -214,7 +148,7 @@ export async function mapEditor(
 async function mapFile(
   { node, index, parent }: NodeInfo,
   config: { theme: any }
-): Promise<CodeFile> {
+): Promise<CodeStep & FileOptions> {
   const { theme } = config
 
   const annotations = extractLinks(
@@ -236,6 +170,7 @@ async function mapFile(
 
   const file = {
     ...options,
+    focus: options.focus || "",
     code,
     annotations,
   }
@@ -259,22 +194,11 @@ function splitChildren(parent: Parent, type: string) {
   return [north, south]
 }
 
-type CodeFile = {
-  code: CodeType
-  annotations: CodeAnnotation[]
-} & FileOptions
-
 type FileOptions = {
   name: string | null
   focus?: string
   active?: string
   hidden?: boolean
-}
-
-type CodeAnnotation = {
-  type: string
-  focus: string
-  data?: any
 }
 
 function parseMetastring(metastring: string): FileOptions {

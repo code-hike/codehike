@@ -5,7 +5,7 @@ import {
 } from "@code-hike/smooth-code"
 import React from "react"
 
-type CodeFile = CodeStep & {
+export type CodeFile = CodeStep & {
   name: string
 }
 

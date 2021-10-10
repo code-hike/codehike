@@ -1,15 +1,40 @@
 import { Node, Parent } from "unist"
+import { CodeStep } from "@code-hike/smooth-code"
+import React from "react"
+
+export function CodeLink({
+  children,
+  data,
+}: {
+  data: {
+    url: string
+    title: string | undefined
+  }
+  children: React.ReactNode
+}) {
+  return (
+    <a
+      href={data.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={data.title}
+      style={{
+        textDecoration: "underline",
+        textDecorationStyle: "dotted",
+      }}
+    >
+      {children}
+    </a>
+  )
+}
+
 export function extractLinks(
   node: Node,
   index: number,
   parent: Parent,
   code: string
 ) {
-  const annotations = [] as {
-    type: "link"
-    focus: string
-    data: { url: string; title: string | undefined }
-  }[]
+  const annotations = [] as CodeStep["annotations"]
 
   const nextIndex = index + 1
   while (
@@ -26,8 +51,8 @@ export function extractLinks(
     )
 
     focusList.forEach(focus => {
-      annotations.push({
-        type: "link",
+      annotations!.push({
+        Component: CodeLink,
         focus,
         data: {
           url: url as string,
@@ -38,7 +63,7 @@ export function extractLinks(
 
     parent.children.splice(nextIndex, 1)
   }
-  return annotations
+  return annotations!
 }
 
 const newlineRe = /\r\n|\r|\n/

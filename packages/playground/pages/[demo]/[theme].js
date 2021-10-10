@@ -13,7 +13,7 @@ export async function getServerSideProps({ params }) {
     return { props }
   } catch (e) {
     console.error(
-      "server side props error",
+      "getServerSideProps error",
       JSON.stringify(e, null, 2)
     )
   }

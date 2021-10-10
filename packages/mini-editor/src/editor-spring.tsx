@@ -3,9 +3,9 @@ import { useSpring } from "use-spring"
 import { EditorTween } from "./editor-tween"
 import { CodeConfig } from "@code-hike/smooth-code"
 import { EditorFrameProps } from "./editor-frame"
-import { EditorStep } from "./editor-shift"
+import { EditorStep, CodeFile } from "./editor-shift"
 
-export { EditorSpring, EditorProps }
+export { EditorSpring, EditorProps, EditorStep, CodeFile }
 
 type SpringConfig = Parameters<typeof useSpring>[1]
 

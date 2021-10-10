@@ -1,5 +1,6 @@
 import { Expression } from "estree"
 import isPlainObject from "is-plain-obj"
+import { CodeLink } from "./links"
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
@@ -190,6 +191,23 @@ export function valueToEstree(
           value: valueToEstree(val, options),
         })
       ),
+    }
+  }
+
+  // code hike annotations patch
+  if (value === CodeLink) {
+    return {
+      type: "MemberExpression",
+      object: {
+        type: "Identifier",
+        name: "CH",
+      },
+      property: {
+        type: "Identifier",
+        name: "CodeLink",
+      },
+      computed: false,
+      optional: false,
     }
   }
 

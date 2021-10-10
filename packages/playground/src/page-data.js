@@ -12,10 +12,6 @@ async function getDemoList() {
 }
 
 export async function toProps({ demo, theme }) {
-  const loadedTheme = await import(
-    `shiki/themes/${theme}.json`
-  ).then(module => module.default)
-
   const mdxSource = await fs.promises.readFile(
     `./content/${demo}.mdx`,
     "utf8"
@@ -25,14 +21,30 @@ export async function toProps({ demo, theme }) {
     remarkShowTree,
   ])
 
-  const postCodeHike = await bundle(mdxSource, [
-    [remarkCodeHike, { theme: loadedTheme }],
-    remarkShowTree,
-  ])
+  let postCodeHike, result
+  try {
+    const loadedTheme = await import(
+      `shiki/themes/${theme}.json`
+    ).then(module => module.default)
 
-  const result = await bundle(mdxSource, [
-    [remarkCodeHike, { theme: loadedTheme }],
-  ])
+    postCodeHike = await bundle(mdxSource, [
+      [remarkCodeHike, { theme: loadedTheme }],
+      remarkShowTree,
+    ])
+
+    result = await bundle(mdxSource, [
+      [remarkCodeHike, { theme: loadedTheme }],
+    ])
+  } catch (e) {
+    console.error("remark-code-hike error", e)
+    const errorBundle = await bundle(
+      `### remark-code-hike error \n ~~~\n${e.toString()}\n~~~`,
+      []
+    )
+
+    postCodeHike = errorBundle
+    result = errorBundle
+  }
 
   const shiki = await import("shiki")
   const highlighter = await shiki.getHighlighter({
@@ -41,8 +53,13 @@ export async function toProps({ demo, theme }) {
 
   const demos = await getDemoList()
 
+  const source = highlighter.codeToHtml(
+    mdxSource,
+    "markdown"
+  )
+
   return {
-    source: highlighter.codeToHtml(mdxSource, "markdown"),
+    source,
     preCodeHike,
     postCodeHike,
     result,

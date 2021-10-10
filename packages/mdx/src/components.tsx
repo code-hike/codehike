@@ -3,7 +3,8 @@ import {
   SectionLink,
   SectionCode,
 } from "./section"
-import { Code, CodeLink } from "./code"
+import { Code } from "./code"
+import { CodeLink } from "./links"
 
 export const CH = {
   Code,

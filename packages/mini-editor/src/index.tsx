@@ -7,7 +7,6 @@ import {
 import {
   MiniEditorHike,
   MiniEditorHikeProps,
-  EditorStep,
 } from "./mini-editor-hike"
 import {
   MiniEditor,
@@ -16,12 +15,19 @@ import {
 import { mdxToStep, mdxToSteps } from "./mdx"
 
 import { EditorTween } from "./editor-tween"
-import { EditorSpring, EditorProps } from "./editor-spring"
+import {
+  EditorSpring,
+  EditorProps,
+  EditorStep,
+  CodeFile,
+} from "./editor-spring"
 
 export {
   EditorTween,
   EditorSpring,
   EditorProps,
+  EditorStep,
+  CodeFile,
   // deprecate:
   mdxToStep,
   mdxToSteps,
@@ -31,5 +37,4 @@ export {
   MiniEditorProps,
   MiniEditorHike,
   MiniEditorHikeProps,
-  EditorStep,
 }
