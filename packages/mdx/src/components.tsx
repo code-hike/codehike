@@ -5,6 +5,7 @@ import {
 } from "./section"
 import { Code } from "./code"
 import { CodeLink } from "./links"
+import { Spotlight } from "./spotlight"
 
 export const CH = {
   Code,
@@ -12,4 +13,5 @@ export const CH = {
   SectionLink,
   SectionCode,
   CodeLink,
+  Spotlight,
 }

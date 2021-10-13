@@ -3,6 +3,7 @@ import { Node } from "unist"
 import { transformCodeNodes } from "./code"
 import { transformEditorNodes } from "./editor"
 import { transformSections } from "./section"
+import { transformSpotlights } from "./spotlight"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async (tree: Node) => {
@@ -19,8 +20,14 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       return
     }
 
-    await transformSections(tree, { theme })
-    await transformEditorNodes(tree, { theme })
-    await transformCodeNodes(tree, { theme })
+    try {
+      await transformSpotlights(tree, { theme })
+      await transformSections(tree, { theme })
+      await transformEditorNodes(tree, { theme })
+      await transformCodeNodes(tree, { theme })
+    } catch (e) {
+      console.error("error running remarkCodeHike", e)
+      throw e
+    }
   }
 }

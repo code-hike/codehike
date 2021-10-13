@@ -37,7 +37,7 @@ main {
   max-width: 800px;
 }
 
-.column h2 {
+.column > h2 {
   padding: 6px;
   margin: 0;
   text-align: center;

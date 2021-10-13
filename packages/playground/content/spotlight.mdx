@@ -6,37 +6,101 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 > Variants
 
-Design composable component APIs with variants
+## Design composable component APIs with variants
 
 Variants are a first-class citizen of Stitches. With multiple variants, compound variants, and default variants, you can design composable component APIs which are typed automatically.
 
+<CH.Code>
+
 ```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit
-  dolor = sit - amet(dolor)
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : []
-}
+const Button = styled("button", {
+  // base styles
+
+  variants: {
+    color: {
+      gray: {
+        backgroundColor: "gainsboro",
+      },
+
+      blue: {
+        backgroundColor: "dodgerblue",
+      },
+    },
+
+    size: {
+      md: {
+        height: "25px",
+      },
+
+      lg: {
+        height: "35px",
+      },
+    },
+  },
+
+  compoundVariants: [
+    {
+      color: "blue",
+
+      size: "lg",
+
+      css: {
+        backgroundColor: "purple",
+      },
+    },
+  ],
+
+  defaultVariants: {
+    color: "gray",
+
+    size: "md",
+  },
+})
 ```
 
+</CH.Code>
+
 ---
 
-## Variants
+<CH.Code>
+
+```js focus=4:24
+
+```
+
+</CH.Code>
+
+### Variants
 
 Define multiple component variants.
 
 ---
 
-## Compound Variants
+<CH.Code>
 
-Define multiple component variants.
+```js focus=26:36
+
+```
+
+</CH.Code>
+
+### Compound Variants
+
+Apply styles only when multiple variants match.
 
 ---
 
-## Default Variants
+<CH.Code>
 
-Define multiple component variants.
+```js focus=38:42
+
+```
+
+</CH.Code>
+
+### Default Variants
+
+Set a value as the default for each variant.
 
 </CH.Spotlight>
 

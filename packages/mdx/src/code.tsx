@@ -2,7 +2,12 @@ import visit from "unist-util-visit"
 import { Node, Parent } from "unist"
 import { highlight } from "@code-hike/highlighter"
 import { extractLinks } from "./links"
-import { visitAsync, toJSX } from "./unist-utils"
+import {
+  visitAsync,
+  toJSX,
+  NodeInfo,
+  splitChildren,
+} from "./unist-utils"
 import React from "react"
 import {
   CodeSpring,
@@ -71,12 +76,6 @@ async function transformCode(
     props,
   })
 }
-
-type NodeInfo = {
-  node: Node
-  index: number
-  parent: Parent
-}
 export async function transformEditor(
   nodeInfo: NodeInfo,
   config: { theme: any }
@@ -92,8 +91,8 @@ export async function transformEditor(
 export async function mapEditor(
   { node }: NodeInfo,
   config: { theme: any }
-) {
-  const [northNodes, southNodes] = splitChildren(
+): Promise<EditorProps> {
+  const [northNodes, southNodes = []] = splitChildren(
     node as Parent,
     "thematicBreak"
   )
@@ -133,7 +132,7 @@ export async function mapEditor(
           active: southActive!.name as any,
           heightRatio: southRatio,
         }
-      : null,
+      : undefined,
     files: allFiles as any,
     codeConfig: {
       theme: config.theme,
@@ -142,9 +141,6 @@ export async function mapEditor(
   return props
 }
 
-// should I edit the node or return the file?
-// i think return file
-// this will be called from transEditor and transCode
 async function mapFile(
   { node, index, parent }: NodeInfo,
   config: { theme: any }
@@ -178,22 +174,6 @@ async function mapFile(
   return file
 }
 
-function splitChildren(parent: Parent, type: string) {
-  const north: NodeInfo[] = []
-  const south: NodeInfo[] = []
-  let breakNode = false
-  parent.children.forEach((node, index) => {
-    if (node.type === type) {
-      breakNode = true
-    } else if (breakNode) {
-      south.push({ node, index, parent })
-    } else {
-      north.push({ node, index, parent })
-    }
-  })
-  return [north, south]
-}
-
 type FileOptions = {
   name: string | null
   focus?: string
@@ -215,5 +195,5 @@ function parseMetastring(metastring: string): FileOptions {
       ;(options as any)[key] = true
     }
   })
-  return { name, ...options }
+  return { name: name || "", ...options }
 }

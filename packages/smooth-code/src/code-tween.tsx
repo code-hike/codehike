@@ -76,7 +76,7 @@ export function CodeTween({
       stepInfo.lastFocusedLineNumber.prev -
       stepInfo.firstFocusedLineNumber.prev +
       3
-    return `${focusedLinesCount * 1.1}rem`
+    return `${focusedLinesCount * 1}rem`
   }, [])
   const htmlProps = {
     ...config?.htmlProps,
@@ -181,6 +181,8 @@ function Wrapper({
         ...style,
         ...htmlProps?.style,
       }}
+      // TODO use classer
+      className="ch-code-wrapper"
     >
       <code>{children}</code>
     </pre>
