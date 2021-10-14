@@ -116,7 +116,7 @@ export async function mapEditor(
   const northLines = northActive.code.lines.length || 1
   const southLines = southActive?.code.lines.length || 0
   const northRatio = southActive
-    ? (northLines + 3.33) / (southLines + northLines + 6.66)
+    ? (northLines + 2) / (southLines + northLines + 4)
     : 1
   const southRatio = 1 - northRatio
 

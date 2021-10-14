@@ -60,6 +60,7 @@ function useCodeShift({
 }
 
 const DEFAULT_MIN_COLUMNS = 40
+const LINE_HEIGHT = 1.3
 
 export function CodeTween({
   tween,
@@ -76,7 +77,7 @@ export function CodeTween({
       stepInfo.lastFocusedLineNumber.prev -
       stepInfo.firstFocusedLineNumber.prev +
       3
-    return `${focusedLinesCount * 1}rem`
+    return `${focusedLinesCount * LINE_HEIGHT}em`
   }, [])
   const htmlProps = {
     ...config?.htmlProps,
@@ -178,6 +179,12 @@ function Wrapper({
       style={{
         overflow: "auto",
         margin: 0,
+
+        // hack https://code.iamkate.com/html-and-css/fixing-browsers-broken-monospace-font-handling/
+        // fontSize: "1em",
+        // fontFamily: "monospace,monospace",
+
+        lineHeight: `${LINE_HEIGHT}em`,
         ...style,
         ...htmlProps?.style,
       }}

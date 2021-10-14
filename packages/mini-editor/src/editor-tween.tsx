@@ -138,11 +138,12 @@ function useDefaultHeight({
     const southFile = files.find(
       ({ name }) => name === southPanel?.active
     )
-    let focusedLines = getFocusedLineCount(northFile!) + 4
+    let focusedLines = getFocusedLineCount(northFile!) + 3.9
     if (southFile) {
-      focusedLines += getFocusedLineCount(southFile!) + 4
+      focusedLines += getFocusedLineCount(southFile!) + 3.9
     }
-    return `${focusedLines * 1.2}rem`
+    const emHeight = focusedLines * 1.03125
+    return `${emHeight}em`
   }, [])
 }
 

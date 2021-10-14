@@ -87,10 +87,20 @@ function useDimensions(
 
       // TODO is it clientWidth or clientRect?
 
-      const plw = pll?.firstElementChild?.clientWidth
-      const nlw = nll?.firstElementChild?.clientWidth
-      const plh = pll?.firstElementChild?.clientHeight ?? 20
-      const nlh = nll?.firstElementChild?.clientHeight ?? 20
+      const plw = getWidthWithoutPadding(
+        pll?.firstElementChild as HTMLElement
+      )
+      const nlw = getWidthWithoutPadding(
+        nll?.firstElementChild as HTMLElement
+      )
+      const plh =
+        getHeightWithoutPadding(
+          pll?.firstElementChild as HTMLElement
+        ) ?? 20
+      const nlh =
+        getHeightWithoutPadding(
+          nll?.firstElementChild as HTMLElement
+        ) ?? 20
       const colWidth = pll
         ? plw! / (pll.textContent?.length || 1)
         : nlw! / (nll!.textContent?.length || 1)
@@ -101,7 +111,7 @@ function useDimensions(
         ),
         containerHeight: getHeightWithoutPadding(
           codeElement.parentElement!
-        ),
+        )!,
         lineWidths: [
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
@@ -161,7 +171,10 @@ function getWidthWithoutPadding(element: HTMLElement) {
     parseFloat(computedStyle.paddingRight)
   )
 }
-function getHeightWithoutPadding(element: HTMLElement) {
+function getHeightWithoutPadding(
+  element: HTMLElement | null
+) {
+  if (!element) return null
   const computedStyle = getComputedStyle(element)
   return (
     parseFloat(computedStyle.height) -

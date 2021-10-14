@@ -48,9 +48,9 @@
 .ch-editor-body {
   background-color: rgb(30, 30, 30);
   color: #cccccc;
-  font-size: 15px;
+  // font-size: 15px;
   // padding: 5px 10px;
-  line-height: 1.1rem;
+  // line-height: 1.1rem;
   box-sizing: border-box;
   position: relative;
 }
@@ -66,9 +66,9 @@
   overflow: auto;
 }
 
-.ch-editor-body code {
-  line-height: 1.2rem;
-}
+// .ch-editor-body code {
+//   line-height: 1.2rem;
+// }
 
 /** terminal */
 
