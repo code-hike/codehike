@@ -30,6 +30,8 @@ main {
 }
 
 .column {
+  margin-left: auto;
+  margin-right: auto;
   flex: 1;
   box-sizing: border-box;
   padding: 0 6px 6px;
@@ -109,9 +111,9 @@ nav select {
 /* result */
 
 .result {
-  min-width: 800px;
-  width: 800px;
-  max-width: 800px;
+  min-width: 900px;
+  width: 900px;
+  max-width: 900px;
 }
 
 pre.shiki {

@@ -14,14 +14,16 @@ export function Spotlight({
   children,
   editorSteps,
   codeConfig,
+  start = 0,
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
   codeConfig: EditorProps["codeConfig"]
+  start?: number
 }) {
   const stepsChildren = React.Children.toArray(children)
 
-  const [stepIndex, setIndex] = React.useState(0)
+  const [stepIndex, setIndex] = React.useState(start)
   const tab = editorSteps[stepIndex]
   return (
     <div className="ch-spotlight">
@@ -30,6 +32,7 @@ export function Spotlight({
         {stepsChildren.map((children, i) =>
           i === 0 ? null : (
             <div
+              key={i}
               onClick={() => setIndex(i)}
               className="ch-spotlight-tab"
               data-selected={
@@ -41,7 +44,9 @@ export function Spotlight({
           )
         )}
       </div>
-      <Code {...(tab as any)} codeConfig={codeConfig} />
+      <div>
+        <Code {...(tab as any)} codeConfig={codeConfig} />
+      </div>
     </div>
   )
 }
@@ -118,5 +123,6 @@ async function transformSpotlight(
       codeConfig: { theme },
       editorSteps: tabs.map(t => t.editorStep),
     },
+    appendProps: true,
   })
 }

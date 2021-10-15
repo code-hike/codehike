@@ -52,10 +52,12 @@ export function toJSX(
     type = "mdxJsxFlowElement",
     props,
     name,
+    appendProps = false,
   }: {
     type?: string
     props: Record<string, any>
     name?: string
+    appendProps?: boolean
   }
 ) {
   // console.log(`transforming ${node.name} to ${name}`)
@@ -63,24 +65,30 @@ export function toJSX(
   if (name) {
     node.name = name
   }
-  node.attributes = Object.keys(props).map(key => ({
-    type: "mdxJsxAttribute",
-    name: key,
-    value: {
-      type: "mdxJsxAttributeValueExpression",
-      value: JSON.stringify(props[key]),
-      data: {
-        estree: {
-          type: "Program",
-          body: [
-            {
-              type: "ExpressionStatement",
-              expression: valueToEstree(props[key]),
-            },
-          ],
-          sourceType: "module",
+  if (!appendProps) {
+    node.attributes = []
+  }
+
+  Object.keys(props).forEach(key => {
+    ;(node as any).attributes.push({
+      type: "mdxJsxAttribute",
+      name: key,
+      value: {
+        type: "mdxJsxAttributeValueExpression",
+        value: JSON.stringify(props[key]),
+        data: {
+          estree: {
+            type: "Program",
+            body: [
+              {
+                type: "ExpressionStatement",
+                expression: valueToEstree(props[key]),
+              },
+            ],
+            sourceType: "module",
+          },
         },
       },
-    },
-  }))
+    })
+  })
 }
