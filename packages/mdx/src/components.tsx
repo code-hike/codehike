@@ -6,6 +6,7 @@ import {
 import { Code } from "./code"
 import { CodeLink } from "./links"
 import { Spotlight } from "./spotlight"
+import { Scrollycoding } from "./scrollycoding"
 
 export const CH = {
   Code,
@@ -14,4 +15,5 @@ export const CH = {
   SectionCode,
   CodeLink,
   Spotlight,
+  Scrollycoding,
 }
