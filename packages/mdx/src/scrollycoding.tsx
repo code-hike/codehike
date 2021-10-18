@@ -9,6 +9,10 @@ import {
 import { mapEditor, Code } from "./code"
 import { reduceSteps } from "./code-files-reducer"
 import { extractStepsInfo } from "./steps"
+import {
+  Scroller,
+  Step as ScrollerStep,
+} from "@code-hike/scroller"
 
 export function Scrollycoding({
   children,
@@ -25,25 +29,36 @@ export function Scrollycoding({
 
   const [stepIndex, setIndex] = React.useState(start)
   const tab = editorSteps[stepIndex]
+
+  function onStepChange(index: number) {
+    setIndex(index)
+  }
   return (
-    <div className="ch-scrollycoding">
-      <div>
-        {stepsChildren.map((children, i) => (
-          <div
-            key={i}
-            onClick={() => setIndex(i)}
-            data-selected={
-              i === stepIndex ? "true" : undefined
-            }
-          >
-            {children}
-          </div>
-        ))}
+    <section className="ch-scrollycoding">
+      <div className="ch-scrollycoding-content">
+        <Scroller onStepChange={onStepChange}>
+          {stepsChildren.map((children, i) => (
+            <ScrollerStep
+              as="div"
+              key={i}
+              index={i}
+              onClick={() => setIndex(i)}
+              className="ch-scrollycoding-step-content"
+              data-selected={
+                i === stepIndex ? "true" : undefined
+              }
+            >
+              {children}
+            </ScrollerStep>
+          ))}
+        </Scroller>
       </div>
-      <div>
-        <Code {...(tab as any)} codeConfig={codeConfig} />
+      <div className="ch-scrollycoding-sticker-column">
+        <div className="ch-scrollycoding-sticker">
+          <Code {...(tab as any)} codeConfig={codeConfig} />
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 

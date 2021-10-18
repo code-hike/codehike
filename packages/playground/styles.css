@@ -48,7 +48,7 @@ main {
 }
 
 .column > .content {
-  padding: 10px;
+  padding: 10px 18px;
   background-color: #fff;
   border-radius: 6px;
 }
