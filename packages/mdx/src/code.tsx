@@ -55,6 +55,45 @@ export function Code(props: EditorProps) {
 
 // remark:
 
+export function isEditorNode(node: Node) {
+  return (
+    node.type === "code" ||
+    (node.type === "mdxJsxFlowElement" &&
+      node.name === "CH.Code")
+  )
+}
+
+export async function mapAnyCodeNode(
+  nodeInfo: NodeInfo,
+  config: { theme: any }
+) {
+  const { node } = nodeInfo
+  if (node.type === "code") {
+    return mapCode(nodeInfo, config)
+  } else {
+    return mapEditor(nodeInfo, config)
+  }
+}
+
+async function mapCode(
+  nodeInfo: NodeInfo,
+  config: { theme: any }
+): Promise<EditorProps> {
+  const file = await mapFile(nodeInfo, config)
+  const props: EditorProps = {
+    northPanel: {
+      tabs: [file.name],
+      active: file.name,
+      heightRatio: 1,
+    },
+    files: [file],
+    codeConfig: {
+      theme: config.theme,
+    },
+  }
+  return props
+}
+
 async function transformCode(
   nodeInfo: NodeInfo,
   config: { theme: any }
@@ -144,7 +183,7 @@ export async function mapEditor(
 async function mapFile(
   { node, index, parent }: NodeInfo,
   config: { theme: any }
-): Promise<CodeStep & FileOptions> {
+): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config
 
   const annotations = extractLinks(
@@ -168,6 +207,7 @@ async function mapFile(
     ...options,
     focus: options.focus || "",
     code,
+    name: options.name || "",
     annotations,
   }
 
@@ -175,13 +215,14 @@ async function mapFile(
 }
 
 type FileOptions = {
-  name: string | null
   focus?: string
   active?: string
   hidden?: boolean
 }
 
-function parseMetastring(metastring: string): FileOptions {
+function parseMetastring(
+  metastring: string
+): FileOptions & { name: string } {
   const params = metastring.split(" ")
   const options = {} as FileOptions
   let name: string | null = null

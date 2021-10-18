@@ -2,15 +2,13 @@ import { CH } from "@code-hike/mdx"
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-<CH.Spotlight start={2}>
+<CH.Spotlight>
 
 > Variants
 
 ## Design composable component APIs with variants
 
 Variants are a first-class citizen of Stitches. With multiple variants, compound variants, and default variants, you can design composable component APIs which are typed automatically.
-
-<CH.Code>
 
 ```js
 const Button = styled("button", {
@@ -58,49 +56,35 @@ const Button = styled("button", {
 })
 ```
 
-</CH.Code>
-
 ---
-
-<CH.Code>
-
-```js focus=4:24
-
-```
-
-</CH.Code>
 
 ### Variants
 
 Define multiple component variants.
 
----
-
-<CH.Code>
-
-```js focus=26:36
+```js focus=4:24
 
 ```
 
-</CH.Code>
+---
 
 ### Compound Variants
 
 Apply styles only when multiple variants match.
 
----
-
-<CH.Code>
-
-```js focus=38:42
+```js focus=26:36
 
 ```
 
-</CH.Code>
+---
 
 ### Default Variants
 
 Set a value as the default for each variant.
+
+```js focus=38:42
+
+```
 
 </CH.Spotlight>
 
@@ -111,8 +95,6 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 ## Design composable component APIs with variants
 
 Variants are a first-class citizen of Stitches. With multiple variants, compound variants, and default variants, you can design composable component APIs which are typed automatically.
-
-<CH.Code>
 
 ```js index.js
 const Button = styled("button", {
@@ -160,17 +142,11 @@ const Button = styled("button", {
 })
 ```
 
-</CH.Code>
-
 ---
-
-<CH.Code>
 
 ```js index.js focus=4:24
 
 ```
-
-</CH.Code>
 
 ### Variants
 
@@ -178,13 +154,9 @@ Define multiple component variants.
 
 ---
 
-<CH.Code>
-
 ```js index.js focus=26:36
 
 ```
-
-</CH.Code>
 
 ### Compound Variants
 
@@ -192,13 +164,9 @@ Apply styles only when multiple variants match.
 
 ---
 
-<CH.Code>
-
 ```js index.js focus=38:42
 
 ```
-
-</CH.Code>
 
 ### Default Variants
 

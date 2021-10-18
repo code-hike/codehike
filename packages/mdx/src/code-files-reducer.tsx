@@ -3,6 +3,8 @@ import {
   CodeFile,
 } from "@code-hike/mini-editor"
 
+// extend steps with info from previous steps
+
 export function reduceSteps(
   baseStep: EditorStep,
   extraStep: EditorStep
