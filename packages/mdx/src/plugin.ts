@@ -4,6 +4,7 @@ import { transformCodeNodes } from "./code"
 import { transformEditorNodes } from "./editor"
 import { transformSections } from "./section"
 import { transformSpotlights } from "./spotlight"
+import { transformScrollycodings } from "./scrollycoding"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async (tree: Node) => {
@@ -21,6 +22,7 @@ export function remarkCodeHike({ theme }: { theme: any }) {
     }
 
     try {
+      await transformScrollycodings(tree, { theme })
       await transformSpotlights(tree, { theme })
       await transformSections(tree, { theme })
       await transformEditorNodes(tree, { theme })

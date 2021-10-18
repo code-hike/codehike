@@ -10,7 +10,6 @@ import { mapEditor, Code } from "./code"
 import { reduceSteps } from "./code-files-reducer"
 import { extractStepsInfo } from "./steps"
 
-// todo copy from https://codesandbox.io/s/3iul1?file=/src/App.js
 export function Spotlight({
   children,
   editorSteps,
