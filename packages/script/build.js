@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path")
-const spawn = require("child_process").spawn
+const { spawnSync } = require("child_process")
 
 function build(args) {
   const configPath = path.resolve(
@@ -9,14 +9,13 @@ function build(args) {
     "rollup.config.js"
   )
 
-  spawn(
+  const p = spawnSync(
     "yarn",
     ["rollup", "--silent", "-c", configPath, ...args],
-    {
-      stdio: "inherit",
-      // cwd: "foo"
-    }
+    { stdio: "inherit" }
   )
+
+  process.exitCode = p.status
 }
 
 module.exports = {
