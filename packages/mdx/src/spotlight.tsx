@@ -45,7 +45,21 @@ export function Spotlight({
         )}
       </div>
       <div>
-        <Code {...(tab as any)} codeConfig={codeConfig} />
+        <Code
+          {...(tab as any)}
+          codeConfig={{
+            ...codeConfig,
+            htmlProps: {
+              style: {
+                minHeight: "100%",
+                maxHeight: "80vh",
+              },
+            },
+          }}
+          frameProps={{
+            style: { minHeight: "100%", maxHeight: "80vh" },
+          }}
+        />
       </div>
     </div>
   )
