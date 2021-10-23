@@ -1,7 +1,4 @@
-.steps-story .ch-frame {
-  max-width: none;
-}
-
-.steps-story .ch-editor-tab {
-  min-width: fit-content;
+.longer code {
+  font-family: ui-monospace, SFMono-Regular, Consolas,
+    "Liberation Mono", Menlo, monospace;
 }

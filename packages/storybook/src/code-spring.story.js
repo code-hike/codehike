@@ -1,8 +1,10 @@
 import React from "react"
 import { Page } from "./utils"
 import { CodeSpring } from "@code-hike/smooth-code"
-import theme from "shiki/themes/poimandres.json"
+import theme from "shiki/themes/github-light.json"
 import { highlight } from "@code-hike/highlighter"
+import "@code-hike/mdx/dist/index.css"
+import "./assets/styles.css"
 
 export default {
   title: "Test/Code Spring",
@@ -89,3 +91,125 @@ const x = (y) => y++
     </Page>
   )
 }
+
+export const longer = ({}) => {
+  // TODO fix scrollbar
+  const prevAnnotations = []
+
+  const nextAnnotations = []
+  const [steps, setSteps] = React.useState(null)
+  const [index, setIndex] = React.useState(0)
+
+  React.useEffect(() => {
+    Promise.all([
+      highlight({ code: mdx, lang: "md", theme }),
+      highlight({ code: mdx, lang: "md", theme }),
+    ]).then(([prevCode, nextCode]) =>
+      setSteps([
+        {
+          code: prevCode,
+          focus: "2:8",
+          annotations: prevAnnotations,
+        },
+        {
+          code: nextCode,
+          focus: "2:8",
+          annotations: nextAnnotations,
+        },
+      ])
+    )
+  }, [])
+
+  return (
+    <Page>
+      <button onClick={() => setIndex((index + 1) % 2)}>
+        Change
+      </button>
+      <div
+        className="longer"
+        style={{
+          height: 320,
+          width: 372,
+          outline: "1px solid red",
+          borderRadius: "0.25rem",
+        }}
+      >
+        {steps ? (
+          <CodeSpring
+            step={steps[index]}
+            config={{
+              theme,
+              minZoom: 0.5,
+              htmlProps: { style: { height: "100%" } },
+            }}
+          />
+        ) : (
+          "Loading..."
+        )}
+      </div>
+    </Page>
+  )
+}
+
+const mdx = `import { Code } from "@code-hike/mdx"
+
+# Hello
+
+~~~js index.js
+function lorem(ipsum, dolor = 1) {}
+~~~
+
+---
+
+~~~js index.js
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit
+  dolor = sit - amet(dolor)
+  return sit
+    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
+    : []
+}
+~~~
+
+---
+
+~~~js index.js focus=9:15
+function lorem(ipsum, dolor = 1) {
+  const sit = ipsum == null ? 0 : ipsum.sit
+  dolor = sit - amet(dolor)
+  return sit
+    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
+    : []
+}
+
+function adipiscing(...elit) {
+  if (!elit.sit) {
+    return []
+  }
+
+  const sed = elit[0]
+  return eiusmod.tempor(sed) ? sed : [sed]
+}
+~~~
+
+## Hi
+
+~~~py
+def hello():
+  print("Hello")
+~~~
+
+---
+
+~~~py focus=4:6
+def hello_1():
+  print("Hello")
+
+def hello_2():
+  print("Hello")
+  pring("World")
+
+def hello_3():
+  print("Hello")
+~~~
+`
