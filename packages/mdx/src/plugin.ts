@@ -1,24 +1,27 @@
-import visit from "unist-util-visit"
-import { Node } from "unist"
+import { Node, Parent } from "unist"
 import { transformCodeNodes } from "./code"
 import { transformEditorNodes } from "./editor"
 import { transformSections } from "./section"
 import { transformSpotlights } from "./spotlight"
 import { transformScrollycodings } from "./scrollycoding"
+import visit from "unist-util-visit"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async (tree: Node) => {
-    let useCodeComponent = false
-    visit(tree, "mdxjsEsm", node => {
+    // TODO add opt-in config
+    let hasCodeHikeImport = false
+    visit(tree, "mdxjsEsm", (node: any) => {
       if (
-        // TODO too fragile:
-        node.value === `import { CH } from "@code-hike/mdx"`
+        node.value.startsWith(
+          `import { CH } from "@code-hike/mdx"`
+        )
       ) {
-        useCodeComponent = true
+        hasCodeHikeImport = true
       }
     })
-    if (!useCodeComponent) {
-      return
+
+    if (!hasCodeHikeImport) {
+      addImportNode(tree as Parent)
     }
 
     try {
@@ -32,4 +35,40 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       throw e
     }
   }
+}
+
+function addImportNode(tree: Parent) {
+  tree.children.unshift({
+    type: "mdxjsEsm",
+    value: 'import { CH } from "@code-hike/mdx"',
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ImportDeclaration",
+            specifiers: [
+              {
+                type: "ImportSpecifier",
+                imported: {
+                  type: "Identifier",
+                  name: "CH",
+                },
+                local: {
+                  type: "Identifier",
+                  name: "CH",
+                },
+              },
+            ],
+            source: {
+              type: "Literal",
+              value: "@code-hike/mdx",
+              raw: '"@code-hike/mdx"',
+            },
+          },
+        ],
+        sourceType: "module",
+      },
+    },
+  })
 }
