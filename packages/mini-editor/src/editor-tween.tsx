@@ -151,14 +151,15 @@ function getFocusedLineCount({
   code,
   focus,
 }: EditorStep["files"][0]): number {
-  const focusByLineNumber = mapFocusToLineNumbers(
-    focus,
-    code.lines
-  )
-  const focusedLineNumbers = Object.keys(
-    focusByLineNumber
-  ).map(k => Number(k))
-  const min = Math.min(...focusedLineNumbers)
-  const max = Math.max(...focusedLineNumbers)
-  return max - min + 1
+  return code.lines.length
+  // const focusByLineNumber = mapFocusToLineNumbers(
+  //   focus,
+  //   code.lines
+  // )
+  // const focusedLineNumbers = Object.keys(
+  //   focusByLineNumber
+  // ).map(k => Number(k))
+  // const min = Math.min(...focusedLineNumbers)
+  // const max = Math.max(...focusedLineNumbers)
+  // return max - min + 1
 }

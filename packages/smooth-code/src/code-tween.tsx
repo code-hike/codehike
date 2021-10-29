@@ -73,10 +73,11 @@ export function CodeTween({
   })
 
   const defaultHeight = React.useMemo(() => {
-    const focusedLinesCount =
-      stepInfo.lastFocusedLineNumber.prev -
-      stepInfo.firstFocusedLineNumber.prev +
-      3
+    // const focusedLinesCount =
+    //   stepInfo.lastFocusedLineNumber.prev -
+    //   stepInfo.firstFocusedLineNumber.prev +
+    //   3
+    const focusedLinesCount = stepInfo.lineCount.prev + 2
     return `${focusedLinesCount * LINE_HEIGHT}em`
   }, [])
   const htmlProps = {
@@ -188,8 +189,6 @@ function Wrapper({
         ...style,
         ...htmlProps?.style,
       }}
-      // TODO use classer
-      className="ch-code-wrapper"
     >
       <code>{children}</code>
     </pre>
