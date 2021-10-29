@@ -45,7 +45,7 @@ export function SmoothContainer({
   )
   const focusWidth = tweenProp(
     prev.focusWidth,
-    prev.focusWidth,
+    next.focusWidth,
     progress
   )
 

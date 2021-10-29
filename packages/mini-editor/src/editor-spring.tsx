@@ -9,6 +9,10 @@ export { EditorSpring, EditorProps, EditorStep, CodeFile }
 
 type SpringConfig = Parameters<typeof useSpring>[1]
 
+type DivProps = React.PropsWithoutRef<
+  JSX.IntrinsicElements["div"]
+>
+
 const defaultSpring = {
   stiffness: 120,
   damping: 24,
@@ -19,7 +23,7 @@ type EditorProps = EditorStep & {
   frameProps?: Partial<EditorFrameProps>
   codeConfig: CodeConfig
   springConfig?: SpringConfig
-}
+} & DivProps
 
 function EditorSpring({
   northPanel,

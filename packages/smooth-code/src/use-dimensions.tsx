@@ -53,20 +53,27 @@ function useDimensions(
     focus.next
   )
   const prevLineRef = React.useRef<HTMLDivElement>(null!)
-  const nextLineRef = React.useRef<HTMLDivElement>(null!)
+
+  const lines = (code.prev || code.next!).split(newlineRe)
 
   const element = (
     <>
-      <div ref={prevLineRef}>
-        <div style={{ display: "inline-block" }}>
-          <span>{prevLongestLine}</span>
+      <br />
+      {lines.map((line, i) => (
+        <div
+          ref={
+            line === prevLongestLine
+              ? prevLineRef
+              : undefined
+          }
+          key={i}
+        >
+          <div style={{ display: "inline-block" }}>
+            <span>{line}</span>
+          </div>
         </div>
-      </div>
-      <div ref={nextLineRef}>
-        <div style={{ display: "inline-block" }}>
-          <span>{nextLongestLine}</span>
-        </div>
-      </div>
+      ))}
+      <br />
     </>
   )
 
@@ -81,29 +88,19 @@ function useDimensions(
   useLayoutEffect(() => {
     if (prevLineRef.current) {
       const pll = prevLineRef.current
-      const nll = nextLineRef.current
-      const codeElement =
-        pll?.parentElement || nll?.parentElement!
+      const codeElement = pll?.parentElement!
 
       // TODO is it clientWidth or clientRect?
 
       const plw = getWidthWithoutPadding(
         pll?.firstElementChild as HTMLElement
       )
-      const nlw = getWidthWithoutPadding(
-        nll?.firstElementChild as HTMLElement
-      )
-      const plh =
+      const colWidth = plw / prevLongestLine.length || 1
+      const nlw = nextLongestLine.length * colWidth
+      const lineHeight =
         getHeightWithoutPadding(
           pll?.firstElementChild as HTMLElement
         ) ?? 20
-      const nlh =
-        getHeightWithoutPadding(
-          nll?.firstElementChild as HTMLElement
-        ) ?? 20
-      const colWidth = pll
-        ? plw! / (pll.textContent?.length || 1)
-        : nlw! / (nll!.textContent?.length || 1)
 
       const d: Dimensions = {
         containerWidth: getWidthWithoutPadding(
@@ -126,11 +123,12 @@ function useDimensions(
             colWidth * minColumns
           ),
         ],
-        lineHeight: Math.max(plh, nlh),
+        lineHeight,
         colWidth,
         deps: allDeps,
       }
       setDimensions(d)
+      // console.log({ d })
     }
   }, [allDeps])
 

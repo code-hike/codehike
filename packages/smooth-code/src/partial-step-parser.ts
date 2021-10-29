@@ -74,7 +74,7 @@ function parse({
 
   const codeStep = addExtraStuff(annotatedCode, normalCode)
 
-  console.log({ codeStep })
+  // console.log({ codeStep })
 
   return codeStep
 }

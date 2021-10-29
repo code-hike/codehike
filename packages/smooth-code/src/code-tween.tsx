@@ -59,8 +59,7 @@ function useCodeShift({
   })
 }
 
-const DEFAULT_MIN_COLUMNS = 40
-const LINE_HEIGHT = 1.3
+const DEFAULT_MIN_COLUMNS = 10
 
 export function CodeTween({
   tween,
@@ -72,18 +71,10 @@ export function CodeTween({
     theme: config.theme,
   })
 
-  const defaultHeight = React.useMemo(() => {
-    // const focusedLinesCount =
-    //   stepInfo.lastFocusedLineNumber.prev -
-    //   stepInfo.firstFocusedLineNumber.prev +
-    //   3
-    const focusedLinesCount = stepInfo.lineCount.prev + 2
-    return `${focusedLinesCount * LINE_HEIGHT}em`
-  }, [])
   const htmlProps = {
     ...config?.htmlProps,
     style: {
-      height: defaultHeight,
+      // height: defaultHeight,
       ...config?.htmlProps?.style,
     },
   }
@@ -184,8 +175,7 @@ function Wrapper({
         // hack https://code.iamkate.com/html-and-css/fixing-browsers-broken-monospace-font-handling/
         // fontSize: "1em",
         // fontFamily: "monospace,monospace",
-
-        lineHeight: `${LINE_HEIGHT}em`,
+        // lineHeight: `${LINE_HEIGHT}em`,
         ...style,
         ...htmlProps?.style,
       }}

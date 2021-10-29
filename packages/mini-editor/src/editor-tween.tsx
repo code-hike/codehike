@@ -25,6 +25,10 @@ type EditorTransitionProps = {
   codeConfig: CodeConfig
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
+type DivProps = React.PropsWithoutRef<
+  JSX.IntrinsicElements["div"]
+>
+
 type EditorTweenProps = {
   prev?: EditorStep
   next?: EditorStep
@@ -32,7 +36,7 @@ type EditorTweenProps = {
   backward: boolean
   codeConfig: CodeConfig
   frameProps?: Partial<EditorFrameProps>
-}
+} & DivProps
 
 const DEFAULT_STEP: EditorStep = {
   files: [
@@ -52,6 +56,7 @@ function EditorTween({
   backward,
   codeConfig,
   frameProps = {},
+  ...divProps
 }: EditorTweenProps) {
   const ref = React.createRef<HTMLDivElement>()
   const { northPanel, southPanel } = useTransition(
@@ -63,10 +68,9 @@ function EditorTween({
     codeConfig
   )
 
-  const defaultHeight = useDefaultHeight(prev)
   const framePropsWithHeight = {
     ...frameProps,
-    style: { height: defaultHeight, ...frameProps?.style },
+    ...divProps,
   }
 
   const terminalPanel = (
@@ -124,42 +128,4 @@ function EditorTransition({
       {...rest}
     />
   )
-}
-
-function useDefaultHeight({
-  files,
-  northPanel,
-  southPanel,
-}: EditorStep): string {
-  return React.useMemo(() => {
-    const northFile = files.find(
-      ({ name }) => name === northPanel.active
-    )
-    const southFile = files.find(
-      ({ name }) => name === southPanel?.active
-    )
-    let focusedLines = getFocusedLineCount(northFile!) + 3.9
-    if (southFile) {
-      focusedLines += getFocusedLineCount(southFile!) + 3.9
-    }
-    const emHeight = focusedLines * 1.03125
-    return `${emHeight}em`
-  }, [])
-}
-
-function getFocusedLineCount({
-  code,
-  focus,
-}: EditorStep["files"][0]): number {
-  return code.lines.length
-  // const focusByLineNumber = mapFocusToLineNumbers(
-  //   focus,
-  //   code.lines
-  // )
-  // const focusedLineNumbers = Object.keys(
-  //   focusByLineNumber
-  // ).map(k => Number(k))
-  // const min = Math.min(...focusedLineNumbers)
-  // const max = Math.max(...focusedLineNumbers)
-  // return max - min + 1
 }

@@ -81,6 +81,12 @@ const x = (y) => y++
             step={steps[index]}
             config={{
               horizontalCenter: center,
+              htmlProps: {
+                style: {
+                  minHeight: "100%",
+                  fontSize: "2rem",
+                },
+              },
               theme,
             }}
           />
@@ -92,39 +98,89 @@ const x = (y) => y++
   )
 }
 
-export const longer = ({}) => {
-  // TODO fix scrollbar
-  const prevAnnotations = []
-
-  const nextAnnotations = []
-  const [steps, setSteps] = React.useState(null)
-  const [index, setIndex] = React.useState(0)
-
+function useStep(code, lang, focus, annotations = []) {
+  const [step, setStep] = React.useState(null)
   React.useEffect(() => {
-    Promise.all([
-      highlight({ code: mdx, lang: "md", theme }),
-      highlight({ code: mdx, lang: "md", theme }),
-    ]).then(([prevCode, nextCode]) =>
-      setSteps([
-        {
-          code: prevCode,
-          focus: "2:8",
-          annotations: prevAnnotations,
-        },
-        {
-          code: nextCode,
-          focus: "2:8",
-          annotations: nextAnnotations,
-        },
-      ])
+    highlight({ code, lang, theme }).then(hcode =>
+      setStep({
+        code: hcode,
+        focus,
+        annotations,
+      })
     )
   }, [])
+  return step
+}
+
+export const flow = ({}) => {
+  const code = `console.log(10)`
+  const step = useStep(code, "js", "1")
 
   return (
     <Page>
-      <button onClick={() => setIndex((index + 1) % 2)}>
-        Change
-      </button>
+      <div
+        className="longer"
+        style={{ outline: "1px solid red" }}
+      >
+        {step ? (
+          <CodeSpring step={step} config={{ theme }} />
+        ) : (
+          "Loading..."
+        )}
+      </div>
+    </Page>
+  )
+}
+
+export const flex = ({}) => {
+  const code = `console.log(10)`
+  const step = useStep(code, "js", "1")
+
+  return (
+    <Page>
+      <div
+        style={{
+          display: "flex",
+          height: 400,
+        }}
+      >
+        {step ? (
+          <CodeSpring
+            step={step}
+            config={{
+              theme,
+              htmlProps: {
+                style: { height: "100%", flex: 2 },
+              },
+            }}
+          />
+        ) : (
+          "Loading..."
+        )}
+        {step ? (
+          <CodeSpring
+            step={step}
+            config={{
+              theme,
+              minZoom: 0.5,
+              htmlProps: {
+                style: { height: "100%", flex: 2 },
+              },
+            }}
+          />
+        ) : (
+          "Loading..."
+        )}
+      </div>
+    </Page>
+  )
+}
+
+export const longer = ({}) => {
+  const step = useStep(mdx, "md", "2:8")
+
+  return (
+    <Page>
       <div
         className="longer"
         style={{
@@ -134,9 +190,9 @@ export const longer = ({}) => {
           borderRadius: "0.25rem",
         }}
       >
-        {steps ? (
+        {step ? (
           <CodeSpring
-            step={steps[index]}
+            step={step}
             config={{
               theme,
               minZoom: 0.5,
