@@ -81,13 +81,11 @@ const x = (y) => y++
             step={steps[index]}
             config={{
               horizontalCenter: center,
-              htmlProps: {
-                style: {
-                  minHeight: "100%",
-                  fontSize: "2rem",
-                },
-              },
               theme,
+            }}
+            style={{
+              minHeight: "100%",
+              fontSize: "2rem",
             }}
           />
         ) : (
@@ -147,12 +145,8 @@ export const flex = ({}) => {
         {step ? (
           <CodeSpring
             step={step}
-            config={{
-              theme,
-              htmlProps: {
-                style: { height: "100%", flex: 2 },
-              },
-            }}
+            style={{ height: "100%", flex: 2 }}
+            config={{ theme }}
           />
         ) : (
           "Loading..."
@@ -160,13 +154,8 @@ export const flex = ({}) => {
         {step ? (
           <CodeSpring
             step={step}
-            config={{
-              theme,
-              minZoom: 0.5,
-              htmlProps: {
-                style: { height: "100%", flex: 2 },
-              },
-            }}
+            style={{ height: "100%", flex: 2 }}
+            config={{ minZoom: 0.5, theme }}
           />
         ) : (
           "Loading..."
@@ -193,11 +182,8 @@ export const longer = ({}) => {
         {step ? (
           <CodeSpring
             step={step}
-            config={{
-              theme,
-              minZoom: 0.5,
-              htmlProps: { style: { height: "100%" } },
-            }}
+            config={{ theme, minZoom: 0.5 }}
+            style={{ height: "100%" }}
           />
         ) : (
           "Loading..."

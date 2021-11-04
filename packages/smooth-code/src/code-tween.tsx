@@ -3,12 +3,7 @@ import { useDimensions, Dimensions } from "./use-dimensions"
 import { IRawTheme } from "vscode-textmate"
 import { DEFAULT_THEME } from "./themes"
 import { FocusString } from "./focus-parser"
-import {
-  Tween,
-  FullTween,
-  Code,
-  map,
-} from "@code-hike/utils"
+import { FullTween, Code, map } from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,
@@ -26,7 +21,7 @@ export type CodeTweenProps = {
   tween: FullTween<CodeStep>
   progress: number
   config: CodeConfig
-}
+} & HTMLProps
 
 export type CodeStep = {
   code: Code
@@ -41,7 +36,6 @@ export type CodeConfig = {
   maxZoom?: number
   horizontalCenter?: boolean
   theme: IRawTheme
-  htmlProps?: HTMLProps
 }
 
 function useCodeShift({
@@ -65,19 +59,12 @@ export function CodeTween({
   tween,
   progress,
   config,
+  ...preProps
 }: CodeTweenProps) {
   const stepInfo = useCodeShift({
     tween,
     theme: config.theme,
   })
-
-  const htmlProps = {
-    ...config?.htmlProps,
-    style: {
-      // height: defaultHeight,
-      ...config?.htmlProps?.style,
-    },
-  }
 
   const { element, dimensions } = useDimensions(
     stepInfo.code,
@@ -85,18 +72,25 @@ export function CodeTween({
     config.minColumns || DEFAULT_MIN_COLUMNS,
     [config.parentHeight]
   )
+  // return (
+  //   <BeforeDimensions
+  //     element={element}
+  //     htmlProps={preProps}
+  //   />
+  // )
 
   return !dimensions ? (
     <BeforeDimensions
       element={element}
-      htmlProps={htmlProps}
+      htmlProps={preProps}
     />
   ) : (
     <AfterDimensions
       dimensions={dimensions}
       stepInfo={stepInfo}
-      config={{ ...config, htmlProps }}
+      config={config}
       progress={progress}
+      htmlProps={preProps}
     />
   )
 }
@@ -124,17 +118,19 @@ function AfterDimensions({
     minZoom = 1,
     maxZoom = 1,
     horizontalCenter = false,
-    htmlProps,
+
     theme = (DEFAULT_THEME as unknown) as IRawTheme,
   },
   dimensions,
   stepInfo,
   progress,
+  htmlProps,
 }: {
   dimensions: NonNullable<Dimensions>
   stepInfo: CodeShift
   config: CodeConfig
   progress: number
+  htmlProps: HTMLProps
 }) {
   const { bg, fg } = getThemeDefaultColors(theme)
 

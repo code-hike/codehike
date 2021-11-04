@@ -68,9 +68,15 @@ function EditorTween({
     codeConfig
   )
 
+  const defaultHeight = useDefaultHeight(prev)
   const framePropsWithHeight = {
     ...frameProps,
     ...divProps,
+    style: {
+      height: defaultHeight,
+      ...frameProps?.style,
+      ...divProps?.style,
+    },
   }
 
   const terminalPanel = (
@@ -128,4 +134,32 @@ function EditorTransition({
       {...rest}
     />
   )
+}
+
+function useDefaultHeight({
+  files,
+  northPanel,
+  southPanel,
+}: EditorStep): string {
+  return React.useMemo(() => {
+    const northFile = files.find(
+      ({ name }) => name === northPanel.active
+    )
+    const southFile = files.find(
+      ({ name }) => name === southPanel?.active
+    )
+    let focusedLines = getFocusedLineCount(northFile!) + 3.9
+    if (southFile) {
+      focusedLines += getFocusedLineCount(southFile!) + 3.9
+    }
+    const emHeight = focusedLines * 1.15
+    return `${emHeight}em`
+  }, [])
+}
+
+function getFocusedLineCount({
+  code,
+  focus,
+}: EditorStep["files"][0]): number {
+  return code.lines.length
 }

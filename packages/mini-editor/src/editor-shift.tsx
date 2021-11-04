@@ -280,8 +280,15 @@ function CodeTransition({
   nextFile: CodeFile
   t: number
   parentHeight: string
-  codeConfig: CodeConfig
+  codeConfig: CodeConfig & { htmlProps?: any }
 }) {
+  const htmlProps = {
+    ...codeConfig?.htmlProps,
+    style: {
+      height: "unset",
+      ...codeConfig?.htmlProps?.style,
+    },
+  }
   return (
     <CodeTween
       progress={t}
@@ -289,14 +296,8 @@ function CodeTransition({
       config={{
         ...codeConfig,
         parentHeight,
-        htmlProps: {
-          ...codeConfig?.htmlProps,
-          style: {
-            height: "unset",
-            ...codeConfig?.htmlProps?.style,
-          },
-        },
       }}
+      {...htmlProps}
     />
   )
 }

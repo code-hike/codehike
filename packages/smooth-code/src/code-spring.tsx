@@ -9,6 +9,11 @@ import {
 
 type SpringConfig = Parameters<typeof useSpring>[1]
 
+type HTMLProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLPreElement>,
+  HTMLPreElement
+>
+
 const defaultSpring = {
   stiffness: 120,
   damping: 24,
@@ -19,13 +24,19 @@ const defaultSpring = {
 export function CodeSpring({
   step,
   config,
+  ...htmlProps
 }: {
   step: CodeStep
   config: CodeConfig & { spring?: SpringConfig }
-}) {
+} & HTMLProps) {
   const { tween, t } = useStepSpring(step, config.spring)
   return (
-    <CodeTween tween={tween} progress={t} config={config} />
+    <CodeTween
+      tween={tween}
+      progress={t}
+      config={config}
+      {...htmlProps}
+    />
   )
 }
 

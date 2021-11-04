@@ -44,13 +44,8 @@ export function Code(props: EditorProps) {
   ) {
     return (
       <CodeSpring
-        config={{
-          ...props.codeConfig,
-          htmlProps: {
-            ...props?.codeConfig?.htmlProps,
-            className: "ch-code",
-          },
-        }}
+        className="ch-code"
+        config={props.codeConfig}
         step={props.files[0]}
       />
     )

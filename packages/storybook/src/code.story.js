@@ -81,38 +81,32 @@ console.log(10)
       <CodePage
         code={verticalCode}
         focus="2:7"
-        config={{
-          htmlProps: {
-            style: { height: 100 },
-          },
-        }}
+        style={{ height: 100 }}
       />
       <hr />
       <CodePage
         code={horizontalCode}
         focus=""
-        config={{
-          htmlProps: {
-            style: { height: 100 },
-          },
-        }}
+        style={{ height: 100 }}
       />
       <hr />
 
       <CodePage
         code={both}
         focus="2:7"
-        config={{
-          htmlProps: {
-            style: { height: 100 },
-          },
-        }}
+        style={{ height: 100 }}
       />
     </Page>
   )
 }
 
-function CodePage({ code, focus, annotations, config }) {
+function CodePage({
+  code,
+  focus,
+  annotations = [],
+  config,
+  ...rest
+}) {
   const [step, setStep] = React.useState(null)
 
   React.useEffect(() => {
@@ -130,7 +124,11 @@ function CodePage({ code, focus, annotations, config }) {
   }, [])
 
   return step ? (
-    <CodeSpring step={step} config={{ theme, ...config }} />
+    <CodeSpring
+      step={step}
+      config={{ theme, ...config }}
+      {...rest}
+    />
   ) : (
     "Loading..."
   )

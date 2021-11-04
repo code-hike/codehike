@@ -14,11 +14,80 @@ export default {
 
 export const flow = () => {
   return (
-    <Page>
-      <EditorTest code="console.log(1)" />
+    <Page className="longer">
+      <EditorTest
+        code="console.log(1)"
+        contentHeight={true}
+      />
+      <EditorTest code={moreCode} contentHeight={true} />
+      <EditorTest
+        code={evenMoreCode}
+        contentHeight={true}
+      />
     </Page>
   )
 }
+
+const moreCode = `
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+`.trim()
+const evenMoreCode = `
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+console.log(1)
+`.trim()
+
+export const height = () => {
+  return (
+    <Page>
+      <div className="longer">
+        <EditorTest
+          code="console.log(1)"
+          style={{ height: 400 }}
+        />
+      </div>
+    </Page>
+  )
+}
+
 export const flex = () => {
   return (
     <Page>
@@ -49,6 +118,7 @@ function EditorTest({
   focus = "",
   annotations = [],
   style,
+  ...rest
 }) {
   const [code, setCode] = React.useState(null)
 
@@ -81,6 +151,7 @@ function EditorTest({
       codeConfig={{ theme }}
       frameProps={{}}
       style={style}
+      {...rest}
     />
   ) : (
     <div style={style}>"Loading..."</div>

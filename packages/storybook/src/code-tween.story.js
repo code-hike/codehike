@@ -77,11 +77,8 @@ const x = (y) => y++
             <CodeTween
               progress={progress}
               tween={tween}
-              config={{
-                horizontalCenter: center,
-                htmlProps: { style: { height: "100%" } },
-                theme,
-              }}
+              style={{ height: "100%" }}
+              config={{ horizontalCenter: center, theme }}
             />
           ) : (
             "Loading..."
