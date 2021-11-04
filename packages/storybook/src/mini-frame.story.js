@@ -1,6 +1,7 @@
 import React from "react"
 import {
   MiniFrame,
+  SimpleFrame,
   FrameButtons,
 } from "@code-hike/mini-frame"
 import "@code-hike/mini-frame/dist/index.css"
@@ -122,5 +123,19 @@ export const overflowX = () => (
         }}
       />
     </MiniFrame>
+  </Page>
+)
+
+export const simple = () => (
+  <Page>
+    <SimpleFrame>
+      <div
+        style={{
+          width: 240,
+          height: 100,
+          background: "salmon",
+        }}
+      />
+    </SimpleFrame>
   </Page>
 )
