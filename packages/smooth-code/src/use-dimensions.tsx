@@ -54,7 +54,9 @@ function useDimensions(
   )
   const prevLineRef = React.useRef<HTMLDivElement>(null!)
 
-  const lines = (code.prev || code.next!).split(newlineRe)
+  const lines = (code.prev || code.next!)
+    .trim()
+    .split(newlineRe)
 
   const element = (
     <>

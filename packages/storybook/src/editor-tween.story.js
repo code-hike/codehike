@@ -2,7 +2,7 @@ import React from "react"
 import { EditorTween } from "@code-hike/mini-editor"
 import { WithProgress } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
-import theme from "shiki/themes/poimandres.json"
+import theme from "shiki/themes/monokai.json"
 import { highlight } from "@code-hike/highlighter"
 
 export default {
