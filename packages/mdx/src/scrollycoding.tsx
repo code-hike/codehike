@@ -53,10 +53,8 @@ export function Scrollycoding({
           ))}
         </Scroller>
       </div>
-      <div className="ch-scrollycoding-sticker-column">
-        <div className="ch-scrollycoding-sticker">
-          <Code {...(tab as any)} codeConfig={codeConfig} />
-        </div>
+      <div className="ch-scrollycoding-sticker">
+        <Code {...(tab as any)} codeConfig={codeConfig} />
       </div>
     </section>
   )

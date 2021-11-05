@@ -56,9 +56,6 @@ export function Spotlight({
               },
             },
           }}
-          frameProps={{
-            style: { minHeight: "100%", maxHeight: "80vh" },
-          }}
         />
       </div>
     </div>

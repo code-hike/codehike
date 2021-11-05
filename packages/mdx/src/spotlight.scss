@@ -27,7 +27,7 @@
 
 .ch-spotlight-sticker {
   position: sticky;
-  bottom: 20px;
+  top: 10vh;
   width: 420px;
   // capitalized Min to avoid usint the sass min
   min-height: Min(100%, 80vh);
@@ -38,5 +38,6 @@
 .ch-spotlight-sticker .ch-code {
   width: 100%;
   min-width: 100%;
-  height: 100%;
+  min-height: Min(100%, 80vh);
+  max-height: 80vh;
 }

@@ -1,7 +1,5 @@
 .ch-scrollycoding {
   display: flex;
-  --sticker-height: 650px;
-  --page-header-height: 0px;
   margin: 32px 0;
   position: relative;
 }
@@ -17,6 +15,7 @@
   margin: 0 -0.5rem 0 -0.5rem;
   padding: 1rem 0.5rem 1rem 0.5rem;
   border: 1.5px solid transparent;
+  min-height: 180px;
 }
 
 .ch-scrollycoding-step-content[data-selected] {
@@ -33,19 +32,22 @@
   margin-bottom: 0;
 }
 
-.ch-scrollycoding-sticker-column {
-  width: 50%;
-  min-width: 300px;
-}
-
 .ch-scrollycoding-sticker {
   position: sticky;
-  top: calc(
-    50vh - var(--sticker-height) / 2 +
-      var(--page-header-height) / 2
-  );
-  margin: 0 0 0 15px;
+  top: 10vh;
   display: flex;
   flex-flow: column;
   justify-content: center;
+  width: 420px;
+  // capitalized Min to avoid usint the sass min
+  min-height: Min(100%, 80vh);
+  max-height: 80vh;
+}
+
+.ch-scrollycoding-sticker .ch-editor-frame,
+.ch-scrollycoding-sticker .ch-code {
+  width: 100%;
+  min-width: 100%;
+  min-height: 200px;
+  max-height: 80vh;
 }
