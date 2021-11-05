@@ -44,7 +44,7 @@ export function Spotlight({
           )
         )}
       </div>
-      <div>
+      <div className="ch-spotlight-sticker">
         <Code
           {...(tab as any)}
           codeConfig={{
