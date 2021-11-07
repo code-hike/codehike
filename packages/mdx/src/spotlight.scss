@@ -1,20 +1,23 @@
 .ch-spotlight {
   display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
 }
 
 .ch-spotlight-tabs {
   display: flex;
   flex-flow: column;
-  margin: 10px;
+  margin-right: 10px;
   flex: 1;
+  gap: 0.5rem;
   align-items: stretch;
 }
 
 .ch-spotlight-tab {
   border-radius: 0.25rem;
-  margin-bottom: 0.5rem;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
   border: 1px solid #e3e3e3;
-  padding: 0 1.2rem;
 }
 
 .ch-spotlight-tab:hover {

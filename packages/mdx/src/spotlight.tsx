@@ -25,10 +25,15 @@ export function Spotlight({
 
   const [stepIndex, setIndex] = React.useState(start)
   const tab = editorSteps[stepIndex]
+
+  const headerElement = stepsChildren[0] as React.ReactElement
+
   return (
     <div className="ch-spotlight">
       <div className="ch-spotlight-tabs">
-        <div>{stepsChildren[0]}</div>
+        {headerElement?.props?.children ? (
+          <div>{stepsChildren[0]}</div>
+        ) : null}
         {stepsChildren.map((children, i) =>
           i === 0 ? null : (
             <div

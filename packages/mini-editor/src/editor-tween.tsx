@@ -152,7 +152,7 @@ function useDefaultHeight({
     if (southFile) {
       focusedLines += getFocusedLineCount(southFile!) + 3.9
     }
-    const emHeight = focusedLines * 1.15
+    const emHeight = focusedLines * 1.5
     return `${emHeight}em`
   }, [])
 }

@@ -37,12 +37,15 @@ function reducePanel(
   if (!newPanel) {
     return newPanel
   }
-  const oldTabsStillThere = oldPanel?.tabs.filter(
-    name => !otherNewPanel?.tabs.includes(name)
-  )
-  const realNewTabs = newPanel.tabs.filter(
-    name => !oldPanel?.tabs.includes(name)
-  )
+  const oldTabsStillThere =
+    oldPanel?.tabs?.filter(
+      name => !otherNewPanel?.tabs?.includes(name)
+    ) || []
+  const realNewTabs =
+    newPanel?.tabs?.filter(
+      name => !oldPanel?.tabs?.includes(name)
+    ) || []
+
   return {
     ...oldPanel,
     ...newPanel,
