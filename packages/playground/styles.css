@@ -119,3 +119,8 @@ nav select {
 pre.shiki {
   white-space: pre-wrap;
 }
+
+.tailwind-font code {
+  font-family: ui-monospace, SFMono-Regular, Consolas,
+    "Liberation Mono", Menlo, monospace;
+}

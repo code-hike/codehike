@@ -16,7 +16,10 @@ import { reduceSteps } from "./code-files-reducer"
 
 export async function extractStepsInfo(
   parent: Parent,
-  config: { theme: any }
+  config: { theme: any },
+  merge:
+    | "merge steps with header"
+    | "merge step with previous"
 ) {
   const steps = [] as {
     editorStep: EditorStep
@@ -47,12 +50,13 @@ export async function extractStepsInfo(
         // for the header props, keep it as it is
         step.editorStep = editorStep
       } else {
-        // for the rest, merge the editor step with the header step
+        // for the rest, merge the editor step with the header step or the prev step
+        const baseStep =
+          merge === "merge steps with header"
+            ? steps[0].editorStep
+            : steps[stepIndex - 1].editorStep
 
-        step.editorStep = reduceSteps(
-          steps[0].editorStep,
-          editorStep
-        )
+        step.editorStep = reduceSteps(baseStep, editorStep)
       }
     } else {
       step.children.push(child)

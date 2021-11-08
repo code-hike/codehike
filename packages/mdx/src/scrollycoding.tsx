@@ -80,7 +80,8 @@ async function transformScrollycoding(
 ) {
   const editorSteps = await extractStepsInfo(
     node as Parent,
-    { theme }
+    { theme },
+    "merge step with previous"
   )
 
   toJSX(node, {

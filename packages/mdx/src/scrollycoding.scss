@@ -20,7 +20,7 @@
 
 .ch-scrollycoding-step-content[data-selected] {
   // border-color: #81d8f7;
-  border-color: #252526;
+  border-color: #0070f3;
   // background-color: #fafafa;
 }
 
@@ -36,11 +36,12 @@
   position: sticky;
   top: 10vh;
   display: flex;
+  align-self: start;
   flex-flow: column;
   justify-content: center;
   width: 420px;
   // capitalized Min to avoid usint the sass min
-  min-height: Min(100%, 80vh);
+  // min-height: Min(100%, 80vh);
   max-height: 80vh;
 }
 

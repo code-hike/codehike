@@ -88,7 +88,8 @@ async function transformSpotlight(
 ) {
   const editorSteps = await extractStepsInfo(
     node as Parent,
-    { theme }
+    { theme },
+    "merge steps with header"
   )
 
   toJSX(node, {

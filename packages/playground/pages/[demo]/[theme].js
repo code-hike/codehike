@@ -81,7 +81,7 @@ const Main = React.memo(function Main({
         <Column column="post-ch">
           <MDXComponent code={postCodeHike} />
         </Column>
-        <Column column="result">
+        <Column column="result" className="tailwind-font">
           <ErrorBoundary>
             <MDXComponent code={result} />
           </ErrorBoundary>
@@ -181,11 +181,13 @@ function useColumns() {
     : DEFAULT_COLUMNS
 }
 
-function Column({ children, column }) {
+function Column({ children, column, className }) {
   const showColumns = useColumns()
   return COLUMNS[column] ? (
     <div
-      className={"column " + column}
+      className={
+        "column " + column + " " + (className || "")
+      }
       style={{
         display: showColumns.includes(column)
           ? "block"
