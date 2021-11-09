@@ -13,17 +13,20 @@ import {
   Scroller,
   Step as ScrollerStep,
 } from "@code-hike/scroller"
+import { Preview } from "./preview"
 
 export function Scrollycoding({
   children,
   editorSteps,
   codeConfig,
+  preset,
   start = 0,
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
   codeConfig: EditorProps["codeConfig"]
   start?: number
+  preset?: string
 }) {
   const stepsChildren = React.Children.toArray(children)
 
@@ -34,7 +37,11 @@ export function Scrollycoding({
     setIndex(index)
   }
   return (
-    <section className="ch-scrollycoding">
+    <section
+      className={`ch-scrollycoding ${
+        preset ? "ch-scrollycoding-with-preview" : ""
+      }`}
+    >
       <div className="ch-scrollycoding-content">
         <Scroller onStepChange={onStepChange}>
           {stepsChildren.map((children, i) => (
@@ -55,6 +62,12 @@ export function Scrollycoding({
       </div>
       <div className="ch-scrollycoding-sticker">
         <Code {...(tab as any)} codeConfig={codeConfig} />
+        {preset && (
+          <Preview
+            className="ch-scrollycoding-preview"
+            files={tab.files}
+          />
+        )}
       </div>
     </section>
   )

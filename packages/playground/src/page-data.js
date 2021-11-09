@@ -73,6 +73,7 @@ export async function toProps({ demo, theme }) {
 async function bundle(source, plugins) {
   const { code } = await bundleMDX(source, {
     esbuildOptions(options) {
+      options.minify = false
       options.platform = "node"
       return options
     },
