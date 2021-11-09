@@ -70,6 +70,9 @@ export function toJSX(
   }
 
   Object.keys(props).forEach(key => {
+    if (props[key] === undefined) {
+      return
+    }
     ;(node as any).attributes.push({
       type: "mdxJsxAttribute",
       name: key,

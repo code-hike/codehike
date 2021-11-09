@@ -4,7 +4,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
-<CH.Scrollycoding preset="https://codesandbox.io/s/confident-feather-ql0bz">
+<CH.Scrollycoding preset="https://codesandbox.io/s/w5wfe">
 
 ## Step 1
 
@@ -19,13 +19,21 @@ Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor
 Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.
 
 ```jsx src/App.js
-import "./styles.css"
+import { motion } from "framer-motion"
+
+const transition = { duration: 1 }
 
 export default function App() {
+  const bg = "hsl(20, 100%, 50%)"
   return (
-    <div className="App">
-      <h1>Hello Sandpack</h1>
-      <h2>Start editing!</h2>
+    <div className="container">
+      <motion.div
+        className="swatch"
+        animate={{
+          backgroundColor: bg,
+        }}
+        transition={transition}
+      />
     </div>
   )
 }
@@ -43,13 +51,22 @@ Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volu
 
 Morbi quis commodo.
 
-```jsx src/App.js
-import "./styles.css"
+```jsx src/App.js focus=1,6,9:15
+import { motion } from "framer-motion"
+
+const transition = { duration: 1 }
 
 export default function App() {
+  const bg = "hsl(110, 100%, 50%)"
   return (
-    <div className="App">
-      <h1>Hello Sandpack</h1>
+    <div className="container">
+      <motion.div
+        className="swatch"
+        animate={{
+          backgroundColor: bg,
+        }}
+        transition={transition}
+      />
     </div>
   )
 }
@@ -67,13 +84,22 @@ Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volu
 
 Ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
 
-```jsx src/App.js
-import "./styles.css"
+```jsx src/App.js focus=1,6,9:15
+import { motion } from "framer-motion"
+
+const transition = { duration: 1 }
 
 export default function App() {
+  const bg = "hsl(200, 100%, 50%)"
   return (
-    <div className="App">
-      <h1>Hello Scrollycoding</h1>
+    <div className="container">
+      <motion.div
+        className="swatch"
+        animate={{
+          backgroundColor: bg,
+        }}
+        transition={transition}
+      />
     </div>
   )
 }
@@ -92,13 +118,22 @@ Sed blandit libero volutpat sed cras.
 
 Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae.
 
-```jsx src/App.js
-import "./styles.css"
+```jsx src/App.js focus=1,6,9:15
+import { motion } from "framer-motion"
+
+const transition = { duration: 1 }
 
 export default function App() {
+  const bg = "hsl(290, 100%, 50%)"
   return (
-    <div className="App">
-      <h1>Hello Scrollycoding 4</h1>
+    <div className="container">
+      <motion.div
+        className="swatch"
+        animate={{
+          backgroundColor: bg,
+        }}
+        transition={transition}
+      />
     </div>
   )
 }
@@ -121,13 +156,22 @@ Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed vi
 
 Morbi quis commodo.
 
-```jsx src/App.js
-import "./styles.css"
+```jsx src/App.js focus=1,6,9:15
+import { motion } from "framer-motion"
+
+const transition = { duration: 1 }
 
 export default function App() {
+  const bg = "hsl(10, 100%, 50%)"
   return (
-    <div className="App">
-      <h1>Hello Scrollycoding 5</h1>
+    <div className="container">
+      <motion.div
+        className="swatch"
+        animate={{
+          backgroundColor: bg,
+        }}
+        transition={transition}
+      />
     </div>
   )
 }
