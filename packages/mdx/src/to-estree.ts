@@ -1,6 +1,7 @@
 import { Expression } from "estree"
 import isPlainObject from "is-plain-obj"
 import { CodeLink } from "./links"
+import { annotationsMap } from "./annotations"
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
@@ -194,17 +195,33 @@ export function valueToEstree(
     }
   }
 
+  const isAnnotation = Object.values(
+    annotationsMap
+  ).includes(value as any)
+
   // code hike annotations patch
-  if (value === CodeLink) {
+  if (isAnnotation) {
+    const identifier = Object.keys(annotationsMap).find(
+      key => annotationsMap[key] === value
+    )!
     return {
       type: "MemberExpression",
       object: {
-        type: "Identifier",
-        name: "CH",
+        type: "MemberExpression",
+        object: {
+          type: "Identifier",
+          name: "CH",
+        },
+        property: {
+          type: "Identifier",
+          name: "annotations",
+        },
+        computed: false,
+        optional: false,
       },
       property: {
         type: "Identifier",
-        name: "CodeLink",
+        name: identifier,
       },
       computed: false,
       optional: false,

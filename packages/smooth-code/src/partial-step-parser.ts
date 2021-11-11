@@ -24,6 +24,7 @@ export type CodeAnnotation = {
     style?: React.CSSProperties
     children: React.ReactNode
     data: any
+    theme: EditorTheme
   }) => React.ReactElement
   data?: any
 }
@@ -135,10 +136,12 @@ export type MultiLineAnnotation = {
   /* line numbers (starting at 1) */
   lineNumbers: { start: number; end: number }
   data: any
+  theme: EditorTheme
   Component: (props: {
     style: React.CSSProperties
     children: React.ReactNode
     data: any
+    theme: EditorTheme
   }) => React.ReactElement
 }
 
@@ -146,10 +149,12 @@ export type InlineAnnotation = {
   /* column numbers (starting at 1) */
   columnNumbers: { start: number; end: number }
   data: any
+  theme: EditorTheme
   Component: (props: {
     style?: React.CSSProperties
     children: React.ReactNode
     data: any
+    theme: EditorTheme
   }) => React.ReactElement
 }
 

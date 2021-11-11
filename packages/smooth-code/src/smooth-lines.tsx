@@ -86,6 +86,7 @@ function Lines({
             }}
             key={i}
             data={group.annotation.data}
+            theme={group.annotation.theme}
           >
             <LineGroup
               lines={group.lines}
@@ -197,6 +198,7 @@ function AnnotatedTokens({
     <Component
       children={children}
       data={annotated?.annotation?.data}
+      theme={annotated?.annotation?.theme!}
     />
   ) : (
     <>{children}</>

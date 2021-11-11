@@ -19,6 +19,7 @@ import {
   EditorStep,
   CodeFile,
 } from "@code-hike/mini-editor"
+import { getAnnotationsFromMetastring } from "./annotations"
 
 export async function transformCodeNodes(
   tree: Node,
@@ -187,13 +188,6 @@ async function mapFile(
 ): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config
 
-  const annotations = extractLinks(
-    node,
-    index,
-    parent,
-    node.value as string
-  )
-
   const code = await highlight({
     code: node.value as string,
     lang: node.lang as string,
@@ -203,6 +197,17 @@ async function mapFile(
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
   )
+
+  const annotations = getAnnotationsFromMetastring(
+    options as any
+  )
+
+  // const annotations = extractLinks(
+  //   node,
+  //   index,
+  //   parent,
+  //   node.value as string
+  // )
 
   const file = {
     ...options,

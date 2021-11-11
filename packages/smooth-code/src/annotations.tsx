@@ -81,6 +81,7 @@ function parseInlineAnnotations(
     lineAnnotations.push({
       columnNumbers: columnNumbersList[0],
       data: annotation.data,
+      theme: theme,
       Component:
         annotation.Component ||
         defaultInlineComponent(annotation, theme),
@@ -110,6 +111,7 @@ function parseMultilineAnnotations(
     return {
       lineNumbers: parseExtremes(annotation.focus),
       data: annotation.data,
+      theme: theme,
       Component:
         annotation.Component ||
         defaultMultilineComponent(annotation, theme),
