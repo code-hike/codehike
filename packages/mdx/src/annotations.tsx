@@ -1,6 +1,7 @@
 import React from "react"
 import { CodeAnnotation } from "@code-hike/smooth-code"
 import { CodeLink } from "./links"
+import { Code } from "@code-hike/utils"
 
 function Box({
   children,
@@ -84,4 +85,52 @@ export function getAnnotationsFromMetastring(
     }
   })
   return annotations
+}
+
+export function getAnnotationsFromCode(code: Code) {
+  const { lines } = code
+  let lineNumber = 1
+  while (lineNumber <= lines.length) {
+    const line = lines[lineNumber - 1]
+    const annotation = getAnnotationFromLine(
+      line,
+      lineNumber
+    )
+    console.log(lineNumber)
+    if (annotation) {
+      // remove line
+      lines.splice(lineNumber - 1, 1)
+    } else {
+      lineNumber++
+    }
+  }
+  return []
+}
+
+function getAnnotationFromLine(
+  line: Code["lines"][0],
+  lineNumber: number
+): CodeAnnotation | undefined {
+  const comment = line.tokens.find(t =>
+    t.content.startsWith("//")
+  )?.content
+
+  if (!comment) {
+    return
+  }
+
+  const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
+  const [, key, focus, data] = commentRegex.exec(comment)
+
+  const Component = annotationsMap[key]
+
+  if (!Component) {
+    return
+  }
+
+  return {
+    Component,
+    focus,
+    data,
+  }
 }

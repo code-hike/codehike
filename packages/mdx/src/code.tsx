@@ -19,7 +19,10 @@ import {
   EditorStep,
   CodeFile,
 } from "@code-hike/mini-editor"
-import { getAnnotationsFromMetastring } from "./annotations"
+import {
+  getAnnotationsFromMetastring,
+  getAnnotationsFromCode,
+} from "./annotations"
 
 export async function transformCodeNodes(
   tree: Node,
@@ -193,6 +196,8 @@ async function mapFile(
     lang: node.lang as string,
     theme,
   })
+
+  getAnnotationsFromCode(code)
 
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
