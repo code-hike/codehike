@@ -5,15 +5,21 @@ import { CodeLink } from "./links"
 function Box({
   children,
   data,
+  theme,
 }: {
   data: {
     url: string
     title: string | undefined
   }
   children: React.ReactNode
+  theme: any
 }) {
+  const border =
+    theme.tokenColors.find((tc: any) =>
+      tc.scope?.includes("string")
+    )?.settings?.foreground || "yellow"
   return (
-    <span style={{ outline: "2px solid yellow" }}>
+    <span style={{ outline: `2px solid ${border}` }}>
       {children}
     </span>
   )
