@@ -2,8 +2,7 @@ import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
 import { IRawTheme } from "vscode-textmate"
 import DEFAULT_THEME from "shiki/themes/dark-plus.json"
-import { FocusString } from "./focus-parser"
-import { Tween } from "@code-hike/utils"
+import { Tween, FocusString } from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,

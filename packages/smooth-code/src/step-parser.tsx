@@ -1,11 +1,11 @@
 import {
   Tween,
   mapWithDefault,
+  FocusString,
   map,
   FullTween,
   withDefault,
 } from "@code-hike/utils"
-import { FocusString } from "./focus-parser"
 import {
   isHighlighterReady,
   loadHighlighter,

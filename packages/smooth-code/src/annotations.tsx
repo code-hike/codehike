@@ -13,14 +13,12 @@ import {
   FullTween,
   mapWithDefault,
   map,
-} from "@code-hike/utils"
-import { EditorTheme } from "./themes"
-import {
   hasColumns,
   parsePartToObject,
   ColumnExtremes,
   parseExtremes,
-} from "./focus-parser"
+} from "@code-hike/utils"
+import { EditorTheme } from "./themes"
 import React from "react"
 
 export function parseAnnotations(

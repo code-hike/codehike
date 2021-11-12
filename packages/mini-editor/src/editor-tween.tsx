@@ -5,10 +5,7 @@ import {
 } from "./editor-frame"
 import { TerminalPanel } from "./terminal-panel"
 import { useTransition, EditorStep } from "./editor-shift"
-import {
-  CodeConfig,
-  mapFocusToLineNumbers,
-} from "@code-hike/smooth-code"
+import { CodeConfig } from "@code-hike/smooth-code"
 
 export {
   EditorTransition,

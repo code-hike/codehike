@@ -1,5 +1,5 @@
 import { splitTokens } from "./splitter"
-import { parseExtremes } from "./focus-parser"
+import { parseExtremes } from "@code-hike/utils"
 
 describe("split tokens", () => {
   it("with no extremes", () => {

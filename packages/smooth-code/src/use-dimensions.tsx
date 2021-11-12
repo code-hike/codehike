@@ -2,8 +2,8 @@ import React from "react"
 import {
   FocusString,
   getFocusIndexes,
-} from "./focus-parser"
-import { Tween } from "@code-hike/utils"
+  Tween,
+} from "@code-hike/utils"
 
 type Dimensions = {
   containerWidth: number

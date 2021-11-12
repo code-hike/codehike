@@ -11,7 +11,6 @@ import {
 } from "./highlighter"
 import { Code } from "./oldcode"
 import { CodeSpring } from "./code-spring"
-import { mapFocusToLineNumbers } from "./focus-parser"
 
 export {
   CodeTween,
@@ -19,7 +18,6 @@ export {
   CodeAnnotation,
   CodeStep,
   CodeConfig,
-  mapFocusToLineNumbers,
   // Deprecated:
   HeavyCode,
   Code,

@@ -2,8 +2,12 @@ import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
 import { IRawTheme } from "vscode-textmate"
 import { DEFAULT_THEME } from "./themes"
-import { FocusString } from "./focus-parser"
-import { FullTween, Code, map } from "@code-hike/utils"
+import {
+  FullTween,
+  Code,
+  map,
+  FocusString,
+} from "@code-hike/utils"
 import {
   useStepParser,
   CodeAnnotation,

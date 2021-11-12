@@ -3,13 +3,11 @@ import {
   mapWithDefault,
   FullTween,
   map,
-} from "@code-hike/utils"
-import {
   FocusString,
   parseExtremes,
   mapFocusToLineNumbers,
   ColumnExtremes,
-} from "./focus-parser"
+} from "@code-hike/utils"
 import {
   MergedCode,
   FocusedCode,

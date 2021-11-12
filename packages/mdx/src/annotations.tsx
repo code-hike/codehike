@@ -96,7 +96,6 @@ export function getAnnotationsFromCode(code: Code) {
       line,
       lineNumber
     )
-    console.log(lineNumber)
     if (annotation) {
       // remove line
       lines.splice(lineNumber - 1, 1)

@@ -98,7 +98,7 @@ export function parseExtremes(part: string) {
 /**
  * Return the first and last indexes to focus, both included
  */
-export function getFocusExtremes(
+function getFocusExtremes(
   focus: FocusString,
   lines: any[]
 ): [number, number] {
@@ -131,10 +131,7 @@ export function getFocusIndexes(
   }
 }
 
-export function getFocusByKey(
-  focus: FocusString,
-  keys: number[]
-) {
+function getFocusByKey(focus: FocusString, keys: number[]) {
   if (!focus) {
     // focus all lines
     return fromEntries(keys.map(key => [key, true]))
@@ -149,7 +146,7 @@ export function getFocusByKey(
   }
 }
 
-export function parseFocus(focus: string) {
+function parseFocus(focus: string) {
   if (!focus) {
     throw new Error("Focus cannot be empty")
   }
@@ -225,7 +222,7 @@ function isNaturalNumber(n: any) {
   return !isNaN(n1) && n2 === n1 && n1.toString() === n
 }
 
-export function getFocusSize(
+function getFocusSize(
   focus: Record<LineIndex, true | ColumnIndex[]>
 ) {
   const lineIndexList = Object.keys(focus).map(k => +k)
@@ -237,14 +234,14 @@ export function getFocusSize(
   }
 }
 
-export class LineOrColumnNumberError extends Error {
+class LineOrColumnNumberError extends Error {
   constructor() {
     super(`Invalid line or column number in focus string`)
     Object.setPrototypeOf(this, new.target.prototype)
   }
 }
 
-export class FocusNumberError extends Error {
+class FocusNumberError extends Error {
   number: string
   constructor(number: string) {
     super(`Invalid number "${number}" in focus string`)
@@ -267,11 +264,4 @@ function fromEntries<K extends string | number | symbol, V>(
   }
 
   return result
-}
-
-function toEntries<K extends string | number | symbol, V>(
-  o: Record<K, V>
-): [K, V][] {
-  const keys = Object.keys(o) as K[]
-  return keys.map(k => [k, o[k]])
 }
