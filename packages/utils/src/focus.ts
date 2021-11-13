@@ -29,9 +29,13 @@ export function mapFocusToLineNumbers(
     )
   } else {
     return mergeToObject(
-      focus.split(/,(?![^\[]*\])/g).map(parsePartToObject)
+      splitParts(focus).map(parsePartToObject)
     )
   }
+}
+
+function splitParts(focus: string) {
+  return focus.split(/,(?![^\[]*\])/g)
 }
 
 function mergeToObject<K extends string | number, T>(
@@ -264,4 +268,42 @@ function fromEntries<K extends string | number | symbol, V>(
   }
 
   return result
+}
+
+// turns a relative string like (1,3) or [4:5] into a normal focus string
+export function relativeToAbsolute(
+  relativeString: string | undefined,
+  lineNumber: number
+): string {
+  if (!relativeString) {
+    return lineNumber.toString()
+  }
+  if (relativeString.startsWith("[")) {
+    return `${lineNumber}` + relativeString
+  }
+
+  const focusMap = mapFocusToLineNumbers(relativeString, [])
+  const newMap = {} as FocusMap
+  Object.keys(focusMap).forEach(ln => {
+    newMap[+ln + lineNumber - 1] = focusMap[+ln]
+  })
+  return toFocusString(newMap)
+}
+
+function toFocusString(focusMap: FocusMap) {
+  let parts = [] as string[]
+  Object.keys(focusMap).forEach(ln => {
+    const part = focusMap[+ln]
+    if (part === true) {
+      parts.push(ln)
+    } else if (part instanceof Array) {
+      const columnsString = part.map(extremes =>
+        extremes.start === extremes.end
+          ? extremes.start
+          : `${extremes.start}:${extremes.end}`
+      )
+      parts.push(`${ln}[${columnsString}]`)
+    }
+  })
+  return parts.join(",")
 }
