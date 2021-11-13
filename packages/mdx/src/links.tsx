@@ -6,21 +6,26 @@ export function CodeLink({
   children,
   data,
 }: {
-  data: {
-    url: string
-    title: string | undefined
-  }
+  data:
+    | {
+        url: string
+        title: string | undefined
+      }
+    | string
   children: React.ReactNode
 }) {
+  const url = (data as any)?.url || data
+  const title = (data as any)?.title
   return (
     <a
-      href={data.url}
+      href={url}
       target="_blank"
       rel="noopener noreferrer"
-      title={data.title}
+      title={title}
       style={{
         textDecoration: "underline",
         textDecorationStyle: "dotted",
+        color: "inherit",
       }}
     >
       {children}

@@ -197,15 +197,17 @@ async function mapFile(
     theme,
   })
 
-  getAnnotationsFromCode(code)
+  const commentAnnotations = getAnnotationsFromCode(code)
 
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
   )
 
-  const annotations = getAnnotationsFromMetastring(
+  const metaAnnotations = getAnnotationsFromMetastring(
     options as any
   )
+
+  console.log(commentAnnotations)
 
   // const annotations = extractLinks(
   //   node,
@@ -219,7 +221,10 @@ async function mapFile(
     focus: options.focus || "",
     code,
     name: options.name || "",
-    annotations,
+    annotations: [
+      ...metaAnnotations,
+      ...commentAnnotations,
+    ],
   }
 
   return file

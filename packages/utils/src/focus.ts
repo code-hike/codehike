@@ -282,7 +282,23 @@ export function relativeToAbsolute(
     return `${lineNumber}` + relativeString
   }
 
-  const focusMap = mapFocusToLineNumbers(relativeString, [])
+  return splitParts(relativeString.slice(1, -1))
+    .map(part => makePartAbsolute(part, lineNumber))
+    .join(",")
+}
+
+function makePartAbsolute(
+  part: string,
+  lineNumber: number
+) {
+  const focusMap = parsePartToObject(part)
+  const keys = Object.keys(focusMap).map(k => +k)
+
+  if (keys.length > 1) {
+    const min = Math.min(...keys)
+    const max = Math.max(...keys)
+    return `${min + lineNumber - 1}:${max + lineNumber - 1}`
+  }
   const newMap = {} as FocusMap
   Object.keys(focusMap).forEach(ln => {
     newMap[+ln + lineNumber - 1] = focusMap[+ln]

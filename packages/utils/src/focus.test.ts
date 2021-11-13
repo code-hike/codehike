@@ -21,13 +21,13 @@ describe("relative to absolute", () => {
     )
   })
   it("lines", () => {
-    expect(relativeToAbsolute("1", 3)).toBe("3")
-    expect(relativeToAbsolute("2", 3)).toBe("4")
-    expect(relativeToAbsolute("1,3", 3)).toBe("3,5")
-    expect(relativeToAbsolute("1:3", 3)).toBe("3,4,5")
-    expect(relativeToAbsolute("1:3,4", 3)).toBe("3,4,5,6")
-    expect(relativeToAbsolute("1:2,4[1:3,5]", 3)).toBe(
-      "3,4,6[1:3,5]"
+    expect(relativeToAbsolute("(1)", 3)).toBe("3")
+    expect(relativeToAbsolute("(2)", 3)).toBe("4")
+    expect(relativeToAbsolute("(1,3)", 3)).toBe("3,5")
+    expect(relativeToAbsolute("(1:3)", 3)).toBe("3:5")
+    expect(relativeToAbsolute("(1:3,4)", 3)).toBe("3:5,6")
+    expect(relativeToAbsolute("(1:2,4[1:3,5])", 3)).toBe(
+      "3:4,6[1:3,5]"
     )
   })
 })

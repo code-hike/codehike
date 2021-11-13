@@ -1,7 +1,7 @@
 import React from "react"
 import { CodeAnnotation } from "@code-hike/smooth-code"
 import { CodeLink } from "./links"
-import { Code } from "@code-hike/utils"
+import { Code, relativeToAbsolute } from "@code-hike/utils"
 
 function Box({
   children,
@@ -16,9 +16,11 @@ function Box({
   theme: any
 }) {
   const border =
+    data ||
     theme.tokenColors.find((tc: any) =>
       tc.scope?.includes("string")
-    )?.settings?.foreground || "yellow"
+    )?.settings?.foreground ||
+    "yellow"
   return (
     <span style={{ outline: `2px solid ${border}` }}>
       {children}
@@ -32,10 +34,40 @@ function Background({
   style,
   theme,
 }: {
-  data: {
-    url: string
-    title: string | undefined
-  }
+  data: string
+  children: React.ReactNode
+  style?: React.CSSProperties
+  theme?: any
+}) {
+  const bg =
+    data ||
+    (((theme as any).colors[
+      "editor.lineHighlightBackground"
+    ] ||
+      (theme as any).colors[
+        "editor.selectionHighlightBackground"
+      ]) as string)
+  return (
+    <div
+      style={{
+        ...style,
+        background: bg,
+        // cursor: "pointer",
+      }}
+      // onClick={_ => alert("clicked")}
+    >
+      {children}
+    </div>
+  )
+}
+
+function Label({
+  children,
+  data,
+  style,
+  theme,
+}: {
+  data: string
   children: React.ReactNode
   style?: React.CSSProperties
   theme?: any
@@ -46,22 +78,31 @@ function Background({
     (theme as any).colors[
       "editor.selectionHighlightBackground"
     ]) as string
+  const [hover, setHover] = React.useState(false)
+
   return (
     <div
       style={{
         ...style,
-        background: bg,
-        cursor: "pointer",
+        background: hover ? bg : undefined,
       }}
-      // onClick={_ => alert("clicked")}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       {children}
+      <div
+        style={{
+          position: "absolute",
+          right: 0,
+          paddingRight: 16,
+          display: hover ? "block" : "none",
+          opacity: 0.7,
+        }}
+      >
+        {data}
+      </div>
     </div>
   )
-}
-
-function Label() {
-  return <div></div>
 }
 
 export const annotationsMap: Record<
@@ -90,6 +131,7 @@ export function getAnnotationsFromMetastring(
 export function getAnnotationsFromCode(code: Code) {
   const { lines } = code
   let lineNumber = 1
+  const annotations = [] as CodeAnnotation[]
   while (lineNumber <= lines.length) {
     const line = lines[lineNumber - 1]
     const annotation = getAnnotationFromLine(
@@ -99,11 +141,12 @@ export function getAnnotationsFromCode(code: Code) {
     if (annotation) {
       // remove line
       lines.splice(lineNumber - 1, 1)
+      annotations.push(annotation)
     } else {
       lineNumber++
     }
   }
-  return []
+  return annotations
 }
 
 function getAnnotationFromLine(
@@ -119,7 +162,9 @@ function getAnnotationFromLine(
   }
 
   const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
-  const [, key, focus, data] = commentRegex.exec(comment)
+  const [, key, focusString, data] = commentRegex.exec(
+    comment
+  )
 
   const Component = annotationsMap[key]
 
@@ -129,7 +174,7 @@ function getAnnotationFromLine(
 
   return {
     Component,
-    focus,
+    focus: relativeToAbsolute(focusString, lineNumber),
     data,
   }
 }
