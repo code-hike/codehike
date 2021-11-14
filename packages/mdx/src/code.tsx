@@ -18,7 +18,8 @@ import {
 } from "@code-hike/mini-editor"
 import {
   getAnnotationsFromMetastring,
-  getAnnotationsFromCode,
+  extractAnnotationsFromCode,
+  extractJSXAnnotations,
 } from "./annotations"
 import { mergeFocus } from "@code-hike/utils"
 
@@ -198,7 +199,7 @@ async function mapFile(
   const [
     commentAnnotations,
     commentFocus,
-  ] = getAnnotationsFromCode(code)
+  ] = extractAnnotationsFromCode(code)
 
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
@@ -208,12 +209,18 @@ async function mapFile(
     options as any
   )
 
-  // const annotations = extractLinks(
-  //   node,
-  //   index,
-  //   parent,
-  //   node.value as string
-  // )
+  const linkAnnotations = extractLinks(
+    node,
+    index,
+    parent,
+    node.value as string
+  )
+
+  const jsxAnnotations = extractJSXAnnotations(
+    node,
+    index,
+    parent
+  )
 
   const file = {
     ...options,
@@ -223,6 +230,7 @@ async function mapFile(
     annotations: [
       ...metaAnnotations,
       ...commentAnnotations,
+      ...jsxAnnotations,
     ],
   }
 

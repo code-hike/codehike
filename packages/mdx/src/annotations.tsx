@@ -2,6 +2,11 @@ import React from "react"
 import { CodeAnnotation } from "@code-hike/smooth-code"
 import { CodeLink } from "./links"
 import { Code, relativeToAbsolute } from "@code-hike/utils"
+import { Node, Parent } from "unist"
+
+export function Annotation() {
+  return "error: code hike remark plugin not running or annotation isn't at the right place"
+}
 
 function Box({
   children,
@@ -128,7 +133,7 @@ export function getAnnotationsFromMetastring(
   return annotations
 }
 
-export function getAnnotationsFromCode(code: Code) {
+export function extractAnnotationsFromCode(code: Code) {
   const { lines } = code
   let lineNumber = 1
   const annotations = [] as CodeAnnotation[]
@@ -177,4 +182,32 @@ function getCommentData(
     focus: relativeToAbsolute(focusString, lineNumber),
     data,
   }
+}
+
+export function extractJSXAnnotations(
+  node: Node,
+  index: number,
+  parent: Parent
+) {
+  const annotations = [] as CodeAnnotation[]
+
+  const nextIndex = index + 1
+  while (
+    parent.children[nextIndex] &&
+    parent.children[nextIndex].type ===
+      "mdxJsxFlowElement" &&
+    parent.children[nextIndex].name === "CH.Annotation"
+  ) {
+    const { attributes } = parent.children[nextIndex] as any
+    const props = {} as any
+    attributes.forEach((attr: any) => {
+      props[attr.name] = attr.value
+    })
+    const { as, focus, ...data } = props
+    const Component = annotationsMap[as] || as
+    annotations.push({ Component, focus, data })
+    console.log(parent.children[nextIndex])
+    parent.children.splice(nextIndex, 1)
+  }
+  return annotations
 }

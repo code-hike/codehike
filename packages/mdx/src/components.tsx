@@ -7,7 +7,7 @@ import { Code } from "./code"
 import { CodeLink } from "./links"
 import { Spotlight } from "./spotlight"
 import { Scrollycoding } from "./scrollycoding"
-import { annotationsMap } from "./annotations"
+import { annotationsMap, Annotation } from "./annotations"
 
 export const CH = {
   Code,
@@ -18,4 +18,5 @@ export const CH = {
   Spotlight,
   Scrollycoding,
   annotations: annotationsMap,
+  Annotation,
 }
