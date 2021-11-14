@@ -132,33 +132,39 @@ export function getAnnotationsFromCode(code: Code) {
   const { lines } = code
   let lineNumber = 1
   const annotations = [] as CodeAnnotation[]
+  const focusList = [] as string[]
   while (lineNumber <= lines.length) {
     const line = lines[lineNumber - 1]
-    const annotation = getAnnotationFromLine(
+    const { key, focus, data } = getCommentData(
       line,
       lineNumber
     )
-    if (annotation) {
-      // remove line
+
+    const Component = annotationsMap[key!]
+
+    if (Component) {
       lines.splice(lineNumber - 1, 1)
-      annotations.push(annotation)
+      annotations.push({ Component, focus: focus!, data })
+    } else if (key === "focus") {
+      lines.splice(lineNumber - 1, 1)
+      focusList.push(focus!)
     } else {
       lineNumber++
     }
   }
-  return annotations
+  return [annotations, focusList.join(",")] as const
 }
 
-function getAnnotationFromLine(
+function getCommentData(
   line: Code["lines"][0],
   lineNumber: number
-): CodeAnnotation | undefined {
+) {
   const comment = line.tokens.find(t =>
     t.content.startsWith("//")
   )?.content
 
   if (!comment) {
-    return
+    return {}
   }
 
   const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
@@ -166,14 +172,8 @@ function getAnnotationFromLine(
     comment
   )
 
-  const Component = annotationsMap[key]
-
-  if (!Component) {
-    return
-  }
-
   return {
-    Component,
+    key,
     focus: relativeToAbsolute(focusString, lineNumber),
     data,
   }

@@ -1,4 +1,3 @@
-import visit from "unist-util-visit"
 import { Node, Parent } from "unist"
 import { highlight } from "@code-hike/highlighter"
 import { extractLinks } from "./links"
@@ -16,13 +15,12 @@ import {
 import {
   EditorSpring,
   EditorProps,
-  EditorStep,
-  CodeFile,
 } from "@code-hike/mini-editor"
 import {
   getAnnotationsFromMetastring,
   getAnnotationsFromCode,
 } from "./annotations"
+import { mergeFocus } from "@code-hike/utils"
 
 export async function transformCodeNodes(
   tree: Node,
@@ -197,7 +195,10 @@ async function mapFile(
     theme,
   })
 
-  const commentAnnotations = getAnnotationsFromCode(code)
+  const [
+    commentAnnotations,
+    commentFocus,
+  ] = getAnnotationsFromCode(code)
 
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
@@ -206,8 +207,6 @@ async function mapFile(
   const metaAnnotations = getAnnotationsFromMetastring(
     options as any
   )
-
-  console.log(commentAnnotations)
 
   // const annotations = extractLinks(
   //   node,
@@ -218,7 +217,7 @@ async function mapFile(
 
   const file = {
     ...options,
-    focus: options.focus || "",
+    focus: mergeFocus(options.focus, commentFocus),
     code,
     name: options.name || "",
     annotations: [
