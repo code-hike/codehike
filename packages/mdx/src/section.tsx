@@ -8,7 +8,12 @@ import {
   EditorSpring,
   EditorProps,
 } from "@code-hike/mini-editor"
-import { Code, mapEditor } from "./code"
+import {
+  Code,
+  mapEditor,
+  isEditorNode,
+  mapAnyCodeNode,
+} from "./code"
 
 const SectionContext = React.createContext<{
   props: EditorProps
@@ -48,9 +53,7 @@ export function Section({
     <SectionContext.Provider
       value={{ props: state as any, setFocus }}
     >
-      <section style={{ outline: "1px solid violet" }}>
-        <div>{children}</div>
-      </section>
+      <section>{children}</section>
     </SectionContext.Provider>
   )
 }
@@ -82,10 +85,10 @@ async function transformSection(
   let props
   await visitAsync(
     node,
-    "mdxJsxFlowElement",
+    ["mdxJsxFlowElement", "code"],
     async (node, index, parent) => {
-      if (node.name === "CH.Code") {
-        props = await mapEditor(
+      if (isEditorNode(node)) {
+        props = await mapAnyCodeNode(
           { node, index, parent: parent! },
           config
         )
@@ -131,7 +134,6 @@ export function SectionLink({
         textDecorationStyle: "dotted",
         cursor: "pointer",
       }}
-      title={focus}
       onClick={() => setFocus({ focus })}
     >
       {children}

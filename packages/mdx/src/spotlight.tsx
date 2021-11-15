@@ -7,7 +7,6 @@ import {
   EditorStep,
 } from "@code-hike/mini-editor"
 import { mapEditor, Code } from "./code"
-import { reduceSteps } from "./code-files-reducer"
 import { extractStepsInfo } from "./steps"
 
 export function Spotlight({
