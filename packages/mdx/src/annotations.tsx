@@ -198,16 +198,27 @@ export function extractJSXAnnotations(
       "mdxJsxFlowElement" &&
     parent.children[nextIndex].name === "CH.Annotation"
   ) {
-    const { attributes } = parent.children[nextIndex] as any
+    const jsxAnnotation = parent.children[nextIndex] as any
+
+    // copy attributes to props
     const props = {} as any
-    attributes.forEach((attr: any) => {
+    jsxAnnotation.attributes.forEach((attr: any) => {
       props[attr.name] = attr.value
     })
     const { as, focus, ...data } = props
+
     const Component = annotationsMap[as] || as
-    annotations.push({ Component, focus, data })
-    console.log(parent.children[nextIndex])
+    annotations.push({
+      Component,
+      focus,
+      data: isEmpty(data) ? undefined : data,
+    })
+    // console.log(jsxAnnotation)
     parent.children.splice(nextIndex, 1)
   }
   return annotations
+}
+
+function isEmpty(obj: any) {
+  return Object.keys(obj).length === 0
 }

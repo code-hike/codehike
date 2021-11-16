@@ -67,6 +67,25 @@ export function isEditorNode(node: Node) {
   )
 }
 
+async function transformCode(
+  nodeInfo: NodeInfo,
+  config: { theme: any }
+) {
+  toJSX(nodeInfo.node, {
+    name: "CH.Code",
+    props: await mapCode(nodeInfo, config),
+  })
+}
+export async function transformEditor(
+  nodeInfo: NodeInfo,
+  config: { theme: any }
+) {
+  toJSX(nodeInfo.node, {
+    name: "CH.Code",
+    props: await mapEditor(nodeInfo, config),
+  })
+}
+
 export async function mapAnyCodeNode(
   nodeInfo: NodeInfo,
   config: { theme: any }
@@ -96,39 +115,6 @@ async function mapCode(
     },
   }
   return props
-}
-
-async function transformCode(
-  nodeInfo: NodeInfo,
-  config: { theme: any }
-) {
-  const file = await mapFile(nodeInfo, config)
-  const props = {
-    northPanel: {
-      tabs: [file.name],
-      active: file.name,
-      heightRatio: 1,
-    },
-    files: [file],
-    codeConfig: {
-      theme: config.theme,
-    },
-  }
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props,
-  })
-}
-export async function transformEditor(
-  nodeInfo: NodeInfo,
-  config: { theme: any }
-) {
-  const props = await mapEditor(nodeInfo, config)
-
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props,
-  })
 }
 
 export async function mapEditor(
