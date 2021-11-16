@@ -13,7 +13,11 @@ import {
   Scroller,
   Step as ScrollerStep,
 } from "@code-hike/scroller"
-import { Preview, PresetConfig } from "./preview"
+import {
+  Preview,
+  PresetConfig,
+  getPresetConfig,
+} from "./preview"
 
 export function Scrollycoding({
   children,
@@ -98,12 +102,9 @@ async function transformScrollycoding(
     "merge step with previous"
   )
 
-  const presetAttribute = (node as any).attributes.find(
-    (attr: any) => attr.name === "preset"
+  const presetConfig = await getPresetConfig(
+    (node as any).attributes
   )
-  const presetConfig =
-    presetAttribute &&
-    (await getPresetConfig(presetAttribute.value))
 
   toJSX(node, {
     props: {
@@ -113,12 +114,4 @@ async function transformScrollycoding(
     },
     appendProps: true,
   })
-}
-
-async function getPresetConfig(url: string) {
-  const prefix = "https://codesandbox.io/s/"
-  const csbid = url.slice(prefix.length)
-  const configUrl = `https://codesandbox.io/api/v1/sandboxes/${csbid}/sandpack`
-  const res = await fetch(configUrl)
-  return await res.json()
 }
