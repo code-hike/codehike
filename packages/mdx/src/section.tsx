@@ -17,11 +17,18 @@ import {
 
 const SectionContext = React.createContext<{
   props: EditorProps
+  selectedId?: string
   setFocus: (x: {
     fileName?: string
     focus: string
+    id: string
   }) => void
-}>({ props: null!, setFocus: () => {} })
+  resetFocus: () => void
+}>({
+  props: null!,
+  setFocus: () => {},
+  resetFocus: () => {},
+})
 
 export function Section({
   children,
@@ -31,27 +38,52 @@ export function Section({
 }) {
   const [state, setState] = React.useState<any>(props)
 
+  const resetFocus = () => setState(props)
+
   const setFocus = ({
     fileName,
     focus,
+    id,
   }: {
     fileName?: string
     focus: string
+    id: string
   }) => {
+    const name = fileName || state.northPanel.active
+
     const newFiles = state.files.map((file: any) =>
-      !fileName || file.name === fileName
-        ? { ...file, focus }
-        : file
+      file.name === name ? { ...file, focus } : file
     )
+
+    let northPanel = { ...state.northPanel }
+    let southPanel = state.southPanel && {
+      ...state.northPanel,
+    }
+    if (state.northPanel.tabs.includes(name)) {
+      northPanel.active = name
+    } else if (southPanel) {
+      southPanel.active = name
+    }
+
     setState({
       ...state,
       files: newFiles,
+      northPanel,
+      southPanel,
+      selectedId: id,
     })
   }
 
+  const { selectedId, ...rest } = state
+
   return (
     <SectionContext.Provider
-      value={{ props: state as any, setFocus }}
+      value={{
+        props: rest,
+        setFocus,
+        resetFocus,
+        selectedId,
+      }}
     >
       <section>{children}</section>
     </SectionContext.Provider>
@@ -61,6 +93,42 @@ export function Section({
 export function SectionCode() {
   const { props } = React.useContext(SectionContext)
   return <Code {...props} />
+}
+
+export function SectionLink({
+  focus,
+  file,
+  children,
+  id,
+}: {
+  focus: string
+  id: string
+  file?: string
+  children: React.ReactNode
+}) {
+  const {
+    setFocus,
+    resetFocus,
+    selectedId,
+  } = React.useContext(SectionContext)
+
+  const isSelected = selectedId === id
+  const handleClick = isSelected
+    ? resetFocus
+    : () => setFocus({ fileName: file, focus, id })
+
+  return (
+    <span
+      style={{
+        textDecoration: "underline",
+        textDecorationStyle: "dotted",
+        cursor: "pointer",
+        backgroundColor: isSelected ? "yellow" : undefined,
+      }}
+      onClick={handleClick}
+      children={children}
+    />
+  )
 }
 
 export async function transformSections(
@@ -110,33 +178,18 @@ function transformLinks(tree: Node) {
   visit(tree, "link", (linkNode: any) => {
     const url = decodeURI(linkNode["url"])
     if (url.startsWith("focus://")) {
-      const focus = url.slice(8)
+      const [firstPart, secondPart] = decodeURI(url)
+        .substr("focus://".length)
+        .split("#")
+      const hasFile = Boolean(secondPart)
+      const props = hasFile
+        ? { file: firstPart, focus: secondPart, id: url }
+        : { focus: firstPart, id: url }
       toJSX(linkNode, {
         type: "mdxJsxTextElement",
         name: "CH.SectionLink",
-        props: { focus },
+        props,
       })
     }
   })
-}
-export function SectionLink({
-  focus,
-  children,
-}: {
-  focus: string
-  children: React.ReactNode
-}) {
-  const { setFocus } = React.useContext(SectionContext)
-  return (
-    <span
-      style={{
-        textDecoration: "underline",
-        textDecorationStyle: "dotted",
-        cursor: "pointer",
-      }}
-      onClick={() => setFocus({ focus })}
-    >
-      {children}
-    </span>
-  )
 }

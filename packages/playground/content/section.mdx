@@ -4,7 +4,7 @@ Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolor
 
 <CH.Section>
 
-Lorem <CH.SectionLink focus="1[16:20]">ipsum</CH.SectionLink> dolor sit amet, [consectetur](focus://5[7:17]) adipiscing elit, sed do eiusmod [tempor](https://google.com) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Lorem [ipsum](focus://1[16:20]) dolor sit amet, [consectetur](focus://5[7:17]) adipiscing elit, sed do eiusmod [tempor](https://google.com) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 ```js
 function lorem(ipsum, dolor = 1) {
@@ -24,11 +24,17 @@ Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
 
 <CH.Section>
 
-Lorem dolor sit amet, [consectetur](focus://3[8:22]) adipiscing elit, sed do eiusmod [tempor](https://google.com) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Lorem dolor sit amet, [consectetur](focus://styles.css#3[8:22]) adipiscing elit, sed do eiusmod [tempor](focus://index.js#1:3) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 <CH.Code>
 
-```css
+```js index.js
+function () {
+  return 3
+}
+```
+
+```css styles.css
 html,
 body,
 body > div:first-child,
