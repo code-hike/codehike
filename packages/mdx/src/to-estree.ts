@@ -1,7 +1,9 @@
 import { Expression } from "estree"
 import isPlainObject from "is-plain-obj"
-import { CodeLink } from "./links"
 import { annotationsMap } from "./annotations"
+// import unified from "unified"
+// import remarkRehype from "remark-rehype"
+// import { toEstree } from "hast-util-to-estree"
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
@@ -230,3 +232,30 @@ export function valueToEstree(
 
   throw new TypeError(`Unsupported value: ${String(value)}`)
 }
+
+// export async function mdastToEstree(node: Node) {
+//   const nodeTypes = [
+//     "mdxFlowExpression",
+//     "mdxJsxFlowElement",
+//     "mdxJsxTextElement",
+//     "mdxTextExpression",
+//     "mdxjsEsm",
+//   ]
+//   const changedTree = unified()
+//     .use(remarkRehype, {
+//       allowDangerousHtml: true,
+//       passThrough: nodeTypes,
+//     })
+//     .use(rehypeRecma as any)
+//     .runSync(node as any)
+
+//   return changedTree
+// }
+
+// function rehypeRecma() {
+//   return (tree: any) => toEstree(tree)
+// }
+
+// export function wrapChildren() {
+//   return {}
+// }

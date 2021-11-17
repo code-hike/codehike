@@ -206,6 +206,7 @@ export function extractJSXAnnotations(
       props[attr.name] = attr.value
     })
     const { as, focus, ...data } = props
+    // data.children = wrapChildren(jsxAnnotation.children);
 
     const Component = annotationsMap[as] || as
     annotations.push({
