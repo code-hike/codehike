@@ -14,19 +14,16 @@ function Box({
   data,
   theme,
 }: {
-  data: {
-    url: string
-    title: string | undefined
-  }
+  data: any
   children: React.ReactNode
   theme: any
 }) {
   const border =
-    data ||
-    theme.tokenColors.find((tc: any) =>
-      tc.scope?.includes("string")
-    )?.settings?.foreground ||
-    "yellow"
+    typeof data === "string"
+      ? data
+      : theme.tokenColors.find((tc: any) =>
+          tc.scope?.includes("string")
+        )?.settings?.foreground || "yellow"
   return (
     <span style={{ outline: `2px solid ${border}` }}>
       {children}

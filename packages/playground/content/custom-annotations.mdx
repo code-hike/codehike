@@ -1,3 +1,5 @@
+import { MyTooltipAnnotation } from "./MyTooltipAnnotation"
+
 # JSX Annotations
 
 ```js
@@ -13,9 +15,4 @@ function adipiscing(...elit) {
 }
 ```
 
-<CH.Annotation
-  as="link"
-  focus="4[16:26]"
-  url="https://github.com/code-hike"
-  title="Code Hike"
-/>
+<CH.Annotation as={MyTooltipAnnotation} focus="4[16:26]" />

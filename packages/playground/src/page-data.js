@@ -62,6 +62,7 @@ export async function toProps({ demo, theme }) {
     console.error("remark-code-hike error", e)
     const errorBundle = await bundle(
       `### remark-code-hike error \n ~~~\n${e.toString()}\n~~~`,
+      undefined,
       []
     )
 

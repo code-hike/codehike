@@ -187,6 +187,13 @@ export function valueToEstree(
       return (mdastToEstree(tree) as any).body[0].expression
     }
 
+    if (
+      (value as any)?.type ===
+      "mdxJsxAttributeValueExpression"
+    ) {
+      return (value as any).data.estree.body[0].expression
+    }
+
     return {
       type: "ObjectExpression",
       // @ts-expect-error: looks like an object.
