@@ -3,6 +3,7 @@ import { CodeAnnotation } from "@code-hike/smooth-code"
 import { CodeLink } from "./links"
 import { Code, relativeToAbsolute } from "@code-hike/utils"
 import { Node, Parent } from "unist"
+import { wrapChildren } from "./to-estree"
 
 export function Annotation() {
   return "error: code hike remark plugin not running or annotation isn't at the right place"
@@ -72,11 +73,12 @@ function Label({
   style,
   theme,
 }: {
-  data: string
+  data: any
   children: React.ReactNode
   style?: React.CSSProperties
   theme?: any
 }) {
+  console.log(data)
   const bg = ((theme as any).colors[
     "editor.lineHighlightBackground"
   ] ||
@@ -104,7 +106,7 @@ function Label({
           opacity: 0.7,
         }}
       >
-        {data}
+        {data?.children || data}
       </div>
     </div>
   )
@@ -206,7 +208,9 @@ export function extractJSXAnnotations(
       props[attr.name] = attr.value
     })
     const { as, focus, ...data } = props
-    // data.children = wrapChildren(jsxAnnotation.children);
+    data.children = wrapChildren(
+      jsxAnnotation.children || []
+    )
 
     const Component = annotationsMap[as] || as
     annotations.push({

@@ -62,8 +62,10 @@ function addImportNode(tree: Parent) {
             ],
             source: {
               type: "Literal",
-              value: "@code-hike/mdx",
-              raw: '"@code-hike/mdx"',
+              value:
+                "@code-hike/mdx/dist/components.esm.js",
+              raw:
+                '"@code-hike/mdx/dist/components.esm.js"',
             },
           },
         ],

@@ -6,18 +6,7 @@ import typescript from "rollup-plugin-typescript2"
 import copy from "rollup-plugin-copy"
 import path from "path"
 import json from "@rollup/plugin-json"
-
-const plugins = [
-  json({ compact: true }),
-  typescript(),
-  postcss({
-    extract: path.resolve("dist/index.css"),
-    plugins: [autoprefixer(), cssnano()],
-  }),
-  copy({
-    targets: [{ src: "src/index.scss", dest: "dist" }],
-  }),
-]
+import fs from "fs"
 
 const createConfig = filename => ({
   input: `src/${filename}.tsx`,
@@ -37,11 +26,22 @@ const createConfig = filename => ({
     },
   ],
   // external: ["react"],
-  plugins,
+  plugins: [
+    json({ compact: true }),
+    typescript(),
+    postcss({
+      extract: path.resolve("dist/index.css"),
+      plugins: [autoprefixer(), cssnano()],
+    }),
+    copy({
+      targets: [{ src: "src/index.scss", dest: "dist" }],
+    }),
+  ],
 })
 
-const configs = ["index"].map(filename =>
-  createConfig(filename)
-)
-
-export default configs
+export default function makeConfig(commandOptions) {
+  const { inputs = ["index"] } = JSON.parse(
+    fs.readFileSync("package.json", "utf8")
+  )
+  return inputs.map(createConfig)
+}

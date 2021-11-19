@@ -9,6 +9,10 @@
   "files": [
     "dist"
   ],
+  "inputs": [
+    "index",
+    "components"
+  ],
   "scripts": {
     "x": "x"
   },
