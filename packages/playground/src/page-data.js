@@ -11,13 +11,36 @@ async function getDemoList() {
     .map(filename => filename.slice(0, -4))
 }
 
+async function getFiles(demo) {
+  let filenames = []
+  try {
+    filenames = await fs.promises.readdir(
+      `./content/${demo}/`
+    )
+  } catch (e) {
+    return undefined
+  }
+
+  const files = {}
+  for (const filename of filenames) {
+    files[filename] = await fs.promises.readFile(
+      `./content/${demo}/${filename}`,
+      "utf8"
+    )
+  }
+
+  return files
+}
+
 export async function toProps({ demo, theme }) {
   const mdxSource = await fs.promises.readFile(
     `./content/${demo}.mdx`,
     "utf8"
   )
 
-  const preCodeHike = await bundle(mdxSource, [
+  const files = await getFiles(demo)
+
+  const preCodeHike = await bundle(mdxSource, files, [
     remarkShowTree,
   ])
 
@@ -27,12 +50,12 @@ export async function toProps({ demo, theme }) {
       `shiki/themes/${theme}.json`
     ).then(module => module.default)
 
-    postCodeHike = await bundle(mdxSource, [
+    postCodeHike = await bundle(mdxSource, files, [
       [remarkCodeHike, { theme: loadedTheme }],
       remarkShowTree,
     ])
 
-    result = await bundle(mdxSource, [
+    result = await bundle(mdxSource, files, [
       [remarkCodeHike, { theme: loadedTheme }],
     ])
   } catch (e) {
@@ -70,8 +93,9 @@ export async function toProps({ demo, theme }) {
   }
 }
 
-async function bundle(source, plugins) {
+async function bundle(source, files, plugins) {
   const { code } = await bundleMDX(source, {
+    files,
     esbuildOptions(options) {
       options.minify = false
       options.platform = "node"

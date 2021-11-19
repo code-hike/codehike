@@ -78,7 +78,6 @@ function Label({
   style?: React.CSSProperties
   theme?: any
 }) {
-  console.log(data)
   const bg = ((theme as any).colors[
     "editor.lineHighlightBackground"
   ] ||
