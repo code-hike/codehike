@@ -25,7 +25,7 @@ export async function highlight({
     setCDN("https://unpkg.com/shiki/")
     highlighterPromise = getHighlighter({
       theme: theme as IShikiTheme,
-      langs: [lang as Lang], // TODO change lang from string to Lang
+      // langs: [lang as Lang], // TODO change lang from string to Lang
     })
   }
 
