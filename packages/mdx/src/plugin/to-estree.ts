@@ -1,6 +1,6 @@
 import { Expression } from "estree"
 import isPlainObject from "is-plain-obj"
-import { annotationsMap } from "./annotations"
+import { annotationsMap } from "../client/annotations"
 import unified from "unified"
 import remarkRehype from "remark-rehype"
 import toEstree from "hast-util-to-estree"

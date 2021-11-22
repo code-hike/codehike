@@ -1,7 +1,7 @@
 @import "~@code-hike/mini-editor/dist/index.scss";
 @import "~@code-hike/mini-browser/dist/index.scss";
-@import "./spotlight.scss";
-@import "./scrollycoding.scss";
+@import "./client/spotlight.scss";
+@import "./client/scrollycoding.scss";
 
 .ch-code {
   border-radius: 6px;

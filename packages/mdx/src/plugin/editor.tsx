@@ -1,6 +1,5 @@
-import visit from "unist-util-visit"
 import { Node, Parent } from "unist"
-import { visitAsync, toJSX } from "./unist-utils"
+import { visitAsync } from "./unist-utils"
 import { transformEditor } from "./code"
 
 export async function transformEditorNodes(

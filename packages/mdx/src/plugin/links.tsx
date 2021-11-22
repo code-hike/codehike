@@ -1,37 +1,6 @@
 import { Node, Parent } from "unist"
 import { CodeStep } from "@code-hike/smooth-code"
-import React from "react"
-
-export function CodeLink({
-  children,
-  data,
-}: {
-  data:
-    | {
-        url: string
-        title: string | undefined
-      }
-    | string
-  children: React.ReactNode
-}) {
-  const url = (data as any)?.url || data
-  const title = (data as any)?.title
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      title={title}
-      style={{
-        textDecoration: "underline",
-        textDecorationStyle: "dotted",
-        color: "inherit",
-      }}
-    >
-      {children}
-    </a>
-  )
-}
+import { annotationsMap } from "../client/annotations"
 
 export function extractLinks(
   node: Node,
@@ -57,7 +26,7 @@ export function extractLinks(
 
     focusList.forEach(focus => {
       annotations!.push({
-        Component: CodeLink,
+        Component: annotationsMap["link"],
         focus,
         data: {
           url: url as string,

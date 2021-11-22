@@ -1,9 +1,9 @@
 import { Node, Parent } from "unist"
-import { transformCodeNodes } from "./code"
-import { transformEditorNodes } from "./editor"
-import { transformSections } from "./section"
-import { transformSpotlights } from "./spotlight"
-import { transformScrollycodings } from "./scrollycoding"
+import { transformCodeNodes } from "./plugin/code"
+import { transformEditorNodes } from "./plugin/editor"
+import { transformSections } from "./plugin/section"
+import { transformSpotlights } from "./plugin/spotlight"
+import { transformScrollycodings } from "./plugin/scrollycoding"
 import visit from "unist-util-visit"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
@@ -63,9 +63,9 @@ function addImportNode(tree: Parent) {
             source: {
               type: "Literal",
               value:
-                "@code-hike/mdx/dist/components.esm.js",
+                "@code-hike/mdx/dist/components.cjs.js",
               raw:
-                '"@code-hike/mdx/dist/components.esm.js"',
+                '"@code-hike/mdx/dist/components.cjs.js"',
             },
           },
         ],

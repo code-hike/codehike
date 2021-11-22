@@ -2,19 +2,20 @@ import {
   Section,
   SectionLink,
   SectionCode,
-} from "./section"
-import { Code } from "./code"
-import { CodeLink } from "./links"
-import { Spotlight } from "./spotlight"
-import { Scrollycoding } from "./scrollycoding"
-import { annotationsMap, Annotation } from "./annotations"
+} from "./client/section"
+import { Code } from "./client/code"
+import { Spotlight } from "./client/spotlight"
+import { Scrollycoding } from "./client/scrollycoding"
+import {
+  annotationsMap,
+  Annotation,
+} from "./client/annotations"
 
 export const CH = {
   Code,
   Section,
   SectionLink,
   SectionCode,
-  CodeLink,
   Spotlight,
   Scrollycoding,
   annotations: annotationsMap,

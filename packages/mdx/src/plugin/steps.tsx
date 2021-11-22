@@ -1,15 +1,6 @@
-import {
-  EditorStep,
-  CodeFile,
-} from "@code-hike/mini-editor"
+import { EditorStep } from "@code-hike/mini-editor"
 import { Node, Parent } from "unist"
-import { visitAsync, toJSX } from "./unist-utils"
-import {
-  mapEditor,
-  Code,
-  isEditorNode,
-  mapAnyCodeNode,
-} from "./code"
+import { isEditorNode, mapAnyCodeNode } from "./code"
 import { reduceSteps } from "./code-files-reducer"
 
 // extract step info
