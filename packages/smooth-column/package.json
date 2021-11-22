@@ -12,8 +12,8 @@
   },
   "devDependencies": {
     "@code-hike/script": "0.0.1",
-    "@types/react": "^16.9.38",
-    "react": "^16.13.1"
+    "@types/react": "^17.0.2",
+    "react": "^17.0.2"
   },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18"

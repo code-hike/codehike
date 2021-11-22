@@ -16,9 +16,9 @@
   "devDependencies": {
     "@code-hike/script": "0.0.1",
     "@types/jest": "^24.0.15",
-    "@types/react": "^16.9.38",
+    "@types/react": "^17.0.2",
     "jest": "^26.5.3",
-    "react": "^16.13.1",
+    "react": "^17.0.2",
     "ts-jest": "^26.4.1"
   },
   "dependencies": {

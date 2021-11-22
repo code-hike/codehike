@@ -14,11 +14,11 @@
   },
   "devDependencies": {
     "@code-hike/script": "0.0.1",
-    "@types/react": "^16.9.38",
+    "@types/react": "^17.0.2",
     "@types/jest": "^24.0.15",
     "jest": "^26.5.3",
     "ts-jest": "^26.4.1",
-    "react": "^16.13.1"
+    "react": "^17.0.2"
   },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18"

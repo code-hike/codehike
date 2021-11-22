@@ -19,8 +19,8 @@
     "@code-hike/smooth-column": "0.3.0-next.0",
     "@code-hike/mdx": "0.3.0-next.0",
     "prism-svelte": "^0.4.7",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

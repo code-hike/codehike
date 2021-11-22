@@ -9,3 +9,4 @@ yarn-error.log
 .vscode
 storybook-static
 packages/playground/out
+packages/starter
