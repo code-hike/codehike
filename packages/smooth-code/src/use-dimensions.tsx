@@ -44,40 +44,47 @@ function useDimensions(
   ] = React.useState<Dimensions>(null)
 
   const windowWidth = useWindowWidth()
-  const prevLongestLine = getLongestLine(
-    code.prev,
-    focus.prev
-  )
-  const nextLongestLine = getLongestLine(
-    code.next,
-    focus.next
-  )
   const prevLineRef = React.useRef<HTMLDivElement>(null!)
 
-  const lines = (code.prev || code.next!)
-    .trim()
-    .split(newlineRe)
+  const {
+    prevLongestLine,
+    nextLongestLine,
+    element,
+  } = React.useMemo(() => {
+    const prevLongestLine = getLongestLine(
+      code.prev,
+      focus.prev
+    )
+    const nextLongestLine = getLongestLine(
+      code.next,
+      focus.next
+    )
+    const lines = (code.prev || code.next!)
+      .trim()
+      .split(newlineRe)
 
-  const element = (
-    <>
-      <br />
-      {lines.map((line, i) => (
-        <div
-          ref={
-            line === prevLongestLine
-              ? prevLineRef
-              : undefined
-          }
-          key={i}
-        >
-          <div style={{ display: "inline-block" }}>
-            <span>{line}</span>
+    const element = (
+      <>
+        <br />
+        {lines.map((line, i) => (
+          <div
+            ref={
+              line === prevLongestLine
+                ? prevLineRef
+                : undefined
+            }
+            key={i}
+          >
+            <div style={{ display: "inline-block" }}>
+              <span>{line}</span>
+            </div>
           </div>
-        </div>
-      ))}
-      <br />
-    </>
-  )
+        ))}
+        <br />
+      </>
+    )
+    return { prevLongestLine, nextLongestLine, element }
+  }, [code])
 
   const allDeps = [
     ...deps,
