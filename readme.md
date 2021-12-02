@@ -1,19 +1,9 @@
-<div align="center">
-<br/>
-<a href="https://codehike.org/">
-<img alt="Code Hike" src="https://user-images.githubusercontent.com/1911623/84699147-674e6e00-af27-11ea-947a-a9362715f78d.png" width="600" />
-</a>
-<br/>
-</div>
-<br/>
-<br/>
+![Code Hike](https://user-images.githubusercontent.com/1911623/144417674-e5ac77d9-e491-449c-aa70-6f8b46ffd6c6.png#gh-light-mode-only)
+![Code Hike](https://user-images.githubusercontent.com/1911623/144418617-b8d4518a-2d09-46ad-80a7-d5cc3f8af053.png#gh-dark-mode-only)
 
-Code Hike is an open-source toolset for building all types of **code walkthroughs**: blog posts, tutorials, quickstarts, slides, videos, workshops, docs, and so on.
+Build first-class code walkthroughs for the web. Whether you are writing blog posts, documentation, tutorials, coding videos, or any type of technical content, Code Hike helps you create a superior code reading experience.
 
-> Follow [@codehike\_](https://twitter.com/codehike_) for updates. [Sponsor Code Hike](https://github.com/sponsors/code-hike) if you wanna help.
+**There isn't a stable version yet**, but there's a preview version for people who want to try it out and [give feedback](https://github.com/code-hike/codehike/discussions). You can use it in any project that has MDX v2 configured. Or you can clone [this starter project](https://github.com/pomber/code-hike-sample).
 
-Videos:
-
-- [Scrollycoding - A new tool for dev blogs and docs](https://www.youtube.com/watch?v=7O2b7vfk-mo)
-- [Make coding videos with markdown](https://www.youtube.com/watch?v=EYyw4oyAJgY)
+There are no docs yet, but you can [explore the demos](https://codehike.org/#demos) for an overview of all the features and how to use them.
 

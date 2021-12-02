@@ -12,8 +12,9 @@
     "watch-package": "lerna run --scope @*/mini-frame --include-dependencies --parallel x -- watch",
     "watch-all": "lerna run --parallel x -- watch",
     "storybook": "lerna run --scope storybook start --stream",
+    "playground": "lerna run --scope @*/playground dev --stream",
     "docs": "lerna run build-docs --stream",
-    "dev": "lerna run --scope react-website dev --stream",
+    "build-playground": "lerna run --scope @*/playground build --stream",
     "release": "auto shipit"
   },
   "devDependencies": {

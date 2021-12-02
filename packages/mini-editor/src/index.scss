@@ -20,6 +20,7 @@
   // background-color: maroon;
   color: rgba(255, 255, 255, 0.5);
   min-width: 0;
+  border-bottom: 1px solid;
 }
 
 .ch-editor-tab-active {
@@ -45,11 +46,11 @@
 /** body */
 
 .ch-editor-body {
-  background-color: rgb(30, 30, 30);
-  color: #cccccc;
-  font-size: 15px;
+  // background-color: rgb(30, 30, 30);
+  // color: #cccccc;
+  // font-size: 15px;
   // padding: 5px 10px;
-  line-height: 1.1rem;
+  // line-height: 1.1rem;
   box-sizing: border-box;
   position: relative;
 }
@@ -60,14 +61,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 16px;
+  // padding: 0 16px;
   margin: 0;
   overflow: auto;
 }
 
-.ch-editor-body code {
-  line-height: 20px;
-}
+// .ch-editor-body code {
+//   line-height: 1.2rem;
+// }
 
 /** terminal */
 

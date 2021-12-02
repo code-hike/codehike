@@ -52,6 +52,35 @@ export const MiniFrame = React.forwardRef<
   )
 })
 
+export const SimpleFrame = React.forwardRef<
+  HTMLDivElement,
+  MiniFrameProps
+>(function (
+  {
+    title,
+    children,
+    titleBar,
+    classes,
+    overflow,
+    ...props
+  },
+  ref
+) {
+  const c = useClasser("ch", classes)
+
+  const bar = titleBar || <DefaultTitleBar title={title} />
+  return (
+    <ClasserProvider classes={classes}>
+      <div {...props} ref={ref}>
+        <div className={c("simple-frame")}>
+          <div className={c("frame-title-bar")}>{bar}</div>
+          {children}
+        </div>
+      </div>
+    </ClasserProvider>
+  )
+})
+
 function DefaultTitleBar({ title }: { title?: string }) {
   const c = useClasser("ch-frame")
   return (

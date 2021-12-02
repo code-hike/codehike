@@ -1,28 +1,17 @@
 import "./index.scss"
 
+import { EditorTween } from "./editor-tween"
 import {
-  MiniEditorTween,
-  MiniEditorTweenProps,
-} from "./mini-editor-tween"
-import {
-  MiniEditorHike,
-  MiniEditorHikeProps,
+  EditorSpring,
+  EditorProps,
   EditorStep,
-} from "./mini-editor-hike"
-import {
-  MiniEditor,
-  MiniEditorProps,
-} from "./mini-editor-spring"
-import { mdxToStep, mdxToSteps } from "./mdx"
+  CodeFile,
+} from "./editor-spring"
 
 export {
-  mdxToStep,
-  mdxToSteps,
-  MiniEditorTween,
-  MiniEditorTweenProps,
-  MiniEditor,
-  MiniEditorProps,
-  MiniEditorHike,
-  MiniEditorHikeProps,
+  EditorTween,
+  EditorSpring,
+  EditorProps,
   EditorStep,
+  CodeFile,
 }

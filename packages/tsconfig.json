@@ -14,6 +14,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     // remove
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true
   }
 }
