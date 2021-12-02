@@ -1,3 +1,5 @@
+import fetch from "node-fetch"
+
 export async function getPresetConfig(
   attributes?: {
     name: string
