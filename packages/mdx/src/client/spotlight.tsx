@@ -3,7 +3,7 @@ import {
   EditorProps,
   EditorStep,
 } from "@code-hike/mini-editor"
-import { Code } from "./code"
+import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 
 export function Spotlight({
@@ -21,8 +21,20 @@ export function Spotlight({
 }) {
   const stepsChildren = React.Children.toArray(children)
 
-  const [stepIndex, setIndex] = React.useState(start)
-  const tab = editorSteps[stepIndex]
+  const [state, setState] = React.useState({
+    stepIndex: start,
+    step: editorSteps[start],
+  })
+  const tab = state.step
+
+  function onTabClick(filename: string) {
+    const newStep = updateEditorStep(
+      state.step,
+      filename,
+      null
+    )
+    setState({ ...state, step: newStep })
+  }
 
   const headerElement = stepsChildren[0] as React.ReactElement
 
@@ -40,10 +52,15 @@ export function Spotlight({
           i === 0 ? null : (
             <div
               key={i}
-              onClick={() => setIndex(i)}
+              onClick={() =>
+                setState({
+                  stepIndex: i,
+                  step: editorSteps[i],
+                })
+              }
               className="ch-spotlight-tab"
               data-selected={
-                i === stepIndex ? "true" : undefined
+                i === state.stepIndex ? "true" : undefined
               }
             >
               {children}
@@ -52,7 +69,11 @@ export function Spotlight({
         )}
       </div>
       <div className="ch-spotlight-sticker">
-        <Code {...(tab as any)} codeConfig={codeConfig} />
+        <InnerCode
+          {...(tab as any)}
+          codeConfig={codeConfig}
+          onTabClick={onTabClick}
+        />
         {presetConfig && (
           <Preview
             className="ch-spotlight-preview"

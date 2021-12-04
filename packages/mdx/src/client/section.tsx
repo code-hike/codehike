@@ -1,13 +1,13 @@
 import React from "react"
 import { EditorProps } from "@code-hike/mini-editor"
-import { Code } from "./code"
+import { InnerCode, updateEditorStep } from "./code"
 
 const SectionContext = React.createContext<{
   props: EditorProps
   selectedId?: string
   setFocus: (x: {
     fileName?: string
-    focus: string
+    focus: string | null
     id: string
   }) => void
   resetFocus: () => void
@@ -33,30 +33,14 @@ export function Section({
     id,
   }: {
     fileName?: string
-    focus: string
+    focus: string | null
     id: string
   }) => {
-    const name = fileName || state.northPanel.active
-
-    const newFiles = state.files.map((file: any) =>
-      file.name === name ? { ...file, focus } : file
-    )
-
-    let northPanel = { ...state.northPanel }
-    let southPanel = state.southPanel && {
-      ...state.northPanel,
-    }
-    if (state.northPanel.tabs.includes(name)) {
-      northPanel.active = name
-    } else if (southPanel) {
-      southPanel.active = name
-    }
+    const newStep = updateEditorStep(state, fileName, focus)
 
     setState({
       ...state,
-      files: newFiles,
-      northPanel,
-      southPanel,
+      ...newStep,
       selectedId: id,
     })
   }
@@ -78,8 +62,15 @@ export function Section({
 }
 
 export function SectionCode() {
-  const { props } = React.useContext(SectionContext)
-  return <Code {...props} />
+  const { props, setFocus } = React.useContext(
+    SectionContext
+  )
+
+  const onTabClick = (filename: string) => {
+    setFocus({ fileName: filename, focus: null, id: "" })
+  }
+
+  return <InnerCode {...props} onTabClick={onTabClick} />
 }
 
 export function SectionLink({

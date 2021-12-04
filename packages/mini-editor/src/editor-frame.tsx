@@ -36,6 +36,7 @@ type EditorFrameProps = {
   height?: number
   button?: React.ReactNode
   classes?: Classes
+  onTabClick?: (filename: string) => void
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 export const EditorFrame = React.forwardRef<
@@ -51,6 +52,7 @@ export const EditorFrame = React.forwardRef<
     button,
     theme,
     className,
+    onTabClick,
     ...rest
   },
   ref
@@ -76,6 +78,7 @@ export const EditorFrame = React.forwardRef<
           button={button}
           panel="north"
           theme={theme}
+          onTabClick={onTabClick}
         />
       }
       {...rest}
@@ -105,6 +108,7 @@ export const EditorFrame = React.forwardRef<
               topBorder={true}
               panel="south"
               theme={theme}
+              onTabClick={onTabClick}
             />
           </div>
           <div
@@ -130,6 +134,7 @@ type TabsContainerProps = {
   topBorder?: boolean
   panel: "north" | "south"
   theme: EditorTheme
+  onTabClick?: (filename: string) => void
 }
 function TabsContainer({
   tabs,
@@ -138,6 +143,7 @@ function TabsContainer({
   topBorder,
   panel,
   theme,
+  onTabClick,
 }: TabsContainerProps) {
   const c = useClasser("ch-editor-tab")
   return (
@@ -189,6 +195,7 @@ function TabsContainer({
                 : ColorName.InactiveTabBackground
             ),
           }}
+          onClick={onTabClick && (() => onTabClick(title))}
         >
           <div>{title}</div>
         </div>
