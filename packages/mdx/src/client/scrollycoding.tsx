@@ -3,7 +3,7 @@ import {
   EditorProps,
   EditorStep,
 } from "@code-hike/mini-editor"
-import { Code } from "./code"
+import { InnerCode, updateEditorStep } from "./code"
 import {
   Scroller,
   Step as ScrollerStep,
@@ -25,12 +25,26 @@ export function Scrollycoding({
 }) {
   const stepsChildren = React.Children.toArray(children)
 
-  const [stepIndex, setIndex] = React.useState(start)
-  const tab = editorSteps[stepIndex]
+  const [state, setState] = React.useState({
+    stepIndex: start,
+    step: editorSteps[start],
+  })
+
+  const tab = state.step
 
   function onStepChange(index: number) {
-    setIndex(index)
+    setState({ stepIndex: index, step: editorSteps[index] })
   }
+
+  function onTabClick(filename: string) {
+    const newStep = updateEditorStep(
+      state.step,
+      filename,
+      null
+    )
+    setState({ ...state, step: newStep })
+  }
+
   return (
     <section
       className={`ch-scrollycoding ${
@@ -44,10 +58,10 @@ export function Scrollycoding({
               as="div"
               key={i}
               index={i}
-              onClick={() => setIndex(i)}
+              onClick={() => onStepChange(i)}
               className="ch-scrollycoding-step-content"
               data-selected={
-                i === stepIndex ? "true" : undefined
+                i === state.stepIndex ? "true" : undefined
               }
             >
               {children}
@@ -56,7 +70,11 @@ export function Scrollycoding({
         </Scroller>
       </div>
       <div className="ch-scrollycoding-sticker">
-        <Code {...(tab as any)} codeConfig={codeConfig} />
+        <InnerCode
+          {...(tab as any)}
+          codeConfig={codeConfig}
+          onTabClick={onTabClick}
+        />
         {presetConfig && (
           <Preview
             className="ch-scrollycoding-preview"

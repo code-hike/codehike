@@ -1,57 +1,48 @@
-# Sections
+# Code Links
 
-Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Lorem ipsum dolor sit amet.
 
 <CH.Section>
 
-Lorem [ipsum](focus://1[16:20]) dolor sit amet, [consectetur](focus://5[7:17]) adipiscing elit, sed do eiusmod [tempor](https://google.com) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Consectetur adipiscing elit, sed do eiusmod tempor [incididunt](focus://4:7) ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget.
 
 ```js
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null ? 0 : ipsum.sit
-  dolor = sit - amet(dolor)
-  return sit
-    ? consectetur(ipsum, 0, dolor < 0 ? 0 : dolor)
-    : []
+function lorem(ipsum, dolor) {
+  const sit = "lorem ipsum"
+  dolor = elit(dolor, 3)
+  while (++consectetur < amet) {
+    sit.eiusmod(150)
+    tempor(ipsum, adipiscing)
+  }
 }
 ```
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum [dolore](focus://1[23:27],3) eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
 
 </CH.Section>
 
----
+## With multiple files
 
 <CH.Section>
 
-Lorem dolor sit amet, [consectetur](focus://styles.css#3[8:22]) adipiscing elit, sed do eiusmod [tempor](focus://index.js#1:3) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Lorem dolor sit amet, [javascript](focus://index.js#2:3) adipiscing elit, sed do eiusmod [styles](focus://styles.css#2:3) incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 <CH.Code>
 
 ```js index.js
-function () {
-  return 3
+function lorem(ipsum, dolor) {
+  const sit = ipsum - amet(dolor)
+  return sit + "lorem ipsum"
 }
 ```
 
 ```css styles.css
-html,
-body,
-body > div:first-child,
-div#__next,
-div#__next > div {
-  margin: 0;
-  height: 100%;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: sans-serif;
-  background-color: #444;
+.lorem-ipsum > .dolor pre {
+  background-color: var(--color-bg);
+  padding: 1em 0px 10vh 300px;
 }
 ```
 
 </CH.Code>
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 </CH.Section>
