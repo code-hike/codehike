@@ -36,3 +36,16 @@ import "@code-hike/mdx/dist/index.css";
 5. Create an mdx file and copy the code from any of the [demos](https://codehike.org/#demos) to see if it works
 
 Here is a [minimal Next.js example](https://github.com/pomber/code-hike-sample).
+
+
+## License
+
+MIT
+
+
+## Powered by
+
+<a href="https://www.browserstack.com/"><img alt="browserstack" src="https://user-images.githubusercontent.com/1911623/66797775-4d651300-eee2-11e9-9072-ef1dc670af1d.png" width="auto" height="30"/></a>  
+
+<a href="https://vercel.com?utm_source=codehike&utm_campaign=oss"><img alt="vercel" src="https://user-images.githubusercontent.com/1911623/145032181-a217f4d2-d273-4968-9f10-b37db8ae319d.png" width="auto" height="24"/></a>
+
