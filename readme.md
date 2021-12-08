@@ -27,6 +27,7 @@ const theme = require("shiki/themes/monokai.json"); // any theme from shiki
 //      },
 // ...
 ```
+
 4. Add Code Hike's CSS. Also depends on your stack. Usually you can _just_ import it:
 
 ```js
@@ -37,15 +38,14 @@ import "@code-hike/mdx/dist/index.css";
 
 Here is a [minimal Next.js example](https://github.com/pomber/code-hike-sample).
 
-
 ## License
 
 MIT
 
-
 ## Powered by
 
-<a href="https://www.browserstack.com/"><img alt="browserstack" src="https://user-images.githubusercontent.com/1911623/66797775-4d651300-eee2-11e9-9072-ef1dc670af1d.png" width="auto" height="30"/></a>  
-
-<a href="https://vercel.com?utm_source=codehike&utm_campaign=oss"><img alt="vercel" src="https://user-images.githubusercontent.com/1911623/145032181-a217f4d2-d273-4968-9f10-b37db8ae319d.png" width="auto" height="24"/></a>
-
+[![Vercel](https://user-images.githubusercontent.com/1911623/145199399-68b8cd57-c331-4c50-81a2-8c491fb7c0a5.png#gh-dark-mode-only)](https://vercel.com/?utm_source=codehike&utm_campaign=oss#gh-dark-mode-only)
+[![Vercel](https://user-images.githubusercontent.com/1911623/145199467-f07416cf-2ed5-4c6f-a4e1-bbcaabbec603.png#gh-light-mode-only)](https://vercel.com/?utm_source=codehike&utm_campaign=oss#gh-light-mode-only)
+![spacer](https://user-images.githubusercontent.com/1911623/145202317-0bcfb3ed-403c-4737-a781-2eeb6b796e8b.png)
+[![BrowserStack](https://user-images.githubusercontent.com/1911623/145201865-9786b79a-c532-41f7-8da0-91334b53f380.png#gh-dark-mode-only)](https://www.browserstack.com/#gh-dark-mode-only)
+[![BrowserStack](https://user-images.githubusercontent.com/1911623/145201872-8940020c-5659-4066-9a0b-0eb25ace3e61.png#gh-light-mode-only)](https://www.browserstack.com/#gh-light-mode-only)
