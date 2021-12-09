@@ -15,6 +15,7 @@ import {
   map,
   hasColumns,
   parsePartToObject,
+  splitParts,
   ColumnExtremes,
   parseExtremes,
 } from "@code-hike/utils"
@@ -32,13 +33,27 @@ export function parseAnnotations(
   >
   multilineAnnotations: FullTween<MultiLineAnnotation[]>
 } {
-  const inlineCodeAnnotations = mapWithDefault(
+  // split annotations with multiple parts in the focus string
+  // "1:2,3[4:5]" becomes  two annotations "1:2" and "3[4:5]"
+  const expandedAnnotations = mapWithDefault(
     annotations,
+    [],
+    annotations =>
+      annotations!.flatMap(annotation =>
+        splitParts(annotation.focus).map(part => ({
+          ...annotation,
+          focus: part,
+        }))
+      )
+  )
+
+  const inlineCodeAnnotations = mapWithDefault(
+    expandedAnnotations,
     [],
     annotations => annotations!.filter(isInline)
   )
   const multilineCodeAnnotations = mapWithDefault(
-    annotations,
+    expandedAnnotations,
     [],
     annotations => annotations!.filter(a => !isInline(a))
   )

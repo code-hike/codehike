@@ -36,8 +36,7 @@ const x = (y) => y++
 `.trim()
 
   const prevAnnotations = [
-    { focus: "1[10:11]" },
-    { focus: "2[1:5]" },
+    { focus: "1[10:11],2[1:5]" },
     { focus: "3[8]" },
   ]
 
