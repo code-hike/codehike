@@ -7,7 +7,7 @@ import {
   FocusedLine,
   AnnotatedLine,
   LineGroup,
-} from "./step-parser"
+} from "./partial-step-parser"
 import {
   Tween,
   FullTween,

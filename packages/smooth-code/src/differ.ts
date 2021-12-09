@@ -4,7 +4,7 @@ import {
   HighlightedLine,
   MergedCode,
   MergedLine,
-} from "./step-parser"
+} from "./partial-step-parser"
 
 export function mergeLines(
   code: FullTween<string>,
