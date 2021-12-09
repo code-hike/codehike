@@ -1,8 +1,7 @@
-import React from "react"
 import {
   LineWithElement,
   AnnotatedLine,
-} from "./step-parser"
+} from "./partial-step-parser"
 import { map } from "@code-hike/utils"
 import { easing, stagger } from "./tween"
 

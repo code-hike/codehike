@@ -1,6 +1,6 @@
 import React from "react"
 import { map } from "@code-hike/utils"
-import { CodeStep } from "./step-parser"
+import { CodeShift } from "./partial-step-parser"
 import { Dimensions } from "./use-dimensions"
 import { tween, easing } from "./tween"
 
@@ -17,7 +17,7 @@ export function SmoothContainer({
   minZoom?: number
   maxZoom?: number
   center?: boolean
-  codeStep: CodeStep
+  codeStep: CodeShift
   children: (focusWidth: number) => React.ReactNode
   progress: number
 }) {
@@ -152,7 +152,7 @@ function getTweenContentProps({
   minZoom: number
   maxZoom: number
   horizontalCenter: boolean
-  codeStep: CodeStep
+  codeStep: CodeShift
 }) {
   const { lineHeight, lineWidth } = rest.dimensions!
   const paramTween = {

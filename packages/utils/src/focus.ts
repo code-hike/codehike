@@ -34,7 +34,7 @@ export function mapFocusToLineNumbers(
   }
 }
 
-function splitParts(focus: string) {
+export function splitParts(focus: string) {
   return focus.split(/,(?![^\[]*\])/g)
 }
 

@@ -1,9 +1,9 @@
 import React from "react"
 import { Dimensions } from "./use-dimensions"
 import {
-  CodeStep,
+  CodeShift,
   AnnotatedTokenGroups,
-} from "./step-parser"
+} from "./partial-step-parser"
 import { SmoothContainer } from "./smooth-container"
 import { tween } from "./tween"
 import { FullTween, map, Tween } from "@code-hike/utils"
@@ -14,7 +14,7 @@ type SmoothLinesProps = {
   minZoom?: number
   maxZoom?: number
   center?: boolean
-  codeStep: CodeStep
+  codeStep: CodeShift
 }
 
 export function SmoothLines(props: SmoothLinesProps) {
@@ -38,7 +38,7 @@ function Lines({
   focusWidth,
   lineHeight,
 }: {
-  codeStep: CodeStep
+  codeStep: CodeShift
   focusWidth: number
   lineHeight: number
   progress: number
@@ -102,7 +102,7 @@ function Lines({
   )
 }
 
-type CodeLine = CodeStep["groups"]["prev"][number]["lines"][number]
+type CodeLine = CodeShift["groups"]["prev"][number]["lines"][number]
 
 function LineGroup({
   lines,

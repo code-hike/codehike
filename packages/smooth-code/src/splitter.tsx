@@ -18,7 +18,7 @@ import {
   AnnotatedLine,
   MultiLineAnnotation,
   InlineAnnotation,
-} from "./step-parser"
+} from "./partial-step-parser"
 import React from "react"
 
 export function splitByAnnotations(
