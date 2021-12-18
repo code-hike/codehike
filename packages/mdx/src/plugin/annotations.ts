@@ -24,19 +24,24 @@ export function extractAnnotationsFromCode(code: Code) {
   const focusList = [] as string[]
   while (lineNumber <= lines.length) {
     const line = lines[lineNumber - 1]
-    const { key, focus, data } = getCommentData(
-      line,
-      lineNumber
-    )
+    const { key, focusString, data } = getCommentData(line)
 
     const Component = annotationsMap[key!]
 
     if (Component) {
+      const focus = relativeToAbsolute(
+        focusString,
+        lineNumber
+      )
       lines.splice(lineNumber - 1, 1)
-      annotations.push({ Component, focus: focus!, data })
+      annotations.push({ Component, focus, data })
     } else if (key === "focus") {
+      const focus = relativeToAbsolute(
+        focusString,
+        lineNumber
+      )
       lines.splice(lineNumber - 1, 1)
-      focusList.push(focus!)
+      focusList.push(focus)
     } else {
       lineNumber++
     }
@@ -44,10 +49,7 @@ export function extractAnnotationsFromCode(code: Code) {
   return [annotations, focusList.join(",")] as const
 }
 
-function getCommentData(
-  line: Code["lines"][0],
-  lineNumber: number
-) {
+function getCommentData(line: Code["lines"][0]) {
   const comment = line.tokens.find(t =>
     t.content.startsWith("//")
   )?.content
@@ -63,7 +65,7 @@ function getCommentData(
 
   return {
     key,
-    focus: relativeToAbsolute(focusString, lineNumber),
+    focusString,
     data,
   }
 }
