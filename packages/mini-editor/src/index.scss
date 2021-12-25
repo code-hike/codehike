@@ -40,35 +40,15 @@
 }
 
 .ch-editor-frame {
-  --ch-content-background: rgb(37, 37, 38);
-}
-
-/** body */
-
-.ch-editor-body {
-  // background-color: rgb(30, 30, 30);
-  // color: #cccccc;
-  // font-size: 15px;
-  // padding: 5px 10px;
-  // line-height: 1.1rem;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  overflow: hidden;
 }
 
-.ch-editor-body pre {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  // padding: 0 16px;
-  margin: 0;
-  overflow: auto;
+.ch-editor-frame .ch-frame-title-bar {
+  background: none;
 }
-
-// .ch-editor-body code {
-//   line-height: 1.2rem;
-// }
 
 /** terminal */
 

@@ -61,20 +61,25 @@ export function useTransition(
   backward: boolean,
   codeConfig: CodeConfig
 ): Transition {
+  // prevSnapshot has the dimensions of the editor for t=0
+  // nextSnapshot has the dimensions of the editor for t=1
   const { prevSnapshot, nextSnapshot } = useSnapshots(
     ref,
     prev,
     next
   )
 
+  // we return the default styles for t=0 until we measure the dimensions
   if (!prevSnapshot) {
     return startingPosition(prev, next, codeConfig)
   }
 
+  // and the same for t=1
   if (!nextSnapshot) {
     return endingPosition(prev, next, codeConfig)
   }
 
+  // TODO this should be commented
   // if (t === 0) {
   //   return startingPosition(prev, next, codeConfig)
   // }
@@ -114,7 +119,10 @@ export function useTransition(
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={t}
-          parentHeight={northStyle.height as string}
+          parentHeight={
+            (northStyle.height ||
+              northStyle.minHeight) as string
+          }
         />
       ),
     },
@@ -127,7 +135,10 @@ export function useTransition(
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={t}
-          parentHeight={southStyle?.height as string}
+          parentHeight={
+            (southStyle?.height ||
+              southStyle?.minHeight) as string
+          }
         />
       ),
     },
@@ -150,12 +161,6 @@ function startingPosition(
     nextSouthFile,
   } = getStepFiles(prev, next, true)
 
-  const northHeight = inputSouthPanel
-    ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
-    : "100%"
-
-  const southHeight = `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel?.heightRatio} + var(--ch-title-bar-height))`
-
   return {
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
@@ -164,15 +169,16 @@ function startingPosition(
         style: {},
       })),
       style: {
-        height: northHeight,
+        flexGrow: 1,
+        overflow: "hidden",
       },
       children: (
         <CodeTransition
           codeConfig={codeConfig}
           prevFile={prevNorthFile}
-          nextFile={nextNorthFile}
+          nextFile={prevNorthFile}
           t={0}
-          parentHeight={northHeight}
+          parentHeight={"0"}
         />
       ),
     },
@@ -183,15 +189,16 @@ function startingPosition(
         style: {},
       })),
       style: {
-        height: `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel.heightRatio} + var(--ch-title-bar-height))`,
+        flexGrow: 1,
+        overflow: "hidden",
       },
       children: (
         <CodeTransition
           codeConfig={codeConfig}
           prevFile={prevSouthFile!}
-          nextFile={nextSouthFile!}
+          nextFile={prevSouthFile!}
           t={0}
-          parentHeight={southHeight}
+          parentHeight={"0"}
         />
       ),
     },
@@ -221,12 +228,6 @@ function endingPosition(
     nextNorthFile = nextSouthFile!
   }
 
-  const northHeight = inputSouthPanel
-    ? `calc((100% - var(--ch-title-bar-height)) * ${inputNorthPanel.heightRatio})`
-    : "100%"
-
-  const southHeight = `calc((100% - var(--ch-title-bar-height)) * ${inputSouthPanel?.heightRatio} + var(--ch-title-bar-height))`
-
   return {
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
@@ -235,15 +236,16 @@ function endingPosition(
         style: {},
       })),
       style: {
-        height: northHeight,
+        flexGrow: 1,
+        overflow: "hidden",
       },
       children: (
         <CodeTransition
           codeConfig={codeConfig}
-          prevFile={prevNorthFile}
+          prevFile={nextNorthFile}
           nextFile={nextNorthFile}
           t={1}
-          parentHeight={northHeight}
+          parentHeight={"1"}
         />
       ),
     },
@@ -254,15 +256,16 @@ function endingPosition(
         style: {},
       })),
       style: {
-        height: southHeight,
+        flexGrow: 1,
+        overflow: "hidden",
       },
       children: (
         <CodeTransition
           codeConfig={codeConfig}
-          prevFile={prevSouthFile!}
+          prevFile={nextSouthFile!}
           nextFile={nextSouthFile!}
           t={1}
-          parentHeight={southHeight}
+          parentHeight={"1"}
         />
       ),
     },
@@ -285,7 +288,7 @@ function CodeTransition({
   const htmlProps = {
     ...codeConfig?.htmlProps,
     style: {
-      height: "unset",
+      height: "100%",
       ...codeConfig?.htmlProps?.style,
     },
   }
@@ -403,7 +406,7 @@ function getPanelStyles(
   ) {
     return {
       northStyle: {
-        height: prev.northHeight,
+        minHeight: prev.northHeight,
       },
     }
   }
@@ -420,14 +423,14 @@ function getPanelStyles(
   ) {
     return {
       northStyle: {
-        height: tween(
+        minHeight: tween(
           prev.northHeight,
           next.northHeight,
           t
         ),
       },
       southStyle: {
-        height: prev.southHeight,
+        minHeight: prev.southHeight,
       },
     }
   }
@@ -444,13 +447,13 @@ function getPanelStyles(
   ) {
     return {
       northStyle: {
-        height: prev.northHeight,
+        minHeight: prev.northHeight,
       },
       southStyle: {
         position: "relative",
-        height: tween(
+        minHeight: tween(
           prev.southHeight,
-          next.northHeight + next.titleBarHeight,
+          next.northHeight,
           t
         ),
         transform: `translateY(${tween(
@@ -474,7 +477,7 @@ function getPanelStyles(
   ) {
     return {
       northStyle: {
-        height: tween(
+        minHeight: tween(
           prev.northHeight,
           next.northHeight,
           t
@@ -482,7 +485,7 @@ function getPanelStyles(
       },
       southStyle: {
         position: "relative",
-        height: next.southHeight!,
+        minHeight: next.southHeight!,
       },
     }
   }
@@ -499,12 +502,12 @@ function getPanelStyles(
   ) {
     return {
       northStyle: {
-        height: next.northHeight,
+        minHeight: next.northHeight,
       },
       southStyle: {
         position: "relative",
-        height: tween(
-          prev.northHeight + prev.titleBarHeight,
+        minHeight: tween(
+          prev.northHeight,
           next.southHeight!,
           t
         ),
@@ -524,10 +527,14 @@ function getPanelStyles(
   // +---+---+
   return {
     northStyle: {
-      height: tween(prev.northHeight, next.northHeight, t),
+      minHeight: tween(
+        prev.northHeight,
+        next.northHeight,
+        t
+      ),
     },
     southStyle: {
-      height: tween(
+      minHeight: tween(
         prev.southHeight!,
         next.southHeight!,
         t
@@ -775,6 +782,7 @@ function useSnapshots(
 
   useLayoutEffect(() => {
     if (!prevSnapshot) {
+      // debugger
       setState(s => ({
         ...s,
         prevSnapshot: {
@@ -783,6 +791,7 @@ function useSnapshots(
         },
       }))
     } else if (!nextSnapshot) {
+      // debugger
       setState(s => ({
         ...s,
         nextSnapshot: {

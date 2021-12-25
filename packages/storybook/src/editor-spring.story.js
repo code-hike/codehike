@@ -135,21 +135,24 @@ function SingleEditor({
     }).then(code => setCode(code))
   }, [inputCode])
 
-  const step = {
-    files: [
-      {
-        name: "index.js",
-        code,
-        focus,
-        annotations,
+  const step = React.useMemo(
+    () => ({
+      files: [
+        {
+          name: "index.js",
+          code,
+          focus,
+          annotations,
+        },
+      ],
+      northPanel: {
+        tabs: ["index.js"],
+        active: "index.js",
+        heightRatio: 1,
       },
-    ],
-    northPanel: {
-      tabs: ["index.js"],
-      active: "index.js",
-      heightRatio: 1,
-    },
-  }
+    }),
+    [code, focus]
+  )
 
   return code ? (
     <EditorSpring {...step} codeConfig={{ theme }} />

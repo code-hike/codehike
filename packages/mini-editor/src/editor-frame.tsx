@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  MiniFrame,
-  FrameButtons,
-} from "@code-hike/mini-frame"
+import { FrameButtons } from "@code-hike/mini-frame"
 import { useClasser, Classes } from "@code-hike/classer"
 import { EditorTheme } from "@code-hike/smooth-code/dist/themes"
 import { getColor, ColorName } from "./theme-colors"
@@ -58,20 +55,21 @@ export const EditorFrame = React.forwardRef<
   ref
 ) {
   const c = useClasser("ch-editor")
+
   return (
-    <MiniFrame
+    <div
       ref={ref}
+      {...rest}
+      className="ch-frame ch-editor-frame"
       style={{
-        height,
-        ["--ch-content-background" as any]: getColor(
+        background: getColor(
           theme,
           ColorName.EditorGroupHeaderBackground
         ),
         ...style,
       }}
-      className={c("frame") + " " + className}
-      overflow="unset"
-      titleBar={
+    >
+      <div className={"ch-frame-title-bar"}>
         <TabsContainer
           tabs={northPanel.tabs}
           showFrameButtons={true}
@@ -80,27 +78,19 @@ export const EditorFrame = React.forwardRef<
           theme={theme}
           onTabClick={onTabClick}
         />
-      }
-      {...rest}
-    >
+      </div>
       <div
         data-ch-panel="north"
-        className={c("body")}
         style={northPanel.style}
         children={northPanel.children}
       />
       {southPanel && (
-        <div
-          data-ch-panel="south"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            ...southPanel.style,
-          }}
-        >
+        <>
           <div
             className={"ch-frame-title-bar"}
-            style={{ background: "none" }}
+            style={{
+              transform: southPanel.style?.transform,
+            }}
           >
             <TabsContainer
               tabs={southPanel.tabs}
@@ -112,18 +102,13 @@ export const EditorFrame = React.forwardRef<
             />
           </div>
           <div
-            className={c("body")}
+            data-ch-panel="south"
             children={southPanel.children}
-            style={{
-              flexGrow: 1,
-              flexShrink: 1,
-              minHeight: 0,
-            }}
+            style={southPanel.style}
           />
-        </div>
+        </>
       )}
-      {terminalPanel}
-    </MiniFrame>
+    </div>
   )
 })
 

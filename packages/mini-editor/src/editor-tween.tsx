@@ -14,6 +14,11 @@ export {
   EditorTweenProps,
 }
 
+const useLayoutEffect =
+  typeof window !== "undefined"
+    ? React.useLayoutEffect
+    : React.useEffect
+
 type EditorTransitionProps = {
   prev?: EditorStep
   next?: EditorStep
@@ -65,15 +70,28 @@ function EditorTween({
     codeConfig
   )
 
-  const defaultHeight = useDefaultHeight(prev)
+  const [frozenHeight, freezeHeight] = React.useState<
+    number | undefined
+  >(undefined)
+
+  useLayoutEffect(() => {
+    const height = ref.current?.getBoundingClientRect()
+      .height
+    freezeHeight(height)
+  }, [])
+
   const framePropsWithHeight = {
     ...frameProps,
     ...divProps,
     style: {
-      height: defaultHeight,
       ...frameProps?.style,
       ...divProps?.style,
     },
+  }
+
+  if (frozenHeight) {
+    framePropsWithHeight.style.height = frozenHeight
+    framePropsWithHeight.style.maxHeight = frozenHeight
   }
 
   const terminalPanel = (
@@ -131,32 +149,4 @@ function EditorTransition({
       {...rest}
     />
   )
-}
-
-function useDefaultHeight({
-  files,
-  northPanel,
-  southPanel,
-}: EditorStep): string {
-  return React.useMemo(() => {
-    const northFile = files.find(
-      ({ name }) => name === northPanel.active
-    )
-    const southFile = files.find(
-      ({ name }) => name === southPanel?.active
-    )
-    let focusedLines = getFocusedLineCount(northFile!) + 3.9
-    if (southFile) {
-      focusedLines += getFocusedLineCount(southFile!) + 3.9
-    }
-    const emHeight = focusedLines * 1.5
-    return `${emHeight}em`
-  }, [])
-}
-
-function getFocusedLineCount({
-  code,
-  focus,
-}: EditorStep["files"][0]): number {
-  return code.lines.length
 }
