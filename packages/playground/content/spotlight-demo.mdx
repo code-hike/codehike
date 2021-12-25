@@ -4,8 +4,6 @@ This is how to use the `<CH.Spotlight>` component. Lorem ipsum dolor sit amet co
 
 <CH.Spotlight>
 
-<CH.Code>
-
 ```js app.js
 function lorem(ipsum, dolor = 1) {
   const sit = ipsum == null && 0
@@ -13,14 +11,6 @@ function lorem(ipsum, dolor = 1) {
   return sit ? consectetur(ipsum) : []
 }
 ```
-
-```css styles.css
-.lorem {
-  color: red;
-}
-```
-
-</CH.Code>
 
 ---
 
@@ -53,13 +43,7 @@ Or change the file
 
 <CH.Code>
 
-```js app.js focus=6:10
-function lorem(ipsum, dolor = 1) {
-  const sit = ipsum == null && 0
-  dolor = sit - amet(dolor)
-  return sit ? consectetur(ipsum) : []
-}
-
+```js app.js focus=1:4
 function adipiscing(...elit) {
   console.log(elit)
   return elit.map(ipsum => ipsum.sit)

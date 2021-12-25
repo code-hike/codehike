@@ -89,7 +89,7 @@ export const EditorFrame = React.forwardRef<
           <div
             className={"ch-frame-title-bar"}
             style={{
-              transform: southPanel.style.transform,
+              transform: southPanel.style?.transform,
             }}
           >
             <TabsContainer

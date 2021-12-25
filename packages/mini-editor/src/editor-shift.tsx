@@ -176,7 +176,7 @@ function startingPosition(
         <CodeTransition
           codeConfig={codeConfig}
           prevFile={prevNorthFile}
-          nextFile={nextNorthFile}
+          nextFile={prevNorthFile}
           t={0}
           parentHeight={"0"}
         />
@@ -196,7 +196,7 @@ function startingPosition(
         <CodeTransition
           codeConfig={codeConfig}
           prevFile={prevSouthFile!}
-          nextFile={nextSouthFile!}
+          nextFile={prevSouthFile!}
           t={0}
           parentHeight={"0"}
         />
@@ -242,7 +242,7 @@ function endingPosition(
       children: (
         <CodeTransition
           codeConfig={codeConfig}
-          prevFile={prevNorthFile}
+          prevFile={nextNorthFile}
           nextFile={nextNorthFile}
           t={1}
           parentHeight={"1"}
@@ -262,7 +262,7 @@ function endingPosition(
       children: (
         <CodeTransition
           codeConfig={codeConfig}
-          prevFile={prevSouthFile!}
+          prevFile={nextSouthFile!}
           nextFile={nextSouthFile!}
           t={1}
           parentHeight={"1"}
@@ -782,6 +782,7 @@ function useSnapshots(
 
   useLayoutEffect(() => {
     if (!prevSnapshot) {
+      // debugger
       setState(s => ({
         ...s,
         prevSnapshot: {
@@ -790,6 +791,7 @@ function useSnapshots(
         },
       }))
     } else if (!nextSnapshot) {
+      // debugger
       setState(s => ({
         ...s,
         nextSnapshot: {
