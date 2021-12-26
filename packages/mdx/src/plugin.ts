@@ -5,6 +5,7 @@ import { transformSections } from "./plugin/section"
 import { transformSpotlights } from "./plugin/spotlight"
 import { transformScrollycodings } from "./plugin/scrollycoding"
 import visit from "unist-util-visit"
+import { transformSlideshows } from "./plugin/slideshow"
 
 export function remarkCodeHike({ theme }: { theme: any }) {
   return async (tree: Node) => {
@@ -27,6 +28,7 @@ export function remarkCodeHike({ theme }: { theme: any }) {
     try {
       await transformScrollycodings(tree, { theme })
       await transformSpotlights(tree, { theme })
+      await transformSlideshows(tree, { theme })
       await transformSections(tree, { theme })
       await transformEditorNodes(tree, { theme })
       await transformCodeNodes(tree, { theme })
