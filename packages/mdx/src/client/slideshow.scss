@@ -18,10 +18,10 @@
 .ch-slideshow-preview {
   flex: 1;
   height: auto;
+  min-width: 0;
 }
 
 .ch-slideshow-range {
-  margin-top: 1rem;
   display: flex;
   flex-flow: row;
   gap: 0.5rem;
@@ -31,11 +31,16 @@
   flex: 1;
 }
 
-.ch-slideshow-note {
-  height: 140px;
-  overflow: auto;
+.ch-slideshow-notes {
   border-radius: 0.25rem;
   margin-top: 1rem;
   padding: 1rem;
   border: 1px solid #e3e3e3;
+}
+
+.ch-slideshow-note {
+  min-height: 140px;
+  max-height: 140px;
+  padding: 0.05px;
+  overflow: auto;
 }

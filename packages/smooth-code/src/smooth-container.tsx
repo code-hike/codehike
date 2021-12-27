@@ -90,10 +90,7 @@ function Container({
         width,
         height,
         position: "relative",
-        overflowX: "auto",
-        // padding: "0 16px",
-        // boxSizing: "border-box",
-        // overflow: "auto",
+        // overflowX: "auto",
       }}
     >
       {children}
@@ -134,7 +131,7 @@ function Content({
           top: 0,
           left: 0,
           transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
-          transformOrigin: "top left",
+          transformOrigin: "16px top",
           width: "100%",
         }}
       >
@@ -214,7 +211,7 @@ function getContentProps({
     (extremes[1] - extremes[0] + 3) * lineHeight
   const zoom = Math.max(
     Math.min(
-      containerWidth / lineWidth,
+      (containerWidth - 16 * 2) / lineWidth,
       containerHeight / originalFocusHeight,
       maxZoom
     ),

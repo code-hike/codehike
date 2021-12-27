@@ -11,11 +11,13 @@ export function Slideshow({
   editorSteps,
   codeConfig,
   presetConfig,
+  code,
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
   codeConfig: EditorProps["codeConfig"]
   presetConfig?: PresetConfig
+  code?: EditorProps["codeConfig"]
 }) {
   const stepsChildren = React.Children.toArray(children)
 
@@ -47,7 +49,10 @@ export function Slideshow({
       <div className="ch-slideshow-slide">
         <InnerCode
           {...(tab as any)}
-          codeConfig={codeConfig}
+          codeConfig={{
+            ...codeConfig,
+            ...code,
+          }}
           onTabClick={onTabClick}
         />
         {presetConfig && (

@@ -173,7 +173,7 @@ function getLongestLine(
 function getWidthWithoutPadding(element: HTMLElement) {
   const computedStyle = getComputedStyle(element)
   return (
-    element.clientWidth -
+    parseFloat(computedStyle.width) -
     parseFloat(computedStyle.paddingLeft) -
     parseFloat(computedStyle.paddingRight)
   )
