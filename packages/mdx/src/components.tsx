@@ -6,6 +6,7 @@ import {
 import { Code } from "./client/code"
 import { Spotlight } from "./client/spotlight"
 import { Scrollycoding } from "./client/scrollycoding"
+import { Slideshow } from "./client/slideshow"
 import {
   annotationsMap,
   Annotation,
@@ -20,4 +21,5 @@ export const CH = {
   Scrollycoding,
   annotations: annotationsMap,
   Annotation,
+  Slideshow,
 }

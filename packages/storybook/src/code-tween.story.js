@@ -30,7 +30,7 @@ console.log(3)
   const nextCode = `
 console.log(1)
 console.log(3)
-const x = (y) => y++
+const x = (y) => y++ * foobarbaz
 `.trim()
 
   const prevAnnotations = [
@@ -58,7 +58,7 @@ const x = (y) => y++
         },
         next: {
           code: nextCode,
-          focus: "2",
+          focus: "2,3",
           annotations: nextAnnotations,
         },
       })
@@ -78,7 +78,12 @@ const x = (y) => y++
               progress={progress}
               tween={tween}
               style={{ height: "100%" }}
-              config={{ horizontalCenter: center, theme }}
+              config={{
+                horizontalCenter: center,
+                theme,
+                minZoom: 0.5,
+                maxZoom: 2,
+              }}
             />
           ) : (
             "Loading..."
