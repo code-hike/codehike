@@ -25,6 +25,7 @@ export function extractAnnotationsFromCode(code: Code) {
   while (lineNumber <= lines.length) {
     const line = lines[lineNumber - 1]
     const { key, focusString, data } = getCommentData(line)
+    // console.log({ key, focusString, data })
 
     const Component = annotationsMap[key!]
 
@@ -51,7 +52,7 @@ export function extractAnnotationsFromCode(code: Code) {
 
 function getCommentData(line: Code["lines"][0]) {
   const comment = line.tokens.find(t =>
-    t.content.startsWith("//")
+    t.content.trim().startsWith("//")
   )?.content
 
   if (!comment) {
