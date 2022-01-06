@@ -149,9 +149,11 @@ async function mapFile(
 ): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config
 
+  const lang = (node.lang as string) || "text"
+
   const code = await highlight({
     code: node.value as string,
-    lang: node.lang as string,
+    lang,
     theme,
   })
 
