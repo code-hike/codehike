@@ -50,6 +50,7 @@ export function extractAnnotationsFromCode(code: Code) {
   return [annotations, focusList.join(",")] as const
 }
 
+const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
 function getCommentData(line: Code["lines"][0]) {
   const comment = line.tokens.find(t =>
     t.content.trim().startsWith("//")
@@ -59,10 +60,13 @@ function getCommentData(line: Code["lines"][0]) {
     return {}
   }
 
-  const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
-  const [, key, focusString, data] = commentRegex.exec(
-    comment
-  )
+  const result = commentRegex.exec(comment)
+
+  if (!result) {
+    return {}
+  }
+
+  const [, key, focusString, data] = result
 
   return {
     key,
