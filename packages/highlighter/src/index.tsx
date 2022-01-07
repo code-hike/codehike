@@ -12,6 +12,8 @@ import { Code } from "@code-hike/utils"
 let highlighterPromise: Promise<Highlighter> | null = null
 let highlighter: Highlighter | null = null
 
+const newlineRe = /\r\n|\r|\n/
+
 export async function highlight({
   code,
   lang,
@@ -21,6 +23,15 @@ export async function highlight({
   lang: string
   theme: any // TODO type this
 }): Promise<Code> {
+  if (lang === "text") {
+    const lines = code ? code.split(newlineRe) : [""]
+    return {
+      lines: lines.map(line => ({
+        tokens: [{ content: line, props: {} }],
+      })),
+      lang,
+    }
+  }
   if (highlighterPromise === null) {
     setCDN("https://unpkg.com/shiki/")
     highlighterPromise = getHighlighter({
