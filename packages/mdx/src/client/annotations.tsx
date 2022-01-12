@@ -31,7 +31,10 @@ function Box({
           tc.scope?.includes("string")
         )?.settings?.foreground || "yellow"
   return (
-    <span style={{ outline: `2px solid ${border}` }}>
+    <span
+      className="ch-code-box-annotation"
+      style={{ outline: `2px solid ${border}` }}
+    >
       {children}
     </span>
   )
@@ -63,8 +66,18 @@ function Background({
         background: bg,
         // cursor: "pointer",
       }}
-      // onClick={_ => alert("clicked")}
+      className="ch-code-bg-annotation"
     >
+      <span
+        className="ch-code-bg-annotation-border"
+        style={{
+          background: "#00a2d3",
+          width: "3px",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+        }}
+      />
       {children}
     </div>
   )

@@ -168,19 +168,8 @@ function Wrapper({
   return (
     <pre
       {...htmlProps}
-      style={{
-        overflow: "auto",
-        margin: 0,
-
-        // hack https://code.iamkate.com/html-and-css/fixing-browsers-broken-monospace-font-handling/
-        // fontSize: "1em",
-        // fontFamily: "monospace,monospace",
-        // lineHeight: `${LINE_HEIGHT}em`,
-        ...style,
-        ...htmlProps?.style,
-      }}
-    >
-      {children}
-    </pre>
+      style={{ margin: 0, ...style, ...htmlProps?.style }}
+      children={children}
+    />
   )
 }

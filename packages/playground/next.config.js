@@ -2,8 +2,8 @@ const { remarkCodeHike } = require("@code-hike/mdx")
 const theme = require("shiki/themes/monokai.json")
 const withBundleAnalyzer = require("@next/bundle-analyzer")(
   {
-    // enabled: process.env.ANALYZE === "true",
-    enabled: true,
+    enabled: process.env.ANALYZE === "true",
+    // enabled: true,
   }
 )
 module.exports = withBundleAnalyzer({

@@ -105,7 +105,7 @@ console.log(4)
   const nextCode = `
 console.log(1)
 console.log(3)
-const x = (y) => y++ * foobarbaz
+const x = (y) => y++ * foobarbaz - 123456789
 `.trim()
 
   const prevAnnotations = [
@@ -139,9 +139,7 @@ const x = (y) => y++ * foobarbaz
   return (
     <WithProgress>
       {progress => (
-        <div
-          style={{ height: 300, outline: "1px solid red" }}
-        >
+        <div style={{ height: 300 }}>
           {tween ? (
             <CodeTween
               progress={progress}

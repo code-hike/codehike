@@ -20,12 +20,13 @@ type SmoothLinesProps = {
 export function SmoothLines(props: SmoothLinesProps) {
   return (
     <SmoothContainer {...props}>
-      {focusWidth => (
+      {(focusWidth, startX) => (
         <Lines
           codeStep={props.codeStep}
           focusWidth={focusWidth}
           lineHeight={props.dimensions!.lineHeight}
           progress={props.progress}
+          startX={startX}
         />
       )}
     </SmoothContainer>
@@ -37,11 +38,13 @@ function Lines({
   progress,
   focusWidth,
   lineHeight,
+  startX,
 }: {
   codeStep: CodeShift
   focusWidth: number
   lineHeight: number
   progress: number
+  startX: number
 }) {
   const groups =
     progress < 0.5
@@ -58,6 +61,7 @@ function Lines({
               t={progress}
               focusWidth={focusWidth}
               lineHeight={lineHeight}
+              startX={startX}
               key={i}
             />
           )
@@ -94,6 +98,7 @@ function Lines({
               focusWidth={focusWidth}
               lineHeight={lineHeight}
               startY={startY}
+              startX={startX}
             />
           </Component>
         )
@@ -109,12 +114,14 @@ function LineGroup({
   focusWidth,
   lineHeight,
   t,
+  startX,
   startY = 0,
 }: {
   lines: CodeLine[]
   focusWidth: number
   lineHeight: number
   t: number
+  startX: number
   startY?: number
 }) {
   return (
@@ -126,15 +133,33 @@ function LineGroup({
         const opacity = getOpacity(focused, t, dx)
 
         return (
-          <LineContainer
-            key={key}
-            dx={16 + dx * focusWidth} // 16 is the left padding, it should be configurable
-            dy={(dy - startY) * lineHeight}
-            width={focusWidth}
-            opacity={opacity}
-          >
-            <LineContent line={line} progress={t} dx={dx} />
-          </LineContainer>
+          <>
+            {/* <span
+              style={{
+                top: 0,
+                left: 0,
+                transform: `translate(${
+                  dx * focusWidth
+                }px, ${(dy - startY) * lineHeight}px)`,
+                position: "absolute",
+              }}
+            >
+              13
+            </span> */}
+            <LineContainer
+              key={key}
+              dx={startX + dx * focusWidth}
+              dy={(dy - startY) * lineHeight}
+              width={focusWidth}
+              opacity={opacity}
+            >
+              <LineContent
+                line={line}
+                progress={t}
+                dx={dx}
+              />
+            </LineContainer>
+          </>
         )
       })}
     </>
