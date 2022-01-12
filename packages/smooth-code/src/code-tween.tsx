@@ -180,7 +180,7 @@ function Wrapper({
         ...htmlProps?.style,
       }}
     >
-      <code>{children}</code>
+      {children}
     </pre>
   )
 }

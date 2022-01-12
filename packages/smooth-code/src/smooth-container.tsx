@@ -85,16 +85,17 @@ function Container({
   children: React.ReactNode
 }) {
   return (
-    <div
+    <code
       style={{
         width,
         height,
         position: "relative",
+        display: "block",
         // overflowX: "auto",
       }}
     >
       {children}
-    </div>
+    </code>
   )
 }
 

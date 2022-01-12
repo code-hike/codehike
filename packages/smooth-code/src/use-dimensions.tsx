@@ -64,7 +64,7 @@ function useDimensions(
       .split(newlineRe)
 
     const element = (
-      <>
+      <code style={{ display: "block" }}>
         <br />
         {lines.map((line, i) => (
           <div
@@ -81,7 +81,7 @@ function useDimensions(
           </div>
         ))}
         <br />
-      </>
+      </code>
     )
     return { prevLongestLine, nextLongestLine, element }
   }, [code])
