@@ -133,7 +133,7 @@ function LineGroup({
         const opacity = getOpacity(focused, t, dx)
 
         return (
-          <>
+          <React.Fragment key={key}>
             {/* <span
               style={{
                 top: 0,
@@ -147,7 +147,6 @@ function LineGroup({
               13
             </span> */}
             <LineContainer
-              key={key}
               dx={startX + dx * focusWidth}
               dy={(dy - startY) * lineHeight}
               width={focusWidth}
@@ -159,7 +158,7 @@ function LineGroup({
                 dx={dx}
               />
             </LineContainer>
-          </>
+          </React.Fragment>
         )
       })}
     </>
