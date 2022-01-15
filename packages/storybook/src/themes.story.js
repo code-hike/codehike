@@ -65,7 +65,7 @@ export const themes = () => {
   React.useEffect(() => {
     const files = [
       { name: "foo.js", lang: "js", code },
-      { name: "index.js", lang: "js", code },
+      { name: "index.js", lang: "js", code, focus: "2:4" },
       { name: "bar.js", lang: "js", code },
       {
         name: "app.js",
@@ -124,7 +124,7 @@ export const themes = () => {
           {...props}
           frameProps={{ height: 500 }}
           codeConfig={{
-            maxZoom: 1.2,
+            maxZoom: 1,
             minColumns: 10,
             theme,
           }}

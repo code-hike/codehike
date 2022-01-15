@@ -1,6 +1,34 @@
-import { EditorTheme } from "@code-hike/smooth-code/dist/themes"
+/**
+ * A single theme setting.
+ */
+interface IRawThemeSetting {
+  name?: string
+  scope?: string | string[]
+  settings: {
+    fontStyle?: string
+    foreground?: string
+    background?: string
+  }
+}
+/**
+ * A TextMate theme.
+ */
+export interface EditorTheme {
+  name?: string
+  type?: string
+  colors?: Record<string, string>
+
+  // not used:
+  tokenColors?: IRawThemeSetting[]
+  settings?: IRawThemeSetting[]
+  semanticTokenColors?: any
+  semanticHighlighting?: boolean
+}
 
 export enum ColorName {
+  CodeForeground,
+  CodeBackground,
+  EditorForeground,
   EditorBackground,
   ActiveTabBackground,
   ActiveTabForeground,
@@ -10,6 +38,7 @@ export enum ColorName {
   EditorGroupHeaderBackground,
   TabBorder,
   ActiveTabBottomBorder,
+  LineNumberForeground,
 }
 
 type Color = string | undefined
@@ -17,13 +46,24 @@ type Color = string | undefined
 const contrastBorder = "#6FC3DF"
 
 // defaults from: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/common/theme.ts
+// and: https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/view/editorColorRegistry.ts
 // keys from : https://code.visualstudio.com/api/references/theme-color#editor-groups-tabs
 export function getColor(
   theme: EditorTheme,
   colorName: ColorName
 ): Color {
-  const colors = (theme as any).colors || {}
+  const colors = theme.colors || {}
   switch (colorName) {
+    case ColorName.CodeForeground:
+      return (
+        getGlobalSettings(theme)?.foreground ||
+        getColor(theme, ColorName.EditorForeground)
+      )
+    case ColorName.CodeBackground:
+      return (
+        getGlobalSettings(theme)?.background ||
+        getColor(theme, ColorName.EditorBackground)
+      )
     case ColorName.EditorBackground:
       return (
         colors["editor.background"] ||
@@ -31,6 +71,15 @@ export function getColor(
           light: "#fffffe",
           dark: "#1E1E1E",
           hc: "#000000",
+        })
+      )
+    case ColorName.EditorForeground:
+      return (
+        colors["editor.foreground"] ||
+        getDefault(theme, {
+          light: "#333333",
+          dark: "#BBBBBB",
+          hc: "#fffffe",
         })
       )
     case ColorName.ActiveTabBackground:
@@ -103,6 +152,15 @@ export function getColor(
           hc: undefined,
         })
       )
+    case ColorName.LineNumberForeground:
+      return (
+        colors["editorLineNumber.foreground"] ||
+        getDefault(theme, {
+          dark: "#858585",
+          light: "#237893",
+          hc: "#fffffe",
+        })
+      )
 
     default:
       return "#f00"
@@ -122,10 +180,36 @@ function getDefault(
   theme: EditorTheme,
   defaults: { dark: Color; light: Color; hc: Color }
 ): Color {
-  const themeType = (theme.type
+  return defaults[getThemeType(theme)]
+}
+
+function getThemeType(
+  theme: EditorTheme
+): "dark" | "light" | "hc" {
+  return (theme.type
     ? theme.type
     : theme.name?.toLowerCase().includes("light")
     ? "light"
     : "dark") as "dark" | "light" | "hc"
-  return defaults[themeType]
+}
+
+export function getCodeColors(
+  theme: EditorTheme
+): { fg: string; bg: string } {
+  return {
+    fg: getColor(theme, ColorName.CodeForeground)!,
+    bg: getColor(theme, ColorName.CodeBackground)!,
+  }
+}
+
+function getGlobalSettings(theme: EditorTheme) {
+  let settings = theme.settings
+    ? theme.settings
+    : theme.tokenColors
+  const globalSetting = settings
+    ? settings.find(s => {
+        return !s.name && !s.scope
+      })
+    : undefined
+  return globalSetting?.settings
 }

@@ -18,8 +18,8 @@ import {
   splitParts,
   ColumnExtremes,
   parseExtremes,
+  EditorTheme,
 } from "@code-hike/utils"
-import { EditorTheme } from "./themes"
 import React from "react"
 
 export function parseAnnotations(

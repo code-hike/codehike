@@ -4,8 +4,8 @@ import {
   map,
   FullTween,
   withDefault,
+  EditorTheme,
 } from "@code-hike/utils"
-import { EditorTheme } from "./themes"
 import { mergeLines } from "./differ"
 import { splitByFocus } from "./splitter"
 import React from "react"

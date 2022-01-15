@@ -1,8 +1,11 @@
 import React from "react"
 import { FrameButtons } from "@code-hike/mini-frame"
 import { useClasser, Classes } from "@code-hike/classer"
-import { EditorTheme } from "@code-hike/smooth-code/dist/themes"
-import { getColor, ColorName } from "./theme-colors"
+import {
+  EditorTheme,
+  getColor,
+  ColorName,
+} from "@code-hike/utils"
 
 export {
   EditorFrameProps,
