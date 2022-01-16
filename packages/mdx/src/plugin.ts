@@ -6,8 +6,15 @@ import { transformSpotlights } from "./plugin/spotlight"
 import { transformScrollycodings } from "./plugin/scrollycoding"
 import visit from "unist-util-visit"
 import { transformSlideshows } from "./plugin/slideshow"
+import { valueToEstree } from "./plugin/to-estree"
+import { CH_CODE_CONFIG_VAR_NAME } from "./plugin/unist-utils"
 
-export function remarkCodeHike({ theme }: { theme: any }) {
+type CodeHikeConfig = {
+  theme: any
+  lineNumbers?: boolean
+}
+
+export function remarkCodeHike(config: CodeHikeConfig) {
   return async (tree: Node) => {
     // TODO add opt-in config
     let hasCodeHikeImport = false
@@ -21,22 +28,58 @@ export function remarkCodeHike({ theme }: { theme: any }) {
       }
     })
 
+    addConfig(tree as Parent, config)
+
     if (!hasCodeHikeImport) {
       addImportNode(tree as Parent)
     }
 
     try {
-      await transformScrollycodings(tree, { theme })
-      await transformSpotlights(tree, { theme })
-      await transformSlideshows(tree, { theme })
-      await transformSections(tree, { theme })
-      await transformEditorNodes(tree, { theme })
-      await transformCodeNodes(tree, { theme })
+      await transformScrollycodings(tree, config)
+      await transformSpotlights(tree, config)
+      await transformSlideshows(tree, config)
+      await transformSections(tree, config)
+      await transformEditorNodes(tree, config)
+      await transformCodeNodes(tree, config)
     } catch (e) {
       console.error("error running remarkCodeHike", e)
       throw e
     }
   }
+}
+
+function addConfig(tree: Parent, config: CodeHikeConfig) {
+  tree.children.unshift({
+    type: "mdxjsEsm",
+    value: "export const chCodeConfig = {}",
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ExportNamedDeclaration",
+            declaration: {
+              type: "VariableDeclaration",
+              declarations: [
+                {
+                  type: "VariableDeclarator",
+                  id: {
+                    type: "Identifier",
+                    name: CH_CODE_CONFIG_VAR_NAME,
+                  },
+                  init: valueToEstree(config),
+                },
+              ],
+              kind: "const",
+            },
+            specifiers: [],
+            source: null,
+          },
+        ],
+        sourceType: "module",
+      },
+    },
+  })
 }
 
 function addImportNode(tree: Parent) {

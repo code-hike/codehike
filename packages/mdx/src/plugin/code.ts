@@ -6,6 +6,7 @@ import {
   toJSX,
   NodeInfo,
   splitChildren,
+  CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
 import { CodeStep } from "@code-hike/smooth-code"
 import { EditorProps } from "@code-hike/mini-editor"
@@ -83,9 +84,7 @@ async function mapCode(
       heightRatio: 1,
     },
     files: [file],
-    codeConfig: {
-      theme: config.theme,
-    },
+    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }
@@ -136,9 +135,7 @@ export async function mapEditor(
         }
       : undefined,
     files: allFiles as any,
-    codeConfig: {
-      theme: config.theme,
-    },
+    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }
