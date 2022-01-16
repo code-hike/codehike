@@ -159,21 +159,16 @@ function LineGroup({
           <React.Fragment key={key}>
             {lineNumberWidth ? (
               <span
+                className="ch-code-line-number"
                 style={{
+                  position: "absolute",
                   top: 0,
                   left: 0,
                   transform: `translate(${
                     dx * focusWidth
                   }px, ${(dy - startY) * lineHeight}px)`,
-                  position: "absolute",
-                  userSelect: "none",
                   width: lineNumberWidth,
-                  textAlign: "right",
-                  display: "inline-block",
-                  boxSizing: "border-box",
-                  paddingRight: "1ch",
                   opacity,
-                  fontVariantNumeric: "tabular-nums",
                   color: getColor(
                     theme,
                     ColorName.LineNumberForeground

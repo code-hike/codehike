@@ -65,8 +65,6 @@ const x = (y) => y++ * foobarbaz
     )
   }, [])
 
-  console.log({ tween })
-
   return (
     <WithProgress>
       {progress => (

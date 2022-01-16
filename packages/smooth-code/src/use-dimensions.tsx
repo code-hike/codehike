@@ -79,14 +79,11 @@ function useDimensions(
             }
             key={i}
           >
-            <span
-              style={{
-                display: "inline-block",
-                width: lineNumbers ? "auto" : 0,
-              }}
-            >
-              {lineCount}0
-            </span>
+            {lineNumbers ? (
+              <span className="ch-code-line-number">
+                _{lineCount}
+              </span>
+            ) : undefined}
             <div style={{ display: "inline-block" }}>
               <span>{line}</span>
             </div>
@@ -119,7 +116,9 @@ function useDimensions(
       const lineNumberSpan = pll?.querySelector(
         ":scope > span"
       ) as HTMLElement
-      const lnw = getWidthWithoutPadding(lineNumberSpan)
+      const lnw = lineNumberSpan
+        ? getWidthWithPadding(lineNumberSpan)
+        : 0
 
       const plw = getWidthWithoutPadding(lineContentDiv)
       const colWidth = plw / prevLongestLine.length || 1
@@ -194,6 +193,10 @@ function getWidthWithoutPadding(element: HTMLElement) {
     parseFloat(computedStyle.paddingLeft) -
     parseFloat(computedStyle.paddingRight)
   )
+}
+function getWidthWithPadding(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element)
+  return parseFloat(computedStyle.width)
 }
 function getHeightWithoutPadding(
   element: HTMLElement | null
