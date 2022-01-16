@@ -13,6 +13,7 @@ type Dimensions = {
   lineWidth: [number, number]
   lineHeight: number
   colWidth: number
+  lineNumberWidth: number
 } | null
 
 const useLayoutEffect =
@@ -36,6 +37,7 @@ function useDimensions(
   code: Tween<string>,
   focus: Tween<FocusString>,
   minColumns: number,
+  lineNumbers: boolean,
   deps: React.DependencyList
 ): { element: React.ReactNode; dimensions: Dimensions } {
   const [
@@ -63,8 +65,10 @@ function useDimensions(
       .trim()
       .split(newlineRe)
 
+    const lineCount = lines.length
+
     const element = (
-      <>
+      <code className="ch-code-scroll-parent">
         <br />
         {lines.map((line, i) => (
           <div
@@ -75,13 +79,18 @@ function useDimensions(
             }
             key={i}
           >
+            {lineNumbers ? (
+              <span className="ch-code-line-number">
+                _{lineCount}
+              </span>
+            ) : undefined}
             <div style={{ display: "inline-block" }}>
               <span>{line}</span>
             </div>
           </div>
         ))}
         <br />
-      </>
+      </code>
     )
     return { prevLongestLine, nextLongestLine, element }
   }, [code])
@@ -100,16 +109,22 @@ function useDimensions(
       const codeElement = pll?.parentElement!
 
       // TODO is it clientWidth or clientRect?
+      const lineContentDiv = pll?.querySelector(
+        ":scope > div"
+      ) as HTMLElement
 
-      const plw = getWidthWithoutPadding(
-        pll?.firstElementChild as HTMLElement
-      )
+      const lineNumberSpan = pll?.querySelector(
+        ":scope > span"
+      ) as HTMLElement
+      const lnw = lineNumberSpan
+        ? getWidthWithPadding(lineNumberSpan)
+        : 0
+
+      const plw = getWidthWithoutPadding(lineContentDiv)
       const colWidth = plw / prevLongestLine.length || 1
       const nlw = nextLongestLine.length * colWidth
       const lineHeight =
-        getHeightWithoutPadding(
-          pll?.firstElementChild as HTMLElement
-        ) ?? 20
+        getHeightWithoutPadding(lineContentDiv) ?? 20
 
       const d: Dimensions = {
         containerWidth: getWidthWithoutPadding(
@@ -134,6 +149,7 @@ function useDimensions(
         ],
         lineHeight,
         colWidth,
+        lineNumberWidth: lnw,
         deps: allDeps,
       }
       setDimensions(d)
@@ -177,6 +193,10 @@ function getWidthWithoutPadding(element: HTMLElement) {
     parseFloat(computedStyle.paddingLeft) -
     parseFloat(computedStyle.paddingRight)
   )
+}
+function getWidthWithPadding(element: HTMLElement) {
+  const computedStyle = getComputedStyle(element)
+  return parseFloat(computedStyle.width)
 }
 function getHeightWithoutPadding(
   element: HTMLElement | null

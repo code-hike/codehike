@@ -1,4 +1,8 @@
-import { visitAsync, toJSX } from "./unist-utils"
+import {
+  visitAsync,
+  toJSX,
+  CH_CODE_CONFIG_PLACEHOLDER,
+} from "./unist-utils"
 import { Node, Parent } from "unist"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./preview"
@@ -34,7 +38,7 @@ async function transformSpotlight(
 
   toJSX(node, {
     props: {
-      codeConfig: { theme },
+      codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
       editorSteps: editorSteps,
       presetConfig,
     },

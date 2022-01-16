@@ -1,5 +1,4 @@
 import React from "react"
-import { MiniEditor as Editor } from "@code-hike/mini-editor"
 import { Page } from "./utils"
 import "@code-hike/mini-editor/dist/index.css"
 import darkplus from "shiki/themes/dark-plus.json"
@@ -20,6 +19,8 @@ import slackdark from "shiki/themes/slack-dark.json"
 import slackochin from "shiki/themes/slack-ochin.json"
 import solarizeddark from "shiki/themes/solarized-dark.json"
 import solarizedlight from "shiki/themes/solarized-light.json"
+import { EditorSpring } from "@code-hike/mini-editor"
+import { highlight } from "@code-hike/highlighter"
 
 const allThemes = {
   darkplus,
@@ -53,28 +54,52 @@ console.log(4)
 console.log(5)`
 
 export const themes = () => {
-  const props = {
-    files: [
-      { name: "foo.js", lang: "js", code },
-      { name: "index.js", lang: "js", code },
-      { name: "bar.js", lang: "js", code },
-      { name: "app.js", lang: "js", code },
-    ],
-    northPanel: {
-      active: "app.js",
-      tabs: ["foo.js", "app.js"],
-      heightRatio: 0.5,
-    },
-    southPanel: {
-      active: "index.js",
-      tabs: ["bar.js", "index.js"],
-      heightRatio: 0.5,
-    },
-  }
-
   const [themeName, setTheme] = React.useState(
     "materialdarker"
   )
+
+  const theme = allThemes[themeName]
+
+  const [props, setProps] = React.useState(null)
+
+  React.useEffect(() => {
+    const files = [
+      { name: "foo.js", lang: "js", code },
+      { name: "index.js", lang: "js", code, focus: "2:4" },
+      { name: "bar.js", lang: "js", code },
+      {
+        name: "app.js",
+        lang: "js",
+        code,
+        annotations: [{ focus: "2:3" }],
+      },
+    ]
+
+    Promise.all(
+      files.map(file =>
+        highlight({
+          code: file.code,
+          lang: file.lang,
+          theme,
+        })
+      )
+    ).then((codes, i) => {
+      setProps({
+        files: files.map((file, i) => ({
+          ...file,
+          code: codes[i],
+        })),
+        northPanel: {
+          active: "app.js",
+          tabs: ["foo.js", "app.js"],
+        },
+        southPanel: {
+          active: "index.js",
+          tabs: ["bar.js", "index.js"],
+        },
+      })
+    })
+  }, [theme])
 
   return (
     <Page>
@@ -82,7 +107,10 @@ export const themes = () => {
         Theme:{" "}
         <select
           value={themeName}
-          onChange={e => setTheme(e.currentTarget.value)}
+          onChange={e => {
+            setTheme(e.currentTarget.value)
+            setProps(null)
+          }}
         >
           {Object.keys(allThemes).map(themeName => (
             <option key={themeName} value={themeName}>
@@ -91,18 +119,19 @@ export const themes = () => {
           ))}
         </select>
       </label>
-      <Editor
-        {...props}
-        codeProps={{
-          maxZoom: 1.2,
-          minColumns: 10,
-          theme: allThemes[themeName],
-        }}
-        frameProps={{ height: 500 }}
-      />
-      {/* <pre>
-        {JSON.stringify(allThemes[themeName], null, 2)}
-      </pre> */}
+      {props ? (
+        <EditorSpring
+          {...props}
+          frameProps={{ height: 500 }}
+          codeConfig={{
+            maxZoom: 1,
+            minColumns: 10,
+            theme,
+          }}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
     </Page>
   )
 }

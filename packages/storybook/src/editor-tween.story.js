@@ -218,8 +218,6 @@ function TestTransition({
     return "Loading..."
   }
 
-  console.log(files)
-
   const [
     prevNorthTabs,
     nextNorthTabs,

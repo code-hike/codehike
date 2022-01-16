@@ -6,7 +6,13 @@ import {
 } from "./partial-step-parser"
 import { SmoothContainer } from "./smooth-container"
 import { tween } from "./tween"
-import { FullTween, map, Tween } from "@code-hike/utils"
+import {
+  FullTween,
+  Tween,
+  getColor,
+  ColorName,
+  EditorTheme,
+} from "@code-hike/utils"
 
 type SmoothLinesProps = {
   progress: number
@@ -15,17 +21,23 @@ type SmoothLinesProps = {
   maxZoom?: number
   center?: boolean
   codeStep: CodeShift
+  theme: EditorTheme
 }
 
 export function SmoothLines(props: SmoothLinesProps) {
   return (
     <SmoothContainer {...props}>
-      {focusWidth => (
+      {(focusWidth, startX) => (
         <Lines
           codeStep={props.codeStep}
           focusWidth={focusWidth}
           lineHeight={props.dimensions!.lineHeight}
           progress={props.progress}
+          theme={props.theme}
+          startX={startX}
+          lineNumberWidth={
+            props.dimensions!.lineNumberWidth
+          }
         />
       )}
     </SmoothContainer>
@@ -37,11 +49,17 @@ function Lines({
   progress,
   focusWidth,
   lineHeight,
+  startX,
+  theme,
+  lineNumberWidth,
 }: {
   codeStep: CodeShift
   focusWidth: number
   lineHeight: number
   progress: number
+  startX: number
+  lineNumberWidth: number
+  theme: EditorTheme
 }) {
   const groups =
     progress < 0.5
@@ -58,7 +76,10 @@ function Lines({
               t={progress}
               focusWidth={focusWidth}
               lineHeight={lineHeight}
+              startX={startX}
               key={i}
+              theme={theme}
+              lineNumberWidth={lineNumberWidth}
             />
           )
         }
@@ -94,6 +115,9 @@ function Lines({
               focusWidth={focusWidth}
               lineHeight={lineHeight}
               startY={startY}
+              startX={startX}
+              theme={theme}
+              lineNumberWidth={lineNumberWidth}
             />
           </Component>
         )
@@ -109,13 +133,19 @@ function LineGroup({
   focusWidth,
   lineHeight,
   t,
+  startX,
   startY = 0,
+  theme,
+  lineNumberWidth,
 }: {
   lines: CodeLine[]
   focusWidth: number
   lineHeight: number
   t: number
+  startX: number
   startY?: number
+  theme: EditorTheme
+  lineNumberWidth: number
 }) {
   return (
     <>
@@ -126,15 +156,43 @@ function LineGroup({
         const opacity = getOpacity(focused, t, dx)
 
         return (
-          <LineContainer
-            key={key}
-            dx={16 + dx * focusWidth} // 16 is the left padding, it should be configurable
-            dy={(dy - startY) * lineHeight}
-            width={focusWidth}
-            opacity={opacity}
-          >
-            <LineContent line={line} progress={t} dx={dx} />
-          </LineContainer>
+          <React.Fragment key={key}>
+            {lineNumberWidth ? (
+              <span
+                className="ch-code-line-number"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  transform: `translate(${
+                    dx * focusWidth
+                  }px, ${(dy - startY) * lineHeight}px)`,
+                  width: lineNumberWidth,
+                  opacity,
+                  color: getColor(
+                    theme,
+                    ColorName.LineNumberForeground
+                  ),
+                }}
+              >
+                {t < 0.5
+                  ? line.lineNumber.prev
+                  : line.lineNumber.next}
+              </span>
+            ) : undefined}
+            <LineContainer
+              dx={startX + dx * focusWidth}
+              dy={(dy - startY) * lineHeight}
+              width={focusWidth}
+              opacity={opacity}
+            >
+              <LineContent
+                line={line}
+                progress={t}
+                dx={dx}
+              />
+            </LineContainer>
+          </React.Fragment>
         )
       })}
     </>

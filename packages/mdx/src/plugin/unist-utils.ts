@@ -46,6 +46,9 @@ export async function visitAsync(
   await Promise.all(promises)
 }
 
+export const CH_CODE_CONFIG_PLACEHOLDER = "CH_CodeConfig" as any
+export const CH_CODE_CONFIG_VAR_NAME = "chCodeConfig"
+
 export function toJSX(
   node: Node,
   {
@@ -73,25 +76,51 @@ export function toJSX(
     if (props[key] === undefined) {
       return
     }
-    ;(node as any).attributes.push({
-      type: "mdxJsxAttribute",
-      name: key,
-      value: {
-        type: "mdxJsxAttributeValueExpression",
-        value: JSON.stringify(props[key]),
-        data: {
-          estree: {
-            type: "Program",
-            body: [
-              {
-                type: "ExpressionStatement",
-                expression: valueToEstree(props[key]),
-              },
-            ],
-            sourceType: "module",
+    if (props[key] === CH_CODE_CONFIG_PLACEHOLDER) {
+      ;(node as any).attributes.push({
+        type: "mdxJsxAttribute",
+        name: key,
+        value: {
+          type: "mdxJsxAttributeValueExpression",
+          value: CH_CODE_CONFIG_VAR_NAME,
+          data: {
+            estree: {
+              type: "Program",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: {
+                    type: "Identifier",
+                    name: CH_CODE_CONFIG_VAR_NAME,
+                  },
+                },
+              ],
+              sourceType: "module",
+            },
           },
         },
-      },
-    })
+      })
+    } else {
+      ;(node as any).attributes.push({
+        type: "mdxJsxAttribute",
+        name: key,
+        value: {
+          type: "mdxJsxAttributeValueExpression",
+          value: JSON.stringify(props[key]),
+          data: {
+            estree: {
+              type: "Program",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: valueToEstree(props[key]),
+                },
+              ],
+              sourceType: "module",
+            },
+          },
+        },
+      })
+    }
   })
 }

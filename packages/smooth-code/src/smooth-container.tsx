@@ -18,7 +18,10 @@ export function SmoothContainer({
   maxZoom?: number
   center?: boolean
   codeStep: CodeShift
-  children: (focusWidth: number) => React.ReactNode
+  children: (
+    focusWidth: number,
+    startX: number
+  ) => React.ReactNode
   progress: number
 }) {
   const { prev, next } = getTweenContentProps({
@@ -49,10 +52,17 @@ export function SmoothContainer({
     progress
   )
 
+  const lineNumberPad =
+    (dimensions?.lineNumberWidth || 0) * zoom
+
+  const leftPad = lineNumberPad || 16
+
   const width = Math.max(
-    focusWidth + 16, // 16 is the left padding
+    focusWidth + leftPad,
     dimensions!.containerWidth
   )
+
+  const startX = leftPad / zoom
 
   return (
     <Container
@@ -69,7 +79,7 @@ export function SmoothContainer({
         )}
         width={width}
       >
-        {children(focusWidth)}
+        {children(focusWidth, startX)}
       </Content>
     </Container>
   )
@@ -85,16 +95,16 @@ function Container({
   children: React.ReactNode
 }) {
   return (
-    <div
+    <code
       style={{
         width,
         height,
         position: "relative",
-        // overflowX: "auto",
+        overflow: "auto",
       }}
-    >
-      {children}
-    </div>
+      className="ch-code-scroll-parent"
+      children={children}
+    />
   )
 }
 
@@ -124,6 +134,7 @@ function Content({
         height: height,
         overflow: "hidden",
       }}
+      className="ch-code-scroll-content"
     >
       <div
         style={{
@@ -131,12 +142,13 @@ function Content({
           top: 0,
           left: 0,
           transform: `translateX(${dx}px) translateY(${dy}px) scale(${scale})`,
-          transformOrigin: "16px top",
-          width: "100%",
+          transformOrigin: "left top",
+          width: width / scale,
+          height: (height - 2 * dy) / scale,
+          // outline: "1px solid yellow",
         }}
-      >
-        {children}
-      </div>
+        children={children}
+      />
     </div>
   )
 }
@@ -209,9 +221,14 @@ function getContentProps({
   } = dimensions!
   const originalFocusHeight =
     (extremes[1] - extremes[0] + 3) * lineHeight
+
+  const leftPadding = dimensions?.lineNumberWidth || 16
+  const rightPadding = 16
+
   const zoom = Math.max(
     Math.min(
-      (containerWidth - 16 * 2) / lineWidth,
+      (containerWidth - leftPadding - rightPadding) /
+        lineWidth,
       containerHeight / originalFocusHeight,
       maxZoom
     ),

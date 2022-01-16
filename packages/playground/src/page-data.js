@@ -51,12 +51,18 @@ export async function toProps({ demo, theme }) {
     ).then(module => module.default)
 
     postCodeHike = await bundle(mdxSource, files, [
-      [remarkCodeHike, { theme: loadedTheme }],
+      [
+        remarkCodeHike,
+        { theme: loadedTheme, lineNumbers: true },
+      ],
       remarkShowTree,
     ])
 
     result = await bundle(mdxSource, files, [
-      [remarkCodeHike, { theme: loadedTheme }],
+      [
+        remarkCodeHike,
+        { theme: loadedTheme, lineNumbers: true },
+      ],
     ])
   } catch (e) {
     console.error("remark-code-hike error", e)

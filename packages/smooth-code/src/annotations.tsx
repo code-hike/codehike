@@ -18,8 +18,8 @@ import {
   splitParts,
   ColumnExtremes,
   parseExtremes,
+  EditorTheme,
 } from "@code-hike/utils"
-import { EditorTheme } from "./themes"
 import React from "react"
 
 export function parseAnnotations(
@@ -152,7 +152,18 @@ function defaultMultilineComponent(
         cursor: "pointer",
       }}
       onClick={_ => alert("clicked")}
+      className="ch-code-bg-annotation"
     >
+      <span
+        className="ch-code-bg-annotation-border"
+        style={{
+          background: "#00a2d3",
+          width: "3px",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+        }}
+      />
       {children}
     </div>
   )

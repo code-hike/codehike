@@ -1,12 +1,12 @@
 import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
 import { IRawTheme } from "vscode-textmate"
-import { DEFAULT_THEME } from "./themes"
 import {
   FullTween,
   Code,
   map,
   FocusString,
+  getCodeColors,
 } from "@code-hike/utils"
 import {
   useStepParser,
@@ -14,7 +14,6 @@ import {
   CodeShift,
 } from "./partial-step-parser"
 import { SmoothLines } from "./smooth-lines"
-import { getThemeDefaultColors } from "./themes"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLPreElement>,
@@ -40,6 +39,7 @@ export type CodeConfig = {
   maxZoom?: number
   horizontalCenter?: boolean
   theme: IRawTheme
+  lineNumbers?: boolean
 }
 
 function useCodeShift({
@@ -74,6 +74,7 @@ export function CodeTween({
     stepInfo.code,
     map(tween, tween => tween.focus),
     config.minColumns || DEFAULT_MIN_COLUMNS,
+    config.lineNumbers || false,
     [config.parentHeight]
   )
   // return (
@@ -122,8 +123,7 @@ function AfterDimensions({
     minZoom = 1,
     maxZoom = 1,
     horizontalCenter = false,
-
-    theme = (DEFAULT_THEME as unknown) as IRawTheme,
+    theme,
   },
   dimensions,
   stepInfo,
@@ -136,8 +136,7 @@ function AfterDimensions({
   progress: number
   htmlProps: HTMLProps
 }) {
-  const { bg, fg } = getThemeDefaultColors(theme)
-
+  const { bg, fg } = getCodeColors(theme)
   return (
     <Wrapper
       htmlProps={htmlProps}
@@ -151,6 +150,7 @@ function AfterDimensions({
         minZoom={minZoom}
         maxZoom={maxZoom}
         center={horizontalCenter}
+        theme={theme}
       />
     </Wrapper>
   )
@@ -168,19 +168,8 @@ function Wrapper({
   return (
     <pre
       {...htmlProps}
-      style={{
-        overflow: "auto",
-        margin: 0,
-
-        // hack https://code.iamkate.com/html-and-css/fixing-browsers-broken-monospace-font-handling/
-        // fontSize: "1em",
-        // fontFamily: "monospace,monospace",
-        // lineHeight: `${LINE_HEIGHT}em`,
-        ...style,
-        ...htmlProps?.style,
-      }}
-    >
-      <code>{children}</code>
-    </pre>
+      style={{ margin: 0, ...style, ...htmlProps?.style }}
+      children={children}
+    />
   )
 }
