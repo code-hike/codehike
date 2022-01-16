@@ -52,7 +52,9 @@ export function SmoothContainer({
     progress
   )
 
-  const leftPad = 16
+  const lineNumberPad =
+    (dimensions?.lineNumberWidth || 0) * zoom
+  const leftPad = 16 + lineNumberPad
 
   const width = Math.max(
     focusWidth + leftPad,
@@ -221,6 +223,7 @@ function getContentProps({
     (extremes[1] - extremes[0] + 3) * lineHeight
   const zoom = Math.max(
     Math.min(
+      // TODO consider line number width
       (containerWidth - 16 * 2) / lineWidth,
       containerHeight / originalFocusHeight,
       maxZoom

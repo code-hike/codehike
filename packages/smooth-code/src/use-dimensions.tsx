@@ -13,6 +13,7 @@ type Dimensions = {
   lineWidth: [number, number]
   lineHeight: number
   colWidth: number
+  lineNumberWidth: number
 } | null
 
 const useLayoutEffect =
@@ -36,6 +37,7 @@ function useDimensions(
   code: Tween<string>,
   focus: Tween<FocusString>,
   minColumns: number,
+  lineNumbers: boolean,
   deps: React.DependencyList
 ): { element: React.ReactNode; dimensions: Dimensions } {
   const [
@@ -63,6 +65,8 @@ function useDimensions(
       .trim()
       .split(newlineRe)
 
+    const lineCount = lines.length
+
     const element = (
       <code style={{ display: "block" }}>
         <br />
@@ -75,6 +79,14 @@ function useDimensions(
             }
             key={i}
           >
+            <span
+              style={{
+                display: "inline-block",
+                width: lineNumbers ? "auto" : 0,
+              }}
+            >
+              {lineCount}0
+            </span>
             <div style={{ display: "inline-block" }}>
               <span>{line}</span>
             </div>
@@ -100,16 +112,20 @@ function useDimensions(
       const codeElement = pll?.parentElement!
 
       // TODO is it clientWidth or clientRect?
+      const lineContentDiv = pll?.querySelector(
+        ":scope > div"
+      ) as HTMLElement
 
-      const plw = getWidthWithoutPadding(
-        pll?.firstElementChild as HTMLElement
-      )
+      const lineNumberSpan = pll?.querySelector(
+        ":scope > span"
+      ) as HTMLElement
+      const lnw = getWidthWithoutPadding(lineNumberSpan)
+
+      const plw = getWidthWithoutPadding(lineContentDiv)
       const colWidth = plw / prevLongestLine.length || 1
       const nlw = nextLongestLine.length * colWidth
       const lineHeight =
-        getHeightWithoutPadding(
-          pll?.firstElementChild as HTMLElement
-        ) ?? 20
+        getHeightWithoutPadding(lineContentDiv) ?? 20
 
       const d: Dimensions = {
         containerWidth: getWidthWithoutPadding(
@@ -134,6 +150,7 @@ function useDimensions(
         ],
         lineHeight,
         colWidth,
+        lineNumberWidth: lnw,
         deps: allDeps,
       }
       setDimensions(d)
