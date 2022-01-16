@@ -68,7 +68,7 @@ function useDimensions(
     const lineCount = lines.length
 
     const element = (
-      <code style={{ display: "block" }}>
+      <code className="ch-code-scroll-parent">
         <br />
         {lines.map((line, i) => (
           <div

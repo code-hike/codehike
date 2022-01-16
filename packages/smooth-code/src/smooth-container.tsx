@@ -100,7 +100,6 @@ function Container({
         width,
         height,
         position: "relative",
-        display: "block",
         overflow: "auto",
       }}
       className="ch-code-scroll-parent"
