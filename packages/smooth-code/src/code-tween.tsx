@@ -168,7 +168,7 @@ function Wrapper({
   return (
     <pre
       {...htmlProps}
-      style={{ margin: 0, ...style, ...htmlProps?.style }}
+      style={{ margin: 0, padding: 0, ...style, ...htmlProps?.style }}
       children={children}
     />
   )
