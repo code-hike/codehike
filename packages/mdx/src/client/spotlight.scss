@@ -41,8 +41,8 @@
   max-height: 80vh;
 }
 
-.ch-spotlight-sticker .ch-editor-frame,
-.ch-spotlight-sticker .ch-code {
+.ch-spotlight-sticker .ch-codegroup,
+.ch-spotlight-sticker .ch-codeblock {
   width: 100%;
   min-width: 100%;
   min-height: Min(100%, 80vh);
@@ -56,8 +56,8 @@
     gap: 0.5rem;
   }
 
-  .ch-spotlight-sticker .ch-editor-frame,
-  .ch-spotlight-sticker .ch-code {
+  .ch-spotlight-sticker .ch-codegroup,
+  .ch-spotlight-sticker .ch-codeblock {
     min-height: 0;
     flex: 1;
   }

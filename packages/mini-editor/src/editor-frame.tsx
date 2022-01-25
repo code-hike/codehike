@@ -63,7 +63,7 @@ export const EditorFrame = React.forwardRef<
     <div
       ref={ref}
       {...rest}
-      className="ch-frame ch-editor-frame"
+      className="ch-editor-frame"
       style={{
         background: getColor(
           theme,
