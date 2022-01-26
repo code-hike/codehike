@@ -16,12 +16,14 @@ export function Preview({
   show,
   children,
   codeConfig,
+  style,
   ...rest
 }: {
   className: string
   files: EditorStep["files"]
   presetConfig?: PresetConfig
   show?: string
+  style?: React.CSSProperties
   children?: React.ReactNode
   codeConfig: { theme: EditorTheme }
 }) {
@@ -30,6 +32,7 @@ export function Preview({
       className={
         "ch-preview" + (className ? " " + className : "")
       }
+      style={style}
     >
       <MiniBrowser
         loadUrl={show}
