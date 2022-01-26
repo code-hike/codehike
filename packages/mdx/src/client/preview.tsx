@@ -30,21 +30,22 @@ export function Preview({
       className={
         "ch-preview" + (className ? " " + className : "")
       }
-      {...rest}
     >
-      {!presetConfig ? (
-        <MiniBrowser
-          loadUrl={show}
-          children={children}
-          theme={codeConfig.theme}
-        />
-      ) : (
-        <SandpackPreview
-          files={files}
-          presetConfig={presetConfig}
-          codeConfig={codeConfig}
-        />
-      )}
+      <MiniBrowser
+        loadUrl={show}
+        theme={codeConfig.theme}
+        {...rest}
+        children={
+          presetConfig ? (
+            <SandpackPreview
+              files={files}
+              presetConfig={presetConfig}
+            />
+          ) : (
+            children
+          )
+        }
+      />
     </div>
   )
 }
@@ -52,11 +53,9 @@ export function Preview({
 function SandpackPreview({
   files,
   presetConfig,
-  codeConfig,
 }: {
   files: EditorStep["files"]
   presetConfig: PresetConfig
-  codeConfig: { theme: EditorTheme }
 }) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null!)
   const clientRef = React.useRef<SandpackClient>(null!)
@@ -85,12 +84,7 @@ function SandpackPreview({
     }
   }, [files])
 
-  return (
-    // TODO only render iframe here, leave MiniBrowser for the parent component
-    <MiniBrowser theme={codeConfig.theme}>
-      <iframe ref={iframeRef} />
-    </MiniBrowser>
-  )
+  return <iframe ref={iframeRef} />
 }
 
 function mergeFiles(
