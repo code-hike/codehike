@@ -8,13 +8,43 @@ import {
 import { EditorStep } from "@code-hike/mini-editor"
 
 export type PresetConfig = SandboxInfo
-
 export function Preview({
   className,
   files,
   presetConfig,
+  show,
+  children,
+  ...rest
 }: {
   className: string
+  files: EditorStep["files"]
+  presetConfig?: PresetConfig
+  show?: string
+  children?: React.ReactNode
+}) {
+  return (
+    <div
+      className={
+        "ch-preview" + (className ? " " + className : "")
+      }
+      {...rest}
+    >
+      {!presetConfig ? (
+        <MiniBrowser loadUrl={show} children={children} />
+      ) : (
+        <SandpackPreview
+          files={files}
+          presetConfig={presetConfig}
+        />
+      )}
+    </div>
+  )
+}
+
+function SandpackPreview({
+  files,
+  presetConfig,
+}: {
   files: EditorStep["files"]
   presetConfig: PresetConfig
 }) {
@@ -46,7 +76,7 @@ export function Preview({
   }, [files])
 
   return (
-    <MiniBrowser className={className}>
+    <MiniBrowser>
       <iframe ref={iframeRef} />
     </MiniBrowser>
   )

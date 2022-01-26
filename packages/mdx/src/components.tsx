@@ -11,6 +11,7 @@ import {
   annotationsMap,
   Annotation,
 } from "./client/annotations"
+import { Preview } from "./client/preview"
 
 export const CH = {
   Code,
@@ -19,6 +20,7 @@ export const CH = {
   SectionCode,
   Spotlight,
   Scrollycoding,
+  Preview,
   annotations: annotationsMap,
   Annotation,
   Slideshow,
