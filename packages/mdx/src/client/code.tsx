@@ -29,7 +29,7 @@ export function InnerCode({
     !props.files[0].name
   ) {
     return (
-      <div className="ch-codeblock no-prose">
+      <div className="ch-codeblock not-prose">
         <CodeSpring
           className="ch-code"
           config={props.codeConfig}
@@ -43,7 +43,7 @@ export function InnerCode({
       onTabClick,
     }
     return (
-      <div className="ch-codegroup no-prose">
+      <div className="ch-codegroup not-prose">
         <EditorSpring {...props} frameProps={frameProps} />
       </div>
     )
