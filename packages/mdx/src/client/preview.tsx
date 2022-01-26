@@ -6,6 +6,7 @@ import {
   SandboxInfo,
 } from "@codesandbox/sandpack-client"
 import { EditorStep } from "@code-hike/mini-editor"
+import { EditorTheme } from "@code-hike/utils"
 
 export type PresetConfig = SandboxInfo
 export function Preview({
@@ -14,6 +15,7 @@ export function Preview({
   presetConfig,
   show,
   children,
+  codeConfig,
   ...rest
 }: {
   className: string
@@ -21,6 +23,7 @@ export function Preview({
   presetConfig?: PresetConfig
   show?: string
   children?: React.ReactNode
+  codeConfig: { theme: EditorTheme }
 }) {
   return (
     <div
@@ -30,11 +33,16 @@ export function Preview({
       {...rest}
     >
       {!presetConfig ? (
-        <MiniBrowser loadUrl={show} children={children} />
+        <MiniBrowser
+          loadUrl={show}
+          children={children}
+          theme={codeConfig.theme}
+        />
       ) : (
         <SandpackPreview
           files={files}
           presetConfig={presetConfig}
+          codeConfig={codeConfig}
         />
       )}
     </div>
@@ -44,9 +52,11 @@ export function Preview({
 function SandpackPreview({
   files,
   presetConfig,
+  codeConfig,
 }: {
   files: EditorStep["files"]
   presetConfig: PresetConfig
+  codeConfig: { theme: EditorTheme }
 }) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null!)
   const clientRef = React.useRef<SandpackClient>(null!)
@@ -76,7 +86,8 @@ function SandpackPreview({
   }, [files])
 
   return (
-    <MiniBrowser>
+    // TODO only render iframe here, leave MiniBrowser for the parent component
+    <MiniBrowser theme={codeConfig.theme}>
       <iframe ref={iframeRef} />
     </MiniBrowser>
   )

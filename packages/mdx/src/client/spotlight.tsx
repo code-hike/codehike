@@ -79,6 +79,7 @@ export function Spotlight({
             className="ch-spotlight-preview"
             files={tab.files}
             presetConfig={presetConfig}
+            codeConfig={codeConfig}
           />
         )}
       </div>

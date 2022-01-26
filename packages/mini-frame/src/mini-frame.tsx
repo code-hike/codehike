@@ -4,6 +4,11 @@ import {
   useClasser,
   Classes,
 } from "@code-hike/classer"
+import {
+  EditorTheme,
+  getColor,
+  ColorName,
+} from "@code-hike/utils"
 
 type MiniFrameProps = {
   title?: string
@@ -11,6 +16,7 @@ type MiniFrameProps = {
   zoom?: number
   classes?: Classes
   overflow?: string
+  theme: EditorTheme
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 export const MiniFrame = React.forwardRef<
@@ -22,6 +28,7 @@ export const MiniFrame = React.forwardRef<
     children,
     titleBar,
     classes,
+    theme,
     zoom = 1,
     overflow,
     ...props
@@ -40,7 +47,17 @@ export const MiniFrame = React.forwardRef<
     <ClasserProvider classes={classes}>
       <div {...props} ref={ref}>
         <div className={c("")}>
-          <div className={c("title-bar")}>{bar}</div>
+          <div
+            className={c("title-bar")}
+            style={{
+              background: getColor(
+                theme,
+                ColorName.EditorGroupHeaderBackground
+              ),
+            }}
+          >
+            {bar}
+          </div>
           <div className={c("content")}>
             <div className={c("zoom")} style={zoomStyle}>
               {children}
