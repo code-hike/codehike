@@ -1,7 +1,11 @@
 import React from "react"
 import { Back, Forward, Open } from "./buttons"
 import { FrameButtons } from "@code-hike/mini-frame"
-import { EditorTheme } from "@code-hike/utils"
+import {
+  EditorTheme,
+  getColor,
+  ColorName,
+} from "@code-hike/utils"
 
 export { TitleBar }
 
@@ -14,14 +18,36 @@ function TitleBar({
   linkUrl: string
   theme: EditorTheme
 }) {
+  const inputBorder = getColor(theme, ColorName.InputBorder)
   return (
     <>
       <FrameButtons />
       <Back />
       <Forward />
       {/* <Refresh /> */}
-      <input value={url || ""} readOnly />
-      <Open href={linkUrl} />
+      <input
+        value={url || ""}
+        readOnly
+        style={{
+          background: getColor(
+            theme,
+            ColorName.InputBackground
+          ),
+          color: getColor(theme, ColorName.InputForeground),
+          border: inputBorder
+            ? `1px solid ${inputBorder}`
+            : undefined,
+        }}
+      />
+      <Open
+        href={linkUrl}
+        style={{
+          color: getColor(
+            theme,
+            ColorName.EditorForeground
+          ),
+        }}
+      />
     </>
   )
 }

@@ -49,13 +49,20 @@ function Refresh() {
   )
 }
 
-function Open({ href }: { href: string }) {
+function Open({
+  href,
+  style,
+}: {
+  href: string
+  style?: React.CSSProperties
+}) {
   const c = useClasser("ch-browser")
   return (
     <a
       className={c("button", "open-button")}
       title="Open in new tab"
       href={href}
+      style={style}
       target="_blank"
       rel="noopener noreferrer"
     >

@@ -39,6 +39,9 @@ export enum ColorName {
   TabBorder,
   ActiveTabBottomBorder,
   LineNumberForeground,
+  InputForeground,
+  InputBackground,
+  InputBorder,
 }
 
 type Color = string | undefined
@@ -46,7 +49,8 @@ type Color = string | undefined
 const contrastBorder = "#6FC3DF"
 
 // defaults from: https://github.com/microsoft/vscode/blob/main/src/vs/workbench/common/theme.ts
-// and: https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/view/editorColorRegistry.ts
+// and: https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/core/editorColorRegistry.ts
+// and: https://github.com/microsoft/vscode/blob/main/src/vs/platform/theme/common/colorRegistry.ts
 // keys from : https://code.visualstudio.com/api/references/theme-color#editor-groups-tabs
 export function getColor(
   theme: EditorTheme,
@@ -161,7 +165,29 @@ export function getColor(
           hc: "#fffffe",
         })
       )
-
+    case ColorName.InputBackground:
+      return (
+        colors["input.background"] ||
+        getDefault(theme, {
+          dark: "#3C3C3C",
+          light: "#fffffe",
+          hc: "#000000",
+        })
+      )
+    case ColorName.InputForeground:
+      return (
+        colors["input.foreground"] ||
+        getColor(theme, ColorName.EditorForeground)
+      )
+    case ColorName.InputBorder:
+      return (
+        colors["input.border"] ||
+        getDefault(theme, {
+          dark: undefined,
+          light: undefined,
+          hc: contrastBorder,
+        })
+      )
     default:
       return "#f00"
   }
