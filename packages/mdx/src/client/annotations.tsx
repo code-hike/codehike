@@ -30,15 +30,15 @@ function Mark({
   children: React.ReactNode
   theme: any
 }) {
-  console.log(children)
   const bg =
-    typeof data === "string"
+    data && typeof data === "string"
       ? data
       : tryGuessColor(children) ||
         transparent(
           getColor(theme, ColorName.CodeForeground),
           0.2
         )
+
   return (
     <span
       className="ch-code-mark-annotation"
