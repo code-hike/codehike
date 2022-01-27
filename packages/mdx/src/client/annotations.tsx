@@ -1,5 +1,10 @@
 import React from "react"
 import { CodeAnnotation } from "@code-hike/smooth-code"
+import {
+  getColor,
+  transparent,
+  ColorName,
+} from "@code-hike/utils"
 
 export function Annotation() {
   return "error: code hike remark plugin not running or annotation isn't at the right place"
@@ -13,6 +18,64 @@ export const annotationsMap: Record<
   bg: Background,
   label: Label,
   link: CodeLink,
+  mark: Mark,
+}
+
+function Mark({
+  children,
+  data,
+  theme,
+}: {
+  data: any
+  children: React.ReactNode
+  theme: any
+}) {
+  console.log(children)
+  const bg =
+    typeof data === "string"
+      ? data
+      : tryGuessColor(children) ||
+        transparent(
+          getColor(theme, ColorName.CodeForeground),
+          0.2
+        )
+  return (
+    <span
+      className="ch-code-mark-annotation"
+      style={{
+        background: bg,
+        borderRadius: "0.25rem",
+        padding: "0.2rem 0.15rem 0.1rem",
+        margin: "0 -0.15rem",
+      }}
+    >
+      {children}
+    </span>
+  )
+}
+
+function tryGuessColor(
+  children: React.ReactNode
+): string | undefined {
+  const child = React.Children.toArray(children)[0] as any
+
+  const grandChild = React.Children.toArray(
+    child?.props?.children || []
+  )[0] as any
+
+  const grandGrandChild = React.Children.toArray(
+    grandChild?.props?.children || []
+  )[0] as any
+
+  console.log({ grandGrandChild })
+
+  const { color } = grandGrandChild?.props?.style
+
+  if (color) {
+    return transparent(color as string, 0.2)
+  }
+
+  return undefined
 }
 
 function Box({
