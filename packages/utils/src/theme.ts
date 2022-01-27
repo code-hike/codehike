@@ -193,7 +193,10 @@ export function getColor(
   }
 }
 
-function transparent(color: Color, opacity: number): Color {
+export function transparent(
+  color: Color,
+  opacity: number
+): Color {
   const _opacity = Math.round(
     Math.min(Math.max(opacity || 1, 0), 1) * 255
   )

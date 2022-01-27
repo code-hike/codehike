@@ -70,6 +70,8 @@ export function toJSX(
   }
   if (!appendProps) {
     node.attributes = []
+  } else {
+    node.attributes = node.attributes || []
   }
 
   Object.keys(props).forEach(key => {
