@@ -67,8 +67,6 @@ function tryGuessColor(
     grandChild?.props?.children || []
   )[0] as any
 
-  console.log({ grandGrandChild })
-
   const { color } = grandGrandChild?.props?.style
 
   if (color) {
