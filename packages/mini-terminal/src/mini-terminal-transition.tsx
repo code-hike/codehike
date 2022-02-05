@@ -24,6 +24,7 @@ function MiniTerminalTransition({
       title={title}
       {...rest}
       className={"ch-terminal-container " + className}
+      theme={{}}
     >
       <InnerTerminalTransition
         {...{ prev, prevKey, next, nextKey, progress }}

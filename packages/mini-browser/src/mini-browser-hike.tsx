@@ -3,6 +3,7 @@ import { MiniFrame } from "@code-hike/mini-frame"
 import { TitleBar } from "./title-bar"
 import { MiniBrowserStep, useSteps } from "./use-steps"
 import { useClasser, Classes } from "@code-hike/classer"
+import { EditorTheme } from "@code-hike/utils"
 
 type Transition = "none" | "slide"
 
@@ -12,6 +13,7 @@ export type MiniBrowserHikeProps = {
   classes?: Classes
   steps?: MiniBrowserStep[]
   transition?: Transition
+  theme: EditorTheme
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 const MiniBrowserHike = React.forwardRef<
@@ -26,6 +28,7 @@ function MiniBrowserWithRef(
     steps: ogSteps,
     transition = "none",
     classes,
+    theme,
     ...props
   }: MiniBrowserHikeProps,
   ref: React.Ref<HTMLIFrameElement>
@@ -50,8 +53,13 @@ function MiniBrowserWithRef(
       }}
       classes={classes}
       titleBar={
-        <TitleBar url={displayUrl!} linkUrl={loadUrl!} />
+        <TitleBar
+          url={displayUrl!}
+          linkUrl={loadUrl!}
+          theme={theme}
+        />
       }
+      theme={theme}
     >
       {children || <iframe ref={ref} src={loadUrl} />}
     </MiniFrame>

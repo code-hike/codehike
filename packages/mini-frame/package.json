@@ -34,6 +34,7 @@
     "url": "https://opencollective.com/codehike"
   },
   "dependencies": {
-    "@code-hike/classer": "^0.3.0-next.0"
+    "@code-hike/classer": "^0.3.0-next.0",
+    "@code-hike/utils": "^0.3.0-next.0"
   }
 }

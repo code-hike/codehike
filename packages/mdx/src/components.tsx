@@ -11,6 +11,8 @@ import {
   annotationsMap,
   Annotation,
 } from "./client/annotations"
+import { Preview } from "./client/preview"
+import { InlineCode } from "./client/inline-code"
 
 export const CH = {
   Code,
@@ -19,7 +21,9 @@ export const CH = {
   SectionCode,
   Spotlight,
   Scrollycoding,
+  Preview,
   annotations: annotationsMap,
   Annotation,
   Slideshow,
+  InlineCode,
 }

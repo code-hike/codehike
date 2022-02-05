@@ -29,11 +29,13 @@ export function InnerCode({
     !props.files[0].name
   ) {
     return (
-      <CodeSpring
-        className="ch-code"
-        config={props.codeConfig}
-        step={props.files[0]}
-      />
+      <div className="ch-codeblock not-prose">
+        <CodeSpring
+          className="ch-code"
+          config={props.codeConfig}
+          step={props.files[0]}
+        />
+      </div>
     )
   } else {
     const frameProps = {
@@ -41,7 +43,9 @@ export function InnerCode({
       onTabClick,
     }
     return (
-      <EditorSpring {...props} frameProps={frameProps} />
+      <div className="ch-codegroup not-prose">
+        <EditorSpring {...props} frameProps={frameProps} />
+      </div>
     )
   }
 }

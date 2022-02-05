@@ -8,6 +8,8 @@ import visit from "unist-util-visit"
 import { transformSlideshows } from "./plugin/slideshow"
 import { valueToEstree } from "./plugin/to-estree"
 import { CH_CODE_CONFIG_VAR_NAME } from "./plugin/unist-utils"
+import { transformPreviews } from "./plugin/preview"
+import { transformInlineCodes } from "./plugin/inline-code"
 
 type CodeHikeConfig = {
   theme: any
@@ -35,6 +37,8 @@ export function remarkCodeHike(config: CodeHikeConfig) {
     }
 
     try {
+      await transformInlineCodes(tree)
+      await transformPreviews(tree)
       await transformScrollycodings(tree, config)
       await transformSpotlights(tree, config)
       await transformSlideshows(tree, config)

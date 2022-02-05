@@ -49,11 +49,11 @@
   .ch-scrollycoding-sticker {
     height: 80vh;
     gap: 0.5rem;
-  }
 
-  .ch-scrollycoding-sticker .ch-editor-frame,
-  .ch-scrollycoding-sticker .ch-code {
-    flex: 1;
+    .ch-codeblock,
+    .ch-codegroup {
+      flex: 1;
+    }
   }
 
   .ch-scrollycoding-preview {
@@ -61,10 +61,14 @@
   }
 }
 
-.ch-scrollycoding-sticker .ch-editor-frame,
-.ch-scrollycoding-sticker .ch-code {
-  width: 100%;
-  min-width: 100%;
-  min-height: 200px;
-  max-height: 80vh;
+.ch-scrollycoding-sticker {
+  .ch-codeblock,
+  .ch-codegroup {
+    width: 100%;
+    min-width: 100%;
+    min-height: 200px;
+    max-height: 80vh;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

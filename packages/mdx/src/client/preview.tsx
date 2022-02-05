@@ -6,15 +6,57 @@ import {
   SandboxInfo,
 } from "@codesandbox/sandpack-client"
 import { EditorStep } from "@code-hike/mini-editor"
+import { EditorTheme } from "@code-hike/utils"
 
 export type PresetConfig = SandboxInfo
-
 export function Preview({
   className,
   files,
   presetConfig,
+  show,
+  children,
+  codeConfig,
+  style,
+  ...rest
 }: {
   className: string
+  files: EditorStep["files"]
+  presetConfig?: PresetConfig
+  show?: string
+  style?: React.CSSProperties
+  children?: React.ReactNode
+  codeConfig: { theme: EditorTheme }
+}) {
+  return (
+    <div
+      className={
+        "ch-preview" + (className ? " " + className : "")
+      }
+      style={style}
+    >
+      <MiniBrowser
+        loadUrl={show}
+        theme={codeConfig.theme}
+        {...rest}
+        children={
+          presetConfig ? (
+            <SandpackPreview
+              files={files}
+              presetConfig={presetConfig}
+            />
+          ) : (
+            children
+          )
+        }
+      />
+    </div>
+  )
+}
+
+function SandpackPreview({
+  files,
+  presetConfig,
+}: {
   files: EditorStep["files"]
   presetConfig: PresetConfig
 }) {
@@ -45,11 +87,7 @@ export function Preview({
     }
   }, [files])
 
-  return (
-    <MiniBrowser className={className}>
-      <iframe ref={iframeRef} />
-    </MiniBrowser>
-  )
+  return <iframe ref={iframeRef} />
 }
 
 function mergeFiles(

@@ -80,6 +80,7 @@ export function Scrollycoding({
             className="ch-scrollycoding-preview"
             files={tab.files}
             presetConfig={presetConfig}
+            codeConfig={codeConfig}
           />
         )}
       </div>

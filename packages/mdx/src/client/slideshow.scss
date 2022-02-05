@@ -10,9 +10,11 @@
   aspect-ratio: 16 / 9;
 }
 
-.ch-slideshow-slide .ch-editor-frame,
-.ch-slideshow-slide .ch-code {
+.ch-slideshow-slide .ch-codegroup,
+.ch-slideshow-slide .ch-codeblock {
   flex: 2;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .ch-slideshow-preview {
