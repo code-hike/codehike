@@ -14,3 +14,8 @@
   line-height: 19px;
   letter-spacing: 0px;
 }
+
+.ch-code-scroll-parent ::selection {
+  background-color: var(--ch-selection-background);
+  color: inherit;
+}

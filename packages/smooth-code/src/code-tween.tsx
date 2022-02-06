@@ -7,6 +7,8 @@ import {
   map,
   FocusString,
   getCodeColors,
+  getColor,
+  ColorName,
 } from "@code-hike/utils"
 import {
   useStepParser,
@@ -140,7 +142,15 @@ function AfterDimensions({
   return (
     <Wrapper
       htmlProps={htmlProps}
-      style={{ opacity: 1, backgroundColor: bg, color: fg }}
+      style={{
+        opacity: 1,
+        backgroundColor: bg,
+        color: fg,
+        ["--ch-selection-background" as any]: getColor(
+          theme,
+          ColorName.SelectionBackground
+        ),
+      }}
     >
       <SmoothLines
         codeStep={stepInfo}
