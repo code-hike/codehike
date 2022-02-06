@@ -16,8 +16,8 @@ import {
 import { SmoothLines } from "./smooth-lines"
 
 type HTMLProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLPreElement>,
-  HTMLPreElement
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
 >
 
 export type CodeTweenProps = {
@@ -166,11 +166,13 @@ function Wrapper({
   children: React.ReactNode
 }) {
   return (
-    <pre
+    <div
       {...htmlProps}
       style={{
         margin: 0,
         padding: 0,
+        // using this instead of <pre> because https://github.com/code-hike/codehike/issues/120
+        whiteSpace: "pre",
         ...style,
         ...htmlProps?.style,
       }}

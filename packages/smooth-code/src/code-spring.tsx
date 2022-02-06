@@ -10,8 +10,8 @@ import {
 type SpringConfig = Parameters<typeof useSpring>[1]
 
 type HTMLProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLPreElement>,
-  HTMLPreElement
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
 >
 
 const defaultSpring = {
