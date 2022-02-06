@@ -42,6 +42,7 @@ export enum ColorName {
   InputForeground,
   InputBackground,
   InputBorder,
+  SelectionBackground,
 }
 
 type Color = string | undefined
@@ -186,6 +187,15 @@ export function getColor(
           dark: undefined,
           light: undefined,
           hc: contrastBorder,
+        })
+      )
+    case ColorName.SelectionBackground:
+      return (
+        colors["editor.selectionBackground"] ||
+        getDefault(theme, {
+          light: "#ADD6FF",
+          dark: "#264F78",
+          hc: "#f3f518",
         })
       )
     default:
