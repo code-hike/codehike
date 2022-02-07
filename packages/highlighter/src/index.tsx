@@ -47,7 +47,15 @@ export async function highlight({
     await highlighter.loadTheme(theme as IShikiTheme)
   }
   if (missingLang(highlighter, lang)) {
-    await highlighter.loadLanguage(lang as Lang)
+    try {
+      await highlighter.loadLanguage(lang as Lang)
+    } catch (e) {
+      console.warn(
+        "[Code Hike warning]",
+        `${lang} is not a valid language, no syntax highlighting will be applied.`
+      )
+      return highlight({ code, lang: "text", theme })
+    }
   }
 
   const tokenizedLines = highlighter.codeToThemedTokens(
