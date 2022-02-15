@@ -203,6 +203,16 @@ export function getColor(
   }
 }
 
+export function getColorScheme(theme: EditorTheme): string | undefined {
+  const themeType = getThemeType(theme)
+  if (themeType === "dark") {
+    return "dark"
+  } else if (themeType === "light") {
+    return "light"
+  }
+  return undefined
+}
+
 export function transparent(
   color: Color,
   opacity: number

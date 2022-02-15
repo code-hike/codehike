@@ -10,7 +10,7 @@
     "autoprefixer": "^9.8.2",
     "cssnano": "^4.1.10",
     "edit-json-file": "^1.5.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "rollup": "^2.41.2",
     "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-postcss": "^4.0.0",

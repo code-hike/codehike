@@ -9,6 +9,7 @@ import {
   getCodeColors,
   getColor,
   ColorName,
+  getColorScheme
 } from "@code-hike/utils"
 import {
   useStepParser,
@@ -146,6 +147,7 @@ function AfterDimensions({
         opacity: 1,
         backgroundColor: bg,
         color: fg,
+        ["color-scheme" as any]: getColorScheme(theme),
         ["--ch-selection-background" as any]: getColor(
           theme,
           ColorName.SelectionBackground
