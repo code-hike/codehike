@@ -16,7 +16,9 @@ type CodeHikeConfig = {
   lineNumbers?: boolean
 }
 
-export function remarkCodeHike(config: CodeHikeConfig) {
+export function remarkCodeHike(
+  unsafeConfig: CodeHikeConfig
+) {
   return async (tree: Node) => {
     // TODO add opt-in config
     let hasCodeHikeImport = false
@@ -29,6 +31,8 @@ export function remarkCodeHike(config: CodeHikeConfig) {
         hasCodeHikeImport = true
       }
     })
+
+    const config = addConfigDefaults(unsafeConfig)
 
     addConfig(tree as Parent, config)
 
@@ -50,6 +54,12 @@ export function remarkCodeHike(config: CodeHikeConfig) {
       throw e
     }
   }
+}
+
+function addConfigDefaults(
+  config: Partial<CodeHikeConfig> | undefined
+): CodeHikeConfig {
+  return { ...config, theme: config?.theme || {} }
 }
 
 function addConfig(tree: Parent, config: CodeHikeConfig) {
