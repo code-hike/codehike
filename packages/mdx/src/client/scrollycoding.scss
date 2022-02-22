@@ -5,9 +5,9 @@
 }
 
 .ch-scrollycoding-content {
-  width: 50%;
   box-sizing: border-box;
   padding-right: 16px;
+  flex: 1;
 }
 
 .ch-scrollycoding-step-content {
@@ -39,7 +39,7 @@
   align-self: start;
   flex-flow: column;
   justify-content: center;
-  width: 420px;
+  width: var(--ch-scrollycoding-sticker-width, 420px);
   // capitalized Min to avoid usint the sass min
   // min-height: Min(100%, 80vh);
   max-height: 80vh;
@@ -66,7 +66,10 @@
   .ch-codegroup {
     width: 100%;
     min-width: 100%;
-    min-height: 200px;
+    min-height: var(
+      --ch-scrollycoding-code-min-height,
+      200px
+    );
     max-height: 80vh;
     margin-top: 0;
     margin-bottom: 0;
