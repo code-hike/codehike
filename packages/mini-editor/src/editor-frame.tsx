@@ -183,12 +183,29 @@ function TabsContainer({
           }}
           onClick={onTabClick && (() => onTabClick(title))}
         >
-          <div>{title}</div>
+          <TabTitle title={title} />
         </div>
       ))}
       <div style={{ flex: 1 }} />
       {button}
     </>
+  )
+}
+
+function TabTitle({ title }: { title: string }) {
+  if (!title) {
+    return <div />
+  }
+
+  const separatorIndex = title.lastIndexOf("/") + 1
+  const filename = title.substring(separatorIndex)
+  const folder = title.substring(0, separatorIndex)
+
+  return (
+    <div>
+      <span style={{ opacity: 0.5 }}>{folder}</span>
+      {filename}
+    </div>
   )
 }
 
