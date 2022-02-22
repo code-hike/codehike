@@ -6,6 +6,7 @@ import {
 import { TerminalPanel } from "./terminal-panel"
 import { useTransition, EditorStep } from "./editor-shift"
 import { CodeConfig } from "@code-hike/smooth-code"
+import { useLayoutEffect } from "@code-hike/utils"
 
 export {
   EditorTransition,
@@ -13,11 +14,6 @@ export {
   EditorTween,
   EditorTweenProps,
 }
-
-const useLayoutEffect =
-  typeof window !== "undefined"
-    ? React.useLayoutEffect
-    : React.useEffect
 
 type EditorTransitionProps = {
   prev?: EditorStep

@@ -57,8 +57,6 @@ export const EditorFrame = React.forwardRef<
   },
   ref
 ) {
-  const c = useClasser("ch-editor")
-
   return (
     <div
       ref={ref}

@@ -3,6 +3,7 @@ import {
   FocusString,
   getFocusIndexes,
   Tween,
+  useLayoutEffect,
 } from "@code-hike/utils"
 
 type Dimensions = {
@@ -15,11 +16,6 @@ type Dimensions = {
   colWidth: number
   lineNumberWidth: number
 } | null
-
-const useLayoutEffect =
-  typeof window !== "undefined"
-    ? React.useLayoutEffect
-    : React.useEffect
 
 export { useDimensions, Dimensions }
 

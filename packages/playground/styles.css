@@ -10,6 +10,8 @@ div#__next > div {
   flex-direction: column;
   font-family: sans-serif;
   background-color: #444;
+  /* --ch-scrollycoding-code-min-height: 500px;
+  --ch-scrollycoding-sticker-width: 500px; */
 }
 
 nav {
