@@ -14,12 +14,14 @@ import { transformInlineCodes } from "./plugin/inline-code"
 type CodeHikeConfig = {
   theme: any
   lineNumbers?: boolean
+  autoImport?: boolean
 }
 
 export function remarkCodeHike(
   unsafeConfig: CodeHikeConfig
 ) {
   return async (tree: Node) => {
+    const config = addConfigDefaults(unsafeConfig)
     // TODO add opt-in config
     let hasCodeHikeImport = false
     visit(tree, "mdxjsEsm", (node: any) => {
@@ -32,11 +34,10 @@ export function remarkCodeHike(
       }
     })
 
-    const config = addConfigDefaults(unsafeConfig)
 
     addConfig(tree as Parent, config)
 
-    if (!hasCodeHikeImport) {
+    if (config.autoImport && !hasCodeHikeImport) {
       addImportNode(tree as Parent)
     }
 
@@ -59,7 +60,7 @@ export function remarkCodeHike(
 function addConfigDefaults(
   config: Partial<CodeHikeConfig> | undefined
 ): CodeHikeConfig {
-  return { ...config, theme: config?.theme || {} }
+  return { ...config, theme: config?.theme || {}, autoImport: config?.autoImport === false ? false : true  }
 }
 
 function addConfig(tree: Parent, config: CodeHikeConfig) {
