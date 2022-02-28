@@ -22,6 +22,10 @@ export function InlineCode({
   const { theme } = codeConfig
   const { lines } = code
   const allTokens = lines.flatMap(line => line.tokens)
+  const foreground = getColor(
+    theme,
+    ColorName.CodeForeground
+  )
   return (
     <span
       className={
@@ -32,11 +36,12 @@ export function InlineCode({
     >
       <code
         style={{
+          ["--ch-code-foreground" as any]: foreground,
           background: transparent(
             getColor(theme, ColorName.CodeBackground),
             0.9
           ),
-          color: getColor(theme, ColorName.CodeForeground),
+          color: foreground,
         }}
       >
         {allTokens.map((token, j) => (

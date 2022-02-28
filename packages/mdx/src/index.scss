@@ -32,3 +32,17 @@
   border-radius: 0.25em;
   font-size: 0.9em;
 }
+
+.ch-section-link,
+.ch-section-link * {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(
+    --ch-code-foreground,
+    currentColor
+  );
+}
+
+.ch-section-link[data-active="true"] {
+  background-color: #bae6fd66;
+}

@@ -74,6 +74,8 @@ export function SectionCode() {
   return <InnerCode {...props} onTabClick={onTabClick} />
 }
 
+// ---
+
 export function SectionLink({
   focus,
   file,
@@ -95,14 +97,8 @@ export function SectionLink({
 
   return (
     <span
-      style={{
-        textDecoration: "underline",
-        textDecorationStyle: "dotted",
-        // cursor: "pointer",
-        backgroundColor: isSelected
-          ? "#bae6fd66"
-          : undefined,
-      }}
+      className="ch-section-link"
+      data-active={isSelected}
       // onClick={handleClick}
       children={children}
       onMouseOver={() =>
@@ -112,8 +108,6 @@ export function SectionLink({
     />
   )
 }
-
-// ---
 
 const LinkableContext = React.createContext<{
   activate: (x: {
