@@ -19,7 +19,8 @@
   },
   "devDependencies": {
     "auto": "^10.18.7",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1"
   },
   "repository": "code-hike/codehike",
   "author": "pomber <pombopombopombo@gmail.com>",
