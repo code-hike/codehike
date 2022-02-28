@@ -62,9 +62,8 @@ export function Section({
 }
 
 export function SectionCode() {
-  const { props, setFocus } = React.useContext(
-    SectionContext
-  )
+  const { props, setFocus } =
+    React.useContext(SectionContext)
 
   const onTabClick = (filename: string) => {
     setFocus({ fileName: filename, focus: null, id: "" })
@@ -84,16 +83,13 @@ export function SectionLink({
   file?: string
   children: React.ReactNode
 }) {
-  const {
-    setFocus,
-    resetFocus,
-    selectedId,
-  } = React.useContext(SectionContext)
+  const { setFocus, resetFocus, selectedId } =
+    React.useContext(SectionContext)
 
   const isSelected = selectedId === id
-  const handleClick = isSelected
-    ? resetFocus
-    : () => setFocus({ fileName: file, focus, id })
+  // const handleClick = isSelected
+  //   ? resetFocus
+  //   : () => setFocus({ fileName: file, focus, id })
 
   return (
     <span
@@ -101,10 +97,16 @@ export function SectionLink({
         textDecoration: "underline",
         textDecorationStyle: "dotted",
         cursor: "pointer",
-        backgroundColor: isSelected ? "yellow" : undefined,
+        backgroundColor: isSelected
+          ? "#bae6fd66"
+          : undefined,
       }}
-      onClick={handleClick}
+      // onClick={handleClick}
       children={children}
+      onMouseOver={() =>
+        setFocus({ fileName: file, focus, id })
+      }
+      onMouseOut={resetFocus}
     />
   )
 }
