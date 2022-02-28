@@ -9,6 +9,7 @@ import {
   Step as ScrollerStep,
 } from "@code-hike/scroller"
 import { Preview, PresetConfig } from "./preview"
+import { LinkableSection } from "./section"
 
 export function Scrollycoding({
   children,
@@ -45,6 +46,19 @@ export function Scrollycoding({
     setState({ ...state, step: newStep })
   }
 
+  function onLinkActivation(
+    stepIndex: number,
+    filename: string | undefined,
+    focus: string | null
+  ) {
+    const newStep = updateEditorStep(
+      editorSteps[stepIndex],
+      filename,
+      focus
+    )
+    setState({ ...state, stepIndex, step: newStep })
+  }
+
   return (
     <section
       className={`ch-scrollycoding ${
@@ -64,7 +78,16 @@ export function Scrollycoding({
                 i === state.stepIndex ? "true" : undefined
               }
             >
-              {children}
+              <LinkableSection
+                onActivation={({ fileName, focus }) => {
+                  onLinkActivation(i, fileName, focus)
+                }}
+                onReset={() => {
+                  onStepChange(i)
+                }}
+              >
+                {children}
+              </LinkableSection>
             </ScrollerStep>
           ))}
         </Scroller>

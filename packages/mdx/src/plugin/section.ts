@@ -46,7 +46,7 @@ async function transformSection(
   }
 }
 
-function transformLinks(tree: Node) {
+export function transformLinks(tree: Node) {
   visit(tree, "link", (linkNode: any) => {
     const url = decodeURI(linkNode["url"])
     if (url.startsWith("focus://")) {

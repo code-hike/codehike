@@ -4,17 +4,14 @@ import { InnerCode, updateEditorStep } from "./code"
 
 const SectionContext = React.createContext<{
   props: EditorProps
-  selectedId?: string
   setFocus: (x: {
     fileName?: string
     focus: string | null
     id: string
   }) => void
-  resetFocus: () => void
 }>({
   props: null!,
   setFocus: () => {},
-  resetFocus: () => {},
 })
 
 export function Section({
@@ -48,16 +45,21 @@ export function Section({
   const { selectedId, ...rest } = state
 
   return (
-    <SectionContext.Provider
-      value={{
-        props: rest,
-        setFocus,
-        resetFocus,
-        selectedId,
-      }}
-    >
-      <section>{children}</section>
-    </SectionContext.Provider>
+    <section>
+      <SectionContext.Provider
+        value={{
+          props: rest,
+          setFocus,
+        }}
+      >
+        <LinkableSection
+          onActivation={setFocus}
+          onReset={resetFocus}
+        >
+          {children}
+        </LinkableSection>
+      </SectionContext.Provider>
+    </section>
   )
 }
 
@@ -83,10 +85,10 @@ export function SectionLink({
   file?: string
   children: React.ReactNode
 }) {
-  const { setFocus, resetFocus, selectedId } =
-    React.useContext(SectionContext)
+  const { activate, reset, activatedId } =
+    React.useContext(LinkableContext)
 
-  const isSelected = selectedId === id
+  const isSelected = activatedId === id
   // const handleClick = isSelected
   //   ? resetFocus
   //   : () => setFocus({ fileName: file, focus, id })
@@ -96,7 +98,7 @@ export function SectionLink({
       style={{
         textDecoration: "underline",
         textDecorationStyle: "dotted",
-        cursor: "pointer",
+        // cursor: "pointer",
         backgroundColor: isSelected
           ? "#bae6fd66"
           : undefined,
@@ -104,9 +106,66 @@ export function SectionLink({
       // onClick={handleClick}
       children={children}
       onMouseOver={() =>
-        setFocus({ fileName: file, focus, id })
+        activate({ fileName: file, focus, id })
       }
-      onMouseOut={resetFocus}
+      onMouseOut={reset}
     />
+  )
+}
+
+// ---
+
+const LinkableContext = React.createContext<{
+  activate: (x: {
+    fileName?: string
+    focus: string | null
+    id: string
+  }) => void
+  reset: () => void
+  activatedId: string | undefined
+}>({
+  activatedId: undefined,
+  activate: () => {},
+  reset: () => {},
+})
+
+export function LinkableSection({
+  onActivation,
+  onReset,
+  children,
+}: {
+  onActivation: (x: {
+    fileName?: string
+    focus: string | null
+    id: string
+  }) => void
+  onReset: () => void
+  children: React.ReactNode
+}) {
+  const [activatedId, setActivatedId] =
+    React.useState<any>(undefined)
+
+  const activate = React.useCallback(
+    x => {
+      setActivatedId(x.id)
+      onActivation(x)
+    },
+    [onActivation]
+  )
+  const reset = React.useCallback(() => {
+    setActivatedId(undefined)
+    onReset()
+  }, [onReset])
+
+  return (
+    <LinkableContext.Provider
+      value={{
+        activate,
+        reset,
+        activatedId,
+      }}
+    >
+      {children}
+    </LinkableContext.Provider>
   )
 }
