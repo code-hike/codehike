@@ -6,8 +6,13 @@ import {
 import { Node } from "unist"
 import visit from "unist-util-visit"
 import { Parent } from "hast-util-to-estree"
+import { highlight } from "@code-hike/highlighter"
 
-export async function transformInlineCodes(tree: Node) {
+export async function transformInlineCodes(
+  tree: Node,
+  { theme }: { theme: any }
+) {
+  // transform *`foo`* to <CH.InlineCode>foo</CH.InlineCode>
   visit(tree, "emphasis", (node: Parent) => {
     if (
       node.children &&
@@ -25,10 +30,16 @@ export async function transformInlineCodes(tree: Node) {
   await visitAsync(
     tree,
     ["mdxJsxFlowElement", "mdxJsxTextElement"],
-    async node => {
+    async (node: Parent) => {
       if (node.name === "CH.InlineCode") {
+        const code = await highlight({
+          code: node.children[0].value as string,
+          lang: "jsx",
+          theme,
+        })
         toJSX(node, {
           props: {
+            code,
             codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
           },
           appendProps: true,

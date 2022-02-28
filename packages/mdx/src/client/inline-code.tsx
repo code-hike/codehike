@@ -4,19 +4,24 @@ import {
   getColor,
   transparent,
   ColorName,
+  Code,
 } from "@code-hike/utils"
 
 export function InlineCode({
   className,
   codeConfig,
   children,
+  code,
   ...rest
 }: {
   className: string
+  code: Code
   children?: React.ReactNode
   codeConfig: { theme: EditorTheme }
 }) {
   const { theme } = codeConfig
+  const { lines } = code
+  const allTokens = lines.flatMap(line => line.tokens)
   return (
     <span
       className={
@@ -34,7 +39,11 @@ export function InlineCode({
           color: getColor(theme, ColorName.CodeForeground),
         }}
       >
-        {children}
+        {allTokens.map((token, j) => (
+          <span key={j} {...token.props}>
+            {token.content}
+          </span>
+        ))}
       </code>
     </span>
   )
