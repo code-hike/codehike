@@ -41,12 +41,12 @@ export function remarkCodeHike(
     }
 
     try {
-      await transformInlineCodes(tree, config)
       await transformPreviews(tree)
       await transformScrollycodings(tree, config)
       await transformSpotlights(tree, config)
       await transformSlideshows(tree, config)
       await transformSections(tree, config)
+      await transformInlineCodes(tree, config)
       await transformEditorNodes(tree, config)
       await transformCodeNodes(tree, config)
     } catch (e) {
