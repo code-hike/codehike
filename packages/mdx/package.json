@@ -35,7 +35,7 @@
     "remark-rehype": "^8.1.0",
     "unified": "^9.2.2",
     "unist-util-visit": "^2.0.0",
-    "unist-util-visit-parents": "^2.0.0"
+    "unist-util-visit-parents": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18"
