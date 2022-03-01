@@ -27,8 +27,27 @@
 }
 
 .ch-inline-code > code {
-  padding: 0.2em 0.4em;
-  margin: 0.1em -0.1em;
+  padding: 0.2em 0.15em;
+  margin: 0.1em -0.05em;
   border-radius: 0.25em;
   font-size: 0.9em;
+}
+
+.ch-section-link,
+.ch-section-link * {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(
+    --ch-code-foreground,
+    currentColor
+  );
+}
+.ch-section-link[data-active="true"] {
+  background-color: #bae6fd66;
+}
+
+.ch-section-link[data-active="true"],
+.ch-section-link[data-active="true"] * {
+  text-decoration-thickness: 1.5px;
 }

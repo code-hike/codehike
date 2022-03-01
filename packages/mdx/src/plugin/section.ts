@@ -26,17 +26,20 @@ async function transformSection(
   await visitAsync(
     node,
     ["mdxJsxFlowElement", "code"],
-    async (node, index, parent) => {
-      if (isEditorNode(node)) {
+    async (editorNode, index, parent) => {
+      if (isEditorNode(editorNode)) {
         props = await mapAnyCodeNode(
-          { node, index, parent: parent! },
+          { node: editorNode, index, parent: parent! },
           config
         )
-        toJSX(node, { name: "CH.SectionCode", props: {} })
+        toJSX(editorNode, {
+          name: "CH.SectionCode",
+          props: {},
+        })
       }
     }
   )
-
+  node.data = { editorStep: props }
   transformLinks(node)
 
   if (props) {
@@ -46,7 +49,7 @@ async function transformSection(
   }
 }
 
-function transformLinks(tree: Node) {
+export function transformLinks(tree: Node) {
   visit(tree, "link", (linkNode: any) => {
     const url = decodeURI(linkNode["url"])
     if (url.startsWith("focus://")) {

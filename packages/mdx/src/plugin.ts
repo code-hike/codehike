@@ -34,7 +34,6 @@ export function remarkCodeHike(
       }
     })
 
-
     addConfig(tree as Parent, config)
 
     if (config.autoImport && !hasCodeHikeImport) {
@@ -42,12 +41,12 @@ export function remarkCodeHike(
     }
 
     try {
-      await transformInlineCodes(tree)
       await transformPreviews(tree)
       await transformScrollycodings(tree, config)
       await transformSpotlights(tree, config)
       await transformSlideshows(tree, config)
       await transformSections(tree, config)
+      await transformInlineCodes(tree, config)
       await transformEditorNodes(tree, config)
       await transformCodeNodes(tree, config)
     } catch (e) {
@@ -60,7 +59,11 @@ export function remarkCodeHike(
 function addConfigDefaults(
   config: Partial<CodeHikeConfig> | undefined
 ): CodeHikeConfig {
-  return { ...config, theme: config?.theme || {}, autoImport: config?.autoImport === false ? false : true  }
+  return {
+    ...config,
+    theme: config?.theme || {},
+    autoImport: config?.autoImport === false ? false : true,
+  }
 }
 
 function addConfig(tree: Parent, config: CodeHikeConfig) {
@@ -124,8 +127,7 @@ function addImportNode(tree: Parent) {
               type: "Literal",
               value:
                 "@code-hike/mdx/dist/components.cjs.js",
-              raw:
-                '"@code-hike/mdx/dist/components.cjs.js"',
+              raw: '"@code-hike/mdx/dist/components.cjs.js"',
             },
           },
         ],

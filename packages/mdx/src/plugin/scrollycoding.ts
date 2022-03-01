@@ -6,6 +6,7 @@ import {
 import { Node, Parent } from "unist"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./preview"
+import { transformLinks } from "./section"
 
 export async function transformScrollycodings(
   tree: Node,
@@ -34,6 +35,8 @@ async function transformScrollycoding(
   const presetConfig = await getPresetConfig(
     (node as any).attributes
   )
+
+  transformLinks(node)
 
   toJSX(node, {
     props: {

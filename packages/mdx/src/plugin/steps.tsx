@@ -29,13 +29,11 @@ export async function extractStepsInfo(
     steps[stepIndex] = steps[stepIndex] || { children: [] }
     const step = steps[stepIndex]
     if (!step.editorStep && isEditorNode(child)) {
-      const {
-        codeConfig,
-        ...editorStep
-      } = await mapAnyCodeNode(
-        { node: child, parent, index: i },
-        config
-      )
+      const { codeConfig, ...editorStep } =
+        await mapAnyCodeNode(
+          { node: child, parent, index: i },
+          config
+        )
 
       if (stepIndex === 0) {
         // for the header props, keep it as it is
@@ -58,6 +56,7 @@ export async function extractStepsInfo(
     return {
       type: "mdxJsxFlowElement",
       children: step.children,
+      data: { editorStep: step.editorStep },
     }
   })
 
