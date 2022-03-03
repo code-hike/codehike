@@ -1,0 +1,28 @@
+.ch-terminal {
+  font-size: 14px;
+  height: 100%;
+  box-sizing: border-box;
+  background: rgb(30, 30, 30);
+  color: #fafafa;
+  overflow: hidden;
+  padding: 0 8px 8px;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+}
+
+.ch-terminal-container .ch-frame-content {
+  background-color: inherit;
+}
+
+.ch-terminal-prompt {
+  color: #8fa2db;
+  user-select: none;
+}
+
+.ch-terminal-content {
+  margin: 0;
+}
+
+.ch-terminal-output {
+  opacity: 0.66;
+}

@@ -1,7 +1,6 @@
 import React from "react"
 import { TerminalContent } from "./terminal-content"
 import { MiniFrame } from "@code-hike/mini-frame"
-import "./mini-terminal-transition.css"
 
 function MiniTerminalTransition({
   title = "bash",
@@ -25,6 +24,7 @@ function MiniTerminalTransition({
       title={title}
       {...rest}
       className={"ch-terminal-container " + className}
+      theme={{}}
     >
       <InnerTerminalTransition
         {...{ prev, prevKey, next, nextKey, progress }}

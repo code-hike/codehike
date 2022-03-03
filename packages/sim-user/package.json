@@ -1,18 +1,18 @@
 {
   "name": "@code-hike/sim-user",
-  "version": "0.2.1",
-  "main": "dist/index.js",
+  "version": "0.3.0-next.0",
+  "private": "true",
+  "main": "dist/index.cjs.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "ch-build",
-    "watch": "ch-build --watch"
+    "x": "x"
   },
   "devDependencies": {
-    "@code-hike/build": "0.0.1"
+    "@code-hike/script": "0.0.1"
   },
   "dependencies": {
     "@testing-library/dom": "^7.5.7",
@@ -23,6 +23,10 @@
   ],
   "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Rodrigo Pombo",
   "license": "MIT",
   "funding": {
     "type": "opencollective",

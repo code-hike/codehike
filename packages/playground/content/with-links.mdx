@@ -1,0 +1,26 @@
+import { CH } from "@code-hike/mdx"
+
+Visit [Daring Fireball][] for more information. Or [Google][] it.
+
+[daring fireball]: http://daringfireball.net/projects/markdown
+[google]: https://google.com
+
+---
+
+```clj fizzbuzz.clj
+(take 100 (map #(let [s (str %2 %3) ] (if (seq s) s (inc %)) )
+  (range)
+  (cycle [ "" "" "Fizz" ])
+  (cycle [ "" "" "" "" "Buzz" ])))
+```
+
+[take]: https://clojuredocs.org/clojure.core/take "Take Docs"
+[map]: https://clojuredocs.org/clojure.core/map "Map Docs"
+[range]: https://clojuredocs.org/clojure.core/range "Range Docs"
+[cycle]: https://clojuredocs.org/clojure.core/cycle "Cycle Docs"
+
+---
+
+TODO
+
+- fix underline color (maybe add .sass and use token's color)

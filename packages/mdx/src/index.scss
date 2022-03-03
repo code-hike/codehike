@@ -1,0 +1,55 @@
+@import "~@code-hike/mini-editor/dist/index.scss";
+@import "~@code-hike/mini-browser/dist/index.scss";
+@import "./client/spotlight.scss";
+@import "./client/scrollycoding.scss";
+@import "./client/slideshow.scss";
+
+.ch-codeblock,
+.ch-codegroup,
+.ch-preview {
+  border-radius: 6px;
+  overflow: hidden;
+  height: max-content; /* for https://github.com/code-hike/codehike/issues/140  */
+
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3),
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+
+  & > * {
+    height: 100%;
+    max-height: inherit;
+    min-height: inherit;
+  }
+}
+
+.ch-codeblock,
+.ch-codegroup {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.ch-inline-code > code {
+  padding: 0.2em 0.15em;
+  margin: 0.1em -0.05em;
+  border-radius: 0.25em;
+  font-size: 0.9em;
+}
+
+.ch-section-link,
+.ch-section-link * {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(
+    --ch-code-foreground,
+    currentColor
+  );
+}
+.ch-section-link[data-active="true"] {
+  background-color: #bae6fd66;
+}
+
+.ch-section-link[data-active="true"],
+.ch-section-link[data-active="true"] * {
+  text-decoration-thickness: 1.5px;
+}

@@ -3,29 +3,31 @@
   "workspaces": {
     "packages": [
       "packages/*",
-      "demos/*",
-      "storybook",
-      "site"
+      "external/*"
     ]
   },
   "scripts": {
-    "dev": "yarn workspace xmdx dev",
-    "mbrowser": "yarn workspace @code-hike/mini-browser",
-    "mframe": "yarn workspace @code-hike/mini-frame",
-    "mterminal": "yarn workspace @code-hike/mini-terminal",
-    "meditor": "yarn workspace @code-hike/mini-editor",
-    "scroller": "yarn workspace @code-hike/scroller",
-    "player": "yarn workspace @code-hike/player",
-    "sim-user": "yarn workspace @code-hike/sim-user",
-    "storybook": "yarn workspace storybook",
-    "site": "yarn workspace site",
-    "ch-build": "yarn workspace @code-hike/build",
-    "watch-packages": "yarn mframe watch & yarn mterminal watch & yarn scroller watch & yarn sim-user watch & yarn player watch & yarn mbrowser watch & yarn meditor watch",
-    "build-packages": "yarn mframe build && yarn mterminal build && yarn scroller build && yarn sim-user build && yarn player build && yarn mbrowser build && yarn meditor build",
-    "build-site": "yarn build-packages && yarn workspace site export"
+    "build": "lerna run --stream x -- build",
+    "watch": "lerna run --since HEAD --exclude-dependents --parallel x -- watch",
+    "watch-all": "lerna run --parallel x -- watch",
+    "storybook": "lerna run --scope storybook start --stream",
+    "playground": "lerna run --scope @*/playground dev --stream",
+    "docs": "lerna run build-docs --stream",
+    "build-playground": "lerna run --scope @*/playground build --stream",
+    "release": "auto shipit"
   },
-  "dependencies": {
-    "@emotion/core": "10.0.7",
-    "theme-ui": "0.2.31"
+  "devDependencies": {
+    "auto": "^10.18.7",
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1"
+  },
+  "repository": "code-hike/codehike",
+  "author": "pomber <pombopombopombo@gmail.com>",
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ],
+    "onlyPublishWithReleaseLabel": true
   }
 }

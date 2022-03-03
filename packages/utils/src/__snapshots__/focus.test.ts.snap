@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`map focus to line numbers 1`] = `
+Object {
+  "1": true,
+  "2": true,
+  "3": Array [
+    Object {
+      "end": 5,
+      "start": 1,
+    },
+    Object {
+      "end": 7,
+      "start": 7,
+    },
+  ],
+}
+`;

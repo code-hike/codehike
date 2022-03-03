@@ -1,3 +1,17 @@
-import { MiniBrowser } from "./mini-browser";
+import {
+  MiniBrowserHike,
+  MiniBrowserHikeProps,
+} from "./mini-browser-hike"
+import {
+  MiniBrowser,
+  MiniBrowserProps,
+} from "./mini-browser"
 
-export { MiniBrowser };
+import "./index.scss"
+
+export {
+  MiniBrowser,
+  MiniBrowserProps,
+  MiniBrowserHike,
+  MiniBrowserHikeProps,
+}
