@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/mini-frame",
-  "version": "0.3.0-next.0",
+  "version": "0.3.0",
   "main": "dist/index.cjs.js",
   "typings": "dist/index.d.ts",
   "module": "dist/index.esm.js",
@@ -12,7 +12,7 @@
     "x": "x"
   },
   "devDependencies": {
-    "@code-hike/script": "0.0.1",
+    "@code-hike/script": "^0.3.0",
     "@types/react": "^17.0.2",
     "react": "^17.0.2"
   },
@@ -34,7 +34,7 @@
     "url": "https://opencollective.com/codehike"
   },
   "dependencies": {
-    "@code-hike/classer": "^0.3.0-next.0",
-    "@code-hike/utils": "^0.3.0-next.0"
+    "@code-hike/classer": "^0.3.0",
+    "@code-hike/utils": "^0.3.0"
   }
 }

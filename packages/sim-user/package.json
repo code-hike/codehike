@@ -1,6 +1,6 @@
 {
   "name": "@code-hike/sim-user",
-  "version": "0.3.0-next.0",
+  "version": "0.3.0",
   "private": "true",
   "main": "dist/index.cjs.js",
   "typings": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     "x": "x"
   },
   "devDependencies": {
-    "@code-hike/script": "0.0.1"
+    "@code-hike/script": "^0.3.0"
   },
   "dependencies": {
     "@testing-library/dom": "^7.5.7",
