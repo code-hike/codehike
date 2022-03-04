@@ -1,12 +1,39 @@
 {
-  "extends": "../tsconfig.json",
-  "include": ["src", "types"],
   "compilerOptions": {
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "paths": {
-      "@": ["./"],
-      "*": ["src/*", "node_modules/*"]
-    }
-  }
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "strict": true,
+    "isolatedModules": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "rootDir": ".",
+    "jsx": "preserve",
+    "types": [
+      "vite/client"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "allowJs": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

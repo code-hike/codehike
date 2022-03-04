@@ -1,3 +1,1 @@
-import "./index.scss"
-
-export { remarkCodeHike } from "./plugin"
+export { remarkCodeHike } from "./mdx/plugin"
