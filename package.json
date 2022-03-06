@@ -3,12 +3,11 @@
   "workspaces": {
     "packages": [
       "packages/mdx",
-      "examples/*",
       "site"
     ]
   },
   "scripts": {
-    "build": "lerna run --stream x -- build",
+    "build": "lerna run --scope @*/mdx build",
     "watch": "lerna run --since HEAD --exclude-dependents --parallel x -- watch",
     "watch-all": "lerna run --parallel x -- watch",
     "storybook": "lerna run --scope storybook start --stream",
