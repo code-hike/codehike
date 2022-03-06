@@ -4,18 +4,25 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/ch-core.umd.js",
-  "module": "./dist/plugin.es.js",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/plugin.es.js",
-      "require": "./dist/plugin.umd.js",
-      "style": "./dist/style.css"
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "style": "./dist/index.css"
     },
-    "./components": "./dist/components.es.js",
-    "./dist/index.css": "./dist/style.css"
+    "./components": {
+      "import": "./dist/components.esm.js",
+      "require": "./dist/components.cjs.js"
+    },
+    "./package.json": "./package.json",
+    "./styles": "./dist/index.css",
+    "./styles.css": "./dist/index.css",
+    "./dist/index.css": "./dist/index.css",
+    "./dist/components.cjs": "./dist/components.cjs.js"
   },
-  "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "next",
     "build": "rollup -c rollup.config.js",

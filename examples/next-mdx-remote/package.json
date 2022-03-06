@@ -1,6 +1,9 @@
 {
+  "name": "codehike-next-mdx-remote",
+  "private": true,
+  "version": "0.0.0",
   "dependencies": {
-    "@code-hike/mdx": "^0.3.0-next.27",
+    "@code-hike/mdx": "^0.3.0",
     "next": "^12.1.0",
     "next-mdx-remote": "^4.0.0",
     "react": "^17.0.2",

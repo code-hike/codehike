@@ -1,7 +1,7 @@
 import { serialize } from "next-mdx-remote/serialize"
 import { MDXRemote } from "next-mdx-remote"
 import { remarkCodeHike } from "@code-hike/mdx"
-import { CH } from "@code-hike/mdx/dist/components.cjs"
+import { CH } from "@code-hike/mdx/components"
 import theme from "shiki/themes/solarized-dark.json"
 import fs from "fs"
 
