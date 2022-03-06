@@ -15,7 +15,8 @@
     },
     "./components": {
       "import": "./dist/components.esm.js",
-      "require": "./dist/components.cjs.js"
+      "require": "./dist/components.cjs.js",
+      "default": "./dist/components.cjs.js"
     },
     "./package.json": "./package.json",
     "./styles": "./dist/index.css",

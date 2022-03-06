@@ -26,7 +26,7 @@ export function remarkCodeHike(
     visit(tree, "mdxjsEsm", (node: EsmNode) => {
       if (
         node.value.startsWith(
-          `import { CH } from "@code-hike/mdx"`
+          `import { CH } from "@code-hike/mdx`
         )
       ) {
         hasCodeHikeImport = true

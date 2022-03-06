@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration
 } from "remix";
-import codeHikeStyles from "@code-hike/mdx/dist/index.css";
+import codeHikeStyles from "@code-hike/mdx/styles.css";
 
 export function meta() {
   return { title: "New Remix App" };

@@ -4,7 +4,6 @@ import fs from "fs"
 import path from "path"
 import { bundleMDX } from "mdx-bundler"
 import { getMDXComponent } from "mdx-bundler/client"
-import { useMemo } from "react"
 
 export async function getStaticProps() {
   // can be from a local file, database, anywhere
