@@ -10,14 +10,18 @@ export type TweenParams =
     }
 
 export function tween(params: TweenParams, t: number) {
-  if (params.fixed) return params.value
-  const [start, end] = params.interval
-  const [from, to] = params.extremes
-  if (t < start) return from
-  if (t > end) return to
-  const x = (t - start) / (end - start)
-  const ease = params.ease || easing.linear
-  return from + ease(x) * (to - from)
+  // needs === true for typescript...
+  if (params.fixed === true) {
+    return params.value
+  } else {
+    const [start, end] = params.interval
+    const [from, to] = params.extremes
+    if (t < start) return from
+    if (t > end) return to
+    const x = (t - start) / (end - start)
+    const ease = params.ease || easing.linear
+    return from + ease(x) * (to - from)
+  }
 }
 
 export function stagger(

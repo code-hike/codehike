@@ -6,46 +6,67 @@ import typescript from "rollup-plugin-typescript2"
 // import copy from "rollup-plugin-copy"
 import path from "path"
 import json from "@rollup/plugin-json"
-import fs from "fs"
-
-const createConfig = filename => ({
-  input: `src/${filename}.tsx`,
-  output: [
-    // {
-    //   file: `./dist/${filename}.js`,
-    //   format: "umd",
-    //   name: "ch", //todo get by parameter
-    // },
-    {
-      file: `./dist/${filename}.cjs.js`,
-      format: "cjs",
-    },
-    {
-      file: `./dist/${filename}.esm.js`,
-      format: "es",
-    },
-  ],
-  // external: ["react"],
-  plugins: [
-    json({ compact: true }),
-    typescript({
-      tsconfigOverride: {
-        compilerOptions: { jsx: "react" },
-      },
-    }),
-    postcss({
-      extract: path.resolve("dist/index.css"),
-      plugins: [autoprefixer(), cssnano()],
-    }),
-    // copy({
-    //   targets: [{ src: "src/index.scss", dest: "dist" }],
-    // }),
-  ],
-})
+import del from "rollup-plugin-delete"
 
 export default function makeConfig(commandOptions) {
-  const { inputs = ["index"] } = JSON.parse(
-    fs.readFileSync("package.json", "utf8")
-  )
-  return inputs.map(createConfig)
+  return [
+    {
+      input: "src/index.scss",
+      output: {
+        file: "dist/index.css",
+        format: "es",
+      },
+      plugins: [
+        del({ targets: "dist/*" }),
+        postcss({
+          extract: path.resolve("dist/index.css"),
+          plugins: [autoprefixer(), cssnano()],
+        }),
+      ],
+    },
+    {
+      input: `src/index.tsx`,
+      output: [
+        {
+          file: `./dist/index.cjs.js`,
+          format: "cjs",
+        },
+        {
+          file: `./dist/index.esm.js`,
+          format: "es",
+        },
+      ],
+      // external: ["react"],
+      plugins: [
+        json({ compact: true }),
+        typescript({
+          tsconfigOverride: {
+            compilerOptions: { jsx: "react" },
+          },
+        }),
+      ],
+    },
+    {
+      input: `src/components.tsx`,
+      output: [
+        {
+          file: `./dist/components.cjs.js`,
+          format: "cjs",
+        },
+        {
+          file: `./dist/components.esm.js`,
+          format: "es",
+        },
+      ],
+      // external: ["react"],
+      plugins: [
+        json({ compact: true }),
+        typescript({
+          tsconfigOverride: {
+            compilerOptions: { jsx: "react" },
+          },
+        }),
+      ],
+    },
+  ]
 }

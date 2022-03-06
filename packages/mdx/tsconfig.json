@@ -31,15 +31,15 @@
         "node_modules/*"
       ]
     },
-    // remove
     "downlevelIteration": true,
     "resolveJsonModule": true,
-    "target": "es5",
+    "target": "es6",
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
   "exclude": [
     "node_modules"
