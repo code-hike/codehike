@@ -9,12 +9,8 @@
   },
   "scripts": {
     "build": "lerna run --scope @*/mdx build",
-    "watch": "lerna run --since HEAD --exclude-dependents --parallel x -- watch",
-    "watch-all": "lerna run --parallel x -- watch",
+    "dev": "lerna run --scope @*/mdx dev",
     "storybook": "lerna run --scope storybook start --stream",
-    "playground": "lerna run --scope @*/playground dev --stream",
-    "docs": "lerna run build-docs --stream",
-    "build-playground": "lerna run --scope @*/playground build --stream",
     "release": "auto shipit"
   },
   "devDependencies": {
