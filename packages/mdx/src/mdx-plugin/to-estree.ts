@@ -196,7 +196,6 @@ export function valueToEstree(
 
     return {
       type: "ObjectExpression",
-      // @ts-expect-error: looks like an object.
       properties: Object.entries(value).map(
         ([name, val]) => ({
           type: "Property",

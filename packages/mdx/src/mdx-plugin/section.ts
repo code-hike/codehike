@@ -1,10 +1,9 @@
-import visit from "unist-util-visit"
-import { Node, Parent } from "unist"
 import { visitAsync, toJSX } from "./unist-utils"
 import { isEditorNode, mapAnyCodeNode } from "./code"
+import { SuperNode, visit } from "./nodes"
 
 export async function transformSections(
-  tree: Node,
+  tree: SuperNode,
   config: { theme: any }
 ) {
   await visitAsync(
@@ -19,7 +18,7 @@ export async function transformSections(
 }
 
 async function transformSection(
-  node: Node,
+  node: SuperNode,
   config: { theme: any }
 ) {
   let props
@@ -49,7 +48,7 @@ async function transformSection(
   }
 }
 
-export function transformLinks(tree: Node) {
+export function transformLinks(tree: SuperNode) {
   visit(tree, "link", (linkNode: any) => {
     const url = decodeURI(linkNode["url"])
     if (url.startsWith("focus://")) {

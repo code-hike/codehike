@@ -1,15 +1,14 @@
-import { Node, Parent } from "unist"
-import { transformCodeNodes } from "../mdx-plugin/code"
-import { transformEditorNodes } from "../mdx-plugin/editor"
-import { transformSections } from "../mdx-plugin/section"
-import { transformSpotlights } from "../mdx-plugin/spotlight"
-import { transformScrollycodings } from "../mdx-plugin/scrollycoding"
-import visit from "unist-util-visit"
-import { transformSlideshows } from "../mdx-plugin/slideshow"
-import { valueToEstree } from "../mdx-plugin/to-estree"
-import { CH_CODE_CONFIG_VAR_NAME } from "../mdx-plugin/unist-utils"
-import { transformPreviews } from "../mdx-plugin/preview"
-import { transformInlineCodes } from "../mdx-plugin/inline-code"
+import { transformCodeNodes } from "./code"
+import { transformEditorNodes } from "./editor"
+import { transformSections } from "./section"
+import { transformSpotlights } from "./spotlight"
+import { transformScrollycodings } from "./scrollycoding"
+import { transformSlideshows } from "./slideshow"
+import { valueToEstree } from "./to-estree"
+import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
+import { transformPreviews } from "./preview"
+import { transformInlineCodes } from "./inline-code"
+import { EsmNode, SuperNode, visit } from "./nodes"
 
 type CodeHikeConfig = {
   theme: any
@@ -20,11 +19,11 @@ type CodeHikeConfig = {
 export function remarkCodeHike(
   unsafeConfig: CodeHikeConfig
 ) {
-  return async (tree: Node) => {
+  return async (tree: SuperNode) => {
     const config = addConfigDefaults(unsafeConfig)
     // TODO add opt-in config
     let hasCodeHikeImport = false
-    visit(tree, "mdxjsEsm", (node: any) => {
+    visit(tree, "mdxjsEsm", (node: EsmNode) => {
       if (
         node.value.startsWith(
           `import { CH } from "@code-hike/mdx"`
@@ -34,10 +33,10 @@ export function remarkCodeHike(
       }
     })
 
-    addConfig(tree as Parent, config)
+    addConfig(tree, config)
 
     if (config.autoImport && !hasCodeHikeImport) {
-      addImportNode(tree as Parent)
+      addImportNode(tree)
     }
 
     try {
@@ -67,7 +66,7 @@ function addConfigDefaults(
 }
 
 function addConfig(
-  tree: Parent<any>,
+  tree: SuperNode,
   config: CodeHikeConfig
 ) {
   tree.children.unshift({
@@ -103,7 +102,7 @@ function addConfig(
   })
 }
 
-function addImportNode(tree: Parent<any>) {
+function addImportNode(tree: SuperNode) {
   tree.children.unshift({
     type: "mdxjsEsm",
     value: 'import { CH } from "@code-hike/mdx"',

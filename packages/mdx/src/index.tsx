@@ -1,1 +1,1 @@
-export { remarkCodeHike } from "./mdx/plugin"
+export { remarkCodeHike } from "./mdx-plugin/plugin"

@@ -1,4 +1,3 @@
-import { Node, Parent } from "unist"
 import { highlight } from "../highlighter"
 import { extractLinks } from "./links"
 import {
@@ -16,15 +15,16 @@ import {
   extractJSXAnnotations,
 } from "./annotations"
 import { mergeFocus } from "../utils"
+import { CodeNode, SuperNode } from "./nodes"
 
 export async function transformCodeNodes(
-  tree: Node,
+  tree: SuperNode,
   { theme }: { theme: any }
 ) {
   await visitAsync(
     tree,
     "code",
-    async (node, index, parent) => {
+    async (node: CodeNode, index, parent) => {
       await transformCode(
         { node, index, parent: parent! },
         { theme }
@@ -33,7 +33,7 @@ export async function transformCodeNodes(
   )
 }
 
-export function isEditorNode(node: Node) {
+export function isEditorNode(node: SuperNode) {
   return (
     node.type === "code" ||
     (node.type === "mdxJsxFlowElement" &&
@@ -42,7 +42,7 @@ export function isEditorNode(node: Node) {
 }
 
 async function transformCode(
-  nodeInfo: NodeInfo,
+  nodeInfo: NodeInfo<CodeNode>,
   config: { theme: any }
 ) {
   toJSX(nodeInfo.node, {
@@ -66,14 +66,14 @@ export async function mapAnyCodeNode(
 ) {
   const { node } = nodeInfo
   if (node.type === "code") {
-    return mapCode(nodeInfo, config)
+    return mapCode(nodeInfo as NodeInfo<CodeNode>, config)
   } else {
     return mapEditor(nodeInfo, config)
   }
 }
 
 async function mapCode(
-  nodeInfo: NodeInfo,
+  nodeInfo: NodeInfo<CodeNode>,
   config: { theme: any }
 ): Promise<EditorProps> {
   const file = await mapFile(nodeInfo, config)
@@ -94,19 +94,23 @@ export async function mapEditor(
   config: { theme: any }
 ): Promise<EditorProps> {
   const [northNodes, southNodes = []] = splitChildren(
-    node as Parent,
+    node,
     "thematicBreak"
   )
 
   const northFiles = await Promise.all(
     northNodes
       .filter(({ node }) => node.type === "code")
-      .map(nodeInfo => mapFile(nodeInfo, config))
+      .map((nodeInfo: NodeInfo<CodeNode>) =>
+        mapFile(nodeInfo, config)
+      )
   )
   const southFiles = await Promise.all(
     southNodes
       .filter(({ node }) => node.type === "code")
-      .map(nodeInfo => mapFile(nodeInfo, config))
+      .map((nodeInfo: NodeInfo<CodeNode>) =>
+        mapFile(nodeInfo, config)
+      )
   )
   const allFiles = [...northFiles, ...southFiles]
   const northActive =
@@ -141,7 +145,7 @@ export async function mapEditor(
 }
 
 async function mapFile(
-  { node, index, parent }: NodeInfo,
+  { node, index, parent }: NodeInfo<CodeNode>,
   config: { theme: any }
 ): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config

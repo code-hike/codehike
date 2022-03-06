@@ -1,15 +1,14 @@
-import { Node, Parent } from "unist"
-import visit from "unist-util-visit"
+import { SuperNode, visit } from "./nodes"
 import { valueToEstree } from "./to-estree"
 
-export type NodeInfo = {
-  node: Node
+export type NodeInfo<N extends SuperNode = SuperNode> = {
+  node: N
   index: number
-  parent: Parent
+  parent: SuperNode
 }
 
 export function splitChildren(
-  parent: Parent,
+  parent: SuperNode,
   type: string
 ) {
   const splits = [] as NodeInfo[][]
@@ -28,12 +27,12 @@ export function splitChildren(
 }
 
 export async function visitAsync(
-  tree: Node,
+  tree: SuperNode,
   type: string | string[],
   visitor: (
-    node: Node,
+    node: SuperNode,
     index: number,
-    parent: Parent | undefined
+    parent: SuperNode | undefined
   ) => void | Promise<any>
 ) {
   const promises = [] as Promise<any>[]

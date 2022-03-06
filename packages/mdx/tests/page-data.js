@@ -92,8 +92,6 @@ export async function toProps({ demo, theme }) {
     result = errorBundle
   }
 
-  console.log({ result })
-
   const shiki = await import("shiki")
   const highlighter = await shiki.getHighlighter({
     theme: "github-light",

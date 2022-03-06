@@ -3,15 +3,14 @@ import {
   toJSX,
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
-import { Node, Parent } from "unist"
-import visit from "unist-util-visit"
-import visitParents from "unist-util-visit-parents"
 import { highlight } from "../highlighter"
 import { EditorStep } from "../mini-editor"
 import { Code } from "../utils"
+import { SuperNode, visit } from "./nodes"
+import visitParents from "unist-util-visit-parents"
 
 export async function transformInlineCodes(
-  tree: Node,
+  tree: SuperNode,
   { theme }: { theme: any }
 ) {
   // transform *`foo`* to <CH.InlineCode>foo</CH.InlineCode>
@@ -56,8 +55,8 @@ export async function transformInlineCodes(
 }
 
 async function getCode(
-  tree: Node,
-  node: Parent,
+  tree: SuperNode,
+  node: SuperNode,
   inlinedCode: string,
   lang: string | undefined,
   theme: any
@@ -104,10 +103,13 @@ async function getCode(
   })
 }
 
-function getAncestors(tree: Node, node: Node): Node[] {
-  let ancestors: Node[] = []
-  visitParents(tree, node, (node, nodeAncestors) => {
-    ancestors = nodeAncestors
+function getAncestors(
+  tree: SuperNode,
+  node: SuperNode
+): SuperNode[] {
+  let ancestors: SuperNode[] = []
+  visitParents(tree, node as any, (node, nodeAncestors) => {
+    ancestors = nodeAncestors as SuperNode[]
   })
   return ancestors
 }

@@ -4,13 +4,10 @@ import {
   toJSX,
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
-import { Node } from "unist"
+import { JsxNode, SuperNode } from "./nodes"
 
 export async function getPresetConfig(
-  attributes?: {
-    name: string
-    value: "string"
-  }[]
+  attributes?: JsxNode["attributes"]
 ) {
   // todo add cache
   const presetAttribute = attributes?.find(
@@ -25,7 +22,7 @@ export async function getPresetConfig(
   return await res.json()
 }
 
-export async function transformPreviews(tree: Node) {
+export async function transformPreviews(tree: SuperNode) {
   await visitAsync(
     tree,
     "mdxJsxFlowElement",

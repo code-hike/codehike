@@ -3,13 +3,13 @@ import {
   toJSX,
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
-import { Node, Parent } from "unist"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./preview"
 import { transformLinks } from "./section"
+import { SuperNode } from "./nodes"
 
 export async function transformScrollycodings(
-  tree: Node,
+  tree: SuperNode,
   config: { theme: any }
 ) {
   await visitAsync(
@@ -23,11 +23,11 @@ export async function transformScrollycodings(
   )
 }
 async function transformScrollycoding(
-  node: Node,
+  node: SuperNode,
   { theme }: { theme: any }
 ) {
   const editorSteps = await extractStepsInfo(
-    node as Parent,
+    node,
     { theme },
     "merge step with previous"
   )

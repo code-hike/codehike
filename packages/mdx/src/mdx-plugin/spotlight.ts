@@ -3,18 +3,18 @@ import {
   toJSX,
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
-import { Node, Parent } from "unist"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./preview"
+import { JsxNode, SuperNode } from "./nodes"
 
 export async function transformSpotlights(
-  tree: Node,
+  tree: SuperNode,
   config: { theme: any }
 ) {
   await visitAsync(
     tree,
     "mdxJsxFlowElement",
-    async (node: any) => {
+    async (node: JsxNode) => {
       if (node.name === "CH.Spotlight") {
         await transformSpotlight(node, config)
       }
@@ -23,17 +23,17 @@ export async function transformSpotlights(
 }
 
 async function transformSpotlight(
-  node: Node,
+  node: JsxNode,
   { theme }: { theme: any }
 ) {
   const editorSteps = await extractStepsInfo(
-    node as Parent,
+    node,
     { theme },
     "merge steps with header"
   )
 
   const presetConfig = await getPresetConfig(
-    (node as any).attributes
+    node.attributes
   )
 
   toJSX(node, {

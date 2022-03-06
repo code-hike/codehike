@@ -1,11 +1,11 @@
-import { Node, Parent } from "unist"
 import { CodeStep } from "../smooth-code"
 import { annotationsMap } from "../mdx-client/annotations"
+import { SuperNode } from "./nodes"
 
 export function extractLinks(
-  node: Node,
+  node: SuperNode,
   index: number,
-  parent: Parent,
+  parent: SuperNode,
   code: string
 ) {
   const annotations = [] as CodeStep["annotations"]

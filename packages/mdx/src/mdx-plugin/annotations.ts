@@ -1,8 +1,8 @@
 import { Code, relativeToAbsolute } from "../utils"
 import { CodeAnnotation } from "../smooth-code"
-import { Node, Parent } from "unist"
 import { wrapChildren } from "./to-estree"
 import { annotationsMap } from "../mdx-client/annotations"
+import { JsxNode as JsxNode, SuperNode } from "./nodes"
 
 export function getAnnotationsFromMetastring(
   options: Record<string, string>
@@ -76,9 +76,9 @@ function getCommentData(line: Code["lines"][0]) {
 }
 
 export function extractJSXAnnotations(
-  node: Node,
+  node: SuperNode,
   index: number,
-  parent: Parent
+  parent: SuperNode
 ) {
   const annotations = [] as CodeAnnotation[]
 
@@ -87,7 +87,8 @@ export function extractJSXAnnotations(
     parent.children[nextIndex] &&
     parent.children[nextIndex].type ===
       "mdxJsxFlowElement" &&
-    parent.children[nextIndex].name === "CH.Annotation"
+    (parent.children[nextIndex] as JsxNode).name ===
+      "CH.Annotation"
   ) {
     const jsxAnnotation = parent.children[nextIndex] as any
 

@@ -1,20 +1,20 @@
 import { EditorStep } from "../mini-editor"
-import { Node, Parent } from "unist"
 import { isEditorNode, mapAnyCodeNode } from "./code"
 import { reduceSteps } from "./code-files-reducer"
+import { SuperNode } from "./nodes"
 
 // extract step info
 
 export async function extractStepsInfo(
-  parent: Parent,
+  parent: SuperNode,
   config: { theme: any },
   merge:
     | "merge steps with header"
     | "merge step with previous"
 ) {
   const steps = [] as {
-    editorStep: EditorStep
-    children: Node[]
+    editorStep?: EditorStep
+    children: SuperNode[]
   }[]
 
   let stepIndex = 0
