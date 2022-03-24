@@ -105,7 +105,8 @@ function addConfig(
 function addImportNode(tree: SuperNode) {
   tree.children.unshift({
     type: "mdxjsEsm",
-    value: 'import { CH } from "@code-hike/mdx/components"',
+    value:
+      'import { CH } from "@code-hike/mdx/dist/components.cjs.js"',
     data: {
       estree: {
         type: "Program",
@@ -127,8 +128,9 @@ function addImportNode(tree: SuperNode) {
             ],
             source: {
               type: "Literal",
-              value: "@code-hike/mdx/components",
-              raw: '"@code-hike/mdx/components"',
+              value:
+                "@code-hike/mdx/dist/components.cjs.js",
+              raw: '"@code-hike/mdx/dist/components.cjs.js"',
             },
           },
         ],

@@ -22,7 +22,11 @@
     "./styles": "./dist/index.css",
     "./styles.css": "./dist/index.css",
     "./dist/index.css": "./dist/index.css",
-    "./dist/components.cjs": "./dist/components.cjs.js"
+    "./dist/components.cjs.js": {
+      "import": "./dist/components.esm.js",
+      "require": "./dist/components.cjs.js",
+      "default": "./dist/components.cjs.js"
+    }
   },
   "scripts": {
     "dev": "next",
