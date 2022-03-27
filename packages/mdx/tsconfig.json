@@ -1,12 +1,47 @@
 {
-  "extends": "../tsconfig.json",
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types"
+  ],
   "compilerOptions": {
     "rootDir": "./src",
     "baseUrl": "./",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "importHelpers": true,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "esModuleInterop": true,
     "paths": {
-      "@": ["./"],
-      "*": ["src/*", "node_modules/*"]
-    }
-  }
+      "@": [
+        "./"
+      ],
+      "*": [
+        "src/*",
+        "node_modules/*"
+      ]
+    },
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "target": "es6",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "incremental": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

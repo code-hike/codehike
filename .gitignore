@@ -10,3 +10,6 @@ yarn-error.log
 storybook-static
 packages/playground/out
 packages/starter
+
+# Contentlayer
+.contentlayer
