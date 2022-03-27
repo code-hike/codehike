@@ -2,6 +2,9 @@
   "name": "codehike-nextra",
   "private": true,
   "version": "0.0.0",
+  "scripts": {
+    "build": "next build"
+  },
   "dependencies": {
     "@code-hike/mdx": "^0.3.0",
     "next": "^12.1.0",

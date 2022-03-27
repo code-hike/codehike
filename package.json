@@ -8,7 +8,7 @@
     ]
   },
   "scripts": {
-    "build": "lerna run --scope @*/mdx build",
+    "build": "lerna run build",
     "dev": "lerna run --scope @*/mdx dev",
     "storybook": "lerna run --scope storybook start --stream",
     "release": "auto shipit"

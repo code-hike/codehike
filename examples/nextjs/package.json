@@ -2,6 +2,9 @@
   "name": "codehike-nextjs",
   "private": true,
   "version": "0.0.0",
+  "scripts": {
+    "build": "next build"
+  },
   "dependencies": {
     "@code-hike/mdx": "^0.3.0",
     "@mdx-js/loader": "^2.0.0",
