@@ -1,49 +1,33 @@
-import { compile, runSync } from "@mdx-js/mdx"
+import { runSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime.js"
-import fs from "fs"
-import { remarkCodeHike } from "../src/index"
 import { CH } from "../src/components"
-import theme from "shiki/themes/slack-dark.json"
 import Link from "next/link"
+import { getCode, getFiles } from "../dev/files"
 
 export const config = {
   unstable_includeFiles: ["./tests"],
   includeFiles: ["./tests"],
 }
 
-export async function getServerSideProps({ params }) {
-  const files = await fs.promises.readdir("./tests/")
-
-  const tests = files
-    .filter(filename => filename.endsWith(".mdx"))
-    .map(filename => filename.slice(0, -4))
-
-  const { name = "test" } = params
-  const mdxSource = await fs.promises.readFile(
-    `./tests/${name}.mdx`,
-    "utf8"
-  )
-  try {
-    const props = {
-      tests,
-      current: name,
-      code: String(
-        await compile(mdxSource, {
-          outputFormat: "function-body",
-          remarkPlugins: [
-            [remarkCodeHike, { autoImport: false, theme }],
-          ],
-        })
-      ),
-    }
-    return { props }
-  } catch (e) {
-    console.error(
-      "getServerSideProps error",
-      JSON.stringify(e, null, 2)
-    )
+export async function getStaticPaths() {
+  const files = await getFiles()
+  return {
+    paths: files.map(file => ({ params: { name: file } })),
+    fallback: false,
   }
-  return { props: { error: true, tests, current: name } }
+}
+
+export async function getStaticProps({ params }) {
+  const { name = "test" } = params
+  const files = await getFiles()
+  const code = await getCode(name)
+  return {
+    props: {
+      tests: files,
+      code,
+      current: name,
+    },
+  }
 }
 
 export default function Page({ current, code, tests }) {
