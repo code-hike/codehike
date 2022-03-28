@@ -1,4 +1,5 @@
 module.exports = {
+  outputFileTracing: true,
   redirects() {
     return [
       {

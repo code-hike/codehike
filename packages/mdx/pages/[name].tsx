@@ -6,6 +6,11 @@ import { CH } from "../src/components"
 import theme from "shiki/themes/slack-dark.json"
 import Link from "next/link"
 
+export const config = {
+  unstable_includeFiles: ["./tests"],
+  includeFiles: ["./tests"],
+}
+
 export async function getServerSideProps({ params }) {
   const files = await fs.promises.readdir("./tests/")
 
