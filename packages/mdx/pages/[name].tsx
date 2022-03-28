@@ -4,11 +4,6 @@ import { CH } from "../src/components"
 import Link from "next/link"
 import { getCode, getFiles } from "../dev/files"
 
-export const config = {
-  unstable_includeFiles: ["./tests"],
-  includeFiles: ["./tests"],
-}
-
 export async function getStaticPaths() {
   const files = await getFiles()
   return {
