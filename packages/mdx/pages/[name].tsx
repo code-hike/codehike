@@ -2,7 +2,7 @@ import { runSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime.js"
 import { CH } from "../src/components"
 import Link from "next/link"
-import { getCode, getFiles } from "../dev/files"
+import { getCode, getContent, getFiles } from "../dev/files"
 
 export async function getStaticPaths() {
   const files = await getFiles()
@@ -14,8 +14,10 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { name = "test" } = params
+
   const files = await getFiles()
-  const code = await getCode(name)
+  const content = await getContent(name)
+  const code = await getCode(content)
   return {
     props: {
       tests: files,
@@ -25,7 +27,12 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export default function Page({ current, code, tests }) {
+export default function Page({
+  current,
+  code,
+  tests,
+  content,
+}) {
   const { default: Content } = runSync(code, runtime)
   return (
     <div
@@ -36,44 +43,52 @@ export default function Page({ current, code, tests }) {
         margin: "8px",
       }}
     >
-      <nav
-        style={{
-          background: "#fafafa",
-          borderRadius: 4,
-          padding: 16,
-          minWidth: 180,
-        }}
-      >
-        <ul style={{ margin: 0, padding: 0 }}>
-          {tests.map(test => (
-            <li key={test} style={{ listStyle: "none" }}>
-              <Link href={`/${encodeURIComponent(test)}`}>
-                <a
-                  style={{
-                    color: "black",
-                    textDecoration: "none",
-                    fontWeight:
-                      test === current ? "bold" : "normal",
-                  }}
-                >
-                  {test}
-                </a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div
-        style={{
-          maxWidth: 900,
-          minWidth: 600,
-          background: "#fafafa",
-          borderRadius: 4,
-          padding: 16,
-        }}
-      >
-        <Content components={{ CH }} />
-      </div>
+      <Sidebar tests={tests} current={current} />
+      <Result Content={Content} />
+    </div>
+  )
+}
+
+function Sidebar({ tests, current }) {
+  return (
+    <nav
+      style={{
+        background: "#fafafa",
+        borderRadius: 4,
+        padding: "16px 0",
+        minWidth: 180,
+      }}
+    >
+      <ul style={{ margin: 0, padding: 0 }}>
+        {tests.map(test => (
+          <li
+            key={test}
+            style={{ listStyle: "none" }}
+            className="sidebar-link"
+            data-active={test === current}
+          >
+            <Link href={`/${encodeURIComponent(test)}`}>
+              <a>{test}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+function Result({ Content }) {
+  return (
+    <div
+      style={{
+        maxWidth: 900,
+        minWidth: 600,
+        background: "#fafafa",
+        borderRadius: 4,
+        padding: 16,
+      }}
+    >
+      <Content components={{ CH }} />
     </div>
   )
 }

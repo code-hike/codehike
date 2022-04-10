@@ -13,6 +13,26 @@ div#__next > div {
   /* --ch-scrollycoding-code-min-height: 500px;
   --ch-scrollycoding-sticker-width: 500px; */
 }
+
+.sidebar-link {
+  font-size: 14px;
+}
+
+.sidebar-link:hover {
+  background: rgba(30, 167, 253, 0.1);
+}
+
+.sidebar-link[data-active="true"] {
+  background: rgba(30, 167, 253, 0.15);
+}
+
+.sidebar-link a {
+  padding: 2px 16px;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
 /* 
 nav {
   height: 40px;

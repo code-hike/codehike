@@ -9,13 +9,16 @@ export async function getFiles() {
     .filter(file => file.endsWith(".mdx"))
     .map(filename => filename.slice(0, -4))
 }
-
-export async function getCode(filename: string) {
+export async function getContent(filename: string) {
   const file = await fs.promises.readFile(
     `./dev/content/${filename}.mdx`,
     "utf8"
   )
 
+  return file
+}
+
+export async function getCode(file: string) {
   const code = String(
     await compile(file, {
       outputFormat: "function-body",
