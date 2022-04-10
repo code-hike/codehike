@@ -28,6 +28,9 @@
       "default": "./dist/components.cjs.js"
     }
   },
+  "browser": {
+    "./dist/index.esm.js": "./dist/index.browser.mjs"
+  },
   "scripts": {
     "dev": "next",
     "build": "rollup -c rollup.config.js",
@@ -50,6 +53,7 @@
   "devDependencies": {
     "@mdx-js/mdx": "^2.0.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-replace": "^4.0.0",
     "@types/diff": "^5.0.2",
     "@types/node": "^17.0.21",
     "@types/node-fetch": "^2.6.1",

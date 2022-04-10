@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Code Hike in the browser</title>
+    <link
+      rel="stylesheet"
+      href="https://esm.sh/@code-hike/mdx@0.4.0--canary.154.285c03a.0/dist/index.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import React from "https://esm.sh/react"
+      import ReactDOM from "https://esm.sh/react-dom"
+      import { evaluate } from "https://esm.sh/@mdx-js/mdx?dev"
+      import * as runtime from "https://esm.sh/react/jsx-runtime.js"
+
+      import { remarkCodeHike } from "https://esm.sh/@code-hike/mdx@0.4.0--canary.154.285c03a.0/dist/index.browser.mjs"
+      import { CH } from "https://esm.sh/@code-hike/mdx@0.4.0--canary.154.285c03a.0/components"
+      import theme from "https://esm.sh/shiki@0.10.1/themes/nord.json" assert { type: "json" }
+
+      const mdx = `# Test
+
+      ~~~python hello.py mark=1[22:30]
+      print("Rendered with Code Hike")
+      ~~~
+      `
+
+      const { default: Content } = await evaluate(mdx, {
+        ...runtime,
+        remarkPlugins: [[remarkCodeHike, { autoImport: false, theme }]],
+      })
+
+      const App = () => {
+        return React.createElement(Content, { components: { CH } })
+      }
+
+      ReactDOM.render(React.createElement(App), document.getElementById("root"))
+    </script>
+  </body>
+</html>

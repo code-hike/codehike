@@ -33,6 +33,7 @@ export async function highlight({
     }
   }
   if (highlighterPromise === null) {
+    // TODO add version
     setCDN("https://unpkg.com/shiki/")
     highlighterPromise = getHighlighter({
       theme: theme as IShikiTheme,
