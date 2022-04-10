@@ -2,6 +2,7 @@ import fs from "fs"
 import { remarkCodeHike } from "../src/index"
 import { compile } from "@mdx-js/mdx"
 import theme from "shiki/themes/slack-dark.json"
+import { withDebugger } from "mdx-debugger"
 
 export async function getFiles() {
   const files = await fs.promises.readdir("./dev/content")
@@ -19,8 +20,16 @@ export async function getContent(filename: string) {
 }
 
 export async function getCode(file: string) {
+  let debugLink = ""
+
+  const debugCompile = withDebugger(compile, {
+    log: (path: string, url: string) => {
+      debugLink = url
+    },
+  })
+
   const code = String(
-    await compile(file, {
+    await debugCompile(file, {
       outputFormat: "function-body",
       remarkPlugins: [
         [remarkCodeHike, { autoImport: false, theme }],
@@ -28,5 +37,5 @@ export async function getCode(file: string) {
     })
   )
 
-  return code
+  return { code, debugLink }
 }

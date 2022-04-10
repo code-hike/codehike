@@ -17,11 +17,12 @@ export async function getStaticProps({ params }) {
 
   const files = await getFiles()
   const content = await getContent(name)
-  const code = await getCode(content)
+  const { code, debugLink } = await getCode(content)
   return {
     props: {
       tests: files,
       code,
+      debugLink,
       current: name,
     },
   }
@@ -31,8 +32,9 @@ export default function Page({
   current,
   code,
   tests,
-  content,
+  debugLink,
 }) {
+  console.log(debugLink)
   const { default: Content } = runSync(code, runtime)
   return (
     <div
@@ -44,7 +46,7 @@ export default function Page({
       }}
     >
       <Sidebar tests={tests} current={current} />
-      <Result Content={Content} />
+      <Result Content={Content} debugLink={debugLink} />
     </div>
   )
 }
@@ -77,7 +79,7 @@ function Sidebar({ tests, current }) {
   )
 }
 
-function Result({ Content }) {
+function Result({ Content, debugLink }) {
   return (
     <div
       style={{
@@ -86,8 +88,21 @@ function Result({ Content }) {
         background: "#fafafa",
         borderRadius: 4,
         padding: 16,
+        position: "relative",
       }}
     >
+      <a
+        href={debugLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          position: "absolute",
+          right: "16px",
+          top: "16px",
+        }}
+      >
+        Debug
+      </a>
       <Content components={{ CH }} />
     </div>
   )

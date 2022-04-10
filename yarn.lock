@@ -6963,6 +6963,13 @@ mdx-bundler@^8.0.1:
     uuid "^8.3.2"
     xdm "^3.3.0"
 
+mdx-debugger@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/mdx-debugger/-/mdx-debugger-0.2.0.tgz#c441bdc9790731774d837374d3acda01cc6f5e86"
+  integrity sha512-xIgIhQszqkLWeh+RR0Y7m+2983EbHMuRmwY3gfDtamXnsi4NO32G88nTAEIDq7D0fV7Ml3BW3yT9dM7jTZjRzQ==
+  dependencies:
+    lz-string "^1.4.4"
+
 meant@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/meant/-/meant-1.0.3.tgz#67769af9de1d158773e928ae82c456114903554c"
