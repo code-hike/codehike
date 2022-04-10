@@ -48,7 +48,7 @@ export default function makeConfig(commandOptions) {
         }),
       ],
     },
-    // for the browser esm we need to replace shiki with shiki/dist/shiki.browser.mjs
+    // for the browser esm we need to replace shiki with shiki/dist/index.browser.mjs
     // https://github.com/shikijs/shiki/issues/131#issuecomment-1094281851
     {
       input: `src/index.tsx`,
@@ -63,9 +63,8 @@ export default function makeConfig(commandOptions) {
         replace({
           delimiters: ["", ""],
           values: {
-            '"shiki"': JSON.stringify(
-              "shiki/dist/index.browser.mjs"
-            ),
+            'from "shiki"':
+              'from "shiki/dist/index.browser.mjs"',
           },
         }),
         json({ compact: true }),
