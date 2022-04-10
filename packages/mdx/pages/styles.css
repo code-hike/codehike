@@ -4,16 +4,36 @@ body > div:first-child,
 div#__next,
 div#__next > div {
   margin: 0;
-  height: 100%;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
   font-family: sans-serif;
   background-color: #444;
+  /* height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column; */
   /* --ch-scrollycoding-code-min-height: 500px;
   --ch-scrollycoding-sticker-width: 500px; */
 }
 
+.sidebar-link {
+  font-size: 14px;
+}
+
+.sidebar-link:hover {
+  background: rgba(30, 167, 253, 0.1);
+}
+
+.sidebar-link[data-active="true"] {
+  background: rgba(30, 167, 253, 0.15);
+}
+
+.sidebar-link a {
+  padding: 2px 16px;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+/* 
 nav {
   height: 40px;
   overflow: hidden;
@@ -22,10 +42,10 @@ nav {
 main {
   flex: 1;
   overflow: auto;
-}
+} */
 
 /* main */
-
+/* 
 .columns {
   display: flex;
   min-height: 100%;
@@ -55,11 +75,9 @@ main {
   border-radius: 6px;
 }
 
-/* nav */
 
 nav {
   display: flex;
-  /* justify-content: space-evenly; */
   align-items: center;
   background-color: #222;
   color: #ccc;
@@ -100,18 +118,17 @@ nav .version {
 
 nav label {
   margin-right: 24px;
-}
+} */
 
-nav select {
+/* nav select {
   margin-left: 6px;
   border-radius: 4px;
   background-color: #fafafa;
   height: 24px;
-  /* overflow: hidden; */
-}
+} */
 
 /* result */
-
+/* 
 .result {
   min-width: 900px;
   width: 900px;
@@ -125,4 +142,4 @@ pre.shiki {
 .tailwind-font code {
   font-family: ui-monospace, SFMono-Regular, Consolas,
     "Liberation Mono", Menlo, monospace;
-}
+} */
