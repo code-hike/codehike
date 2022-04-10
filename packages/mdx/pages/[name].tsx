@@ -3,6 +3,7 @@ import * as runtime from "react/jsx-runtime.js"
 import { CH } from "../src/components"
 import Link from "next/link"
 import { getCode, getContent, getFiles } from "../dev/files"
+import Head from "next/head"
 
 export async function getStaticPaths() {
   const files = await getFiles()
@@ -34,7 +35,6 @@ export default function Page({
   tests,
   debugLink,
 }) {
-  console.log(debugLink)
   const { default: Content } = runSync(code, runtime)
   return (
     <div
@@ -45,6 +45,9 @@ export default function Page({
         margin: "8px",
       }}
     >
+      <Head>
+        <title>Code Hike Test - {current}</title>
+      </Head>
       <Sidebar tests={tests} current={current} />
       <Result Content={Content} debugLink={debugLink} />
     </div>
