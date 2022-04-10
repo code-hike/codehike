@@ -7,6 +7,8 @@ import typescript from "rollup-plugin-typescript2"
 import path from "path"
 import json from "@rollup/plugin-json"
 import del from "rollup-plugin-delete"
+import replace from "@rollup/plugin-replace"
+// import { terser } from "rollup-plugin-terser"
 
 export default function makeConfig(commandOptions) {
   return [
@@ -44,6 +46,35 @@ export default function makeConfig(commandOptions) {
             compilerOptions: { jsx: "react" },
           },
         }),
+      ],
+    },
+    // for the browser esm we need to replace shiki with shiki/dist/shiki.browser.mjs
+    // https://github.com/shikijs/shiki/issues/131#issuecomment-1094281851
+    {
+      input: `src/index.tsx`,
+      output: [
+        {
+          file: `./dist/index.browser.mjs`,
+          format: "es",
+        },
+      ],
+      // external: ["react"],
+      plugins: [
+        replace({
+          delimiters: ["", ""],
+          values: {
+            '"shiki"': JSON.stringify(
+              "shiki/dist/index.browser.mjs"
+            ),
+          },
+        }),
+        json({ compact: true }),
+        typescript({
+          tsconfigOverride: {
+            compilerOptions: { jsx: "react" },
+          },
+        }),
+        // terser(),
       ],
     },
     {
