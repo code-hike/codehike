@@ -55,7 +55,7 @@ function useDimensions(
         focus.next
       )
       const lines = (code.prev || code.next!)
-        .trim()
+        .trimEnd()
         .split(newlineRe)
 
       const lineCount = lines.length
