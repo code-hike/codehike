@@ -5,16 +5,16 @@
     "dist"
   ],
   "main": "./dist/index.cjs.js",
-  "module": "./dist/index.esm.js",
+  "module": "./dist/index.esm.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
+      "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js",
       "style": "./dist/index.css"
     },
     "./components": {
-      "import": "./dist/components.esm.js",
+      "import": "./dist/components.esm.mjs",
       "require": "./dist/components.cjs.js",
       "default": "./dist/components.cjs.js"
     },
@@ -23,13 +23,13 @@
     "./styles.css": "./dist/index.css",
     "./dist/index.css": "./dist/index.css",
     "./dist/components.cjs.js": {
-      "import": "./dist/components.esm.js",
+      "import": "./dist/components.esm.mjs",
       "require": "./dist/components.cjs.js",
       "default": "./dist/components.cjs.js"
     }
   },
   "browser": {
-    "./dist/index.esm.js": "./dist/index.browser.mjs"
+    "./dist/index.esm.mjs": "./dist/index.browser.mjs"
   },
   "scripts": {
     "dev": "next",

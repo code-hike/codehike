@@ -34,7 +34,7 @@ export default function makeConfig(commandOptions) {
           format: "cjs",
         },
         {
-          file: `./dist/index.esm.js`,
+          file: `./dist/index.esm.mjs`,
           format: "es",
         },
       ],
@@ -84,7 +84,7 @@ export default function makeConfig(commandOptions) {
           format: "cjs",
         },
         {
-          file: `./dist/components.esm.js`,
+          file: `./dist/components.esm.mjs`,
           format: "es",
         },
       ],
