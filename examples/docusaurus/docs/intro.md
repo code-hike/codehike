@@ -125,7 +125,7 @@ We need to import the `remarkCodeHike` function from the _`@code-hike/mdx`_ pack
 
 Next to the plugin you can pass a [config object](focus://14[30:38]). Almost always you'll want to pass a theme there. You can import one from shiki, or make a custom one.
 
-You can also pass more options, like `lineNumbers` for example. See the [configuration docs](/configuration) for more information.
+You can also pass more options, like `lineNumbers` for example. See the [configuration docs](/docs/intro) for more information.
 
 ---
 
@@ -178,7 +178,7 @@ There's a `customCSS` property in the theme config. You can replace it with an a
 
 If you want to customize Code Hike's styles with a global stylesheet make sure to import it after this import to avoid specificity issues.
 
-You can learn more about customizing Code Hike styles in the [styling docs](/styling).
+You can learn more about customizing Code Hike styles in the [styling docs](/docs/intro).
 
 </CH.Scrollycoding>
 
