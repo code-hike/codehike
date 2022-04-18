@@ -1,3 +1,4 @@
+export { transparent } from "./color"
 export * from "./tween"
 export * from "./code"
 export * from "./focus"

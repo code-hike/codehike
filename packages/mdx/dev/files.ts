@@ -1,7 +1,7 @@
 import fs from "fs"
 import { remarkCodeHike } from "../src/index"
 import { compile } from "@mdx-js/mdx"
-import theme from "shiki/themes/slack-dark.json"
+import theme from "shiki/themes/nord.json"
 import { withDebugger } from "mdx-debugger"
 
 export async function getFiles() {
