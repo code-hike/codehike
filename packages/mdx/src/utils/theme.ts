@@ -1,3 +1,5 @@
+import { transparent } from "./color"
+
 /**
  * A single theme setting.
  */
@@ -203,7 +205,9 @@ export function getColor(
   }
 }
 
-export function getColorScheme(theme: EditorTheme): string | undefined {
+export function getColorScheme(
+  theme: EditorTheme
+): string | undefined {
   const themeType = getThemeType(theme)
   if (themeType === "dark") {
     return "dark"
@@ -211,18 +215,6 @@ export function getColorScheme(theme: EditorTheme): string | undefined {
     return "light"
   }
   return undefined
-}
-
-export function transparent(
-  color: Color,
-  opacity: number
-): Color {
-  const _opacity = Math.round(
-    Math.min(Math.max(opacity || 1, 0), 1) * 255
-  )
-  return !color
-    ? color
-    : color + _opacity.toString(16).toUpperCase()
 }
 
 function getDefault(
@@ -235,16 +227,19 @@ function getDefault(
 function getThemeType(
   theme: EditorTheme
 ): "dark" | "light" | "hc" {
-  return (theme.type
-    ? theme.type
-    : theme.name?.toLowerCase().includes("light")
-    ? "light"
-    : "dark") as "dark" | "light" | "hc"
+  return (
+    theme.type
+      ? theme.type
+      : theme.name?.toLowerCase().includes("light")
+      ? "light"
+      : "dark"
+  ) as "dark" | "light" | "hc"
 }
 
-export function getCodeColors(
-  theme: EditorTheme
-): { fg: string; bg: string } {
+export function getCodeColors(theme: EditorTheme): {
+  fg: string
+  bg: string
+} {
   return {
     fg: getColor(theme, ColorName.CodeForeground)!,
     bg: getColor(theme, ColorName.CodeBackground)!,

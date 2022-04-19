@@ -78,5 +78,12 @@
   },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18"
+  },
+  "repository": "code-hike/codehike",
+  "license": "MIT",
+  "homepage": "https://codehike.org",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/code-hike"
   }
 }

@@ -1,3 +1,11 @@
 {
-  "semi": false
+  "semi": false,
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "parser": "mdx"
+      }
+    }
+  ]
 }

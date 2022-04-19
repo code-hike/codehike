@@ -10,6 +10,23 @@ import del from "rollup-plugin-delete"
 import replace from "@rollup/plugin-replace"
 // import { terser } from "rollup-plugin-terser"
 
+const clientExternal = [
+  "react",
+  "@codesandbox/sandpack-client",
+  "use-spring",
+  "diff",
+]
+const remarkExternal = [
+  "react",
+  "node-fetch",
+  "is-plain-obj",
+  "unified",
+  "remark-rehype",
+  "hast-util-to-estree",
+  "unist-util-visit-parents",
+  "unist-util-visit",
+]
+
 export default function makeConfig(commandOptions) {
   return [
     {
@@ -25,20 +42,24 @@ export default function makeConfig(commandOptions) {
           plugins: [autoprefixer(), cssnano()],
         }),
       ],
+      onwarn(warning, warn) {
+        if (warning.code === "FILE_NAME_CONFLICT") return
+        warn(warning)
+      },
     },
     {
       input: `src/index.tsx`,
       output: [
         {
-          file: `./dist/index.cjs.js`,
-          format: "cjs",
-        },
-        {
           file: `./dist/index.esm.mjs`,
           format: "es",
         },
+        {
+          file: `./dist/index.cjs.js`,
+          format: "cjs",
+        },
       ],
-      // external: ["react"],
+      external: [...remarkExternal, "shiki"],
       plugins: [
         json({ compact: true }),
         typescript({
@@ -58,10 +79,11 @@ export default function makeConfig(commandOptions) {
           format: "es",
         },
       ],
-      // external: ["react"],
+      external: remarkExternal,
       plugins: [
         replace({
           delimiters: ["", ""],
+          preventAssignment: true,
           values: {
             'from "shiki"':
               'from "shiki/dist/index.browser.mjs"',
@@ -88,7 +110,7 @@ export default function makeConfig(commandOptions) {
           format: "es",
         },
       ],
-      // external: ["react"],
+      external: clientExternal,
       plugins: [
         json({ compact: true }),
         typescript({
