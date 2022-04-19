@@ -27,3 +27,11 @@ export const CH = {
   Slideshow,
   InlineCode,
 }
+
+import { MiniBrowser } from "./mini-browser"
+import { EditorSpring } from "./mini-editor"
+
+export const internal = {
+  MiniBrowser,
+  EditorSpring,
+}
