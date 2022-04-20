@@ -54,7 +54,7 @@ export function remarkCodeHike(
       addConfig(tree, config)
 
       if (config.autoImport && !hasCodeHikeImport) {
-        addImportNode(tree)
+        addSmartImport(tree, usage)
       }
     }
   }
@@ -99,6 +99,101 @@ function addConfig(
             },
             specifiers: [],
             source: null,
+          },
+        ],
+        sourceType: "module",
+      },
+    },
+  })
+}
+
+function addSmartImport(tree: SuperNode, usage: string[]) {
+  const specifiers = [
+    "annotations",
+    ...usage.map(name => name.slice("CH.".length)),
+  ]
+
+  tree.children.unshift({
+    type: "mdxjsEsm",
+    value: `export const CH = { ${specifiers.join(", ")} }`,
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ExportNamedDeclaration",
+            declaration: {
+              type: "VariableDeclaration",
+              declarations: [
+                {
+                  type: "VariableDeclarator",
+                  id: {
+                    type: "Identifier",
+                    name: "CH",
+                  },
+                  init: {
+                    type: "ObjectExpression",
+                    properties: specifiers.map(
+                      specifier => ({
+                        type: "Property",
+                        method: false,
+                        shorthand: true,
+                        computed: false,
+                        key: {
+                          type: "Identifier",
+                          name: specifier,
+                        },
+                        kind: "init",
+                        value: {
+                          type: "Identifier",
+                          name: specifier,
+                        },
+                      })
+                    ),
+                  },
+                },
+              ],
+              kind: "const",
+            },
+            specifiers: [],
+            source: null,
+          },
+        ],
+        sourceType: "module",
+        comments: [],
+      },
+    },
+  })
+
+  tree.children.unshift({
+    type: "mdxjsEsm",
+    value: `import { ${specifiers.join(
+      ", "
+    )} } from "@code-hike/mdx/dist/components.cjs.js"`,
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ImportDeclaration",
+
+            specifiers: specifiers.map(specifier => ({
+              type: "ImportSpecifier",
+              imported: {
+                type: "Identifier",
+                name: specifier,
+              },
+              local: {
+                type: "Identifier",
+                name: specifier,
+              },
+            })),
+            source: {
+              type: "Literal",
+              value:
+                "@code-hike/mdx/dist/components.cjs.js",
+              raw: '"@code-hike/mdx/dist/components.cjs.js"',
+            },
           },
         ],
         sourceType: "module",

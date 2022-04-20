@@ -14,6 +14,20 @@ import {
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
 
+export {
+  Code,
+  Section,
+  SectionLink,
+  SectionCode,
+  Spotlight,
+  Scrollycoding,
+  Preview,
+  annotationsMap as annotations,
+  Annotation,
+  Slideshow,
+  InlineCode,
+}
+
 export const CH = {
   Code,
   Section,
