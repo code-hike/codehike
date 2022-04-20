@@ -33,12 +33,6 @@ export function remarkCodeHike(
       }
     })
 
-    addConfig(tree, config)
-
-    if (config.autoImport && !hasCodeHikeImport) {
-      addImportNode(tree)
-    }
-
     try {
       await transformPreviews(tree)
       await transformScrollycodings(tree, config)
@@ -51,6 +45,12 @@ export function remarkCodeHike(
     } catch (e) {
       console.error("error running remarkCodeHike", e)
       throw e
+    }
+
+    addConfig(tree, config)
+
+    if (config.autoImport && !hasCodeHikeImport) {
+      addImportNode(tree)
     }
   }
 }
