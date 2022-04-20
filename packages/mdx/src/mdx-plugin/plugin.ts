@@ -9,6 +9,7 @@ import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
 import { transformPreviews } from "./preview"
 import { transformInlineCodes } from "./inline-code"
 import { EsmNode, SuperNode, visit } from "./nodes"
+import { chUsage } from "./ch-usage"
 
 type CodeHikeConfig = {
   theme: any
@@ -47,10 +48,14 @@ export function remarkCodeHike(
       throw e
     }
 
-    addConfig(tree, config)
+    const usage = chUsage(tree)
 
-    if (config.autoImport && !hasCodeHikeImport) {
-      addImportNode(tree)
+    if (usage.length > 0) {
+      addConfig(tree, config)
+
+      if (config.autoImport && !hasCodeHikeImport) {
+        addImportNode(tree)
+      }
     }
   }
 }
