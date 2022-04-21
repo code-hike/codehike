@@ -8,13 +8,16 @@ import path from "path"
 import json from "@rollup/plugin-json"
 import del from "rollup-plugin-delete"
 import replace from "@rollup/plugin-replace"
+import { nodeResolve } from "@rollup/plugin-node-resolve"
 // import { terser } from "rollup-plugin-terser"
+import commonjs from "@rollup/plugin-commonjs"
 
 const clientExternal = [
   "react",
-  "@codesandbox/sandpack-client",
-  "use-spring",
-  "diff",
+  "react-dom",
+  // "@codesandbox/sandpack-client",
+  // "use-spring",
+  // "diff",
 ]
 const remarkExternal = [
   "react",
@@ -112,6 +115,8 @@ export default function makeConfig(commandOptions) {
       ],
       external: clientExternal,
       plugins: [
+        nodeResolve(),
+        commonjs(),
         json({ compact: true }),
         typescript({
           tsconfigOverride: {
