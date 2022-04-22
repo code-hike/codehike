@@ -3,6 +3,7 @@ import { CodeAnnotation } from "../smooth-code"
 import { wrapChildren } from "./to-estree"
 import { annotationsMap } from "../mdx-client/annotations"
 import { JsxNode as JsxNode, SuperNode } from "./nodes"
+import { getCommentData } from "./comment-data"
 
 export function getAnnotationsFromMetastring(
   options: Record<string, string>
@@ -24,8 +25,10 @@ export function extractAnnotationsFromCode(code: Code) {
   const focusList = [] as string[]
   while (lineNumber <= lines.length) {
     const line = lines[lineNumber - 1]
-    const { key, focusString, data } = getCommentData(line)
-    // console.log({ key, focusString, data })
+    const { key, focusString, data } = getCommentData(
+      line,
+      code.lang
+    )
 
     const Component = annotationsMap[key!]
 
@@ -48,31 +51,6 @@ export function extractAnnotationsFromCode(code: Code) {
     }
   }
   return [annotations, focusList.join(",")] as const
-}
-
-const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
-function getCommentData(line: Code["lines"][0]) {
-  const comment = line.tokens.find(t =>
-    t.content.trim().startsWith("//")
-  )?.content
-
-  if (!comment) {
-    return {}
-  }
-
-  const result = commentRegex.exec(comment)
-
-  if (!result) {
-    return {}
-  }
-
-  const [, key, focusString, data] = result
-
-  return {
-    key,
-    focusString,
-    data,
-  }
 }
 
 export function extractJSXAnnotations(
@@ -108,7 +86,6 @@ export function extractJSXAnnotations(
       focus,
       data: isEmpty(data) ? undefined : data,
     })
-    // console.log(jsxAnnotation)
     parent.children.splice(nextIndex, 1)
   }
   return annotations
