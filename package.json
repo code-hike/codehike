@@ -12,7 +12,6 @@
     "build:lib": "lerna run --stream --scope @*/mdx build",
     "test": "lerna run --stream test",
     "dev": "lerna run --stream --scope @*/mdx dev",
-    "storybook": "lerna run --scope storybook start --stream",
     "release": "auto shipit"
   },
   "devDependencies": {
