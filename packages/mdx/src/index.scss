@@ -1,8 +1,8 @@
-@import "~@code-hike/mini-editor/dist/index.scss";
-@import "~@code-hike/mini-browser/dist/index.scss";
-@import "./client/spotlight.scss";
-@import "./client/scrollycoding.scss";
-@import "./client/slideshow.scss";
+@import "./mini-editor/index.scss";
+@import "./mini-browser/index.scss";
+@import "./mdx-client/spotlight.scss";
+@import "./mdx-client/scrollycoding.scss";
+@import "./mdx-client/slideshow.scss";
 
 .ch-codeblock,
 .ch-codegroup,
@@ -32,7 +32,7 @@
   padding: 0.2em 0.15em;
   margin: 0.1em -0.05em;
   border-radius: 0.25em;
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
 .ch-section-link,

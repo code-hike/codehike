@@ -1,0 +1,27 @@
+.ch-code-line-number {
+  user-select: none;
+  text-align: right;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-right: 1.5ch;
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-code-scroll-parent {
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0px;
+  border-radius: 0;
+  background-color: unset;
+  color: unset;
+  padding: 0;
+  box-sizing: content-box;
+  border: none;
+}
+
+.ch-code-scroll-parent ::selection {
+  background-color: var(--ch-selection-background);
+  color: inherit;
+}

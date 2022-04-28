@@ -2,17 +2,31 @@ import {
   Section,
   SectionLink,
   SectionCode,
-} from "./client/section"
-import { Code } from "./client/code"
-import { Spotlight } from "./client/spotlight"
-import { Scrollycoding } from "./client/scrollycoding"
-import { Slideshow } from "./client/slideshow"
+} from "./mdx-client/section"
+import { Code } from "./mdx-client/code"
+import { Spotlight } from "./mdx-client/spotlight"
+import { Scrollycoding } from "./mdx-client/scrollycoding"
+import { Slideshow } from "./mdx-client/slideshow"
 import {
   annotationsMap,
   Annotation,
-} from "./client/annotations"
-import { Preview } from "./client/preview"
-import { InlineCode } from "./client/inline-code"
+} from "./mdx-client/annotations"
+import { Preview } from "./mdx-client/preview"
+import { InlineCode } from "./mdx-client/inline-code"
+
+export {
+  Code,
+  Section,
+  SectionLink,
+  SectionCode,
+  Spotlight,
+  Scrollycoding,
+  Preview,
+  annotationsMap as annotations,
+  Annotation,
+  Slideshow,
+  InlineCode,
+}
 
 export const CH = {
   Code,
@@ -26,4 +40,12 @@ export const CH = {
   Annotation,
   Slideshow,
   InlineCode,
+}
+
+import { MiniBrowser } from "./mini-browser"
+import { EditorSpring } from "./mini-editor"
+
+export const internal = {
+  MiniBrowser,
+  EditorSpring,
 }

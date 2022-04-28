@@ -1,3 +1,3 @@
-import "./index.scss"
+export { remarkCodeHike } from "./mdx-plugin/plugin"
 
-export { remarkCodeHike } from "./plugin"
+export { highlight } from "./highlighter"

@@ -1,0 +1,9 @@
+# Hello
+
+Lorem ipsum dolor sit amet.
+
+```python hello.py mark=1[22:30]
+print("Rendered with Code Hike")
+```
+
+Lorem ipsum dolor sit amet.

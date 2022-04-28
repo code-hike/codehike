@@ -1,57 +1,91 @@
 {
   "name": "@code-hike/mdx",
   "version": "0.3.0",
-  "main": "dist/index.cjs.js",
-  "typings": "dist/index.d.ts",
-  "module": "dist/index.esm.js",
-  "sideEffects": false,
-  "style": "dist/index.css",
   "files": [
     "dist"
   ],
-  "inputs": [
-    "index",
-    "components"
-  ],
-  "scripts": {
-    "x": "x"
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.mjs",
+      "require": "./dist/index.cjs.js",
+      "style": "./dist/index.css"
+    },
+    "./components": {
+      "import": "./dist/components.esm.mjs",
+      "require": "./dist/components.cjs.js",
+      "default": "./dist/components.cjs.js"
+    },
+    "./package.json": "./package.json",
+    "./styles": "./dist/index.css",
+    "./styles.css": "./dist/index.css",
+    "./dist/index.css": "./dist/index.css",
+    "./dist/components.cjs.js": {
+      "import": "./dist/components.esm.mjs",
+      "require": "./dist/components.cjs.js",
+      "default": "./dist/components.cjs.js"
+    }
   },
-  "devDependencies": {
-    "@code-hike/script": "^0.3.0",
-    "@types/react": "^17.0.2",
-    "react": "^17.0.2"
+  "browser": {
+    "./dist/index.esm.mjs": "./dist/index.browser.mjs"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "rollup -c rollup.config.js",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@code-hike/highlighter": "^0.3.0",
-    "@code-hike/mini-browser": "^0.3.0",
-    "@code-hike/mini-editor": "^0.3.0",
-    "@code-hike/scroller": "^0.3.0",
-    "@code-hike/smooth-code": "^0.3.0",
-    "@code-hike/utils": "^0.3.0",
-    "@codesandbox/sandpack-client": "^0.1.20",
     "hast-util-to-estree": "^1.4.0",
     "is-plain-obj": "^3.0.0",
     "node-fetch": "^2.0.0",
     "remark-rehype": "^8.1.0",
+    "shiki": "^0.10.1",
     "unified": "^9.2.2",
     "unist-util-visit": "^2.0.0",
     "unist-util-visit-parents": "^3.0.0"
   },
+  "devDependencies": {
+    "@codesandbox/sandpack-client": "^0.19.0",
+    "@mdx-js/mdx": "^2.0.0",
+    "@rollup/plugin-commonjs": "^21.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@types/diff": "^5.0.2",
+    "@types/node": "^17.0.21",
+    "@types/node-fetch": "^2.6.1",
+    "@types/react": "^17.0.39",
+    "autoprefixer": "^9.8.2",
+    "cssnano": "^4.1.10",
+    "diff": "^4.0.2",
+    "esbuild": "^0.13.2",
+    "mdx-bundler": "^8.0.1",
+    "mdx-debugger": "^0.2.0",
+    "next": "^12.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "rollup": "^2.41.2",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "sass": "^1.49.9",
+    "typescript": "^4.6.2",
+    "use-spring": "^0.2.3",
+    "vite": "^2.8.6",
+    "vitest": "^0.5.9"
+  },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18"
   },
-  "keywords": [
-    "react"
-  ],
-  "homepage": "https://codehike.org",
   "repository": "code-hike/codehike",
-  "publishConfig": {
-    "access": "public"
-  },
-  "author": "Rodrigo Pombo",
   "license": "MIT",
+  "homepage": "https://codehike.org",
   "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/codehike"
+    "type": "github",
+    "url": "https://github.com/sponsors/code-hike"
   }
 }
