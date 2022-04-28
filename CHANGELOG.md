@@ -1,3 +1,29 @@
+# v0.4.0 (Thu Apr 28 2022)
+
+#### 🚀 Enhancement
+
+- `@code-hike/mdx`
+  - Monopackage refactor [#147](https://github.com/code-hike/codehike/pull/147) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Fix preview width [#165](https://github.com/code-hike/codehike/pull/165) ([@pomber](https://github.com/pomber))
+  - Python comments support [#163](https://github.com/code-hike/codehike/pull/163) ([@pomber](https://github.com/pomber))
+  - Smart imports [#160](https://github.com/code-hike/codehike/pull/160) ([@pomber](https://github.com/pomber))
+  - Export internals [#159](https://github.com/code-hike/codehike/pull/159) ([@pomber](https://github.com/pomber))
+  - Docusaurus example [#158](https://github.com/code-hike/codehike/pull/158) ([@pomber](https://github.com/pomber))
+  - Rename esm to .mjs [#157](https://github.com/code-hike/codehike/pull/157) ([@pomber](https://github.com/pomber))
+  - Fix longest line trim [#155](https://github.com/code-hike/codehike/pull/155) ([@pomber](https://github.com/pomber))
+  - Browser example [#154](https://github.com/code-hike/codehike/pull/154) ([@pomber](https://github.com/pomber))
+  - Test site [#149](https://github.com/code-hike/codehike/pull/149) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.3.0 (Thu Mar 03 2022)
 
 #### 🚀 Enhancement
