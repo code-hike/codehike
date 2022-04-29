@@ -201,8 +201,6 @@ function CodeLink({
   return (
     <a
       href={url}
-      target="_blank"
-      rel="noopener noreferrer"
       title={title}
       style={{
         textDecoration: "underline",
