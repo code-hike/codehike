@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "INIT_CWD=$PWD next build",
     "start": "next start"
   },
   "dependencies": {
