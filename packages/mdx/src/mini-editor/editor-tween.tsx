@@ -7,6 +7,7 @@ import { TerminalPanel } from "./terminal-panel"
 import { useTransition, EditorStep } from "./editor-shift"
 import { CodeConfig } from "../smooth-code"
 import { useLayoutEffect } from "../utils"
+import { CopyButton } from "smooth-code/copy-button"
 
 export { EditorTransition, EditorTween }
 export type { EditorTransitionProps, EditorTweenProps }
@@ -53,7 +54,12 @@ function EditorTween({
   ...divProps
 }: EditorTweenProps) {
   const ref = React.createRef<HTMLDivElement>()
-  const { northPanel, southPanel } = useTransition(
+  const {
+    northPanel,
+    southPanel,
+    northContent,
+    southContent,
+  } = useTransition(
     ref,
     prev,
     next || prev,
@@ -102,6 +108,8 @@ function EditorTween({
       southPanel={southPanel}
       terminalPanel={terminalPanel}
       theme={codeConfig.theme}
+      // TODO same for south
+      button={<CopyButton content={northContent} />}
     />
   )
 }
