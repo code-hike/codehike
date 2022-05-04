@@ -1,7 +1,7 @@
 import fs from "fs"
 import { remarkCodeHike } from "../src/index"
 import { compile } from "@mdx-js/mdx"
-import theme from "shiki/themes/slack-ochin.json"
+import theme from "shiki/themes/github-light.json"
 import { withDebugger } from "mdx-debugger"
 
 export async function getFiles() {
@@ -19,7 +19,7 @@ export async function getContent(filename: string) {
   return file
 }
 
-export async function getCode(file: string) {
+export async function getCode(file: string, config = {}) {
   let debugLink = ""
 
   const debugCompile = withDebugger(compile, {
@@ -32,7 +32,10 @@ export async function getCode(file: string) {
     await debugCompile(file, {
       outputFormat: "function-body",
       remarkPlugins: [
-        [remarkCodeHike, { autoImport: false, theme }],
+        [
+          remarkCodeHike,
+          { autoImport: false, theme, ...config },
+        ],
       ],
     })
   )

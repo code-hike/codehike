@@ -59,6 +59,7 @@
     "@types/node-fetch": "^2.6.1",
     "@types/react": "^17.0.39",
     "autoprefixer": "^9.8.2",
+    "click-to-react-component": "^1.0.8",
     "cssnano": "^4.1.10",
     "diff": "^4.0.2",
     "esbuild": "^0.13.2",
