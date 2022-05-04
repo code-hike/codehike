@@ -68,7 +68,12 @@ export const EditorFrame = React.forwardRef<
         ...style,
       }}
     >
-      <div className={"ch-frame-title-bar"}>
+      <div
+        className={"ch-frame-title-bar"}
+        style={{
+          color: getColor(theme, ColorName.IconForeground),
+        }}
+      >
         <TabsContainer
           tabs={northPanel.tabs}
           showFrameButtons={true}
@@ -89,6 +94,10 @@ export const EditorFrame = React.forwardRef<
             className={"ch-frame-title-bar"}
             style={{
               transform: southPanel.style?.transform,
+              color: getColor(
+                theme,
+                ColorName.IconForeground
+              ),
             }}
           >
             <TabsContainer
