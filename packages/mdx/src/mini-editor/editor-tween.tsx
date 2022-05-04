@@ -54,6 +54,8 @@ function EditorTween({
   ...divProps
 }: EditorTweenProps) {
   const ref = React.createRef<HTMLDivElement>()
+
+  const { showCopyButton, ...config } = codeConfig
   const {
     northPanel,
     southPanel,
@@ -65,7 +67,7 @@ function EditorTween({
     next || prev,
     t,
     backward,
-    codeConfig
+    config
   )
 
   const [frozenHeight, freezeHeight] = React.useState<
@@ -109,20 +111,20 @@ function EditorTween({
       terminalPanel={terminalPanel}
       theme={codeConfig.theme}
       northButton={
-        <CopyButton
-          content={northContent}
-          style={{
-            margin: "0 0.8em",
-          }}
-        />
+        showCopyButton ? (
+          <CopyButton
+            content={northContent}
+            style={{ margin: "0 0.8em" }}
+          />
+        ) : undefined
       }
       southButton={
-        <CopyButton
-          content={southContent}
-          style={{
-            margin: "0 0.8em",
-          }}
-        />
+        showCopyButton ? (
+          <CopyButton
+            content={southContent}
+            style={{ margin: "0 0.8em" }}
+          />
+        ) : undefined
       }
     />
   )

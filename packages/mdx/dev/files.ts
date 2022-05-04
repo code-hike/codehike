@@ -34,7 +34,12 @@ export async function getCode(file: string, config = {}) {
       remarkPlugins: [
         [
           remarkCodeHike,
-          { autoImport: false, theme, ...config },
+          {
+            autoImport: false,
+            showCopyButton: true,
+            theme,
+            ...config,
+          },
         ],
       ],
     })

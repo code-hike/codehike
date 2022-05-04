@@ -38,6 +38,7 @@ export async function getStaticProps() {
     const { code } = await getCode(mdx, {
       theme,
       lineNumbers: true,
+      showCopyButton: true,
     })
     return { themeName, code }
   })

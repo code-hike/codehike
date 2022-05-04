@@ -15,6 +15,7 @@ type CodeHikeConfig = {
   theme: any
   lineNumbers?: boolean
   autoImport?: boolean
+  showCopyButton?: boolean
 }
 
 export function remarkCodeHike(

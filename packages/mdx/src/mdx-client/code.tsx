@@ -32,10 +32,7 @@ export function InnerCode({
       <div className="ch-codeblock not-prose">
         <CodeSpring
           className="ch-code"
-          config={{
-            ...props.codeConfig,
-            showCopyButton: true,
-          }}
+          config={props.codeConfig}
           step={props.files[0]}
         />
       </div>
