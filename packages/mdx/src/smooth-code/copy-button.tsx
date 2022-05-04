@@ -1,8 +1,12 @@
+import React from "react"
+
 export function CopyButton({
   content,
 }: {
   content: string
 }) {
+  const [copied, setCopied] = React.useState(false)
+
   return (
     <svg
       style={{
@@ -11,19 +15,36 @@ export function CopyButton({
         margin: "0 0.8em",
         cursor: "pointer",
       }}
-      onClick={() => copyToClipboard(content)}
+      onClick={() => {
+        copyToClipboard(content)
+        setCopied(true)
+        setTimeout(() => {
+          setCopied(false)
+        }, 1200)
+      }}
+      className="ch-copy-button"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>Copy</title>
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-      ></path>
+
+      {copied ? (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M5 13l4 4L19 7"
+        />
+      ) : (
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+        />
+      )}
     </svg>
   )
 }
@@ -33,16 +54,7 @@ function copyToClipboard(text: string) {
     fallbackCopyTextToClipboard(text)
     return
   }
-  navigator.clipboard.writeText(text).then(
-    function () {
-      console.log(
-        "Async: Copying to clipboard was successful!"
-      )
-    },
-    function (err) {
-      console.error("Async: Could not copy text: ", err)
-    }
-  )
+  navigator.clipboard.writeText(text)
 }
 
 function fallbackCopyTextToClipboard(text: string) {
@@ -60,10 +72,10 @@ function fallbackCopyTextToClipboard(text: string) {
 
   try {
     var successful = document.execCommand("copy")
-    var msg = successful ? "successful" : "unsuccessful"
-    console.log("Fallback: Copying text command was " + msg)
+    // var msg = successful ? "successful" : "unsuccessful"
+    // console.log("Fallback: Copying text command was " + msg)
   } catch (err) {
-    console.error("Fallback: Oops, unable to copy", err)
+    // console.error("Fallback: Oops, unable to copy", err)
   }
 
   document.body.removeChild(textArea)
