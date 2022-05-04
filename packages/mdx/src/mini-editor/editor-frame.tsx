@@ -30,7 +30,8 @@ type EditorFrameProps = {
   theme: EditorTheme
   terminalPanel?: React.ReactNode
   height?: number
-  button?: React.ReactNode
+  northButton?: React.ReactNode
+  southButton?: React.ReactNode
   classes?: Classes
   onTabClick?: (filename: string) => void
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
@@ -45,7 +46,8 @@ export const EditorFrame = React.forwardRef<
     terminalPanel,
     style,
     height,
-    button,
+    northButton,
+    southButton,
     theme,
     className,
     onTabClick,
@@ -70,7 +72,7 @@ export const EditorFrame = React.forwardRef<
         <TabsContainer
           tabs={northPanel.tabs}
           showFrameButtons={true}
-          button={button}
+          button={northButton}
           panel="north"
           theme={theme}
           onTabClick={onTabClick}
@@ -92,6 +94,7 @@ export const EditorFrame = React.forwardRef<
             <TabsContainer
               tabs={southPanel.tabs}
               showFrameButtons={false}
+              button={southButton}
               topBorder={true}
               panel="south"
               theme={theme}
