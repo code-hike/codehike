@@ -108,8 +108,22 @@ function EditorTween({
       southPanel={southPanel}
       terminalPanel={terminalPanel}
       theme={codeConfig.theme}
-      northButton={<CopyButton content={northContent} />}
-      southButton={<CopyButton content={southContent} />}
+      northButton={
+        <CopyButton
+          content={northContent}
+          style={{
+            margin: "0 0.8em",
+          }}
+        />
+      }
+      southButton={
+        <CopyButton
+          content={southContent}
+          style={{
+            margin: "0 0.8em",
+          }}
+        />
+      }
     />
   )
 }

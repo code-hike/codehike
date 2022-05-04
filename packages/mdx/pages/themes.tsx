@@ -58,7 +58,7 @@ export default function Page({ codes, tests }) {
   })
   return (
     <Layout
-      current={"test"}
+      current={"themes"}
       contentFileNames={tests}
       style={{ width: "100%", maxWidth: undefined }}
     >

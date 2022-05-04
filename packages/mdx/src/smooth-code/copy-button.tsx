@@ -2,8 +2,10 @@ import React from "react"
 
 export function CopyButton({
   content,
+  style,
 }: {
   content: string
+  style?: React.CSSProperties
 }) {
   const [copied, setCopied] = React.useState(false)
 
@@ -12,8 +14,8 @@ export function CopyButton({
       style={{
         width: "1.5em",
         height: "1.5em",
-        margin: "0 0.8em",
         cursor: "pointer",
+        ...style,
       }}
       onClick={() => {
         copyToClipboard(content)
