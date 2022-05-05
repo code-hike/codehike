@@ -93,3 +93,21 @@ function lorem(ipsum, dolor = 1) {
   return $sit and consectetur(ipsum) or []
 }
 ```
+
+With class
+
+```js
+function lorem(ipsum, dolor = 1) {
+  // withClass[15:19] annotation-class
+  const sit = ipsum == null && 0
+  // withClass(1:2) annotation-class
+  dolor = sit - amet(dolor)
+  return sit ? consectetur(ipsum) : []
+}
+
+function adipiscing(...elit) {
+  console.log("hover me")
+  // withClass annotation-class
+  return elit.map(ipsum => ipsum.sit)
+}
+```
