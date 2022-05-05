@@ -17,6 +17,7 @@ import {
   CodeShift,
 } from "./partial-step-parser"
 import { SmoothLines } from "./smooth-lines"
+import { CopyButton } from "./copy-button"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -43,6 +44,7 @@ export type CodeConfig = {
   horizontalCenter?: boolean
   theme: IRawTheme
   lineNumbers?: boolean
+  showCopyButton?: boolean
 }
 
 function useCodeShift({
@@ -132,6 +134,7 @@ function AfterDimensions({
   stepInfo,
   progress,
   htmlProps,
+  config,
 }: {
   dimensions: NonNullable<Dimensions>
   stepInfo: CodeShift
@@ -140,6 +143,7 @@ function AfterDimensions({
   htmlProps: HTMLProps
 }) {
   const { bg, fg } = getCodeColors(theme)
+
   return (
     <Wrapper
       htmlProps={htmlProps}
@@ -164,6 +168,18 @@ function AfterDimensions({
         center={horizontalCenter}
         theme={theme}
       />
+      {config.showCopyButton ? (
+        <CopyButton
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            width: "1.1em",
+            height: "1.1em",
+          }}
+          content={stepInfo?.code?.prev}
+        />
+      ) : undefined}
     </Wrapper>
   )
 }
@@ -183,6 +199,7 @@ function Wrapper({
       style={{
         margin: 0,
         padding: 0,
+        position: "relative",
         // using this instead of <pre> because https://github.com/code-hike/codehike/issues/120
         whiteSpace: "pre",
         ...style,

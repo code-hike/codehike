@@ -4,6 +4,7 @@ import {
   CodeStep,
 } from "../smooth-code"
 import React from "react"
+import { codeToText } from "utils"
 
 export type CodeFile = CodeStep & {
   name: string
@@ -37,6 +38,8 @@ type OutputPanel = {
 type Transition = {
   northPanel: OutputPanel
   southPanel?: OutputPanel | null
+  northContent: string
+  southContent: string
 }
 
 type TabsSnapshot = Record<
@@ -110,6 +113,7 @@ export function useTransition(
   )
 
   return {
+    northContent: getContentFromFile(nextNorthFile),
     northPanel: {
       tabs: northTabs,
       style: northStyle,
@@ -126,6 +130,7 @@ export function useTransition(
         />
       ),
     },
+    southContent: getContentFromFile(nextSouthFile),
     southPanel: inputSouthPanel && {
       tabs: southTabs!,
       style: southStyle!,
@@ -162,6 +167,7 @@ function startingPosition(
   } = getStepFiles(prev, next, true)
 
   return {
+    northContent: getContentFromFile(prevNorthFile),
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
         title,
@@ -182,6 +188,7 @@ function startingPosition(
         />
       ),
     },
+    southContent: getContentFromFile(prevSouthFile),
     southPanel: inputSouthPanel && {
       tabs: inputSouthPanel.tabs.map(title => ({
         title,
@@ -229,6 +236,7 @@ function endingPosition(
   }
 
   return {
+    northContent: getContentFromFile(nextNorthFile),
     northPanel: {
       tabs: inputNorthPanel.tabs.map(title => ({
         title,
@@ -249,6 +257,7 @@ function endingPosition(
         />
       ),
     },
+    southContent: getContentFromFile(nextSouthFile),
     southPanel: inputSouthPanel && {
       tabs: inputSouthPanel.tabs.map(title => ({
         title,
@@ -303,6 +312,10 @@ function CodeTransition({
       {...htmlProps}
     />
   )
+}
+
+function getContentFromFile(file?: CodeFile) {
+  return file ? codeToText(file.code) : ""
 }
 
 /**
