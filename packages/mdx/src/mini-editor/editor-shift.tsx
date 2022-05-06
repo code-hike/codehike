@@ -793,21 +793,21 @@ function useSnapshots(
 
   useLayoutEffect(() => {
     if (!prevSnapshot) {
-      // debugger
+      const parent = ref.current!
       setState(s => ({
         ...s,
         prevSnapshot: {
-          ...getPanelSnapshot(ref.current!, prev),
-          ...getTabsSnapshot(ref.current!, prev),
+          ...getPanelSnapshot(parent, prev),
+          ...getTabsSnapshot(parent, prev),
         },
       }))
     } else if (!nextSnapshot) {
-      // debugger
+      const parent = ref.current!
       setState(s => ({
         ...s,
         nextSnapshot: {
-          ...getPanelSnapshot(ref.current!, next),
-          ...getTabsSnapshot(ref.current!, next),
+          ...getPanelSnapshot(parent, next),
+          ...getTabsSnapshot(parent, next),
         },
       }))
     }
