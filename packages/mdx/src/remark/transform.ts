@@ -4,12 +4,12 @@ import { transformSections } from "./section"
 import { transformSpotlights } from "./spotlight"
 import { transformScrollycodings } from "./scrollycoding"
 import { transformSlideshows } from "./slideshow"
+import { transformInlineCodes } from "./inline-code"
+import { transformPreviews } from "./preview"
+
 import { valueToEstree } from "./to-estree"
 import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
-import { transformPreviews } from "./preview"
-import { transformInlineCodes } from "./inline-code"
-import { EsmNode, SuperNode, visit } from "./nodes"
-import { chUsage } from "./ch-usage"
+import { JsxNode, SuperNode, visit } from "./nodes"
 
 type CodeHikeConfig = {
   theme: any
@@ -18,52 +18,50 @@ type CodeHikeConfig = {
   showCopyButton?: boolean
 }
 
-export function remarkCodeHike(
-  unsafeConfig: CodeHikeConfig
-) {
+const transforms = [
+  transformPreviews,
+  transformScrollycodings,
+  transformSpotlights,
+  transformSlideshows,
+  transformSections,
+  transformInlineCodes,
+  transformEditorNodes,
+  transformCodeNodes,
+]
+
+export function transform(unsafeConfig: CodeHikeConfig) {
   return async (tree: SuperNode) => {
     const config = addConfigDefaults(unsafeConfig)
-    // TODO add opt-in config
-    let hasCodeHikeImport = false
-    visit(tree, "mdxjsEsm", (node: EsmNode) => {
-      if (
-        node.value.startsWith(
-          `import { CH } from "@code-hike/mdx`
-        )
-      ) {
-        hasCodeHikeImport = true
-      }
-    })
 
     try {
-      await transformPreviews(tree)
-      await transformScrollycodings(tree, config)
-      await transformSpotlights(tree, config)
-      await transformSlideshows(tree, config)
-      await transformSections(tree, config)
-      await transformInlineCodes(tree, config)
-      await transformEditorNodes(tree, config)
-      await transformCodeNodes(tree, config)
+      for (const transform of transforms) {
+        await transform(tree, config)
+      }
     } catch (e) {
       console.error("error running remarkCodeHike", e)
       throw e
     }
 
-    const usage = chUsage(tree)
+    const usedCodeHikeComponents =
+      getUsedCodeHikeComponentNames(tree)
 
-    if (usage.length > 0) {
+    if (usedCodeHikeComponents.length > 0) {
       addConfig(tree, config)
 
-      if (config.autoImport && !hasCodeHikeImport) {
-        addSmartImport(tree, usage)
+      if (config.autoImport) {
+        addSmartImport(tree, usedCodeHikeComponents)
       }
     }
   }
 }
 
+/**
+ * Add defaults and normalize config
+ */
 function addConfigDefaults(
   config: Partial<CodeHikeConfig> | undefined
 ): CodeHikeConfig {
+  // TODO warn when config looks weird
   return {
     ...config,
     theme: config?.theme || {},
@@ -71,13 +69,42 @@ function addConfigDefaults(
   }
 }
 
+/**
+ * Returns a the list of component names
+ * used inside the tree
+ * that looks like `<CH.* />`
+ */
+function getUsedCodeHikeComponentNames(
+  tree: SuperNode
+): string[] {
+  const usage = []
+  visit(
+    tree,
+    ["mdxJsxFlowElement", "mdxJsxTextElement"],
+    (node: JsxNode) => {
+      if (
+        node.name &&
+        node.name.startsWith("CH.") &&
+        !usage.includes(node.name)
+      ) {
+        usage.push(node.name)
+      }
+    }
+  )
+  return usage
+}
+
+/**
+ * Creates a `chCodeConfig` variable node in the tree
+ * so that the components can access the config
+ */
 function addConfig(
   tree: SuperNode,
   config: CodeHikeConfig
 ) {
   tree.children.unshift({
     type: "mdxjsEsm",
-    value: "export const chCodeConfig = {}",
+    value: `export const ${CH_CODE_CONFIG_VAR_NAME} = {}`,
     data: {
       estree: {
         type: "Program",
@@ -108,10 +135,17 @@ function addConfig(
   })
 }
 
-function addSmartImport(tree: SuperNode, usage: string[]) {
+/**
+ * Add an import node at the start of the tree
+ * importing all the components used
+ */
+function addSmartImport(
+  tree: SuperNode,
+  componentNames: string[]
+) {
   const specifiers = [
     "annotations",
-    ...usage.map(name => name.slice("CH.".length)),
+    ...componentNames.map(name => name.slice("CH.".length)),
   ]
 
   tree.children.unshift({
@@ -189,44 +223,6 @@ function addSmartImport(tree: SuperNode, usage: string[]) {
                 name: specifier,
               },
             })),
-            source: {
-              type: "Literal",
-              value:
-                "@code-hike/mdx/dist/components.cjs.js",
-              raw: '"@code-hike/mdx/dist/components.cjs.js"',
-            },
-          },
-        ],
-        sourceType: "module",
-      },
-    },
-  })
-}
-
-function addImportNode(tree: SuperNode) {
-  tree.children.unshift({
-    type: "mdxjsEsm",
-    value:
-      'import { CH } from "@code-hike/mdx/dist/components.cjs.js"',
-    data: {
-      estree: {
-        type: "Program",
-        body: [
-          {
-            type: "ImportDeclaration",
-            specifiers: [
-              {
-                type: "ImportSpecifier",
-                imported: {
-                  type: "Identifier",
-                  name: "CH",
-                },
-                local: {
-                  type: "Identifier",
-                  name: "CH",
-                },
-              },
-            ],
             source: {
               type: "Literal",
               value:
