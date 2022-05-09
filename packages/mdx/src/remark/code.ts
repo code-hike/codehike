@@ -1,12 +1,6 @@
 import { highlight } from "../highlighter"
 import { extractLinks } from "./links"
-import {
-  visitAsync,
-  toJSX,
-  NodeInfo,
-  splitChildren,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { NodeInfo, splitChildren } from "./unist-utils"
 import { CodeStep } from "../smooth-code"
 import { EditorProps } from "../mini-editor"
 import {
@@ -38,19 +32,20 @@ export async function mapAnyCodeNode(
   }
 }
 
+type Props = Omit<EditorProps, "codeConfig">
+
 async function mapCode(
   nodeInfo: NodeInfo<CodeNode>,
   config: CodeHikeConfig
-): Promise<EditorProps> {
+): Promise<Props> {
   const file = await mapFile(nodeInfo, config)
-  const props: EditorProps = {
+  const props: Props = {
     northPanel: {
       tabs: [file.name],
       active: file.name,
       heightRatio: 1,
     },
     files: [file],
-    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }
@@ -58,7 +53,7 @@ async function mapCode(
 export async function mapEditor(
   { node }: NodeInfo,
   config: CodeHikeConfig
-): Promise<EditorProps> {
+): Promise<Props> {
   const [northNodes, southNodes = []] = splitChildren(
     node,
     "thematicBreak"
@@ -105,7 +100,6 @@ export async function mapEditor(
         }
       : undefined,
     files: allFiles as any,
-    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }

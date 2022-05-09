@@ -1,8 +1,4 @@
-import {
-  visitAsync,
-  toJSX,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { visitAsync, toJSX } from "./unist-utils"
 import { highlight } from "../highlighter"
 import { EditorStep } from "../mini-editor"
 import { Code } from "../utils"
@@ -46,9 +42,9 @@ export async function transformInlineCodes(
               lang,
               theme
             ),
-            codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
           },
           appendProps: true,
+          addConfigProp: true,
         })
       }
     }

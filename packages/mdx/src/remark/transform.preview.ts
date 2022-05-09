@@ -1,9 +1,5 @@
 import fetch from "node-fetch"
-import {
-  visitAsync,
-  toJSX,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { visitAsync, toJSX } from "./unist-utils"
 import { JsxNode, SuperNode } from "./nodes"
 
 export async function getPresetConfig(
@@ -36,9 +32,8 @@ export async function transformPreviews(tree: SuperNode) {
 
 async function transformPreview(node: Node) {
   toJSX(node, {
-    props: {
-      codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
-    },
+    props: {},
     appendProps: true,
+    addConfigProp: true,
   })
 }

@@ -1,8 +1,4 @@
-import {
-  visitAsync,
-  toJSX,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { visitAsync, toJSX } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./transform.preview"
 import { transformLinks } from "./transform.section"
@@ -41,10 +37,10 @@ async function transformScrollycoding(
 
   toJSX(node, {
     props: {
-      codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
       editorSteps: editorSteps,
       presetConfig,
     },
     appendProps: true,
+    addConfigProp: true,
   })
 }

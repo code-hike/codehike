@@ -46,10 +46,6 @@ export async function visitAsync(
   await Promise.all(promises)
 }
 
-// if one of the props in a toJSX call has the CH_CODE_CONFIG_PLACEHOLDER value
-// it will be replaced with a reference to the CH_CODE_CONFIG_VAR_NAME var
-export const CH_CODE_CONFIG_PLACEHOLDER =
-  "CH_CodeConfig" as any
 export const CH_CODE_CONFIG_VAR_NAME = "chCodeConfig"
 
 /**
@@ -64,14 +60,15 @@ export function toJSX(
     props,
     name,
     appendProps = false,
+    addConfigProp = false,
   }: {
     type?: string
     props: Record<string, any>
     name?: string
     appendProps?: boolean
+    addConfigProp?: boolean
   }
 ) {
-  // console.log(`transforming ${node.name} to ${name}`)
   node.type = type
   if (name) {
     node.name = name
@@ -82,26 +79,26 @@ export function toJSX(
     node.attributes = node.attributes || []
   }
 
+  if (addConfigProp) {
+    node.attributes.push(
+      toAttribute("codeConfig", CH_CODE_CONFIG_VAR_NAME, {
+        type: "Identifier",
+        name: CH_CODE_CONFIG_VAR_NAME,
+      })
+    )
+  }
+
   Object.keys(props).forEach(key => {
     if (props[key] === undefined) {
       return
     }
-    if (props[key] === CH_CODE_CONFIG_PLACEHOLDER) {
-      node.attributes.push(
-        toAttribute(key, CH_CODE_CONFIG_VAR_NAME, {
-          type: "Identifier",
-          name: CH_CODE_CONFIG_VAR_NAME,
-        })
+    node.attributes.push(
+      toAttribute(
+        key,
+        JSON.stringify(props[key]),
+        valueToEstree(props[key])
       )
-    } else {
-      node.attributes.push(
-        toAttribute(
-          key,
-          JSON.stringify(props[key]),
-          valueToEstree(props[key])
-        )
-      )
-    }
+    )
   })
 }
 

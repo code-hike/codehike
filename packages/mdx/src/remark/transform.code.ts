@@ -1,5 +1,5 @@
 import { NodeInfo, toJSX, visitAsync } from "./unist-utils"
-import { mapEditor } from "./code"
+import { mapAnyCodeNode, mapEditor } from "./code"
 import { CodeNode, JsxNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 
@@ -31,6 +31,7 @@ async function transformCode(
 ) {
   toJSX(nodeInfo.node, {
     name: "CH.Code",
-    props: await mapEditor(nodeInfo, config),
+    props: await mapAnyCodeNode(nodeInfo, config),
+    addConfigProp: true,
   })
 }
