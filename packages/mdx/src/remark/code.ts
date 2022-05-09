@@ -18,47 +18,12 @@ import { mergeFocus } from "../utils"
 import { CodeNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 
-export async function transformCodeNodes(
-  tree: SuperNode,
-  config: CodeHikeConfig
-) {
-  await visitAsync(
-    tree,
-    "code",
-    async (node: CodeNode, index, parent) => {
-      await transformCode(
-        { node, index, parent: parent! },
-        config
-      )
-    }
-  )
-}
-
 export function isEditorNode(node: SuperNode) {
   return (
     node.type === "code" ||
     (node.type === "mdxJsxFlowElement" &&
       node.name === "CH.Code")
   )
-}
-
-async function transformCode(
-  nodeInfo: NodeInfo<CodeNode>,
-  config: CodeHikeConfig
-) {
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props: await mapCode(nodeInfo, config),
-  })
-}
-export async function transformEditor(
-  nodeInfo: NodeInfo,
-  config: CodeHikeConfig
-) {
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props: await mapEditor(nodeInfo, config),
-  })
 }
 
 export async function mapAnyCodeNode(

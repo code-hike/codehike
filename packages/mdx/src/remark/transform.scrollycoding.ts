@@ -5,7 +5,7 @@ import {
 } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
 import { getPresetConfig } from "./transform.preview"
-import { transformLinks } from "./section"
+import { transformLinks } from "./transform.section"
 import { SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 

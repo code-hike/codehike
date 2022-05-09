@@ -1,10 +1,9 @@
-import { transformCodeNodes } from "./code"
-import { transformEditorNodes } from "./editor"
-import { transformSections } from "./section"
-import { transformSpotlights } from "./spotlight"
-import { transformScrollycodings } from "./scrollycoding"
-import { transformSlideshows } from "./slideshow"
-import { transformInlineCodes } from "./inline-code"
+import { transformCodes } from "./transform.code"
+import { transformSections } from "./transform.section"
+import { transformSpotlights } from "./transform.spotlight"
+import { transformScrollycodings } from "./transform.scrollycoding"
+import { transformSlideshows } from "./transform.slideshow"
+import { transformInlineCodes } from "./transform.inline-code"
 import { transformPreviews } from "./transform.preview"
 
 import { valueToEstree } from "./to-estree"
@@ -19,8 +18,7 @@ const transforms = [
   transformSlideshows,
   transformSections,
   transformInlineCodes,
-  transformEditorNodes,
-  transformCodeNodes,
+  transformCodes,
 ]
 
 export function transform(unsafeConfig: CodeHikeConfig) {
@@ -31,20 +29,20 @@ export function transform(unsafeConfig: CodeHikeConfig) {
       for (const transform of transforms) {
         await transform(tree, config)
       }
+
+      const usedCodeHikeComponents =
+        getUsedCodeHikeComponentNames(tree)
+
+      if (usedCodeHikeComponents.length > 0) {
+        addConfig(tree, config)
+
+        if (config.autoImport) {
+          addSmartImport(tree, usedCodeHikeComponents)
+        }
+      }
     } catch (e) {
       console.error("error running remarkCodeHike", e)
       throw e
-    }
-
-    const usedCodeHikeComponents =
-      getUsedCodeHikeComponentNames(tree)
-
-    if (usedCodeHikeComponents.length > 0) {
-      addConfig(tree, config)
-
-      if (config.autoImport) {
-        addSmartImport(tree, usedCodeHikeComponents)
-      }
     }
   }
 }
