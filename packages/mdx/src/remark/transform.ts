@@ -5,18 +5,12 @@ import { transformSpotlights } from "./spotlight"
 import { transformScrollycodings } from "./scrollycoding"
 import { transformSlideshows } from "./slideshow"
 import { transformInlineCodes } from "./inline-code"
-import { transformPreviews } from "./preview"
+import { transformPreviews } from "./transform.preview"
 
 import { valueToEstree } from "./to-estree"
 import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
 import { JsxNode, SuperNode, visit } from "./nodes"
-
-type CodeHikeConfig = {
-  theme: any
-  lineNumbers?: boolean
-  autoImport?: boolean
-  showCopyButton?: boolean
-}
+import { addConfigDefaults, CodeHikeConfig } from "./config"
 
 const transforms = [
   transformPreviews,
@@ -52,20 +46,6 @@ export function transform(unsafeConfig: CodeHikeConfig) {
         addSmartImport(tree, usedCodeHikeComponents)
       }
     }
-  }
-}
-
-/**
- * Add defaults and normalize config
- */
-function addConfigDefaults(
-  config: Partial<CodeHikeConfig> | undefined
-): CodeHikeConfig {
-  // TODO warn when config looks weird
-  return {
-    ...config,
-    theme: config?.theme || {},
-    autoImport: config?.autoImport === false ? false : true,
   }
 }
 

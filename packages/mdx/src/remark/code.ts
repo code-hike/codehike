@@ -16,10 +16,11 @@ import {
 } from "./annotations"
 import { mergeFocus } from "../utils"
 import { CodeNode, SuperNode } from "./nodes"
+import { CodeHikeConfig } from "./config"
 
 export async function transformCodeNodes(
   tree: SuperNode,
-  { theme }: { theme: any }
+  config: CodeHikeConfig
 ) {
   await visitAsync(
     tree,
@@ -27,7 +28,7 @@ export async function transformCodeNodes(
     async (node: CodeNode, index, parent) => {
       await transformCode(
         { node, index, parent: parent! },
-        { theme }
+        config
       )
     }
   )
@@ -43,7 +44,7 @@ export function isEditorNode(node: SuperNode) {
 
 async function transformCode(
   nodeInfo: NodeInfo<CodeNode>,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   toJSX(nodeInfo.node, {
     name: "CH.Code",
@@ -52,7 +53,7 @@ async function transformCode(
 }
 export async function transformEditor(
   nodeInfo: NodeInfo,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   toJSX(nodeInfo.node, {
     name: "CH.Code",
@@ -62,7 +63,7 @@ export async function transformEditor(
 
 export async function mapAnyCodeNode(
   nodeInfo: NodeInfo,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   const { node } = nodeInfo
   if (node.type === "code") {
@@ -74,7 +75,7 @@ export async function mapAnyCodeNode(
 
 async function mapCode(
   nodeInfo: NodeInfo<CodeNode>,
-  config: { theme: any }
+  config: CodeHikeConfig
 ): Promise<EditorProps> {
   const file = await mapFile(nodeInfo, config)
   const props: EditorProps = {
@@ -91,7 +92,7 @@ async function mapCode(
 
 export async function mapEditor(
   { node }: NodeInfo,
-  config: { theme: any }
+  config: CodeHikeConfig
 ): Promise<EditorProps> {
   const [northNodes, southNodes = []] = splitChildren(
     node,
@@ -146,7 +147,7 @@ export async function mapEditor(
 
 async function mapFile(
   { node, index, parent }: NodeInfo<CodeNode>,
-  config: { theme: any }
+  config: CodeHikeConfig
 ): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config
 

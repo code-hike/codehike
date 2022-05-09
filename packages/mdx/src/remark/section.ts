@@ -1,10 +1,11 @@
 import { visitAsync, toJSX } from "./unist-utils"
 import { isEditorNode, mapAnyCodeNode } from "./code"
 import { SuperNode, visit } from "./nodes"
+import { CodeHikeConfig } from "./config"
 
 export async function transformSections(
   tree: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   await visitAsync(
     tree,
@@ -19,7 +20,7 @@ export async function transformSections(
 
 async function transformSection(
   node: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   let props
   await visitAsync(

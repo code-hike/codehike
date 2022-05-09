@@ -1,5 +1,6 @@
 import { SuperNode, visit } from "./nodes"
 import { valueToEstree } from "./to-estree"
+import { Expression } from "estree"
 
 export type NodeInfo<N extends SuperNode = SuperNode> = {
   node: N
@@ -45,10 +46,17 @@ export async function visitAsync(
   await Promise.all(promises)
 }
 
+// if one of the props in a toJSX call has the CH_CODE_CONFIG_PLACEHOLDER value
+// it will be replaced with a reference to the CH_CODE_CONFIG_VAR_NAME var
 export const CH_CODE_CONFIG_PLACEHOLDER =
   "CH_CodeConfig" as any
 export const CH_CODE_CONFIG_VAR_NAME = "chCodeConfig"
 
+/**
+ * Transforms a node into a JSX Flow ELement (or another given type).
+ * Most of the work is transforming the props object into an array
+ * of mdxJsxAttribute.
+ */
 export function toJSX(
   node: any,
   {
@@ -79,50 +87,47 @@ export function toJSX(
       return
     }
     if (props[key] === CH_CODE_CONFIG_PLACEHOLDER) {
-      ;(node as any).attributes.push({
-        type: "mdxJsxAttribute",
-        name: key,
-        value: {
-          type: "mdxJsxAttributeValueExpression",
-          value: CH_CODE_CONFIG_VAR_NAME,
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ExpressionStatement",
-                  expression: {
-                    type: "Identifier",
-                    name: CH_CODE_CONFIG_VAR_NAME,
-                  },
-                },
-              ],
-              sourceType: "module",
-            },
-          },
-        },
-      })
+      node.attributes.push(
+        toAttribute(key, CH_CODE_CONFIG_VAR_NAME, {
+          type: "Identifier",
+          name: CH_CODE_CONFIG_VAR_NAME,
+        })
+      )
     } else {
-      ;(node as any).attributes.push({
-        type: "mdxJsxAttribute",
-        name: key,
-        value: {
-          type: "mdxJsxAttributeValueExpression",
-          value: JSON.stringify(props[key]),
-          data: {
-            estree: {
-              type: "Program",
-              body: [
-                {
-                  type: "ExpressionStatement",
-                  expression: valueToEstree(props[key]),
-                },
-              ],
-              sourceType: "module",
-            },
-          },
-        },
-      })
+      node.attributes.push(
+        toAttribute(
+          key,
+          JSON.stringify(props[key]),
+          valueToEstree(props[key])
+        )
+      )
     }
   })
+}
+
+function toAttribute(
+  key: string,
+  stringValue: string,
+  expression: Expression
+) {
+  return {
+    type: "mdxJsxAttribute",
+    name: key,
+    value: {
+      type: "mdxJsxAttributeValueExpression",
+      value: stringValue,
+      data: {
+        estree: {
+          type: "Program",
+          body: [
+            {
+              type: "ExpressionStatement",
+              expression: expression,
+            },
+          ],
+          sourceType: "module",
+        },
+      },
+    },
+  }
 }

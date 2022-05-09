@@ -4,12 +4,13 @@ import {
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
-import { getPresetConfig } from "./preview"
+import { getPresetConfig } from "./transform.preview"
 import { JsxNode, SuperNode } from "./nodes"
+import { CodeHikeConfig } from "./config"
 
 export async function transformSpotlights(
   tree: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   await visitAsync(
     tree,
@@ -24,11 +25,11 @@ export async function transformSpotlights(
 
 async function transformSpotlight(
   node: JsxNode,
-  { theme }: { theme: any }
+  config: CodeHikeConfig
 ) {
   const editorSteps = await extractStepsInfo(
     node,
-    { theme },
+    config,
     "merge steps with header"
   )
 

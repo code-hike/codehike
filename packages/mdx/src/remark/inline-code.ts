@@ -8,10 +8,11 @@ import { EditorStep } from "../mini-editor"
 import { Code } from "../utils"
 import { SuperNode, visit } from "./nodes"
 import visitParents from "unist-util-visit-parents"
+import { CodeHikeConfig } from "./config"
 
 export async function transformInlineCodes(
   tree: SuperNode,
-  { theme }: { theme: any }
+  { theme }: CodeHikeConfig
 ) {
   // transform *`foo`* to <CH.InlineCode>foo</CH.InlineCode>
   visit(tree, "emphasis", (node: any) => {

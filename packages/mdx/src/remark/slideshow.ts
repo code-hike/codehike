@@ -4,12 +4,13 @@ import {
   CH_CODE_CONFIG_PLACEHOLDER,
 } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
-import { getPresetConfig } from "./preview"
+import { getPresetConfig } from "./transform.preview"
 import { JsxNode, SuperNode } from "./nodes"
+import { CodeHikeConfig } from "./config"
 
 export async function transformSlideshows(
   tree: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   await visitAsync(
     tree,
@@ -23,11 +24,11 @@ export async function transformSlideshows(
 }
 async function transformSlideshow(
   node: SuperNode,
-  { theme }: { theme: any }
+  config: CodeHikeConfig
 ) {
   const editorSteps = await extractStepsInfo(
     node,
-    { theme },
+    config,
     "merge step with previous"
   )
 
