@@ -1,3 +1,39 @@
+# v0.5.0 (Tue May 10 2022)
+
+#### 🚀 Enhancement
+
+- Copy button component [#172](https://github.com/code-hike/codehike/pull/172) ([@pomber](https://github.com/pomber))
+- Remove target from code links [#169](https://github.com/code-hike/codehike/pull/169) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- Better props support for mdx [#174](https://github.com/code-hike/codehike/pull/174) ([@pomber](https://github.com/pomber))
+- Fix parent config ([@pomber](https://github.com/pomber))
+- Fix wrong text ([@pomber](https://github.com/pomber))
+- Support more props in CH.Code ([@pomber](https://github.com/pomber))
+- Remove config placeholder ([@pomber](https://github.com/pomber))
+- Rename transform files ([@pomber](https://github.com/pomber))
+- Remark refactor ([@pomber](https://github.com/pomber))
+- Change plugin folder ([@pomber](https://github.com/pomber))
+- Fix react 18 strict mode [#173](https://github.com/code-hike/codehike/pull/173) ([@pomber](https://github.com/pomber))
+- Fix react 18 strict mode ([@pomber](https://github.com/pomber))
+- Add withClass annotation ([@pomber](https://github.com/pomber))
+- Add copy button to config ([@pomber](https://github.com/pomber))
+- Add codeblock button ([@pomber](https://github.com/pomber))
+- Fix button color ([@pomber](https://github.com/pomber))
+- Add themes test ([@pomber](https://github.com/pomber))
+- Add copy feedback ([@pomber](https://github.com/pomber))
+- Add button to south panel ([@pomber](https://github.com/pomber))
+- Copy button component ([@pomber](https://github.com/pomber))
+- Remove target from code links ([@pomber](https://github.com/pomber))
+- v0.4.0 [#167](https://github.com/code-hike/codehike/pull/167) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.4.0 (Thu Apr 28 2022)
 
 #### 🚀 Enhancement

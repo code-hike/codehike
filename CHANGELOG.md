@@ -1,3 +1,25 @@
+# v0.5.0 (Tue May 10 2022)
+
+#### 🚀 Enhancement
+
+- `@code-hike/mdx`
+  - Copy button component [#172](https://github.com/code-hike/codehike/pull/172) ([@pomber](https://github.com/pomber))
+  - Remove target from code links [#169](https://github.com/code-hike/codehike/pull/169) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- Contentlayer example [#170](https://github.com/code-hike/codehike/pull/170) ([@pomber](https://github.com/pomber))
+- `@code-hike/mdx`
+  - Better props support for mdx [#174](https://github.com/code-hike/codehike/pull/174) ([@pomber](https://github.com/pomber))
+  - Fix react 18 strict mode [#173](https://github.com/code-hike/codehike/pull/173) ([@pomber](https://github.com/pomber))
+  - v0.4.0 [#167](https://github.com/code-hike/codehike/pull/167) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.4.0 (Thu Apr 28 2022)
 
 #### 🚀 Enhancement
