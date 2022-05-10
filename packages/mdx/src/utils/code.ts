@@ -11,3 +11,11 @@ export type Code = {
   lines: HighlightedLine[]
   lang: string
 }
+
+export function codeToText(code: Code) {
+  return code.lines
+    .map(line =>
+      line.tokens.map(token => token.content).join("")
+    )
+    .join("\n")
+}

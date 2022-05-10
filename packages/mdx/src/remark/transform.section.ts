@@ -1,10 +1,11 @@
 import { visitAsync, toJSX } from "./unist-utils"
 import { isEditorNode, mapAnyCodeNode } from "./code"
 import { SuperNode, visit } from "./nodes"
+import { CodeHikeConfig } from "./config"
 
 export async function transformSections(
   tree: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   await visitAsync(
     tree,
@@ -19,7 +20,7 @@ export async function transformSections(
 
 async function transformSection(
   node: SuperNode,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   let props
   await visitAsync(
@@ -28,7 +29,7 @@ async function transformSection(
     async (editorNode, index, parent) => {
       if (isEditorNode(editorNode)) {
         props = await mapAnyCodeNode(
-          { node: editorNode, index, parent: parent! },
+          { node: editorNode, index, parent },
           config
         )
         toJSX(editorNode, {
@@ -42,7 +43,11 @@ async function transformSection(
   transformLinks(node)
 
   if (props) {
-    toJSX(node, { name: "CH.Section", props: props as any })
+    toJSX(node, {
+      name: "CH.Section",
+      props: props as any,
+      addConfigProp: true,
+    })
   } else {
     toJSX(node, { name: "div", props: {} })
   }

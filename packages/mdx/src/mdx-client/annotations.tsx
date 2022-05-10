@@ -15,6 +15,7 @@ export const annotationsMap: Record<
   label: Label,
   link: CodeLink,
   mark: Mark,
+  withClass: WithClass,
 }
 
 function Mark({
@@ -92,6 +93,25 @@ function Box({
       className="ch-code-box-annotation"
       style={{ outline: `2px solid ${border}` }}
     >
+      {children}
+    </span>
+  )
+}
+
+function WithClass({
+  children,
+  data,
+  style,
+  theme,
+}: {
+  data: any
+  children: React.ReactNode
+  style?: React.CSSProperties
+  theme: any
+}) {
+  const className = data as string
+  return (
+    <span style={style} className={className}>
       {children}
     </span>
   )
@@ -201,8 +221,6 @@ function CodeLink({
   return (
     <a
       href={url}
-      target="_blank"
-      rel="noopener noreferrer"
       title={title}
       style={{
         textDecoration: "underline",

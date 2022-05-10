@@ -45,6 +45,7 @@ export enum ColorName {
   InputBackground,
   InputBorder,
   SelectionBackground,
+  IconForeground,
 }
 
 type Color = string | undefined
@@ -198,6 +199,15 @@ export function getColor(
           light: "#ADD6FF",
           dark: "#264F78",
           hc: "#f3f518",
+        })
+      )
+    case ColorName.IconForeground:
+      return (
+        colors["icon.foreground"] ||
+        getDefault(theme, {
+          dark: "#C5C5C5",
+          light: "#424242",
+          hc: "#FFFFFF",
         })
       )
     default:

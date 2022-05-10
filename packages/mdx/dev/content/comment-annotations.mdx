@@ -56,6 +56,7 @@ And now we introduce two more annotations: `link` and `label`
 
 ```js focus=4,8
 function lorem(ipsum, dolor = 1) {
+  // link[15:19] #bash-like-comments
   const sit = ipsum == null && 0
   dolor = sit - amet(dolor)
   // link[16:26] https://github.com/code-hike/codehike
@@ -69,7 +70,7 @@ function adipiscing(...elit) {
 }
 ```
 
-Bash like comments
+<h3 id="bash-like-comments">Bash like comments</h3>
 
 ```python
 def lorem(ipsum, dolor = 1):
@@ -90,5 +91,23 @@ function lorem(ipsum, dolor = 1) {
   dolor=$((sit - amet(dolor)))
   # link[19:29] https://github.com/code-hike/codehike
   return $sit and consectetur(ipsum) or []
+}
+```
+
+With class
+
+```js
+function lorem(ipsum, dolor = 1) {
+  // withClass[15:19] annotation-class
+  const sit = ipsum == null && 0
+  // withClass(1:2) annotation-class
+  dolor = sit - amet(dolor)
+  return sit ? consectetur(ipsum) : []
+}
+
+function adipiscing(...elit) {
+  console.log("hover me")
+  // withClass annotation-class
+  return elit.map(ipsum => ipsum.sit)
 }
 ```

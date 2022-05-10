@@ -1,12 +1,6 @@
 import { highlight } from "../highlighter"
 import { extractLinks } from "./links"
-import {
-  visitAsync,
-  toJSX,
-  NodeInfo,
-  splitChildren,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { NodeInfo, splitChildren } from "./unist-utils"
 import { CodeStep } from "../smooth-code"
 import { EditorProps } from "../mini-editor"
 import {
@@ -16,22 +10,7 @@ import {
 } from "./annotations"
 import { mergeFocus } from "../utils"
 import { CodeNode, SuperNode } from "./nodes"
-
-export async function transformCodeNodes(
-  tree: SuperNode,
-  { theme }: { theme: any }
-) {
-  await visitAsync(
-    tree,
-    "code",
-    async (node: CodeNode, index, parent) => {
-      await transformCode(
-        { node, index, parent: parent! },
-        { theme }
-      )
-    }
-  )
-}
+import { CodeHikeConfig } from "./config"
 
 export function isEditorNode(node: SuperNode) {
   return (
@@ -41,28 +20,9 @@ export function isEditorNode(node: SuperNode) {
   )
 }
 
-async function transformCode(
-  nodeInfo: NodeInfo<CodeNode>,
-  config: { theme: any }
-) {
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props: await mapCode(nodeInfo, config),
-  })
-}
-export async function transformEditor(
-  nodeInfo: NodeInfo,
-  config: { theme: any }
-) {
-  toJSX(nodeInfo.node, {
-    name: "CH.Code",
-    props: await mapEditor(nodeInfo, config),
-  })
-}
-
 export async function mapAnyCodeNode(
   nodeInfo: NodeInfo,
-  config: { theme: any }
+  config: CodeHikeConfig
 ) {
   const { node } = nodeInfo
   if (node.type === "code") {
@@ -72,27 +32,28 @@ export async function mapAnyCodeNode(
   }
 }
 
+type Props = Omit<EditorProps, "codeConfig">
+
 async function mapCode(
   nodeInfo: NodeInfo<CodeNode>,
-  config: { theme: any }
-): Promise<EditorProps> {
+  config: CodeHikeConfig
+): Promise<Props> {
   const file = await mapFile(nodeInfo, config)
-  const props: EditorProps = {
+  const props: Props = {
     northPanel: {
       tabs: [file.name],
       active: file.name,
       heightRatio: 1,
     },
     files: [file],
-    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }
 
 export async function mapEditor(
   { node }: NodeInfo,
-  config: { theme: any }
-): Promise<EditorProps> {
+  config: CodeHikeConfig
+): Promise<Props> {
   const [northNodes, southNodes = []] = splitChildren(
     node,
     "thematicBreak"
@@ -139,14 +100,13 @@ export async function mapEditor(
         }
       : undefined,
     files: allFiles as any,
-    codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
   }
   return props
 }
 
 async function mapFile(
   { node, index, parent }: NodeInfo<CodeNode>,
-  config: { theme: any }
+  config: CodeHikeConfig
 ): Promise<CodeStep & FileOptions & { name: string }> {
   const { theme } = config
 

@@ -1,17 +1,14 @@
-import {
-  visitAsync,
-  toJSX,
-  CH_CODE_CONFIG_PLACEHOLDER,
-} from "./unist-utils"
+import { visitAsync, toJSX } from "./unist-utils"
 import { highlight } from "../highlighter"
 import { EditorStep } from "../mini-editor"
 import { Code } from "../utils"
 import { SuperNode, visit } from "./nodes"
 import visitParents from "unist-util-visit-parents"
+import { CodeHikeConfig } from "./config"
 
 export async function transformInlineCodes(
   tree: SuperNode,
-  { theme }: { theme: any }
+  { theme }: CodeHikeConfig
 ) {
   // transform *`foo`* to <CH.InlineCode>foo</CH.InlineCode>
   visit(tree, "emphasis", (node: any) => {
@@ -45,9 +42,9 @@ export async function transformInlineCodes(
               lang,
               theme
             ),
-            codeConfig: CH_CODE_CONFIG_PLACEHOLDER,
           },
           appendProps: true,
+          addConfigProp: true,
         })
       }
     }
