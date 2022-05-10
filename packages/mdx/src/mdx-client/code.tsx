@@ -36,8 +36,14 @@ export function InnerCode({
 
   const codeConfig = {
     ...props.codeConfig,
-    lineNumbers,
-    showCopyButton,
+    lineNumbers:
+      lineNumbers == null
+        ? props.codeConfig?.lineNumbers
+        : lineNumbers,
+    showCopyButton:
+      showCopyButton == null
+        ? props.codeConfig?.showCopyButton
+        : showCopyButton,
   }
 
   if (
