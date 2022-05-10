@@ -32,6 +32,7 @@ async function transformCode(
   toJSX(nodeInfo.node, {
     name: "CH.Code",
     props: await mapAnyCodeNode(nodeInfo, config),
+    appendProps: true,
     addConfigProp: true,
   })
 }

@@ -5,8 +5,11 @@ import {
   EditorProps,
   EditorStep,
 } from "../mini-editor"
+import { CodeHikeConfig } from "remark/config"
 
-export function Code(props: EditorProps) {
+export function Code(
+  props: EditorProps & Partial<CodeHikeConfig>
+) {
   const [step, setStep] = React.useState(props)
 
   function onTabClick(filename: string) {
@@ -22,29 +25,57 @@ export function InnerCode({
   ...props
 }: EditorProps & {
   onTabClick?: (filename: string) => void
-}) {
+} & Partial<CodeHikeConfig>) {
+  const {
+    lineNumbers,
+    showCopyButton,
+    className,
+    style,
+    ...editorProps
+  } = props
+
+  const codeConfig = {
+    ...props.codeConfig,
+    lineNumbers,
+    showCopyButton,
+  }
+
   if (
     !props.southPanel &&
     props.files.length === 1 &&
     !props.files[0].name
   ) {
     return (
-      <div className="ch-codeblock not-prose">
+      <div
+        className={`ch-codeblock not-prose ${
+          className || ""
+        }`}
+        style={style}
+      >
         <CodeSpring
           className="ch-code"
-          config={props.codeConfig}
-          step={props.files[0]}
+          config={codeConfig}
+          step={editorProps.files[0]}
         />
       </div>
     )
   } else {
     const frameProps = {
-      ...props?.frameProps,
+      ...editorProps?.frameProps,
       onTabClick,
     }
     return (
-      <div className="ch-codegroup not-prose">
-        <EditorSpring {...props} frameProps={frameProps} />
+      <div
+        className={`ch-codegroup not-prose ${
+          className || ""
+        }`}
+        style={style}
+      >
+        <EditorSpring
+          {...editorProps}
+          frameProps={frameProps}
+          codeConfig={codeConfig}
+        />
       </div>
     )
   }
