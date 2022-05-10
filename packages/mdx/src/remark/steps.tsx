@@ -1,13 +1,14 @@
 import { EditorStep } from "../mini-editor"
 import { isEditorNode, mapAnyCodeNode } from "./code"
 import { reduceSteps } from "./code-files-reducer"
+import { CodeHikeConfig } from "./config"
 import { SuperNode } from "./nodes"
 
 // extract step info
 
 export async function extractStepsInfo(
   parent: SuperNode,
-  config: { theme: any },
+  config: CodeHikeConfig,
   merge:
     | "merge steps with header"
     | "merge step with previous"
@@ -29,11 +30,10 @@ export async function extractStepsInfo(
     steps[stepIndex] = steps[stepIndex] || { children: [] }
     const step = steps[stepIndex]
     if (!step.editorStep && isEditorNode(child)) {
-      const { codeConfig, ...editorStep } =
-        await mapAnyCodeNode(
-          { node: child, parent, index: i },
-          config
-        )
+      const editorStep = await mapAnyCodeNode(
+        { node: child, parent, index: i },
+        config
+      )
 
       if (stepIndex === 0) {
         // for the header props, keep it as it is
