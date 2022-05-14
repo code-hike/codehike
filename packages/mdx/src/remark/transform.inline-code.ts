@@ -138,6 +138,10 @@ function getExistingCode(
   return undefined
 }
 
+/**
+ * Slice a line of tokens from a given index to a given length
+ * Turns ("[abc][de][fgh]", 2, 4) into "[c][de][f]")
+ */
 function sliceTokens(
   line: Code["lines"][0],
   start: number,
@@ -148,44 +152,62 @@ function sliceTokens(
 
   let headTokens = [] as Code["lines"][0]["tokens"]
 
-  for (let i = 0; i < tokens.length; i++) {
+  // this for loop remove the unwanted prefix tokens and put the rest in headTokens
+  for (
+    let tokenIndex = 0;
+    tokenIndex < tokens.length;
+    tokenIndex++
+  ) {
     if (currentLength === start) {
-      headTokens = tokens.slice(i)
+      headTokens = tokens.slice(tokenIndex)
       break
     }
-    if (currentLength + tokens[i].content.length > start) {
+    if (
+      currentLength + tokens[tokenIndex].content.length >
+      start
+    ) {
       const newToken = {
-        ...tokens[i],
-        content: tokens[i].content.slice(
+        ...tokens[tokenIndex],
+        content: tokens[tokenIndex].content.slice(
           start - currentLength
         ),
       }
-      headTokens = [newToken].concat(tokens.slice(i + 1))
+      headTokens = [newToken].concat(
+        tokens.slice(tokenIndex + 1)
+      )
       break
     }
-    currentLength += tokens[i].content.length
+    currentLength += tokens[tokenIndex].content.length
   }
-
+  // headTokens is now "[c][de][fgh]" (from the example above)
   currentLength = 0
-  for (let i = 0; i < headTokens.length; i++) {
-    if (currentLength === length) {
-      return headTokens.slice(0, i)
+  // this for loop remove the unwanted suffix tokens from headTokens
+  for (
+    let headTokenIndex = 0;
+    headTokenIndex <= headTokens.length;
+    headTokenIndex++
+  ) {
+    if (currentLength >= length) {
+      return headTokens.slice(0, headTokenIndex)
     }
+    const currentToken = headTokens[headTokenIndex]
     if (
-      currentLength + headTokens[i].content.length >
+      currentLength + currentToken.content.length >
       length
     ) {
       const newToken = {
-        ...headTokens[i],
-        content: headTokens[i].content.slice(
+        ...currentToken,
+        content: currentToken.content.slice(
           0,
           length - currentLength
         ),
       }
 
-      return headTokens.slice(0, i).concat([newToken])
+      return headTokens
+        .slice(0, headTokenIndex)
+        .concat([newToken])
     }
-    currentLength += headTokens[i].content.length
+    currentLength += currentToken.content.length
   }
   return []
 }
