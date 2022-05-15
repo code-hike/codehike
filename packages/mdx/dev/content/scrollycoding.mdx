@@ -6,17 +6,7 @@ Start by installing next and react on an empty directory:
 npm install next react react-dom
 ```
 
-<CH.Section>
-
-Then also install the [mdx plugin for next](focus://1[13:21]), the [mdx loader](focus://1[23:36]), and [Code Hike](focus://1[38:56]).
-
-```bash
-npm install @next/mdx @mdx-js/loader @code-hike/mdx@next
-```
-
-</CH.Section>
-
-<div style={{ height: "0.5em" }} />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
 <CH.Scrollycoding>
 
@@ -27,6 +17,8 @@ Here we use the [_`require("@next/mdx")`_](focus://1,6,8) plugin to set up MDX i
 Also, make sure you include `"md"` and `"mdx"` on the _`pageExtensions`_ setting.
 
 After this step, you can use MDX files in your project, but you can't use Code Hike yet.
+
+<CH.Code>
 
 {/* prettier-ignore */}
 ```js next.config.js
@@ -44,6 +36,17 @@ module.exports = withMDX({
   ],
 })
 ```
+
+---
+
+```css index.css
+.scrollycoding {
+  overflow: auto;
+  max-height: calc(100vh - 100px);
+}
+```
+
+</CH.Code>
 
 ---
 
@@ -81,6 +84,8 @@ Then you need to create a `pages/_app.js` file if you don't have one.
 
 You can find more information about the `_app.js` file in the [Next.js official docs](https://nextjs.org/docs/advanced-features/custom-app).
 
+<CH.Code show={["pages/_app.js"]}>
+
 {/* prettier-ignore */}
 ```js pages/_app.js
 function MyApp({ Component, pageProps }) {
@@ -90,6 +95,8 @@ function MyApp({ Component, pageProps }) {
 export default MyApp
 ```
 
+</CH.Code>
+
 ---
 
 The pages/\_app.js file is where you add global stylesheets in Next.js.
@@ -98,8 +105,14 @@ Here we need to import Code Hike's CSS.
 
 If you want to customize Code Hike's styles with a global stylesheet make sure to import it after this import to avoid specificity issues.
 
+<CH.Code show={["next.config.js", "pages/_app.js"]}>
+
+```js next.config.js
+
+```
+
 {/* prettier-ignore */}
-```js pages/_app.js focus=1
+```js pages/_app.js focus=1 active
 import "@code-hike/mdx/dist/index.css"
 
 function MyApp({ Component, pageProps }) {
@@ -109,11 +122,15 @@ function MyApp({ Component, pageProps }) {
 export default MyApp
 ```
 
+</CH.Code>
+
 ---
 
 Now you can create mdx files using codehike.
 
 Markdown (.md) files should also work.
+
+<CH.Code show={["next.config.js","pages/my.mdx"]}>
 
 {/* prettier-ignore */}
 ~~~md pages/my.mdx
@@ -128,8 +145,16 @@ print("Rendered with Code Hike")
 Lorem ipsum dolor sit amet.
 ~~~
 
+</CH.Code>
+
 </CH.Scrollycoding>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+
 Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
+
+<div style={{ height: "8em" }} />
