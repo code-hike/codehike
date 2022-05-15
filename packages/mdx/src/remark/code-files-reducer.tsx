@@ -4,24 +4,41 @@ import { EditorStep, CodeFile } from "../mini-editor"
 
 export function reduceSteps(
   baseStep: EditorStep,
-  extraStep: EditorStep
+  extraStep: EditorStep,
+  filter?: string[]
 ): EditorStep {
   let files = reduceFiles(baseStep.files, extraStep.files)
+
+  const newNorthPanel = reducePanel(
+    baseStep.northPanel,
+    extraStep.northPanel,
+    extraStep.southPanel
+  )!
+
+  const newSouthPanel = reducePanel(
+    baseStep.southPanel,
+    extraStep.southPanel,
+    extraStep.northPanel
+  )
+
+  if (filter) {
+    newNorthPanel.tabs = newNorthPanel.tabs.filter(
+      filename => filter.includes(filename)
+    )
+
+    if (newSouthPanel) {
+      newNorthPanel.tabs = newNorthPanel.tabs.filter(
+        filename => filter.includes(filename)
+      )
+    }
+  }
 
   return {
     ...baseStep,
     ...extraStep,
     files: files,
-    northPanel: reducePanel(
-      baseStep.northPanel,
-      extraStep.northPanel,
-      extraStep.southPanel
-    )!,
-    southPanel: reducePanel(
-      baseStep.southPanel,
-      extraStep.southPanel,
-      extraStep.northPanel
-    ),
+    northPanel: newNorthPanel,
+    southPanel: newSouthPanel,
   }
 }
 

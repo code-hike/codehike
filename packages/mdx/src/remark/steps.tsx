@@ -35,6 +35,8 @@ export async function extractStepsInfo(
         config
       )
 
+      const filter = getFilterFromEditorNode(child)
+
       if (stepIndex === 0) {
         // for the header props, keep it as it is
         step.editorStep = editorStep
@@ -45,7 +47,11 @@ export async function extractStepsInfo(
             ? steps[0].editorStep
             : steps[stepIndex - 1].editorStep
 
-        step.editorStep = reduceSteps(baseStep, editorStep)
+        step.editorStep = reduceSteps(
+          baseStep,
+          editorStep,
+          filter
+        )
       }
     } else {
       step.children.push(child)
@@ -61,4 +67,19 @@ export async function extractStepsInfo(
   })
 
   return steps.map(step => step.editorStep)
+}
+
+/**
+ * Extracts the `show` prop from <CH.Code show={["foo.js", "bar.html"]} />
+ */
+function getFilterFromEditorNode(node: any) {
+  const value = node.attributes?.find(
+    a => a.name === "show"
+  )?.value?.value
+
+  if (value) {
+    return JSON.parse(value)
+  } else {
+    return undefined
+  }
 }
