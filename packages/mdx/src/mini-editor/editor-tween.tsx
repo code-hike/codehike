@@ -8,6 +8,7 @@ import { useTransition, EditorStep } from "./editor-shift"
 import { CodeConfig } from "../smooth-code"
 import { useLayoutEffect } from "../utils"
 import { CopyButton } from "smooth-code/copy-button"
+import { ExpandButton } from "smooth-code/expand-button"
 
 export { EditorTransition, EditorTween }
 export type { EditorTransitionProps, EditorTweenProps }
@@ -111,12 +112,7 @@ function EditorTween({
       terminalPanel={terminalPanel}
       theme={codeConfig.theme}
       northButton={
-        showCopyButton ? (
-          <CopyButton
-            content={northContent}
-            style={{ margin: "0 0.8em" }}
-          />
-        ) : undefined
+        <ExpandButton style={{ margin: "0 0.8em" }} />
       }
       southButton={
         showCopyButton ? (
