@@ -46,6 +46,13 @@ export enum ColorName {
   InputBorder,
   SelectionBackground,
   IconForeground,
+  ListActiveSelectionBackground,
+  ListActiveSelectionForeground,
+  ListHoverBackground,
+  ListHoverForeground,
+  SideBarBackground,
+  SideBarForeground,
+  SideBarBorder,
 }
 
 type Color = string | undefined
@@ -210,6 +217,57 @@ export function getColor(
           hc: "#FFFFFF",
         })
       )
+
+    case ColorName.SideBarBackground:
+      return (
+        colors["sideBar.background"] ||
+        getDefault(theme, {
+          dark: "#252526",
+          light: "#F3F3F3",
+          hc: "#000000",
+        })
+      )
+    case ColorName.SideBarForeground:
+      return (
+        colors["sideBar.foreground"] ||
+        getColor(theme, ColorName.EditorForeground)
+      )
+    case ColorName.SideBarBorder:
+      return (
+        colors["sideBar.border"] ||
+        getColor(theme, ColorName.SideBarBackground)
+      )
+
+    case ColorName.ListActiveSelectionBackground:
+      return (
+        colors["list.activeSelectionBackground"] ||
+        getDefault(theme, {
+          dark: "#094771",
+          light: "#0060C0",
+          hc: "#000000",
+        })
+      )
+    case ColorName.ListActiveSelectionForeground:
+      return (
+        colors["list.activeSelectionForeground"] ||
+        getDefault(theme, {
+          dark: "#fffffe",
+          light: "#fffffe",
+          hc: "#fffffe",
+        })
+      )
+    case ColorName.ListHoverBackground:
+      return (
+        colors["list.hoverBackground"] ||
+        getDefault(theme, {
+          dark: "#2A2D2E",
+          light: "#F0F0F0",
+          hc: undefined,
+        })
+      )
+    case ColorName.ListHoverForeground:
+      return colors["list.hoverForeground"] || undefined
+
     default:
       return "#f00"
   }

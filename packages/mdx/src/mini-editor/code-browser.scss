@@ -1,0 +1,43 @@
+.ch-code-browser {
+  display: flex;
+  height: 100%;
+  font-family: Ubuntu, Droid Sans, -apple-system,
+    BlinkMacSystemFont, Segoe WPC, Segoe UI, sans-serif;
+}
+
+.ch-code-browser-sidebar {
+  border-right: 1px solid;
+  min-width: 100px;
+  padding: 1em 0;
+}
+
+.ch-code-browser-content {
+  overflow: auto;
+  flex: 1;
+  padding: 1em;
+  white-space: pre;
+  font-family: monospace;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0px;
+}
+
+.ch-code-browser-content ::selection {
+  background-color: var(--ch-selection-background);
+  color: inherit;
+}
+
+.ch-code-browser-sidebar-folder,
+.ch-code-browser-sidebar-file {
+  padding: 0.1em 1em;
+}
+
+.ch-code-browser-sidebar-file {
+  cursor: pointer;
+}
+
+.ch-code-browser-sidebar-file:hover {
+  background-color: var(--ch-hover-background);
+  color: var(--ch-hover-foreground);
+}
