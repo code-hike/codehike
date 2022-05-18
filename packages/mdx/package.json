@@ -57,7 +57,7 @@
     "@types/diff": "^5.0.2",
     "@types/node": "^17.0.21",
     "@types/node-fetch": "^2.6.1",
-    "@types/react": "^17.0.39",
+    "@types/react": "17.0.45",
     "autoprefixer": "^9.8.2",
     "click-to-react-component": "^1.0.8",
     "cssnano": "^4.1.10",
