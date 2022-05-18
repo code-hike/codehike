@@ -31,6 +31,12 @@ export function ExpandButton({
         onClose={() => {
           setExpanded(false)
         }}
+        onClick={e => {
+          if (e.currentTarget === e.target) {
+            ref.current.close()
+            document.body.classList.remove("ch-no-scroll")
+          }
+        }}
       >
         <CloseButton
           onClick={() => {
