@@ -8,7 +8,7 @@ import { useTransition, EditorStep } from "./editor-shift"
 import { CodeConfig } from "../smooth-code"
 import { useLayoutEffect } from "../utils"
 import { CopyButton } from "smooth-code/copy-button"
-import { ExpandButton } from "smooth-code/expand-button"
+import { ExpandButton } from "mini-editor/expand-button"
 
 export { EditorTransition, EditorTween }
 export type { EditorTransitionProps, EditorTweenProps }
@@ -56,7 +56,8 @@ function EditorTween({
 }: EditorTweenProps) {
   const ref = React.createRef<HTMLDivElement>()
 
-  const { showCopyButton, ...config } = codeConfig
+  const { showCopyButton, showExpandButton, ...config } =
+    codeConfig
   const {
     northPanel,
     southPanel,
@@ -95,6 +96,31 @@ function EditorTween({
     framePropsWithHeight.style.maxHeight = frozenHeight
   }
 
+  const northButtons = (
+    <>
+      {showCopyButton ? (
+        <CopyButton
+          content={northContent}
+          style={{ marginRight: "0.8em" }}
+        />
+      ) : undefined}
+      {showExpandButton ? (
+        <ExpandButton
+          style={{ marginRight: "0.8em" }}
+          step={next || prev}
+          theme={codeConfig.theme}
+        />
+      ) : undefined}
+    </>
+  )
+
+  const southCopyButton = showCopyButton ? (
+    <CopyButton
+      content={southContent}
+      style={{ marginRight: "0.8em" }}
+    />
+  ) : undefined
+
   const terminalPanel = (
     <TerminalPanel
       prev={prev.terminal}
@@ -111,17 +137,8 @@ function EditorTween({
       southPanel={southPanel}
       terminalPanel={terminalPanel}
       theme={codeConfig.theme}
-      northButton={
-        <ExpandButton style={{ margin: "0 0.8em" }} />
-      }
-      southButton={
-        showCopyButton ? (
-          <CopyButton
-            content={southContent}
-            style={{ margin: "0 0.8em" }}
-          />
-        ) : undefined
-      }
+      northButton={northButtons}
+      southButton={southCopyButton}
     />
   )
 }

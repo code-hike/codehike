@@ -45,6 +45,7 @@ export type CodeConfig = {
   theme: IRawTheme
   lineNumbers?: boolean
   showCopyButton?: boolean
+  showExpandButton?: boolean
 }
 
 function useCodeShift({
