@@ -2,6 +2,7 @@ export type CodeHikeConfig = {
   theme: any
   lineNumbers?: boolean
   autoImport?: boolean
+  showExpandButton?: boolean
   showCopyButton?: boolean
 }
 
