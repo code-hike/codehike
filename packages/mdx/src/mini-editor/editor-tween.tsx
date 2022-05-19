@@ -100,13 +100,13 @@ function EditorTween({
     <>
       {showCopyButton ? (
         <CopyButton
+          className="ch-editor-button"
           content={northContent}
-          style={{ marginRight: "0.8em" }}
         />
       ) : undefined}
       {showExpandButton ? (
         <ExpandButton
-          style={{ marginRight: "0.8em" }}
+          className="ch-editor-button"
           step={next || prev}
           theme={codeConfig.theme}
         />
@@ -116,8 +116,8 @@ function EditorTween({
 
   const southCopyButton = showCopyButton ? (
     <CopyButton
+      className="ch-editor-button"
       content={southContent}
-      style={{ marginRight: "0.8em" }}
     />
   ) : undefined
 

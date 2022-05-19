@@ -7,10 +7,12 @@ export function ExpandButton({
   style,
   step,
   theme,
+  className,
 }: {
   style?: React.CSSProperties
   step: EditorStep
   theme: IRawTheme
+  className?: string
 }) {
   const [expanded, setExpanded] = React.useState(false)
   const ref = React.useRef<any>(null)
@@ -18,6 +20,7 @@ export function ExpandButton({
   return (
     <>
       <ExpandIcon
+        className={className}
         style={style}
         onClick={() => {
           ref.current.showModal()
@@ -61,15 +64,17 @@ export function ExpandButton({
 function ExpandIcon({
   onClick,
   style,
+  className,
 }: {
   onClick: () => void
   style?: React.CSSProperties
+  className?: string
 }) {
   return (
     <svg
       style={style}
       onClick={onClick}
-      className="ch-expand-button"
+      className={className}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"

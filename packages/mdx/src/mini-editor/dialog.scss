@@ -2,15 +2,10 @@
   overflow: hidden;
 }
 
-.ch-expand-button {
-  width: 1.5em;
-  height: 1.5em;
-  cursor: pointer;
-}
-
 .ch-expand-dialog {
   height: 100vh;
   width: 100vw;
+  max-width: 900px;
   border: 0;
   background-color: transparent;
 }
