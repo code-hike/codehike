@@ -1,3 +1,27 @@
+# v0.5.1 (Thu May 19 2022)
+
+#### 🐛 Bug Fix
+
+- Expand button [#181](https://github.com/code-hike/codehike/pull/181) ([@pomber](https://github.com/pomber))
+- Hide dialog when not supported ([@pomber](https://github.com/pomber))
+- Add dialog border ([@pomber](https://github.com/pomber))
+- Improved styles for buttons ([@pomber](https://github.com/pomber))
+- Show expand button ([@pomber](https://github.com/pomber))
+- Change dialog font ([@pomber](https://github.com/pomber))
+- Add dialog ([@pomber](https://github.com/pomber))
+- Add CodeBrowser ([@pomber](https://github.com/pomber))
+- Test expand dialog ([@pomber](https://github.com/pomber))
+- Hide tabs [#179](https://github.com/code-hike/codehike/pull/179) ([@pomber](https://github.com/pomber))
+- Add show prop to CH.Code ([@pomber](https://github.com/pomber))
+- Fix sliceTokens edge case ([@pomber](https://github.com/pomber))
+- Merge main [#176](https://github.com/code-hike/codehike/pull/176) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.5.0 (Tue May 10 2022)
 
 #### 🚀 Enhancement
