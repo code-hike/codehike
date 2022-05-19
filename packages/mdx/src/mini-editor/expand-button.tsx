@@ -16,8 +16,22 @@ export function ExpandButton({
   className?: string
 }) {
   const [expanded, setExpanded] = React.useState(false)
+  const [dialogSupported, setDialogSupported] =
+    React.useState(true)
   const ref = React.useRef<any>(null)
   const files = step.files
+
+  // check if <dialog /> is supported
+  React.useEffect(() => {
+    if (ref.current && !ref.current.showModal) {
+      setDialogSupported(false)
+    }
+  }, [])
+
+  if (!dialogSupported) {
+    return null
+  }
+
   return (
     <>
       <ExpandIcon
