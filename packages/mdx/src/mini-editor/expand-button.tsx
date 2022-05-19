@@ -1,4 +1,5 @@
 import React from "react"
+import { ColorName, getColor } from "utils"
 import { IRawTheme } from "vscode-textmate"
 import { CodeBrowser } from "./code-browser"
 import { EditorStep } from "./editor-shift"
@@ -48,7 +49,15 @@ export function ExpandButton({
           }}
         />
         {expanded ? (
-          <div className="ch-expand-dialog-content">
+          <div
+            className="ch-expand-dialog-content"
+            style={{
+              borderColor: getColor(
+                theme,
+                ColorName.SideBarBorder
+              ),
+            }}
+          >
             <CodeBrowser
               files={files}
               theme={theme}
