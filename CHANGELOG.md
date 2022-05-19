@@ -1,3 +1,18 @@
+# v0.5.1 (Thu May 19 2022)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Expand button [#181](https://github.com/code-hike/codehike/pull/181) ([@pomber](https://github.com/pomber))
+  - Hide tabs [#179](https://github.com/code-hike/codehike/pull/179) ([@pomber](https://github.com/pomber))
+  - Merge main [#176](https://github.com/code-hike/codehike/pull/176) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.5.0 (Tue May 10 2022)
 
 #### 🚀 Enhancement
