@@ -91,6 +91,7 @@ export function Scrollycoding({
           {...(tab as any)}
           codeConfig={codeConfig}
           onTabClick={onTabClick}
+          showExpandButton={true}
         />
         {presetConfig && (
           <Preview

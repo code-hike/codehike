@@ -45,6 +45,7 @@ export type CodeConfig = {
   theme: IRawTheme
   lineNumbers?: boolean
   showCopyButton?: boolean
+  showExpandButton?: boolean
 }
 
 function useCodeShift({
@@ -170,13 +171,7 @@ function AfterDimensions({
       />
       {config.showCopyButton ? (
         <CopyButton
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            width: "1.1em",
-            height: "1.1em",
-          }}
+          className="ch-code-button"
           content={stepInfo?.code?.prev}
         />
       ) : undefined}

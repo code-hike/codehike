@@ -29,6 +29,7 @@ export function InnerCode({
   const {
     lineNumbers,
     showCopyButton,
+    showExpandButton,
     className,
     style,
     ...editorProps
@@ -44,6 +45,10 @@ export function InnerCode({
       showCopyButton == null
         ? props.codeConfig?.showCopyButton
         : showCopyButton,
+    showExpandButton:
+      showExpandButton == null
+        ? props.codeConfig?.showExpandButton
+        : showExpandButton,
   }
 
   if (

@@ -3,20 +3,17 @@ import React from "react"
 export function CopyButton({
   content,
   style,
+  className,
 }: {
   content: string
   style?: React.CSSProperties
+  className?: string
 }) {
   const [copied, setCopied] = React.useState(false)
 
   return (
     <svg
-      style={{
-        width: "1.5em",
-        height: "1.5em",
-        cursor: "pointer",
-        ...style,
-      }}
+      style={style}
       onClick={() => {
         copyToClipboard(content)
         setCopied(true)
@@ -24,11 +21,11 @@ export function CopyButton({
           setCopied(false)
         }, 1200)
       }}
-      className="ch-copy-button"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <title>Copy</title>
 

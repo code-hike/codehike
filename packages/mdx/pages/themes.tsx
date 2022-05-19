@@ -8,17 +8,45 @@ import { Layout } from "../dev/layout"
 const mdx = `
 
 <CH.Code>
-~~~js foo.js
-function foo(x = 1) {
-  return "bar"
+
+~~~json package.json
+{
+  "name": "package.json"
 }
 ~~~
+
+~~~js pages/index.js
+function IndexPage() {
+  return 1
+}
+~~~
+
+~~~js pages/post/[slug].js
+function PostPage() {
+  return 1
+}
+~~~
+
 ---
-~~~css foo.css
-body {
-  height: 32px;
+
+~~~js pages/alpha.ts
+function AlphaPage() {
+  return 1
 }
 ~~~
+
+~~~css src/styles.css
+.alpha {
+  color: red;
+}
+~~~
+
+~~~js src/comp.js
+function AlphaPage() {
+  return <div className="alpha">1</div>
+}
+~~~
+
 </CH.Code>
 
 ~~~py

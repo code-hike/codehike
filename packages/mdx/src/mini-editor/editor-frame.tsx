@@ -194,7 +194,7 @@ function TabsContainer({
           <TabTitle title={title} />
         </div>
       ))}
-      <div style={{ flex: 1 }} />
+      <div style={{ flex: 1, minWidth: "0.8em" }} />
       {button}
     </>
   )
