@@ -12,7 +12,7 @@
       "esnext"
     ],
     "importHelpers": true,
-    "declaration": true,
+    "declaration": false,
     "sourceMap": true,
     "strict": false,
     "noUnusedLocals": false,
@@ -39,7 +39,8 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "isolatedModules": true,
-    "incremental": true
+    "incremental": true,
+    "tsBuildInfoFile": "./dist/tsbuildinfo.json"
   },
   "exclude": [
     "node_modules"

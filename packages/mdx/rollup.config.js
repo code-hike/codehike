@@ -8,6 +8,7 @@ import path from "path"
 import json from "@rollup/plugin-json"
 import del from "rollup-plugin-delete"
 import replace from "@rollup/plugin-replace"
+import dts from "rollup-plugin-dts";
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 // import { terser } from "rollup-plugin-terser"
 import commonjs from "@rollup/plugin-commonjs"
@@ -15,6 +16,7 @@ import commonjs from "@rollup/plugin-commonjs"
 const clientExternal = [
   "react",
   "react-dom",
+  "remark/config",
   // "@codesandbox/sandpack-client",
   // "use-spring",
   // "diff",
@@ -72,6 +74,12 @@ export default function makeConfig(commandOptions) {
         }),
       ],
     },
+    {
+      input: `src/index.tsx`,
+      output: [{ file: `./dist/index.d.ts`, format: "es" }],
+      external: [...remarkExternal, "shiki"],
+      plugins: [dts()],
+    },
     // for the browser esm we need to replace shiki with shiki/dist/index.browser.mjs
     // https://github.com/shikijs/shiki/issues/131#issuecomment-1094281851
     {
@@ -124,6 +132,12 @@ export default function makeConfig(commandOptions) {
           },
         }),
       ],
+    },
+    {
+      input: `src/components.tsx`,
+      output: [{ file: `./dist/components.d.ts`, format: "es" }],
+      external: clientExternal,
+      plugins: [dts()],
     },
   ]
 }
