@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+header {
+  background-color: cadetblue;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0 1rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.editor {
+  min-width: 400px;
+  /* background-color: #222;
+  color: white; */
+}
+
+.preview {
+  min-width: 600px;
+  border-left: 2px solid cadetblue;
+  padding: 1em;
+}
