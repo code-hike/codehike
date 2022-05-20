@@ -1,33 +1,28 @@
-import { useRef, useEffect } from "react";
-import * as runtime from "react/jsx-runtime.js";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
-
-import { compile, run } from "@mdx-js/mdx";
+import { Preview } from "./preview";
 
 const defaultCode = `
 # Hello
 
 This is a markdown editor.
 
+<CH.Code style={{height: 200}}>
+
 ~~~py foo.py
 print "Hello, world!";
 ~~~
+
+</CH.Code>
 
 `;
 
 function App() {
   const [code, setCode] = useState(defaultCode);
-  const [Content, setContent] = useState(undefined);
   function handleEditorChange(value, event) {
     setCode(value);
   }
 
-  useEffect(() => {
-    compile(code, { outputFormat: "function-body" })
-      .then((c) => run(String(c), runtime))
-      .then((x) => setContent(x.default));
-  }, [code]);
   return (
     <div className="app">
       <header>
@@ -55,7 +50,7 @@ function App() {
             tabSize: 2,
           }}
         />
-        <div className="preview">{Content}</div>
+        <Preview code={code} />
       </main>
     </div>
   );

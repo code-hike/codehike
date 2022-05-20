@@ -48,3 +48,7 @@ main {
   border-left: 2px solid cadetblue;
   padding: 1em;
 }
+
+.preview-error {
+  border: 1px solid red;
+}

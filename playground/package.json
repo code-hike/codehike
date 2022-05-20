@@ -9,15 +9,11 @@
   },
   "dependencies": {
     "@code-hike/mdx": "^0.5.1",
-    "@codemirror/basic-setup": "^0.20.0",
-    "@codemirror/commands": "^0.20.0",
-    "@codemirror/lang-markdown": "^0.20.1",
-    "@codemirror/state": "^0.20.0",
-    "@codemirror/view": "^0.20.5",
     "@mdx-js/mdx": "^2.1.1",
     "@monaco-editor/react": "^4.4.5",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-error-boundary": "^3.1.4"
   },
   "devDependencies": {
     "@types/react": "^17.0.2",
