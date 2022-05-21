@@ -1,5 +1,5 @@
-import Editor from "@monaco-editor/react";
 import { useState } from "react";
+import { Editor } from "./editor";
 import { Preview } from "./preview";
 
 const defaultCode = `
@@ -19,40 +19,40 @@ print "Hello, world!";
 
 function App() {
   const [code, setCode] = useState(defaultCode);
-  function handleEditorChange(value, event) {
-    setCode(value);
-  }
 
   return (
     <div className="app">
       <header>
-        <h1>Code Hike</h1> v0.5.1
+        <a
+          className="flex items-center gap-2 mr-auto 2cols:ml-6"
+          href="https://codehike.org"
+        >
+          <CodeHikeLogo />
+          <h1>
+            Code Hike
+            <span>v0.5.1</span>
+          </h1>
+        </a>
+        <a>Docs</a>
       </header>
       <main>
-        <Editor
-          className="editor"
-          onChange={handleEditorChange}
-          defaultLanguage="markdown"
-          theme="vs-dark"
-          defaultValue={defaultCode}
-          options={{
-            // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html
-            minimap: {
-              enabled: false,
-            },
-            lineNumbers: "off",
-            scrollBeyondLastLine: false,
-            hideCursorInOverviewRuler: true,
-            matchBrackets: false,
-            overviewRulerBorder: false,
-            renderLineHighlight: "none",
-            wordWrap: "on",
-            tabSize: 2,
-          }}
-        />
+        <Editor setCode={setCode} defaultCode={defaultCode} />
         <Preview code={code} />
       </main>
     </div>
+  );
+}
+
+function CodeHikeLogo(props) {
+  return (
+    <svg viewBox="-100 -100 200 200" fill="currentColor" {...props}>
+      <path d="M 70 60 L 42 -27 L 72 -27 L 100 60 Z" />
+      <path d="M 20.419540229885058 40.05357142857142 L 42 -27 L 72 -27 L 50.41954022988506 40.05357142857142 Z" />
+      <path d="M 20.419540229885058 40.05357142857142 L -15 -70 L 15 -70 L 50.41954022988506 40.05357142857142 Z" />
+      <path d="M -50.41954022988506 40.05357142857142 L -15 -70 L 15 -70 L -20.419540229885058 40.05357142857142 Z" />
+      <path d="M -50.41954022988506 40.05357142857142 L -72 -27 L -42 -27 L -20.419540229885058 40.05357142857142 Z" />
+      <path d="M -100 60 L -72 -27 L -42 -27 L -70 60 Z" />
+    </svg>
   );
 }
 
