@@ -1,4 +1,3 @@
-import fetch from "node-fetch"
 import { visitAsync, toJSX } from "./unist-utils"
 import { JsxNode, SuperNode } from "./nodes"
 
@@ -14,6 +13,7 @@ export async function getPresetConfig(
   const prefix = "https://codesandbox.io/s/"
   const csbid = url.slice(prefix.length)
   const configUrl = `https://codesandbox.io/api/v1/sandboxes/${csbid}/sandpack`
+  const { default: fetch } = await import("node-fetch")
   const res = await fetch(configUrl)
   return await res.json()
 }
