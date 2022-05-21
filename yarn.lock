@@ -10399,6 +10399,13 @@ magic-string@^0.25.3, magic-string@^0.25.7:
   dependencies:
     sourcemap-codec "^1.4.8"
 
+magic-string@^0.26.1:
+  version "0.26.2"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.26.2.tgz#5331700e4158cd6befda738bb6b0c7b93c0d4432"
+  integrity sha512-NzzlXpclt5zAbmo6h6jNc8zl2gNRGHvmsZW4IvZhTC4W7k4OlLP+S5YLussa/r3ixNT66KOQfNORlXHSOy/X4A==
+  dependencies:
+    sourcemap-codec "^1.4.8"
+
 make-dir@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -14302,6 +14309,15 @@ rollup-plugin-delete@^2.0.0:
   integrity sha512-/VpLMtDy+8wwRlDANuYmDa9ss/knGsAgrDhM+tEwB1npHwNu4DYNmDfUL55csse/GHs9Q+SMT/rw9uiaZ3pnzA==
   dependencies:
     del "^5.1.0"
+
+rollup-plugin-dts@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-dts/-/rollup-plugin-dts-4.2.1.tgz#c17968a0f7c5ae70a9e0ab37e715f3ef63da01c7"
+  integrity sha512-eaxQZNUJ5iQcxNGlpJ1CUgG4OSVqWjDZ3nNSWBIoGrpcote2aNphSe1RJOaSYkb8dwn3o+rYm1vvld/5z3EGSQ==
+  dependencies:
+    magic-string "^0.26.1"
+  optionalDependencies:
+    "@babel/code-frame" "^7.16.7"
 
 rollup-plugin-inject@^3.0.0:
   version "3.0.2"
