@@ -5,7 +5,7 @@ import {
   EditorProps,
   EditorStep,
 } from "../mini-editor"
-import { CodeHikeConfig } from "remark/config"
+import { CodeHikeConfig } from "../remark/config"
 
 export function Code(
   props: EditorProps & Partial<CodeHikeConfig>
