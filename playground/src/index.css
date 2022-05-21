@@ -27,6 +27,7 @@ header {
   background-color: #111;
   color: #fafafa;
   height: 3.2rem;
+  min-height: 3.2rem;
   border-bottom: 1px solid #444;
 }
 
@@ -44,7 +45,7 @@ header h1 span {
   padding-left: 0.5rem;
 }
 
-header a {
+header a.code-hike {
   color: inherit;
   text-decoration: inherit;
   display: flex;
@@ -77,6 +78,7 @@ main {
   background-color: #111;
   color: #fafafa;
   height: 2rem;
+  min-height: 2rem;
   border-bottom: 1px solid #444;
   display: flex;
   align-items: center;
@@ -108,6 +110,8 @@ main {
   border-left: 2px solid cadetblue;
   padding: 1em;
   flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 
 .preview-error {

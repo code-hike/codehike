@@ -5,15 +5,12 @@ import { Preview } from "./preview";
 const defaultCode = `
 # Hello
 
-This is a markdown editor.
+Edit me.
 
-<CH.Code style={{height: 200}}>
-
-~~~py foo.py
-print "Hello, world!";
+~~~python hello.py
+# mark[16:24]
+print("This is Code Hike")
 ~~~
-
-</CH.Code>
 
 `;
 
@@ -23,17 +20,13 @@ function App() {
   return (
     <div className="app">
       <header>
-        <a
-          className="flex items-center gap-2 mr-auto 2cols:ml-6"
-          href="https://codehike.org"
-        >
+        <a className="code-hike" href="https://codehike.org">
           <CodeHikeLogo />
           <h1>
             Code Hike
             <span>v0.5.1</span>
           </h1>
         </a>
-        <a>Docs</a>
       </header>
       <main>
         <Editor setCode={setCode} defaultCode={defaultCode} />
