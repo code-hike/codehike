@@ -25,7 +25,11 @@ function App() {
       readHash() || {
         mdx: defaultCode,
         css: defaultCss,
-        config: { lineNumbers: false, showCopyButton: false },
+        config: {
+          lineNumbers: false,
+          showCopyButton: false,
+          theme: "material-darker",
+        },
       }
     );
   }, []);

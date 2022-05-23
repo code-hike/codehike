@@ -5,7 +5,7 @@ import { remarkCodeHike } from "@code-hike/mdx";
 import { CH } from "@code-hike/mdx/components";
 import "@code-hike/mdx/styles.css";
 import { ErrorBoundary } from "react-error-boundary";
-import theme from "shiki/themes/material-darker.json";
+import { getTheme } from "./themes";
 
 export function Preview(props) {
   return (
@@ -35,7 +35,14 @@ function InnerPreview({ input }) {
     compile(input.mdx, {
       outputFormat: "function-body",
       remarkPlugins: [
-        [remarkCodeHike, { ...input.config, autoImport: false, theme }],
+        [
+          remarkCodeHike,
+          {
+            ...input.config,
+            autoImport: false,
+            theme: getTheme(input.config.theme),
+          },
+        ],
       ],
     })
       .then((c) => {

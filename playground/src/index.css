@@ -79,6 +79,7 @@ main {
   color: #fafafa;
   height: 2.2rem;
   min-height: 2rem;
+  max-height: 2rem;
   border-bottom: 1px solid #444;
   display: flex;
   align-items: center;
@@ -108,6 +109,31 @@ main {
 .editor-tab:hover {
   color: rgb(179, 209, 245);
 }
+
+.editor {
+  flex: 1;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  color-scheme: dark;
+}
+
+.config-editor {
+  padding: 0.6rem 1.5rem;
+}
+
+.config-editor label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.config-editor input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.config-editor select {
+  font-size: 1rem;
+}
+
 .preview {
   min-width: 600px;
   border-left: 2px solid cadetblue;
