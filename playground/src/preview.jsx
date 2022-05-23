@@ -47,7 +47,7 @@ function InnerPreview({ code }) {
   // console.log(error);
   return (
     <>
-      {Content ? Content({ components: { CH } }) : null}
+      {Content ? <Content components={{ CH }} /> : null}
       {error ? <div className="preview-error">{error}</div> : null}
     </>
   );
