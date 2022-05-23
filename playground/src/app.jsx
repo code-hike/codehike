@@ -17,7 +17,7 @@ print("This is Code Hike")
 const defaultInput = {
   mdx: defaultCode,
   css: ".preview-container { border: 1px solid blue; }",
-  config: {},
+  config: { lineNumbers: false, showCopyButton: false },
 };
 
 function App() {
