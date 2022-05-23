@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Editor } from "./editor";
+import { readHash, writeHash } from "./hash";
 import { Preview } from "./preview";
 
 const defaultCode = `
@@ -14,14 +15,21 @@ print("This is Code Hike")
 
 `;
 
-const defaultInput = {
-  mdx: defaultCode,
-  css: ".preview-container { border: 1px solid blue; }",
-  config: { lineNumbers: false, showCopyButton: false },
-};
-
 function App() {
+  const defaultInput = React.useMemo(() => {
+    return (
+      readHash() || {
+        mdx: defaultCode,
+        css: ".preview-container { border: 1px solid blue; }",
+        config: { lineNumbers: false, showCopyButton: false },
+      }
+    );
+  }, []);
   const [input, setInput] = useState(defaultInput);
+
+  React.useEffect(() => {
+    writeHash(input);
+  }, [input]);
 
   return (
     <div className="app">
