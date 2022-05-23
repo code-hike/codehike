@@ -111,7 +111,6 @@ main {
 .preview {
   min-width: 600px;
   border-left: 2px solid cadetblue;
-  padding: 1em;
   flex: 1;
   min-height: 0;
   overflow: auto;

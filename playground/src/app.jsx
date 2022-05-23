@@ -15,12 +15,16 @@ print("This is Code Hike")
 
 `;
 
+const defaultCss = `.preview-container { 
+  margin: 8px; 
+}`;
+
 function App() {
   const defaultInput = React.useMemo(() => {
     return (
       readHash() || {
         mdx: defaultCode,
-        css: ".preview-container { border: 1px solid blue; }",
+        css: defaultCss,
         config: { lineNumbers: false, showCopyButton: false },
       }
     );
