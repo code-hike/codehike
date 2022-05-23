@@ -77,7 +77,7 @@ main {
 .editor-side nav {
   background-color: #111;
   color: #fafafa;
-  height: 2rem;
+  height: 2.2rem;
   min-height: 2rem;
   border-bottom: 1px solid #444;
   display: flex;
@@ -94,6 +94,9 @@ main {
   box-sizing: border-box;
   padding-top: 3px;
   padding-bottom: 3px;
+  font-size: 0.95em;
+  display: inline-flex;
+  align-items: center;
 }
 
 .editor-tab[data-active="true"] {

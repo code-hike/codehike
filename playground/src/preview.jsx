@@ -10,7 +10,10 @@ import theme from "shiki/themes/material-darker.json";
 export function Preview(props) {
   return (
     <div className="preview">
-      <ErrorBoundary resetKeys={[props.code]} FallbackComponent={ErrorFallback}>
+      <ErrorBoundary
+        resetKeys={[props.input.mdx, props.input.css, props.input.config]}
+        FallbackComponent={ErrorFallback}
+      >
         <InnerPreview {...props} />
       </ErrorBoundary>
     </div>
@@ -25,13 +28,15 @@ function ErrorFallback({ error }) {
   );
 }
 
-function InnerPreview({ code }) {
+function InnerPreview({ input }) {
   const [Content, setContent] = useState(undefined);
   const [error, setError] = useState(undefined);
   useEffect(() => {
-    compile(code, {
+    compile(input.mdx, {
       outputFormat: "function-body",
-      remarkPlugins: [[remarkCodeHike, { autoImport: false, theme }]],
+      remarkPlugins: [
+        [remarkCodeHike, { ...input.config, autoImport: false, theme }],
+      ],
     })
       .then((c) => {
         return run(String(c), runtime);
@@ -44,7 +49,7 @@ function InnerPreview({ code }) {
         setError(e.message);
         console.error({ e });
       });
-  }, [code]);
+  }, [input.mdx, input.css, input.config]);
   // console.log(error);
   return (
     <>

@@ -1,12 +1,33 @@
 import MonacoEditor from "@monaco-editor/react";
 import { useState } from "react";
 
-export function Editor({ setCode, defaultCode }) {
-  function handleEditorChange(value, event) {
-    setCode(value);
+const tabs = {
+  mdx: {
+    lang: "markdown",
+    code: (input) => input.mdx,
+  },
+  css: {
+    lang: "css",
+    code: (input) => input.css,
+  },
+  config: {
+    lang: "json",
+    code: (input) => JSON.stringify(input.config, null, 2),
+  },
+};
+
+export function Editor({ setInput, input }) {
+  const [tab, setTab] = useState("mdx");
+
+  function handleEditorChange(code, event) {
+    let value = code;
+    if (tab === "config") {
+      console.log({ code });
+      value = JSON.parse(code);
+    }
+    setInput((prev) => ({ ...prev, [tab]: value }));
   }
 
-  const [tab, setTab] = useState("mdx");
   return (
     <div className="editor-side">
       <nav>
@@ -35,9 +56,10 @@ export function Editor({ setCode, defaultCode }) {
       <MonacoEditor
         className="editor"
         onChange={handleEditorChange}
-        defaultLanguage="markdown"
         theme="vs-dark"
-        defaultValue={defaultCode}
+        path={tab}
+        defaultLanguage={tabs[tab].lang}
+        defaultValue={tabs[tab].code(input)}
         options={{
           // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html
           minimap: {

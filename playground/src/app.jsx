@@ -14,8 +14,14 @@ print("This is Code Hike")
 
 `;
 
+const defaultInput = {
+  mdx: defaultCode,
+  css: ".preview-container { border: 1px solid blue; }",
+  config: {},
+};
+
 function App() {
-  const [code, setCode] = useState(defaultCode);
+  const [input, setInput] = useState(defaultInput);
 
   return (
     <div className="app">
@@ -29,8 +35,8 @@ function App() {
         </a>
       </header>
       <main>
-        <Editor setCode={setCode} defaultCode={defaultCode} />
-        <Preview code={code} />
+        <Editor setInput={setInput} input={input} />
+        <Preview input={input} />
       </main>
     </div>
   );
