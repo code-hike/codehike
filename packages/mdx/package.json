@@ -34,6 +34,7 @@
   "scripts": {
     "dev": "next",
     "build": "rollup -c rollup.config.js",
+    "watch": "rollup --watch -c  rollup.config.js",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },

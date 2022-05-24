@@ -1,12 +1,30 @@
 import MonacoEditor from "@monaco-editor/react";
 import { useState } from "react";
+import { themeList } from "./themes";
 
-export function Editor({ setCode, defaultCode }) {
-  function handleEditorChange(value, event) {
-    setCode(value);
+const tabs = {
+  mdx: {
+    lang: "markdown",
+    code: (input) => input.mdx,
+  },
+  css: {
+    lang: "css",
+    code: (input) => input.css,
+  },
+  config: {
+    lang: "json",
+    code: (input) => JSON.stringify(input.config, null, 2),
+  },
+};
+
+export function Editor({ setInput, input }) {
+  const [tab, setTab] = useState("mdx");
+
+  function handleEditorChange(code) {
+    let value = code;
+    setInput((prev) => ({ ...prev, [tab]: value }));
   }
 
-  const [tab, setTab] = useState("mdx");
   return (
     <div className="editor-side">
       <nav>
@@ -32,27 +50,72 @@ export function Editor({ setCode, defaultCode }) {
           Config
         </span>
       </nav>
-      <MonacoEditor
-        className="editor"
-        onChange={handleEditorChange}
-        defaultLanguage="markdown"
-        theme="vs-dark"
-        defaultValue={defaultCode}
-        options={{
-          // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html
-          minimap: {
-            enabled: false,
-          },
-          lineNumbers: "off",
-          scrollBeyondLastLine: false,
-          hideCursorInOverviewRuler: true,
-          matchBrackets: false,
-          overviewRulerBorder: false,
-          renderLineHighlight: "none",
-          wordWrap: "on",
-          tabSize: 2,
-        }}
-      />
+      {tab === "config" ? (
+        <ConfigEditor config={input.config} onChange={handleEditorChange} />
+      ) : (
+        <div className="editor">
+          <MonacoEditor
+            onChange={handleEditorChange}
+            theme="vs-dark"
+            path={tab}
+            defaultLanguage={tabs[tab].lang}
+            defaultValue={tabs[tab].code(input)}
+            options={{
+              // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IEditorConstructionOptions.html
+              minimap: {
+                enabled: false,
+              },
+              lineNumbers: "off",
+              scrollBeyondLastLine: false,
+              hideCursorInOverviewRuler: true,
+              matchBrackets: false,
+              overviewRulerBorder: false,
+              renderLineHighlight: "none",
+              wordWrap: "on",
+              tabSize: 2,
+            }}
+          />
+        </div>
+      )}
     </div>
+  );
+}
+
+function ConfigEditor({ config, onChange }) {
+  return (
+    <form className="editor config-editor">
+      <label>
+        <input
+          type="checkbox"
+          checked={config.lineNumbers}
+          onChange={(e) =>
+            onChange({ ...config, lineNumbers: e.target.checked })
+          }
+        />
+        Line Numbers
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={config.showCopyButton}
+          onChange={(e) =>
+            onChange({ ...config, showCopyButton: e.target.checked })
+          }
+        />
+        Copy Button
+      </label>
+      <label>
+        Theme:
+        <br />
+        <select
+          value={config.theme}
+          onChange={(e) => onChange({ ...config, theme: e.target.value })}
+        >
+          {themeList().map((theme) => (
+            <option key={theme}>{theme}</option>
+          ))}
+        </select>
+      </label>
+    </form>
   );
 }

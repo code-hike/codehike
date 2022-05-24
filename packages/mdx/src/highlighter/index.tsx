@@ -33,11 +33,17 @@ export async function highlight({
     }
   }
   if (highlighterPromise === null) {
+    const isBrowser = typeof window !== "undefined"
+    // if we are on the server we load all the languages
+    // if we are on the browser just load the first language
+    // subsequent calls with different languages will lazy load
+    const langs = isBrowser ? [lang as Lang] : undefined
+
     // TODO add version
     setCDN("https://unpkg.com/shiki/")
     highlighterPromise = getHighlighter({
       theme: theme as IShikiTheme,
-      // langs: [lang as Lang], // TODO change lang from string to Lang
+      langs,
     })
   }
 

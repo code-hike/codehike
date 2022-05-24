@@ -23,12 +23,13 @@ body,
 header {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8rem;
   background-color: #111;
   color: #fafafa;
   height: 3.2rem;
   min-height: 3.2rem;
   border-bottom: 1px solid #444;
+  padding: 0 1.5rem;
 }
 
 header h1 {
@@ -46,11 +47,18 @@ header h1 span {
 }
 
 header a.code-hike {
+  gap: 0.5rem;
+  display: flex;
+  margin-right: auto;
+}
+
+header a {
   color: inherit;
   text-decoration: inherit;
-  display: flex;
-  margin-left: 1.5rem;
-  gap: 0.5rem;
+  font-size: 1.05rem;
+}
+header a:hover {
+  color: rgb(179, 209, 245);
 }
 
 header svg {
@@ -60,16 +68,18 @@ header svg {
   color: rgb(96 165 250);
 }
 main {
-  display: flex;
+  /* display: flex; */
   flex: 1 1 auto;
   overflow: hidden;
+  position: relative;
 }
 
 .editor-side {
-  min-width: 400px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 100%;
   /* background-color: #222;
   color: white; */
 }
@@ -77,8 +87,9 @@ main {
 .editor-side nav {
   background-color: #111;
   color: #fafafa;
-  height: 2rem;
+  height: 2.2rem;
   min-height: 2rem;
+  max-height: 2rem;
   border-bottom: 1px solid #444;
   display: flex;
   align-items: center;
@@ -94,6 +105,9 @@ main {
   box-sizing: border-box;
   padding-top: 3px;
   padding-bottom: 3px;
+  font-size: 0.95em;
+  display: inline-flex;
+  align-items: center;
 }
 
 .editor-tab[data-active="true"] {
@@ -105,15 +119,98 @@ main {
 .editor-tab:hover {
   color: rgb(179, 209, 245);
 }
+
+.editor {
+  flex: 1;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  color-scheme: dark;
+}
+
+.config-editor {
+  padding: 0.6rem 1.5rem;
+}
+
+.config-editor label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.config-editor input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.config-editor select {
+  font-size: 1rem;
+}
+
 .preview {
-  min-width: 600px;
-  border-left: 2px solid cadetblue;
-  padding: 1em;
   flex: 1;
   min-height: 0;
+}
+
+.preview:not(.standalone) {
   overflow: auto;
+  position: absolute;
+  inset: 0;
+}
+
+.preview.standalone {
+  padding: 0.1px;
 }
 
 .preview-error {
-  border: 1px solid red;
+  color: #be0924;
+  padding: 0.5rem 1.5rem;
+}
+
+.preview-error pre {
+  color: #111;
+}
+
+.compile-error {
+  color: #be0924;
+  position: fixed;
+  top: 3.4rem;
+  background-color: white;
+  margin: 1.5rem;
+  border: 1px solid #be0924;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border-radius: 4px;
+  z-index: 4;
+}
+
+.compile-error pre {
+  color: #111;
+  white-space: normal;
+}
+
+.with-error {
+  opacity: 0.8;
+  filter: blur(1.5px);
+}
+
+.standalone-link {
+  position: fixed;
+  top: 3.6rem;
+  right: 1.6rem;
+  z-index: 3;
+  background-color: #222;
+  color: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #fafafa;
+}
+
+.standalone .standalone-link {
+  top: 2rem;
+}
+
+.standalone-link:hover {
+  background-color: #000;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  padding: 4px;
 }
