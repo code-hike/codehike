@@ -10,10 +10,10 @@ const defaultCode = `
 
 Edit me.
 
-~~~python hello.py
+\`\`\`python hello.py
 # mark[16:24]
 print("This is Code Hike")
-~~~
+\`\`\`
 
 `;
 
@@ -57,6 +57,8 @@ function App() {
             <span>v0.5.1</span>
           </h1>
         </a>
+        <a href="https://codehike.org/docs">Docs</a>
+        <a href="https://codehike.org/#demos">Demos</a>
       </header>
       <main>
         <SplitPane
