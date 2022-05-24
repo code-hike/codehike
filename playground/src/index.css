@@ -143,5 +143,32 @@ main {
 }
 
 .preview-error {
-  border: 1px solid red;
+  color: #be0924;
+  padding: 0.5rem 1.5rem;
+}
+
+.preview-error pre {
+  color: #111;
+}
+
+.compile-error {
+  color: #be0924;
+  position: fixed;
+  top: 3.4rem;
+  background-color: white;
+  margin: 1.5rem;
+  border: 1px solid #be0924;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  border-radius: 4px;
+  z-index: 4;
+}
+
+.compile-error pre {
+  color: #111;
+  white-space: normal;
+}
+
+.with-error {
+  opacity: 0.8;
+  filter: blur(1.5px);
 }

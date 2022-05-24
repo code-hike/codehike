@@ -22,7 +22,7 @@ export function Preview(props) {
 function ErrorFallback({ error }) {
   return (
     <div className="preview-error">
-      <p>Something went wrong:</p>
+      <h3>Runtime Error:</h3>
       <pre>{String(error)}</pre>
     </div>
   );
@@ -61,10 +61,15 @@ function InnerPreview({ input }) {
   return (
     <>
       <style>{input.css}</style>
-      <div className="preview-container">
+      {error ? (
+        <div className="compile-error">
+          <h3>Compliation Error:</h3>
+          <pre>{error}</pre>
+        </div>
+      ) : null}
+      <div className={`preview-container ${error ? "with-error" : ""}`}>
         {Content ? <Content components={{ CH }} /> : null}
       </div>
-      {error ? <div className="preview-error">{error}</div> : null}
     </>
   );
 }
