@@ -20,26 +20,29 @@ const defaultCss = `.preview-container {
 }`;
 
 function App() {
-  const defaultInput = React.useMemo(() => {
-    return (
-      readHash() || {
-        mdx: defaultCode,
-        css: defaultCss,
-        config: {
-          lineNumbers: false,
-          showCopyButton: false,
-          theme: "material-darker",
-        },
-      }
-    );
+  const data = React.useMemo(() => {
+    const input = readHash() || {
+      mdx: defaultCode,
+      css: defaultCss,
+      config: {
+        lineNumbers: false,
+        showCopyButton: false,
+        theme: "material-darker",
+      },
+    };
+    const params = new URL(location).searchParams;
+    const standalonePreview = !!params.get("preview");
+    return { input, standalonePreview };
   }, []);
-  const [input, setInput] = useState(defaultInput);
+  const [input, setInput] = useState(data.input);
 
   React.useEffect(() => {
     writeHash(input);
   }, [input]);
 
-  return (
+  return data.standalonePreview ? (
+    <Preview input={input} standalone={true} />
+  ) : (
     <div className="app">
       <header>
         <a className="code-hike" href="https://codehike.org">

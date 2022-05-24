@@ -136,10 +136,14 @@ main {
 
 .preview {
   min-width: 600px;
-  border-left: 2px solid cadetblue;
   flex: 1;
   min-height: 0;
   overflow: auto;
+}
+
+.preview.standalone {
+  overflow: unset;
+  padding: 0.1px;
 }
 
 .preview-error {
@@ -171,4 +175,29 @@ main {
 .with-error {
   opacity: 0.8;
   filter: blur(1.5px);
+}
+
+.standalone-link {
+  position: fixed;
+  top: 3.6rem;
+  right: 1.6rem;
+  z-index: 3;
+  background-color: #222;
+  color: #fafafa;
+  border-radius: 4px;
+  border: 1px solid #fafafa;
+}
+
+.standalone .standalone-link {
+  top: 2rem;
+}
+
+.standalone-link:hover {
+  background-color: #000;
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  padding: 4px;
 }
