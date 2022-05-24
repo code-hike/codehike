@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Editor } from "./editor";
 import { readHash, writeHash } from "./hash";
 import { Preview } from "./preview";
+import SplitPane from "react-split-pane";
+import "./resizer.css";
 
 const defaultCode = `
 # Hello
@@ -40,6 +42,9 @@ function App() {
     writeHash(input);
   }, [input]);
 
+  // when the width changes we want to re-render the preview
+  const [refreshKey, setRefreshKey] = useState(0);
+
   return data.standalonePreview ? (
     <Preview input={input} standalone={true} />
   ) : (
@@ -54,8 +59,15 @@ function App() {
         </a>
       </header>
       <main>
-        <Editor setInput={setInput} input={input} />
-        <Preview input={input} />
+        <SplitPane
+          split="vertical"
+          minSize={200}
+          defaultSize="50%"
+          onDragFinished={(e) => setRefreshKey(e)}
+        >
+          <Editor setInput={setInput} input={input} />
+          <Preview input={input} refreshKey={refreshKey} />
+        </SplitPane>
       </main>
     </div>
   );

@@ -29,7 +29,7 @@ function ErrorFallback({ error }) {
   );
 }
 
-function InnerPreview({ input, standalone }) {
+function InnerPreview({ input, standalone, refreshKey }) {
   const [Content, setContent] = useState(undefined);
   const [error, setError] = useState(undefined);
   useEffect(() => {
@@ -78,7 +78,7 @@ function InnerPreview({ input, standalone }) {
         </a>
       )}
       <div className={`preview-container ${error ? "with-error" : ""}`}>
-        {Content ? <Content components={{ CH }} /> : null}
+        {Content ? <Content components={{ CH }} key={refreshKey} /> : null}
       </div>
     </>
   );

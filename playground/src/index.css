@@ -60,16 +60,18 @@ header svg {
   color: rgb(96 165 250);
 }
 main {
-  display: flex;
+  /* display: flex; */
   flex: 1 1 auto;
   overflow: hidden;
+  position: relative;
 }
 
 .editor-side {
-  min-width: 400px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  height: 100%;
   /* background-color: #222;
   color: white; */
 }
@@ -135,14 +137,17 @@ main {
 }
 
 .preview {
-  min-width: 600px;
   flex: 1;
   min-height: 0;
+}
+
+.preview:not(.standalone) {
   overflow: auto;
+  position: absolute;
+  inset: 0;
 }
 
 .preview.standalone {
-  overflow: unset;
   padding: 0.1px;
 }
 
@@ -184,7 +189,7 @@ main {
   z-index: 3;
   background-color: #222;
   color: #fafafa;
-  border-radius: 4px;
+  border-radius: 8px;
   border: 1px solid #fafafa;
 }
 
