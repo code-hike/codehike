@@ -1,12 +1,12 @@
 {
   "name": "codehike-nextra",
   "private": true,
-  "version": "0.5.1",
+  "version": "0.5.2",
   "scripts": {
     "build": "next build"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.5.1",
+    "@code-hike/mdx": "^0.5.2",
     "next": "^12.1.0",
     "nextra": "^1.1.0",
     "nextra-theme-docs": "^1.2.6",

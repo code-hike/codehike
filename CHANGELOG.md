@@ -1,3 +1,25 @@
+# v0.5.2 (Wed May 25 2022)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Fix rose pine themes [#188](https://github.com/code-hike/codehike/pull/188) ([@pomber](https://github.com/pomber))
+  - Better playground [#187](https://github.com/code-hike/codehike/pull/187) ([@pomber](https://github.com/pomber))
+  - Playground [#185](https://github.com/code-hike/codehike/pull/185) ([@pomber](https://github.com/pomber))
+
+#### 🏠 Internal
+
+- `@code-hike/mdx`
+  - Modify output of dist folder to merge all .d.ts files [#186](https://github.com/code-hike/codehike/pull/186) ([@AeonFr](https://github.com/AeonFr) [@pomber](https://github.com/pomber))
+  - Merge main [#183](https://github.com/code-hike/codehike/pull/183) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- Francisco Cano ([@AeonFr](https://github.com/AeonFr))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.5.1 (Thu May 19 2022)
 
 #### 🐛 Bug Fix
