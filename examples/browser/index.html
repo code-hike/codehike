@@ -4,7 +4,7 @@
     <title>Code Hike in the browser</title>
     <link
       rel="stylesheet"
-      href="https://esm.sh/@code-hike/mdx@0.4.0-next.1/dist/index.css"
+      href="https://esm.sh/@code-hike/mdx@0.5.2-next.2/dist/index.css"
     />
   </head>
   <body>
@@ -13,18 +13,26 @@
     <script type="module">
       import React from "https://esm.sh/react"
       import ReactDOM from "https://esm.sh/react-dom"
-      import { evaluate } from "https://esm.sh/@mdx-js/mdx?dev"
+      import { evaluate } from "https://esm.sh/@mdx-js/mdx?bundle"
       import * as runtime from "https://esm.sh/react/jsx-runtime.js"
 
-      import { remarkCodeHike } from "https://esm.sh/@code-hike/mdx@0.4.0-next.1/dist/index.browser.mjs"
-      import { CH } from "https://esm.sh/@code-hike/mdx@0.4.0-next.1/components"
-      import theme from "https://esm.sh/shiki@0.10.1/themes/nord.json" assert { type: "json" }
+      import { remarkCodeHike } from "https://esm.sh/@code-hike/mdx@0.5.2-next.2/dist/index.browser.mjs?bundle"
+      import { CH } from "https://esm.sh/@code-hike/mdx@0.5.2-next.2/components"
+      import theme from "https://esm.sh/shiki@0.10.1/themes/dracula.json" assert { type: "json" }
 
       const mdx = `# Test
 
-      ~~~python hello.py mark=1[22:30]
-      print("Rendered with Code Hike")
-      ~~~
+<CH.Code>
+
+~~~python hello.py mark=1[22:30]
+print("Rendered with Code Hike")
+~~~
+
+~~~js hello.js mark=1[23:36]
+console.log("Rendered with Code Hike")
+~~~
+
+</CH.Code>
       `
 
       const { default: Content } = await evaluate(mdx, {
