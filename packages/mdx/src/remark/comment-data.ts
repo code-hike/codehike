@@ -28,11 +28,25 @@ export function getCommentData(
   }
 }
 
+function getTextAfter(
+  line: Code["lines"][0],
+  prefix: string
+) {
+  const firstIndex = line.tokens.findIndex(t =>
+    t.content.trim().startsWith(prefix)
+  )
+  if (firstIndex === -1) {
+    return undefined
+  }
+  return line.tokens
+    .slice(firstIndex)
+    .map(t => t.content)
+    .join("")
+}
+
 const commentRegex = /\/\/\s+(\w+)(\S*)\s*(.*)/
 function otherComment(line: Code["lines"][0]) {
-  const comment = line.tokens.find(t =>
-    t.content.trim().startsWith("//")
-  )?.content
+  const comment = getTextAfter(line, "//")
 
   if (!comment) {
     return []
@@ -56,9 +70,7 @@ const bashLikeLangs = [
 ]
 const bashLikeCommentRegex = /#\s+(\w+)(\S*)\s*(.*)/
 function bashLikeComment(line: Code["lines"][0]) {
-  const comment = line.tokens.find(t =>
-    t.content.trim().startsWith("#")
-  )?.content
+  const comment = getTextAfter(line, "#")
 
   if (!comment) {
     return []

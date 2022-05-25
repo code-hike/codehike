@@ -63,7 +63,7 @@ export const EditorFrame = React.forwardRef<
       style={{
         background: getColor(
           theme,
-          ColorName.EditorGroupHeaderBackground
+          ColorName.EditorBackground
         ),
         ...style,
       }}
@@ -72,6 +72,10 @@ export const EditorFrame = React.forwardRef<
         className={"ch-frame-title-bar"}
         style={{
           color: getColor(theme, ColorName.IconForeground),
+          background: getColor(
+            theme,
+            ColorName.EditorGroupHeaderBackground
+          ),
         }}
       >
         <TabsContainer
@@ -97,6 +101,10 @@ export const EditorFrame = React.forwardRef<
               color: getColor(
                 theme,
                 ColorName.IconForeground
+              ),
+              background: getColor(
+                theme,
+                ColorName.EditorGroupHeaderBackground
               ),
             }}
           >
