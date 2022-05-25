@@ -1,3 +1,29 @@
+# v0.5.2 (Wed May 25 2022)
+
+#### 🐛 Bug Fix
+
+- Fix rose pine themes [#188](https://github.com/code-hike/codehike/pull/188) ([@pomber](https://github.com/pomber))
+- Fix tabs background ([@pomber](https://github.com/pomber))
+- Fix multi token annotations ([@pomber](https://github.com/pomber))
+- Better playground [#187](https://github.com/code-hike/codehike/pull/187) ([@pomber](https://github.com/pomber))
+- Lazy load languages on browser ([@pomber](https://github.com/pomber))
+- Playground [#185](https://github.com/code-hike/codehike/pull/185) ([@pomber](https://github.com/pomber))
+- Fix CodeHikeConfig import ([@pomber](https://github.com/pomber))
+- Modify output of dist folder to merge all .d.ts files ([@AeonFr](https://github.com/AeonFr))
+- Playground preview ([@pomber](https://github.com/pomber))
+
+#### 🏠 Internal
+
+- Modify output of dist folder to merge all .d.ts files [#186](https://github.com/code-hike/codehike/pull/186) ([@AeonFr](https://github.com/AeonFr) [@pomber](https://github.com/pomber))
+- Merge main [#183](https://github.com/code-hike/codehike/pull/183) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- Francisco Cano ([@AeonFr](https://github.com/AeonFr))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.5.1 (Thu May 19 2022)
 
 #### 🐛 Bug Fix
