@@ -34,6 +34,7 @@
   "scripts": {
     "dev": "next",
     "build": "rollup -c rollup.config.js",
+    "watch": "rollup --watch -c  rollup.config.js",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -71,6 +72,7 @@
     "react-json-view": "^1.21.3",
     "rollup": "^2.41.2",
     "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^4.2.1",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "sass": "^1.49.9",

@@ -4,12 +4,14 @@
     "packages": [
       "packages/mdx",
       "examples/*",
+      "playground",
       "site"
     ]
   },
   "scripts": {
     "build": "lerna run --stream build",
     "build:lib": "lerna run --stream --scope @*/mdx build",
+    "build:playground": "lerna run --stream --scope playground build",
     "test": "lerna run --stream test",
     "dev": "lerna run --stream --scope @*/mdx dev",
     "release": "auto shipit"
