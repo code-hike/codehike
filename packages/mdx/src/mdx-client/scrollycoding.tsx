@@ -11,6 +11,7 @@ export function Scrollycoding({
   codeConfig,
   presetConfig,
   start = 0,
+  ...rest
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
@@ -88,10 +89,11 @@ export function Scrollycoding({
       </div>
       <div className="ch-scrollycoding-sticker">
         <InnerCode
+          showExpandButton={true}
+          {...rest}
           {...(tab as any)}
           codeConfig={codeConfig}
           onTabClick={onTabClick}
-          showExpandButton={true}
         />
         {presetConfig && (
           <Preview
