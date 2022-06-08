@@ -9,6 +9,7 @@ export function Slideshow({
   codeConfig,
   presetConfig,
   code,
+  ...rest
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
@@ -45,6 +46,7 @@ export function Slideshow({
     >
       <div className="ch-slideshow-slide">
         <InnerCode
+          {...rest}
           {...(tab as any)}
           codeConfig={{
             ...codeConfig,

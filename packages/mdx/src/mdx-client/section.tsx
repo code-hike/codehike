@@ -63,7 +63,7 @@ export function Section({
   )
 }
 
-export function SectionCode() {
+export function SectionCode(innerProps) {
   const { props, setFocus } =
     React.useContext(SectionContext)
 
@@ -71,7 +71,13 @@ export function SectionCode() {
     setFocus({ fileName: filename, focus: null, id: "" })
   }
 
-  return <InnerCode {...props} onTabClick={onTabClick} />
+  return (
+    <InnerCode
+      {...innerProps}
+      {...props}
+      onTabClick={onTabClick}
+    />
+  )
 }
 
 // ---
