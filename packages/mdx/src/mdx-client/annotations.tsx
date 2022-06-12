@@ -25,7 +25,6 @@ function Mark(props: any) {
     return <MultilineMark {...props} />
   }
 }
-
 function MultilineMark({
   children,
   data,
@@ -39,29 +38,20 @@ function MultilineMark({
 }) {
   const bg =
     data ||
-    (((theme as any).colors[
-      "editor.lineHighlightBackground"
-    ] ||
-      (theme as any).colors[
-        "editor.selectionHighlightBackground"
-      ]) as string)
+    getColor(theme, ColorName.RangeHighlightBackground)
+  const border = getColor(
+    theme,
+    ColorName.EditorInfoForeground
+  )
+
   return (
     <div
-      style={{
-        ...style,
-        background: bg,
-      }}
-      className="ch-code-bg-annotation"
+      style={{ ...style, background: bg }}
+      className="ch-code-multiline-mark"
     >
       <span
-        className="ch-code-bg-annotation-border"
-        style={{
-          background: "#00a2d3",
-          width: "3px",
-          height: "100%",
-          position: "absolute",
-          left: 0,
-        }}
+        className="ch-code-multiline-mark-border"
+        style={{ background: border }}
       />
       {children}
     </div>
@@ -88,13 +78,8 @@ function InlineMark({
 
   return (
     <span
-      className="ch-code-mark-annotation"
-      style={{
-        background: bg,
-        borderRadius: "0.25rem",
-        padding: "0.2rem 0.15rem 0.1rem",
-        margin: "0 -0.15rem",
-      }}
+      className="ch-code-inline-mark"
+      style={{ background: bg }}
     >
       {children}
     </span>

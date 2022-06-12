@@ -32,6 +32,7 @@ export enum ColorName {
   CodeBackground,
   EditorForeground,
   EditorBackground,
+  FocusBorder,
   ActiveTabBackground,
   ActiveTabForeground,
   InactiveTabBackground,
@@ -53,6 +54,12 @@ export enum ColorName {
   SideBarBackground,
   SideBarForeground,
   SideBarBorder,
+  // Background color for the highlight of line at the cursor position
+  LineHighlightBackground,
+  // Background color of highlighted ranges, like by quick open and find features
+  RangeHighlightBackground,
+  // Foreground color of info squigglies in the editor
+  EditorInfoForeground,
 }
 
 type Color = string | undefined
@@ -95,6 +102,15 @@ export function getColor(
           light: "#333333",
           dark: "#BBBBBB",
           hc: "#fffffe",
+        })
+      )
+    case ColorName.FocusBorder:
+      return (
+        colors["focusBorder"] ||
+        getDefault(theme, {
+          light: "#0090F1",
+          dark: "#007FD4",
+          hc: contrastBorder,
         })
       )
     case ColorName.ActiveTabBackground:
@@ -267,6 +283,34 @@ export function getColor(
       )
     case ColorName.ListHoverForeground:
       return colors["list.hoverForeground"] || undefined
+    case ColorName.LineHighlightBackground:
+      return (
+        colors["editor.lineHighlightBackground"] ||
+        getDefault(theme, {
+          dark: undefined,
+          light: undefined,
+          hc: undefined,
+        })
+      )
+    case ColorName.RangeHighlightBackground:
+      return (
+        colors["editor.rangeHighlightBackground"] ||
+        getDefault(theme, {
+          dark: "#ffffff0b",
+          light: "#fdff0033",
+          hc: undefined,
+        })
+      )
+
+    case ColorName.EditorInfoForeground:
+      return (
+        colors["editor.infoForeground"] ||
+        getDefault(theme, {
+          dark: "#3794FF",
+          light: "#1a85ff",
+          hc: "#3794FF",
+        })
+      )
 
     default:
       return "#f00"
