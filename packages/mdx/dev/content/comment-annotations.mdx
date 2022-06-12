@@ -20,10 +20,10 @@ function adipiscing(...elit) {
 console.log("hey")
 ```
 
-Same with other annotations like `bg` and `box`.
+Same with other annotations like `mark` and `box`.
 
 ```js
-// bg(1:2)
+// mark(1:2)
 function foo() {
   // box[6:9]
   console.log("hover me")
@@ -31,11 +31,11 @@ function foo() {
 }
 ```
 
-You can pass a string parameter to comment annotations. For `bg` and `box`, it will be used as a color.
+You can pass a string parameter to comment annotations. For `mark` and `box`, it will be used as a color.
 
 ```js index.js
 function lorem(ipsum, dolor = 1) {
-  // bg(1:3) linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%)
+  // mark(1:3) linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%)
   const sit = ipsum == null && 0
   dolor = sit - amet(dolor)
   return sit ? consectetur(ipsum) : []

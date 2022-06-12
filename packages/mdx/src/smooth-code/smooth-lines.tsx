@@ -108,6 +108,7 @@ function Lines({
             key={i}
             data={group.annotation.data}
             theme={group.annotation.theme}
+            isInline={false}
           >
             <LineGroup
               lines={group.lines}
@@ -258,6 +259,7 @@ function AnnotatedTokens({
       children={children}
       data={annotated?.annotation?.data}
       theme={annotated?.annotation?.theme!}
+      isInline={true}
     />
   ) : (
     <>{children}</>

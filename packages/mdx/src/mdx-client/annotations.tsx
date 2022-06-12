@@ -11,14 +11,64 @@ export const annotationsMap: Record<
   CodeAnnotation["Component"]
 > = {
   box: Box,
-  bg: Background,
+  bg: MultilineMark,
   label: Label,
   link: CodeLink,
   mark: Mark,
   withClass: WithClass,
 }
 
-function Mark({
+function Mark(props: any) {
+  if (props.isInline) {
+    return <InlineMark {...props} />
+  } else {
+    return <MultilineMark {...props} />
+  }
+}
+
+function MultilineMark({
+  children,
+  data,
+  style,
+  theme,
+}: {
+  data: string
+  children: React.ReactNode
+  style?: React.CSSProperties
+  theme?: any
+}) {
+  const bg =
+    data ||
+    (((theme as any).colors[
+      "editor.lineHighlightBackground"
+    ] ||
+      (theme as any).colors[
+        "editor.selectionHighlightBackground"
+      ]) as string)
+  return (
+    <div
+      style={{
+        ...style,
+        background: bg,
+      }}
+      className="ch-code-bg-annotation"
+    >
+      <span
+        className="ch-code-bg-annotation-border"
+        style={{
+          background: "#00a2d3",
+          width: "3px",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+        }}
+      />
+      {children}
+    </div>
+  )
+}
+
+function InlineMark({
   children,
   data,
   theme,
@@ -64,7 +114,7 @@ function tryGuessColor(
     grandChild?.props?.children || []
   )[0] as any
 
-  const { color } = grandGrandChild?.props?.style
+  const { color } = grandGrandChild?.props?.style || {}
 
   if (color) {
     return transparent(color as string, 0.2)
@@ -114,49 +164,6 @@ function WithClass({
     <span style={style} className={className}>
       {children}
     </span>
-  )
-}
-
-function Background({
-  children,
-  data,
-  style,
-  theme,
-}: {
-  data: string
-  children: React.ReactNode
-  style?: React.CSSProperties
-  theme?: any
-}) {
-  const bg =
-    data ||
-    (((theme as any).colors[
-      "editor.lineHighlightBackground"
-    ] ||
-      (theme as any).colors[
-        "editor.selectionHighlightBackground"
-      ]) as string)
-  return (
-    <div
-      style={{
-        ...style,
-        background: bg,
-        // cursor: "pointer",
-      }}
-      className="ch-code-bg-annotation"
-    >
-      <span
-        className="ch-code-bg-annotation-border"
-        style={{
-          background: "#00a2d3",
-          width: "3px",
-          height: "100%",
-          position: "absolute",
-          left: 0,
-        }}
-      />
-      {children}
-    </div>
   )
 }
 
