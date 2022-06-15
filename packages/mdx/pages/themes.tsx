@@ -9,7 +9,7 @@ const mdx = `
 
 <CH.Code>
 
-~~~json package.json
+~~~json package.json mark=2[12:23]
 {
   "name": "package.json"
 }
@@ -31,6 +31,7 @@ function PostPage() {
 
 ~~~js pages/alpha.ts
 function AlphaPage() {
+  // mark
   return 1
 }
 ~~~

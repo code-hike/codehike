@@ -53,3 +53,16 @@
 .ch-section-link[data-active="true"] * {
   text-decoration-thickness: 1.5px;
 }
+
+.ch-code-inline-mark {
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.15rem 0.1rem;
+  margin: 0 -0.15rem;
+}
+
+.ch-code-multiline-mark-border {
+  width: 3px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+}

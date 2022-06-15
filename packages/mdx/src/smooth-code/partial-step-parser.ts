@@ -142,6 +142,7 @@ export type MultiLineAnnotation = {
     children: React.ReactNode
     data: any
     theme: EditorTheme
+    isInline: boolean
   }) => React.ReactElement
 }
 
@@ -155,6 +156,7 @@ export type InlineAnnotation = {
     children: React.ReactNode
     data: any
     theme: EditorTheme
+    isInline: boolean
   }) => React.ReactElement
 }
 
