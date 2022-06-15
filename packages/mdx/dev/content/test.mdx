@@ -1,15 +1,124 @@
-Lorem ipsum dolor sit amet. _`console.log("foo bar")`_.
+Annotations allow you to change how the code is displayed and also to add interactivity.
 
-Lorem ipsum dolor sit amet. `console.log("foo bar")`.
+<CH.Spotlight lineNumbers={true}>
 
-_`console.log("foo bar")`_
+````mdx mark=1[7:13],5[1:7]
+```py focus=2
+print(1)
+print(2)
+print(3)
+# focus
+print(4)
+print(5)
+```
+````
 
-_`console.log("foo bar")`_
+There are two ways to add annotations:
 
-X <CH.InlineCode>console.log("foo bar")</CH.InlineCode>
+---
 
-Lorem ipsum `var x = 1`
+```mdx mark=1[7:13],5[1:7] focus=1
 
-_Lorem ipsum `var x = 1`_
+```
 
-**`console.log("foo bar")`**
+- using the codeblock metastring
+
+---
+
+```mdx mark=1[7:13],5[1:7] focus=5
+
+```
+
+- using comments inside the code
+
+</CH.Spotlight>
+
+_`focus`_ is only one of the possible annotations. The full list is:
+
+- _`focus`_: keep the targeted code bright while dimming the rest
+- _`mark`_: add a background color to the targeted tokens
+- _`link`_: add links inside the code
+
+First let's see the syntax to target different parts of the code.
+
+## Targeting lines and columns
+
+<CH.Spotlight maxZoom={1.5} lineNumbers={true} >
+
+<CH.Code lineNumbers={true}>
+
+```text
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+```
+
+</CH.Code>
+
+---
+
+```text focus=2
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+```
+
+To select a specific line, use the line number:
+_`focus=2`_
+
+---
+
+```text focus=3:5
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+```
+
+To select a range of lines use a colon:
+_`focus=3:5`_
+
+---
+
+```text focus=5[3:6]
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+```
+
+Select a range of column from a line using brackets:
+_`focus=5[3:6]`_
+
+---
+
+```text focus=1,3:5,7[1:4,7:9]
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+123456789
+```
+
+Combine selectors using a comma separated list:
+_`focus=1,3:5,7[1:4,7:9]`_
+
+</CH.Spotlight>
+
+## Comment syntax

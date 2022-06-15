@@ -1,5 +1,5 @@
 import React from "react"
-import { CodeSpring } from "../smooth-code"
+import { CodeConfig, CodeSpring } from "../smooth-code"
 import {
   EditorSpring,
   EditorProps,
@@ -20,23 +20,29 @@ export function Code(
   return <InnerCode {...step} onTabClick={onTabClick} />
 }
 
-export function InnerCode({
-  onTabClick,
-  ...props
-}: EditorProps & {
-  onTabClick?: (filename: string) => void
-} & Partial<CodeHikeConfig>) {
+// build the CodeConfig from props and props.codeConfig
+export function mergeCodeConfig<T>(
+  props: Partial<CodeConfig> & {
+    codeConfig: Partial<CodeConfig>
+  } & T
+) {
   const {
     lineNumbers,
     showCopyButton,
     showExpandButton,
-    className,
-    style,
-    ...editorProps
+    minZoom,
+    maxZoom,
+    ...rest
   } = props
-
   const codeConfig = {
     ...props.codeConfig,
+    maxZoom:
+      maxZoom == null ? props.codeConfig?.maxZoom : maxZoom,
+    minZoom:
+      minZoom == null ? props.codeConfig?.minZoom : minZoom,
+    horizontalCenter:
+      props.codeConfig?.horizontalCenter ??
+      props.horizontalCenter,
     lineNumbers:
       lineNumbers == null
         ? props.codeConfig?.lineNumbers
@@ -50,6 +56,17 @@ export function InnerCode({
         ? props.codeConfig?.showExpandButton
         : showExpandButton,
   }
+  return { ...rest, codeConfig }
+}
+
+export function InnerCode({
+  onTabClick,
+  ...props
+}: EditorProps & {
+  onTabClick?: (filename: string) => void
+} & Partial<CodeHikeConfig>) {
+  const { className, style, codeConfig, ...editorProps } =
+    mergeCodeConfig(props)
 
   if (
     !props.southPanel &&

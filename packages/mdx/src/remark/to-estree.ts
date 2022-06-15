@@ -145,8 +145,9 @@ export function valueToEstree(
     }
   }
   if (
-    value instanceof BigInt64Array ||
-    value instanceof BigUint64Array ||
+    // https://github.com/code-hike/codehike/issues/194
+    // value instanceof BigInt64Array ||
+    // value instanceof BigUint64Array ||
     value instanceof Float32Array ||
     value instanceof Float64Array ||
     value instanceof Int8Array ||

@@ -1,6 +1,6 @@
 import { EditorStep } from "../mini-editor"
 import { isEditorNode, mapAnyCodeNode } from "./code"
-import { reduceSteps } from "./code-files-reducer"
+import { reduceStep } from "./code-files-reducer"
 import { CodeHikeConfig } from "./config"
 import { SuperNode } from "./nodes"
 
@@ -47,7 +47,7 @@ export async function extractStepsInfo(
             ? steps[0].editorStep
             : steps[stepIndex - 1].editorStep
 
-        step.editorStep = reduceSteps(
+        step.editorStep = reduceStep(
           baseStep,
           editorStep,
           filter

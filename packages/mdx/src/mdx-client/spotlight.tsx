@@ -9,6 +9,7 @@ export function Spotlight({
   codeConfig,
   start = 0,
   presetConfig,
+  ...rest
 }: {
   children: React.ReactNode
   editorSteps: EditorStep[]
@@ -68,6 +69,7 @@ export function Spotlight({
       </div>
       <div className="ch-spotlight-sticker">
         <InnerCode
+          {...rest}
           {...(tab as any)}
           codeConfig={codeConfig}
           onTabClick={onTabClick}

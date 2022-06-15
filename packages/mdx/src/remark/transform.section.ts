@@ -34,6 +34,7 @@ async function transformSection(
         )
         toJSX(editorNode, {
           name: "CH.SectionCode",
+          appendProps: true,
           props: {},
         })
       }

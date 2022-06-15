@@ -36,3 +36,19 @@ div#__next > div {
 .annotation-class span {
   text-decoration: line-through;
 }
+
+.mark-red-background {
+  background: #550000 !important;
+}
+
+.mark-red-background .ch-code-multiline-mark-border {
+  background: #bb0000 !important;
+}
+
+.mark-box {
+  background: #000 !important;
+}
+
+.mark-box * {
+  color: #0f0 !important;
+}

@@ -2,23 +2,31 @@ import { EditorStep, CodeFile } from "../mini-editor"
 
 // extend steps with info from previous steps
 
-export function reduceSteps(
+/**
+ * Extends `extraStep` with info from `baseStep`.
+ *
+ * @param baseStep it could be the header step or the previous step
+ * @param step the step to be extended
+ * @param filter if it is defined, show only the files in the array.
+ *
+ */
+export function reduceStep(
   baseStep: EditorStep,
-  extraStep: EditorStep,
+  step: EditorStep,
   filter?: string[]
 ): EditorStep {
-  let files = reduceFiles(baseStep.files, extraStep.files)
+  let files = reduceFiles(baseStep.files, step.files)
 
   const newNorthPanel = reducePanel(
     baseStep.northPanel,
-    extraStep.northPanel,
-    extraStep.southPanel
+    step.northPanel,
+    step.southPanel
   )!
 
   const newSouthPanel = reducePanel(
     baseStep.southPanel,
-    extraStep.southPanel,
-    extraStep.northPanel
+    step.southPanel,
+    step.northPanel
   )
 
   if (filter) {
@@ -35,7 +43,7 @@ export function reduceSteps(
 
   return {
     ...baseStep,
-    ...extraStep,
+    ...step,
     files: files,
     northPanel: newNorthPanel,
     southPanel: newSouthPanel,
@@ -68,33 +76,36 @@ function reducePanel(
 }
 
 function reduceFiles(
-  baseFiles: CodeFile[],
-  extraFiles: CodeFile[]
+  oldFiles: CodeFile[],
+  newFiles: CodeFile[]
 ): CodeFile[] {
   const filesMap = {} as { [name: string]: CodeFile }
-  baseFiles.forEach(f => (filesMap[f.name] = f))
-  extraFiles.forEach(ef => {
-    const bf = filesMap[ef.name]
-    if (!bf) {
-      filesMap[ef.name] = ef
+  oldFiles.forEach(f => (filesMap[f.name] = f))
+  newFiles.forEach(newFile => {
+    const prevFile = filesMap[newFile.name]
+    if (!prevFile) {
+      filesMap[newFile.name] = newFile
       return
     }
 
-    // merge old and new files
-    const { code, ...rest } = ef
+    // if the file is in both arrays, merge the content
+    // but if the new file is empty, keep the old content
+    const { code, ...rest } = newFile
     if (isEmpty(code)) {
-      filesMap[ef.name] = { ...bf, ...rest }
+      filesMap[newFile.name] = { ...prevFile, ...rest }
     } else {
-      filesMap[ef.name] = ef
+      filesMap[newFile.name] = newFile
     }
   })
 
+  // return a new array following the original order:
+  // first the old files, then the new ones
   const result = [] as CodeFile[]
-  baseFiles.forEach(f => {
+  oldFiles.forEach(f => {
     result.push(filesMap[f.name])
     delete filesMap[f.name]
   })
-  extraFiles.forEach(
+  newFiles.forEach(
     f => filesMap[f.name] && result.push(filesMap[f.name])
   )
 
@@ -103,7 +114,7 @@ function reduceFiles(
 
 function isEmpty(code: CodeFile["code"]) {
   const anyContent = code.lines.some(l =>
-    l.tokens.some(t => t.content.trim() == "")
+    l.tokens.some(t => t.content.trim() !== "")
   )
   return !anyContent
 }
