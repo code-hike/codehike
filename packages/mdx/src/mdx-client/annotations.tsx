@@ -36,9 +36,11 @@ function MultilineMark({
   style?: React.CSSProperties
   theme?: any
 }) {
-  const bg =
-    data ||
-    getColor(theme, ColorName.RangeHighlightBackground)
+  const className = `ch-code-multiline-mark ` + (data ?? "")
+  const bg = getColor(
+    theme,
+    ColorName.RangeHighlightBackground
+  )
   const border = getColor(
     theme,
     ColorName.EditorInfoForeground
@@ -47,7 +49,7 @@ function MultilineMark({
   return (
     <div
       style={{ ...style, background: bg }}
-      className="ch-code-multiline-mark"
+      className={className}
     >
       <span
         className="ch-code-multiline-mark-border"
@@ -68,19 +70,15 @@ function InlineMark({
   theme: any
 }) {
   const bg =
-    data && typeof data === "string"
-      ? data
-      : tryGuessColor(children) ||
-        transparent(
-          getColor(theme, ColorName.CodeForeground),
-          0.2
-        )
+    tryGuessColor(children) ||
+    transparent(
+      getColor(theme, ColorName.CodeForeground),
+      0.2
+    )
 
+  const className = "ch-code-inline-mark " + (data ?? "")
   return (
-    <span
-      className="ch-code-inline-mark"
-      style={{ background: bg }}
-    >
+    <span className={className} style={{ background: bg }}>
       {children}
     </span>
   )
