@@ -1,3 +1,27 @@
+# v0.6.0 (Wed Jun 15 2022)
+
+#### 🚀 Enhancement
+
+- Multiline mark annotation [#199](https://github.com/code-hike/codehike/pull/199) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- Add class parmeter to mark annotation ([@pomber](https://github.com/pomber))
+- Change multiline mark colors ([@pomber](https://github.com/pomber))
+- Multiline mark ([@pomber](https://github.com/pomber))
+- Fix Safari 14 playground [#195](https://github.com/code-hike/codehike/pull/195) ([@pomber](https://github.com/pomber))
+- Remove BigInt64Array ([@pomber](https://github.com/pomber))
+- Empty codeblocks [#192](https://github.com/code-hike/codehike/pull/192) ([@pomber](https://github.com/pomber))
+- Add config props to components ([@pomber](https://github.com/pomber))
+- Fix empty check ([@pomber](https://github.com/pomber))
+- Merge main [#190](https://github.com/code-hike/codehike/pull/190) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.5.2 (Wed May 25 2022)
 
 #### 🐛 Bug Fix
