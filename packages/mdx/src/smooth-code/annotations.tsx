@@ -505,8 +505,11 @@ function shiftGroups(
 ): TokenGroup[] {
   const removedGroups = [] as TokenGroup[]
   let currentStartColumn = startColumn
-  while (currentStartColumn < newStartColumn) {
-    const currentTokenGroup = tokenGroups.shift()!
+  while (
+    currentStartColumn < newStartColumn &&
+    tokenGroups.length > 0
+  ) {
+    const currentTokenGroup = tokenGroups.shift()
     removedGroups.push(currentTokenGroup)
     const length = currentTokenGroup.tokens.reduce(
       (a, t) => a + t.content.length,
