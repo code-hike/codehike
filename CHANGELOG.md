@@ -1,3 +1,17 @@
+# v0.6.1 (Mon Jun 20 2022)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Stable annotations [#203](https://github.com/code-hike/codehike/pull/203) ([@pomber](https://github.com/pomber))
+  - Merge main [#201](https://github.com/code-hike/codehike/pull/201) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.6.0 (Wed Jun 15 2022)
 
 #### 🚀 Enhancement
