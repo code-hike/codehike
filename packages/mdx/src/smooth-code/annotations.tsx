@@ -207,6 +207,12 @@ function annotateMultilineSide(
     let line = lines[lineIndex]
     if (
       annotation &&
+      getLineNumber(line) > annotation.lineNumbers.start
+    ) {
+      throw "Code Hike can't handle two annotations for the same line"
+    }
+    if (
+      annotation &&
       getLineNumber(line) === annotation.lineNumbers.start
     ) {
       // create annotation group
