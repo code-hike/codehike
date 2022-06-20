@@ -54,7 +54,7 @@ function App() {
           <CodeHikeLogo />
           <h1>
             Code Hike
-            <span>v0.6.0</span>
+            <span>v{__APP_VERSION__}</span>
           </h1>
         </a>
         <a href="https://codehike.org/docs">Docs</a>
