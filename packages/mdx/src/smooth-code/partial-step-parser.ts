@@ -24,6 +24,7 @@ export type CodeAnnotation = {
     children: React.ReactNode
     data: any
     theme: EditorTheme
+    isInline: boolean
   }) => React.ReactElement
   data?: any
 }
