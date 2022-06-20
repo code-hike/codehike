@@ -66,3 +66,15 @@
   position: absolute;
   left: 0;
 }
+
+.ch-code-inline-link {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: inherit;
+}
+
+.ch-code-link :not(span) > span {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: inherit;
+}
