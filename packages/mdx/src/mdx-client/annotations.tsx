@@ -196,6 +196,8 @@ function Label({
 
 function CodeLink({
   children,
+  isInline,
+  style,
   data,
 }: {
   data:
@@ -205,6 +207,8 @@ function CodeLink({
       }
     | string
   children: React.ReactNode
+  isInline: boolean
+  style?: React.CSSProperties
 }) {
   const url = (data as any)?.url || data
   const title = (data as any)?.title
@@ -212,11 +216,10 @@ function CodeLink({
     <a
       href={url}
       title={title}
-      style={{
-        textDecoration: "underline",
-        textDecorationStyle: "dotted",
-        color: "inherit",
-      }}
+      className={
+        isInline ? "ch-code-inline-link" : "ch-code-link"
+      }
+      style={style}
     >
       {children}
     </a>
