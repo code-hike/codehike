@@ -48,6 +48,7 @@ async function transformSection(
       name: "CH.Section",
       props: props as any,
       addConfigProp: true,
+      appendProps: true,
     })
   } else {
     toJSX(node, { name: "div", props: {} })

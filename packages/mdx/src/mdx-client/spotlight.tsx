@@ -9,6 +9,8 @@ export function Spotlight({
   codeConfig,
   start = 0,
   presetConfig,
+  className,
+  style,
   ...rest
 }: {
   children: React.ReactNode
@@ -16,6 +18,8 @@ export function Spotlight({
   codeConfig: EditorProps["codeConfig"]
   start?: number
   presetConfig?: PresetConfig
+  className?: string
+  style?: React.CSSProperties
 }) {
   const stepsChildren = React.Children.toArray(children)
 
@@ -38,10 +42,11 @@ export function Spotlight({
     stepsChildren[0] as React.ReactElement
 
   return (
-    <div
+    <section
       className={`ch-spotlight ${
         presetConfig ? "ch-spotlight-with-preview" : ""
-      }`}
+      } ${className || ""}`}
+      style={style}
     >
       <div className="ch-spotlight-tabs">
         {headerElement?.props?.children ? (
@@ -83,6 +88,6 @@ export function Spotlight({
           />
         )}
       </div>
-    </div>
+    </section>
   )
 }

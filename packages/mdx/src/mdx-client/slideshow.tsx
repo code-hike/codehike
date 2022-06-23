@@ -9,6 +9,8 @@ export function Slideshow({
   codeConfig,
   presetConfig,
   code,
+  className,
+  style,
   ...rest
 }: {
   children: React.ReactNode
@@ -16,6 +18,8 @@ export function Slideshow({
   codeConfig: EditorProps["codeConfig"]
   presetConfig?: PresetConfig
   code?: EditorProps["codeConfig"]
+  className?: string
+  style?: React.CSSProperties
 }) {
   const stepsChildren = React.Children.toArray(children)
 
@@ -42,7 +46,8 @@ export function Slideshow({
     <div
       className={`ch-slideshow ${
         presetConfig ? "ch-slideshow-with-preview" : ""
-      }`}
+      } ${className || ""}`}
+      style={style}
     >
       <div className="ch-slideshow-slide">
         <InnerCode
