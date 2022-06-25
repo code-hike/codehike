@@ -16,9 +16,13 @@ const SectionContext = React.createContext<{
 
 export function Section({
   children,
+  className,
+  style,
   ...props
 }: {
   children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
 }) {
   const [state, setState] = React.useState<any>(props)
 
@@ -45,7 +49,10 @@ export function Section({
   const { selectedId, ...rest } = state
 
   return (
-    <section>
+    <section
+      className={`ch-section ${className || ""}`}
+      style={style}
+    >
       <SectionContext.Provider
         value={{
           props: rest,
