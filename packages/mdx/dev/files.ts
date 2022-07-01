@@ -36,6 +36,7 @@ export async function getCode(file: string, config = {}) {
           remarkCodeHike,
           {
             autoImport: false,
+            skipLanguages: ["", "mermaid"],
             showCopyButton: true,
             theme,
             ...config,

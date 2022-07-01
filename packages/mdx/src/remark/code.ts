@@ -12,11 +12,18 @@ import { mergeFocus } from "../utils"
 import { CodeNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 
-export function isEditorNode(node: SuperNode) {
+export function isEditorNode(
+  node: SuperNode,
+  config: CodeHikeConfig
+) {
+  if (node.type === "code") {
+    const lang = (node.lang as string) || ""
+    const shouldSkip = config.skipLanguages.includes(lang)
+    return !shouldSkip
+  }
   return (
-    node.type === "code" ||
-    (node.type === "mdxJsxFlowElement" &&
-      node.name === "CH.Code")
+    node.type === "mdxJsxFlowElement" &&
+    node.name === "CH.Code"
   )
 }
 
