@@ -29,7 +29,7 @@ export async function extractStepsInfo(
 
     steps[stepIndex] = steps[stepIndex] || { children: [] }
     const step = steps[stepIndex]
-    if (!step.editorStep && isEditorNode(child)) {
+    if (!step.editorStep && isEditorNode(child, config)) {
       const editorStep = await mapAnyCodeNode(
         { node: child, parent, index: i },
         config

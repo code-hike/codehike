@@ -1,5 +1,9 @@
 import { NodeInfo, toJSX, visitAsync } from "./unist-utils"
-import { mapAnyCodeNode, mapEditor } from "./code"
+import {
+  isEditorNode,
+  mapAnyCodeNode,
+  mapEditor,
+} from "./code"
 import { CodeNode, JsxNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 
@@ -20,7 +24,10 @@ export async function transformCodes(
     tree,
     "code",
     async (node: CodeNode, index, parent) => {
-      await transformCode({ node, index, parent }, config)
+      // here we check if we should skip it because of the language:
+      if (isEditorNode(node, config)) {
+        await transformCode({ node, index, parent }, config)
+      }
     }
   )
 }

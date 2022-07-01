@@ -2,6 +2,7 @@ export type CodeHikeConfig = {
   theme: any
   lineNumbers?: boolean
   autoImport?: boolean
+  skipLanguages: string[]
   showExpandButton?: boolean
   showCopyButton?: boolean
 }
@@ -17,5 +18,6 @@ export function addConfigDefaults(
     ...config,
     theme: config?.theme || {},
     autoImport: config?.autoImport === false ? false : true,
+    skipLanguages: config?.skipLanguages || [],
   }
 }
