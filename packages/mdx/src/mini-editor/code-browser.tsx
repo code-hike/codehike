@@ -1,6 +1,6 @@
 import { CodeFile } from "./editor-shift"
 import { IRawTheme } from "vscode-textmate"
-import { ColorName, getColor } from "utils"
+import { ColorName, getColor, getColorScheme } from "utils"
 import React from "react"
 
 export function CodeBrowser({
@@ -189,15 +189,20 @@ function Content({
           theme,
           ColorName.SelectionBackground
         ),
+        colorScheme: getColorScheme(theme),
       }}
     >
       {file.code.lines.map((line, i) => (
         <div key={i}>
-          {line.tokens.map((token, i) => (
-            <span key={i} {...token.props}>
-              {token.content}
-            </span>
-          ))}
+          {line.tokens.length === 0 ? (
+            <br />
+          ) : (
+            line.tokens.map((token, i) => (
+              <span key={i} {...token.props}>
+                {token.content}
+              </span>
+            ))
+          )}
         </div>
       ))}
     </div>
