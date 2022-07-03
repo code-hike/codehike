@@ -1,7 +1,11 @@
 import { Code } from "../utils"
 import { annotationsMap } from "../mdx-client/annotations"
 
-const validKeys = ["focus", ...Object.keys(annotationsMap)]
+const validKeys = [
+  "focus",
+  "from",
+  ...Object.keys(annotationsMap),
+]
 
 export function getCommentData(
   line: Code["lines"][0],

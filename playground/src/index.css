@@ -182,7 +182,7 @@ main {
 
 .compile-error pre {
   color: #111;
-  white-space: normal;
+  white-space: pre-wrap;
 }
 
 .with-error {
