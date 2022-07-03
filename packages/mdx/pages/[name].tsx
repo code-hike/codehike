@@ -1,7 +1,7 @@
 import { runSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime.js"
 import { CH } from "../src/components"
-import { getCode, getContent, getFiles } from "../dev/files"
+import { getCode, getFile, getFiles } from "../dev/files"
 import { ClickToComponent } from "click-to-react-component"
 import { Layout } from "../dev/layout"
 
@@ -17,8 +17,8 @@ export async function getStaticProps({ params }) {
   const { name = "test" } = params
 
   const files = await getFiles()
-  const content = await getContent(name)
-  const { code, debugLink } = await getCode(content)
+  const file = await getFile(name)
+  const { code, debugLink } = await getCode(file)
   return {
     props: {
       tests: files,
