@@ -59,7 +59,7 @@ export function SmoothContainer({
 
   const width = Math.max(
     focusWidth + leftPad,
-    dimensions!.containerWidth
+    dimensions!.contentWidth
   )
 
   const startX = leftPad / zoom
@@ -75,7 +75,7 @@ export function SmoothContainer({
         scale={zoom}
         height={Math.max(
           focusHeight,
-          dimensions!.containerHeight
+          dimensions!.contentHeight
         )}
         width={width}
       >
@@ -214,8 +214,10 @@ function getContentProps({
   originalContentHeight: number
   horizontalCenter: boolean
 }) {
-  const { containerWidth, containerHeight, lineHeight } =
-    dimensions!
+  const { lineHeight } = dimensions!
+  const containerHeight = dimensions?.contentHeight
+  const containerWidth = dimensions?.contentWidth
+
   const originalFocusHeight =
     (extremes[1] - extremes[0] + 3) * lineHeight
 
