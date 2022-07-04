@@ -46,6 +46,7 @@ export type CodeConfig = {
   lineNumbers?: boolean
   showCopyButton?: boolean
   showExpandButton?: boolean
+  debug?: boolean
 }
 
 function useCodeShift({
@@ -83,17 +84,12 @@ export function CodeTween({
     config.lineNumbers || false,
     [config.parentHeight]
   )
-  // return (
-  //   <BeforeDimensions
-  //     element={element}
-  //     htmlProps={preProps}
-  //   />
-  // )
 
-  return !dimensions ? (
+  return !dimensions || config.debug ? (
     <BeforeDimensions
       element={element}
       htmlProps={preProps}
+      debug={config.debug}
     />
   ) : (
     <AfterDimensions
@@ -109,15 +105,16 @@ export function CodeTween({
 function BeforeDimensions({
   element,
   htmlProps,
+  debug,
 }: {
   element: React.ReactNode
   htmlProps?: HTMLProps
+  debug?: boolean
 }) {
   return (
     <Wrapper
       htmlProps={htmlProps}
-      // avoid scrollbars when measuring
-      style={{ overflow: "hidden", opacity: 0 }}
+      style={{ opacity: debug ? 0.9 : 0, overflow: "auto" }}
     >
       {element}
     </Wrapper>
