@@ -20,10 +20,15 @@ const transforms = [
   transformInlineCodes,
   transformCodes,
 ]
-
 export function transform(unsafeConfig: CodeHikeConfig) {
-  return async (tree: SuperNode) => {
-    const config = addConfigDefaults(unsafeConfig)
+  return async (tree: SuperNode, file: any) => {
+    const config = addConfigDefaults(
+      unsafeConfig,
+      file?.cwd,
+      file?.history
+        ? file.history[file.history.length - 1]
+        : undefined
+    )
 
     try {
       for (const transform of transforms) {

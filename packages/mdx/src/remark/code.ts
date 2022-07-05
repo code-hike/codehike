@@ -8,15 +8,23 @@ import {
   extractAnnotationsFromCode,
   extractJSXAnnotations,
 } from "./annotations"
-import { mergeFocus } from "../utils"
+import { Code, mergeFocus } from "../utils"
 import { CodeNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
+import { getCommentData } from "./comment-data"
 
-export function isEditorNode(node: SuperNode) {
+export function isEditorNode(
+  node: SuperNode,
+  config: CodeHikeConfig
+) {
+  if (node.type === "code") {
+    const lang = (node.lang as string) || ""
+    const shouldSkip = config.skipLanguages.includes(lang)
+    return !shouldSkip
+  }
   return (
-    node.type === "code" ||
-    (node.type === "mdxJsxFlowElement" &&
-      node.name === "CH.Code")
+    node.type === "mdxJsxFlowElement" &&
+    node.name === "CH.Code"
   )
 }
 
@@ -112,11 +120,14 @@ async function mapFile(
 
   const lang = (node.lang as string) || "text"
 
-  const code = await highlight({
+  let code = await highlight({
     code: node.value as string,
     lang,
     theme,
   })
+
+  // if the code is a single line with a "from" annotation
+  code = await getCodeFromExternalFileIfNeeded(code, config)
 
   const [commentAnnotations, commentFocus] =
     extractAnnotationsFromCode(code)
@@ -129,12 +140,12 @@ async function mapFile(
     options as any
   )
 
-  const linkAnnotations = extractLinks(
-    node,
-    index,
-    parent,
-    node.value as string
-  )
+  // const linkAnnotations = extractLinks(
+  //   node,
+  //   index,
+  //   parent,
+  //   nodeValue as string
+  // )
 
   const jsxAnnotations = extractJSXAnnotations(
     node,
@@ -180,4 +191,70 @@ function parseMetastring(
     }
   })
   return { name: name || "", ...options }
+}
+
+async function getCodeFromExternalFileIfNeeded(
+  code: Code,
+  config: CodeHikeConfig
+) {
+  if (code?.lines?.length != 1) {
+    return code
+  }
+
+  const firstLine = code.lines[0]
+  const commentData = getCommentData(firstLine, code.lang)
+
+  if (!commentData || commentData.key != "from") {
+    return code
+  }
+
+  const fileText = firstLine.tokens
+    .map(t => t.content)
+    .join("")
+
+  const codepath = commentData.data
+
+  let fs, path
+
+  try {
+    fs = (await import("fs")).default
+    path = (await import("path")).default
+    if (!fs || !fs.readFileSync || !path || !path.resolve) {
+      throw new Error("fs or path not found")
+    }
+  } catch (e) {
+    e.message = `Code Hike couldn't resolve this annotation:
+${fileText}
+Looks like node "fs" and "path" modules are not available.`
+    throw e
+  }
+
+  // if we don't know the path of the mdx file:
+  if (config.filepath === undefined) {
+    throw new Error(
+      `Code Hike couldn't resolve this annotation:
+  ${fileText}
+  Someone is calling the mdx compile function without setting the path.
+  Open an issue on CodeHike's repo for help.`
+    )
+  }
+
+  const dir = path.dirname(config.filepath)
+  const absoluteCodepath = path.resolve(dir, codepath)
+
+  let nodeValue
+  try {
+    nodeValue = fs.readFileSync(absoluteCodepath, "utf8")
+  } catch (e) {
+    e.message = `Code Hike couldn't resolve this annotation:
+${fileText}
+${absoluteCodepath} doesn't exist.`
+    throw e
+  }
+
+  return await highlight({
+    code: nodeValue,
+    lang: code.lang,
+    theme: config.theme,
+  })
 }

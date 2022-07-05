@@ -27,7 +27,7 @@ async function transformSection(
     node,
     ["mdxJsxFlowElement", "code"],
     async (editorNode, index, parent) => {
-      if (isEditorNode(editorNode)) {
+      if (isEditorNode(editorNode, config)) {
         props = await mapAnyCodeNode(
           { node: editorNode, index, parent },
           config
@@ -48,6 +48,7 @@ async function transformSection(
       name: "CH.Section",
       props: props as any,
       addConfigProp: true,
+      appendProps: true,
     })
   } else {
     toJSX(node, { name: "div", props: {} })

@@ -10,16 +10,14 @@ export async function getFiles() {
     .filter(file => file.endsWith(".mdx"))
     .map(filename => filename.slice(0, -4))
 }
-export async function getContent(filename: string) {
-  const file = await fs.promises.readFile(
-    `./dev/content/${filename}.mdx`,
-    "utf8"
-  )
+export async function getFile(filename: string) {
+  const path = `./dev/content/${filename}.mdx`
+  const file = await fs.promises.readFile(path, "utf8")
 
-  return file
+  return { value: file, path }
 }
 
-export async function getCode(file: string, config = {}) {
+export async function getCode(file: any, config = {}) {
   let debugLink = ""
 
   const debugCompile = withDebugger(compile, {
@@ -36,6 +34,7 @@ export async function getCode(file: string, config = {}) {
           remarkCodeHike,
           {
             autoImport: false,
+            skipLanguages: ["", "mermaid"],
             showCopyButton: true,
             theme,
             ...config,

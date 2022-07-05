@@ -11,6 +11,8 @@ export function Scrollycoding({
   codeConfig,
   presetConfig,
   start = 0,
+  className,
+  style,
   ...rest
 }: {
   children: React.ReactNode
@@ -18,6 +20,8 @@ export function Scrollycoding({
   codeConfig: EditorProps["codeConfig"]
   start?: number
   presetConfig?: PresetConfig
+  className?: string
+  style?: React.CSSProperties
 }) {
   const stepsChildren = React.Children.toArray(children)
 
@@ -58,7 +62,8 @@ export function Scrollycoding({
     <section
       className={`ch-scrollycoding ${
         presetConfig ? "ch-scrollycoding-with-preview" : ""
-      }`}
+      } ${className || ""}`}
+      style={style}
     >
       <div className="ch-scrollycoding-content">
         <Scroller onStepChange={onStepChange}>

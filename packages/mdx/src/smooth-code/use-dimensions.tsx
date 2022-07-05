@@ -9,6 +9,8 @@ import {
 type Dimensions = {
   containerWidth: number
   containerHeight: number
+  contentWidth: number
+  contentHeight: number
   deps: React.DependencyList
   lineWidths: [number, number]
   lineWidth: [number, number]
@@ -77,7 +79,13 @@ function useDimensions(
                   _{lineCount}
                 </span>
               ) : undefined}
-              <div style={{ display: "inline-block" }}>
+              <div
+                style={{
+                  display: "inline-block",
+                  // leftPad
+                  marginLeft: 16,
+                }}
+              >
                 <span>{line}</span>
               </div>
             </div>
@@ -99,7 +107,8 @@ function useDimensions(
   useLayoutEffect(() => {
     if (prevLineRef.current) {
       const pll = prevLineRef.current
-      const codeElement = pll?.parentElement!
+      const contentElement = pll?.parentElement!
+      const codeElement = contentElement.parentElement!
 
       // TODO is it clientWidth or clientRect?
       const lineContentDiv = pll?.querySelector(
@@ -126,6 +135,12 @@ function useDimensions(
         containerHeight: getHeightWithoutPadding(
           codeElement.parentElement!
         )!,
+        contentWidth: getWidthWithoutPadding(
+          contentElement.parentElement!
+        ),
+        contentHeight: getHeightWithoutPadding(
+          contentElement.parentElement!
+        )!,
         lineWidths: [
           plw || nlw || DEFAULT_WIDTH,
           nlw || plw || DEFAULT_WIDTH,
@@ -146,9 +161,8 @@ function useDimensions(
         deps: allDeps,
       }
       setDimensions(d)
-      // console.log({ d })
     }
-  }, [allDeps])
+  }, allDeps)
 
   if (
     !dimensions ||
