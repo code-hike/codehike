@@ -1,3 +1,26 @@
+# v0.6.2 (Tue Jul 05 2022)
+
+#### 🐛 Bug Fix
+
+- Better scrollbars [#216](https://github.com/code-hike/codehike/pull/216) ([@pomber](https://github.com/pomber))
+- Include scrollbars in dimensions ([@pomber](https://github.com/pomber))
+- Improve code-browser [#215](https://github.com/code-hike/codehike/pull/215) ([@pomber](https://github.com/pomber))
+- Improve code-browser ([@pomber](https://github.com/pomber))
+- Add from annotation [#214](https://github.com/code-hike/codehike/pull/214) ([@pomber](https://github.com/pomber))
+- Add from annotation ([@pomber](https://github.com/pomber))
+- Add skipLanguages config [#213](https://github.com/code-hike/codehike/pull/213) ([@pomber](https://github.com/pomber))
+- Add skipLanguages config ([@pomber](https://github.com/pomber))
+- Styling props [#208](https://github.com/code-hike/codehike/pull/208) ([@pomber](https://github.com/pomber))
+- row-reverse compatible styles ([@pomber](https://github.com/pomber))
+- Add class and style to components ([@pomber](https://github.com/pomber))
+- Merge main [#205](https://github.com/code-hike/codehike/pull/205) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.6.1 (Mon Jun 20 2022)
 
 #### 🐛 Bug Fix
