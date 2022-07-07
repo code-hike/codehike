@@ -4,6 +4,7 @@ import { InnerCode, updateEditorStep } from "./code"
 import { Scroller, Step as ScrollerStep } from "../scroller"
 import { Preview, PresetConfig } from "./preview"
 import { LinkableSection } from "./section"
+import { extractPreviewSteps } from "./steps"
 
 export function Scrollycoding({
   children,
@@ -13,6 +14,7 @@ export function Scrollycoding({
   start = 0,
   className,
   style,
+  hasPreviewSteps,
   ...rest
 }: {
   children: React.ReactNode
@@ -22,8 +24,12 @@ export function Scrollycoding({
   presetConfig?: PresetConfig
   className?: string
   style?: React.CSSProperties
+  hasPreviewSteps?: boolean
 }) {
-  const stepsChildren = React.Children.toArray(children)
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+
+  const withPreview = presetConfig || hasPreviewSteps
 
   const [state, setState] = React.useState({
     stepIndex: start,
@@ -61,7 +67,7 @@ export function Scrollycoding({
   return (
     <section
       className={`ch-scrollycoding ${
-        presetConfig ? "ch-scrollycoding-with-preview" : ""
+        withPreview ? "ch-scrollycoding-with-preview" : ""
       } ${className || ""}`}
       style={style}
     >
@@ -100,14 +106,19 @@ export function Scrollycoding({
           codeConfig={codeConfig}
           onTabClick={onTabClick}
         />
-        {presetConfig && (
+        {presetConfig ? (
           <Preview
             className="ch-scrollycoding-preview"
             files={tab.files}
             presetConfig={presetConfig}
             codeConfig={codeConfig}
           />
-        )}
+        ) : hasPreviewSteps ? (
+          <Preview
+            className="ch-scrollycoding-preview"
+            {...previewChildren[state.stepIndex]["props"]}
+          />
+        ) : null}
       </div>
     </section>
   )

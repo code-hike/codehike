@@ -2,10 +2,9 @@ import { EditorStep } from "../mini-editor"
 import { isEditorNode, mapAnyCodeNode } from "./code"
 import { reduceStep } from "./code-files-reducer"
 import { CodeHikeConfig } from "./config"
-import { SuperNode } from "./nodes"
+import { JsxNode, SuperNode } from "./nodes"
 
 // extract step info
-
 export async function extractStepsInfo(
   parent: SuperNode,
   config: CodeHikeConfig,
@@ -15,6 +14,7 @@ export async function extractStepsInfo(
 ) {
   const steps = [] as {
     editorStep?: EditorStep
+    previewStep?: JsxNode
     children: SuperNode[]
   }[]
 
@@ -29,6 +29,7 @@ export async function extractStepsInfo(
 
     steps[stepIndex] = steps[stepIndex] || { children: [] }
     const step = steps[stepIndex]
+
     if (!step.editorStep && isEditorNode(child, config)) {
       const editorStep = await mapAnyCodeNode(
         { node: child, parent, index: i },
@@ -53,6 +54,13 @@ export async function extractStepsInfo(
           filter
         )
       }
+    } else if (
+      child.type === "mdxJsxFlowElement" &&
+      child.name === "CH.Preview" &&
+      // only add the preview if we have a preview in step 0
+      (stepIndex === 0 || steps[0].previewStep != null)
+    ) {
+      step.previewStep = child
     } else {
       step.children.push(child)
     }
@@ -66,7 +74,27 @@ export async function extractStepsInfo(
     }
   })
 
-  return steps.map(step => step.editorStep)
+  const hasPreviewSteps = steps[0].previewStep !== undefined
+  // if there is a CH.Preview in the first step
+  // build the previewStep list
+  if (hasPreviewSteps) {
+    const previewSteps = steps.map(step => step.previewStep)
+    // fill empties with previous step
+    previewSteps.forEach((previewStep, i) => {
+      if (!previewStep) {
+        previewSteps[i] =
+          merge === "merge steps with header"
+            ? previewSteps[0]
+            : previewSteps[i - 1]
+      }
+    })
+    parent.children = parent.children.concat(previewSteps)
+  }
+
+  return {
+    editorSteps: steps.map(step => step.editorStep),
+    hasPreviewSteps,
+  }
 }
 
 /**
