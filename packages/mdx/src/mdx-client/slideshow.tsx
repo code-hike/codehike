@@ -2,6 +2,7 @@ import React from "react"
 import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
+import { extractPreviewSteps } from "./steps"
 
 export function Slideshow({
   children,
@@ -11,6 +12,7 @@ export function Slideshow({
   code,
   className,
   style,
+  hasPreviewSteps,
   ...rest
 }: {
   children: React.ReactNode
@@ -20,8 +22,11 @@ export function Slideshow({
   code?: EditorProps["codeConfig"]
   className?: string
   style?: React.CSSProperties
+  hasPreviewSteps?: boolean
 }) {
-  const stepsChildren = React.Children.toArray(children)
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+  const withPreview = presetConfig || hasPreviewSteps
 
   const hasNotes = stepsChildren.some(
     (child: any) => child.props?.children
@@ -45,7 +50,7 @@ export function Slideshow({
   return (
     <div
       className={`ch-slideshow ${
-        presetConfig ? "ch-slideshow-with-preview" : ""
+        withPreview ? "ch-slideshow-with-preview" : ""
       } ${className || ""}`}
       style={style}
     >
@@ -59,14 +64,19 @@ export function Slideshow({
           }}
           onTabClick={onTabClick}
         />
-        {presetConfig && (
+        {presetConfig ? (
           <Preview
             className="ch-slideshow-preview"
             files={tab.files}
             presetConfig={presetConfig}
             codeConfig={codeConfig}
           />
-        )}
+        ) : hasPreviewSteps ? (
+          <Preview
+            className="ch-slideshow-preview"
+            {...previewChildren[state.stepIndex]["props"]}
+          />
+        ) : null}
       </div>
 
       <div className="ch-slideshow-notes">

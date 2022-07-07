@@ -23,11 +23,12 @@ async function transformScrollycoding(
   node: SuperNode,
   config: CodeHikeConfig
 ) {
-  const editorSteps = await extractStepsInfo(
-    node,
-    config,
-    "merge step with previous"
-  )
+  const { editorSteps, hasPreviewSteps } =
+    await extractStepsInfo(
+      node,
+      config,
+      "merge step with previous"
+    )
 
   const presetConfig = await getPresetConfig(
     (node as any).attributes
@@ -39,6 +40,7 @@ async function transformScrollycoding(
     props: {
       editorSteps: editorSteps,
       presetConfig,
+      hasPreviewSteps,
     },
     appendProps: true,
     addConfigProp: true,
