@@ -6,6 +6,7 @@ import {
 import { Code } from "./mdx-client/code"
 import { Spotlight } from "./mdx-client/spotlight"
 import { Scrollycoding } from "./mdx-client/scrollycoding"
+import { CodeSlot, PreviewSlot } from "./mdx-client/slots"
 import { Slideshow } from "./mdx-client/slideshow"
 import {
   annotationsMap,
@@ -26,6 +27,8 @@ export {
   Annotation,
   Slideshow,
   InlineCode,
+  CodeSlot,
+  PreviewSlot,
 }
 
 export const CH = {
@@ -40,6 +43,8 @@ export const CH = {
   Annotation,
   Slideshow,
   InlineCode,
+  CodeSlot,
+  PreviewSlot,
 }
 
 import { MiniBrowser } from "./mini-browser"

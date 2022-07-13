@@ -3,6 +3,7 @@ import { isEditorNode, mapAnyCodeNode } from "./code"
 import { reduceStep } from "./code-files-reducer"
 import { CodeHikeConfig } from "./config"
 import { JsxNode, SuperNode } from "./nodes"
+import { getPresetConfig } from "./transform.preview"
 
 // extract step info
 export async function extractStepsInfo(
@@ -17,6 +18,10 @@ export async function extractStepsInfo(
     previewStep?: JsxNode
     children: SuperNode[]
   }[]
+
+  const presetConfig = await getPresetConfig(
+    (parent as any).attributes
+  )
 
   let stepIndex = 0
   const children = parent.children || []
@@ -54,13 +59,24 @@ export async function extractStepsInfo(
           filter
         )
       }
+      step.children.push({
+        type: "mdxJsxFlowElement",
+        name: "CH.CodeSlot",
+      })
     } else if (
       child.type === "mdxJsxFlowElement" &&
       child.name === "CH.Preview" &&
       // only add the preview if we have a preview in step 0
-      (stepIndex === 0 || steps[0].previewStep != null)
+      (stepIndex === 0 ||
+        steps[0].previewStep != null ||
+        // or there is a global sandpack preset
+        presetConfig)
     ) {
       step.previewStep = child
+      step.children.push({
+        type: "mdxJsxFlowElement",
+        name: "CH.PreviewSlot",
+      })
     } else {
       step.children.push(child)
     }
@@ -74,18 +90,24 @@ export async function extractStepsInfo(
     }
   })
 
-  const hasPreviewSteps = steps[0].previewStep !== undefined
-  // if there is a CH.Preview in the first step
+  const hasPreviewSteps =
+    steps[0].previewStep !== undefined || presetConfig
+  // if there is a CH.Preview in the first step or a preset config
   // build the previewStep list
   if (hasPreviewSteps) {
     const previewSteps = steps.map(step => step.previewStep)
-    // fill empties with previous step
+    // fill empties with base step
     previewSteps.forEach((previewStep, i) => {
       if (!previewStep) {
-        previewSteps[i] =
-          merge === "merge steps with header"
-            ? previewSteps[0]
-            : previewSteps[i - 1]
+        if (presetConfig) {
+          // we fill the hole with a placeholder
+          previewSteps[i] = { type: "mdxJsxFlowElement" }
+        } else {
+          previewSteps[i] =
+            merge === "merge steps with header"
+              ? previewSteps[0]
+              : previewSteps[i - 1]
+        }
       }
     })
     parent.children = parent.children.concat(previewSteps)
@@ -94,6 +116,8 @@ export async function extractStepsInfo(
   return {
     editorSteps: steps.map(step => step.editorStep),
     hasPreviewSteps,
+
+    presetConfig,
   }
 }
 

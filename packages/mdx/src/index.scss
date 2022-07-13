@@ -15,6 +15,9 @@
     0 8px 16px -8px rgba(0, 0, 0, 0.3),
     0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
   & > * {
     height: 100%;
     max-height: inherit;
