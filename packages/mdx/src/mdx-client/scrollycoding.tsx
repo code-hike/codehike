@@ -5,8 +5,119 @@ import { Scroller, Step as ScrollerStep } from "../scroller"
 import { Preview, PresetConfig } from "./preview"
 import { LinkableSection } from "./section"
 import { extractPreviewSteps } from "./steps"
+import { Swap } from "./ssmq"
+import { StaticStepContext } from "./slots"
 
-export function Scrollycoding({
+type ScrollycodingProps = {
+  children: React.ReactNode
+  editorSteps: EditorStep[]
+  codeConfig: EditorProps["codeConfig"]
+  start?: number
+  presetConfig?: PresetConfig
+  className?: string
+  style?: React.CSSProperties
+  hasPreviewSteps?: boolean
+}
+
+export function Scrollycoding(props) {
+  return (
+    <Swap
+      match={[
+        [
+          props.codeConfig.staticMediaQuery,
+          <DynamicScrollycoding {...props} />,
+        ],
+        ["default", <StaticScrollycoding {...props} />],
+      ]}
+    />
+  )
+}
+
+function StaticScrollycoding({
+  children,
+  hasPreviewSteps,
+  editorSteps,
+  ...rest
+}: ScrollycodingProps) {
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+  return (
+    <section className={`ch-scrollycoding-static`}>
+      {stepsChildren.map((children, i) => (
+        <StaticSection
+          key={i}
+          editorStep={editorSteps[i]}
+          previewStep={
+            previewChildren && previewChildren[i]
+          }
+          allProps={rest}
+        >
+          {children}
+        </StaticSection>
+      ))}
+    </section>
+  )
+}
+
+function StaticSection({
+  editorStep,
+  previewStep,
+  allProps,
+  children,
+}: {
+  editorStep: EditorStep
+  previewStep: React.ReactNode
+  children: React.ReactNode
+  allProps: any
+}) {
+  const [step, setStep] = React.useState({
+    ...editorStep,
+    ...allProps,
+  })
+
+  const resetFocus = () =>
+    setStep({
+      ...editorStep,
+      ...allProps,
+    })
+  const setFocus = ({
+    fileName,
+    focus,
+    id,
+  }: {
+    fileName?: string
+    focus: string | null
+    id: string
+  }) => {
+    const newStep = updateEditorStep(step, fileName, focus)
+
+    setStep({
+      ...step,
+      ...newStep,
+      selectedId: id,
+    })
+  }
+
+  return (
+    <StaticStepContext.Provider
+      value={{
+        editorStep: step,
+        previewStep: previewStep,
+        allProps,
+        setFocus,
+      }}
+    >
+      <LinkableSection
+        onActivation={setFocus}
+        onReset={resetFocus}
+      >
+        {children}
+      </LinkableSection>
+    </StaticStepContext.Provider>
+  )
+}
+
+function DynamicScrollycoding({
   children,
   editorSteps,
   codeConfig,
@@ -16,16 +127,7 @@ export function Scrollycoding({
   style,
   hasPreviewSteps,
   ...rest
-}: {
-  children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  start?: number
-  presetConfig?: PresetConfig
-  className?: string
-  style?: React.CSSProperties
-  hasPreviewSteps?: boolean
-}) {
+}: ScrollycodingProps) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
 

@@ -1,6 +1,5 @@
 import { visitAsync, toJSX } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
-import { getPresetConfig } from "./transform.preview"
 import { JsxNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 
@@ -23,16 +22,12 @@ async function transformSpotlight(
   node: JsxNode,
   config: CodeHikeConfig
 ) {
-  const { editorSteps, hasPreviewSteps } =
+  const { editorSteps, hasPreviewSteps, presetConfig } =
     await extractStepsInfo(
       node,
       config,
       "merge steps with header"
     )
-
-  const presetConfig = await getPresetConfig(
-    node.attributes
-  )
 
   toJSX(node, {
     props: {

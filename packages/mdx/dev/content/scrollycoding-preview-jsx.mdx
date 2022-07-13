@@ -20,10 +20,19 @@ Create a `next.config.js` file at the root of your project.
 
 Here we use the [_`require("@next/mdx")`_](focus://1,6,8) plugin to set up MDX imports.
 
-<CH.Preview
-  url="https://whatismyviewport.com/"
-  style={{ height: 200 }}
-/>
+<CH.Preview>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+  <div>Step 1</div>
+</CH.Preview>
 
 Also, make sure you include `"md"` and `"mdx"` on the _`pageExtensions`_ setting.
 
@@ -81,28 +90,6 @@ You will also want to import a theme. You can import one from shiki, or make a c
 
 Pass the theme into Code Hike's config object, there are a few more settings you can use, like lineNumbers for example.
 
-{/* prettier-ignore */}
-```js next.config.js focus=1:2,7:9
-const { remarkCH } = require("@code-hike/mdx")
-const theme = require("shiki/themes/nord.json")
-
-const withMDX = require("@next/mdx")({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [
-      [remarkCH, { theme }]
-    ],
-  },
-})
-
-module.exports = withMDX({
-  pageExtensions: [
-    "ts", "tsx", "js", 
-    "jsx", "md", "mdx"
-  ],
-})
-```
-
 ---
 
 ### Step 4
@@ -131,6 +118,10 @@ export default MyApp
 The pages/\_app.js file is where you add global stylesheets in Next.js.
 
 Here we need to import Code Hike's CSS.
+
+<CH.Preview>
+  <div>Step 5</div>
+</CH.Preview>
 
 If you want to customize Code Hike's styles with a global stylesheet make sure to import it after this import to avoid specificity issues.
 
