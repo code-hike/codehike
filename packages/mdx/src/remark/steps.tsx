@@ -51,7 +51,7 @@ export async function extractStepsInfo(
         const baseStep =
           merge === "merge steps with header"
             ? steps[0].editorStep
-            : steps[stepIndex - 1].editorStep
+            : previousEditorStep(steps, stepIndex)
 
         step.editorStep = reduceStep(
           baseStep,
@@ -113,12 +113,39 @@ export async function extractStepsInfo(
     parent.children = parent.children.concat(previewSteps)
   }
 
+  // fill editor steps holes
+  const editorSteps = steps.map(step => step.editorStep)
+  editorSteps.forEach((editorStep, i) => {
+    if (!editorStep) {
+      editorSteps[i] =
+        merge === "merge steps with header"
+          ? editorSteps[0]
+          : editorSteps[i - 1]
+    }
+  })
+
   return {
-    editorSteps: steps.map(step => step.editorStep),
+    editorSteps,
     hasPreviewSteps,
 
     presetConfig,
   }
+}
+
+function previousEditorStep(
+  steps: {
+    editorStep?: EditorStep
+  }[],
+  index: number
+) {
+  if (index === 0) {
+    throw new Error("The first step should have some code")
+  }
+
+  return (
+    steps[index - 1].editorStep ||
+    previousEditorStep(steps, index - 1)
+  )
 }
 
 /**
