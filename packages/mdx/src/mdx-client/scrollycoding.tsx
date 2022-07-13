@@ -24,7 +24,7 @@ export function Scrollycoding(props) {
     <Swap
       match={[
         [
-          "screen and (min-width: 768px)",
+          props.codeConfig.staticMediaQuery,
           <DynamicScrollycoding {...props} />,
         ],
         ["default", <StaticScrollycoding {...props} />],

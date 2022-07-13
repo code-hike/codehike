@@ -46,6 +46,7 @@ export type CodeConfig = {
   lineNumbers?: boolean
   showCopyButton?: boolean
   showExpandButton?: boolean
+  staticMediaQuery?: string
   debug?: boolean
 }
 

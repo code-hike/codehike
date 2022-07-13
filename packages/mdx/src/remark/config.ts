@@ -5,6 +5,7 @@ export type CodeHikeConfig = {
   skipLanguages: string[]
   showExpandButton?: boolean
   showCopyButton?: boolean
+  staticMediaQuery?: string
   // path to the current file, internal use only
   filepath?: string
 }
@@ -19,6 +20,7 @@ export function addConfigDefaults(
 ): CodeHikeConfig {
   // TODO warn when config looks weird
   return {
+    staticMediaQuery: "screen and (min-width: 768px)",
     ...config,
     theme: config?.theme || {},
     autoImport: config?.autoImport === false ? false : true,
