@@ -1,10 +1,10 @@
-# Scrollycoding with preview
+# Scrollycoding
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
 Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
 
-<CH.Scrollycoding preset="https://codesandbox.io/s/w5wfe">
+<CH.Scrollycoding>
 
 ## Step 1
 
@@ -14,23 +14,35 @@ Lorem ipsum dolor sit amet, consectetur adipiscing something about points, sed d
 > ad diffusa illis voluisti fidensque coniugiale laniata curam. Aras rivus
 > eripuit, qua fistula haec partus; serpens, negat.
 
-Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget.
-
 Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus.
 
-```jsx src/App.js
-import { motion } from "framer-motion"
-
-export default function App() {
-  const bg = "hsl(20, 100%, 50%)"
-  return (
-    <motion.div
-      className="swatch"
-      animate={{ backgroundColor: bg }}
-      transition={{ duration: 1 }}
-    />
-  )
-}
+```js app.js focus=3:10
+const { lorem, ipsum } = dolor({
+  sit: {
+    amet: 1,
+    consectetur: 2,
+    adipiscing: (elit) => ({
+      sed: elit,
+    }),
+    eiusmod: (tempor) => ({
+      incididunt: tempor,
+    }),
+    ut: (labore) => ({
+      et: labore,
+      dolore: labore + 1,
+    }),
+    magna: (aliqua) => ({
+      ut: aliqua,
+    }),
+    nostrud: (elit) => ({
+      exercitation: elit,
+      ullamco: elit,
+    }),
+    laboris: (elit) => ({
+      nisi: elit,
+    }),
+  },
+})
 ```
 
 ---
@@ -45,19 +57,8 @@ Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volu
 
 Morbi quis commodo.
 
-```jsx src/App.js focus=1,4,6:10
-import { motion } from "framer-motion"
+```js app.js focus=11:17
 
-export default function App() {
-  const bg = "hsl(110, 100%, 50%)"
-  return (
-    <motion.div
-      className="swatch"
-      animate={{ backgroundColor: bg }}
-      transition={{ duration: 1 }}
-    />
-  )
-}
 ```
 
 ---
@@ -72,19 +73,30 @@ Id aliquet risus feugiat in ante metus dictum at tempor. Sed blandit libero volu
 
 Ut consequat semper viverra. Fringilla ut morbi tincidunt augue interdum velit euismod.
 
-```jsx src/App.js focus=1,4,6:10
-import { motion } from "framer-motion"
-
-export default function App() {
-  const bg = "hsl(200, 100%, 50%)"
-  return (
-    <motion.div
-      className="swatch"
-      animate={{ backgroundColor: bg }}
-      transition={{ duration: 1 }}
-    />
-  )
-}
+```js app.js focus=11:14
+const { lorem, ipsum } = dolor({
+  sit: {
+    amet: 1,
+    consectetur: 2,
+    adipiscing: (elit) => ({
+      sed: elit,
+    }),
+    eiusmod: (tempor) => ({
+      incididunt: tempor,
+    }),
+    ut: (labore) => ({
+      et: lorem(labore * ipsum),
+      dolore: lorem(labore + 1),
+    }),
+    nostrud: (elit) => ({
+      exercitation: elit,
+      ullamco: elit,
+    }),
+    laboris: (elit) => ({
+      nisi: elit,
+    }),
+  },
+})
 ```
 
 ---
@@ -100,19 +112,8 @@ Sed blandit libero volutpat sed cras.
 
 Gravida in fermentum et sollicitudin ac orci phasellus egestas tellus. Volutpat consequat mauris nunc congue nisi vitae.
 
-```jsx src/App.js focus=1,4,6:10
-import { motion } from "framer-motion"
+```js app.js focus=15:21
 
-export default function App() {
-  const bg = "hsl(290, 100%, 50%)"
-  return (
-    <motion.div
-      className="swatch"
-      animate={{ backgroundColor: bg }}
-      transition={{ duration: 1 }}
-    />
-  )
-}
 ```
 
 ---
@@ -132,19 +133,8 @@ Mi bibendum neque egestas congue quisque egestas diam in arcu. Nisi lacus sed vi
 
 Morbi quis commodo.
 
-```jsx src/App.js focus=1,4,6:10
-import { motion } from "framer-motion"
+```js app.js
 
-export default function App() {
-  const bg = "hsl(10, 100%, 50%)"
-  return (
-    <motion.div
-      className="swatch"
-      animate={{ backgroundColor: bg }}
-      transition={{ duration: 1 }}
-    />
-  )
-}
 ```
 
 </CH.Scrollycoding>
