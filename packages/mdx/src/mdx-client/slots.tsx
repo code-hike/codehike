@@ -18,9 +18,8 @@ function InnerCodeSlot({ editorStep, setFocus }) {
   const onTabClick = (filename: string) => {
     setFocus({ fileName: filename, focus: null, id: "" })
   }
-  return (
-    <InnerCode {...editorStep} onTabClick={onTabClick} />
-  )
+  const { preset, presetConfig, ...props } = editorStep
+  return <InnerCode {...props} onTabClick={onTabClick} />
 }
 export function PreviewSlot() {
   const context = React.useContext(StaticStepContext)
