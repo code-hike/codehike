@@ -1,6 +1,5 @@
 import { visitAsync, toJSX } from "./unist-utils"
 import { extractStepsInfo } from "./steps"
-import { getPresetConfig } from "./transform.preview"
 import { transformLinks } from "./transform.section"
 import { SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
@@ -23,15 +22,12 @@ async function transformScrollycoding(
   node: SuperNode,
   config: CodeHikeConfig
 ) {
-  const editorSteps = await extractStepsInfo(
-    node,
-    config,
-    "merge step with previous"
-  )
-
-  const presetConfig = await getPresetConfig(
-    (node as any).attributes
-  )
+  const { editorSteps, hasPreviewSteps, presetConfig } =
+    await extractStepsInfo(
+      node,
+      config,
+      "merge step with previous"
+    )
 
   transformLinks(node)
 
@@ -39,6 +35,7 @@ async function transformScrollycoding(
     props: {
       editorSteps: editorSteps,
       presetConfig,
+      hasPreviewSteps,
     },
     appendProps: true,
     addConfigProp: true,

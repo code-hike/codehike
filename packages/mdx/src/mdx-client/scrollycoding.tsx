@@ -4,17 +4,11 @@ import { InnerCode, updateEditorStep } from "./code"
 import { Scroller, Step as ScrollerStep } from "../scroller"
 import { Preview, PresetConfig } from "./preview"
 import { LinkableSection } from "./section"
+import { extractPreviewSteps } from "./steps"
+import { Swap } from "./ssmq"
+import { StaticStepContext } from "./slots"
 
-export function Scrollycoding({
-  children,
-  editorSteps,
-  codeConfig,
-  presetConfig,
-  start = 0,
-  className,
-  style,
-  ...rest
-}: {
+type ScrollycodingProps = {
   children: React.ReactNode
   editorSteps: EditorStep[]
   codeConfig: EditorProps["codeConfig"]
@@ -22,8 +16,122 @@ export function Scrollycoding({
   presetConfig?: PresetConfig
   className?: string
   style?: React.CSSProperties
+  hasPreviewSteps?: boolean
+}
+
+export function Scrollycoding(props) {
+  return (
+    <Swap
+      match={[
+        [
+          props.codeConfig.staticMediaQuery,
+          <StaticScrollycoding {...props} />,
+        ],
+        ["default", <DynamicScrollycoding {...props} />],
+      ]}
+    />
+  )
+}
+
+function StaticScrollycoding({
+  children,
+  hasPreviewSteps,
+  editorSteps,
+  ...rest
+}: ScrollycodingProps) {
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+  return (
+    <section className={`ch-scrollycoding-static`}>
+      {stepsChildren.map((children, i) => (
+        <StaticSection
+          key={i}
+          editorStep={editorSteps[i]}
+          previewStep={
+            previewChildren && previewChildren[i]
+          }
+          allProps={rest}
+        >
+          {children}
+        </StaticSection>
+      ))}
+    </section>
+  )
+}
+
+function StaticSection({
+  editorStep,
+  previewStep,
+  allProps,
+  children,
+}: {
+  editorStep: EditorStep
+  previewStep: React.ReactNode
+  children: React.ReactNode
+  allProps: any
 }) {
-  const stepsChildren = React.Children.toArray(children)
+  const [step, setStep] = React.useState({
+    ...editorStep,
+    ...allProps,
+  })
+
+  const resetFocus = () =>
+    setStep({
+      ...editorStep,
+      ...allProps,
+    })
+  const setFocus = ({
+    fileName,
+    focus,
+    id,
+  }: {
+    fileName?: string
+    focus: string | null
+    id: string
+  }) => {
+    const newStep = updateEditorStep(step, fileName, focus)
+
+    setStep({
+      ...step,
+      ...newStep,
+      selectedId: id,
+    })
+  }
+
+  return (
+    <StaticStepContext.Provider
+      value={{
+        editorStep: step,
+        previewStep: previewStep,
+        allProps,
+        setFocus,
+      }}
+    >
+      <LinkableSection
+        onActivation={setFocus}
+        onReset={resetFocus}
+      >
+        {children}
+      </LinkableSection>
+    </StaticStepContext.Provider>
+  )
+}
+
+function DynamicScrollycoding({
+  children,
+  editorSteps,
+  codeConfig,
+  presetConfig,
+  start = 0,
+  className,
+  style,
+  hasPreviewSteps,
+  ...rest
+}: ScrollycodingProps) {
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+
+  const withPreview = presetConfig || hasPreviewSteps
 
   const [state, setState] = React.useState({
     stepIndex: start,
@@ -61,7 +169,7 @@ export function Scrollycoding({
   return (
     <section
       className={`ch-scrollycoding ${
-        presetConfig ? "ch-scrollycoding-with-preview" : ""
+        withPreview ? "ch-scrollycoding-with-preview" : ""
       } ${className || ""}`}
       style={style}
     >
@@ -100,14 +208,19 @@ export function Scrollycoding({
           codeConfig={codeConfig}
           onTabClick={onTabClick}
         />
-        {presetConfig && (
+        {presetConfig ? (
           <Preview
             className="ch-scrollycoding-preview"
             files={tab.files}
             presetConfig={presetConfig}
             codeConfig={codeConfig}
           />
-        )}
+        ) : hasPreviewSteps ? (
+          <Preview
+            className="ch-scrollycoding-preview"
+            {...previewChildren[state.stepIndex]["props"]}
+          />
+        ) : null}
       </div>
     </section>
   )

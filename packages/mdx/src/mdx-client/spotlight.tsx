@@ -2,6 +2,7 @@ import React from "react"
 import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
+import { extractPreviewSteps } from "./steps"
 
 export function Spotlight({
   children,
@@ -11,6 +12,7 @@ export function Spotlight({
   presetConfig,
   className,
   style,
+  hasPreviewSteps,
   ...rest
 }: {
   children: React.ReactNode
@@ -20,13 +22,18 @@ export function Spotlight({
   presetConfig?: PresetConfig
   className?: string
   style?: React.CSSProperties
+  hasPreviewSteps?: boolean
 }) {
-  const stepsChildren = React.Children.toArray(children)
+  const { stepsChildren, previewChildren } =
+    extractPreviewSteps(children, hasPreviewSteps)
+
+  const withPreview = presetConfig || hasPreviewSteps
 
   const [state, setState] = React.useState({
     stepIndex: start,
     step: editorSteps[start],
   })
+
   const tab = state.step
 
   function onTabClick(filename: string) {
@@ -44,7 +51,7 @@ export function Spotlight({
   return (
     <section
       className={`ch-spotlight ${
-        presetConfig ? "ch-spotlight-with-preview" : ""
+        withPreview ? "ch-spotlight-with-preview" : ""
       } ${className || ""}`}
       style={style}
     >
@@ -79,14 +86,19 @@ export function Spotlight({
           codeConfig={codeConfig}
           onTabClick={onTabClick}
         />
-        {presetConfig && (
+        {presetConfig ? (
           <Preview
             className="ch-spotlight-preview"
             files={tab.files}
             presetConfig={presetConfig}
             codeConfig={codeConfig}
           />
-        )}
+        ) : hasPreviewSteps ? (
+          <Preview
+            className="ch-spotlight-preview"
+            {...previewChildren[state.stepIndex]["props"]}
+          />
+        ) : null}
       </div>
     </section>
   )

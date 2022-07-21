@@ -17,9 +17,11 @@ export function Preview({
   children,
   codeConfig,
   style,
+  frameless,
   ...rest
 }: {
   className: string
+  frameless?: boolean
   files: EditorStep["files"]
   presetConfig?: PresetConfig
   show?: string
@@ -27,6 +29,14 @@ export function Preview({
   children?: React.ReactNode
   codeConfig: { theme: EditorTheme }
 }) {
+  const kids = presetConfig ? (
+    <SandpackPreview
+      files={files}
+      presetConfig={presetConfig}
+    />
+  ) : (
+    children
+  )
   return (
     <div
       className={
@@ -34,21 +44,16 @@ export function Preview({
       }
       style={style}
     >
-      <MiniBrowser
-        loadUrl={show}
-        theme={codeConfig.theme}
-        {...rest}
-        children={
-          presetConfig ? (
-            <SandpackPreview
-              files={files}
-              presetConfig={presetConfig}
-            />
-          ) : (
-            children
-          )
-        }
-      />
+      {frameless ? (
+        kids
+      ) : (
+        <MiniBrowser
+          loadUrl={show}
+          theme={codeConfig.theme}
+          {...rest}
+          children={kids}
+        />
+      )}
     </div>
   )
 }
