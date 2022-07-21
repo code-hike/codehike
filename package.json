@@ -11,6 +11,7 @@
   "scripts": {
     "build": "lerna run --stream build",
     "build:lib": "lerna run --stream --scope @*/mdx build",
+    "watch": "lerna run --stream --scope @*/mdx watch",
     "build:playground": "lerna run --stream --scope playground build",
     "test": "lerna run --stream test",
     "dev": "lerna run --stream --scope @*/mdx dev",
