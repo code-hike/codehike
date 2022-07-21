@@ -2,7 +2,9 @@
 sidebar_position: 1
 ---
 
-### Lorem ipsum
+# Introduction
+
+## Lorem ipsum
 
 ```python hello.py
 # mark[22:30]
