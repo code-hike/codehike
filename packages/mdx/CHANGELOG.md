@@ -1,3 +1,31 @@
+# v0.7.0 (Thu Jul 21 2022)
+
+#### 🚀 Enhancement
+
+- Static scrollycoding [#223](https://github.com/code-hike/codehike/pull/223) ([@pomber](https://github.com/pomber))
+- Add previews in steps [#221](https://github.com/code-hike/codehike/pull/221) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- Invert staticMediaQuery [#229](https://github.com/code-hike/codehike/pull/229) ([@pomber](https://github.com/pomber))
+- Invert staticMediaQuery ([@pomber](https://github.com/pomber))
+- Add preview frameless prop [#225](https://github.com/code-hike/codehike/pull/225) ([@pomber](https://github.com/pomber))
+- Add preview frameless prop ([@pomber](https://github.com/pomber))
+- Update nextjs example [#224](https://github.com/code-hike/codehike/pull/224) ([@pomber](https://github.com/pomber))
+- Fix react warning ([@pomber](https://github.com/pomber))
+- Add staticMediaQuery config ([@pomber](https://github.com/pomber))
+- Allow empty code steps ([@pomber](https://github.com/pomber))
+- Move ssmq to typescript ([@pomber](https://github.com/pomber))
+- Add static scrollycoding ([@pomber](https://github.com/pomber))
+- Parse preview steps ([@pomber](https://github.com/pomber))
+- Merge main [#220](https://github.com/code-hike/codehike/pull/220) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.6.2 (Tue Jul 05 2022)
 
 #### 🐛 Bug Fix
