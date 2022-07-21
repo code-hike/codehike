@@ -25,9 +25,9 @@ export function Scrollycoding(props) {
       match={[
         [
           props.codeConfig.staticMediaQuery,
-          <DynamicScrollycoding {...props} />,
+          <StaticScrollycoding {...props} />,
         ],
-        ["default", <StaticScrollycoding {...props} />],
+        ["default", <DynamicScrollycoding {...props} />],
       ]}
     />
   )
