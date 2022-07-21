@@ -20,7 +20,7 @@ export function addConfigDefaults(
 ): CodeHikeConfig {
   // TODO warn when config looks weird
   return {
-    staticMediaQuery: "screen and (min-width: 768px)",
+    staticMediaQuery: "not screen, (max-width: 768px)",
     ...config,
     theme: config?.theme || {},
     autoImport: config?.autoImport === false ? false : true,
