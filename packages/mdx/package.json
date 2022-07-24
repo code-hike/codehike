@@ -64,6 +64,7 @@
     "cssnano": "^4.1.10",
     "diff": "^4.0.2",
     "esbuild": "^0.13.2",
+    "framer-motion": "6.5.1",
     "mdx-bundler": "^8.0.1",
     "mdx-debugger": "^0.2.0",
     "next": "^12.1.0",
@@ -81,8 +82,13 @@
     "vite": "^2.8.6",
     "vitest": "^0.5.9"
   },
+  "resolutions": {
+    "@types/react": "17.0.45",
+    "@types/react-dom": "17.0.2"
+  },
   "peerDependencies": {
-    "react": "^16.8.3 || ^17 || ^18"
+    "react": "^16.8.3 || ^17 || ^18",
+    "framer-motion": "^6.5.1"
   },
   "repository": "code-hike/codehike",
   "license": "MIT",
