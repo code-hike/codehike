@@ -3,6 +3,7 @@ import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
+import { AnimatePresence } from "framer-motion"
 
 export function Slideshow({
   children,
@@ -130,7 +131,11 @@ export function Slideshow({
 
         {hasNotes && (
           <div className="ch-slideshow-note">
-            {stepsChildren[state.stepIndex]}
+            <AnimatePresence>
+              <>
+                {stepsChildren[state.stepIndex]}
+              </>
+            </AnimatePresence>
           </div>
         )}
       </div>
