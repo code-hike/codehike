@@ -82,10 +82,6 @@
     "vite": "^2.8.6",
     "vitest": "^0.5.9"
   },
-  "resolutions": {
-    "@types/react": "17.0.45",
-    "@types/react-dom": "17.0.2"
-  },
   "peerDependencies": {
     "react": "^16.8.3 || ^17 || ^18",
     "framer-motion": "^6.5.1"
