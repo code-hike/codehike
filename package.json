@@ -16,7 +16,7 @@
     "test": "lerna run --stream test",
     "dev": "lerna run --stream --scope @*/mdx dev",
     "release": "auto shipit",
-    "postinstall": "build:lib"
+    "postinstall": "yarn build:lib"
   },
   "devDependencies": {
     "auto": "^10.18.7",
