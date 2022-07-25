@@ -1,7 +1,13 @@
 import { CodeFile } from "./editor-shift"
 import { IRawTheme } from "vscode-textmate"
-import { ColorName, getColor, getColorScheme } from "utils"
+import {
+  codeToText,
+  ColorName,
+  getColor,
+  getColorScheme,
+} from "utils"
 import React from "react"
+import { CopyButton } from "smooth-code/copy-button"
 
 export function CodeBrowser({
   files,
@@ -192,6 +198,10 @@ function Content({
         colorScheme: getColorScheme(theme),
       }}
     >
+      <CopyButton
+        className="ch-code-browser-button"
+        content={codeToText(file.code)}
+      />
       {file.code.lines.map((line, i) => (
         <div key={i}>
           {line.tokens.length === 0 ? (
