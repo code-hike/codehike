@@ -56,40 +56,43 @@ function useDimensions(
         code.next,
         focus.next
       )
+
       const lines = (code.prev || code.next!)
         .trimEnd()
         .split(newlineRe)
 
       const lineCount = lines.length
 
+      // avod setting the ref more than once https://github.com/code-hike/codehike/issues/232
+      let prevLineRefSet = false
       const element = (
         <code className="ch-code-scroll-parent">
           <br />
-          {lines.map((line, i) => (
-            <div
-              ref={
-                line === prevLongestLine
-                  ? prevLineRef
-                  : undefined
-              }
-              key={i}
-            >
-              {lineNumbers ? (
-                <span className="ch-code-line-number">
-                  _{lineCount}
-                </span>
-              ) : undefined}
-              <div
-                style={{
-                  display: "inline-block",
-                  // leftPad
-                  marginLeft: 16,
-                }}
-              >
-                <span>{line}</span>
+          {lines.map((line, i) => {
+            const ref =
+              !prevLineRefSet && line === prevLongestLine
+                ? prevLineRef
+                : undefined
+            prevLineRefSet = prevLineRefSet || ref != null
+            return (
+              <div ref={ref} key={i}>
+                {lineNumbers ? (
+                  <span className="ch-code-line-number">
+                    _{lineCount}
+                  </span>
+                ) : undefined}
+                <div
+                  style={{
+                    display: "inline-block",
+                    // leftPad
+                    marginLeft: 16,
+                  }}
+                >
+                  <span>{line}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
           <br />
         </code>
       )
