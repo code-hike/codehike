@@ -1,3 +1,19 @@
+# v0.7.1 (Mon Jul 25 2022)
+
+#### 🐛 Bug Fix
+
+- Add copy button to code browser [#234](https://github.com/code-hike/codehike/pull/234) ([@pomber](https://github.com/pomber))
+- Add copy button ([@pomber](https://github.com/pomber))
+- Set `longestLineRef` once [#233](https://github.com/code-hike/codehike/pull/233) ([@pomber](https://github.com/pomber))
+- Set longestLineRef once ([@pomber](https://github.com/pomber))
+- Merge main [#231](https://github.com/code-hike/codehike/pull/231) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.0 (Thu Jul 21 2022)
 
 #### 🚀 Enhancement
