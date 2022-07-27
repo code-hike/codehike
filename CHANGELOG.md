@@ -1,3 +1,17 @@
+# v0.7.2 (Wed Jul 27 2022)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Remove overscroll-behavior [#241](https://github.com/code-hike/codehike/pull/241) ([@pomber](https://github.com/pomber))
+  - Merge main [#236](https://github.com/code-hike/codehike/pull/236) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.1 (Mon Jul 25 2022)
 
 #### 🐛 Bug Fix
