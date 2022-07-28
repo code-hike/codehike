@@ -6,23 +6,25 @@ import { extractPreviewSteps } from "./steps"
 
 export function Slideshow({
   children,
-  editorSteps,
-  codeConfig,
-  presetConfig,
-  code,
   className,
-  style,
+  code,
+  codeConfig,
+  editorSteps,
+  hasAutoFocusControls,
   hasPreviewSteps,
+  presetConfig,
+  style,
   ...rest
 }: {
   children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  presetConfig?: PresetConfig
-  code?: EditorProps["codeConfig"]
   className?: string
-  style?: React.CSSProperties
+  code?: EditorProps["codeConfig"]
+  codeConfig: EditorProps["codeConfig"]
+  editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
+  hasAutoFocusControls?: boolean
+  presetConfig?: PresetConfig
+  style?: React.CSSProperties
 }) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
@@ -98,6 +100,7 @@ export function Slideshow({
             Prev
           </button>
           <input
+            autoFocus={hasAutoFocusControls}
             type="range"
             min={0}
             max={editorSteps.length - 1}
