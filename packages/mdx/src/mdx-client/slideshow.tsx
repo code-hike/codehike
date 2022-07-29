@@ -92,10 +92,7 @@ export function Slideshow({
     // If autoplay is enabled, and we are not at the end of the slides, move to the next slide
     if (autoPlay && !atSlideshowEnd) {
       const autoSlide = setTimeout(
-        () => {
-          slideNext();
-          console.log('next');
-        },
+        () => slideNext(),
         autoPlay
       );
       
