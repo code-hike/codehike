@@ -22,6 +22,7 @@
   font-size: 1rem;
   line-height: 1.2rem;
   letter-spacing: 0px;
+  position: relative;
 }
 
 .ch-code-browser-content ::selection {
@@ -41,4 +42,15 @@
 .ch-code-browser-sidebar-file:hover {
   background-color: var(--ch-hover-background);
   color: var(--ch-hover-foreground);
+}
+
+.ch-code-browser-button {
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+  min-width: 1.5em;
+  min-height: 1.5em;
+  position: absolute;
+  right: 0.8em;
+  top: 0.8em;
 }
