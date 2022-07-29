@@ -3,7 +3,6 @@ import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
-import { useInitialState } from "utils"
 
 export function Slideshow({
   children,
@@ -50,11 +49,8 @@ export function Slideshow({
 
   const maxSteps = editorSteps.length - 1;
 
-  // This hook will prevent the slide from being changed via the start prop after render
-  const initialSlideValue = useInitialState(start);
-
   // Make sure the initial slide is not configured out of bounds
-  const initialSlide = initialSlideValue > maxSteps ? maxSteps : initialSlideValue
+  const initialSlide = start > maxSteps ? maxSteps : start
 
   const [state, setState] = React.useState({
     stepIndex: initialSlide,
