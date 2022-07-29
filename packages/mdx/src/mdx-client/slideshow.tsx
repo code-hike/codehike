@@ -13,7 +13,7 @@ export function Slideshow({
   editorSteps,
   hasPreviewSteps,
   // Set the initial slide index
-  initialSlideIndex = 0,
+  start = 0,
   // Called when the slideshow state changes and returns the current state object
   onChange: onSlideshowChange = () => {},
   presetConfig,
@@ -26,7 +26,7 @@ export function Slideshow({
   codeConfig: EditorProps["codeConfig"]
   editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
-  initialSlideIndex?: number
+  start?: number
   onChange?: Function
   presetConfig?: PresetConfig
   style?: React.CSSProperties
@@ -41,8 +41,8 @@ export function Slideshow({
 
   const maxSteps = editorSteps.length - 1;
 
-  // This hook will prevent the slide from being changed via the initialSlideIndex prop after render
-  const initialSlideValue = useInitialState(initialSlideIndex);
+  // This hook will prevent the slide from being changed via the start prop after render
+  const initialSlideValue = useInitialState(start);
 
   // Make sure the initial slide is not configured out of bounds
   const initialSlide = initialSlideValue > maxSteps ? maxSteps : initialSlideValue
