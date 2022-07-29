@@ -3,26 +3,33 @@ import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
+import { useInitialState } from "utils"
 
 export function Slideshow({
   children,
-  editorSteps,
-  codeConfig,
-  presetConfig,
-  code,
   className,
-  style,
+  code,
+  codeConfig,
+  editorSteps,
   hasPreviewSteps,
+  // Set the initial slide index
+  initialSlideIndex = 0,
+  // Called when the slideshow state changes and returns the current state object
+  onChange: onSlideshowChange = () => {},
+  presetConfig,
+  style,
   ...rest
 }: {
   children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  presetConfig?: PresetConfig
-  code?: EditorProps["codeConfig"]
   className?: string
-  style?: React.CSSProperties
+  code?: EditorProps["codeConfig"]
+  codeConfig: EditorProps["codeConfig"]
+  editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
+  initialSlideIndex?: number
+  onChange?: Function
+  presetConfig?: PresetConfig
+  style?: React.CSSProperties
 }) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
@@ -32,11 +39,25 @@ export function Slideshow({
     (child: any) => child.props?.children
   )
 
+  const maxSteps = editorSteps.length - 1;
+
+  // This hook will prevent the slide from being changed via the initialSlideIndex prop after render
+  const initialSlideValue = useInitialState(initialSlideIndex);
+
+  // Make sure the initial slide is not configured out of bounds
+  const initialSlide = initialSlideValue > maxSteps ? maxSteps : initialSlideValue
+
   const [state, setState] = React.useState({
-    stepIndex: 0,
-    step: editorSteps[0],
+    stepIndex: initialSlide,
+    step: editorSteps[initialSlide],
   })
   const tab = state.step
+
+  // Run any time our Slideshow state changes
+  React.useEffect(() => {
+    // Return our state object to the Slideshow onChange function
+    onSlideshowChange(state);
+  }, [state]);
 
   function onTabClick(filename: string) {
     const newStep = updateEditorStep(
@@ -100,7 +121,7 @@ export function Slideshow({
           <input
             type="range"
             min={0}
-            max={editorSteps.length - 1}
+            max={maxSteps}
             value={state.stepIndex}
             step={1}
             onChange={e =>
@@ -114,7 +135,7 @@ export function Slideshow({
             onClick={() =>
               setState(s => {
                 const stepIndex = Math.min(
-                  editorSteps.length - 1,
+                  maxSteps,
                   s.stepIndex + 1
                 )
                 return {
