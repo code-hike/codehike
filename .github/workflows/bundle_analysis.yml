@@ -1,7 +1,7 @@
 name: 'Bundle Analysis'
 
 on:
-  pull_request:
+  pull_request_target:
   push:
     branches:
       - next # change this if your default branch is named differently
