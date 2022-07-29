@@ -6,24 +6,33 @@ import { extractPreviewSteps } from "./steps"
 
 export function Slideshow({
   children,
-  editorSteps,
-  codeConfig,
-  presetConfig,
-  code,
   className,
-  style,
+  code,
+  codeConfig,
+  editorSteps,
+  autoFocus,
   hasPreviewSteps,
+  presetConfig,
+  style,
   ...rest
 }: {
   children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  presetConfig?: PresetConfig
-  code?: EditorProps["codeConfig"]
   className?: string
-  style?: React.CSSProperties
+  code?: EditorProps["codeConfig"]
+  codeConfig: EditorProps["codeConfig"]
+  editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
+  autoFocus?: boolean
+  presetConfig?: PresetConfig
+  style?: React.CSSProperties
 }) {
+  const controlsRef = React.useRef(null)
+
+  React.useEffect(() => {
+    // Only set focus on controls input if we have configured to do so
+    autoFocus && controlsRef.current.focus()
+  }, [])
+
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
   const withPreview = presetConfig || hasPreviewSteps
@@ -98,17 +107,19 @@ export function Slideshow({
             Prev
           </button>
           <input
-            type="range"
-            min={0}
             max={editorSteps.length - 1}
-            value={state.stepIndex}
+            min={0}
+            ref={controlsRef}
             step={1}
+            type="range"
+            value={state.stepIndex}
             onChange={e =>
               setState({
                 stepIndex: +e.target.value,
                 step: editorSteps[+e.target.value],
               })
             }
+            autoFocus={autoFocus}
           />
           <button
             onClick={() =>
