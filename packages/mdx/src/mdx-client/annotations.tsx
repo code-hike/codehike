@@ -3,7 +3,12 @@ import { CodeAnnotation } from "../smooth-code"
 import { getColor, transparent, ColorName } from "../utils"
 
 export function Annotation() {
-  return "error: code hike remark plugin not running or annotation isn't at the right place"
+  return (
+    <div>
+      "error: code hike remark plugin not running or
+      annotation isn't at the right place"
+    </div>
+  )
 }
 
 export const annotationsMap: Record<

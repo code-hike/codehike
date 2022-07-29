@@ -10,6 +10,7 @@ import { valueToEstree } from "./to-estree"
 import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
 import { JsxNode, SuperNode, visit } from "./nodes"
 import { addConfigDefaults, CodeHikeConfig } from "./config"
+import { Attacher } from "unified"
 
 const transforms = [
   transformPreviews,
@@ -20,7 +21,9 @@ const transforms = [
   transformInlineCodes,
   transformCodes,
 ]
-export function transform(unsafeConfig: CodeHikeConfig) {
+export const attacher: Attacher<
+  [CodeHikeConfig?]
+> = unsafeConfig => {
   return async (tree: SuperNode, file: any) => {
     const config = addConfigDefaults(
       unsafeConfig,
