@@ -136,6 +136,8 @@ export default function makeConfig(commandOptions) {
       input: `src/components.tsx`,
       output: [
         { file: `./dist/components.d.ts`, format: "es" },
+        // because of typescript not following package.json exports sometimes
+        { file: `./components.d.ts`, format: "es" },
       ],
       external: clientExternal,
       plugins: [dts()],

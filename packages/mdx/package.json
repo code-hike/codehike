@@ -9,11 +9,13 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.mjs",
       "require": "./dist/index.cjs.js",
       "style": "./dist/index.css"
     },
     "./components": {
+      "types": "./dist/components.d.ts",
       "import": "./dist/components.esm.mjs",
       "require": "./dist/components.cjs.js",
       "default": "./dist/components.cjs.js"
@@ -23,6 +25,7 @@
     "./styles.css": "./dist/index.css",
     "./dist/index.css": "./dist/index.css",
     "./dist/components.cjs.js": {
+      "types": "./dist/components.d.ts",
       "import": "./dist/components.esm.mjs",
       "require": "./dist/components.cjs.js",
       "default": "./dist/components.cjs.js"
