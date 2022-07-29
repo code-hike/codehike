@@ -14,6 +14,8 @@ export function Slideshow({
   className,
   style,
   hasPreviewSteps,
+  autoPlay,
+  autoPlayLoop = false,
   ...rest
 }: {
   children: React.ReactNode
@@ -24,6 +26,8 @@ export function Slideshow({
   className?: string
   style?: React.CSSProperties
   hasPreviewSteps?: boolean
+  autoPlay?: number
+  autoPlayLoop?: boolean
 }) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
@@ -33,11 +37,21 @@ export function Slideshow({
     (child: any) => child.props?.children
   )
 
+  const maxSteps = editorSteps.length - 1;
+
+  // As this gets more complex, probably would make more sense to abstract this into a custom hook with methods to modify state versus exposing directly
   const [state, setState] = React.useState({
     stepIndex: 0,
     step: editorSteps[0],
   })
-  const tab = state.step
+
+  const {
+    stepIndex: currentSlideIndex,
+    step: tab,
+  } = state;
+
+  const atSlideshowStart = currentSlideIndex === 0;
+  const atSlideshowEnd = currentSlideIndex === maxSteps;
 
   function onTabClick(filename: string) {
     const newStep = updateEditorStep(
@@ -47,6 +61,69 @@ export function Slideshow({
     )
     setState({ ...state, step: newStep })
   }
+
+  function slideNext() {
+    setState(s => {
+      const stepIndex = Math.min(
+        maxSteps,
+        s.stepIndex + 1
+      )
+      return {
+        stepIndex,
+        step: editorSteps[stepIndex],
+      }
+    })
+  }
+
+  function slidePrevious() {
+    setState(s => {
+      const stepIndex = Math.max(
+        0,
+        s.stepIndex - 1
+      )
+      return {
+        stepIndex,
+        step: editorSteps[stepIndex],
+      }
+    })
+  }
+
+  React.useEffect(() => {
+    // If autoplay is enabled, and we are not at the end of the slides, move to the next slide
+    if (autoPlay && !atSlideshowEnd) {
+      const autoSlide = setTimeout(
+        () => {
+          slideNext();
+          console.log('next');
+        },
+        autoPlay
+      );
+      
+      // Cleanup our timeout if our component unmounts
+      return () => {
+        clearTimeout(autoSlide);
+      };
+    // If we are at the end of the slideshow, and we have configured to loop, start over
+    } else if (autoPlay && atSlideshowEnd && autoPlayLoop) {
+      // We still have to use the same timeout function with autoPlay delay or else the last slide will never show because it will instantly change
+      const autoRestart = setTimeout(
+        () => {
+          setState({
+            stepIndex: 0,
+            step: editorSteps[0],
+          })
+        },
+        autoPlay
+      );
+      
+      // Cleanup our timeout if our component unmounts
+      return () => {
+        clearTimeout(autoRestart);
+      };      
+    } else {
+      return null;
+    }
+  }, [currentSlideIndex, autoPlay]);
 
   return (
     <div
@@ -82,26 +159,16 @@ export function Slideshow({
 
       <div className="ch-slideshow-notes">
         <div className="ch-slideshow-range">
-          <button
-            onClick={() =>
-              setState(s => {
-                const stepIndex = Math.max(
-                  0,
-                  s.stepIndex - 1
-                )
-                return {
-                  stepIndex,
-                  step: editorSteps[stepIndex],
-                }
-              })
-            }
+          <button 
+            onClick={() => slidePrevious()}
+            disabled={atSlideshowStart}
           >
             Prev
           </button>
           <input
             type="range"
             min={0}
-            max={editorSteps.length - 1}
+            max={maxSteps}
             value={state.stepIndex}
             step={1}
             onChange={e =>
@@ -111,19 +178,9 @@ export function Slideshow({
               })
             }
           />
-          <button
-            onClick={() =>
-              setState(s => {
-                const stepIndex = Math.min(
-                  editorSteps.length - 1,
-                  s.stepIndex + 1
-                )
-                return {
-                  stepIndex,
-                  step: editorSteps[stepIndex],
-                }
-              })
-            }
+          <button 
+            onClick={() => slideNext()}
+            disabled={atSlideshowEnd}
           >
             Next
           </button>
