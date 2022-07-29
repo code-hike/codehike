@@ -51,13 +51,21 @@ export function Slideshow({
     stepIndex: initialSlide,
     step: editorSteps[initialSlide],
   })
-  const tab = state.step
+
+  // Destructure these values and give them more semantic names for use below
+  const {
+    stepIndex: currentSlideIndex,
+    step: tab,
+  } = state;
 
   // Run any time our Slideshow state changes
   React.useEffect(() => {
     // Return our state object to the Slideshow onChange function
-    onSlideshowChange(state);
-  }, [state]);
+    onSlideshowChange({
+      index: currentSlideIndex
+    });
+    // We are only calling this effect if the current slide changes.
+  }, [currentSlideIndex]);
 
   function onTabClick(filename: string) {
     const newStep = updateEditorStep(
@@ -95,7 +103,7 @@ export function Slideshow({
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-slideshow-preview"
-            {...previewChildren[state.stepIndex]["props"]}
+            {...previewChildren[currentSlideIndex]["props"]}
           />
         ) : null}
       </div>
@@ -151,7 +159,7 @@ export function Slideshow({
 
         {hasNotes && (
           <div className="ch-slideshow-note">
-            {stepsChildren[state.stepIndex]}
+            {stepsChildren[currentSlideIndex]}
           </div>
         )}
       </div>
