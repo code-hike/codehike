@@ -19,7 +19,7 @@ export function Slideshow({
   presetConfig,
   style,
   autoPlay,
-  autoPlayLoop = false,
+  loop = false,
   ...rest
 }: {
   children: React.ReactNode
@@ -34,7 +34,7 @@ export function Slideshow({
   presetConfig?: PresetConfig
   style?: React.CSSProperties
   autoPlay?: number
-  autoPlayLoop?: boolean
+  loop?: boolean
 }) {
   const controlsRef = React.useRef(null)
 
@@ -128,7 +128,7 @@ export function Slideshow({
         clearTimeout(autoSlide);
       };
     // If we are at the end of the slideshow, and we have configured to loop, start over
-    } else if (autoPlay && atSlideshowEnd && autoPlayLoop) {
+    } else if (autoPlay && atSlideshowEnd && loop) {
       // We still have to use the same timeout function with autoPlay delay or else the last slide will never show because it will instantly change
       const autoRestart = setTimeout(
         () => {
