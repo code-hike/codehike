@@ -68,6 +68,7 @@ export function SmoothContainer({
     <Container
       width={dimensions!.containerWidth}
       height={dimensions!.containerHeight}
+      lang={codeStep.lang}
     >
       <Content
         dx={dx}
@@ -89,9 +90,11 @@ function Container({
   width,
   height,
   children,
+  lang,
 }: {
   width: number
   height: number
+  lang: string
   children: React.ReactNode
 }) {
   return (
@@ -104,6 +107,7 @@ function Container({
       }}
       className="ch-code-scroll-parent"
       children={children}
+      data-ch-lang={lang}
     />
   )
 }

@@ -10,6 +10,7 @@ import {
   getColor,
   ColorName,
   getColorScheme,
+  anyValue,
 } from "../utils"
 import {
   useStepParser,
@@ -62,6 +63,7 @@ function useCodeShift({
     theme,
     focus: map(tween, tween => tween.focus),
     annotations: map(tween, tween => tween.annotations),
+    lang: anyValue(tween, tween => tween?.code?.lang),
   })
 }
 

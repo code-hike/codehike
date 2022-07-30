@@ -33,6 +33,7 @@ type ParseInput = {
   focus: Tween<FocusString>
   annotations?: Tween<CodeAnnotation[] | undefined>
   highlightedLines: FullTween<HighlightedLine[]>
+  lang: string
 }
 
 export function useStepParser(input: ParseInput) {
@@ -54,6 +55,7 @@ function parse({
   focus,
   annotations,
   highlightedLines,
+  lang,
 }: ParseInput) {
   const normalCode = getCode(highlightedLines)
 
@@ -74,7 +76,11 @@ function parse({
     multilineAnnotations
   )
 
-  const codeStep = addExtraStuff(annotatedCode, normalCode)
+  const codeStep = addExtraStuff(
+    annotatedCode,
+    normalCode,
+    lang
+  )
 
   // console.log({ codeStep })
 
@@ -274,11 +280,13 @@ export type CodeShift = {
   verticalInterval: [number, number]
   lineCount: FullTween<number>
   code: FullTween<string>
+  lang: string
 }
 
 function addExtraStuff(
   codeStep: AnnotatedCode,
-  code: FullTween<string>
+  code: FullTween<string>,
+  lang: string
 ): CodeShift {
   const vInterval = verticalInterval(
     codeStep.enterCount,
@@ -302,6 +310,7 @@ function addExtraStuff(
     groups: newGroups,
     verticalInterval: vInterval,
     code,
+    lang,
   }
 }
 

@@ -43,3 +43,10 @@ export function mapWithDefault<T, R>(
 ): FullTween<R> {
   return map(withDefault(tween, deft), fn)
 }
+
+export function anyValue<T, R>(
+  tween: AnyTween<T>,
+  fn: (t: T) => R
+): R {
+  return fn(tween.prev) || fn(tween.next)
+}
