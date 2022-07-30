@@ -12,6 +12,10 @@ export function Slideshow({
   editorSteps,
   autoFocus,
   hasPreviewSteps,
+  // Set the initial slide index
+  start = 0,
+  // Called when the slideshow state changes and returns the current state object
+  onChange: onSlideshowChange = () => {},
   presetConfig,
   style,
   ...rest
@@ -23,6 +27,8 @@ export function Slideshow({
   editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
   autoFocus?: boolean
+  start?: number
+  onChange?: Function
   presetConfig?: PresetConfig
   style?: React.CSSProperties
 }) {
@@ -41,11 +47,30 @@ export function Slideshow({
     (child: any) => child.props?.children
   )
 
+  const maxSteps = editorSteps.length - 1;
+
+  // Make sure the initial slide is not configured out of bounds
+  const initialSlide = start > maxSteps ? maxSteps : start
+
   const [state, setState] = React.useState({
-    stepIndex: 0,
-    step: editorSteps[0],
+    stepIndex: initialSlide,
+    step: editorSteps[initialSlide],
   })
-  const tab = state.step
+
+  // Destructure these values and give them more semantic names for use below
+  const {
+    stepIndex: currentSlideIndex,
+    step: tab,
+  } = state;
+
+  // Run any time our Slideshow state changes
+  React.useEffect(() => {
+    // Return our state object to the Slideshow onChange function
+    onSlideshowChange({
+      index: currentSlideIndex
+    });
+    // We are only calling this effect if the current slide changes.
+  }, [currentSlideIndex]);
 
   function onTabClick(filename: string) {
     const newStep = updateEditorStep(
@@ -83,7 +108,7 @@ export function Slideshow({
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-slideshow-preview"
-            {...previewChildren[state.stepIndex]["props"]}
+            {...previewChildren[currentSlideIndex]["props"]}
           />
         ) : null}
       </div>
@@ -107,12 +132,12 @@ export function Slideshow({
             Prev
           </button>
           <input
-            max={editorSteps.length - 1}
+            max={maxSteps}
             min={0}
             ref={controlsRef}
             step={1}
             type="range"
-            value={state.stepIndex}
+            value={currentSlideIndex}
             onChange={e =>
               setState({
                 stepIndex: +e.target.value,
@@ -125,7 +150,7 @@ export function Slideshow({
             onClick={() =>
               setState(s => {
                 const stepIndex = Math.min(
-                  editorSteps.length - 1,
+                  maxSteps,
                   s.stepIndex + 1
                 )
                 return {
@@ -141,7 +166,7 @@ export function Slideshow({
 
         {hasNotes && (
           <div className="ch-slideshow-note">
-            {stepsChildren[state.stepIndex]}
+            {stepsChildren[currentSlideIndex]}
           </div>
         )}
       </div>
