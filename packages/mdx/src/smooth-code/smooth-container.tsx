@@ -101,6 +101,7 @@ function Container({
         height,
         position: "relative",
         overflow: "auto",
+        overscrollBehavior: "auto",
       }}
       className="ch-code-scroll-parent"
       children={children}
