@@ -86,8 +86,7 @@
     "vitest": "^0.5.9"
   },
   "peerDependencies": {
-    "react": "^16.8.3 || ^17 || ^18",
-    "framer-motion": "^6.5.1"
+    "react": "^16.8.3 || ^17 || ^18"
   },
   "repository": "code-hike/codehike",
   "license": "MIT",
