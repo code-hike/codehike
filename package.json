@@ -15,7 +15,8 @@
     "build:playground": "lerna run --stream --scope playground build",
     "test": "lerna run --stream test",
     "dev": "lerna run --stream --scope @*/mdx dev",
-    "release": "auto shipit"
+    "release": "auto shipit",
+    "postinstall": "yarn build:lib"
   },
   "devDependencies": {
     "auto": "^10.18.7",
