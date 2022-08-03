@@ -12,3 +12,5 @@ print("Rendered with Code Hike")
 ```
 
 Lorem ipsum dolor sit amet.
+
+See also [Scrollycoding page](scrollycoding).
