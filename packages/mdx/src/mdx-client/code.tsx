@@ -55,6 +55,7 @@ export function mergeCodeConfig<T>(
       showExpandButton == null
         ? props.codeConfig?.showExpandButton
         : showExpandButton,
+    rows: props.rows,
     debug: props.debug ?? props.codeConfig?.debug,
   }
   return { ...rest, codeConfig }

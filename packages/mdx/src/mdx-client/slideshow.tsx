@@ -1,28 +1,45 @@
 import React from "react"
+import { clamp, useInterval } from "utils"
 import { EditorProps, EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
 
+type ChangeEvent = {
+  index: number
+}
+
 export function Slideshow({
   children,
-  editorSteps,
-  codeConfig,
-  presetConfig,
-  code,
   className,
-  style,
+  code,
+  codeConfig,
+  editorSteps,
+  autoFocus,
   hasPreviewSteps,
+  // Set the initial slide index
+  start = 0,
+  // Called when the slideshow state changes and returns the current state object
+  onChange: onSlideshowChange = () => {},
+  presetConfig,
+  style,
+  autoPlay,
+  loop = false,
   ...rest
 }: {
   children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  presetConfig?: PresetConfig
-  code?: EditorProps["codeConfig"]
   className?: string
-  style?: React.CSSProperties
+  code?: EditorProps["codeConfig"]
+  codeConfig: EditorProps["codeConfig"]
+  editorSteps: EditorStep[]
   hasPreviewSteps?: boolean
+  autoFocus?: boolean
+  start?: number
+  onChange?: (e: ChangeEvent) => void
+  presetConfig?: PresetConfig
+  style?: React.CSSProperties
+  autoPlay?: number
+  loop?: boolean
 }) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
@@ -32,20 +49,47 @@ export function Slideshow({
     (child: any) => child.props?.children
   )
 
-  const [state, setState] = React.useState({
-    stepIndex: 0,
-    step: editorSteps[0],
+  const maxSteps = editorSteps.length - 1
+
+  const [state, setState] = React.useState(() => {
+    const startIndex = clamp(start, 0, maxSteps)
+    return {
+      stepIndex: startIndex,
+      step: editorSteps[startIndex],
+    }
   })
-  const tab = state.step
+
+  const { stepIndex: currentIndex, step: tab } = state
+
+  const atSlideshowEnd = currentIndex === maxSteps
+
+  React.useEffect(() => {
+    onSlideshowChange({ index: currentIndex })
+  }, [currentIndex])
 
   function onTabClick(filename: string) {
-    const newStep = updateEditorStep(
-      state.step,
-      filename,
-      null
-    )
+    const newStep = updateEditorStep(tab, filename, null)
     setState({ ...state, step: newStep })
   }
+
+  function setIndex(newIndex: number) {
+    const stepIndex = clamp(newIndex, 0, maxSteps)
+    setState({ stepIndex, step: editorSteps[stepIndex] })
+  }
+
+  function nextSlide() {
+    setState(s => {
+      const stepIndex = loop
+        ? (s.stepIndex + 1) % (maxSteps + 1)
+        : clamp(s.stepIndex + 1, 0, maxSteps)
+      return {
+        stepIndex,
+        step: editorSteps[stepIndex],
+      }
+    })
+  }
+
+  useInterval(nextSlide, autoPlay)
 
   return (
     <div
@@ -74,7 +118,7 @@ export function Slideshow({
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-slideshow-preview"
-            {...previewChildren[state.stepIndex]["props"]}
+            {...previewChildren[currentIndex]["props"]}
           />
         ) : null}
       </div>
@@ -82,58 +126,42 @@ export function Slideshow({
       <div className="ch-slideshow-notes">
         <div className="ch-slideshow-range">
           <button
-            onClick={() =>
-              setState(s => {
-                const stepIndex = Math.max(
-                  0,
-                  s.stepIndex - 1
-                )
-                return {
-                  stepIndex,
-                  step: editorSteps[stepIndex],
-                }
-              })
-            }
+            onClick={() => setIndex(currentIndex - 1)}
+            disabled={currentIndex === 0}
           >
             Prev
           </button>
           <input
-            type="range"
+            max={maxSteps}
             min={0}
-            max={editorSteps.length - 1}
-            value={state.stepIndex}
             step={1}
-            onChange={e =>
-              setState({
-                stepIndex: +e.target.value,
-                step: editorSteps[+e.target.value],
-              })
-            }
+            type="range"
+            value={currentIndex}
+            onChange={e => setIndex(+e.target.value)}
+            ref={useAutoFocusRef(autoFocus)}
+            autoFocus={autoFocus}
           />
           <button
-            onClick={() =>
-              setState(s => {
-                const stepIndex = Math.min(
-                  editorSteps.length - 1,
-                  s.stepIndex + 1
-                )
-                return {
-                  stepIndex,
-                  step: editorSteps[stepIndex],
-                }
-              })
-            }
+            onClick={nextSlide}
+            disabled={atSlideshowEnd}
           >
             Next
           </button>
         </div>
-
         {hasNotes && (
           <div className="ch-slideshow-note">
-            {stepsChildren[state.stepIndex]}
+            {stepsChildren[currentIndex]}
           </div>
         )}
       </div>
     </div>
   )
+}
+
+function useAutoFocusRef(autoFocus: boolean) {
+  const ref = React.useRef(null)
+  React.useEffect(() => {
+    autoFocus && ref.current.focus()
+  }, [])
+  return ref
 }

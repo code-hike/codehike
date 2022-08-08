@@ -10,6 +10,7 @@ import {
   getColor,
   ColorName,
   getColorScheme,
+  anyValue,
 } from "../utils"
 import {
   useStepParser,
@@ -47,6 +48,7 @@ export type CodeConfig = {
   showCopyButton?: boolean
   showExpandButton?: boolean
   staticMediaQuery?: string
+  rows?: number | "focus"
   debug?: boolean
 }
 
@@ -62,6 +64,7 @@ function useCodeShift({
     theme,
     focus: map(tween, tween => tween.focus),
     annotations: map(tween, tween => tween.annotations),
+    lang: anyValue(tween, tween => tween?.code?.lang),
   })
 }
 
@@ -83,6 +86,7 @@ export function CodeTween({
     map(tween, tween => tween.focus),
     config.minColumns || DEFAULT_MIN_COLUMNS,
     config.lineNumbers || false,
+    config.rows,
     [config.parentHeight]
   )
 

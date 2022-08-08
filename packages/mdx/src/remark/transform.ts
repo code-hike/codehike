@@ -11,6 +11,8 @@ import { CH_CODE_CONFIG_VAR_NAME } from "./unist-utils"
 import { JsxNode, SuperNode, visit } from "./nodes"
 import { addConfigDefaults, CodeHikeConfig } from "./config"
 
+import type { Node } from "unist"
+
 const transforms = [
   transformPreviews,
   transformScrollycodings,
@@ -20,37 +22,53 @@ const transforms = [
   transformInlineCodes,
   transformCodes,
 ]
-export function transform(unsafeConfig: CodeHikeConfig) {
-  return async (tree: SuperNode, file: any) => {
-    const config = addConfigDefaults(
-      unsafeConfig,
-      file?.cwd,
-      file?.history
-        ? file.history[file.history.length - 1]
-        : undefined
-    )
 
-    try {
-      for (const transform of transforms) {
-        await transform(tree, config)
-      }
+type VFile = {
+  history: string[]
+  cwd: string
+}
 
-      const usedCodeHikeComponents =
-        getUsedCodeHikeComponentNames(tree)
+type Transformer = (
+  node: Node,
+  file: VFile
+) => Promise<void>
 
-      if (usedCodeHikeComponents.length > 0) {
-        addConfig(tree, config)
+type CodeHikeRemarkPlugin = (
+  config: CodeHikeConfig
+) => Transformer
 
-        if (config.autoImport) {
-          addSmartImport(tree, usedCodeHikeComponents)
+export const attacher: CodeHikeRemarkPlugin =
+  unsafeConfig => {
+    return async (tree: SuperNode, file: VFile) => {
+      const config = addConfigDefaults(
+        unsafeConfig,
+        file?.cwd,
+        file?.history
+          ? file.history[file.history.length - 1]
+          : undefined
+      )
+
+      try {
+        for (const transform of transforms) {
+          await transform(tree, config)
         }
+
+        const usedCodeHikeComponents =
+          getUsedCodeHikeComponentNames(tree)
+
+        if (usedCodeHikeComponents.length > 0) {
+          addConfig(tree, config)
+
+          if (config.autoImport) {
+            addSmartImport(tree, usedCodeHikeComponents)
+          }
+        }
+      } catch (e) {
+        console.error("error running remarkCodeHike", e)
+        throw e
       }
-    } catch (e) {
-      console.error("error running remarkCodeHike", e)
-      throw e
     }
   }
-}
 
 /**
  * Returns a the list of component names

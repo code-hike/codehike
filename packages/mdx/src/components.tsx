@@ -14,6 +14,7 @@ import {
 } from "./mdx-client/annotations"
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
+import type { MDXComponents } from "mdx/types"
 
 export {
   Code,
@@ -31,7 +32,7 @@ export {
   PreviewSlot,
 }
 
-export const CH = {
+export const CH: MDXComponents = {
   Code,
   Section,
   SectionLink,
