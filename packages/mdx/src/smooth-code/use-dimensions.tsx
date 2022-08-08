@@ -1,6 +1,7 @@
 import React from "react"
 import {
   FocusString,
+  getFocusExtremes,
   getFocusIndexes,
   Tween,
   useLayoutEffect,
@@ -38,6 +39,7 @@ function useDimensions(
   focus: Tween<FocusString>,
   minColumns: number,
   lineNumbers: boolean,
+  rows: number | "focus" | undefined,
   deps: React.DependencyList
 ): { element: React.ReactNode; dimensions: Dimensions } {
   const [dimensions, setDimensions] =
@@ -61,7 +63,35 @@ function useDimensions(
         .trimEnd()
         .split(newlineRe)
 
-      const lineCount = lines.length
+      const originalLineCount = lines.length
+
+      if (rows) {
+        // make the lines match the requested number of rows
+        const heightInLines =
+          rows === "focus"
+            ? focusHeightInLines(focus, lines)
+            : rows
+        let i = lines.length
+
+        while (i < heightInLines) {
+          lines.push("")
+          i++
+        }
+
+        // remove extra lines to match the requested rows
+        while (i > heightInLines) {
+          lines.pop()
+          i--
+        }
+
+        // if we removed prevLongestLine, add it back
+        if (
+          prevLongestLine &&
+          !lines.includes(prevLongestLine)
+        ) {
+          lines[lines.length - 1] = prevLongestLine
+        }
+      }
 
       // avod setting the ref more than once https://github.com/code-hike/codehike/issues/232
       let prevLineRefSet = false
@@ -78,7 +108,7 @@ function useDimensions(
               <div ref={ref} key={i}>
                 {lineNumbers ? (
                   <span className="ch-code-line-number">
-                    _{lineCount}
+                    _{originalLineCount}
                   </span>
                 ) : undefined}
                 <div
@@ -243,4 +273,12 @@ function useWindowWidth() {
       window.removeEventListener("resize", handleResize)
   }, [])
   return width
+}
+
+function focusHeightInLines(
+  focus: Tween<FocusString>,
+  lines: any[]
+): number {
+  const [start, end] = getFocusExtremes(focus.prev, lines)
+  return end - start + 1
 }

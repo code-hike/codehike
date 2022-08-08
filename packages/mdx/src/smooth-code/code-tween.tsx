@@ -48,6 +48,7 @@ export type CodeConfig = {
   showCopyButton?: boolean
   showExpandButton?: boolean
   staticMediaQuery?: string
+  rows?: number | "focus"
   debug?: boolean
 }
 
@@ -85,6 +86,7 @@ export function CodeTween({
     map(tween, tween => tween.focus),
     config.minColumns || DEFAULT_MIN_COLUMNS,
     config.lineNumbers || false,
+    config.rows,
     [config.parentHeight]
   )
 
