@@ -102,7 +102,7 @@ export function parseExtremes(part: string) {
 /**
  * Return the first and last indexes to focus, both included
  */
-function getFocusExtremes(
+export function getFocusExtremes(
   focus: FocusString,
   lines: any[]
 ): [number, number] {
