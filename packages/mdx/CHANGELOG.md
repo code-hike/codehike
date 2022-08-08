@@ -1,3 +1,49 @@
+# v0.7.3 (Mon Aug 08 2022)
+
+#### 🐛 Bug Fix
+
+- Change code height with `rows` [#262](https://github.com/code-hike/codehike/pull/262) ([@pomber](https://github.com/pomber))
+- Add focus example ([@pomber](https://github.com/pomber))
+- Add rows prop ([@pomber](https://github.com/pomber))
+- Change plugin type [#256](https://github.com/code-hike/codehike/pull/256) ([@pomber](https://github.com/pomber))
+- Use unist Node type ([@pomber](https://github.com/pomber))
+- Change plugin type ([@pomber](https://github.com/pomber))
+- feat(#217): CH.Slideshow autoPlay and autoPlayLoop [#250](https://github.com/code-hike/codehike/pull/250) ([@brianespinosa](https://github.com/brianespinosa) [@pomber](https://github.com/pomber))
+- Slideshow refactor ([@pomber](https://github.com/pomber))
+- Add lang attribute [#253](https://github.com/code-hike/codehike/pull/253) ([@pomber](https://github.com/pomber))
+- Rename autoPlayLoop -> loop ([@brianespinosa](https://github.com/brianespinosa))
+- Remove framer-motion ([@brianespinosa](https://github.com/brianespinosa))
+- Add lang attribute ([@pomber](https://github.com/pomber))
+- feat(#246): Add onChange and initialSlideIndex props to CH.Slideshow [#248](https://github.com/code-hike/codehike/pull/248) ([@brianespinosa](https://github.com/brianespinosa))
+- oops ([@brianespinosa](https://github.com/brianespinosa))
+- feat(#217): CH.Slideshow autoPlay and autoPlayLoop ([@brianespinosa](https://github.com/brianespinosa))
+- Remove useInitialState hook ([@brianespinosa](https://github.com/brianespinosa))
+- Match MDX example to new props ([@brianespinosa](https://github.com/brianespinosa))
+- Limit what we are exposing from internal state ([@brianespinosa](https://github.com/brianespinosa))
+- Rename prop for consistency with CH.Spotlight ([@brianespinosa](https://github.com/brianespinosa))
+- Fix typescript module resolution [#249](https://github.com/code-hike/codehike/pull/249) ([@pomber](https://github.com/pomber))
+- Add type to CH components ([@pomber](https://github.com/pomber))
+- Add d.ts file to npm publish ([@pomber](https://github.com/pomber))
+- Add attacher type ([@pomber](https://github.com/pomber))
+- Fix typescript module resolution ([@pomber](https://github.com/pomber))
+- feat(244): Allow Slideshow controls to autoFocus [#245](https://github.com/code-hike/codehike/pull/245) ([@brianespinosa](https://github.com/brianespinosa) [@pomber](https://github.com/pomber))
+- Rename hasAutoFocusControls to autoFocus ([@pomber](https://github.com/pomber))
+- feat(#246): Add onChange and initialSlideIndex props to CH.Slideshow ([@brianespinosa](https://github.com/brianespinosa))
+- Merge branch 'code-hike:next' into next ([@brianespinosa](https://github.com/brianespinosa))
+- Use a ref to more reliably set focus ([@brianespinosa](https://github.com/brianespinosa))
+- feat(244): Allow Slideshow controls to autoFocus ([@brianespinosa](https://github.com/brianespinosa))
+- Merge main [#243](https://github.com/code-hike/codehike/pull/243) ([@pomber](https://github.com/pomber))
+- fix deps ([@brianespinosa](https://github.com/brianespinosa))
+- Merge branch 'next' of https://github.com/brianespinosa/codehike into next ([@brianespinosa](https://github.com/brianespinosa))
+- Add Presence Animation ([@brianespinosa](https://github.com/brianespinosa))
+
+#### Authors: 2
+
+- Brian Espinosa ([@brianespinosa](https://github.com/brianespinosa))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.2 (Wed Jul 27 2022)
 
 #### 🐛 Bug Fix

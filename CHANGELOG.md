@@ -1,3 +1,24 @@
+# v0.7.3 (Mon Aug 08 2022)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Change code height with `rows` [#262](https://github.com/code-hike/codehike/pull/262) ([@pomber](https://github.com/pomber))
+  - Change plugin type [#256](https://github.com/code-hike/codehike/pull/256) ([@pomber](https://github.com/pomber))
+  - feat(#217): CH.Slideshow autoPlay and autoPlayLoop [#250](https://github.com/code-hike/codehike/pull/250) ([@brianespinosa](https://github.com/brianespinosa) [@pomber](https://github.com/pomber))
+  - Add lang attribute [#253](https://github.com/code-hike/codehike/pull/253) ([@pomber](https://github.com/pomber))
+  - feat(#246): Add onChange and initialSlideIndex props to CH.Slideshow [#248](https://github.com/code-hike/codehike/pull/248) ([@brianespinosa](https://github.com/brianespinosa))
+  - Fix typescript module resolution [#249](https://github.com/code-hike/codehike/pull/249) ([@pomber](https://github.com/pomber))
+  - feat(244): Allow Slideshow controls to autoFocus [#245](https://github.com/code-hike/codehike/pull/245) ([@brianespinosa](https://github.com/brianespinosa) [@pomber](https://github.com/pomber))
+  - Merge main [#243](https://github.com/code-hike/codehike/pull/243) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- Brian Espinosa ([@brianespinosa](https://github.com/brianespinosa))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.2 (Wed Jul 27 2022)
 
 #### 🐛 Bug Fix
