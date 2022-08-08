@@ -1,14 +1,14 @@
 {
   "name": "playground",
   "private": true,
-  "version": "0.7.2",
+  "version": "0.7.3",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.7.2",
+    "@code-hike/mdx": "^0.7.3",
     "@mdx-js/mdx": "^2.1.1",
     "@monaco-editor/react": "^4.4.5",
     "lz-string": "^1.4.4",
