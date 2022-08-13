@@ -192,6 +192,7 @@ function Wrapper({
 }) {
   return (
     <div
+      className="ch-code-wrapper"
       {...htmlProps}
       style={{
         margin: 0,
@@ -199,6 +200,8 @@ function Wrapper({
         position: "relative",
         // using this instead of <pre> because https://github.com/code-hike/codehike/issues/120
         whiteSpace: "pre",
+        // to avoid resets using "border-box" that break the scrollbar https://github.com/code-hike/codehike/issues/240
+        boxSizing: "content-box",
         ...style,
         ...htmlProps?.style,
       }}
