@@ -56,6 +56,26 @@ type Snapshot = {
   southTabs: TabsSnapshot | null
 }
 
+function northConfig(codeConfig: CodeConfig) {
+  if (Array.isArray(codeConfig.rows)) {
+    return {
+      ...codeConfig,
+      rows: codeConfig.rows[0],
+    }
+  }
+  return codeConfig
+}
+
+function southConfig(codeConfig: CodeConfig) {
+  if (Array.isArray(codeConfig.rows)) {
+    return {
+      ...codeConfig,
+      rows: codeConfig.rows[1],
+    }
+  }
+  return codeConfig
+}
+
 export function useTransition(
   ref: React.RefObject<HTMLDivElement>,
   prev: EditorStep,
@@ -119,7 +139,7 @@ export function useTransition(
       style: northStyle,
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={northConfig(codeConfig)}
           prevFile={prevNorthFile}
           nextFile={nextNorthFile}
           t={t}
@@ -136,7 +156,7 @@ export function useTransition(
       style: southStyle!,
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={southConfig(codeConfig)}
           prevFile={prevSouthFile!}
           nextFile={nextSouthFile!}
           t={t}
@@ -180,7 +200,7 @@ function startingPosition(
       },
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={northConfig(codeConfig)}
           prevFile={prevNorthFile}
           nextFile={prevNorthFile}
           t={0}
@@ -201,7 +221,7 @@ function startingPosition(
       },
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={southConfig(codeConfig)}
           prevFile={prevSouthFile!}
           nextFile={prevSouthFile!}
           t={0}
@@ -249,7 +269,7 @@ function endingPosition(
       },
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={northConfig(codeConfig)}
           prevFile={nextNorthFile}
           nextFile={nextNorthFile}
           t={1}
@@ -270,7 +290,7 @@ function endingPosition(
       },
       children: (
         <CodeTransition
-          codeConfig={codeConfig}
+          codeConfig={southConfig(codeConfig)}
           prevFile={nextSouthFile!}
           nextFile={nextSouthFile!}
           t={1}
