@@ -1,3 +1,20 @@
+# v0.7.4 (Mon Aug 22 2022)
+
+#### 🐛 Bug Fix
+
+- Gatsby example [#273](https://github.com/code-hike/codehike/pull/273) ([@pomber](https://github.com/pomber))
+- `@code-hike/mdx`
+  - `rows` prop when you have two panels [#269](https://github.com/code-hike/codehike/pull/269) ([@pomber](https://github.com/pomber))
+  - Fix focus height on transitions [#268](https://github.com/code-hike/codehike/pull/268) ([@pomber](https://github.com/pomber))
+  - Force content box in code-wrapper [#267](https://github.com/code-hike/codehike/pull/267) ([@pomber](https://github.com/pomber))
+  - Merge main [#264](https://github.com/code-hike/codehike/pull/264) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.3 (Mon Aug 08 2022)
 
 #### 🐛 Bug Fix
