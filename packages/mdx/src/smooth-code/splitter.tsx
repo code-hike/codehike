@@ -89,9 +89,17 @@ export function splitByFocus(
   >
 ): FocusedCode {
   const { lines, ...mergedCodeRest } = mergedCode
-  const focusByLineNumber = map(focus, focus =>
-    mapFocusToLineNumbers(focus, lines)
-  )
+
+  const focusByLineNumber = map(focus, (focus, key) => {
+    // we need to filter the lines that don't belong to the step
+    // for the case where focus == ""
+    const stepLines =
+      key === "prev"
+        ? lines.filter(l => l.move !== "enter")
+        : lines.filter(l => l.move !== "exit")
+
+    return mapFocusToLineNumbers(focus, stepLines)
+  })
 
   const splittedLines = lines.map(line => {
     const { tokens, ...rest } = line
