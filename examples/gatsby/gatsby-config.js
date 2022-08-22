@@ -3,8 +3,7 @@ const theme = require("shiki/themes/nord.json")
 
 module.exports = {
   siteMetadata: {
-    title: `gatsby`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: `codehike-gatsby`,
   },
   plugins: [
     {
