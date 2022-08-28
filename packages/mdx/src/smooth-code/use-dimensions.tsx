@@ -63,7 +63,7 @@ function useDimensions(
         .trimEnd()
         .split(newlineRe)
 
-      const originalLineCount = lines.length
+      const largestLineNumber = Math.max(lines.length, 10)
 
       if (rows) {
         // make the lines match the requested number of rows
@@ -108,7 +108,7 @@ function useDimensions(
               <div ref={ref} key={i}>
                 {lineNumbers ? (
                   <span className="ch-code-line-number">
-                    _{originalLineCount}
+                    _{largestLineNumber}
                   </span>
                 ) : undefined}
                 <div
