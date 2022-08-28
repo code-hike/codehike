@@ -47,6 +47,7 @@ function useDimensions(
 
   const windowWidth = useWindowWidth()
   const prevLineRef = React.useRef<HTMLDivElement>(null!)
+  console.log(windowWidth)
 
   const { prevLongestLine, nextLongestLine, element } =
     React.useMemo(() => {
@@ -126,6 +127,8 @@ function useDimensions(
           <br />
         </code>
       )
+
+      console.log("memo", prevLineRef.current)
       return { prevLongestLine, nextLongestLine, element }
     }, [code])
 
@@ -137,7 +140,8 @@ function useDimensions(
     minColumns,
   ]
 
-  useLayoutEffect(() => {
+  React.useEffect(() => {
+    console.log("effect", prevLineRef)
     if (prevLineRef.current) {
       const pll = prevLineRef.current
       const contentElement = pll?.parentElement!
