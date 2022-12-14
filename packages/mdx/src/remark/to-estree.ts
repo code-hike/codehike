@@ -1,10 +1,10 @@
 import { Expression } from "estree"
 import isPlainObject from "is-plain-obj"
 import { annotationsMap } from "../mdx-client/annotations"
-import unified from "unified"
-import remarkRehype from "remark-rehype"
+// import unified from "unified"
+// import remarkRehype from "remark-rehype"
 import toEstree from "hast-util-to-estree"
-import { Node, Parent } from "unist"
+import { Node } from "unist"
 
 // forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
 
@@ -182,11 +182,11 @@ export function valueToEstree(
     }
   }
   if (options.instanceAsObject || isPlainObject(value)) {
-    if ((value as any)?.name === MDX_CHILDREN) {
-      const tree = { ...(value as any) }
-      tree.name = null
-      return (mdastToEstree(tree) as any).body[0].expression
-    }
+    // if ((value as any)?.name === MDX_CHILDREN) {
+    //   const tree = { ...(value as any) }
+    //   tree.name = null
+    //   return (mdastToEstree(tree) as any).body[0].expression
+    // }
 
     if (
       (value as any)?.type ===
@@ -247,24 +247,24 @@ export function valueToEstree(
   throw new TypeError(`Unsupported value: ${String(value)}`)
 }
 
-export function mdastToEstree(node: Node) {
-  const nodeTypes = [
-    "mdxFlowExpression",
-    "mdxJsxFlowElement",
-    "mdxJsxTextElement",
-    "mdxTextExpression",
-    "mdxjsEsm",
-  ]
-  const changedTree = unified()
-    .use(remarkRehype, {
-      allowDangerousHtml: true,
-      passThrough: nodeTypes,
-    })
-    .use(rehypeRecma as any)
-    .runSync(node)
+// export function mdastToEstree(node: Node) {
+//   const nodeTypes = [
+//     "mdxFlowExpression",
+//     "mdxJsxFlowElement",
+//     "mdxJsxTextElement",
+//     "mdxTextExpression",
+//     "mdxjsEsm",
+//   ]
+//   const changedTree = unified()
+//     .use(remarkRehype, {
+//       allowDangerousHtml: true,
+//       passThrough: nodeTypes,
+//     })
+//     .use(rehypeRecma as any)
+//     .runSync(node)
 
-  return changedTree
-}
+//   return changedTree
+// }
 
 function rehypeRecma() {
   return (tree: any) => (toEstree as any)(tree)
