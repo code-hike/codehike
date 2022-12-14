@@ -11978,7 +11978,7 @@ esbuild@^0.14.0, esbuild@^0.14.43:
     esbuild-windows-64 "0.14.54"
     esbuild-windows-arm64 "0.14.54"
 
-esbuild@^0.14.14, esbuild@^0.14.23:
+esbuild@^0.14.14:
   version "0.14.25"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.14.25.tgz#ddb9d47b91ca76abb7d850ce3dfed0bc3dc88d16"
   integrity sha512-4JHEIOMNFvK09ziiL+iVmldIhLbn49V4NAVo888tcGFKedEZY/Y8YapfStJ6zSE23tzYPKxqKwQBnQoIO0BI/Q==
@@ -21154,13 +21154,6 @@ remark-rehype@^10.0.0, remark-rehype@^10.1.0:
     "@types/mdast" "^3.0.0"
     mdast-util-to-hast "^12.1.0"
     unified "^10.0.0"
-
-remark-rehype@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/remark-rehype/-/remark-rehype-8.1.0.tgz#610509a043484c1e697437fa5eb3fd992617c945"
-  integrity sha512-EbCu9kHgAxKmW1yEYjx3QafMyGY3q8noUbNUI5xyKbaFP89wbhDrKxyIQNukNYthzjNHZu6J7hwFg7hRm1svYA==
-  dependencies:
-    mdast-util-to-hast "^10.2.0"
 
 remark-rehype@^9.0.0:
   version "9.1.0"
