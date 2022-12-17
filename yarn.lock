@@ -2973,10 +2973,10 @@
   resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.5.4.tgz#1a89069978734e132fa4a59414ddb64e4b94fde7"
   integrity sha512-qnikpQgi30AS01aFlNQV6l8/qdZIcP76mp90ti+u4rucXHsn4afSKivQXApqxvrQG9+Ibv45STyvHizvxef/7A==
 
-"@code-hike/lighter@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.0.3.tgz#2d497c52b224b3811029314480bc82bed443332a"
-  integrity sha512-USrq8t5aF6Kbtc9U8tnvJvZHP8rozJ02aMiUaGQNRO1Xbul3cOAv/Q4Jav0QVSFs2MCeQj9mRMA+zG8lkk3+RQ==
+"@code-hike/lighter@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.0.4.tgz#4464b3cf6eb055f5c22421b4329567e09e9323c7"
+  integrity sha512-xc8k+dn6t3N9pZvRYhGN5CDK+3mdabbiKvLKtov79L6zf8sx1Lo+EfqitgWcCyepYXmu9u6XQcVTuU3cE18CJw==
 
 "@codesandbox/sandpack-client@^0.19.0":
   version "0.19.0"
