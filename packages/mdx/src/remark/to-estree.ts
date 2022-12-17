@@ -55,12 +55,12 @@ export function valueToEstree(
   }
   if (typeof value === "bigint") {
     return value >= 0
-      ? {
+      ? ({
           type: "Literal",
           value,
           raw: `${value}n`,
           bigint: String(value),
-        }
+        } as any)
       : {
           type: "UnaryExpression",
           operator: "-",

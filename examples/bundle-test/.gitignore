@@ -1,2 +1,6 @@
 node_modules
 .next
+
+
+# Contentlayer
+.contentlayer

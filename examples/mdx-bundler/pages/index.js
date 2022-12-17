@@ -30,7 +30,7 @@ export async function getStaticProps() {
   const { code } = await bundleMDX({
     source,
     files: {},
-    xdmOptions(options) {
+    mdxOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         [remarkCodeHike, { theme }],
