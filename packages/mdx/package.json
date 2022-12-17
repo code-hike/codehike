@@ -37,6 +37,7 @@
   },
   "scripts": {
     "dev": "next",
+    "build-test": "next build",
     "build": "rollup -c rollup.config.js",
     "watch": "rollup --watch -c  rollup.config.js",
     "test": "vitest",
