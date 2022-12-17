@@ -3,7 +3,7 @@
   "workspaces": {
     "packages": [
       "packages/mdx",
-      "examples/!(mdx-bundler)",
+      "examples/*",
       "playground",
       "site"
     ]

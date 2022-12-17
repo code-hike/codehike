@@ -22,6 +22,7 @@ const clientExternal = [
 ]
 const remarkExternal = [
   // "hast-util-to-estree",
+  "@code-hike/lighter",
   // "is-plain-obj",
   "node-fetch",
   // "remark-rehype",
@@ -95,6 +96,7 @@ export default function makeConfig(commandOptions) {
       plugins: [
         nodeResolve(),
         commonjs(),
+        // TODO remove
         replace({
           delimiters: ["", ""],
           preventAssignment: true,
