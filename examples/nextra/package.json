@@ -10,8 +10,8 @@
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",
     "next": "^13.0.7",
-    "nextra": "^1.1.0",
-    "nextra-theme-docs": "^1.2.6",
+    "nextra": "2.0.1",
+    "nextra-theme-docs": "2.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   }
