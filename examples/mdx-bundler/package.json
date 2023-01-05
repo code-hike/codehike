@@ -4,7 +4,8 @@
   "version": "0.7.4",
   "scripts": {
     "dev": "next",
-    "build": "next build"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",

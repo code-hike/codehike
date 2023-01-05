@@ -27,6 +27,9 @@ export type CodeAnnotation = {
     isInline: boolean
   }) => React.ReactElement
   data?: any
+  // sometimes serializing the Component function doesn't work (Astro)
+  // so we pass the name and get the Component from annotationsMap
+  // name?: string
 }
 type ParseInput = {
   theme: EditorTheme

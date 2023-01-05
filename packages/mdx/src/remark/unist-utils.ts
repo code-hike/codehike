@@ -79,6 +79,14 @@ export function toJSX(
     node.attributes = node.attributes || []
   }
 
+  // if (addClientLoad) {
+  //   node.attributes.push({
+  //     type: "mdxJsxAttribute",
+  //     name: "client:load",
+  //     value: null,
+  //   })
+  // }
+
   if (addConfigProp) {
     node.attributes.push(
       toAttribute("codeConfig", CH_CODE_CONFIG_VAR_NAME, {

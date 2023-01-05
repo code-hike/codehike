@@ -11,10 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.11.1",
-    "@astrojs/react": "^1.1.3",
+    "@astrojs/mdx": "^0.13.0",
+    "@astrojs/react": "^1.2.2",
     "@code-hike/mdx": "^0.7.4",
-    "astro": "^1.2.6",
+    "astro": "^1.7.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   }
