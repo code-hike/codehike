@@ -22,7 +22,7 @@ export async function highlight({
     }
   }
 
-  const r = await light(code, lang, theme)
+  const r = await light(code, lang as any, theme)
 
   const lines = r.lines.map(line => ({
     tokens: line.map(token => ({
