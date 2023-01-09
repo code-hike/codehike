@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",
-    "@docusaurus/core": "2.0.1",
-    "@docusaurus/preset-classic": "2.0.1",
+    "@docusaurus/core": "2.2.0",
+    "@docusaurus/preset-classic": "2.2.0",
     "@mdx-js/react": "^2.1.1",
     "clsx": "^1.2.1",
     "docusaurus-theme-mdx-v2": "^0.1.2",

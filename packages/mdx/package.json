@@ -44,7 +44,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@code-hike/lighter": "^0.1.4",
+    "@code-hike/lighter": "^0.1.5",
     "node-fetch": "^2.0.0",
     "shiki": "^0.10.1"
   },
