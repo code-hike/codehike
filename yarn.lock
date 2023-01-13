@@ -15964,6 +15964,21 @@ mdx-bundler@^9.0.1:
     remark-mdx-frontmatter "^1.1.1"
     uuid "^8.3.2"
 
+mdx-bundler@^9.2.1:
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/mdx-bundler/-/mdx-bundler-9.2.1.tgz#917dbd986ac3e7f7f14ac635c2dfc224eafdd42d"
+  integrity sha512-hWEEip1KU9MCNqeH2rqwzAZ1pdqPPbfkx9OTJjADqGPQz4t9BO85fhI7AP9gVYrpmfArf9/xJZUN0yBErg/G/Q==
+  dependencies:
+    "@babel/runtime" "^7.16.3"
+    "@esbuild-plugins/node-resolve" "^0.1.4"
+    "@fal-works/esbuild-plugin-global-externals" "^2.1.2"
+    "@mdx-js/esbuild" "^2.0.0"
+    gray-matter "^4.0.3"
+    remark-frontmatter "^4.0.1"
+    remark-mdx-frontmatter "^1.1.1"
+    uuid "^8.3.2"
+    vfile "^5.3.2"
+
 mdx-debugger@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/mdx-debugger/-/mdx-debugger-0.2.0.tgz#c441bdc9790731774d837374d3acda01cc6f5e86"
