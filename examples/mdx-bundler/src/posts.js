@@ -4,11 +4,9 @@ import { remarkCodeHike } from "@code-hike/mdx"
 import theme from "shiki/themes/material-palenight.json"
 import { bundleMDX } from "mdx-bundler"
 
-const POSTS_PATH = path.join(process.cwd(), "posts")
-
 export function getPostNames() {
   return fs
-    .readdirSync(POSTS_PATH)
+    .readdirSync("posts")
     .filter((path) => /\.mdx?$/.test(path))
     .map((fileName) => {
       const postName = fileName.replace(/\.mdx?$/, "")
