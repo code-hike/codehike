@@ -22,7 +22,7 @@ export async function getStaticProps({ params }) {
 const PostLayout = ({ post }: { post: Post }) => {
   const MDXContent = useMDXComponent(post.body.code)
   return (
-    <article style={{ width: 600, margin: "0 auto" }}>
+    <article style={{ width: 768, margin: "0 auto", fontFamily: "sans-serif" }}>
       <Head>
         <title>{post.title}</title>
       </Head>

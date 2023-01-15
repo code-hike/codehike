@@ -1,6 +1,7 @@
-import "nextra-theme-docs/style.css"
 import "@code-hike/mdx/styles"
 
-export default function Nextra({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
+
+export default MyApp

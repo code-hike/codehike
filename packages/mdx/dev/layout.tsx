@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Head from "next/head"
+import React from "react"
 
 const extraItems = ["themes"]
 
@@ -19,7 +20,7 @@ export function Layout({
       }}
     >
       <Head>
-        <title>Code Hike Test - {current}</title>
+        <title>{`Code Hike Test - ${current}`}</title>
       </Head>
       <Sidebar
         contentFileNames={contentFileNames}
@@ -63,7 +64,7 @@ function Sidebar({ contentFileNames, current }) {
             data-active={item === current}
           >
             <Link href={`/${encodeURIComponent(item)}`}>
-              <a>{item}</a>
+              {item}
             </Link>
           </li>
         ))}

@@ -1,52 +1,21 @@
-import { remarkCodeHike } from "@code-hike/mdx"
-import theme from "shiki/themes/solarized-dark.json"
-import fs from "fs"
-import path from "path"
-import { bundleMDX } from "mdx-bundler"
-import { getMDXComponent } from "mdx-bundler/client"
+import { getPostNames } from "../src/posts"
 
 export async function getStaticProps() {
-  // can be from a local file, database, anywhere
-  const source = fs.readFileSync("posts/lorem.mdx", "utf-8")
-
-  // https://github.com/kentcdodds/mdx-bundler#nextjs-esbuild-enoent
-  if (process.platform === "win32") {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "esbuild.exe"
-    )
-  } else {
-    process.env.ESBUILD_BINARY_PATH = path.join(
-      process.cwd(),
-      "node_modules",
-      "esbuild",
-      "bin",
-      "esbuild"
-    )
-  }
-
-  const { code } = await bundleMDX({
-    source,
-    files: {},
-    xdmOptions(options) {
-      options.remarkPlugins = [
-        ...(options.remarkPlugins ?? []),
-        [remarkCodeHike, { theme }],
-      ]
-      return options
-    },
-  })
-
-  return { props: { source: code } }
+  const postNames = getPostNames()
+  return { props: { postNames } }
 }
 
-export default function Page({ source }) {
-  const Content = getMDXComponent(source)
+export default function Page({ postNames }) {
   return (
-    <div style={{ width: 800, margin: "0 auto" }}>
-      <Content />
+    <div style={{ width: 800, margin: "0 auto", fontFamily: "sans-serif" }}>
+      <h1>My Blog</h1>
+      <ul>
+        {postNames.map((postName) => (
+          <li key={postName}>
+            <a href={`/posts/${postName}`}>{postName}</a>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

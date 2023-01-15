@@ -4,14 +4,15 @@
   "version": "0.7.4",
   "scripts": {
     "dev": "next",
-    "build": "next build"
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",
     "esbuild": "^0.14.23",
-    "mdx-bundler": "^8.0.1",
-    "next": "^12.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "mdx-bundler": "^9.2.1",
+    "next": "13.1.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }

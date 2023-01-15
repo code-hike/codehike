@@ -4,20 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "INIT_CWD=$PWD next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",
     "@types/node": "^17.0.30",
-    "contentlayer": "0.2.5",
-    "next": "^12.1.5",
-    "next-contentlayer": "0.2.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "contentlayer": "0.2.9",
+    "next": "13.1.2",
+    "next-contentlayer": "0.2.9",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.2",
-    "typescript": "4.6.3"
+    "@types/react": "^18.0.26",
+    "typescript": "4.8.4"
   }
 }

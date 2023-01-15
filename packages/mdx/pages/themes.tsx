@@ -1,6 +1,6 @@
 import { BUNDLED_THEMES } from "shiki"
 import { getCode, getFiles } from "../dev/files"
-import * as runtime from "react/jsx-runtime.js"
+import * as runtime from "react/jsx-runtime"
 import { runSync } from "@mdx-js/mdx"
 import { CH } from "../src/components"
 import { Layout } from "../dev/layout"
