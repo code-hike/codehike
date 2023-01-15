@@ -67,7 +67,7 @@
     "hast-util-to-estree": "^1.4.0",
     "is-plain-obj": "^3.0.0",
     "mdx-debugger": "^0.2.0",
-    "next": "^13.0.7",
+    "next": "13.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-json-view": "^1.21.3",
