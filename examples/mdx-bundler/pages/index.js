@@ -8,7 +8,7 @@ export async function getStaticProps() {
 export default function Page({ postNames }) {
   return (
     <div style={{ width: 800, margin: "0 auto", fontFamily: "sans-serif" }}>
-      <h1>Blog</h1>
+      <h1>My Blog</h1>
       <ul>
         {postNames.map((postName) => (
           <li key={postName}>
