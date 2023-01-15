@@ -1,6 +1,6 @@
 export default {
-  logo: <span>My Nextra Documentation</span>,
+  logo: <span>My Docs</span>,
   project: {
-    link: "https://github.com/shuding/nextra",
+    link: "https://github.com/code-hike/codehike",
   },
 }

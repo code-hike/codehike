@@ -4686,6 +4686,14 @@
     node-fetch "^3.0.0"
     vfile "^5.0.0"
 
+"@mdx-js/loader@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-2.2.1.tgz#71634e87659cd29240933d174a151a4d4ab3b70c"
+  integrity sha512-J4E8A5H+xtk4otZiEZ5AXl61Tj04Avm5MqLQazITdI3+puVXVnTTuZUKM1oNHTtfDIfOl0uMt+o/Ij+x6Fvf+g==
+  dependencies:
+    "@mdx-js/mdx" "^2.0.0"
+    source-map "^0.7.0"
+
 "@mdx-js/loader@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-2.0.0.tgz#4ff3278d341e7a15ecf87c4623a8ecd533cb3dbc"
@@ -4985,7 +4993,14 @@
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.1.2.tgz#4f13e3e9d44bb17fdc1d4543827459097035f10f"
   integrity sha512-PpT4UZIX66VMTqXt4HKEJ+/PwbS+tWmmhZlazaws1a+dbUA5pPdjntQ46Jvj616i3ZKN9doS9LHx3y50RLjAWg==
 
-"@next/mdx@^13.0.0", "@next/mdx@^13.0.7":
+"@next/mdx@13.1.2":
+  version "13.1.2"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.1.2.tgz#f53d2eeb203019862e32dff274c538b3be33eaef"
+  integrity sha512-7SDyXOqTUHeklV2aJOTWEIW6x8E8i4agKwQVXrPtpZiTkIjR9v7155oMCV48fpwxjQCoH/5ek3EwzbXwO0qzHw==
+  dependencies:
+    source-map "^0.7.0"
+
+"@next/mdx@^13.0.7":
   version "13.0.7"
   resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.0.7.tgz#34275121ac690c11746780345fc96b456c9d9e72"
   integrity sha512-ekuxCOO7j/Un7qxIYtuBAQN+bduDAtYDEMEf0OqBQ3ZDWJpQYrJ1kGr0uk1WjW5Z1OH7hV8ZlGwuBvhfjaao8Q==
