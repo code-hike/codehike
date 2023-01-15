@@ -1,26 +1,23 @@
-import { serialize } from "next-mdx-remote/serialize"
-import { MDXRemote } from "next-mdx-remote"
-import { remarkCodeHike } from "@code-hike/mdx"
-import { CH } from "@code-hike/mdx/components"
-import theme from "shiki/themes/solarized-dark.json"
-import fs from "fs"
+import Link from "next/link"
+import { postNames } from "../src/posts"
 
-export async function getStaticProps() {
-  // can be from a local file, database, anywhere
-  const source = fs.readFileSync("posts/lorem.mdx")
-  const mdxSource = await serialize(source, {
-    mdxOptions: {
-      remarkPlugins: [[remarkCodeHike, { autoImport: false, theme }]],
-      useDynamicImport: true,
-    },
-  })
-  return { props: { source: mdxSource } }
-}
-
-export default function Page({ source }) {
+export default function Index({ posts }) {
   return (
-    <div style={{ width: 800, margin: "0 auto" }}>
-      <MDXRemote {...source} components={{ CH }} />
+    <div style={{ width: 800, margin: "0 auto", fontFamily: "sans-serif" }}>
+      <h1>My Blog</h1>
+      <ul>
+        {posts.map((postName) => (
+          <li key={postName}>
+            <Link as={`/posts/${postName}`} href={`/posts/[slug]`}>
+              {postName}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
+}
+
+export function getStaticProps() {
+  return { props: { posts: postNames } }
 }
