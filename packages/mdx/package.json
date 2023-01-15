@@ -39,12 +39,12 @@
     "dev": "next",
     "build-test": "next build",
     "build": "rollup -c rollup.config.js",
-    "watch": "rollup --watch -c  rollup.config.js",
+    "watch": "rollup --watch -c rollup.config.js",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@code-hike/lighter": "^0.1.9",
+    "@code-hike/lighter": "^0.2.0",
     "node-fetch": "^2.0.0",
     "shiki": "^0.10.1"
   },
