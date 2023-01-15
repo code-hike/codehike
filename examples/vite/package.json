@@ -9,12 +9,12 @@
   },
   "dependencies": {
     "@code-hike/mdx": "^0.7.4",
-    "@mdx-js/rollup": "^2.0.0",
+    "@mdx-js/rollup": "2.2.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^1.0.7",
-    "vite": "^2.8.0"
+    "@vitejs/plugin-react": "3.0.1",
+    "vite": "4.0.4"
   }
 }
