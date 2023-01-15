@@ -4,16 +4,16 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
-} from "remix";
-import codeHikeStyles from "@code-hike/mdx/styles.css";
+  ScrollRestoration,
+} from "remix"
+import codeHikeStyles from "@code-hike/mdx/styles.css"
 
 export function meta() {
-  return { title: "New Remix App" };
+  return { title: "New Remix App" }
 }
 
 export function links() {
-  return [{ rel: "stylesheet", href: codeHikeStyles }];
+  return [{ rel: "stylesheet", href: codeHikeStyles }]
 }
 
 export default function App() {
@@ -25,12 +25,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body
+        style={{ maxWidth: 768, margin: "0 auto", fontFamily: "sans-serif" }}
+      >
         <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
       </body>
     </html>
-  );
+  )
 }
