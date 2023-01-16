@@ -1,3 +1,24 @@
+# v0.8.0 (Mon Jan 16 2023)
+
+#### 🚀 Enhancement
+
+- `@code-hike/mdx`
+  - Use @code-hike/lighter [#308](https://github.com/code-hike/codehike/pull/308) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- add/astro-example [#282](https://github.com/code-hike/codehike/pull/282) ([@JohnDaly](https://github.com/JohnDaly))
+- `@code-hike/mdx`
+  - Fix line number horizontal shift [#278](https://github.com/code-hike/codehike/pull/278) ([@pomber](https://github.com/pomber))
+  - Merge main [#275](https://github.com/code-hike/codehike/pull/275) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- John Daly ([@JohnDaly](https://github.com/JohnDaly))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.4 (Mon Aug 22 2022)
 
 #### 🐛 Bug Fix
