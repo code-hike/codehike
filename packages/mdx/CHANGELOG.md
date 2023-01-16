@@ -1,3 +1,35 @@
+# v0.8.0 (Mon Jan 16 2023)
+
+#### 🚀 Enhancement
+
+- Use @code-hike/lighter [#308](https://github.com/code-hike/codehike/pull/308) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- Use lighter v0.2 ([@pomber](https://github.com/pomber))
+- Pin ch-test next version ([@pomber](https://github.com/pomber))
+- Update lighter ([@pomber](https://github.com/pomber))
+- Use lighter v0.1.6 ([@pomber](https://github.com/pomber))
+- Fix docusaurus ([@pomber](https://github.com/pomber))
+- Update astro ([@pomber](https://github.com/pomber))
+- Fix ch-test again ([@pomber](https://github.com/pomber))
+- Fix ch-test ([@pomber](https://github.com/pomber))
+- React 18 and Next 13 ([@pomber](https://github.com/pomber))
+- Exclude lighter from bundle ([@pomber](https://github.com/pomber))
+- Lighter v0.0.4 ([@pomber](https://github.com/pomber))
+- Use lighter ([@pomber](https://github.com/pomber))
+- Remove deps ([@pomber](https://github.com/pomber))
+- Fix line number horizontal shift [#278](https://github.com/code-hike/codehike/pull/278) ([@pomber](https://github.com/pomber))
+- Fix line number horizontal shift ([@pomber](https://github.com/pomber))
+- Merge main [#275](https://github.com/code-hike/codehike/pull/275) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- John Daly ([@JohnDaly](https://github.com/JohnDaly))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.7.4 (Mon Aug 22 2022)
 
 #### 🐛 Bug Fix
