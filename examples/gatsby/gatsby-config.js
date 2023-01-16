@@ -1,5 +1,5 @@
 const { remarkCodeHike } = require("@code-hike/mdx")
-const theme = require("shiki/themes/nord.json")
+const theme = require("shiki/themes/material-palenight.json")
 
 module.exports = {
   siteMetadata: {

@@ -1,9 +1,10 @@
 import { runSync } from "@mdx-js/mdx"
-import * as runtime from "react/jsx-runtime.js"
+import * as runtime from "react/jsx-runtime"
 import { CH } from "../src/components"
 import { getCode, getFile, getFiles } from "../dev/files"
 import { ClickToComponent } from "click-to-react-component"
 import { Layout } from "../dev/layout"
+import React from "react"
 
 export async function getStaticPaths() {
   const files = await getFiles()

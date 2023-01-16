@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import * as runtime from "react/jsx-runtime.js";
+import * as runtime from "react/jsx-runtime";
 import { compile, run } from "@mdx-js/mdx";
 import { remarkCodeHike } from "@code-hike/mdx";
 import { CH } from "@code-hike/mdx/components";

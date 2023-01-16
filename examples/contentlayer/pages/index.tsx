@@ -13,9 +13,7 @@ export default function Home({ posts }: { posts: Post[] }) {
       <ul>
         {posts.map((post, idx) => (
           <li key={idx}>
-            <Link href={post.url}>
-              <a>{post.title}</a>
-            </Link>
+            <Link href={post.url}>{post.title}</Link>
           </li>
         ))}
       </ul>

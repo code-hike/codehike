@@ -21,14 +21,15 @@ const clientExternal = [
   // "diff",
 ]
 const remarkExternal = [
-  "react",
+  // "hast-util-to-estree",
+  "@code-hike/lighter",
+  // "is-plain-obj",
   "node-fetch",
-  "is-plain-obj",
-  "unified",
-  "remark-rehype",
-  "hast-util-to-estree",
-  "unist-util-visit-parents",
-  "unist-util-visit",
+  // "remark-rehype",
+  "react",
+  // "unified",
+  // "unist-util-visit",
+  // "unist-util-visit-parents",
 ]
 
 export default function makeConfig(commandOptions) {
@@ -65,6 +66,8 @@ export default function makeConfig(commandOptions) {
       ],
       external: [...remarkExternal, "shiki"],
       plugins: [
+        nodeResolve(),
+        commonjs(),
         json({ compact: true }),
         typescript({
           tsconfigOverride: {
@@ -77,7 +80,7 @@ export default function makeConfig(commandOptions) {
       input: `src/index.tsx`,
       output: [{ file: `./dist/index.d.ts`, format: "es" }],
       external: [...remarkExternal, "shiki"],
-      plugins: [dts()],
+      plugins: [nodeResolve(), commonjs(), dts()],
     },
     // for the browser esm we need to replace shiki with shiki/dist/index.browser.mjs
     // https://github.com/shikijs/shiki/issues/131#issuecomment-1094281851
@@ -91,6 +94,9 @@ export default function makeConfig(commandOptions) {
       ],
       external: remarkExternal,
       plugins: [
+        nodeResolve(),
+        commonjs(),
+        // TODO remove
         replace({
           delimiters: ["", ""],
           preventAssignment: true,
