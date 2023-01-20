@@ -214,3 +214,26 @@ main {
   display: block;
   padding: 4px;
 }
+
+.loading-border {
+  position: absolute;
+  top: 0;
+  border-top: 6px solid rgb(96 165 250);
+  transition: opacity 0.5s;
+  animation: loading-border 2.5s linear infinite;
+}
+
+@keyframes loading-border {
+  from {
+    right: 100%;
+    left: 0%;
+  }
+  50% {
+    right: 0%;
+    left: 0%;
+  }
+  to {
+    right: 0%;
+    left: 100%;
+  }
+}
