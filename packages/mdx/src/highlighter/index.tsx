@@ -22,14 +22,23 @@ export async function highlight({
     }
   }
 
-  const r = await light(code, lang as any, theme)
+  try {
+    const r = await light(code, lang as any, theme)
 
-  const lines = r.lines.map(line => ({
-    tokens: line.map(token => ({
-      content: token.content,
-      props: { style: token.style },
-    })),
-  }))
+    const lines = r.lines.map(line => ({
+      tokens: line.map(token => ({
+        content: token.content,
+        props: { style: token.style },
+      })),
+    }))
 
-  return { lines, lang }
+    return { lines, lang }
+  } catch (e) {
+    // TODO check error is "missing grammar"
+    console.warn(
+      "[Code Hike warning]",
+      `${lang} is not a valid language, no syntax highlighting will be applied.`
+    )
+    return highlight({ code, lang: "text", theme })
+  }
 }
