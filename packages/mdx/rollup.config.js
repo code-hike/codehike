@@ -12,6 +12,7 @@ import dts from "rollup-plugin-dts"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 // import { terser } from "rollup-plugin-terser"
 import commonjs from "@rollup/plugin-commonjs"
+import banner2 from "rollup-plugin-banner2"
 
 const clientExternal = [
   "react",
@@ -136,6 +137,7 @@ export default function makeConfig(commandOptions) {
             compilerOptions: { jsx: "react" },
           },
         }),
+        banner2(() => `"use client";\n`),
       ],
     },
     {
