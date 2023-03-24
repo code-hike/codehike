@@ -1,3 +1,20 @@
+# v0.8.1 (Fri Mar 24 2023)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Use new MDX grammar [#337](https://github.com/code-hike/codehike/pull/337) ([@pomber](https://github.com/pomber))
+  - misc: fix typo in Sildeshow [#329](https://github.com/code-hike/codehike/pull/329) ([@yangshun](https://github.com/yangshun))
+  - Catch lighter error [#318](https://github.com/code-hike/codehike/pull/318) ([@pomber](https://github.com/pomber))
+  - Merge main [#315](https://github.com/code-hike/codehike/pull/315) ([@pomber](https://github.com/pomber))
+
+#### Authors: 2
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+- Yangshun Tay ([@yangshun](https://github.com/yangshun))
+
+---
+
 # v0.8.0 (Mon Jan 16 2023)
 
 #### 🚀 Enhancement

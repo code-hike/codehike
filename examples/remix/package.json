@@ -1,7 +1,7 @@
 {
   "name": "codehike-remix",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "sideEffects": false,
   "scripts": {
     "build": "cross-env NODE_ENV=production remix build",
@@ -10,7 +10,7 @@
     "start": "cross-env NODE_ENV=production remix-serve build"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.0",
+    "@code-hike/mdx": "^0.8.1",
     "@remix-run/react": "^1.2.2",
     "@remix-run/serve": "^1.2.2",
     "cross-env": "^7.0.3",
