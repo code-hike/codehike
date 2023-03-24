@@ -29,11 +29,9 @@ function ErrorFallback({ error }) {
   );
 }
 
-function InnerPreview({ input, standalone, refreshKey }) {
-  const [Content, setContent] = useState(undefined);
-  const [error, setError] = useState(undefined);
-  useEffect(() => {
-    compile(input.mdx, {
+async function compileAndRun(input) {
+  try {
+    const c = await compile(input.mdx, {
       outputFormat: "function-body",
       remarkPlugins: [
         [
@@ -45,19 +43,49 @@ function InnerPreview({ input, standalone, refreshKey }) {
           },
         ],
       ],
-    })
-      .then((c) => {
-        return run(String(c), runtime);
-      })
-      .then((x) => {
-        setContent(() => x.default);
-        setError(undefined);
-      })
-      .catch((e) => {
-        setError(e.message);
-        console.error({ e });
-      });
+    });
+    const x = await run(String(c), runtime);
+    return { content: x.default, error: undefined };
+  } catch (e) {
+    return { content: undefined, error: e.message };
+  }
+}
+
+let effectId = 0;
+
+function useInput(input) {
+  const [{ Content, error }, setState] = useState({
+    Content: undefined,
+    error: undefined,
+  });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const id = effectId;
+    // console.log("compiling...", id);
+    setLoading(true);
+    compileAndRun(input).then(({ content, error }) => {
+      // console.log("compiled", id, error);
+      if (id !== effectId) {
+        // console.log("skipping", id);
+        return;
+      }
+      setState((state) => ({
+        Content: content || state.Content,
+        error,
+      }));
+      setLoading(false);
+    });
+    return () => {
+      // console.log("cancelling", id);
+      effectId++;
+    };
   }, [input.mdx, input.css, input.config]);
+
+  return { Content, error, loading };
+}
+
+function InnerPreview({ input, standalone, refreshKey }) {
+  const { Content, error, loading } = useInput(input);
   // console.log(error);
   return (
     <>
@@ -78,6 +106,7 @@ function InnerPreview({ input, standalone, refreshKey }) {
         </a>
       )}
       <div className={`preview-container ${error ? "with-error" : ""}`}>
+        <div style={{ opacity: loading ? 1 : 0 }} className="loading-border" />
         {Content ? <Content components={{ CH }} key={refreshKey} /> : null}
       </div>
     </>

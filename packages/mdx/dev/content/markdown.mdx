@@ -1,19 +1,33 @@
 Test nested syntax highlighting
 
-````md hi.md
-# Hi
+````mdx hi.md
+<CH.Section>
 
-```js
-export default {
-  data() {
-    return {
-      greeting: "Hello World!",
-    }
-  },
+```python
+def lorem(ipsum):
+  ipsum + 1
+```
+
+Something `def lorem(ipsum)`
+
+Hello, [hover me](focus://1[5:16])
+
+<CH.Code>
+
+```python one.py
+def lorem(ipsum):
+  ipsum + 1
+```
+
+```js two.js
+function lorem(ipsum) {
+  return ipsum + 1
 }
 ```
 
-[lorem](https://loremipsum.com)
+</CH.Code>
+
+</CH.Section>
 ````
 
 ```js hi.js
