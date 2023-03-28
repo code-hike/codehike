@@ -104,4 +104,17 @@
   min-width: 1.5em;
   min-height: 1.5em;
   margin-right: 0.8em;
+
+  &[type="button"] {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: inherit;
+  }
+
+  svg {
+    width: 1.5em;
+    height: 1.5em;
+    min-width: 1.5em;
+    min-height: 1.5em;
+  }
 }
