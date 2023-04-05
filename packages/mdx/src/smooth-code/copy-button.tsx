@@ -14,6 +14,7 @@ export function CopyButton({
   return (
     <button
       type="button"
+      title="Copy code"
       className={className}
       style={style}
       onClick={() => {
@@ -30,8 +31,6 @@ export function CopyButton({
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <title>Copy</title>
-
         {copied ? (
           <path
             strokeLinecap="round"

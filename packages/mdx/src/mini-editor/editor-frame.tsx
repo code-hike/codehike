@@ -167,7 +167,7 @@ function TabsContainer({
       )}
       {showFrameButtons ? <FrameButtons /> : <div />}
       {tabs.map(({ title, active, style }) => (
-        <button
+        <div
           key={title}
           title={title}
           data-ch-tab={panel}
@@ -198,10 +198,9 @@ function TabsContainer({
             ),
           }}
           onClick={onTabClick && (() => onTabClick(title))}
-          type="button"
         >
           <TabTitle title={title} />
-        </button>
+        </div>
       ))}
       <div style={{ flex: 1, minWidth: "0.8em" }} />
       {button}

@@ -3,6 +3,7 @@
 @import "../smooth-code/index.scss";
 @import "./dialog.scss";
 @import "./code-browser.scss";
+@import "../utils/mixins.scss";
 
 /** tabs */
 
@@ -24,8 +25,6 @@
   color: rgba(255, 255, 255, 0.5);
   min-width: 0;
   border-bottom: 1px solid;
-  border-left: 1px solid transparent;
-  border-top: 1px solid transparent;
 }
 
 .ch-editor-tab-active {
@@ -98,23 +97,11 @@
 }
 
 .ch-editor-button {
+  @include button-reset;
+
   width: 1.5em;
   height: 1.5em;
-  cursor: pointer;
   min-width: 1.5em;
   min-height: 1.5em;
   margin-right: 0.8em;
-
-  &[type="button"] {
-    background-color: transparent;
-    border: 1px solid transparent;
-    color: inherit;
-  }
-
-  svg {
-    width: 1.5em;
-    height: 1.5em;
-    min-width: 1.5em;
-    min-height: 1.5em;
-  }
 }
