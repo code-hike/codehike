@@ -3,6 +3,7 @@
 @import "../smooth-code/index.scss";
 @import "./dialog.scss";
 @import "./code-browser.scss";
+@import "../utils/mixins.scss";
 
 /** tabs */
 
@@ -96,9 +97,10 @@
 }
 
 .ch-editor-button {
+  @include button-reset;
+
   width: 1.5em;
   height: 1.5em;
-  cursor: pointer;
   min-width: 1.5em;
   min-height: 1.5em;
   margin-right: 0.8em;
