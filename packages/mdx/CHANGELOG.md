@@ -1,3 +1,27 @@
+# v0.8.2 (Tue Apr 11 2023)
+
+#### 🐛 Bug Fix
+
+- Update lighter [#347](https://github.com/code-hike/codehike/pull/347) ([@pomber](https://github.com/pomber))
+- Update lighter ([@pomber](https://github.com/pomber))
+- add outline-color to button-reset mixin [#345](https://github.com/code-hike/codehike/pull/345) ([@Mantish](https://github.com/Mantish))
+- add outline-color to button-reset mixin ([@Mantish](https://github.com/Mantish))
+- fix: use semantic elements [#341](https://github.com/code-hike/codehike/pull/341) ([@mfranzke](https://github.com/mfranzke) [@pomber](https://github.com/pomber))
+- More button styles ([@pomber](https://github.com/pomber))
+- refactor: using a button instead of just an SVG ([@mfranzke](https://github.com/mfranzke))
+- Update index.scss ([@mfranzke](https://github.com/mfranzke))
+- style: overwrite standard button styles ([@mfranzke](https://github.com/mfranzke))
+- fix: use semantic element ([@mfranzke](https://github.com/mfranzke))
+- Merge main [#339](https://github.com/code-hike/codehike/pull/339) ([@pomber](https://github.com/pomber))
+
+#### Authors: 3
+
+- [@Mantish](https://github.com/Mantish)
+- Maximilian Franzke ([@mfranzke](https://github.com/mfranzke))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.8.1 (Fri Mar 24 2023)
 
 #### 🐛 Bug Fix
