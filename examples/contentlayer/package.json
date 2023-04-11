@@ -1,6 +1,6 @@
 {
   "name": "codehike-contentlayer",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.1",
+    "@code-hike/mdx": "^0.8.2",
     "@types/node": "^17.0.30",
     "contentlayer": "0.2.9",
     "next": "13.1.2",
