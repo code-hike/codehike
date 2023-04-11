@@ -1,3 +1,5 @@
+@import "../utils/mixins.scss";
+
 .ch-code-browser {
   display: flex;
   height: 100%;
@@ -45,9 +47,10 @@
 }
 
 .ch-code-browser-button {
+  @include button-reset;
+
   width: 1.5em;
   height: 1.5em;
-  cursor: pointer;
   min-width: 1.5em;
   min-height: 1.5em;
   position: absolute;
