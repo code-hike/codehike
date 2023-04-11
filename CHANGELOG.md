@@ -1,3 +1,21 @@
+# v0.8.2 (Tue Apr 11 2023)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Update lighter [#347](https://github.com/code-hike/codehike/pull/347) ([@pomber](https://github.com/pomber))
+  - add outline-color to button-reset mixin [#345](https://github.com/code-hike/codehike/pull/345) ([@Mantish](https://github.com/Mantish))
+  - fix: use semantic elements [#341](https://github.com/code-hike/codehike/pull/341) ([@mfranzke](https://github.com/mfranzke) [@pomber](https://github.com/pomber))
+  - Merge main [#339](https://github.com/code-hike/codehike/pull/339) ([@pomber](https://github.com/pomber))
+
+#### Authors: 3
+
+- [@Mantish](https://github.com/Mantish)
+- Maximilian Franzke ([@mfranzke](https://github.com/mfranzke))
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.8.1 (Fri Mar 24 2023)
 
 #### 🐛 Bug Fix

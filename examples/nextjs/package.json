@@ -1,13 +1,13 @@
 {
   "name": "codehike-nextjs",
   "private": true,
-  "version": "0.8.1",
+  "version": "0.8.2",
   "scripts": {
     "dev": "next",
     "build": "next build"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.1",
+    "@code-hike/mdx": "^0.8.2",
     "@mdx-js/loader": "2.2.1",
     "@mdx-js/react": "^2.2.1",
     "@next/mdx": "13.1.2",
