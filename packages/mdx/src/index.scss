@@ -70,6 +70,18 @@
   left: 0;
 }
 
+.ch-code-multiline-mark .ch-code-button {
+  font-size: 1.2em;
+  position: absolute;
+  right: 10px;
+  top: 1px;
+  display: none;
+}
+
+// .ch-code-multiline-mark:hover .ch-code-button {
+//   display: block;
+// }
+
 .ch-code-inline-link {
   text-decoration: underline;
   text-decoration-style: dotted;

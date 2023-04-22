@@ -109,6 +109,7 @@ function Lines({
             data={group.annotation.data}
             theme={group.annotation.theme}
             isInline={false}
+            lines={group.lines}
           >
             <LineGroup
               lines={group.lines}
