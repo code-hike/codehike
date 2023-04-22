@@ -1,8 +1,8 @@
 import React from "react"
 import { CodeAnnotation } from "../smooth-code"
 import { getColor, transparent, ColorName } from "../utils"
-import { LineWithElement } from "smooth-code/partial-step-parser"
-import { CopyButton } from "smooth-code/copy-button"
+import { LineWithElement } from "../smooth-code/partial-step-parser"
+import { CopyButton } from "../smooth-code/copy-button"
 
 export function Annotation() {
   return (
