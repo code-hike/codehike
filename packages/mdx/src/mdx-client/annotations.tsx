@@ -1,6 +1,8 @@
 import React from "react"
 import { CodeAnnotation } from "../smooth-code"
 import { getColor, transparent, ColorName } from "../utils"
+import { LineWithElement } from "../smooth-code/partial-step-parser"
+import { CopyButton } from "../smooth-code/copy-button"
 
 export function Annotation() {
   return (
@@ -35,12 +37,15 @@ function MultilineMark({
   data,
   style,
   theme,
+  lines,
 }: {
   data: string
   children: React.ReactNode
   style?: React.CSSProperties
   theme?: any
+  lines?: LineWithElement[]
 }) {
+  const content = getContent(lines)
   const className = `ch-code-multiline-mark ` + (data ?? "")
   const bg = getColor(
     theme,
@@ -61,8 +66,26 @@ function MultilineMark({
         style={{ background: border }}
       />
       {children}
+      <CopyButton
+        className="ch-code-button"
+        content={content}
+      />
     </div>
   )
+}
+
+function getContent(lines: LineWithElement[]) {
+  return lines
+    .map(l =>
+      l.annotatedGroups
+        .flatMap(ag =>
+          ag.prev?.groups.flatMap(tg =>
+            tg.tokens.map(t => t.content)
+          )
+        )
+        .join("")
+    )
+    .join("\n")
 }
 
 function InlineMark({

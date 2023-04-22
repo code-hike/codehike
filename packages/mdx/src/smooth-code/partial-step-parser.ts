@@ -153,6 +153,7 @@ export type MultiLineAnnotation = {
     data: any
     theme: EditorTheme
     isInline: boolean
+    lines?: LineWithElement[]
   }) => React.ReactElement
 }
 
