@@ -36,6 +36,7 @@ export async function getCode(file: any, config = {}) {
             autoImport: false,
             skipLanguages: ["", "mermaid"],
             showCopyButton: true,
+            autoLink: true,
             theme,
             ...config,
           },

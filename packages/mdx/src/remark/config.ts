@@ -5,6 +5,7 @@ export type CodeHikeConfig = {
   skipLanguages: string[]
   showExpandButton?: boolean
   showCopyButton?: boolean
+  autoLink?: boolean
   staticMediaQuery?: string
   // path to the current file, internal use only
   filepath?: string
