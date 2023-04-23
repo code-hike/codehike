@@ -29,6 +29,7 @@ function App() {
       config: {
         lineNumbers: false,
         showCopyButton: false,
+        autoLink: false,
         theme: "material-darker",
       },
     };

@@ -4,6 +4,7 @@ import { wrapChildren } from "./to-estree"
 import { annotationsMap } from "../mdx-client/annotations"
 import { JsxNode as JsxNode, SuperNode } from "./nodes"
 import { getCommentData } from "./comment-data"
+import { CodeHikeConfig } from "./config"
 
 export function getAnnotationsFromMetastring(
   options: Record<string, string>
@@ -18,7 +19,10 @@ export function getAnnotationsFromMetastring(
   return annotations
 }
 
-export function extractAnnotationsFromCode(code: Code) {
+export function extractAnnotationsFromCode(
+  code: Code,
+  config: CodeHikeConfig
+) {
   const { lines } = code
   let lineNumber = 1
   const annotations = [] as CodeAnnotation[]
@@ -52,24 +56,26 @@ export function extractAnnotationsFromCode(code: Code) {
   }
 
   // extract links
-  lineNumber = 1
-  while (lineNumber <= lines.length) {
-    const line = lines[lineNumber - 1]
-    const lineContent = line.tokens
-      .map(t => t.content)
-      .join("")
+  if (config.autoLink) {
+    lineNumber = 1
+    while (lineNumber <= lines.length) {
+      const line = lines[lineNumber - 1]
+      const lineContent = line.tokens
+        .map(t => t.content)
+        .join("")
 
-    const urls = extractURLsFromLine(lineContent)
-    urls.forEach(({ url, start, end }) => {
-      const Component = annotationsMap["link"]
-      const focus = `${lineNumber}[${start + 1}:${end}]`
-      annotations.push({
-        Component,
-        focus,
-        data: url,
+      const urls = extractURLsFromLine(lineContent)
+      urls.forEach(({ url, start, end }) => {
+        const Component = annotationsMap["link"]
+        const focus = `${lineNumber}[${start + 1}:${end}]`
+        annotations.push({
+          Component,
+          focus,
+          data: url,
+        })
       })
-    })
-    lineNumber++
+      lineNumber++
+    }
   }
   return [annotations, focusList.join(",")] as const
 }
