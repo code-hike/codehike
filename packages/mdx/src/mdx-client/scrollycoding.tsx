@@ -174,7 +174,10 @@ function DynamicScrollycoding({
       style={style}
     >
       <div className="ch-scrollycoding-content">
-        <Scroller onStepChange={onStepChange}>
+        <Scroller
+          onStepChange={onStepChange}
+          triggerPositon={codeConfig?.triggerPositon}
+        >
           {stepsChildren.map((children, i) => (
             <ScrollerStep
               as="div"

@@ -25,6 +25,8 @@ type HTMLProps = React.DetailedHTMLProps<
   HTMLDivElement
 >
 
+type TriggerPositon = `${number}px` | `${number}%`
+
 export type CodeTweenProps = {
   tween: FullTween<CodeStep>
   progress: number
@@ -49,6 +51,7 @@ export type CodeConfig = {
   showExpandButton?: boolean
   staticMediaQuery?: string
   rows?: number | "focus" | (number | "focus")[]
+  triggerPositon?: TriggerPositon
   debug?: boolean
 }
 
