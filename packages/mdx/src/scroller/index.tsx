@@ -18,9 +18,9 @@ type ScrollerProps = {
   children: React.ReactNode
   getRootMargin?: (
     vh: number,
-    triggerPositon?: TriggerPositon
+    triggerPosition?: TriggerPosition
   ) => string
-  triggerPositon?: TriggerPositon
+  triggerPosition?: TriggerPosition
   debug?: boolean
 }
 
@@ -32,7 +32,7 @@ function Scroller({
   onStepChange,
   children,
   getRootMargin = defaultRootMargin,
-  triggerPositon,
+  triggerPosition,
   debug = false,
 }: ScrollerProps) {
   const [observer, setObserver] =
@@ -56,7 +56,7 @@ function Scroller({
       }
     const observer = newIntersectionObserver(
       handleIntersect,
-      getRootMargin(windowHeight, triggerPositon)
+      getRootMargin(windowHeight, triggerPosition)
     )
     setObserver(observer)
 
@@ -109,21 +109,21 @@ function newIntersectionObserver(
   })
 }
 
-type TriggerPositon = `${number}px` | `${number}%`
+type TriggerPosition = `${number}px` | `${number}%`
 
 function defaultRootMargin(
   vh: number,
-  triggerPositon = "50%"
+  triggerPosition = "50%"
 ) {
   let y = vh * 0.5
 
-  if (triggerPositon.endsWith("%")) {
+  if (triggerPosition.endsWith("%")) {
     const percent = parseFloat(
-      triggerPositon.replace("%", "")
+      triggerPosition.replace("%", "")
     )
     y = vh * (percent / 100)
-  } else if (triggerPositon.endsWith("px")) {
-    y = parseFloat(triggerPositon.replace("px", ""))
+  } else if (triggerPosition.endsWith("px")) {
+    y = parseFloat(triggerPosition.replace("px", ""))
   }
 
   if (y < 0) {
