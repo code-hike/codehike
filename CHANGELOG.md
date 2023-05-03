@@ -1,3 +1,21 @@
+# v0.8.3 (Wed May 03 2023)
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - Update nextra example [#363](https://github.com/code-hike/codehike/pull/363) ([@pomber](https://github.com/pomber))
+  - Fix empty lines in expand code browser [#362](https://github.com/code-hike/codehike/pull/362) ([@pomber](https://github.com/pomber))
+  - Add trigger position config [#360](https://github.com/code-hike/codehike/pull/360) ([@pomber](https://github.com/pomber))
+  - Autolink option [#358](https://github.com/code-hike/codehike/pull/358) ([@pomber](https://github.com/pomber))
+  - Add copy button to multiline mark [#357](https://github.com/code-hike/codehike/pull/357) ([@pomber](https://github.com/pomber))
+  - Merge Main [#349](https://github.com/code-hike/codehike/pull/349) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.8.2 (Tue Apr 11 2023)
 
 #### 🐛 Bug Fix

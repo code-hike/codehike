@@ -1,6 +1,6 @@
 {
   "name": "codehike-gatsby",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "private": true,
   "scripts": {
     "develop": "gatsby develop",
@@ -10,7 +10,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.2",
+    "@code-hike/mdx": "^0.8.3",
     "@mdx-js/react": "^2.1.3",
     "gatsby": "^4.21.1",
     "gatsby-plugin-mdx": "^4.0.0",

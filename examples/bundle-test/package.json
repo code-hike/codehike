@@ -1,13 +1,13 @@
 {
   "name": "bundle-test",
   "private": true,
-  "version": "0.8.2",
+  "version": "0.8.3",
   "scripts": {
     "dev": "next",
     "build": "next build"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.2",
+    "@code-hike/mdx": "^0.8.3",
     "@mdx-js/loader": "^2.0.0",
     "@next/mdx": "^13.0.7",
     "next": "^13.0.7",
