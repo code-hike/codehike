@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "@code-hike/mdx": "^0.8.2",
-    "next": "13.1.2",
-    "nextra": "2.2.3",
-    "nextra-theme-docs": "2.2.3",
+    "next": "13.3.4",
+    "nextra": "2.4.2",
+    "nextra-theme-docs": "2.4.2",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "shiki": "^0.10.1"
   }
 }

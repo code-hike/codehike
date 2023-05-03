@@ -8,5 +8,8 @@
   padding: 0;
   border: none;
   font-size: inherit;
-  outline-color: currentColor;
+
+  &:focus-visible {
+    outline-color: currentColor;
+  }
 }
