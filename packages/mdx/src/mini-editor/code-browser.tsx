@@ -204,15 +204,12 @@ function Content({
       />
       {file.code.lines.map((line, i) => (
         <div key={i}>
-          {line.tokens.length === 0 ? (
-            <br />
-          ) : (
-            line.tokens.map((token, i) => (
-              <span key={i} {...token.props}>
-                {token.content}
-              </span>
-            ))
-          )}
+          {line.tokens.map((token, i) => (
+            <span key={i} {...token.props}>
+              {token.content}
+            </span>
+          ))}
+          <br />
         </div>
       ))}
     </div>

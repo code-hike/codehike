@@ -16,7 +16,11 @@ const useLayoutEffect =
 type ScrollerProps = {
   onStepChange: (stepIndex: number) => void
   children: React.ReactNode
-  getRootMargin?: (vh: number) => string
+  getRootMargin?: (
+    vh: number,
+    triggerPosition?: TriggerPosition
+  ) => string
+  triggerPosition?: TriggerPosition
   debug?: boolean
 }
 
@@ -28,30 +32,31 @@ function Scroller({
   onStepChange,
   children,
   getRootMargin = defaultRootMargin,
+  triggerPosition,
   debug = false,
 }: ScrollerProps) {
-  const [
-    observer,
-    setObserver,
-  ] = React.useState<IntersectionObserver>()
+  const [observer, setObserver] =
+    React.useState<IntersectionObserver>()
   const vh = useWindowHeight()
 
   useLayoutEffect(() => {
     const windowHeight = vh || 0
-    const handleIntersect: IntersectionObserverCallback = entries => {
-      if (debug || (window as any).chDebugScroller) {
-        debugEntries(entries)
-      }
-      entries.forEach(entry => {
-        if (entry.intersectionRatio > 0) {
-          const stepElement = (entry.target as unknown) as StepElement
-          onStepChange(+stepElement.stepIndex)
+    const handleIntersect: IntersectionObserverCallback =
+      entries => {
+        if (debug || (window as any).chDebugScroller) {
+          debugEntries(entries)
         }
-      })
-    }
+        entries.forEach(entry => {
+          if (entry.intersectionRatio > 0) {
+            const stepElement =
+              entry.target as unknown as StepElement
+            onStepChange(+stepElement.stepIndex)
+          }
+        })
+      }
     const observer = newIntersectionObserver(
       handleIntersect,
-      getRootMargin(windowHeight)
+      getRootMargin(windowHeight, triggerPosition)
     )
     setObserver(observer)
 
@@ -85,7 +90,8 @@ function Step({
   }, [observer])
 
   useLayoutEffect(() => {
-    const stepElement = (ref.current as unknown) as StepElement
+    const stepElement =
+      ref.current as unknown as StepElement
     stepElement.stepIndex = index
   }, [index])
 
@@ -103,6 +109,26 @@ function newIntersectionObserver(
   })
 }
 
-function defaultRootMargin(vh: number) {
-  return `-${vh / 2 - 2}px 0px`
+type TriggerPosition = `${number}px` | `${number}%`
+
+function defaultRootMargin(
+  vh: number,
+  triggerPosition = "50%"
+) {
+  let y = vh * 0.5
+
+  if (triggerPosition.endsWith("%")) {
+    const percent = parseFloat(
+      triggerPosition.replace("%", "")
+    )
+    y = vh * (percent / 100)
+  } else if (triggerPosition.endsWith("px")) {
+    y = parseFloat(triggerPosition.replace("px", ""))
+  }
+
+  if (y < 0) {
+    y = vh + y
+  }
+
+  return `-${y - 2}px 0px -${vh - y - 2}px`
 }

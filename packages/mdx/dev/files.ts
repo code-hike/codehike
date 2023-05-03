@@ -1,7 +1,7 @@
 import fs from "fs"
 import { remarkCodeHike } from "../src/index"
 import { compile } from "@mdx-js/mdx"
-import theme from "shiki/themes/rose-pine-moon.json"
+import theme from "./theme.js"
 import { withDebugger } from "mdx-debugger"
 
 export async function getFiles() {
@@ -36,6 +36,7 @@ export async function getCode(file: any, config = {}) {
             autoImport: false,
             skipLanguages: ["", "mermaid"],
             showCopyButton: true,
+            autoLink: true,
             theme,
             ...config,
           },

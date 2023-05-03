@@ -105,6 +105,14 @@ function ConfigEditor({ config, onChange }) {
         Copy Button
       </label>
       <label>
+        <input
+          type="checkbox"
+          checked={config.autoLink}
+          onChange={(e) => onChange({ ...config, autoLink: e.target.checked })}
+        />
+        Auto Link
+      </label>
+      <label>
         Theme:
         <br />
         <select

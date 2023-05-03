@@ -130,7 +130,7 @@ async function mapFile(
   code = await getCodeFromExternalFileIfNeeded(code, config)
 
   const [commentAnnotations, commentFocus] =
-    extractAnnotationsFromCode(code)
+    extractAnnotationsFromCode(code, config)
 
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
