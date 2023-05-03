@@ -1,14 +1,14 @@
 {
   "name": "codehike-mdx-bundler",
   "private": true,
-  "version": "0.8.2",
+  "version": "0.8.3",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "@code-hike/mdx": "^0.8.2",
+    "@code-hike/mdx": "^0.8.3",
     "esbuild": "^0.14.23",
     "mdx-bundler": "^9.2.1",
     "next": "13.1.2",
