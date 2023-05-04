@@ -1,0 +1,59 @@
+@import "../utils/mixins.scss";
+
+.ch-chat {
+  gap: 10px;
+
+  --ch-scrollycoding-sticker-width: 520px;
+
+  .ch-chat-reply-button {
+    @include button-reset;
+    background-color: #0084ff;
+    color: #fafafa;
+    padding: 6px;
+    border-radius: 8px;
+    border-bottom-right-radius: 0;
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+
+  .ch-chat-reply-button:hover {
+    background-color: #0072d9;
+  }
+
+  .ch-scrollycoding-content {
+    // padding: 80vh 0 140px !important;
+    font-size: 1rem !important;
+  }
+
+  .ch-scrollycoding-content p {
+    margin: 1.5rem 0;
+  }
+
+  .ch-scrollycoding-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ch-scrollycoding-content p:first-child {
+    margin-top: 0;
+  }
+
+  .ch-scrollycoding-step-content {
+    border-radius: 18px !important;
+    padding: 0px !important;
+    border: 0px !important;
+    margin: 0px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+    /* min-height: 50vh !important; */
+    min-height: 10px !important;
+    justify-content: flex-end;
+  }
+  .ch-scrollycoding-step-content[data-selected] {
+    border-color: transparent !important;
+    /* background: rgba(189, 147, 249, 0.243); */
+  }
+  .ch-scrollycoding-step-content[data-selected] .answer {
+    outline: rgb(191, 158, 238) 4px solid;
+  }
+}
