@@ -3,16 +3,17 @@ import React from "react"
 type ConversationEntry = {
   question?: JSX.Element
   answer?: JSX.Element
-  code: {
+  code?: {
     title: string
     lang: string
     text: string
   }
+  replies?: string[]
 }
 
 type Conversation = ConversationEntry[]
-const THINKING_MS = 10
-const WRITING_MS = 9
+const THINKING_MS = 2500
+const WRITING_MS = 90
 
 export function useFakeGPT(convo: Conversation) {
   const [currentConvo, setCurrentConvo] = React.useState([
@@ -37,6 +38,14 @@ export function useFakeGPT(convo: Conversation) {
         () => writeNextWord(stepIndex, currentWord + 1),
         random(WRITING_MS)
       )
+    } else {
+      setCurrentConvo(currentConvo => [
+        ...currentConvo.slice(0, -1),
+        {
+          ...currentConvo[stepIndex],
+          replies: convo[stepIndex].replies || [],
+        },
+      ])
     }
   }
 
@@ -50,10 +59,16 @@ export function useFakeGPT(convo: Conversation) {
       convo[index].question
     )
     next.answer = undefined
+    next.replies = []
+    next.code = undefined
 
     setCurrentConvo([...currentConvo, next])
 
     setTimeout(() => {
+      setCurrentConvo(currentConvo => [
+        ...currentConvo.slice(0, -1),
+        { ...currentConvo[index], code: convo[index].code },
+      ])
       writeNextWord(index)
     }, random(THINKING_MS))
   }
@@ -100,7 +115,7 @@ function traverseJSX(element, remainingWords, callback) {
 }
 
 function random(n) {
-  return randomIntegerBetween(n * 0.1, n * 1.9)
+  return randomIntegerBetween(n * 0.2, n * 1.8)
 }
 
 function randomIntegerBetween(a, b) {

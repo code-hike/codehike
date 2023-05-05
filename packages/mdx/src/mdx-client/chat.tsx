@@ -12,10 +12,11 @@ export function Chat({ steps, style, height, onReply }) {
 
   React.useEffect(() => {
     const step = steps[selectedStep]
+    if (!step.code) return
     mapFile(step.code).then(file => {
       setNewFiles([file])
     })
-  }, [selectedStep])
+  }, [selectedStep, steps[selectedStep]?.code])
 
   React.useEffect(() => {
     setSelectedStep(steps.length - 1)
@@ -123,11 +124,24 @@ function Content({ step }) {
       {step.answer ? (
         <Answer>{step.answer}</Answer>
       ) : (
-        "Thinking"
+        <Answer>
+          <BouncingDots />
+        </Answer>
       )}
     </>
   )
 }
+
+const BouncingDots = () => {
+  return (
+    <div className="bouncing-dots">
+      <div className="dot" />
+      <div className="dot" />
+      <div className="dot" />
+    </div>
+  )
+}
+
 async function mapFile({ lang, text, title }) {
   const { code, annotations } = await extractAnnotations(
     text,

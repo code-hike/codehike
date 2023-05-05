@@ -5,6 +5,39 @@
 
   --ch-scrollycoding-sticker-width: 520px;
 
+  .bouncing-dots {
+    display: flex;
+    align-items: center;
+  }
+
+  .dot {
+    background-color: white;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1.8s infinite;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes bounce {
+    0%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-5px);
+    }
+  }
+
   .ch-chat-reply-button {
     @include button-reset;
     background-color: #0084ff;
