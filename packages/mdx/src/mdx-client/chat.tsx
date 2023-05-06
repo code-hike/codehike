@@ -30,7 +30,7 @@ export function Chat({ steps, style, height, onReply }) {
     ) {
       alignBottoms(lastStepRef.current, stickerRef.current)
     }
-  }, [steps])
+  }, [steps, selectedStep])
 
   return (
     <section
@@ -87,7 +87,7 @@ export function Chat({ steps, style, height, onReply }) {
 }
 
 function Replies({ replies, onReply }) {
-  if (!replies) return null
+  if (!replies || replies.length === 0) return null
   return (
     <div
       style={{

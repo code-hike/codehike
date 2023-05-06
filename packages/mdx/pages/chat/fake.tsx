@@ -109,7 +109,7 @@ const conversation = [
     code: {
       title: "index.js",
       lang: "js",
-      text: `fetch('https://api.example.com/data', { signal })
+      text: `fetch('https://api.example.com/data')
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => {
