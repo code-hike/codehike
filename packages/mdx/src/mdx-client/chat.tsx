@@ -1,7 +1,7 @@
 import { InnerCode } from "./code"
 import React from "react"
-import { highlight } from "@code-hike/lighter"
-import { extractAnnotations } from "@code-hike/lighter"
+import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
+import { extractAnnotations } from "@code-hike/lighter/dist/browser.esm.mjs"
 
 export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
@@ -12,7 +12,7 @@ export function Chat({ steps, style, height, onReply }) {
 
   React.useEffect(() => {
     const step = steps[selectedStep]
-    if (!step.code) return
+    if (!step?.code) return
     mapFile(step.code).then(file => {
       setNewFiles([file])
     })
@@ -44,7 +44,12 @@ export function Chat({ steps, style, height, onReply }) {
       >
         {newFiles && (
           <InnerCode
-            {...innerCode}
+            codeConfig={{ theme: {} as any }}
+            northPanel={{
+              tabs: newFiles.map(f => f.name),
+              active: newFiles[0]?.name,
+              heightRatio: 1,
+            }}
             files={newFiles}
             style={{ height: "100%" }}
           />
@@ -77,10 +82,12 @@ export function Chat({ steps, style, height, onReply }) {
             <Content step={step} />
           </div>
         ))}
-        <Replies
-          replies={steps[steps.length - 1].replies}
-          onReply={onReply}
-        />
+        {steps.length > 0 && (
+          <Replies
+            replies={steps[steps.length - 1].replies}
+            onReply={onReply}
+          />
+        )}
       </div>
     </section>
   )
@@ -151,7 +158,7 @@ async function mapFile({ lang, text, title }) {
   const focus = annotations
     .map(a =>
       a.ranges
-        .map(r =>
+        .map((r: any) =>
           r.lineNumber
             ? `${r.lineNumber}[${r.fromColumn}:${r.toColumn}]`
             : `${r.fromLineNumber}:${r.toLineNumber}`
@@ -175,16 +182,6 @@ async function mapFile({ lang, text, title }) {
       })),
     },
   }
-}
-const innerCode = {
-  codeConfig: {
-    theme: {},
-  },
-  northPanel: {
-    tabs: ["index.js"],
-    active: "index.js",
-    heightRatio: 1,
-  },
 }
 
 function Bubble({ children, isQuestion }) {

@@ -64,6 +64,8 @@ export default function Page() {
         </div>
       </div>
     </div>
+
+    // copy to
   )
 }
 
@@ -80,7 +82,7 @@ const conversation = [
       </>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `async function fetchData(url) {
   try {
@@ -107,7 +109,7 @@ const conversation = [
       </>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `fetch('https://api.example.com/data')
   .then((response) => response.json())
@@ -136,7 +138,7 @@ const conversation = [
       </>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `// focus(1:2)
 const controller = new AbortController();
@@ -168,7 +170,7 @@ fetch('https://api.example.com/data', { signal })
       </>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `const controller = new AbortController();
 const signal = controller.signal;
@@ -204,7 +206,7 @@ setTimeout(() => controller.abort(), 5000);`,
       </>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `const controller = new AbortController();
 const signal = controller.signal;
@@ -250,7 +252,7 @@ setTimeout(() => controller.abort(), 5000);`,
       </div>
     ),
     code: {
-      title: "index.js",
+      title: "foo.js",
       lang: "js",
       text: `// focus(1:2)
 const controller = new AbortController();

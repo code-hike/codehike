@@ -16,9 +16,8 @@ const THINKING_MS = 2500
 const WRITING_MS = 90
 
 export function useFakeGPT(convo: Conversation) {
-  const [currentConvo, setCurrentConvo] = React.useState([
-    convo[0],
-  ])
+  const [currentConvo, setCurrentConvo] =
+    React.useState<Conversation>([])
 
   function writeNextWord(stepIndex, currentWord = 1) {
     const answer = convo[stepIndex].answer

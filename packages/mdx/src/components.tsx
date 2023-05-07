@@ -8,6 +8,7 @@ import { Spotlight } from "./mdx-client/spotlight"
 import { Scrollycoding } from "./mdx-client/scrollycoding"
 import { CodeSlot, PreviewSlot } from "./mdx-client/slots"
 import { Slideshow } from "./mdx-client/slideshow"
+import { Chat } from "./mdx-client/chat"
 import {
   annotationsMap,
   Annotation,
@@ -17,6 +18,7 @@ import { InlineCode } from "./mdx-client/inline-code"
 import type { MDXComponents } from "mdx/types"
 
 export {
+  Chat,
   Code,
   Section,
   SectionLink,
