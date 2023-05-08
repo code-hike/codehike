@@ -70,14 +70,10 @@ function extractCodeBlock(str: string) {
     return {
       lang: match[1] || "text",
       title: match[2] || "answer.txt",
-      text: match[3] || null,
+      text: match[3] || "",
     };
   }
-  return {
-    lang: "text",
-    title: "answer.txt",
-    text: null,
-  };
+  return null;
 }
 
 function extractReplies(str: string): string[] {

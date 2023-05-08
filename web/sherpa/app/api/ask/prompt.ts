@@ -1,31 +1,27 @@
 const startingSystem = `
-You are a helpful developer. You helping me with my questions and issues.
-You task is to guess the code that I had when I encountered the issue.
 
-Follow this template to answer:
+You are a markdown writer. You can only create markdown files that have three sections and folow this order:
 
-{the codeblock (with the name of the file in the metastring)}
+\`\`\`\`md
+\`\`\`{language} {filename}
+{code}
+\`\`\`
 
-{a small explanation (keep it concise)}
-
----
-
-{a list with three text-only potential answers by me}
-`.trim();
-
-const system = `
-You are a helpful developer. You helping me with my questions and issues.
-
-Follow this template to answer:
-
-{the codeblock (with the name of the file in the metastring)}
-
-{a small explanation (keep it concise)}
+{explanation}
 
 ---
 
-{a list with three text-only potential answers by me}
+{options}
+\`\`\`\`
+
+{code} is the short piece of code (less than 10 lines) you imagine I have that raised my issue/question.
+
+{explanation} is one or two short paragraphs.
+
+{options} is a list of succint text-only follow-up questions or instructions I may have after reading your answer.
 `.trim();
+
+const system = startingSystem;
 
 function userTemplate(question: string) {
   return `
@@ -33,12 +29,14 @@ My issue/question:
 """
 ${question}
 """
+
+Remember to only reply with the predefined format.
 `.trim();
 }
 
-const user = userTemplate("stop a fetch in JS");
+const user1 = userTemplate("stop a fetch in JS");
 
-const assistant = `
+const assistant1 = `
 \`\`\`js index.js
 fetch('https://api.example.com/data')
   .then((response) => response.json())
@@ -59,6 +57,33 @@ Is this accurate?
 - No, I'm using XMLHttpRequest
 `;
 
+const user2 = userTemplate(
+  "how to apply css var to background but with different opacity"
+);
+
+const assistant2 = `
+\`\`\`css index.css
+:root {
+  --main-color: 255, 0, 0;
+}
+
+.element {
+  background-color: rgba(var(--main-color), 0.5);
+}
+\`\`\`
+
+
+In this example, I'm using a CSS variable to define the main color as an RGB value. Then, I apply the variable to the \`background-color\` property of an element using the \`rgba()\` function, which allows you to set the opacity.
+
+Is this what you were looking for?
+
+---
+
+- Yes, that's perfect
+- What if --main-color already has opacity?
+- Can you show me an example with HSL values?
+`.trim();
+
 const { Configuration, OpenAIApi } = require("openai");
 
 export async function nextAnswer(chat: string[]) {
@@ -75,6 +100,7 @@ export async function nextAnswer(chat: string[]) {
   try {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
+      temperature: 0.1,
       messages,
     });
     console.log("done with completion");
@@ -89,8 +115,10 @@ export async function nextAnswer(chat: string[]) {
 function startingMessages(question: string) {
   return [
     { role: "system", content: startingSystem },
-    { role: "user", content: user },
-    { role: "assistant", content: assistant },
+    { role: "user", content: user1 },
+    { role: "assistant", content: assistant1 },
+    { role: "user", content: user2 },
+    { role: "assistant", content: assistant2 },
     { role: "user", content: question },
   ];
 }
