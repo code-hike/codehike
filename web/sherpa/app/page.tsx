@@ -13,10 +13,13 @@ export default function Home() {
     setConvo((convo) => [...convo, answer]);
   };
 
+  const started = convo.length > 0;
+
   return (
     <main className="  ">
       <Convo convo={convo} onReply={onSend} />
-      <ChatInput onSend={onSend} />
+
+      <ChatInput onSend={onSend} started={started} />
     </main>
   );
 }

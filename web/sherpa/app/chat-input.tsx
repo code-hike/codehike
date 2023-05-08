@@ -3,7 +3,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IconSend } from "@tabler/icons-react";
 
-function ChatInput({ onSend }: { onSend: (c: string) => void }) {
+function ChatInput({
+  onSend,
+  started,
+}: {
+  onSend: (c: string) => void;
+  started: boolean;
+}) {
   const [content, setContent] = useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -35,7 +41,27 @@ function ChatInput({ onSend }: { onSend: (c: string) => void }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 md:pt-2">
+    <div
+      className={
+        "fixed bottom-0 left-0 w-full border-transparent pt-6 md:pt-2 bg-gradient-to-b from-transparent via-white to-white"
+        // "fixed bottom-0 left-0 w-full border-transparent bg-red-600 pt-6 md:pt-2 "
+      }
+      style={{
+        transform: started
+          ? "translateY(calc(50vh - 30px))"
+          : "translateY(30px)",
+        transition: "transform 0.3s ease-in-out",
+      }}
+    >
+      <div
+        className={
+          "text-2xl absolute w-full text-center top-0 " +
+          (started ? "opacity-0" : "opacity-100")
+        }
+        style={{ transition: "opacity 0.3s ease-in-out" }}
+      >
+        Tell me about the coding challenge you're facing:
+      </div>
       <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl">
         <div className="relative mx-2 flex w-full flex-grow flex-col rounded-md border border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <textarea
@@ -51,7 +77,7 @@ function ChatInput({ onSend }: { onSend: (c: string) => void }) {
                   : "hidden"
               }`,
             }}
-            placeholder={"Send a message..."}
+            placeholder={"Send message..."}
             onInput={handleInput}
             value={content}
             rows={1}
@@ -70,6 +96,7 @@ function ChatInput({ onSend }: { onSend: (c: string) => void }) {
           </button>
         </div>
       </div>
+      <div style={{ height: "50vh", background: "white" }} />
     </div>
   );
 }

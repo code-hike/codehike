@@ -2,6 +2,8 @@ import { InnerCode } from "./code"
 import React from "react"
 import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { extractAnnotations } from "@code-hike/lighter/dist/browser.esm.mjs"
+import { evaluateSync } from "@mdx-js/mdx"
+import * as runtime from "react/jsx-runtime"
 
 export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
@@ -44,7 +46,11 @@ export function Chat({ steps, style, height, onReply }) {
       >
         {newFiles && (
           <InnerCode
-            codeConfig={{ theme: {} as any }}
+            codeConfig={{
+              theme: {} as any,
+              showCopyButton: true,
+              showExpandButton: true,
+            }}
             northPanel={{
               tabs: newFiles.map(f => f.name),
               active: newFiles[0]?.name,
@@ -123,13 +129,18 @@ function Option({ value, onClick }) {
 }
 
 function Content({ step }) {
+  const { default: AnswerContent } = step.answer
+    ? evaluateSync(step.answer, runtime as any)
+    : { default: () => undefined }
   return (
     <>
       {step.question && (
         <Question>{step.question}</Question>
       )}
       {step.answer ? (
-        <Answer>{step.answer}</Answer>
+        <Answer>
+          <AnswerContent />
+        </Answer>
       ) : (
         <Answer>
           <BouncingDots />
