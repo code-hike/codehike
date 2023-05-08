@@ -33,3 +33,11 @@ What is the rationale for allowing to assign a new struct value to self in Swift
 # c-same-function
 
 Why does declaring the same function both with and without parameters not cause compilation errors in C?
+
+# off-topic
+
+hello
+
+# react-three-dots
+
+A react component that three dots bouncing with a little delay between each other (to simulate that we are waiting for someone to write)
