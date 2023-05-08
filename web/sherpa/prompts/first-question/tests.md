@@ -21,3 +21,15 @@ while ((match = sectionRegex.exec(promptMarkdown)) !== null) {
 }
 console.log(sections);
 ```
+
+# first-day-pandas
+
+Extracting the first day of month of a datetime type column in pandas
+
+# swift-assign-self
+
+What is the rationale for allowing to assign a new struct value to self in Swift?
+
+# c-same-function
+
+Why does declaring the same function both with and without parameters not cause compilation errors in C?
