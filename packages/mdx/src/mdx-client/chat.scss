@@ -4,7 +4,7 @@
   gap: 10px;
 
   --ch-scrollycoding-sticker-width: 520px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.21, 1);
 
   &.ch-chat-no-code {
     transform: translateX(
@@ -20,7 +20,8 @@
 
   .ch-scrollycoding-sticker {
     opacity: 1;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.6s
+      cubic-bezier(1, -0.01, 0.68, 1.01);
   }
 
   .bouncing-dots {
@@ -59,8 +60,8 @@
   .ch-chat-reply-button {
     @include button-reset;
     background-color: #0084ff;
-    color: #fafafa;
-    padding: 6px;
+    color: #e7f3ff;
+    padding: 8px 10px;
     border-radius: 8px;
     border-bottom-right-radius: 0;
     font-size: 0.9rem;
@@ -69,6 +70,7 @@
 
   .ch-chat-reply-button:hover {
     background-color: #0072d9;
+    color: #fafafa;
   }
 
   .ch-scrollycoding-content {

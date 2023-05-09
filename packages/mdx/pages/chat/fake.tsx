@@ -72,15 +72,11 @@ export default function Page() {
 const conversation = [
   {
     question: <p>how to stop a fetch in js?</p>,
-    answer: (
-      <>
-        <p>
-          I'm assuming you're currently using the Fetch API
-          to make a request
-        </p>
-        <p>Is this accurate?</p>
-      </>
-    ),
+    answer: `I'm assuming you're currently using the Fetch API
+to make a request.
+
+Is this accurate?
+`,
     code: {
       title: "foo.js",
       lang: "js",
@@ -102,12 +98,9 @@ const conversation = [
   },
   {
     question: <p>I'm using promises</p>,
-    answer: (
-      <>
-        <p>Thanks for the clarification.</p>
-        <p>Is this accurate?</p>
-      </>
-    ),
+    answer: `Thanks for the clarification.
+
+Is this accurate?`,
     code: {
       title: "foo.js",
       lang: "js",
@@ -122,21 +115,14 @@ const conversation = [
   },
   {
     question: <p>Yes, continue</p>,
-    answer: (
-      <>
-        <p>
-          Now, let's introduce the AbortController to enable
-          aborting the fetch request.
-        </p>
-        <p>
-          Here, we create an instance of AbortController and
-          get its signal property. We then pass this signal
-          to the fetch request options. The signal allows us
-          to control the fetch request and abort it when
-          necessary.
-        </p>
-      </>
-    ),
+    answer: ` Now, let's introduce the AbortController to enable
+aborting the fetch request.
+
+Here, we create an instance of AbortController and
+get its signal property. We then pass this signal
+to the fetch request options. The signal allows us
+to control the fetch request and abort it when
+necessary.`,
     code: {
       title: "foo.js",
       lang: "js",

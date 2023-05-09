@@ -12,10 +12,13 @@ type ConversationEntry = {
 }
 
 type Conversation = ConversationEntry[]
-const THINKING_MS = 2500
+const THINKING_MS = 300
 const WRITING_MS = 90
 
-export function useFakeGPT(convo: Conversation) {
+export function useFakeGPT(
+  convo: Conversation,
+  stream: boolean = false
+) {
   const [currentConvo, setCurrentConvo] =
     React.useState<Conversation>([])
 
@@ -58,17 +61,27 @@ export function useFakeGPT(convo: Conversation) {
       convo[index].question
     )
     next.answer = undefined
-    next.replies = []
+    next.replies = undefined
     next.code = undefined
 
     setCurrentConvo([...currentConvo, next])
 
     setTimeout(() => {
-      setCurrentConvo(currentConvo => [
-        ...currentConvo.slice(0, -1),
-        { ...currentConvo[index], code: convo[index].code },
-      ])
-      writeNextWord(index)
+      if (stream) {
+        setCurrentConvo(currentConvo => [
+          ...currentConvo.slice(0, -1),
+          {
+            ...currentConvo[index],
+            code: convo[index].code,
+          },
+        ])
+        writeNextWord(index)
+      } else {
+        setCurrentConvo(currentConvo => [
+          ...currentConvo.slice(0, -1),
+          { ...convo[index] },
+        ])
+      }
     }, random(THINKING_MS))
   }
   return [currentConvo, sendQuestion] as const

@@ -9,7 +9,7 @@ export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
   const [newFiles, setNewFiles] = React.useState(null)
 
-  const lastStepRef = React.useRef(null)
+  const contentRef = React.useRef(null)
   const stickerRef = React.useRef(null)
 
   const hasCode = steps.some(s => s.code)
@@ -29,10 +29,10 @@ export function Chat({ steps, style, height, onReply }) {
   React.useLayoutEffect(() => {
     if (
       stickerRef.current &&
-      lastStepRef.current &&
+      contentRef.current &&
       selectedStep === steps.length - 1
     ) {
-      alignBottoms(lastStepRef.current, stickerRef.current)
+      alignBottoms(contentRef.current, stickerRef.current)
     }
   }, [steps, selectedStep])
 
@@ -75,6 +75,7 @@ export function Chat({ steps, style, height, onReply }) {
           justifyContent: "flex-end",
           gap: 10,
         }}
+        ref={contentRef}
       >
         {steps.map((step, i) => (
           <div
@@ -84,11 +85,6 @@ export function Chat({ steps, style, height, onReply }) {
               selectedStep === i ? true : undefined
             }
             onClick={() => setSelectedStep(i)}
-            ref={
-              selectedStep === steps.length - 1
-                ? lastStepRef
-                : null
-            }
           >
             <Content step={step} />
           </div>
@@ -235,13 +231,13 @@ function Answer({ children }) {
   return <Bubble isQuestion={false}>{children}</Bubble>
 }
 
-function alignBottoms(stickerElement, lastStepElement) {
+function alignBottoms(stickerElement, contentElement) {
   const stickerElementRect =
     stickerElement.getBoundingClientRect()
   const stickerElementBottom = stickerElementRect.bottom
 
   const lastStepElementRect =
-    lastStepElement.getBoundingClientRect()
+    contentElement.getBoundingClientRect()
   const lastStepElementHeight = lastStepElementRect.height
 
   const targetScrollTop =

@@ -45,3 +45,15 @@ A react component that three dots bouncing with a little delay between each othe
 # java-object-class
 
 What's the difference between a class and an object in Java?
+
+# react-set-state
+
+Why this doesn't work?
+
+```
+const [counter, setCounter] = React.useState(0);
+
+const onClick = () => {
+  setCounter((i) => i++);
+};
+```
