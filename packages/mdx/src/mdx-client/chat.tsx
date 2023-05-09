@@ -4,6 +4,7 @@ import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { extractAnnotations } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { evaluateSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime"
+import { getDiffFocus } from "./focus-diff"
 
 export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
@@ -17,9 +18,11 @@ export function Chat({ steps, style, height, onReply }) {
   React.useEffect(() => {
     const step = steps[selectedStep]
     if (!step?.code) return
-    mapFile(step.code).then(file => {
-      setNewFiles([file])
-    })
+    mapFile(step.code, steps[selectedStep - 1]?.code).then(
+      file => {
+        setNewFiles([file])
+      }
+    )
   }, [selectedStep, steps[selectedStep]?.code])
 
   React.useEffect(() => {
@@ -55,6 +58,7 @@ export function Chat({ steps, style, height, onReply }) {
               theme: {} as any,
               showCopyButton: true,
               showExpandButton: true,
+              // lineNumbers: true,
             }}
             northPanel={{
               tabs: newFiles.map(f => f.name),
@@ -161,23 +165,27 @@ const BouncingDots = () => {
   )
 }
 
-async function mapFile({ lang, text, title }) {
-  const { code, annotations } = await extractAnnotations(
-    text,
-    lang,
-    ["focus"]
-  )
-  const focus = annotations
-    .map(a =>
-      a.ranges
-        .map((r: any) =>
-          r.lineNumber
-            ? `${r.lineNumber}[${r.fromColumn}:${r.toColumn}]`
-            : `${r.fromLineNumber}:${r.toLineNumber}`
-        )
-        .join(",")
-    )
-    .join(",")
+async function mapFile({ lang, text, title }, oldCode) {
+  const focus = oldCode?.text
+    ? getDiffFocus(oldCode?.text, text)
+    : ""
+  // const { code, annotations } = await extractAnnotations(
+  //   text,
+  //   lang,
+  //   ["focus"]
+  // )
+  // const focus = annotations
+  //   .map(a =>
+  //     a.ranges
+  //       .map((r: any) =>
+  //         r.lineNumber
+  //           ? `${r.lineNumber}[${r.fromColumn}:${r.toColumn}]`
+  //           : `${r.fromLineNumber}:${r.toLineNumber}`
+  //       )
+  //       .join(",")
+  //   )
+  //   .join(",")
+  const code = text
 
   const result = await highlight(code, lang, "dracula")
   return {

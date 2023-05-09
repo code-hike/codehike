@@ -41,6 +41,12 @@ function ChatInput({
     setContent("");
   };
 
+  React.useEffect(() => {
+    if (started) {
+      textareaRef.current?.focus();
+    }
+  }, [started]);
+
   return (
     <div
       className={

@@ -126,11 +126,9 @@ necessary.`,
     code: {
       title: "foo.js",
       lang: "js",
-      text: `// focus(1:2)
-const controller = new AbortController();
+      text: `const controller = new AbortController();
 const signal = controller.signal;
 
-// focus[1:5,39:48]
 fetch('https://api.example.com/data', { signal })
   .then((response) => response.json())
   .then((data) => console.log(data))
@@ -168,7 +166,6 @@ fetch('https://api.example.com/data', { signal })
     console.error(error);
   });
 
-// focus
 setTimeout(() => controller.abort(), 5000);`,
     },
   },
@@ -200,7 +197,6 @@ const signal = controller.signal;
 fetch('https://api.example.com/data', { signal })
   .then((response) => response.json())
   .then((data) => console.log(data))
-  //focus(1:6)
   .catch((error) => {
     if (error.name === 'AbortError') {
       console.log('Fetch aborted');
@@ -209,7 +205,6 @@ fetch('https://api.example.com/data', { signal })
     }
   });
 
-// focus
 setTimeout(() => controller.abort(), 5000);`,
     },
   },
@@ -240,16 +235,13 @@ setTimeout(() => controller.abort(), 5000);`,
     code: {
       title: "foo.js",
       lang: "js",
-      text: `// focus(1:2)
-const controller = new AbortController();
+      text: `const controller = new AbortController();
 const signal = controller.signal;
 
-// focus[39:48]
 fetch('https://api.example.com/data', { signal })
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => {
-    //focus(1:2)
     if (error.name === 'AbortError') {
       console.log('Fetch aborted');
     } else {
@@ -257,7 +249,6 @@ fetch('https://api.example.com/data', { signal })
     }
   });
 
-// focus
 setTimeout(() => controller.abort(), 5000);`,
     },
   },
