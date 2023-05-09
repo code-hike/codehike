@@ -12,6 +12,8 @@ export function Chat({ steps, style, height, onReply }) {
   const lastStepRef = React.useRef(null)
   const stickerRef = React.useRef(null)
 
+  const hasCode = steps.some(s => s.code)
+
   React.useEffect(() => {
     const step = steps[selectedStep]
     if (!step?.code) return
@@ -36,7 +38,10 @@ export function Chat({ steps, style, height, onReply }) {
 
   return (
     <section
-      className="ch-scrollycoding ch-chat"
+      className={
+        "ch-scrollycoding ch-chat " +
+        (hasCode ? "" : "ch-chat-no-code")
+      }
       style={style}
     >
       <div

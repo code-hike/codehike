@@ -4,6 +4,24 @@
   gap: 10px;
 
   --ch-scrollycoding-sticker-width: 520px;
+  transition: transform 0.3s ease-in-out;
+
+  &.ch-chat-no-code {
+    transform: translateX(
+      calc(
+        -0.5 * var(--ch-scrollycoding-sticker-width) - 5px
+      )
+    );
+
+    .ch-scrollycoding-sticker {
+      opacity: 0;
+    }
+  }
+
+  .ch-scrollycoding-sticker {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
 
   .bouncing-dots {
     display: flex;
