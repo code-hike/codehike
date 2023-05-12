@@ -1,3 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  --input-container-height: 120px;
+  --sticker-top: 36px;
+}
+
+.ch-scrollycoding-sticker {
+  top: var(--sticker-top) !important;
+  max-height: calc(100vh) !important;
+}
+
+.ch-codegroup {
+  max-height: calc(100vh) !important;
+}
+
+.input-container {
+  bottom: 0;
+  height: var(--input-container-height);
+  transform: translateY(calc(50% - 50vh));
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.curtain {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: translateY(0);
+}
+
+.started .curtain {
+  transform: translateY(calc(50vh - var(--input-container-height) / 2));
+}
+
+.started .input-container {
+  transform: translateY(0);
+}
+
+.home-top {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.5s ease-in-out;
+}
+
+.started .home-top {
+  transform: translateY(30vh);
+  opacity: 0;
+}
+
+.home-bottom {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.5s ease-in-out;
+}
+
+.started .home-bottom {
+  transform: translateY(70vh);
+  opacity: 0;
+}
+
+.input-footer {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  transition-delay: 0s;
+}
+
+.started .input-footer {
+  transition-delay: 0.3s;
+  opacity: 1;
+}

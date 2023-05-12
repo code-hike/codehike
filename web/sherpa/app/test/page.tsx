@@ -4,7 +4,7 @@ import ChatInput from "../chat-input";
 import Convo from "../convo";
 
 export default function Home() {
-  const [i, setI] = React.useState(0);
+  const [i, setI] = React.useState(2);
 
   const onSend = () => {
     setI((i) => i + 1);
@@ -16,8 +16,11 @@ export default function Home() {
   return (
     <main className="  ">
       <Convo convo={convo} onReply={onSend} />
-
-      <ChatInput onSend={onSend} started={started} isWaiting={i === 1} />
+      <div
+        className="fixed bottom-0 bg-violet-500 w-full opacity-50"
+        style={{ height: "var(--input-container-height)" }}
+      ></div>
+      {/* <ChatInput onSend={onSend} started={started} isWaiting={i === 1} /> */}
     </main>
   );
 }

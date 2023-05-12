@@ -57,3 +57,7 @@ const onClick = () => {
   setCounter((i) => i++);
 };
 ```
+
+# tailwind-selector
+
+In tailwind + react, apply some style only when a parent has a class. Something like hover:text-lg but instead of hover I want it to be applied when a parent has the className foo.

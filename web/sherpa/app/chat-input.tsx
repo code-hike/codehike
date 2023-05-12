@@ -2,6 +2,15 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { IconSend } from "@tabler/icons-react";
+import { SignInButton } from "./auth-buttons";
+
+const absurdExamples = [
+  "How to center a div using Smalltalk",
+  "Help me improve quantum computing with CSS",
+  "Whale song generator using browser APIs",
+  "Write a MATLAB program that can predict what color shirt you're wearing",
+  "Use SQL to write a love story",
+];
 
 function ChatInput({
   onSend,
@@ -55,7 +64,7 @@ function ChatInput({
       }
       style={{
         transform: started
-          ? "translateY(calc(50vh - 30px))"
+          ? "translateY(calc(50vh - 5px))"
           : "translateY(30px)",
         transition: "transform 0.3s cubic-bezier(.42,0,.21,1)",
         pointerEvents: "none",
@@ -73,15 +82,12 @@ function ChatInput({
       <div className="stretch mx-2 mt-4 flex flex-row gap-3 last:mb-2 md:mx-4 md:mt-[52px] md:last:mb-6 lg:mx-auto lg:max-w-3xl pointer-events-auto">
         <div
           className={
-            "relative mx-2 flex w-full flex-grow flex-col rounded-md  bg-white  sm:mx-4 " +
-            (started
-              ? "shadow-[0_0_10px_rgba(0,0,0,0.10)]"
-              : "shadow-[0_0_10px_rgba(191,158,238,0.80)]")
+            "relative mx-2 flex w-full flex-grow flex-col rounded-md  bg-white  sm:mx-4 shadow-[0_0_10px_rgba(0,0,0,0.6)]"
           }
         >
           <textarea
             ref={textareaRef}
-            className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-4 text-black md:py-3 outline-[rgba(191,158,238,1)]"
+            className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-4 text-black md:py-3 outline-[rgba(0,0,0,0.5)]"
             style={{
               resize: "none",
               bottom: `${textareaRef?.current?.scrollHeight}px`,
@@ -92,7 +98,11 @@ function ChatInput({
                   : "hidden"
               }`,
             }}
-            placeholder={"Send message..."}
+            placeholder={
+              started
+                ? "Send message..."
+                : "How to center a div using Smalltalk"
+            }
             onInput={handleInput}
             value={content}
             rows={1}
@@ -112,7 +122,26 @@ function ChatInput({
           </button>
         </div>
       </div>
-      <div style={{ height: "50vh", background: "white" }} />
+      <div className="py-1 px-6 mx-auto  lg:max-w-3xl">
+        <ProgressBar percentage={20} />
+      </div>
+      <div className=" bg-white p-12 flex flex-col items-center gap-3 h-[50vh] bold">
+        <span className="text-lg">but first</span>
+        <SignInButton />
+      </div>
+    </div>
+  );
+}
+function ProgressBar({ percentage }: { percentage: number }) {
+  return (
+    <div className="w-full h-2 bg-green-200 rounded-md overflow-hidden">
+      <div
+        className="h-full bg-green-500"
+        style={{
+          width: `${percentage}%`,
+          transition: "width 0.3s ease-in-out",
+        }}
+      ></div>
     </div>
   );
 }

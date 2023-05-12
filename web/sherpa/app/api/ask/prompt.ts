@@ -107,9 +107,10 @@ export async function nextAnswer(chat: string[]) {
     console.log("done with completion");
     // console.log(completion.data);
     return completion.data.choices[0].message.content;
-  } catch (error) {
-    console.log({ error });
-    return "error";
+  } catch (error: any) {
+    console.log({ error: error.response ? error.response : error });
+    console.log({ error: error.response ? error.response.data : "" });
+    return `Error ${error.response?.status}`;
   }
 }
 

@@ -19,9 +19,9 @@ export default function Convo({
       steps={conversation}
       style={{
         width: 900,
-        margin: "10vh auto",
+        margin: "var(--sticker-top) auto var(--input-container-height)",
       }}
-      height="80vh"
+      height="calc(100vh - var(--sticker-top) - var(--input-container-height))"
       onReply={onReply}
     />
   ) : null;
