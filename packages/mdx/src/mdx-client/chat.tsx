@@ -1,7 +1,6 @@
 import { InnerCode } from "./code"
 import React from "react"
 import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
-import { extractAnnotations } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { evaluateSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime"
 import { getDiffFocus } from "./focus-diff"
@@ -9,6 +8,7 @@ import { getDiffFocus } from "./focus-diff"
 export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
   const [newFiles, setNewFiles] = React.useState(null)
+  const [activeFile, setActiveFile] = React.useState(null)
 
   const contentRef = React.useRef(null)
   const stickerRef = React.useRef(null)
@@ -18,9 +18,16 @@ export function Chat({ steps, style, height, onReply }) {
   React.useEffect(() => {
     const step = steps[selectedStep]
     if (!step?.code) return
-    mapFile(step.code, steps[selectedStep - 1]?.code).then(
-      file => {
-        setNewFiles([file])
+    mapFiles(step.code, steps[selectedStep - 1]?.code).then(
+      files => {
+        setNewFiles(files)
+        // if activeFile is not in the new files, set it to null
+        if (
+          activeFile &&
+          !files.some(f => f.name === activeFile)
+        ) {
+          setActiveFile(null)
+        }
       }
     )
   }, [selectedStep, steps[selectedStep]?.code])
@@ -62,11 +69,14 @@ export function Chat({ steps, style, height, onReply }) {
             }}
             northPanel={{
               tabs: newFiles.map(f => f.name),
-              active: newFiles[0]?.name,
+              active: activeFile || newFiles[0]?.name,
               heightRatio: 1,
             }}
             files={newFiles}
             style={{ height: "100%" }}
+            onTabClick={tab => {
+              setActiveFile(tab)
+            }}
           />
         )}
       </div>
@@ -90,15 +100,13 @@ export function Chat({ steps, style, height, onReply }) {
             }
             onClick={() => setSelectedStep(i)}
           >
-            <Content step={step} />
+            <Content
+              step={step}
+              onReply={onReply}
+              isLast={i === steps.length - 1}
+            />
           </div>
         ))}
-        {steps.length > 0 && (
-          <Replies
-            replies={steps[steps.length - 1].replies}
-            onReply={onReply}
-          />
-        )}
       </div>
     </section>
   )
@@ -133,7 +141,7 @@ function Option({ value, onClick }) {
   )
 }
 
-function Content({ step }) {
+function Content({ step, onReply, isLast }) {
   const { default: AnswerContent } = step.answer
     ? evaluateSync(step.answer, runtime as any)
     : { default: () => undefined }
@@ -145,6 +153,12 @@ function Content({ step }) {
       {step.answer ? (
         <Answer>
           <AnswerContent />
+          {isLast && (
+            <Replies
+              replies={step.replies}
+              onReply={onReply}
+            />
+          )}
         </Answer>
       ) : (
         <Answer>
@@ -163,6 +177,18 @@ const BouncingDots = () => {
       <div className="dot" />
     </div>
   )
+}
+
+async function mapFiles(newCode, oldCode) {
+  const files = await Promise.all(
+    newCode.map(async file => {
+      const oldFile = oldCode?.find(
+        f => f.name === file.name
+      )
+      return mapFile(file, oldFile)
+    })
+  )
+  return files
 }
 
 async function mapFile({ lang, text, title }, oldCode) {

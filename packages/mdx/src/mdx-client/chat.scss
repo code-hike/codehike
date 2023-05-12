@@ -59,7 +59,8 @@
 
   .ch-chat-reply-button {
     @include button-reset;
-    background-color: #0084ff;
+    background-color: #222;
+    border: 1px solid #555;
     color: #e7f3ff;
     padding: 8px 10px;
     border-radius: 8px;
@@ -69,7 +70,7 @@
   }
 
   .ch-chat-reply-button:hover {
-    background-color: #0072d9;
+    background-color: #333;
     color: #fafafa;
   }
 

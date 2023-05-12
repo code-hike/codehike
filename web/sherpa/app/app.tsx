@@ -113,7 +113,9 @@ function TextArea({
           }`,
         }}
         placeholder={
-          started ? "Send message..." : "How to center a div using Smalltalk"
+          started
+            ? "Send message..."
+            : absurdExamples[Math.floor(Math.random() * absurdExamples.length)]
         }
         onInput={handleInput}
         value={content}

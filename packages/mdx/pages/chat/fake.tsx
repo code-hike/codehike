@@ -77,10 +77,11 @@ to make a request.
 
 Is this accurate?
 `,
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `async function fetchData(url) {
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `async function fetchData(url) {
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -89,11 +90,18 @@ Is this accurate?
     console.error(error);
   }
 }`,
-    },
+      },
+      {
+        title: "foo.html",
+        lang: "html",
+        text: `<button onclick="fetchData('https://api.example.com/data')">Fetch Data</button>`,
+      },
+    ],
     replies: [
       "Yes",
-      "No, I'm using XMLHttpRequest",
+      "No, I'm using XMLHttpRequest. Please help with a solution for that",
       "No, I'm using promises",
+      "Ask GPT-4",
     ],
   },
   {
@@ -101,16 +109,18 @@ Is this accurate?
     answer: `Thanks for the clarification.
 
 Is this accurate?`,
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `fetch('https://api.example.com/data')
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `fetch('https://api.example.com/data')
   .then((response) => response.json())
   .then((data) => console.log(data))
   .catch((error) => {
     console.error(error);
   });`,
-    },
+      },
+    ],
     replies: ["Yes, continue"],
   },
   {
@@ -123,10 +133,11 @@ get its signal property. We then pass this signal
 to the fetch request options. The signal allows us
 to control the fetch request and abort it when
 necessary.`,
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `const controller = new AbortController();
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `const controller = new AbortController();
 const signal = controller.signal;
 
 fetch('https://api.example.com/data', { signal })
@@ -135,7 +146,8 @@ fetch('https://api.example.com/data', { signal })
   .catch((error) => {
     console.error(error);
   });`,
-    },
+      },
+    ],
   },
   {
     question: <p>Go on</p>,
@@ -153,10 +165,11 @@ fetch('https://api.example.com/data', { signal })
         </p>
       </>
     ),
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `const controller = new AbortController();
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `const controller = new AbortController();
 const signal = controller.signal;
 
 fetch('https://api.example.com/data', { signal })
@@ -167,7 +180,8 @@ fetch('https://api.example.com/data', { signal })
   });
 
 setTimeout(() => controller.abort(), 5000);`,
-    },
+      },
+    ],
   },
   {
     question: <p>Go on</p>,
@@ -188,10 +202,11 @@ setTimeout(() => controller.abort(), 5000);`,
         </p>
       </>
     ),
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `const controller = new AbortController();
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `const controller = new AbortController();
 const signal = controller.signal;
 
 fetch('https://api.example.com/data', { signal })
@@ -206,7 +221,8 @@ fetch('https://api.example.com/data', { signal })
   });
 
 setTimeout(() => controller.abort(), 5000);`,
-    },
+      },
+    ],
   },
   {
     question: <p>Go on</p>,
@@ -232,10 +248,11 @@ setTimeout(() => controller.abort(), 5000);`,
         </ul>
       </div>
     ),
-    code: {
-      title: "foo.js",
-      lang: "js",
-      text: `const controller = new AbortController();
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `const controller = new AbortController();
 const signal = controller.signal;
 
 fetch('https://api.example.com/data', { signal })
@@ -250,6 +267,7 @@ fetch('https://api.example.com/data', { signal })
   });
 
 setTimeout(() => controller.abort(), 5000);`,
-    },
+      },
+    ],
   },
 ]
