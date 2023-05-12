@@ -1,8 +1,13 @@
-export async function sendQuestion(chat: string[]) {
+export type Message = {
+  md: string;
+  model?: string;
+};
+
+export async function sendQuestion(messages: Message[], model?: string) {
+  const chat = messages.map((m) => m.md);
   const r = await fetch("/api/ask", {
     method: "POST",
-    body: JSON.stringify({ chat }),
+    body: JSON.stringify({ chat, model }),
   });
-  const { answer } = await r.json();
-  return answer;
+  return await r.json();
 }

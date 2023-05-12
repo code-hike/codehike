@@ -183,7 +183,7 @@ async function mapFiles(newCode, oldCode) {
   const files = await Promise.all(
     newCode.map(async file => {
       const oldFile = oldCode?.find(
-        f => f.name === file.name
+        f => f?.title === file?.title
       )
       return mapFile(file, oldFile)
     })

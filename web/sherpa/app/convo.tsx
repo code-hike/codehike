@@ -1,12 +1,13 @@
 "use client";
 import { Chat } from "@code-hike/mdx/components";
 import React from "react";
+import { Message } from "./send-question";
 
 export default function Convo({
   convo,
   onReply,
 }: {
-  convo: string[];
+  convo: Message[];
   onReply: (s: string) => void;
 }) {
   const conversation = React.useMemo(() => {
@@ -27,18 +28,22 @@ export default function Convo({
   ) : null;
 }
 
-function parseConvo(convo: string[]) {
+function parseConvo(convo: Message[]) {
   const chat: any[] = [];
   convo.forEach((c, i) => {
     if (i % 2 === 0) {
       chat.push({
-        question: <p>{c}</p>,
+        question: <p>{c.md}</p>,
       });
     } else {
       // const { answer, code, replies } = parseAnswer(c);
-      chat[chat.length - 1].answer = extractAnswer(c);
-      chat[chat.length - 1].code = extractCodeBlock(c);
-      chat[chat.length - 1].replies = extractReplies(c);
+      chat[chat.length - 1].model = c.model;
+      chat[chat.length - 1].answer = extractAnswer(c.md);
+      chat[chat.length - 1].code = [extractCodeBlock(c.md)];
+      chat[chat.length - 1].replies = extractReplies(c.md) || [];
+      if (c.model !== "gpt-4") {
+        chat[chat.length - 1].replies.push("Ask GPT-4");
+      }
     }
   });
   return chat;

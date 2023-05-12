@@ -1,7 +1,7 @@
 "use client";
 import { IconSend } from "@tabler/icons-react";
 import React from "react";
-import { sendQuestion } from "./send-question";
+import { Message, sendQuestion } from "./send-question";
 import Convo from "./convo";
 
 const absurdExamples = [
@@ -13,14 +13,30 @@ const absurdExamples = [
 ];
 
 export function App({ children }: { children: React.ReactNode }) {
-  const [convo, setConvo] = React.useState<string[]>([]);
+  const [convo, setConvo] = React.useState<Message[]>([]);
   const [isWaiting, setIsWaiting] = React.useState(false);
+
+  const retryWithGPT4 = async () => {
+    const [...messages] = convo;
+    messages.pop();
+    setConvo(messages);
+    setIsWaiting(true);
+    const { answer } = await sendQuestion(messages, "gpt-4");
+    setConvo((convo) => [...convo, { md: answer, model: "gpt-4" }]);
+    setIsWaiting(false);
+  };
+
   const onSend = async (c: string) => {
-    const newConvo = [...convo, c];
+    if (c === "Ask GPT-4") {
+      retryWithGPT4();
+      return;
+    }
+
+    const newConvo = [...convo, { md: c, model: "user" }];
     setConvo(newConvo);
     setIsWaiting(true);
-    const answer = await sendQuestion(newConvo);
-    setConvo((convo) => [...convo, answer]);
+    const { answer } = await sendQuestion(newConvo);
+    setConvo((convo) => [...convo, { md: answer, model: "gpt-3.5-turbo" }]);
     setIsWaiting(false);
   };
 
@@ -40,14 +56,12 @@ export function App({ children }: { children: React.ReactNode }) {
         </div>
         <div className="flex-1 min-h-0 text-center">
           <div className="input-footer text-sm pt-2 text-stone-600">
-            Used 31/100 credits.{" "}
             <button
               className="hover:bold hover:text-black"
               onClick={restartConvo}
             >
-              Restart conversation
+              New conversation
             </button>
-            .
           </div>
         </div>
       </div>

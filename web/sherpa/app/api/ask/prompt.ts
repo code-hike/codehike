@@ -86,7 +86,8 @@ Is this what you were looking for?
 
 const { Configuration, OpenAIApi } = require("openai");
 
-export async function nextAnswer(chat: string[]) {
+export async function nextAnswer(chat: string[], model: string) {
+  console.log({ model });
   let messages =
     chat.length === 1 ? startingMessages(chat[0]) : nextMessages(chat);
 
@@ -99,7 +100,7 @@ export async function nextAnswer(chat: string[]) {
   const openai = new OpenAIApi(configuration);
   try {
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model,
       // model: "gpt-4",
       temperature: 0.1,
       messages,

@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { nextAnswer } from "./prompt";
 
 export async function POST(request: Request) {
-  const { chat } = await request.json();
+  const { chat, model = "gpt-3.5-turbo" } = await request.json();
 
-  const answer = await nextAnswer(chat);
+  const answer = await nextAnswer(chat, model);
 
-  const data = { answer };
+  const data = { answer, model };
 
   return NextResponse.json(data);
 }
