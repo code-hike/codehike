@@ -91,8 +91,8 @@ export async function nextAnswer(chat: string[], model: string) {
   let messages =
     chat.length === 1 ? startingMessages(chat[0]) : nextMessages(chat);
 
-  console.log({ chat });
-  console.log({ messages });
+  // console.log({ chat });
+  // console.log({ messages });
 
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,

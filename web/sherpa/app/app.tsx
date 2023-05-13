@@ -126,6 +126,7 @@ function TextArea({
               : "hidden"
           }`,
         }}
+        suppressHydrationWarning={true}
         placeholder={
           started
             ? "Send message..."

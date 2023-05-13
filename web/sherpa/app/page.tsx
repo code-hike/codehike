@@ -30,9 +30,9 @@ export default async function Page() {
 function BottomPanel({ user }: { user: any }) {
   return user ? (
     <>
-      <ProgressBar percentage={20} />
+      {/* <ProgressBar percentage={20} /> */}
       <div>
-        Hi {user.login}, you've used 20/100 credits. <SignOutButton />.
+        Hi {user.login}. <SignOutButton />.
       </div>
     </>
   ) : (
