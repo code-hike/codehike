@@ -13,11 +13,11 @@ export function Chat({ steps, style, height, onReply }) {
   const contentRef = React.useRef(null)
   const stickerRef = React.useRef(null)
 
-  const hasCode = steps.some(s => s.code)
+  const hasCode = steps.some(s => s.code?.length)
 
   React.useEffect(() => {
     const step = steps[selectedStep]
-    if (!step?.code) return
+    if (!step?.code?.length) return
     mapFiles(step.code, steps[selectedStep - 1]?.code).then(
       files => {
         setNewFiles(files)
