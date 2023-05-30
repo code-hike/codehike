@@ -94,7 +94,7 @@ Is this accurate?
       {
         title: "foo.html",
         lang: "html",
-        text: `<button onclick="fetchData('https://api.example.com/data')">Fetch Data</button>`,
+        text: `<button onclick="fetchData()">Fetch Data</button>`,
       },
     ],
     replies: [
@@ -103,6 +103,36 @@ Is this accurate?
       "No, I'm using promises",
       "Ask GPT-4",
     ],
+  },
+  {
+    question: <p>how to stop a fetch in js?</p>,
+    answer: `I'm assuming you're currently using the Fetch API
+to make a request.
+
+Is this accurate?
+`,
+    code: [
+      {
+        title: "foo.js",
+        lang: "js",
+        text: `async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}`,
+      },
+      {
+        title: "foo.html",
+        lang: "html",
+        text: `<button onclick="fetchData()">Fetch Data</button>
+<div>Yes</div>`,
+      },
+    ],
+    replies: ["Yes", "No", "Maybe", "Ask GPT-4"],
   },
   {
     question: <p>I'm using promises</p>,

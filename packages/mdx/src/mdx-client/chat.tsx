@@ -21,8 +21,15 @@ export function Chat({ steps, style, height, onReply }) {
     mapFiles(step.code, steps[selectedStep - 1]?.code).then(
       files => {
         setNewFiles(files)
-        // if activeFile is not in the new files, set it to null
-        if (
+        const changedTitles = files
+          .filter(f => f.focus !== "")
+          .map(f => f.name)
+
+        if (changedTitles.includes(activeFile)) {
+          // do nothing
+        } else if (changedTitles.length > 0) {
+          setActiveFile(changedTitles[0])
+        } else if (
           activeFile &&
           !files.some(f => f.name === activeFile)
         ) {
