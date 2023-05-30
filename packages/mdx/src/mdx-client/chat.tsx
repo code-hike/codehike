@@ -152,10 +152,15 @@ function Content({ step, onReply, isLast }) {
   const { default: AnswerContent } = step.answer
     ? evaluateSync(step.answer, runtime as any)
     : { default: () => undefined }
+  const { default: QuestionContent } = step.question
+    ? evaluateSync(step.question, runtime as any)
+    : { default: () => undefined }
   return (
     <>
       {step.question && (
-        <Question>{step.question}</Question>
+        <Question>
+          <QuestionContent />
+        </Question>
       )}
       {step.answer ? (
         <Answer>

@@ -71,7 +71,7 @@ export default function Page() {
 
 const conversation = [
   {
-    question: <p>how to stop a fetch in js?</p>,
+    question: `how to stop a *fetch* in js?`,
     answer: `I'm assuming you're currently using the Fetch API
 to make a request.
 
@@ -105,7 +105,7 @@ Is this accurate?
     ],
   },
   {
-    question: <p>how to stop a fetch in js?</p>,
+    question: "how to stop a fetch in js?",
     answer: `I'm assuming you're currently using the Fetch API
 to make a request.
 
@@ -135,7 +135,7 @@ Is this accurate?
     replies: ["Yes", "No", "Maybe", "Ask GPT-4"],
   },
   {
-    question: <p>I'm using promises</p>,
+    question: "I'm using promises",
     answer: `Thanks for the clarification.
 
 Is this accurate?`,
@@ -154,7 +154,7 @@ Is this accurate?`,
     replies: ["Yes, continue"],
   },
   {
-    question: <p>Yes, continue</p>,
+    question: "Yes, continue",
     answer: ` Now, let's introduce the AbortController to enable
 aborting the fetch request.
 
@@ -180,7 +180,7 @@ fetch('https://api.example.com/data', { signal })
     ],
   },
   {
-    question: <p>Go on</p>,
+    question: "Go on",
     answer: (
       <>
         <p>
@@ -214,7 +214,7 @@ setTimeout(() => controller.abort(), 5000);`,
     ],
   },
   {
-    question: <p>Go on</p>,
+    question: "Go on",
     answer: (
       <>
         <p>
@@ -255,7 +255,7 @@ setTimeout(() => controller.abort(), 5000);`,
     ],
   },
   {
-    question: <p>Go on</p>,
+    question: "Go on",
     answer: (
       <div>
         In summary, to stop a fetch request in JavaScript:
