@@ -24,11 +24,20 @@ export function Chat({ steps, style, height, onReply }) {
         const changedTitles = files
           .filter(f => f.focus !== "")
           .map(f => f.name)
+        const newTitles = files
+          .filter(f =>
+            steps[selectedStep - 1]?.code?.every(
+              f2 => f2.name !== f.name
+            )
+          )
+          .map(f => f.name)
 
         if (changedTitles.includes(activeFile)) {
           // do nothing
         } else if (changedTitles.length > 0) {
           setActiveFile(changedTitles[0])
+        } else if (newTitles.length > 0) {
+          setActiveFile(newTitles[0])
         } else if (
           activeFile &&
           !files.some(f => f.name === activeFile)

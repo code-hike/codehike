@@ -79,6 +79,27 @@ Is this accurate?
 `,
     code: [
       {
+        title: "foo.html",
+        lang: "html",
+        text: `<button onclick="fetchData()">Fetch Data</button>`,
+      },
+    ],
+    replies: [
+      "Yes",
+      "No, I'm using XMLHttpRequest. Please help with a solution for that",
+      "No, I'm using promises",
+      "Ask GPT-4",
+    ],
+  },
+  {
+    question: `how to stop a *fetch* in js?`,
+    answer: `I'm assuming you're currently using the Fetch API
+to make a request.
+
+Is this accurate?
+`,
+    code: [
+      {
         title: "foo.js",
         lang: "js",
         text: `async function fetchData(url) {
