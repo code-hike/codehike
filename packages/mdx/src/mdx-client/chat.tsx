@@ -157,23 +157,27 @@ function Option({ value, onClick }) {
   )
 }
 
+function MDContent({ children }) {
+  const { default: Content } = children
+    ? evaluateSync(
+        children.replace(/\{/g, "\\{"),
+        runtime as any
+      )
+    : { default: () => undefined }
+  return <Content />
+}
+
 function Content({ step, onReply, isLast }) {
-  const { default: AnswerContent } = step.answer
-    ? evaluateSync(step.answer, runtime as any)
-    : { default: () => undefined }
-  const { default: QuestionContent } = step.question
-    ? evaluateSync(step.question, runtime as any)
-    : { default: () => undefined }
   return (
     <>
       {step.question && (
         <Question>
-          <QuestionContent />
+          <MDContent>{step.question}</MDContent>
         </Question>
       )}
       {step.answer ? (
         <Answer>
-          <AnswerContent />
+          <MDContent>{step.answer}</MDContent>
           {isLast && (
             <Replies
               replies={step.replies}
