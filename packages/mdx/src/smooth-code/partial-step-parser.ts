@@ -17,15 +17,16 @@ import {
   annotateMultiline,
 } from "./annotations"
 
+export type AnnotationProps = {
+  style?: React.CSSProperties
+  children: React.ReactNode
+  data: any
+  isInline: boolean
+}
+
 export type CodeAnnotation = {
   focus: string
-  Component?: (props: {
-    style?: React.CSSProperties
-    children: React.ReactNode
-    data: any
-    theme: EditorTheme
-    isInline: boolean
-  }) => React.ReactElement
+  Component?: (props: AnnotationProps) => React.ReactElement
   data?: any
   // sometimes serializing the Component function doesn't work (Astro)
   // so we pass the name and get the Component from annotationsMap

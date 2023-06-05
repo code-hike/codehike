@@ -61,6 +61,11 @@
   border-radius: 0.25rem;
   padding: 0.2rem 0.15rem 0.1rem;
   margin: 0 -0.15rem;
+  background: var(--ch-l-editor-rangeHighlightBackground);
+}
+
+.ch-code-multiline-mark {
+  background: var(--ch-l-editor-rangeHighlightBackground);
 }
 
 .ch-code-multiline-mark-border {
@@ -68,6 +73,7 @@
   height: 100%;
   position: absolute;
   left: 0;
+  background: var(--ch-l-editor-infoForeground);
 }
 
 .ch-code-multiline-mark .ch-code-button {
@@ -92,4 +98,8 @@
   text-decoration: underline;
   text-decoration-style: dotted;
   color: inherit;
+}
+
+.ch-code-box-annotation {
+  outline: 2px solid var(--ch-l-editor-infoForeground);
 }
