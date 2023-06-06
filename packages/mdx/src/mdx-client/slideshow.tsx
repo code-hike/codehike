@@ -113,7 +113,6 @@ export function Slideshow({
             className="ch-slideshow-preview"
             files={tab.files}
             presetConfig={presetConfig}
-            codeConfig={codeConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview

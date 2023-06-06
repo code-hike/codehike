@@ -41,7 +41,6 @@ export type CodeConfig = {
   minZoom?: number
   maxZoom?: number
   horizontalCenter?: boolean
-  theme: IRawTheme
   lineNumbers?: boolean
   showCopyButton?: boolean
   showExpandButton?: boolean
@@ -125,7 +124,6 @@ function AfterDimensions({
     minZoom = 1,
     maxZoom = 1,
     horizontalCenter = false,
-    theme,
   },
   dimensions,
   stepInfo,
@@ -149,7 +147,6 @@ function AfterDimensions({
         minZoom={minZoom}
         maxZoom={maxZoom}
         center={horizontalCenter}
-        theme={theme}
       />
       {config.showCopyButton ? (
         <CopyButton

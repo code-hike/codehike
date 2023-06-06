@@ -6,7 +6,6 @@ import {
   SandboxInfo,
 } from "@codesandbox/sandpack-client"
 import { EditorStep } from "../mini-editor"
-import { EditorTheme } from "../utils"
 
 export type PresetConfig = SandboxInfo
 export function Preview({
@@ -15,7 +14,6 @@ export function Preview({
   presetConfig,
   show,
   children,
-  codeConfig,
   style,
   frameless,
   ...rest
@@ -27,7 +25,6 @@ export function Preview({
   show?: string
   style?: React.CSSProperties
   children?: React.ReactNode
-  codeConfig: { theme: EditorTheme }
 }) {
   const kids = presetConfig ? (
     <SandpackPreview
@@ -49,7 +46,6 @@ export function Preview({
       ) : (
         <MiniBrowser
           loadUrl={show}
-          theme={codeConfig.theme}
           {...rest}
           children={kids}
         />

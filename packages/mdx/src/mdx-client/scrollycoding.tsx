@@ -220,7 +220,6 @@ function DynamicScrollycoding({
             className="ch-scrollycoding-preview"
             files={tab.files}
             presetConfig={presetConfig}
-            codeConfig={codeConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview

@@ -183,7 +183,7 @@ function addConfig(
                   init: valueToEstree({
                     ...config,
                     themeName,
-                    // theme: undefined,
+                    theme: undefined,
                   }),
                 },
               ],

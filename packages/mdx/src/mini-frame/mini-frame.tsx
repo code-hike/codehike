@@ -1,12 +1,10 @@
 import React from "react"
-import { EditorTheme } from "../utils"
 
 type MiniFrameProps = {
   title?: string
   titleBar?: React.ReactNode
   zoom?: number
   overflow?: string
-  theme: EditorTheme
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 export const MiniFrame = React.forwardRef<
@@ -17,7 +15,6 @@ export const MiniFrame = React.forwardRef<
     title,
     children,
     titleBar,
-    theme,
     zoom = 1,
     overflow,
     ...props

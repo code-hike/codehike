@@ -6,7 +6,7 @@ import {
 } from "./partial-step-parser"
 import { SmoothContainer } from "./smooth-container"
 import { tween } from "./tween"
-import { FullTween, Tween, EditorTheme } from "../utils"
+import { FullTween, Tween } from "../utils"
 
 type SmoothLinesProps = {
   progress: number
@@ -15,7 +15,6 @@ type SmoothLinesProps = {
   maxZoom?: number
   center?: boolean
   codeStep: CodeShift
-  theme: EditorTheme
 }
 
 export function SmoothLines(props: SmoothLinesProps) {
@@ -27,7 +26,6 @@ export function SmoothLines(props: SmoothLinesProps) {
           focusWidth={focusWidth}
           lineHeight={props.dimensions!.lineHeight}
           progress={props.progress}
-          theme={props.theme}
           startX={startX}
           lineNumberWidth={
             props.dimensions!.lineNumberWidth
@@ -44,7 +42,6 @@ function Lines({
   focusWidth,
   lineHeight,
   startX,
-  theme,
   lineNumberWidth,
 }: {
   codeStep: CodeShift
@@ -53,7 +50,6 @@ function Lines({
   progress: number
   startX: number
   lineNumberWidth: number
-  theme: EditorTheme
 }) {
   const groups =
     progress < 0.5
@@ -72,7 +68,6 @@ function Lines({
               lineHeight={lineHeight}
               startX={startX}
               key={i}
-              theme={theme}
               lineNumberWidth={lineNumberWidth}
             />
           )
@@ -111,7 +106,6 @@ function Lines({
               lineHeight={lineHeight}
               startY={startY}
               startX={startX}
-              theme={theme}
               lineNumberWidth={lineNumberWidth}
             />
           </Component>
@@ -131,7 +125,6 @@ function LineGroup({
   t,
   startX,
   startY = 0,
-  theme,
   lineNumberWidth,
 }: {
   lines: CodeLine[]
@@ -140,7 +133,6 @@ function LineGroup({
   t: number
   startX: number
   startY?: number
-  theme: EditorTheme
   lineNumberWidth: number
 }) {
   return (
