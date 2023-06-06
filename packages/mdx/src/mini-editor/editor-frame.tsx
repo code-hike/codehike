@@ -1,6 +1,5 @@
 import React from "react"
 import { FrameButtons } from "../mini-frame"
-import { Classes } from "../classer"
 
 export { getPanelStyles }
 export type {
@@ -30,7 +29,6 @@ type EditorFrameProps = {
   height?: number
   northButton?: React.ReactNode
   southButton?: React.ReactNode
-  classes?: Classes
   onTabClick?: (filename: string) => void
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 

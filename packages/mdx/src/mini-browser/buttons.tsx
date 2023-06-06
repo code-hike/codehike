@@ -1,15 +1,13 @@
-import { useClasser } from "../classer"
 import React from "react"
 
 function Back() {
-  const c = useClasser("ch-browser")
   return (
     <svg
       fill="currentColor"
       preserveAspectRatio="xMidYMid meet"
       height="1em"
       viewBox="13 10 14 23"
-      className={c("button", "back-button")}
+      className="ch-browser-button ch-browser-back-button"
     >
       <g>
         <path d="m26.5 12.1q0 0.3-0.2 0.6l-8.8 8.7 8.8 8.8q0.2 0.2 0.2 0.5t-0.2 0.5l-1.1 1.1q-0.3 0.3-0.6 0.3t-0.5-0.3l-10.4-10.4q-0.2-0.2-0.2-0.5t0.2-0.5l10.4-10.4q0.3-0.2 0.5-0.2t0.6 0.2l1.1 1.1q0.2 0.2 0.2 0.5z" />
@@ -19,14 +17,13 @@ function Back() {
 }
 
 function Forward() {
-  const c = useClasser("ch-browser")
   return (
     <svg
       fill="currentColor"
       preserveAspectRatio="xMidYMid meet"
       height="1em"
       viewBox="13 10 14 23"
-      className={c("button", "forward-button")}
+      className="ch-browser-button ch-browser-forward-button"
     >
       <g>
         <path d="m26.3 21.4q0 0.3-0.2 0.5l-10.4 10.4q-0.3 0.3-0.6 0.3t-0.5-0.3l-1.1-1.1q-0.2-0.2-0.2-0.5t0.2-0.5l8.8-8.8-8.8-8.7q-0.2-0.3-0.2-0.6t0.2-0.5l1.1-1.1q0.3-0.2 0.5-0.2t0.6 0.2l10.4 10.4q0.2 0.2 0.2 0.5z" />

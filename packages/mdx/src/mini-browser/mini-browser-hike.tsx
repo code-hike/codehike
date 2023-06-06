@@ -2,14 +2,12 @@ import React from "react"
 import { MiniFrame } from "../mini-frame"
 import { TitleBar } from "./title-bar"
 import { MiniBrowserStep, useSteps } from "./use-steps"
-import { useClasser, Classes } from "../classer"
 
 type Transition = "none" | "slide"
 
 export type MiniBrowserHikeProps = {
   progress?: number
   backward?: boolean
-  classes?: Classes
   steps?: MiniBrowserStep[]
   transition?: Transition
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
@@ -25,12 +23,10 @@ function MiniBrowserWithRef(
     backward = false,
     steps: ogSteps,
     transition = "none",
-    classes,
     ...props
   }: MiniBrowserHikeProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
-  const c = useClasser("ch-mini-browser", classes)
   const steps = useSteps(ogSteps)
 
   const stepIndex = Math.round(progress)
@@ -42,7 +38,7 @@ function MiniBrowserWithRef(
     <MiniFrame
       {...props}
       zoom={zoom}
-      className={`${c("")} ${props.className || ""}`}
+      className={`ch-mini-browser ${props.className || ""}`}
       style={{
         ...transitionStyle({ progress, transition }),
         ...props.style,
