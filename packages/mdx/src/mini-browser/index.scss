@@ -22,9 +22,9 @@
   color: #544;
   min-width: 5px;
   width: 5px;
-  background: var(--ch-l-input-background);
-  color: var(--ch-l-input-foreground);
-  border: 1px solid var(--ch-l-input-border);
+  background: var(--ch-t-input-background);
+  color: var(--ch-t-input-foreground);
+  border: 1px solid var(--ch-t-input-border);
 }
 
 .ch-browser-button {
@@ -41,7 +41,7 @@
 }
 
 .ch-browser-open-button {
-  color: var(--ch-l-icon-foreground);
+  color: var(--ch-t-icon-foreground);
 }
 
 .ch-browser-open-icon {

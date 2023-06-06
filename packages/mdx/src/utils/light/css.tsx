@@ -40,7 +40,7 @@ function v(key: string) {
 }
 
 function vn(key: string) {
-  return `--ch-l-${key.replace(".", "-")}`
+  return `--ch-t-${key.replace(".", "-")}`
 }
 
 const CSSV = {

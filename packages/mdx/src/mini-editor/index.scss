@@ -22,16 +22,16 @@
   padding-right: 15px;
   min-width: 0;
   border-bottom: 1px solid;
-  background: var(--ch-l-tab-inactiveBackground);
-  color: var(--ch-l-tab-inactiveForeground);
-  border-right-color: var(--ch-l-tab-border);
-  border-bottom-color: var(--ch-l-tab-inactiveBackground);
+  background: var(--ch-t-tab-inactiveBackground);
+  color: var(--ch-t-tab-inactiveForeground);
+  border-right-color: var(--ch-t-tab-border);
+  border-bottom-color: var(--ch-t-tab-inactiveBackground);
 }
 
 .ch-editor-tab[data-active="true"] {
-  background: var(--ch-l-tab-activeBackground);
-  color: var(--ch-l-tab-activeForeground);
-  border-bottom-color: var(--ch-l-tab-activeBorder);
+  background: var(--ch-t-tab-activeBackground);
+  color: var(--ch-t-tab-activeForeground);
+  border-bottom-color: var(--ch-t-tab-activeBorder);
   min-width: unset;
 }
 
@@ -50,7 +50,7 @@
   height: 1px;
   width: 100%;
   z-index: 1;
-  background: var(--ch-l-editorGroup-border);
+  background: var(--ch-t-editorGroup-border);
 }
 
 .ch-editor-frame {
@@ -63,13 +63,13 @@
   break-inside: avoid;
   --ch-title-bar-height: 30px;
   height: 100%;
-  background: var(--ch-l-editor-background);
+  background: var(--ch-t-editor-background);
 }
 
 .ch-editor-frame .ch-frame-title-bar {
   background: none;
-  color: var(--ch-l-icon-foreground);
-  background: var(--ch-l-editorGroupHeader-tabsBackground);
+  color: var(--ch-t-icon-foreground);
+  background: var(--ch-t-editorGroupHeader-tabsBackground);
 }
 
 /** terminal */
