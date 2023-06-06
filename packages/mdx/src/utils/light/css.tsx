@@ -1,5 +1,9 @@
 import { Theme } from "@code-hike/lighter"
-import { getColor, getTheme } from "./theme-colors"
+import {
+  getColor,
+  getColorScheme,
+  getTheme,
+} from "./theme-colors"
 
 const keys = [
   "editor.background",
@@ -40,6 +44,12 @@ function vn(key: string) {
 }
 
 export const CSSV = {
+  colorScheme: v("colorScheme"),
+  foreground: v("foreground"),
+  background: v("background"),
+  lighter: {
+    inlineBackground: v("lighter.inlineBackground"),
+  },
   editor: {
     background: v("editor.background"),
     foreground: v("editor.foreground"),
@@ -101,5 +111,10 @@ export function getCSSVariables(theme: Theme) {
   for (const key of keys) {
     vars[vn(key)] = getColor(finalTheme, key)
   }
+  vars[vn("colorScheme")] = getColorScheme(finalTheme)
+  vars[vn("foreground")] = vars[vn("editor.foreground")]
+  vars[vn("background")] = vars[vn("editor.background")]
+  vars[vn("lighter.inlineBackground")] =
+    vars[vn("editor.background")] // should be background with 90% opacity
   return vars
 }

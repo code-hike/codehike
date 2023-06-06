@@ -1,6 +1,7 @@
 @import "../utils/mixins.scss";
 
 .ch-code-browser {
+  color: var(--ch-l-editor-foreground);
   display: flex;
   height: 100%;
   font-family: Ubuntu, Droid Sans, -apple-system,
@@ -12,6 +13,9 @@
   min-width: 100px;
   padding: 1em 0;
   font-size: 0.95rem;
+  border-color: var(--ch-l-sideBar-border);
+  background: var(--ch-l-sideBar-background);
+  color: var(--ch-l-sideBar-foreground);
 }
 
 .ch-code-browser-content {
@@ -25,10 +29,13 @@
   line-height: 1.2rem;
   letter-spacing: 0px;
   position: relative;
+  background: var(--ch-l-background);
+  color: var(--ch-l-foreground);
+  color-scheme: var(--ch-l-colorScheme);
 }
 
 .ch-code-browser-content ::selection {
-  background-color: var(--ch-selection-background);
+  background-color: var(--ch-l-editor-selectionBackground);
   color: inherit;
 }
 
@@ -41,9 +48,14 @@
   cursor: pointer;
 }
 
+.ch-code-browser-sidebar-file[data-selected="true"] {
+  background: var(--ch-l-list-activeSelectionBackground);
+  color: var(--ch-l-list-activeSelectionForeground);
+}
+
 .ch-code-browser-sidebar-file:hover {
-  background-color: var(--ch-hover-background);
-  color: var(--ch-hover-foreground);
+  background-color: var(--ch-l-list-hoverBackground);
+  color: var(--ch-l-list-hoverForeground);
 }
 
 .ch-code-browser-button {

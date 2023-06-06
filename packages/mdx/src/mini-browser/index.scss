@@ -16,13 +16,15 @@
   height: 1.4em;
   font-size: 1em;
   border-radius: 0.5em;
-  border: none;
   box-shadow: none;
   flex: 1;
   padding: 0 10px;
   color: #544;
   min-width: 5px;
   width: 5px;
+  background: var(--ch-l-input-background);
+  color: var(--ch-l-input-foreground);
+  border: 1px solid var(--ch-l-input-border);
 }
 
 .ch-browser-button {
@@ -39,8 +41,9 @@
 }
 
 .ch-browser-open-button {
-  color: inherit;
+  color: var(--ch-l-icon-foreground);
 }
+
 .ch-browser-open-icon {
   display: block;
 }

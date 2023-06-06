@@ -8,10 +8,15 @@ export function getThemeColors(theme: FinalTheme) {
       theme.type === "from-css"
         ? "var(--ch-0)"
         : theme.type,
+    foreground: getColor(theme, "editor.foreground"),
+    background: getColor(theme, "editor.background"),
   }
 }
 
 export function getColor(theme: FinalTheme, name: string) {
+  if (!defaults[name]) {
+    throw new Error(`unknown color ${name}`)
+  }
   const colors = theme.colors || {}
   if (colors[name]) {
     return colors[name]
@@ -140,6 +145,45 @@ const defaults = {
   "tab.activeBorderTop": { hc: contrastBorder },
   "tab.hoverBackground": "tab.inactiveBackground",
   "tab.hoverForeground": "tab.inactiveForeground",
+  "editor.rangeHighlightBackground": {
+    dark: "#ffffff0b",
+    light: "#fdff0033",
+  },
+  "editor.infoForeground": {
+    dark: "#3794FF",
+    light: "#1a85ff",
+    hc: "#3794FF",
+  },
+  "input.border": {
+    hc: contrastBorder,
+  },
+  "input.background": {
+    dark: "#3C3C3C",
+    light: "#fffffe",
+    hc: "#000000",
+  },
+  "input.foreground": "editor.foreground",
+  "editor.lineHighlightBackground": {},
+  focusBorder: {
+    light: "#0090F1",
+    dark: "#007FD4",
+    hc: contrastBorder,
+  },
+  "editorGroup.border": {
+    dark: "#444444",
+    light: "#E7E7E7",
+    hc: contrastBorder,
+  },
+  "list.activeSelectionBackground": {
+    dark: "#094771",
+    light: "#0060C0",
+    hc: "#000000",
+  },
+  "list.activeSelectionForeground": {
+    dark: "#fffffe",
+    light: "#fffffe",
+    hc: "#fffffe",
+  },
 }
 
 const themeCache = new Map<StringTheme, RawTheme>()
@@ -254,7 +298,7 @@ function toFinalTheme(
   return finalTheme
 }
 
-function getColorScheme(theme: RawTheme) {
+export function getColorScheme(theme: RawTheme) {
   if (theme.type === "from-css") {
     return "from-css"
   }

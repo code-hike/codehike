@@ -12,6 +12,7 @@ import { JsxNode, SuperNode, visit } from "./nodes"
 import { addConfigDefaults, CodeHikeConfig } from "./config"
 
 import type { Node } from "unist"
+import { getCSSVariables } from "utils/light/css"
 
 const transforms = [
   transformPreviews,
@@ -103,6 +104,64 @@ function addConfig(
   tree: SuperNode,
   config: CodeHikeConfig
 ) {
+  const themeName = config.theme.name
+  const cssVars = getCSSVariables(config.theme)
+  const rules = Object.entries(cssVars)
+    .map(([key, value]) => `${key}: ${value};`)
+    .join(" ")
+  const style = `[data-ch-theme="${themeName}"] \{  ${rules} \}`
+  tree.children.unshift({
+    type: "mdxJsxFlowElement",
+    name: "style",
+    attributes: [
+      {
+        type: "mdxJsxAttribute",
+        name: "dangerouslySetInnerHTML",
+        value: {
+          type: "mdxJsxAttributeValueExpression",
+          // value: `{ __html: "${style}" }`,
+          data: {
+            estree: {
+              type: "Program",
+              start: 34,
+              end: 55,
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: {
+                    type: "ObjectExpression",
+                    properties: [
+                      {
+                        type: "Property",
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        key: {
+                          type: "Identifier",
+                          name: "__html",
+                        },
+                        value: {
+                          type: "Literal",
+                          value: style,
+                          // raw: `"${style}"`,
+                        },
+                        kind: "init",
+                      },
+                    ],
+                  },
+                },
+              ],
+              sourceType: "module",
+            },
+          },
+        },
+      },
+    ],
+    children: [],
+    data: {
+      _mdxExplicitJsx: true,
+    },
+  })
   tree.children.unshift({
     type: "mdxjsEsm",
     value: `export const ${CH_CODE_CONFIG_VAR_NAME} = {}`,
@@ -121,7 +180,11 @@ function addConfig(
                     type: "Identifier",
                     name: CH_CODE_CONFIG_VAR_NAME,
                   },
-                  init: valueToEstree(config),
+                  init: valueToEstree({
+                    ...config,
+                    themeName,
+                    // theme: undefined,
+                  }),
                 },
               ],
               kind: "const",

@@ -20,17 +20,18 @@
   box-sizing: border-box;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: rgb(45, 45, 45);
-  // background-color: maroon;
-  color: rgba(255, 255, 255, 0.5);
   min-width: 0;
   border-bottom: 1px solid;
+  background: var(--ch-l-tab-inactiveBackground);
+  color: var(--ch-l-tab-inactiveForeground);
+  border-right-color: var(--ch-l-tab-border);
+  border-bottom-color: var(--ch-l-tab-inactiveBackground);
 }
 
-.ch-editor-tab-active {
-  background-color: rgb(30, 30, 30);
-  // background-color: lightseagreen;
-  color: rgb(255, 255, 255);
+.ch-editor-tab[data-active="true"] {
+  background: var(--ch-l-tab-activeBackground);
+  color: var(--ch-l-tab-activeForeground);
+  border-bottom-color: var(--ch-l-tab-activeBorder);
   min-width: unset;
 }
 
@@ -43,6 +44,15 @@
   overflow: hidden;
 }
 
+.ch-editor-group-border {
+  position: absolute;
+  top: 0;
+  height: 1px;
+  width: 100%;
+  z-index: 1;
+  background: var(--ch-l-editorGroup-border);
+}
+
 .ch-editor-frame {
   display: flex;
   flex-direction: column;
@@ -53,10 +63,13 @@
   break-inside: avoid;
   --ch-title-bar-height: 30px;
   height: 100%;
+  background: var(--ch-l-editor-background);
 }
 
 .ch-editor-frame .ch-frame-title-bar {
   background: none;
+  color: var(--ch-l-icon-foreground);
+  background: var(--ch-l-editorGroupHeader-tabsBackground);
 }
 
 /** terminal */

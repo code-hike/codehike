@@ -80,6 +80,7 @@ export function InnerCode({
         className={`ch-codeblock not-prose ${
           className || ""
         }`}
+        data-ch-theme={props.codeConfig?.themeName}
         style={style}
       >
         <CodeSpring
@@ -99,6 +100,7 @@ export function InnerCode({
         className={`ch-codegroup not-prose ${
           className || ""
         }`}
+        data-ch-theme={props.codeConfig?.themeName}
         style={style}
       >
         <EditorSpring

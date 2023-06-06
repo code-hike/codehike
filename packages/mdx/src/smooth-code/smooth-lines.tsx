@@ -6,13 +6,7 @@ import {
 } from "./partial-step-parser"
 import { SmoothContainer } from "./smooth-container"
 import { tween } from "./tween"
-import {
-  FullTween,
-  Tween,
-  getColor,
-  ColorName,
-  EditorTheme,
-} from "../utils"
+import { FullTween, Tween, EditorTheme } from "../utils"
 
 type SmoothLinesProps = {
   progress: number
@@ -107,7 +101,6 @@ function Lines({
             }}
             key={i}
             data={group.annotation.data}
-            theme={group.annotation.theme}
             isInline={false}
             lines={group.lines}
           >
@@ -172,10 +165,6 @@ function LineGroup({
                   }px, ${(dy - startY) * lineHeight}px)`,
                   width: lineNumberWidth,
                   opacity,
-                  color: getColor(
-                    theme,
-                    ColorName.LineNumberForeground
-                  ),
                 }}
               >
                 {t < 0.5
@@ -259,7 +248,6 @@ function AnnotatedTokens({
     <Component
       children={children}
       data={annotated?.annotation?.data}
-      theme={annotated?.annotation?.theme!}
       isInline={true}
     />
   ) : (

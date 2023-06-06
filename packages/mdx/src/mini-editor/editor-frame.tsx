@@ -1,7 +1,6 @@
 import React from "react"
 import { FrameButtons } from "../mini-frame"
-import { useClasser, Classes } from "../classer"
-import { EditorTheme, getColor, ColorName } from "../utils"
+import { Classes } from "../classer"
 
 export { getPanelStyles }
 export type {
@@ -27,7 +26,6 @@ type OutputPanel = {
 type EditorFrameProps = {
   northPanel: OutputPanel
   southPanel?: OutputPanel | null
-  theme: EditorTheme
   terminalPanel?: React.ReactNode
   height?: number
   northButton?: React.ReactNode
@@ -48,7 +46,6 @@ export const EditorFrame = React.forwardRef<
     height,
     northButton,
     southButton,
-    theme,
     className,
     onTabClick,
     ...rest
@@ -60,30 +57,14 @@ export const EditorFrame = React.forwardRef<
       ref={ref}
       {...rest}
       className="ch-editor-frame"
-      style={{
-        background: getColor(
-          theme,
-          ColorName.EditorBackground
-        ),
-        ...style,
-      }}
+      style={style}
     >
-      <div
-        className={"ch-frame-title-bar"}
-        style={{
-          color: getColor(theme, ColorName.IconForeground),
-          background: getColor(
-            theme,
-            ColorName.EditorGroupHeaderBackground
-          ),
-        }}
-      >
+      <div className="ch-frame-title-bar">
         <TabsContainer
           tabs={northPanel.tabs}
           showFrameButtons={true}
           button={northButton}
           panel="north"
-          theme={theme}
           onTabClick={onTabClick}
         />
       </div>
@@ -95,17 +76,9 @@ export const EditorFrame = React.forwardRef<
       {southPanel && (
         <>
           <div
-            className={"ch-frame-title-bar"}
+            className="ch-frame-title-bar"
             style={{
               transform: southPanel.style?.transform,
-              color: getColor(
-                theme,
-                ColorName.IconForeground
-              ),
-              background: getColor(
-                theme,
-                ColorName.EditorGroupHeaderBackground
-              ),
             }}
           >
             <TabsContainer
@@ -114,7 +87,6 @@ export const EditorFrame = React.forwardRef<
               button={southButton}
               topBorder={true}
               panel="south"
-              theme={theme}
               onTabClick={onTabClick}
             />
           </div>
@@ -135,7 +107,6 @@ type TabsContainerProps = {
   showFrameButtons: boolean
   topBorder?: boolean
   panel: "north" | "south"
-  theme: EditorTheme
   onTabClick?: (filename: string) => void
 }
 function TabsContainer({
@@ -144,26 +115,12 @@ function TabsContainer({
   showFrameButtons,
   topBorder,
   panel,
-  theme,
   onTabClick,
 }: TabsContainerProps) {
-  const c = useClasser("ch-editor-tab")
   return (
     <>
       {topBorder && (
-        <div
-          style={{
-            position: "absolute",
-            height: "1px",
-            background: getColor(
-              theme,
-              ColorName.EditorGroupBorder
-            ),
-            width: "100%",
-            top: 0,
-            zIndex: 1,
-          }}
-        />
+        <div className="ch-editor-group-border" />
       )}
       {showFrameButtons ? <FrameButtons /> : <div />}
       {tabs.map(({ title, active, style }) => (
@@ -171,32 +128,9 @@ function TabsContainer({
           key={title}
           title={title}
           data-ch-tab={panel}
-          className={c("", active ? "active" : "inactive")}
-          style={{
-            ...style,
-            background: getColor(
-              theme,
-              active
-                ? ColorName.ActiveTabBackground
-                : ColorName.InactiveTabBackground
-            ),
-            color: getColor(
-              theme,
-              active
-                ? ColorName.ActiveTabForeground
-                : ColorName.InactiveTabForeground
-            ),
-            borderRightColor: getColor(
-              theme,
-              ColorName.TabBorder
-            ),
-            borderBottomColor: getColor(
-              theme,
-              active
-                ? ColorName.ActiveTabBottomBorder
-                : ColorName.InactiveTabBackground
-            ),
-          }}
+          data-active={active}
+          className="ch-editor-tab"
+          style={style}
           onClick={onTabClick && (() => onTabClick(title))}
         >
           <TabTitle title={title} />

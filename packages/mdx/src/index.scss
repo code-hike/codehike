@@ -36,6 +36,13 @@
   margin: 0.1em -0.05em;
   border-radius: 0.25em;
   font-size: 0.9rem;
+  color: var(--ch-l-foreground);
+  background: var(--ch-l-lighter-inlineBackground);
+}
+
+.ch-inline-code .ch-section-link,
+.ch-inline-code .ch-section-link * {
+  text-decoration-color: var(--ch-l-foreground);
 }
 
 .ch-section-link,
@@ -43,10 +50,7 @@
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(
-    --ch-code-foreground,
-    currentColor
-  );
+  text-decoration-color: currentColor;
 }
 .ch-section-link[data-active="true"] {
   background-color: #bae6fd66;

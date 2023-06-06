@@ -54,6 +54,7 @@ export function Spotlight({
         withPreview ? "ch-spotlight-with-preview" : ""
       } ${className || ""}`}
       style={style}
+      data-ch-theme={codeConfig.themeName}
     >
       <div className="ch-spotlight-tabs">
         {headerElement?.props?.children ? (

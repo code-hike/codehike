@@ -42,7 +42,10 @@ function StaticScrollycoding({
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
   return (
-    <section className={`ch-scrollycoding-static`}>
+    <section
+      className="ch-scrollycoding-static"
+      data-ch-theme={rest?.codeConfig?.themeName}
+    >
       {stepsChildren.map((children, i) => (
         <StaticSection
           key={i}
@@ -172,6 +175,7 @@ function DynamicScrollycoding({
         withPreview ? "ch-scrollycoding-with-preview" : ""
       } ${className || ""}`}
       style={style}
+      data-ch-theme={codeConfig?.themeName}
     >
       <div className="ch-scrollycoding-content">
         <Scroller

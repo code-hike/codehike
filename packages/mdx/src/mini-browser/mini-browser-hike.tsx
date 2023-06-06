@@ -50,13 +50,8 @@ function MiniBrowserWithRef(
         ...transitionStyle({ progress, transition }),
         ...props.style,
       }}
-      classes={classes}
       titleBar={
-        <TitleBar
-          url={displayUrl!}
-          linkUrl={loadUrl!}
-          theme={theme}
-        />
+        <TitleBar url={displayUrl!} linkUrl={loadUrl!} />
       }
       theme={theme}
     >

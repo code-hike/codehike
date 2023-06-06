@@ -1,21 +1,13 @@
 import { CodeFile } from "./editor-shift"
-import { IRawTheme } from "vscode-textmate"
-import {
-  codeToText,
-  ColorName,
-  getColor,
-  getColorScheme,
-} from "utils"
+import { codeToText } from "utils"
 import React from "react"
 import { CopyButton } from "smooth-code/copy-button"
 
 export function CodeBrowser({
   files,
-  theme,
   startingFileName,
 }: {
   files: CodeFile[]
-  theme: IRawTheme
   startingFileName: string
 }) {
   const [activeFile, setActiveFile] = React.useState(() =>
@@ -23,31 +15,23 @@ export function CodeBrowser({
   )
 
   return (
-    <div
-      className="ch-code-browser"
-      style={{
-        color: getColor(theme, ColorName.EditorForeground),
-      }}
-    >
+    <div className="ch-code-browser">
       <Sidebar
         files={files}
-        theme={theme}
         activeFile={activeFile}
         setActiveFile={setActiveFile}
       />
-      <Content file={activeFile} theme={theme} />
+      <Content file={activeFile} />
     </div>
   )
 }
 
 function Sidebar({
-  theme,
   files,
   activeFile,
   setActiveFile,
 }: {
   files: CodeFile[]
-  theme: IRawTheme
   activeFile: CodeFile
   setActiveFile: (file: CodeFile) => void
 }) {
@@ -56,36 +40,7 @@ function Sidebar({
     [files]
   )
   return (
-    <div
-      className="ch-code-browser-sidebar"
-      style={{
-        borderColor: getColor(
-          theme,
-          ColorName.SideBarBorder
-        ),
-        background: getColor(
-          theme,
-          ColorName.SideBarBackground
-        ),
-        color: getColor(theme, ColorName.SideBarForeground),
-        ["--ch-list-selection-background" as any]: getColor(
-          theme,
-          ColorName.ListActiveSelectionBackground
-        ),
-        ["--ch-list-selection-foreground" as any]: getColor(
-          theme,
-          ColorName.ListActiveSelectionForeground
-        ),
-        ["--ch-hover-background" as any]: getColor(
-          theme,
-          ColorName.ListHoverBackground
-        ),
-        ["--ch-hover-foreground" as any]: getColor(
-          theme,
-          ColorName.ListHoverForeground
-        ),
-      }}
-    >
+    <div className="ch-code-browser-sidebar">
       <SidebarNodes
         tree={tree}
         activeFile={activeFile}
@@ -154,17 +109,8 @@ function SidebarNode({
       <div>
         <div
           className="ch-code-browser-sidebar-file"
+          data-selected={isSelected}
           onClick={() => setActiveFile(node.codeFile)}
-          style={
-            isSelected
-              ? {
-                  color:
-                    "var(--ch-list-selection-foreground)",
-                  background:
-                    "var(--ch-list-selection-background)",
-                }
-              : {}
-          }
         >
           <div style={{ paddingLeft: level * 1.5 + "ch" }}>
             {node.name}
@@ -175,29 +121,9 @@ function SidebarNode({
   }
 }
 
-function Content({
-  file,
-  theme,
-}: {
-  file: CodeFile
-  theme: IRawTheme
-}) {
+function Content({ file }: { file: CodeFile }) {
   return (
-    <div
-      className="ch-code-browser-content"
-      style={{
-        background: getColor(
-          theme,
-          ColorName.CodeBackground
-        ),
-        color: getColor(theme, ColorName.CodeForeground),
-        ["--ch-selection-background" as any]: getColor(
-          theme,
-          ColorName.SelectionBackground
-        ),
-        colorScheme: getColorScheme(theme),
-      }}
-    >
+    <div className="ch-code-browser-content">
       <CopyButton
         className="ch-code-browser-button"
         content={codeToText(file.code)}

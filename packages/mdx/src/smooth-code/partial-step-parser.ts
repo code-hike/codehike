@@ -4,7 +4,6 @@ import {
   map,
   FullTween,
   withDefault,
-  EditorTheme,
 } from "../utils"
 import { mergeLines } from "./differ"
 import { splitByFocus } from "./splitter"
@@ -33,7 +32,6 @@ export type CodeAnnotation = {
   // name?: string
 }
 type ParseInput = {
-  theme: EditorTheme
   focus: Tween<FocusString>
   annotations?: Tween<CodeAnnotation[] | undefined>
   highlightedLines: FullTween<HighlightedLine[]>
@@ -41,7 +39,7 @@ type ParseInput = {
 }
 
 export function useStepParser(input: ParseInput) {
-  const { highlightedLines, theme, focus } = input
+  const { highlightedLines, focus } = input
   return React.useMemo(
     () => parse(input),
     [
@@ -49,13 +47,11 @@ export function useStepParser(input: ParseInput) {
       highlightedLines.next,
       focus.prev,
       focus.next,
-      theme,
     ]
   )
 }
 
 function parse({
-  theme,
   focus,
   annotations,
   highlightedLines,
@@ -66,7 +62,7 @@ function parse({
   const mergedCode = merge(normalCode, highlightedLines)
 
   const { inlineAnnotations, multilineAnnotations } =
-    parseAllAnnotations(annotations, theme)
+    parseAllAnnotations(annotations)
 
   const focusedCode = splitLinesByFocus(
     mergedCode,
@@ -147,12 +143,10 @@ export type MultiLineAnnotation = {
   /* line numbers (starting at 1) */
   lineNumbers: { start: number; end: number }
   data: any
-  theme: EditorTheme
   Component: (props: {
     style: React.CSSProperties
     children: React.ReactNode
     data: any
-    theme: EditorTheme
     isInline: boolean
     lines?: LineWithElement[]
   }) => React.ReactElement
@@ -162,12 +156,10 @@ export type InlineAnnotation = {
   /* column numbers (starting at 1) */
   columnNumbers: { start: number; end: number }
   data: any
-  theme: EditorTheme
   Component: (props: {
     style?: React.CSSProperties
     children: React.ReactNode
     data: any
-    theme: EditorTheme
     isInline: boolean
   }) => React.ReactElement
 }
@@ -175,10 +167,9 @@ export type InlineAnnotation = {
 function parseAllAnnotations(
   annotations:
     | Tween<CodeAnnotation[] | undefined>
-    | undefined,
-  theme: EditorTheme
+    | undefined
 ) {
-  return parseAnnotations(annotations, theme)
+  return parseAnnotations(annotations)
 }
 
 // 4 - split lines by focus
