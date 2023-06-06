@@ -107,3 +107,17 @@
 .ch-code-box-annotation {
   outline: 2px solid var(--ch-l-editor-infoForeground);
 }
+
+.ch-code-label-annotation:hover {
+  background: var(--ch-l-editor-lineHighlightBackground);
+  .ch-code-label-annotation-text {
+    display: block;
+  }
+}
+.ch-code-label-annotation-text {
+  position: absolute;
+  right: 0;
+  padding-right: 16px;
+  opacity: 0.7;
+  display: none;
+}

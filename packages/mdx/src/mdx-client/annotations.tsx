@@ -6,7 +6,6 @@ import {
   LineWithElement,
 } from "../smooth-code/partial-step-parser"
 import { CopyButton } from "../smooth-code/copy-button"
-import { CSSV } from "utils/light/css"
 
 export function Annotation() {
   return (
@@ -140,28 +139,10 @@ function WithClass({
 }
 
 function Label({ children, data, style }: AnnotationProps) {
-  const bg = CSSV.editor.lineHighlightBackground
-  const [hover, setHover] = React.useState(false)
-
   return (
-    <div
-      style={{
-        ...style,
-        background: hover ? bg : undefined,
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
+    <div className="ch-code-label-annotation" style={style}>
       {children}
-      <div
-        style={{
-          position: "absolute",
-          right: 0,
-          paddingRight: 16,
-          display: hover ? "block" : "none",
-          opacity: 0.7,
-        }}
-      >
+      <div className="ch-code-label-annotation-text">
         {data?.children || data}
       </div>
     </div>

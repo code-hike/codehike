@@ -43,7 +43,7 @@ function vn(key: string) {
   return `--ch-l-${key.replace(".", "-")}`
 }
 
-export const CSSV = {
+const CSSV = {
   colorScheme: v("colorScheme"),
   foreground: v("foreground"),
   background: v("background"),
