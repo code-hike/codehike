@@ -1,8 +1,5 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files"
 import { remarkCodeHike } from "@code-hike/mdx"
-import { createRequire } from "module"
-const require = createRequire(import.meta.url)
-const theme = require("shiki/themes/material-palenight.json")
 
 const Post = defineDocumentType(() => ({
   name: "Post",
@@ -27,5 +24,5 @@ export default makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
 
-  mdx: { remarkPlugins: [[remarkCodeHike, { theme }]] },
+  mdx: { remarkPlugins: [[remarkCodeHike, { theme: "material-palenight" }]] },
 })

@@ -1,16 +1,10 @@
 {
-  "include": [
-    "src",
-    "types"
-  ],
+  "include": ["src", "types"],
   "compilerOptions": {
     "rootDir": "./src",
     "baseUrl": "./",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": false,
     "sourceMap": true,
@@ -23,13 +17,8 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "paths": {
-      "@": [
-        "./"
-      ],
-      "*": [
-        "src/*",
-        "node_modules/*"
-      ]
+      "@": ["./"],
+      "*": ["src/*", "node_modules/*"]
     },
     "downlevelIteration": true,
     "resolveJsonModule": true,
@@ -42,7 +31,5 @@
     "incremental": true,
     "tsBuildInfoFile": "./dist/tsbuildinfo.json"
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

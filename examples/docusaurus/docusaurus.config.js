@@ -1,7 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const theme = require("shiki/themes/material-palenight.json")
 const { remarkCodeHike } = require("@code-hike/mdx")
 
 /** @type {import('@docusaurus/types').Config} */
@@ -18,7 +17,9 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          beforeDefaultRemarkPlugins: [[remarkCodeHike, { theme }]],
+          beforeDefaultRemarkPlugins: [
+            [remarkCodeHike, { theme: "material-palenight" }],
+          ],
           sidebarPath: require.resolve("./sidebars.js"),
         },
         theme: {

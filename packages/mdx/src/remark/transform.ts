@@ -12,7 +12,7 @@ import { JsxNode, SuperNode, visit } from "./nodes"
 import { addConfigDefaults, CodeHikeConfig } from "./config"
 
 import type { Node } from "unist"
-import { getCSSVariables } from "utils/light/css"
+import { getThemeColors } from "@code-hike/lighter"
 
 const transforms = [
   transformPreviews,
@@ -58,7 +58,7 @@ export const attacher: CodeHikeRemarkPlugin =
           getUsedCodeHikeComponentNames(tree)
 
         if (usedCodeHikeComponents.length > 0) {
-          addConfig(tree, config)
+          await addConfig(tree, config)
 
           if (config.autoImport) {
             addSmartImport(tree, usedCodeHikeComponents)
@@ -100,15 +100,30 @@ function getUsedCodeHikeComponentNames(
  * Creates a `chCodeConfig` variable node in the tree
  * so that the components can access the config
  */
-function addConfig(
+async function addConfig(
   tree: SuperNode,
   config: CodeHikeConfig
 ) {
-  const themeName = config.theme.name
-  const cssVars = getCSSVariables(config.theme)
-  const rules = Object.entries(cssVars)
-    .map(([key, value]) => `${key}: ${value};`)
-    .join(" ")
+  const { theme } = config
+
+  const themeColors = await getThemeColors(theme)
+  let rules = ""
+  for (const [first, value] of Object.entries(
+    themeColors
+  )) {
+    if (typeof value === "string") {
+      rules += `--ch-t-${first}: ${value};`
+    } else {
+      for (const [second, svalue] of Object.entries(
+        value
+      )) {
+        rules += `--ch-t-${first}-${second}: ${svalue};`
+      }
+    }
+  }
+
+  const themeName =
+    typeof theme === "string" ? theme : theme.name
   const style = `[data-ch-theme="${themeName}"] \{  ${rules} \}`
   tree.children.unshift({
     type: "mdxJsxFlowElement",
