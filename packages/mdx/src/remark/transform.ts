@@ -96,16 +96,9 @@ function getUsedCodeHikeComponentNames(
   return usage
 }
 
-/**
- * Creates a `chCodeConfig` variable node in the tree
- * so that the components can access the config
- */
-async function addConfig(
-  tree: SuperNode,
-  config: CodeHikeConfig
+async function getCSSVariables(
+  theme: CodeHikeConfig["theme"]
 ) {
-  const { theme } = config
-
   const themeColors = await getThemeColors(theme)
   let rules = ""
   for (const [first, value] of Object.entries(
@@ -121,7 +114,21 @@ async function addConfig(
       }
     }
   }
+  return rules
+}
 
+/**
+ * Creates a `chCodeConfig` variable node in the tree
+ * so that the components can access the config
+ *
+ * Also add a style tags with all the css variables with the theme colors
+ */
+async function addConfig(
+  tree: SuperNode,
+  config: CodeHikeConfig
+) {
+  const { theme } = config
+  const rules = await getCSSVariables(theme)
   const themeName =
     typeof theme === "string" ? theme : theme.name
   const style = `[data-ch-theme="${themeName}"] \{  ${rules} \}`

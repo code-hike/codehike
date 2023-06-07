@@ -1,5 +1,7 @@
+import { Theme } from "@code-hike/lighter"
+
 export type CodeHikeConfig = {
-  theme: any
+  theme: Theme
   lineNumbers?: boolean
   autoImport?: boolean
   skipLanguages: string[]
@@ -23,7 +25,7 @@ export function addConfigDefaults(
   return {
     staticMediaQuery: "not screen, (max-width: 768px)",
     ...config,
-    theme: config?.theme || {},
+    theme: config?.theme || "dark-plus",
     autoImport: config?.autoImport === false ? false : true,
     skipLanguages: config?.skipLanguages || [],
     filepath,
