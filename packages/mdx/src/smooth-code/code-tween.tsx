@@ -1,6 +1,5 @@
 import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
-import { IRawTheme } from "vscode-textmate"
 import {
   FullTween,
   Code,
