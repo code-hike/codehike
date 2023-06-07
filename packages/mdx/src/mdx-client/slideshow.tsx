@@ -97,6 +97,7 @@ export function Slideshow({
         withPreview ? "ch-slideshow-with-preview" : ""
       } ${className || ""}`}
       style={style}
+      data-ch-theme={codeConfig.themeName}
     >
       <div className="ch-slideshow-slide">
         <InnerCode
