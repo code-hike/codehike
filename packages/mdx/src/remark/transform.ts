@@ -132,6 +132,14 @@ async function addConfig(
   const themeName =
     typeof theme === "string" ? theme : theme.name
   const style = `[data-ch-theme="${themeName}"] \{  ${rules} \}`
+
+  const codeConfig = {
+    staticMediaQuery: config.staticMediaQuery,
+    lineNumbers: config.lineNumbers,
+    showCopyButton: config.showCopyButton,
+    themeName,
+  }
+
   tree.children.unshift({
     type: "mdxJsxFlowElement",
     name: "style",
@@ -202,11 +210,7 @@ async function addConfig(
                     type: "Identifier",
                     name: CH_CODE_CONFIG_VAR_NAME,
                   },
-                  init: valueToEstree({
-                    ...config,
-                    themeName,
-                    theme: undefined,
-                  }),
+                  init: valueToEstree(codeConfig),
                 },
               ],
               kind: "const",
