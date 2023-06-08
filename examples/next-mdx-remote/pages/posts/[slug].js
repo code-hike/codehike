@@ -6,7 +6,6 @@ import path from "path"
 import { postNames, POSTS_PATH } from "../../src/posts"
 import { remarkCodeHike } from "@code-hike/mdx"
 import { CH } from "@code-hike/mdx/components"
-import theme from "shiki/themes/material-palenight.json"
 
 export default function PostPage({ source }) {
   return (
@@ -28,7 +27,9 @@ export const getStaticProps = async ({ params }) => {
 
   const mdxSource = await serialize(source, {
     mdxOptions: {
-      remarkPlugins: [[remarkCodeHike, { autoImport: false, theme }]],
+      remarkPlugins: [
+        [remarkCodeHike, { autoImport: false, theme: "material-palenight" }],
+      ],
       useDynamicImport: true,
     },
   })

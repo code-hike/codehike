@@ -108,7 +108,6 @@ function EditorTween({
         <ExpandButton
           className="ch-editor-button"
           step={next || prev}
-          theme={codeConfig.theme}
         />
       ) : undefined}
     </>
@@ -136,7 +135,6 @@ function EditorTween({
       northPanel={northPanel}
       southPanel={southPanel}
       terminalPanel={terminalPanel}
-      theme={codeConfig.theme}
       northButton={northButtons}
       southButton={southCopyButton}
     />

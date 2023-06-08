@@ -1,6 +1,4 @@
 const { remarkCodeHike } = require("@code-hike/mdx")
-const theme = require("shiki/themes/dracula.json")
-
 /**
  * @type {import('@remix-run/dev').AppConfig}
  */
@@ -12,6 +10,6 @@ module.exports = {
   // publicPath: "/build/",
   // devServerPort: 8002
   mdx: {
-    remarkPlugins: [[remarkCodeHike, { theme }]],
+    remarkPlugins: [[remarkCodeHike, { theme: "dracula" }]],
   },
 }

@@ -1,15 +1,10 @@
 import React from "react"
 import { useDimensions, Dimensions } from "./use-dimensions"
-import { IRawTheme } from "vscode-textmate"
 import {
   FullTween,
   Code,
   map,
   FocusString,
-  getCodeColors,
-  getColor,
-  ColorName,
-  getColorScheme,
   anyValue,
 } from "../utils"
 import {
@@ -45,7 +40,6 @@ export type CodeConfig = {
   minZoom?: number
   maxZoom?: number
   horizontalCenter?: boolean
-  theme: IRawTheme
   lineNumbers?: boolean
   showCopyButton?: boolean
   showExpandButton?: boolean
@@ -53,18 +47,16 @@ export type CodeConfig = {
   rows?: number | "focus" | (number | "focus")[]
   triggerPosition?: TriggerPosition
   debug?: boolean
+  themeName?: string
 }
 
 function useCodeShift({
   tween,
-  theme,
 }: {
   tween: FullTween<CodeStep>
-  theme: IRawTheme
 }) {
   return useStepParser({
     highlightedLines: map(tween, tween => tween.code.lines),
-    theme,
     focus: map(tween, tween => tween.focus),
     annotations: map(tween, tween => tween.annotations),
     lang: anyValue(tween, tween => tween?.code?.lang),
@@ -79,10 +71,7 @@ export function CodeTween({
   config,
   ...preProps
 }: CodeTweenProps) {
-  const stepInfo = useCodeShift({
-    tween,
-    theme: config.theme,
-  })
+  const stepInfo = useCodeShift({ tween })
 
   const { element, dimensions } = useDimensions(
     stepInfo.code,
@@ -134,7 +123,6 @@ function AfterDimensions({
     minZoom = 1,
     maxZoom = 1,
     horizontalCenter = false,
-    theme,
   },
   dimensions,
   stepInfo,
@@ -148,22 +136,8 @@ function AfterDimensions({
   progress: number
   htmlProps: HTMLProps
 }) {
-  const { bg, fg } = getCodeColors(theme)
-
   return (
-    <Wrapper
-      htmlProps={htmlProps}
-      style={{
-        opacity: 1,
-        backgroundColor: bg,
-        color: fg,
-        ["colorScheme" as any]: getColorScheme(theme),
-        ["--ch-selection-background" as any]: getColor(
-          theme,
-          ColorName.SelectionBackground
-        ),
-      }}
-    >
+    <Wrapper htmlProps={htmlProps} style={{ opacity: 1 }}>
       <SmoothLines
         codeStep={stepInfo}
         progress={progress}
@@ -172,7 +146,6 @@ function AfterDimensions({
         minZoom={minZoom}
         maxZoom={maxZoom}
         center={horizontalCenter}
-        theme={theme}
       />
       {config.showCopyButton ? (
         <CopyButton
@@ -194,17 +167,13 @@ function Wrapper({
   children: React.ReactNode
 }) {
   return (
+    // not using <pre> because https://github.com/code-hike/codehike/issues/120
     <div
-      className="ch-code-wrapper"
       {...htmlProps}
+      className={`ch-code-wrapper ${
+        htmlProps?.className || ""
+      }`}
       style={{
-        margin: 0,
-        padding: 0,
-        position: "relative",
-        // using this instead of <pre> because https://github.com/code-hike/codehike/issues/120
-        whiteSpace: "pre",
-        // to avoid resets using "border-box" that break the scrollbar https://github.com/code-hike/codehike/issues/240
-        boxSizing: "content-box",
         ...style,
         ...htmlProps?.style,
       }}

@@ -2,18 +2,14 @@ import React from "react"
 import { MiniFrame } from "../mini-frame"
 import { TitleBar } from "./title-bar"
 import { MiniBrowserStep, useSteps } from "./use-steps"
-import { useClasser, Classes } from "../classer"
-import { EditorTheme } from "../utils"
 
 type Transition = "none" | "slide"
 
 export type MiniBrowserHikeProps = {
   progress?: number
   backward?: boolean
-  classes?: Classes
   steps?: MiniBrowserStep[]
   transition?: Transition
-  theme: EditorTheme
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 const MiniBrowserHike = React.forwardRef<
@@ -27,13 +23,10 @@ function MiniBrowserWithRef(
     backward = false,
     steps: ogSteps,
     transition = "none",
-    classes,
-    theme,
     ...props
   }: MiniBrowserHikeProps,
   ref: React.Ref<HTMLIFrameElement>
 ) {
-  const c = useClasser("ch-mini-browser", classes)
   const steps = useSteps(ogSteps)
 
   const stepIndex = Math.round(progress)
@@ -45,20 +38,14 @@ function MiniBrowserWithRef(
     <MiniFrame
       {...props}
       zoom={zoom}
-      className={`${c("")} ${props.className || ""}`}
+      className={`ch-mini-browser ${props.className || ""}`}
       style={{
         ...transitionStyle({ progress, transition }),
         ...props.style,
       }}
-      classes={classes}
       titleBar={
-        <TitleBar
-          url={displayUrl!}
-          linkUrl={loadUrl!}
-          theme={theme}
-        />
+        <TitleBar url={displayUrl!} linkUrl={loadUrl!} />
       }
-      theme={theme}
     >
       {children || <iframe ref={ref} src={loadUrl} />}
     </MiniFrame>

@@ -1,7 +1,6 @@
-import { CH } from "components"
 import React from "react"
-import { EditorProps, EditorStep } from "../mini-editor"
-import { InnerCode, updateEditorStep } from "./code"
+import { EditorStep } from "../mini-editor"
+import { InnerCode } from "./code"
 import { Preview } from "./preview"
 
 export function CodeSlot() {

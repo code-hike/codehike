@@ -1,7 +1,10 @@
 import React from "react"
 import { CodeAnnotation } from "../smooth-code"
-import { getColor, transparent, ColorName } from "../utils"
-import { LineWithElement } from "../smooth-code/partial-step-parser"
+import { transparent } from "../utils"
+import {
+  AnnotationProps,
+  LineWithElement,
+} from "../smooth-code/partial-step-parser"
 import { CopyButton } from "../smooth-code/copy-button"
 
 export function Annotation() {
@@ -36,35 +39,19 @@ function MultilineMark({
   children,
   data,
   style,
-  theme,
   lines,
 }: {
   data: string
   children: React.ReactNode
   style?: React.CSSProperties
-  theme?: any
   lines?: LineWithElement[]
 }) {
   const content = getContent(lines)
   const className = `ch-code-multiline-mark ` + (data ?? "")
-  const bg = getColor(
-    theme,
-    ColorName.RangeHighlightBackground
-  )
-  const border = getColor(
-    theme,
-    ColorName.EditorInfoForeground
-  )
 
   return (
-    <div
-      style={{ ...style, background: bg }}
-      className={className}
-    >
-      <span
-        className="ch-code-multiline-mark-border"
-        style={{ background: border }}
-      />
+    <div style={style} className={className}>
+      <span className="ch-code-multiline-mark-border" />
       {children}
       <CopyButton
         className="ch-code-button"
@@ -88,25 +75,15 @@ function getContent(lines: LineWithElement[]) {
     .join("\n")
 }
 
-function InlineMark({
-  children,
-  data,
-  theme,
-}: {
-  data: any
-  children: React.ReactNode
-  theme: any
-}) {
-  const bg =
-    tryGuessColor(children) ||
-    transparent(
-      getColor(theme, ColorName.CodeForeground),
-      0.2
-    )
-
+function InlineMark({ children, data }: AnnotationProps) {
   const className = "ch-code-inline-mark " + (data ?? "")
   return (
-    <span className={className} style={{ background: bg }}>
+    <span
+      className={className}
+      style={{
+        background: tryGuessColor(children) || undefined,
+      }}
+    >
       {children}
     </span>
   )
@@ -115,44 +92,34 @@ function InlineMark({
 function tryGuessColor(
   children: React.ReactNode
 ): string | undefined {
-  const child = React.Children.toArray(children)[0] as any
+  try {
+    const child = React.Children.toArray(children)[0] as any
 
-  const grandChild = React.Children.toArray(
-    child?.props?.children || []
-  )[0] as any
+    const grandChild = React.Children.toArray(
+      child?.props?.children || []
+    )[0] as any
 
-  const grandGrandChild = React.Children.toArray(
-    grandChild?.props?.children || []
-  )[0] as any
+    const grandGrandChild = React.Children.toArray(
+      grandChild?.props?.children || []
+    )[0] as any
+    const { color } = grandGrandChild?.props?.style || {}
 
-  const { color } = grandGrandChild?.props?.style || {}
-
-  if (color) {
-    return transparent(color as string, 0.2)
+    if (color) {
+      return transparent(color as string, 0.2)
+    }
+    return undefined
+  } catch (e) {
+    return undefined
   }
-
-  return undefined
 }
 
-function Box({
-  children,
-  data,
-  theme,
-}: {
-  data: any
-  children: React.ReactNode
-  theme: any
-}) {
-  const border =
-    typeof data === "string"
-      ? data
-      : theme.tokenColors.find((tc: any) =>
-          tc.scope?.includes("string")
-        )?.settings?.foreground || "yellow"
+function Box({ children, data }: AnnotationProps) {
+  const outlineColor =
+    typeof data === "string" ? data : undefined
   return (
     <span
       className="ch-code-box-annotation"
-      style={{ outline: `2px solid ${border}` }}
+      style={{ outlineColor }}
     >
       {children}
     </span>
@@ -163,59 +130,19 @@ function WithClass({
   children,
   data,
   style,
-  theme,
-}: {
-  data: any
-  children: React.ReactNode
-  style?: React.CSSProperties
-  theme: any
-}) {
-  const className = data as string
+}: AnnotationProps) {
   return (
-    <span style={style} className={className}>
+    <span style={style} className={data as string}>
       {children}
     </span>
   )
 }
 
-function Label({
-  children,
-  data,
-  style,
-  theme,
-}: {
-  data: any
-  children: React.ReactNode
-  style?: React.CSSProperties
-  theme?: any
-}) {
-  const bg = ((theme as any).colors[
-    "editor.lineHighlightBackground"
-  ] ||
-    (theme as any).colors[
-      "editor.selectionHighlightBackground"
-    ]) as string
-  const [hover, setHover] = React.useState(false)
-
+function Label({ children, data, style }: AnnotationProps) {
   return (
-    <div
-      style={{
-        ...style,
-        background: hover ? bg : undefined,
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
+    <div className="ch-code-label-annotation" style={style}>
       {children}
-      <div
-        style={{
-          position: "absolute",
-          right: 0,
-          paddingRight: 16,
-          display: hover ? "block" : "none",
-          opacity: 0.7,
-        }}
-      >
+      <div className="ch-code-label-annotation-text">
         {data?.children || data}
       </div>
     </div>

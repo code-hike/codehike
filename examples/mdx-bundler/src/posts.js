@@ -1,7 +1,6 @@
 import fs from "fs"
 import path from "path"
 import { remarkCodeHike } from "@code-hike/mdx"
-import theme from "shiki/themes/material-palenight.json"
 import { bundleMDX } from "mdx-bundler"
 
 export function getPostNames() {
@@ -42,7 +41,7 @@ export async function getPostSource(postName) {
     mdxOptions(options) {
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
-        [remarkCodeHike, { theme }],
+        [remarkCodeHike, { theme: "material-palenight" }],
       ]
       return options
     },

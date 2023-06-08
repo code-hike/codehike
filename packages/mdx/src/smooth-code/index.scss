@@ -7,6 +7,7 @@
   box-sizing: border-box;
   padding-right: 1.5ch;
   font-variant-numeric: tabular-nums;
+  color: var(--ch-t-editorLineNumber-foreground);
 }
 
 .ch-code-scroll-parent {
@@ -25,7 +26,7 @@
 }
 
 .ch-code-scroll-parent ::selection {
-  background-color: var(--ch-selection-background);
+  background-color: var(--ch-t-editor-selectionBackground);
   color: inherit;
 }
 
@@ -37,4 +38,16 @@
   right: 10px;
   width: 1.1em;
   height: 1.1em;
+}
+
+.ch-code-wrapper {
+  background-color: var(--ch-t-background);
+  color: var(--ch-t-foreground);
+  color-scheme: var(--ch-t-colorScheme);
+  margin: 0;
+  padding: 0;
+  position: relative;
+  white-space: pre;
+  // to avoid resets using "border-box" that break the scrollbar https://github.com/code-hike/codehike/issues/240
+  box-sizing: content-box;
 }

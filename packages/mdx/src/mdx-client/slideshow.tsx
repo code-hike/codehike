@@ -97,6 +97,7 @@ export function Slideshow({
         withPreview ? "ch-slideshow-with-preview" : ""
       } ${className || ""}`}
       style={style}
+      data-ch-theme={codeConfig.themeName}
     >
       <div className="ch-slideshow-slide">
         <InnerCode
@@ -113,7 +114,6 @@ export function Slideshow({
             className="ch-slideshow-preview"
             files={tab.files}
             presetConfig={presetConfig}
-            codeConfig={codeConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview

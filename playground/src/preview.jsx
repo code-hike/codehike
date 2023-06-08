@@ -5,7 +5,6 @@ import { remarkCodeHike } from "@code-hike/mdx";
 import { CH } from "@code-hike/mdx/components";
 import "@code-hike/mdx/styles.css";
 import { ErrorBoundary } from "react-error-boundary";
-import { getTheme } from "./themes";
 import { toHash } from "./hash";
 
 export function Preview(props) {
@@ -39,7 +38,7 @@ async function compileAndRun(input) {
           {
             ...input.config,
             autoImport: false,
-            theme: getTheme(input.config.theme),
+            theme: input.config.theme,
           },
         ],
       ],

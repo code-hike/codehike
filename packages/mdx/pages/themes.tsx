@@ -1,9 +1,10 @@
-import { BUNDLED_THEMES } from "shiki"
 import { getCode, getFiles } from "../dev/files"
 import * as runtime from "react/jsx-runtime"
 import { runSync } from "@mdx-js/mdx"
 import { CH } from "../src/components"
 import { Layout } from "../dev/layout"
+import React from "react"
+import { THEME_NAMES } from "@code-hike/lighter"
 
 const mdx = `
 
@@ -58,14 +59,9 @@ def foo(x = 1):
 
 export async function getStaticProps() {
   const files = await getFiles()
-  const promises = BUNDLED_THEMES.filter(
-    x => x !== "css-variables"
-  ).map(async themeName => {
-    const theme = (
-      await import(`shiki/themes/${themeName}.json`)
-    ).default
+  const promises = THEME_NAMES.map(async themeName => {
     const { code } = await getCode(mdx, {
-      theme,
+      theme: themeName,
       lineNumbers: true,
       showCopyButton: true,
     })
