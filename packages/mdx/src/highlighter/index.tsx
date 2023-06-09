@@ -3,6 +3,8 @@ import { highlight as light } from "@code-hike/lighter"
 
 const newlineRe = /\r\n|\r|\n/
 
+const warnings = new Set()
+
 export async function highlight({
   code,
   lang,
@@ -35,10 +37,13 @@ export async function highlight({
     return { lines, lang }
   } catch (e) {
     // TODO check error is "missing grammar"
-    console.warn(
-      "[Code Hike warning]",
-      `${lang} is not a valid language, no syntax highlighting will be applied.`
-    )
+    if (!warnings.has(lang)) {
+      console.warn(
+        "[Code Hike warning]",
+        `${lang} is not a valid language, no syntax highlighting will be applied.`
+      )
+      warnings.add(lang)
+    }
     return highlight({ code, lang: "text", theme })
   }
 }
