@@ -109,10 +109,7 @@ function BeforeDimensions({
   debug?: boolean
 }) {
   return (
-    <Wrapper
-      htmlProps={htmlProps}
-      style={{ opacity: debug ? 0.9 : 0, overflow: "auto" }}
-    >
+    <Wrapper htmlProps={htmlProps} measured={false}>
       {element}
     </Wrapper>
   )
@@ -137,7 +134,7 @@ function AfterDimensions({
   htmlProps: HTMLProps
 }) {
   return (
-    <Wrapper htmlProps={htmlProps} style={{ opacity: 1 }}>
+    <Wrapper htmlProps={htmlProps} measured={true}>
       <SmoothLines
         codeStep={stepInfo}
         progress={progress}
@@ -159,12 +156,12 @@ function AfterDimensions({
 
 function Wrapper({
   htmlProps,
-  style,
   children,
+  measured,
 }: {
   htmlProps?: HTMLProps
-  style: React.CSSProperties
   children: React.ReactNode
+  measured: boolean
 }) {
   return (
     // not using <pre> because https://github.com/code-hike/codehike/issues/120
@@ -173,10 +170,7 @@ function Wrapper({
       className={`ch-code-wrapper ${
         htmlProps?.className || ""
       }`}
-      style={{
-        ...style,
-        ...htmlProps?.style,
-      }}
+      data-ch-measured={measured}
       children={children}
     />
   )

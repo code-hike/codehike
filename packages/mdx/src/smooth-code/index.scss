@@ -51,3 +51,9 @@
   // to avoid resets using "border-box" that break the scrollbar https://github.com/code-hike/codehike/issues/240
   box-sizing: content-box;
 }
+.ch-code-wrapper[data-ch-measured="false"] {
+  overflow: auto;
+}
+.ch-code-wrapper[data-ch-measured="false"] > * {
+  opacity: 0;
+}
