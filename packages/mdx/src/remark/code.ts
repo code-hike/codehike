@@ -212,7 +212,9 @@ async function getCodeFromExternalFileIfNeeded(
     .map(t => t.content)
     .join("")
 
-  const codepath = commentData.data
+  const [codepath, range] = commentData.data
+    ?.trim()
+    .split(/\s+/)
 
   let fs, path
 
@@ -242,9 +244,9 @@ Looks like node "fs" and "path" modules are not available.`
   const dir = path.dirname(config.filepath)
   const absoluteCodepath = path.resolve(dir, codepath)
 
-  let nodeValue
+  let content: string
   try {
-    nodeValue = fs.readFileSync(absoluteCodepath, "utf8")
+    content = fs.readFileSync(absoluteCodepath, "utf8")
   } catch (e) {
     e.message = `Code Hike couldn't resolve this annotation:
 ${fileText}
@@ -252,8 +254,24 @@ ${absoluteCodepath} doesn't exist.`
     throw e
   }
 
+  if (range) {
+    const [start, end] = range.split(":")
+    const startLine = parseInt(start)
+    const endLine = parseInt(end)
+    if (isNaN(startLine) || isNaN(endLine)) {
+      throw new Error(
+        `Code Hike couldn't resolve this annotation:
+${fileText}
+The range is not valid. Should be something like:
+ ${codepath} 2:5`
+      )
+    }
+    const lines = content.split("\n")
+    content = lines.slice(startLine - 1, endLine).join("\n")
+  }
+
   return await highlight({
-    code: nodeValue,
+    code: content,
     lang: code.lang,
     theme: config.theme,
   })
