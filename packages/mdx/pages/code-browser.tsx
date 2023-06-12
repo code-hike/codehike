@@ -1,6 +1,5 @@
 import { CodeBrowser } from "../src/mini-editor/code-browser"
-
-import theme from "shiki/themes/nord.json"
+import React from "react"
 
 const files = [
   {
@@ -734,7 +733,6 @@ export default function Page() {
     <div>
       <CodeBrowser
         files={files}
-        theme={theme as any}
         startingFileName="package.json"
       />
     </div>

@@ -18,15 +18,12 @@ import {
   splitParts,
   ColumnExtremes,
   parseExtremes,
-  EditorTheme,
 } from "../utils"
-import React from "react"
 
 export function parseAnnotations(
   annotations:
     | Tween<CodeAnnotation[] | undefined>
-    | undefined,
-  theme: EditorTheme
+    | undefined
 ): {
   inlineAnnotations: FullTween<
     Record<number, InlineAnnotation[] | undefined>
@@ -60,13 +57,11 @@ export function parseAnnotations(
   return {
     inlineAnnotations: map(
       inlineCodeAnnotations,
-      annotations =>
-        parseInlineAnnotations(annotations, theme)
+      annotations => parseInlineAnnotations(annotations)
     ),
     multilineAnnotations: map(
       multilineCodeAnnotations,
-      annotations =>
-        parseMultilineAnnotations(annotations, theme)
+      annotations => parseMultilineAnnotations(annotations)
     ),
   }
 }
@@ -76,8 +71,7 @@ function isInline(annotation: CodeAnnotation): boolean {
 }
 
 function parseInlineAnnotations(
-  annotations: CodeAnnotation[],
-  theme: EditorTheme
+  annotations: CodeAnnotation[]
 ): Record<number, InlineAnnotation[]> {
   const annotationMap = {} as Record<
     number,
@@ -94,10 +88,7 @@ function parseInlineAnnotations(
     lineAnnotations.push({
       columnNumbers: columnNumbersList[0],
       data: annotation.data,
-      theme: theme,
-      Component:
-        annotation.Component ||
-        defaultInlineComponent(annotation, theme),
+      Component: annotation.Component,
     })
     annotationMap[lineNumber] = lineAnnotations
   })
@@ -105,68 +96,16 @@ function parseInlineAnnotations(
   return annotationMap
 }
 
-function defaultInlineComponent(
-  annotation: CodeAnnotation,
-  theme: EditorTheme
-): InlineAnnotation["Component"] {
-  return ({ children }) => (
-    <span style={{ outline: "red 1px solid" }}>
-      {children}
-    </span>
-  )
-}
-
 function parseMultilineAnnotations(
-  annotations: CodeAnnotation[],
-  theme: EditorTheme
+  annotations: CodeAnnotation[]
 ): MultiLineAnnotation[] {
   return annotations.map(annotation => {
     return {
       lineNumbers: parseExtremes(annotation.focus),
       data: annotation.data,
-      theme: theme,
-      Component:
-        annotation.Component ||
-        defaultMultilineComponent(annotation, theme),
+      Component: annotation.Component,
     }
   })
-}
-
-function defaultMultilineComponent(
-  annotation: CodeAnnotation,
-  theme: EditorTheme
-): MultiLineAnnotation["Component"] {
-  // TODO handle missing bg
-  const bg = ((theme as any).colors[
-    "editor.lineHighlightBackground"
-  ] ||
-    (theme as any).colors[
-      "editor.selectionHighlightBackground"
-    ]) as string
-
-  return ({ children, style }) => (
-    <div
-      style={{
-        ...style,
-        background: bg,
-        cursor: "pointer",
-      }}
-      onClick={_ => alert("clicked")}
-      className="ch-code-bg-annotation"
-    >
-      <span
-        className="ch-code-bg-annotation-border"
-        style={{
-          background: "#00a2d3",
-          width: "3px",
-          height: "100%",
-          position: "absolute",
-          left: 0,
-        }}
-      />
-      {children}
-    </div>
-  )
 }
 
 // --- multiline

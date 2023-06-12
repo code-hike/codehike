@@ -1,7 +1,6 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import { remarkCodeHike } from "@code-hike/mdx"
-import theme from "shiki/themes/material-palenight.json"
 
 export default defineConfig(async () => {
   const mdx = await import("@mdx-js/rollup")
@@ -11,7 +10,9 @@ export default defineConfig(async () => {
     },
     plugins: [
       react(),
-      mdx.default({ remarkPlugins: [[remarkCodeHike, { theme }]] }),
+      mdx.default({
+        remarkPlugins: [[remarkCodeHike, { theme: "material-palenight" }]],
+      }),
     ],
   }
 })

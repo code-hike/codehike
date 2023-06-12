@@ -37,7 +37,7 @@ export async function getCode(file: any, config = {}) {
             skipLanguages: ["", "mermaid"],
             showCopyButton: true,
             autoLink: true,
-            theme,
+            theme: "material-darker",
             ...config,
           },
         ],

@@ -45,9 +45,13 @@ function useDimensions(
   const [dimensions, setDimensions] =
     React.useState<Dimensions>(null)
 
+  // in case the element starts hidden https://github.com/code-hike/codehike/issues/372
+  const [visibility, markAsVisible] = React.useState(0)
+
   const windowWidth = useWindowWidth()
   const prevLineRef = React.useRef<HTMLDivElement>(null!)
 
+  // the element to render before dimensions are calculated
   const { prevLongestLine, nextLongestLine, element } =
     React.useMemo(() => {
       const prevLongestLine = getLongestLine(
@@ -135,6 +139,7 @@ function useDimensions(
     prevLongestLine,
     nextLongestLine,
     minColumns,
+    visibility,
   ]
 
   useLayoutEffect(() => {
@@ -142,6 +147,21 @@ function useDimensions(
       const pll = prevLineRef.current
       const contentElement = pll?.parentElement!
       const codeElement = contentElement.parentElement!
+
+      const { width } = codeElement.getBoundingClientRect()
+      if (!width && visibility === 0) {
+        const resizeObserver = new ResizeObserver(
+          ([entry]) => {
+            const { width } = entry.contentRect
+            if (width) {
+              resizeObserver.disconnect()
+              markAsVisible(1)
+            }
+          }
+        )
+        resizeObserver.observe(codeElement)
+        return () => resizeObserver.disconnect()
+      }
 
       // TODO is it clientWidth or clientRect?
       const lineContentDiv = pll?.querySelector(
@@ -195,6 +215,7 @@ function useDimensions(
       }
       setDimensions(d)
     }
+    return () => {}
   }, allDeps)
 
   if (

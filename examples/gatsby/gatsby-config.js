@@ -1,5 +1,4 @@
 const { remarkCodeHike } = require("@code-hike/mdx")
-const theme = require("shiki/themes/material-palenight.json")
 
 module.exports = {
   siteMetadata: {
@@ -11,7 +10,7 @@ module.exports = {
       options: {
         extensions: [`.mdx`, `.md`],
         mdxOptions: {
-          remarkPlugins: [[remarkCodeHike, { theme }]],
+          remarkPlugins: [[remarkCodeHike, { theme: "material-palenight" }]],
         },
       },
     },

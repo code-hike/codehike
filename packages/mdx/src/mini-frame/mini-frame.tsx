@@ -1,18 +1,10 @@
 import React from "react"
-import {
-  ClasserProvider,
-  useClasser,
-  Classes,
-} from "../classer"
-import { EditorTheme, getColor, ColorName } from "../utils"
 
 type MiniFrameProps = {
   title?: string
   titleBar?: React.ReactNode
   zoom?: number
-  classes?: Classes
   overflow?: string
-  theme: EditorTheme
 } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
 
 export const MiniFrame = React.forwardRef<
@@ -23,16 +15,12 @@ export const MiniFrame = React.forwardRef<
     title,
     children,
     titleBar,
-    classes,
-    theme,
     zoom = 1,
     overflow,
     ...props
   },
   ref
 ) {
-  const c = useClasser("ch-frame", classes)
-
   const bar = titleBar || <DefaultTitleBar title={title} />
   const zoomStyle = {
     "--ch-frame-zoom": zoom,
@@ -40,28 +28,19 @@ export const MiniFrame = React.forwardRef<
   } as React.CSSProperties
 
   return (
-    <ClasserProvider classes={classes}>
-      <div {...props} ref={ref}>
-        <div className={c("")}>
+    <div {...props} ref={ref}>
+      <div className="ch-frame">
+        <div className="ch-frame-title-bar">{bar}</div>
+        <div className={"ch-frame-content"}>
           <div
-            className={c("title-bar")}
-            style={{
-              background: getColor(
-                theme,
-                ColorName.EditorGroupHeaderBackground
-              ),
-            }}
+            className={"ch-frame-zoom"}
+            style={zoomStyle}
           >
-            {bar}
-          </div>
-          <div className={c("content")}>
-            <div className={c("zoom")} style={zoomStyle}>
-              {children}
-            </div>
+            {children}
           </div>
         </div>
       </div>
-    </ClasserProvider>
+    </div>
   )
 })
 
@@ -69,53 +48,40 @@ export const SimpleFrame = React.forwardRef<
   HTMLDivElement,
   MiniFrameProps
 >(function (
-  {
-    title,
-    children,
-    titleBar,
-    classes,
-    overflow,
-    ...props
-  },
+  { title, children, titleBar, overflow, ...props },
   ref
 ) {
-  const c = useClasser("ch", classes)
-
   const bar = titleBar || <DefaultTitleBar title={title} />
   return (
-    <ClasserProvider classes={classes}>
-      <div {...props} ref={ref}>
-        <div className={c("simple-frame")}>
-          <div className={c("frame-title-bar")}>{bar}</div>
-          {children}
-        </div>
+    <div {...props} ref={ref}>
+      <div className="ch-simple-frame">
+        <div className="ch-frame-title-bar">{bar}</div>
+        {children}
       </div>
-    </ClasserProvider>
+    </div>
   )
 })
 
 function DefaultTitleBar({ title }: { title?: string }) {
-  const c = useClasser("ch-frame")
   return (
     <>
-      <div className={c("left-bar")}>
+      <div className="ch-frame-left-bar">
         <FrameButtons />
       </div>
-      <div className={c("middle-bar")}>{title}</div>
-      <div className={c("right-bar")}></div>
+      <div className="ch-frame-middle-bar">{title}</div>
+      <div className="ch-frame-right-bar" />
     </>
   )
 }
 
 export function FrameButtons() {
-  const c = useClasser("ch-frame")
   return (
-    <div className={c("buttons")}>
-      <div className={c("button", "button-left")} />
-      <div className={c("button-space")} />
-      <div className={c("button", "button-middle")} />
-      <div className={c("button-space")} />
-      <div className={c("button", "button-right")} />
+    <div className="ch-frame-buttons">
+      <div className="ch-frame-button ch-frame-button-left" />
+      <div className="ch-frame-button-space" />
+      <div className="ch-frame-button ch-frame-button-middle" />
+      <div className="ch-frame-button-space" />
+      <div className="ch-frame-button ch-frame-button-right" />
     </div>
   )
 }

@@ -40,10 +40,13 @@ export interface JsxNode<TData extends object = Data>
    * Component name (undefined for React.Fragment)
    */
   name?: string
-  attributes?: {
-    name: string
-    value: "string"
-  }[]
+  attributes?: JsxAttribute[]
+}
+
+type JsxAttribute = {
+  name: string
+  value: "string" | any
+  type?: string
 }
 
 export interface EsmNode<TData extends object = Data>

@@ -36,6 +36,13 @@
   margin: 0.1em -0.05em;
   border-radius: 0.25em;
   font-size: 0.9rem;
+  color: var(--ch-t-foreground);
+  background: var(--ch-t-lighter-inlineBackground);
+}
+
+.ch-inline-code .ch-section-link,
+.ch-inline-code .ch-section-link * {
+  text-decoration-color: var(--ch-t-foreground);
 }
 
 .ch-section-link,
@@ -43,10 +50,7 @@
   text-decoration: underline;
   text-decoration-style: dotted;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(
-    --ch-code-foreground,
-    currentColor
-  );
+  text-decoration-color: currentColor;
 }
 .ch-section-link[data-active="true"] {
   background-color: #bae6fd66;
@@ -61,6 +65,11 @@
   border-radius: 0.25rem;
   padding: 0.2rem 0.15rem 0.1rem;
   margin: 0 -0.15rem;
+  background: var(--ch-t-editor-rangeHighlightBackground);
+}
+
+.ch-code-multiline-mark {
+  background: var(--ch-t-editor-rangeHighlightBackground);
 }
 
 .ch-code-multiline-mark-border {
@@ -68,6 +77,7 @@
   height: 100%;
   position: absolute;
   left: 0;
+  background: var(--ch-t-editor-infoForeground);
 }
 
 .ch-code-multiline-mark .ch-code-button {
@@ -92,4 +102,22 @@
   text-decoration: underline;
   text-decoration-style: dotted;
   color: inherit;
+}
+
+.ch-code-box-annotation {
+  outline: 2px solid var(--ch-t-editor-infoForeground);
+}
+
+.ch-code-label-annotation:hover {
+  background: var(--ch-t-editor-lineHighlightBackground);
+  .ch-code-label-annotation-text {
+    display: block;
+  }
+}
+.ch-code-label-annotation-text {
+  position: absolute;
+  right: 0;
+  padding-right: 16px;
+  opacity: 0.7;
+  display: none;
 }
