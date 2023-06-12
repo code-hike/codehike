@@ -1,3 +1,23 @@
+# v0.9.0 (Mon Jun 12 2023)
+
+#### 🚀 Enhancement
+
+- `@code-hike/mdx`
+  - Refactor themes [#370](https://github.com/code-hike/codehike/pull/370) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- `@code-hike/mdx`
+  - `from` annotation with line range [#376](https://github.com/code-hike/codehike/pull/376) ([@pomber](https://github.com/pomber))
+  - Fix dimensions when code starts hidden [#373](https://github.com/code-hike/codehike/pull/373) ([@pomber](https://github.com/pomber))
+  - Merge main [#365](https://github.com/code-hike/codehike/pull/365) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.8.3 (Wed May 03 2023)
 
 #### 🐛 Bug Fix

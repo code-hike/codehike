@@ -1,3 +1,35 @@
+# v0.9.0 (Mon Jun 12 2023)
+
+#### 🚀 Enhancement
+
+- Refactor themes [#370](https://github.com/code-hike/codehike/pull/370) ([@pomber](https://github.com/pomber))
+
+#### 🐛 Bug Fix
+
+- `from` annotation with line range [#376](https://github.com/code-hike/codehike/pull/376) ([@pomber](https://github.com/pomber))
+- `from` annotation with line range ([@pomber](https://github.com/pomber))
+- Fix dimensions when code starts hidden [#373](https://github.com/code-hike/codehike/pull/373) ([@pomber](https://github.com/pomber))
+- Fix dimensions when code starts hidden ([@pomber](https://github.com/pomber))
+- More robust style tag ([@pomber](https://github.com/pomber))
+- Filter codeConfig properties ([@pomber](https://github.com/pomber))
+- Remove import ([@pomber](https://github.com/pomber))
+- Add missing data-ch-theme attributes ([@pomber](https://github.com/pomber))
+- Fix config typescript ([@pomber](https://github.com/pomber))
+- Remove shiki ([@pomber](https://github.com/pomber))
+- Change theme vars prefix ([@pomber](https://github.com/pomber))
+- Dont use theme variables in JS ([@pomber](https://github.com/pomber))
+- Remove classer ([@pomber](https://github.com/pomber))
+- Remove theme from client ([@pomber](https://github.com/pomber))
+- Remove all uses of getColor ([@pomber](https://github.com/pomber))
+- Remove theme from annotations ([@pomber](https://github.com/pomber))
+- Merge main [#365](https://github.com/code-hike/codehike/pull/365) ([@pomber](https://github.com/pomber))
+
+#### Authors: 1
+
+- Rodrigo Pombo ([@pomber](https://github.com/pomber))
+
+---
+
 # v0.8.3 (Wed May 03 2023)
 
 #### 🐛 Bug Fix
