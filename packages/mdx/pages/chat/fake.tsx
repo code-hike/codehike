@@ -71,7 +71,7 @@ export default function Page() {
 
 const conversation = [
   {
-    question: `how to stop a *fetch* in js?`,
+    question: `how to stop a <Fetch/> in js?`,
     answer: `I'm assuming you're currently using {the Fetch API}
 to make a {request.
 

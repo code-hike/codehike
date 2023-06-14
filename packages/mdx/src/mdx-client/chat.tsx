@@ -4,6 +4,7 @@ import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { evaluateSync } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime"
 import { getDiffFocus } from "./focus-diff"
+import ReactMarkdown from "react-markdown"
 
 export function Chat({ steps, style, height, onReply }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
@@ -152,7 +153,7 @@ function Option({ value, onClick }) {
       className="ch-chat-reply-button"
       style={{ width: "fit-content" }}
     >
-      {value}
+      <ReactMarkdown>{value}</ReactMarkdown>
     </button>
   )
 }
@@ -172,12 +173,12 @@ function Content({ step, onReply, isLast }) {
     <>
       {step.question && (
         <Question>
-          <MDContent>{step.question}</MDContent>
+          <ReactMarkdown>{step.question}</ReactMarkdown>
         </Question>
       )}
       {step.answer ? (
         <Answer>
-          <MDContent>{step.answer}</MDContent>
+          <ReactMarkdown>{step.answer}</ReactMarkdown>
           {isLast && (
             <Replies
               replies={step.replies}

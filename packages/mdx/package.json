@@ -46,6 +46,7 @@
   "dependencies": {
     "@code-hike/lighter": "0.6.4",
     "node-fetch": "^2.0.0",
+    "react-markdown": "^8.0.7",
     "shiki": "^0.10.1"
   },
   "devDependencies": {
