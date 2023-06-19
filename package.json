@@ -31,7 +31,7 @@
       [
         "released",
         {
-          "message": "Released in %VERSION :rocket:  \n\nThanks for using Code Hike! **[Become a sponsor](https://github.com/sponsors/code-hike?metadata_source=%TYPE)** and help us keep innovating."
+          "message": "Released in `%VERSION` :rocket:  \n\nThanks for using Code Hike! **[Become a sponsor](https://github.com/sponsors/code-hike?metadata_source=%TYPE)** and help us keep innovating."
         }
       ]
     ],
