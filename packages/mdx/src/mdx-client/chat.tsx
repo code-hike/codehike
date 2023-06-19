@@ -1,8 +1,6 @@
 import { InnerCode } from "./code"
 import React from "react"
 import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
-import { evaluateSync } from "@mdx-js/mdx"
-import * as runtime from "react/jsx-runtime"
 import { getDiffFocus } from "./focus-diff"
 import ReactMarkdown from "react-markdown"
 
@@ -156,16 +154,6 @@ function Option({ value, onClick }) {
       <ReactMarkdown>{value}</ReactMarkdown>
     </button>
   )
-}
-
-function MDContent({ children }) {
-  const { default: Content } = children
-    ? evaluateSync(
-        children.replace(/\{/g, "\\{"),
-        runtime as any
-      )
-    : { default: () => undefined }
-  return <Content />
 }
 
 function Content({ step, onReply, isLast }) {
