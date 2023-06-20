@@ -3,13 +3,14 @@ import React from "react"
 import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { getDiffFocus } from "./focus-diff"
 import ReactMarkdown from "react-markdown"
+import { getCSSVariablesObject } from "utils/theme"
 
 export function Chat({
   steps,
   style,
   height,
   onReply,
-  theme = "dracula",
+  theme,
 }) {
   const [selectedStep, setSelectedStep] = React.useState(0)
   const [newFiles, setNewFiles] = React.useState(null)
@@ -69,13 +70,19 @@ export function Chat({
     }
   }, [steps, selectedStep])
 
+  const [themeVariables, setThemeVariables] =
+    React.useState({})
+  React.useEffect(() => {
+    getCSSVariablesObject(theme).then(setThemeVariables)
+  }, [theme])
+
   return (
     <section
       className={
         "ch-scrollycoding ch-chat " +
         (hasCode ? "" : "ch-chat-no-code")
       }
-      style={style}
+      style={{ ...themeVariables, ...style }}
     >
       <div
         className="ch-scrollycoding-sticker"

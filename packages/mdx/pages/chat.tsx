@@ -38,6 +38,7 @@ export default function Page() {
         }}
         height="80vh"
         onReply={sendQuestion}
+        theme="dracula"
       />
       <div
         style={{
@@ -200,125 +201,125 @@ fetch('https://api.example.com/data', { signal })
       },
     ],
   },
-  {
-    question: "Go on",
-    answer: (
-      <>
-        <p>
-          Now, to abort the fetch request, you can simply
-          call the abort method on the AbortController
-          instance. For example, you can abort the request
-          after a certain time.
-        </p>
-        <p>
-          This will abort the fetch request if it hasn't
-          completed within 5 seconds.
-        </p>
-      </>
-    ),
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `const controller = new AbortController();
-const signal = controller.signal;
+  //   {
+  //     question: "Go on",
+  //     answer: (
+  //       <>
+  //         <p>
+  //           Now, to abort the fetch request, you can simply
+  //           call the abort method on the AbortController
+  //           instance. For example, you can abort the request
+  //           after a certain time.
+  //         </p>
+  //         <p>
+  //           This will abort the fetch request if it hasn't
+  //           completed within 5 seconds.
+  //         </p>
+  //       </>
+  //     ),
+  //     code: [
+  //       {
+  //         title: "foo.js",
+  //         lang: "js",
+  //         text: `const controller = new AbortController();
+  // const signal = controller.signal;
 
-fetch('https://api.example.com/data', { signal })
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    console.error(error);
-  });
+  // fetch('https://api.example.com/data', { signal })
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data))
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
 
-setTimeout(() => controller.abort(), 5000);`,
-      },
-    ],
-  },
-  {
-    question: "Go on",
-    answer: (
-      <>
-        <p>
-          When you call controller.abort(), the fetch
-          request is interrupted, and the promise returned
-          by the fetch function is rejected with an
-          AbortError. You can catch this error in the .catch
-          block of your fetch request and handle it
-          accordingly.
-        </p>
-        <p>
-          The .catch block in the fetch request will handle
-          the abort error, logging "Fetch aborted" to the
-          console.
-        </p>
-      </>
-    ),
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `const controller = new AbortController();
-const signal = controller.signal;
+  // setTimeout(() => controller.abort(), 5000);`,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     question: "Go on",
+  //     answer: (
+  //       <>
+  //         <p>
+  //           When you call controller.abort(), the fetch
+  //           request is interrupted, and the promise returned
+  //           by the fetch function is rejected with an
+  //           AbortError. You can catch this error in the .catch
+  //           block of your fetch request and handle it
+  //           accordingly.
+  //         </p>
+  //         <p>
+  //           The .catch block in the fetch request will handle
+  //           the abort error, logging "Fetch aborted" to the
+  //           console.
+  //         </p>
+  //       </>
+  //     ),
+  //     code: [
+  //       {
+  //         title: "foo.js",
+  //         lang: "js",
+  //         text: `const controller = new AbortController();
+  // const signal = controller.signal;
 
-fetch('https://api.example.com/data', { signal })
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    if (error.name === 'AbortError') {
-      console.log('Fetch aborted');
-    } else {
-      console.error(error);
-    }
-  });
+  // fetch('https://api.example.com/data', { signal })
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data))
+  //   .catch((error) => {
+  //     if (error.name === 'AbortError') {
+  //       console.log('Fetch aborted');
+  //     } else {
+  //       console.error(error);
+  //     }
+  //   });
 
-setTimeout(() => controller.abort(), 5000);`,
-      },
-    ],
-  },
-  {
-    question: "Go on",
-    answer: (
-      <div>
-        In summary, to stop a fetch request in JavaScript:
-        <ul>
-          <li>
-            Create an instance of AbortController and get
-            its signal property
-          </li>
-          <li>
-            Pass the signal to the fetch request options
-          </li>
-          <li>
-            Call the abort method on the AbortController
-            instance to abort the fetch request
-          </li>
-          <li>
-            Catch the AbortError in the .catch block of the
-            fetch request
-          </li>
-        </ul>
-      </div>
-    ),
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `const controller = new AbortController();
-const signal = controller.signal;
+  // setTimeout(() => controller.abort(), 5000);`,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     question: "Go on",
+  //     answer: (
+  //       <div>
+  //         In summary, to stop a fetch request in JavaScript:
+  //         <ul>
+  //           <li>
+  //             Create an instance of AbortController and get
+  //             its signal property
+  //           </li>
+  //           <li>
+  //             Pass the signal to the fetch request options
+  //           </li>
+  //           <li>
+  //             Call the abort method on the AbortController
+  //             instance to abort the fetch request
+  //           </li>
+  //           <li>
+  //             Catch the AbortError in the .catch block of the
+  //             fetch request
+  //           </li>
+  //         </ul>
+  //       </div>
+  //     ),
+  //     code: [
+  //       {
+  //         title: "foo.js",
+  //         lang: "js",
+  //         text: `const controller = new AbortController();
+  // const signal = controller.signal;
 
-fetch('https://api.example.com/data', { signal })
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    if (error.name === 'AbortError') {
-      console.log('Fetch aborted');
-    } else {
-      console.error(error);
-    }
-  });
+  // fetch('https://api.example.com/data', { signal })
+  //   .then((response) => response.json())
+  //   .then((data) => console.log(data))
+  //   .catch((error) => {
+  //     if (error.name === 'AbortError') {
+  //       console.log('Fetch aborted');
+  //     } else {
+  //       console.error(error);
+  //     }
+  //   });
 
-setTimeout(() => controller.abort(), 5000);`,
-      },
-    ],
-  },
+  // setTimeout(() => controller.abort(), 5000);`,
+  //       },
+  //     ],
+  //   },
 ]

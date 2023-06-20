@@ -1,13 +1,13 @@
 import React from "react"
 
 type ConversationEntry = {
-  question?: JSX.Element
-  answer?: JSX.Element
+  question?: string | JSX.Element
+  answer?: string | JSX.Element
   code?: {
     title: string
     lang: string
     text: string
-  }
+  }[]
   replies?: string[]
 }
 

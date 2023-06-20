@@ -12,7 +12,7 @@ import { JsxNode, SuperNode, visit } from "./nodes"
 import { addConfigDefaults, CodeHikeConfig } from "./config"
 
 import type { Node } from "unist"
-import { getThemeColors } from "@code-hike/lighter"
+import { getStyle } from "utils/theme"
 
 const transforms = [
   transformPreviews,
@@ -96,54 +96,6 @@ function getUsedCodeHikeComponentNames(
   return usage
 }
 
-const styleCache = new Map<string, string>()
-
-async function getStyle(
-  theme: CodeHikeConfig["theme"],
-  themeName: string
-) {
-  if (styleCache.has(themeName)) {
-    return styleCache.get(themeName)
-  }
-  const rules = await getCSSVariables(theme)
-  const style = `[data-ch-theme="${themeName}"] \{  ${rules} \}`
-  styleCache.set(themeName, style)
-  return style
-}
-
-async function getCSSVariables(
-  theme: CodeHikeConfig["theme"]
-) {
-  const themeColors = await getThemeColors(theme)
-
-  if (!themeColors || typeof themeColors !== "object") {
-    throw new Error(
-      "[Code Hike error] Unknown theme format"
-    )
-  }
-  let rules = ""
-  for (const [first, value] of Object.entries(
-    themeColors
-  )) {
-    if (!value) {
-      continue
-    }
-    if (typeof value === "string") {
-      rules += `--ch-t-${first}: ${value};`
-    } else {
-      for (const [second, svalue] of Object.entries(
-        value
-      )) {
-        if (!svalue) {
-          continue
-        }
-        rules += `--ch-t-${first}-${second}: ${svalue};`
-      }
-    }
-  }
-  return rules
-}
-
 /**
  * Creates a `chCodeConfig` variable node in the tree
  * so that the components can access the config
@@ -155,9 +107,7 @@ async function addConfig(
   config: CodeHikeConfig
 ) {
   const { theme } = config
-  const themeName =
-    typeof theme === "string" ? theme : theme.name
-  const style = await getStyle(theme, themeName)
+  const { themeName, style } = await getStyle(theme)
 
   const codeConfig = {
     staticMediaQuery: config.staticMediaQuery,
