@@ -38,7 +38,7 @@ export default function Page() {
         }}
         height="80vh"
         onReply={sendQuestion}
-        theme="dracula"
+        theme="github-dark"
       />
       <div
         style={{
