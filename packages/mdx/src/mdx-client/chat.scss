@@ -1,0 +1,113 @@
+@import "../utils/mixins.scss";
+
+.ch-chat {
+  gap: 10px;
+
+  --ch-scrollycoding-sticker-width: 520px;
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.21, 1);
+
+  &.ch-chat-no-code {
+    transform: translateX(
+      calc(
+        -0.5 * var(--ch-scrollycoding-sticker-width) - 5px
+      )
+    );
+
+    .ch-scrollycoding-sticker {
+      opacity: 0;
+    }
+  }
+
+  .ch-scrollycoding-sticker {
+    opacity: 1;
+    transition: opacity 0.6s
+      cubic-bezier(1, -0.01, 0.68, 1.01);
+  }
+
+  .bouncing-dots {
+    display: flex;
+    align-items: center;
+  }
+
+  .dot {
+    background-color: white;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1.8s infinite;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes bounce {
+    0%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .ch-chat-reply-button {
+    @include button-reset;
+    background-color: #222;
+    border: 1px solid #555;
+    color: #e7f3ff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border-bottom-right-radius: 0;
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+
+  .ch-chat-reply-button:hover {
+    background-color: #333;
+    color: #fafafa;
+  }
+
+  .ch-scrollycoding-content {
+    // padding: 80vh 0 140px !important;
+    font-size: 1rem !important;
+  }
+
+  .ch-scrollycoding-content p {
+    margin: 1.5rem 0;
+  }
+
+  .ch-scrollycoding-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ch-scrollycoding-content p:first-child {
+    margin-top: 0;
+  }
+
+  .ch-scrollycoding-step-content {
+    border-radius: 18px !important;
+    padding: 0px !important;
+    border: 0px !important;
+    margin: 0px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+    /* min-height: 50vh !important; */
+    min-height: 10px !important;
+    justify-content: flex-end;
+  }
+  .ch-scrollycoding-step-content[data-selected] {
+    border-color: transparent !important;
+    /* background: rgba(189, 147, 249, 0.243); */
+  }
+  .ch-scrollycoding-step-content[data-selected] .answer {
+    outline: rgb(191, 158, 238) 4px solid;
+  }
+}
