@@ -94,7 +94,6 @@ export function Chat({
             codeConfig={{
               showCopyButton: true,
               showExpandButton: true,
-              // lineNumbers: true,
             }}
             northPanel={{
               tabs: newFiles.map(f => f.name),
@@ -111,13 +110,7 @@ export function Chat({
       </div>
       <div
         className="ch-scrollycoding-content"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: height,
-          justifyContent: "flex-end",
-          gap: 10,
-        }}
+        style={{ minHeight: height }}
         ref={contentRef}
       >
         {steps.map((step, i) => (
@@ -144,14 +137,7 @@ export function Chat({
 function Replies({ replies, onReply }) {
   if (!replies || replies.length === 0) return null
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 8,
-        flexDirection: "column",
-        alignItems: "flex-end",
-      }}
-    >
+    <div className="ch-chat-replies">
       {replies.map((reply, i) => (
         <Option key={i} value={reply} onClick={onReply} />
       ))}
@@ -162,8 +148,7 @@ function Option({ value, onClick }) {
   return (
     <button
       onClick={() => onClick(value)}
-      className="ch-chat-reply-button"
-      style={{ width: "fit-content" }}
+      className="ch-chat-reply"
     >
       <ReactMarkdown>{value}</ReactMarkdown>
     </button>
@@ -199,10 +184,10 @@ function Content({ step, onReply, isLast }) {
 
 const BouncingDots = () => {
   return (
-    <div className="bouncing-dots">
-      <div className="dot" />
-      <div className="dot" />
-      <div className="dot" />
+    <div className="ch-chat-bouncing-dots">
+      <div />
+      <div />
+      <div />
     </div>
   )
 }
@@ -263,26 +248,13 @@ async function mapFile(
 }
 
 function Bubble({ children, isQuestion }) {
-  const extraStyle = isQuestion
-    ? {
-        backgroundColor: "#0084ff",
-        borderBottomRightRadius: 3,
-      }
-    : {
-        backgroundColor: "rgb(47, 51, 54)",
-        borderTopLeftRadius: 3,
-      }
   return (
     <div
-      className={isQuestion ? "question" : "answer"}
-      style={{
-        // margin: '10px 0',
-        padding: "16px",
-        borderRadius: 16,
-        color: "white",
-        lineHeight: "1.5",
-        ...extraStyle,
-      }}
+      className={
+        isQuestion
+          ? "ch-chat-message ch-chat-question"
+          : "ch-chat-message ch-chat-answer"
+      }
     >
       {children}
     </div>

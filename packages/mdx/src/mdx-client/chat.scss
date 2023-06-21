@@ -24,28 +24,6 @@
       cubic-bezier(1, -0.01, 0.68, 1.01);
   }
 
-  .bouncing-dots {
-    display: flex;
-    align-items: center;
-  }
-
-  .dot {
-    background-color: white;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    margin: 0 3px;
-    animation: bounce 1.8s infinite;
-  }
-
-  .dot:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  .dot:nth-child(3) {
-    animation-delay: 0.4s;
-  }
-
   @keyframes bounce {
     0%,
     80%,
@@ -57,26 +35,13 @@
     }
   }
 
-  .ch-chat-reply-button {
-    @include button-reset;
-    background-color: #222;
-    border: 1px solid #555;
-    color: #e7f3ff;
-    padding: 8px 10px;
-    border-radius: 8px;
-    border-bottom-right-radius: 0;
-    font-size: 0.9rem;
-    display: inline-block;
-  }
-
-  .ch-chat-reply-button:hover {
-    background-color: #333;
-    color: #fafafa;
-  }
-
   .ch-scrollycoding-content {
     // padding: 80vh 0 140px !important;
-    font-size: 1rem !important;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
   }
 
   .ch-scrollycoding-content p {
@@ -109,5 +74,68 @@
   }
   .ch-scrollycoding-step-content[data-selected] .answer {
     outline: rgb(191, 158, 238) 4px solid;
+  }
+}
+
+.ch-chat-message {
+  padding: 16px;
+  border-radius: 16px;
+  color: white;
+  line-height: 1.5;
+}
+
+.ch-chat-question {
+  background-color: #0084ff;
+  border-bottom-right-radius: 3px;
+}
+
+.ch-chat-answer {
+  background-color: rgb(47, 51, 54);
+  border-top-left-radius: 3px;
+}
+
+.ch-chat-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.ch-chat-reply {
+  @include button-reset;
+  background-color: #222;
+  border: 1px solid #555;
+  color: #e7f3ff;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border-bottom-right-radius: 0;
+  font-size: 0.9rem;
+  display: inline-block;
+  width: fit-content;
+}
+
+.ch-chat-reply:hover {
+  background-color: #333;
+  color: #fafafa;
+}
+
+.ch-chat-bouncing-dots {
+  display: flex;
+  align-items: center;
+}
+
+.ch-chat-bouncing-dots div {
+  background-color: currentColor;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin: 0 3px;
+  animation: bounce 1.8s infinite;
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  &:nth-child(3) {
+    animation-delay: 0.4s;
   }
 }
