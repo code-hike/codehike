@@ -90,21 +90,10 @@ export function Chat({
         ref={stickerRef}
       >
         {newFiles && (
-          <InnerCode
-            codeConfig={{
-              showCopyButton: true,
-              showExpandButton: true,
-            }}
-            northPanel={{
-              tabs: newFiles.map(f => f.name),
-              active: activeFile || newFiles[0]?.name,
-              heightRatio: 1,
-            }}
+          <StickerCode
             files={newFiles}
-            style={{ height: "100%" }}
-            onTabClick={tab => {
-              setActiveFile(tab)
-            }}
+            setActiveFile={setActiveFile}
+            activeFile={activeFile}
           />
         )}
       </div>
@@ -133,6 +122,37 @@ export function Chat({
     </section>
   )
 }
+
+const StickerCode = React.memo(
+  ({
+    files,
+    setActiveFile,
+    activeFile,
+  }: {
+    files: any[]
+    setActiveFile: any
+    activeFile: any
+  }) => {
+    return (
+      <InnerCode
+        codeConfig={{
+          showCopyButton: true,
+          showExpandButton: true,
+        }}
+        northPanel={{
+          tabs: files.map(f => f.name),
+          active: activeFile || files[0]?.name,
+          heightRatio: 1,
+        }}
+        files={files}
+        style={{ height: "100%" }}
+        onTabClick={tab => {
+          setActiveFile(tab)
+        }}
+      />
+    )
+  }
+)
 
 function Replies({ replies, onReply }) {
   if (!replies || replies.length === 0) return null
@@ -230,7 +250,10 @@ async function mapFile(
   //   .join(",")
   const code = text
 
-  const result = await highlight(code, lang, theme)
+  const result = await highlight(code, lang, theme).catch(
+    () => highlight(code, "text", theme)
+  )
+
   return {
     name: title,
     focus,

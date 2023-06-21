@@ -4,7 +4,10 @@ import { useFakeGPT } from "../dev/chat/fake-gpt"
 
 export default function Page() {
   const inputRef = React.useRef<any>(null)
-  const [convo, sendQuestion] = useFakeGPT(conversation)
+  const [convo, sendQuestion] = useFakeGPT(
+    conversation,
+    true
+  )
 
   const handleSend = () => {
     const value = inputRef?.current?.value
@@ -72,7 +75,10 @@ export default function Page() {
 
 const conversation = [
   {
-    question: `how to stop a <Fetch/> in js?`,
+    question:
+      'convert into typescript function\n{\n      name: "getCityWeather",\n      description: "Get the weather in a given city",\n      parameters: {\n        type: "object",\n        properties: {\n          city: { type: "string", description: "The city" },\n          unit: { type: "string", enum: ["C", "F"] },\n        },\n        required: ["city"],\n      },\n    },'
+        .replace(/\r\n|\r|\n/g, "  \n")
+        .replace(/\t/g, "  "),
     answer: `I'm assuming you're currently using {the Fetch API}
 to make a {request.
 
