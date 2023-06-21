@@ -1,4 +1,7 @@
-import { Theme, getThemeColors } from "@code-hike/lighter"
+import {
+  Theme,
+  getThemeColors,
+} from "@code-hike/lighter/dist/browser.esm.mjs"
 
 const styleCache = new Map<string, string>()
 
