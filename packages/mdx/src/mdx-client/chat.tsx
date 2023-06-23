@@ -4,8 +4,39 @@ import { highlight } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { getDiffFocus } from "./focus-diff"
 import ReactMarkdown from "react-markdown"
 import { getCSSVariablesObject } from "utils/theme"
+import { Swap } from "./ssmq"
+import { Kid, NewChat } from "./new-chat"
 
 export function Chat({
+  staticMediaQuery = "not screen, (max-width: 768px)",
+  ...props
+}: any) {
+  return (
+    <Swap
+      match={[
+        [staticMediaQuery, <StaticChat {...props} />],
+        ["default", <DynamicChat {...props} />],
+      ]}
+    />
+  )
+}
+
+function StaticChat({
+  steps,
+  style,
+  height,
+  onReply,
+  theme,
+}) {
+  // TODO add css vars from theme and theme-name
+  return (
+    <section className="ch-scrollycoding-static">
+      statics
+    </section>
+  )
+}
+
+function DynamicChat({
   steps,
   style,
   height,
@@ -76,15 +107,53 @@ export function Chat({
     getCSSVariablesObject(theme).then(setThemeVariables)
   }, [theme])
 
-  return (
-    <section
-      className={
-        "ch-scrollycoding ch-chat " +
-        (hasCode ? "" : "ch-chat-no-code")
+  const kids = React.useMemo(() => {
+    const k = [] as Kid[]
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i]
+      if (step.question) {
+        k.push({
+          type: "question",
+          children: (
+            <ReactMarkdown>{step.question}</ReactMarkdown>
+          ),
+        })
       }
+      const isLast = i === steps.length - 1
+      if (step.answer) {
+        k.push({
+          type: "answer",
+          files: [],
+          children: (
+            <>
+              <ReactMarkdown>{step.answer}</ReactMarkdown>
+              {isLast && (
+                <Replies
+                  replies={step.replies}
+                  onReply={onReply}
+                />
+              )}
+            </>
+          ),
+        })
+      } else {
+        k.push({
+          type: "answer",
+          files: [],
+          children: <BouncingDots />,
+        })
+      }
+    }
+    return k
+  }, [steps])
+
+  return (
+    <NewChat
+      kids={kids}
+      height={height}
       style={{ ...themeVariables, ...style }}
     >
-      <div
+      {/* <div
         className="ch-scrollycoding-sticker"
         style={{ height }}
         ref={stickerRef}
@@ -96,7 +165,7 @@ export function Chat({
             activeFile={activeFile}
           />
         )}
-      </div>
+      </div> */}
       <div
         className="ch-scrollycoding-content"
         style={{ minHeight: height }}
@@ -119,7 +188,7 @@ export function Chat({
           </div>
         ))}
       </div>
-    </section>
+    </NewChat>
   )
 }
 

@@ -1,0 +1,108 @@
+// Vitest Snapshot v1
+
+exports[`
+\`\`\`js foo.js
+console.log(1)
+
+ 1`] = `
+{
+  "content": "",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": true,
+      "text": "console.log(1)
+
+",
+    },
+  ],
+  "replies": [],
+}
+`;
+
+exports[`
+\`\`\`js foo.js
+console.log(1)
+
+\`\`\`
+
+\`\`\`ts bar.ts
+console.log(2)
+\`\`\`
+
+# hello
+
+world 1`] = `
+{
+  "content": "# hello
+
+world",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": false,
+      "text": "console.log(1)
+",
+    },
+    {
+      "lang": "ts",
+      "name": "bar.ts",
+      "open": false,
+      "text": "console.log(2)",
+    },
+  ],
+  "replies": [],
+}
+`;
+
+exports[`
+\`\`\`js foo.js
+console.log(1)
+\`\`\`
+
+# hello
+
+world
+
+---
+
+- yes
+- no
+
+ 1`] = `
+{
+  "content": "# hello
+
+world",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": false,
+      "text": "console.log(1)",
+    },
+  ],
+  "replies": [
+    "yes",
+    "no",
+  ],
+}
+`;
+
+exports[` 1`] = `
+{
+  "content": "",
+  "fileInfoList": [],
+  "replies": [],
+}
+`;
+
+exports[`Hello 1`] = `
+{
+  "content": "Hello",
+  "fileInfoList": [],
+  "replies": [],
+}
+`;

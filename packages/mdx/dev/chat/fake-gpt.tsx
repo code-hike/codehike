@@ -13,7 +13,7 @@ type ConversationEntry = {
 
 type Conversation = ConversationEntry[]
 const THINKING_MS = 300
-const WRITING_MS = 400
+const WRITING_MS = 100
 
 export function useFakeGPT(
   convo: Conversation,

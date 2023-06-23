@@ -1,5 +1,14 @@
 @import "../utils/mixins.scss";
 
+.ch-chat-static {
+  padding: 1em;
+
+  & > * {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+}
+
 .ch-chat {
   gap: 10px;
 
