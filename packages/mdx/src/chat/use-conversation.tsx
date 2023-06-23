@@ -156,9 +156,17 @@ function getFiles(
       return {
         name: fileInfo.name,
         code: {
-          // TODO this should be just lines: []
           lines: [
-            { tokens: [{ content: "x", props: {} }] },
+            {
+              tokens: [
+                {
+                  content: ".",
+                  props: {
+                    style: { color: "transparent" },
+                  },
+                },
+              ],
+            },
           ],
           lang: fileInfo.lang,
         },
