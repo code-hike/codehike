@@ -3,6 +3,7 @@ import { parseAnswer } from "./answer-parser"
 import { Replies } from "./replies"
 import {
   ConversationEntry,
+  EntryCodeFile,
   FileInfo,
   Message,
 } from "./types"
@@ -40,7 +41,7 @@ export function useConversation(
 
   ref.current.oldConversation = newConversation
 
-  console.log(messages, newConversation)
+  // console.log(messages, newConversation)
   return newConversation
 }
 
@@ -90,7 +91,6 @@ function getPartialConversation(
       }
     }
   }
-  console.log(missingLangs)
 
   // todo - should be effect
   missingLangs.forEach(lang => {
@@ -148,7 +148,7 @@ function getFiles(
   fileInfoList: FileInfo[],
   theme: RawTheme
 ): {
-  files: CodeFile[]
+  files: EntryCodeFile[]
   activeFile: string
 } {
   const files = fileInfoList.map(fileInfo => {
@@ -157,9 +157,12 @@ function getFiles(
         name: fileInfo.name,
         code: {
           // TODO this should be just lines: []
-          lines: [{ tokens: [{ content: "" }] }],
+          lines: [
+            { tokens: [{ content: "x", props: {} }] },
+          ],
           lang: fileInfo.lang,
         },
+        text: "",
         focus: "",
         annotations: [],
       }
@@ -181,10 +184,11 @@ function getFiles(
         lines,
         lang: fileInfo.lang,
       },
+      text: fileInfo.text,
       focus: "",
       annotations: [],
     }
-  }) as CodeFile[]
+  }) as EntryCodeFile[]
   return {
     files,
     activeFile: files[0]?.name,

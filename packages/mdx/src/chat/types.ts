@@ -9,7 +9,7 @@ export type ConversationEntry =
 
 export type AnswerEntry = {
   type: "answer"
-  files: CodeFile[]
+  files: EntryCodeFile[]
   activeFile?: string
   children: React.ReactNode
 }
@@ -25,3 +25,5 @@ export type FileInfo = {
   text: string
   open: boolean
 }
+
+export type EntryCodeFile = CodeFile & { text: string }

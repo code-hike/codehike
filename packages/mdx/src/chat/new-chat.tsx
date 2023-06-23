@@ -1,6 +1,10 @@
 import React from "react"
 import { InnerCode } from "../mdx-client/code"
-import { AnswerEntry, ConversationEntry } from "./types"
+import {
+  AnswerEntry,
+  ConversationEntry,
+  EntryCodeFile,
+} from "./types"
 import { Swap } from "mdx-client/ssmq"
 import { RawTheme } from "@code-hike/lighter/dist/browser.esm.mjs"
 import { getCSSVariablesObjectSync } from "utils/theme"
@@ -176,7 +180,7 @@ const Code = React.memo(
     files,
     activeFile,
   }: {
-    files: any[]
+    files: EntryCodeFile[]
     activeFile?: string
   }) => {
     const [active, setActiveFile] =
@@ -188,6 +192,8 @@ const Code = React.memo(
 
     if (!files) return null
 
+    console.log("rendering code", files)
+
     return (
       <InnerCode
         codeConfig={{
@@ -196,7 +202,7 @@ const Code = React.memo(
         }}
         northPanel={{
           tabs: files.map(f => f.name),
-          active: active,
+          active: active || activeFile,
           heightRatio: 1,
         }}
         files={files}
@@ -205,6 +211,14 @@ const Code = React.memo(
           setActiveFile(tab)
         }}
       />
+    )
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.activeFile === nextProps.activeFile &&
+      prevProps.files?.every(
+        (f, i) => f.text === nextProps.files[i]?.text
+      )
     )
   }
 )

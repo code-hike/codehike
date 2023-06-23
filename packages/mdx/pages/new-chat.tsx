@@ -4,6 +4,9 @@ import { useConversation } from "../src/chat/use-conversation"
 import theme from "@code-hike/lighter/themes/github-dark.json"
 
 export default function Page() {
+  const [progress, setProgress] = React.useState(0)
+  const messages = getMessages(progress)
+
   const conversation = useConversation(
     messages,
     false,
@@ -12,7 +15,8 @@ export default function Page() {
     },
     theme
   )
-  console.log(conversation)
+  console.log({ messages })
+  console.log({ conversation })
   return (
     <div>
       <style jsx global>{`
@@ -35,6 +39,25 @@ export default function Page() {
         height="80vh"
         theme={theme as any}
       />
+      <div
+        style={{
+          position: "fixed",
+          bottom: 8,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <input
+          style={{ width: "100%", padding: 0, margin: 0 }}
+          type="range"
+          min="0"
+          max={max}
+          value={progress}
+          onChange={e =>
+            setProgress(Number(e.target.value))
+          }
+        />
+      </div>
     </div>
   )
 }
@@ -66,3 +89,9 @@ That is foo
   ...m,
   content: m.content.replace(/~/g, "`"),
 }))
+
+const max = messages.length
+
+function getMessages(p) {
+  return messages.slice(0, p)
+}
