@@ -97,7 +97,7 @@ function useDimensions(
         }
       }
 
-      // avod setting the ref more than once https://github.com/code-hike/codehike/issues/232
+      // avoid setting the ref more than once https://github.com/code-hike/codehike/issues/232
       let prevLineRefSet = false
       const element = (
         <code className="ch-code-scroll-parent">
