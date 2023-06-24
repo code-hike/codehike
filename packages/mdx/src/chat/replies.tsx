@@ -22,3 +22,13 @@ export function Replies({
     </div>
   )
 }
+
+export const BouncingDots = () => {
+  return (
+    <div className="ch-chat-bouncing-dots">
+      <div />
+      <div />
+      <div />
+    </div>
+  )
+}

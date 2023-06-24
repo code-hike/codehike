@@ -2,21 +2,34 @@ import React from "react"
 import { NewChat } from "../src/chat/new-chat"
 import { useConversation } from "../src/chat/use-conversation"
 import theme from "@code-hike/lighter/themes/github-dark.json"
+import { Message } from "../src/chat/types"
 
 export default function Page() {
   const [progress, setProgress] = React.useState(0)
-  const messages = getMessages(progress)
-
+  const messages = steps[progress]
+  const isStreaming =
+    messages[messages.length - 1]?.isStreaming
   const conversation = useConversation(
     messages,
-    false,
+    !!isStreaming,
     x => {
       console.log(x)
     },
     theme
   )
-  console.log({ messages })
+  console.log(progress)
+  // console.log({ messages })
+  console.log(messages[messages.length - 1]?.content)
   console.log({ conversation })
+
+  React.useEffect(() => {
+    // focus input range
+    const input = document.querySelector(
+      "input[type=range]"
+    ) as HTMLInputElement
+    input.focus()
+  }, [])
+
   return (
     <div>
       <style jsx global>{`
@@ -48,6 +61,7 @@ export default function Page() {
         }}
       >
         <input
+          autoFocus
           style={{ width: "100%", padding: 0, margin: 0 }}
           type="range"
           min="0"
@@ -56,6 +70,23 @@ export default function Page() {
           onChange={e =>
             setProgress(Number(e.target.value))
           }
+          onKeyDown={event => {
+            if (
+              event.key === "ArrowRight" &&
+              progress < 100
+            ) {
+              setProgress(prevValue =>
+                Math.min(prevValue + 1, max)
+              )
+            } else if (
+              event.key === "ArrowLeft" &&
+              progress > 0
+            ) {
+              setProgress(prevValue =>
+                Math.max(prevValue - 1, 0)
+              )
+            }
+          }}
         />
       </div>
     </div>
@@ -72,13 +103,16 @@ const messages = [
     content: `
 ~~~js foo.js
 console.log("this is foo")
+console.log("this too")
 ~~~
 
 ~~~js bar.js
 console.log("this is bar")
 ~~~
 
-That is foo
+That is foo.
+
+That is bar.
 `,
   },
   {
@@ -90,8 +124,42 @@ That is foo
   content: m.content.replace(/~/g, "`"),
 }))
 
-const max = messages.length
+function getSteps() {
+  const steps = [[]] as (Message & {
+    isStreaming?: boolean
+  })[][]
+  const current = [] as Message[]
+  messages.forEach(m => {
+    if (m.role === "user") {
+      current.push(m)
+      steps.push([...current])
+      return
+    }
 
-function getMessages(p) {
-  return messages.slice(0, p)
+    let newContent = ""
+    steps.push([
+      ...current,
+      { ...m, content: newContent, isStreaming: true },
+    ])
+
+    const splits = m.content.match(/.{1,2}/gs) || []
+    splits.forEach(s => {
+      newContent += s
+      steps.push([
+        ...current,
+        { ...m, content: newContent, isStreaming: true },
+      ])
+    })
+
+    steps.push([
+      ...current,
+      { ...m, content: newContent, isStreaming: false },
+    ])
+
+    current.push(m)
+  })
+  return steps
 }
+
+const steps = getSteps()
+const max = steps.length - 1

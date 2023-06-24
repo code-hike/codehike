@@ -1,7 +1,8 @@
 import ReactMarkdown from "react-markdown"
 import { parseAnswer } from "./answer-parser"
-import { Replies } from "./replies"
+import { BouncingDots, Replies } from "./replies"
 import {
+  AnswerEntry,
   ConversationEntry,
   EntryCodeFile,
   FileInfo,
@@ -30,7 +31,7 @@ export function useConversation(
   })
 
   const { oldConversation } = ref.current
-  const newConversation = getPartialConversation(
+  const newConversation = getNewConversation(
     [],
     messages,
     oldConversation,
@@ -45,7 +46,7 @@ export function useConversation(
   return newConversation
 }
 
-function getPartialConversation(
+function getNewConversation(
   oldMessages: Message[],
   newMessages: Message[],
   oldConversation: ConversationEntry[],
@@ -64,11 +65,15 @@ function getPartialConversation(
     const oldMessage = oldMessages[i]
     const newMessage = newMessages[i]
     const oldEntry = oldConversation[i]
+    const isStreamingEntry =
+      isStreaming && i === newMessages.length - 1
     const newEntry = getEntry(
       oldMessage,
       newMessage,
       oldEntry,
+      conversation,
       onReply,
+      isStreamingEntry,
       theme
     )
     if (newEntry) {
@@ -108,7 +113,9 @@ function getEntry(
   oldMessage: Message | undefined,
   newMessage: Message | undefined,
   oldEntry: ConversationEntry | undefined,
+  conversation: ConversationEntry[],
   onReply: (v: string) => void,
+  isStreaming: boolean,
   theme: RawTheme
 ): ConversationEntry | undefined {
   if (!newMessage) return undefined
@@ -121,9 +128,16 @@ function getEntry(
     }
   }
 
-  const parsedAnswer = parseAnswer(newMessage.content)
+  const content = isStreaming
+    ? newMessage.content.split("\n").slice(0, -1).join("\n")
+    : newMessage.content
+
+  const parsedAnswer = parseAnswer(content)
+
   const { files, activeFile } = getFiles(
     parsedAnswer.fileInfoList,
+    oldEntry,
+    conversation,
     theme
   )
   return {
@@ -132,9 +146,14 @@ function getEntry(
     activeFile,
     children: (
       <>
-        <ReactMarkdown>
-          {parsedAnswer.content}
-        </ReactMarkdown>
+        {parsedAnswer.content ? (
+          <ReactMarkdown>
+            {parsedAnswer.content}
+          </ReactMarkdown>
+        ) : (
+          <BouncingDots />
+        )}
+
         <Replies
           replies={parsedAnswer.replies}
           onReply={onReply}
@@ -146,59 +165,110 @@ function getEntry(
 
 function getFiles(
   fileInfoList: FileInfo[],
+  oldEntry: ConversationEntry | undefined,
+  conversation: ConversationEntry[],
   theme: RawTheme
 ): {
   files: EntryCodeFile[]
   activeFile: string
 } {
-  const files = fileInfoList.map(fileInfo => {
-    if (!isLangLoaded(fileInfo.lang)) {
-      return {
-        name: fileInfo.name,
-        code: {
-          lines: [
-            {
-              tokens: [
-                {
-                  content: ".",
-                  props: {
-                    style: { color: "transparent" },
-                  },
-                },
-              ],
-            },
-          ],
-          lang: fileInfo.lang,
-        },
-        text: "",
-        focus: "",
-        annotations: [],
-      }
-    }
-    const result = highlightSync(
-      fileInfo.text,
-      fileInfo.lang,
-      theme
+  // we need the files from the previous answer
+  // if it's a new file it goes first
+
+  // if there's an open file it is active
+  // else we keep the same from the prev convo
+  // else we set the first one
+
+  let prevFiles = [] as EntryCodeFile[]
+  let prevActiveFile = ""
+
+  if (oldEntry?.type === "answer") {
+    prevFiles = oldEntry.files
+    prevActiveFile = oldEntry.activeFile
+  } else {
+    const lastAnswer = conversation
+      .reverse()
+      .find(entry => entry.type === "answer") as
+      | AnswerEntry
+      | undefined
+    prevFiles = lastAnswer?.files ?? []
+    prevActiveFile = lastAnswer?.activeFile ?? ""
+  }
+
+  const files = prevFiles.map(prevFile => {
+    const newFile = fileInfoList.find(
+      newFile => newFile.name === prevFile.name
     )
-    const lines = result.lines.map(line => ({
-      tokens: line.map(token => ({
-        content: token.content,
-        props: { style: token.style },
-      })),
-    }))
+
+    if (!newFile || newFile.text === prevFile.text) {
+      return prevFile
+    }
+
+    return highlightFile(newFile, theme)
+  })
+
+  fileInfoList.forEach(fileInfo => {
+    if (!files.find(file => file.name === fileInfo.name)) {
+      files.unshift(highlightFile(fileInfo, theme))
+    }
+  })
+
+  const activeFile = fileInfoList.find(
+    fileInfo => fileInfo.open
+  )?.name
+  return {
+    files,
+    activeFile:
+      activeFile || prevActiveFile || files[0]?.name,
+  }
+}
+
+function highlightFile(
+  fileInfo: FileInfo,
+  theme: RawTheme
+): EntryCodeFile {
+  if (!isLangLoaded(fileInfo.lang)) {
     return {
       name: fileInfo.name,
       code: {
-        lines,
+        lines: [
+          {
+            tokens: [
+              {
+                content: ".",
+                props: {
+                  style: { color: "transparent" },
+                },
+              },
+            ],
+          },
+        ],
         lang: fileInfo.lang,
       },
-      text: fileInfo.text,
+      text: "",
       focus: "",
       annotations: [],
     }
-  }) as EntryCodeFile[]
+  }
+  const result = highlightSync(
+    fileInfo.text,
+    fileInfo.lang,
+    theme
+  )
+  const lines = result.lines.map(line => ({
+    tokens: line.map(token => ({
+      content: token.content,
+      props: { style: token.style },
+    })),
+  }))
   return {
-    files,
-    activeFile: files[0]?.name,
+    name: fileInfo.name,
+    code: {
+      lines,
+      lang: fileInfo.lang,
+    },
+    text: fileInfo.text,
+    focus: "",
+    annotations: [],
   }
 }

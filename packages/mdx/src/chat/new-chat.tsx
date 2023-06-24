@@ -190,7 +190,7 @@ const Code = React.memo(
       setActiveFile(activeFile)
     }, [activeFile])
 
-    if (!files) return null
+    if (!files || !files.length) return null
 
     console.log("rendering code", files)
 
@@ -214,8 +214,10 @@ const Code = React.memo(
     )
   },
   (prevProps, nextProps) => {
+    console.log({ prevProps, nextProps })
     return (
       prevProps.activeFile === nextProps.activeFile &&
+      prevProps.files?.length === nextProps.files?.length &&
       prevProps.files?.every(
         (f, i) => f.text === nextProps.files[i]?.text
       )
