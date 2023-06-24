@@ -40,27 +40,36 @@ function extractCodeBlocks(
   let markdownWithoutCode = markdownWithoutClosedCodeBlocs
 
   if (isStreaming) {
-    const markdownWithoutLineInProgress =
-      markdownWithoutClosedCodeBlocs
-        .split("\n")
-        .slice(0, -1)
-        .join("\n")
     const openCodeBlock =
-      markdownWithoutLineInProgress.match(/```[\s\S]*?$/g)
+      markdownWithoutClosedCodeBlocs.match(/```[\s\S]*?$/g)
 
     if (openCodeBlock) {
-      markdownWithoutCode = markdownWithoutLineInProgress
+      markdownWithoutCode = markdownWithoutClosedCodeBlocs
         .replace(/```[\s\S]*?$/g, "")
         .trim()
 
-      const streamingCodeBlock = openCodeBlock[0]
-      fileInfoList.push({
-        ...codeblockToFileInfo(
-          streamingCodeBlock + "\n```"
-        ),
-        open: isStreaming,
-      })
+      let streamingCodeBlock = openCodeBlock[0]
+        .split("\n")
+        .slice(0, -1)
+        .join("\n")
+
+      if (streamingCodeBlock) {
+        fileInfoList.push({
+          ...codeblockToFileInfo(
+            streamingCodeBlock + "\n```"
+          ),
+          open: isStreaming,
+        })
+      }
     }
+  }
+
+  // if ends with ` or ``, let's wait until more chars
+  const backticks = markdownWithoutCode.match(/(`$|``$)/g)
+  if (backticks) {
+    markdownWithoutCode = markdownWithoutCode
+      .replace(/(`$|``$)/g, "")
+      .trim()
   }
 
   return { markdownWithoutCode, fileInfoList }

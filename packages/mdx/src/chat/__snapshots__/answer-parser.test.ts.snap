@@ -13,7 +13,6 @@ console.log(1)
       "name": "foo.js",
       "open": true,
       "text": "console.log(1)
-
 ",
     },
   ],
@@ -35,7 +34,12 @@ console.log(2)
 
 world 1`] = `
 {
-  "content": "# hello
+  "content": "
+
+
+
+
+# hello
 
 world",
   "fileInfoList": [
@@ -73,7 +77,10 @@ world
 
  1`] = `
 {
-  "content": "# hello
+  "content": "
+
+
+# hello
 
 world",
   "fileInfoList": [

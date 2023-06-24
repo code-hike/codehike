@@ -192,8 +192,6 @@ const Code = React.memo(
 
     if (!files || !files.length) return null
 
-    console.log("rendering code", files)
-
     return (
       <InnerCode
         codeConfig={{
@@ -214,7 +212,6 @@ const Code = React.memo(
     )
   },
   (prevProps, nextProps) => {
-    console.log({ prevProps, nextProps })
     return (
       prevProps.activeFile === nextProps.activeFile &&
       prevProps.files?.length === nextProps.files?.length &&

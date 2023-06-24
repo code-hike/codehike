@@ -17,10 +17,10 @@ export default function Page() {
     },
     theme
   )
-  console.log(progress)
+  // console.log(progress)
   // console.log({ messages })
-  console.log(messages[messages.length - 1]?.content)
-  console.log({ conversation })
+  // console.log(messages[messages.length - 1]?.content)
+  // console.log({ conversation })
 
   React.useEffect(() => {
     // focus input range
