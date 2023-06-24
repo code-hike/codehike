@@ -1,5 +1,5 @@
 import React from "react"
-import { NewChat } from "../src/chat/new-chat"
+import { Chat } from "../src/chat/chat"
 import { useConversation } from "../src/chat/use-conversation"
 import theme from "@code-hike/lighter/themes/github-dark.json"
 import { Message } from "../src/chat/types"
@@ -58,7 +58,7 @@ export default function Page() {
         .ch-scrollycoding-sticker {
         }
       `}</style>
-      <NewChat
+      <Chat
         conversation={conversation}
         height="80vh"
         theme={theme as any}
@@ -134,11 +134,20 @@ console.log("this is foo")
 console.log("this too")
 ~~~
 
-~~~js bar.js
+That is bar.
+`,
+  },
+  {
+    role: "user",
+    content: "hi 2",
+  },
+  {
+    role: "assistant",
+    content: `
+~~~js foo.js
 console.log("this is bar")
+console.log("this too")
 ~~~
-
-That is foo.
 
 That is bar.
 `,

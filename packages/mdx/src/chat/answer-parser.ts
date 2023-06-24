@@ -44,9 +44,11 @@ function extractCodeBlocks(
       markdownWithoutClosedCodeBlocs.match(/```[\s\S]*?$/g)
 
     if (openCodeBlock) {
-      markdownWithoutCode = markdownWithoutClosedCodeBlocs
-        .replace(/```[\s\S]*?$/g, "")
-        .trim()
+      markdownWithoutCode =
+        markdownWithoutClosedCodeBlocs.replace(
+          /```[\s\S]*?$/g,
+          ""
+        )
 
       let streamingCodeBlock = openCodeBlock[0]
         .split("\n")
@@ -67,10 +69,14 @@ function extractCodeBlocks(
   // if ends with ` or ``, let's wait until more chars
   const backticks = markdownWithoutCode.match(/(`$|``$)/g)
   if (backticks) {
-    markdownWithoutCode = markdownWithoutCode
-      .replace(/(`$|``$)/g, "")
-      .trim()
+    markdownWithoutCode = markdownWithoutCode.replace(
+      /(`$|``$)/g,
+      ""
+    )
   }
+
+  markdownWithoutCode = markdownWithoutCode.trim()
+  // console.log({ markdownWithoutCode })
 
   return { markdownWithoutCode, fileInfoList }
 }

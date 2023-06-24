@@ -9,7 +9,6 @@ import {
   Message,
 } from "./types"
 import React from "react"
-import { CodeFile } from "mini-editor"
 import {
   highlightSync,
   RawTheme,
@@ -19,6 +18,7 @@ import {
   isLangLoaded,
   loadLang,
 } from "./laguages"
+import { highlightFile } from "./highlight-code"
 
 export function useConversation(
   messages: Message[],
@@ -203,7 +203,17 @@ function getFiles(
       return prevFile
     }
 
-    return highlightFile(newFile, theme)
+    const prevAnswer = conversation
+      .reverse()
+      .find(entry => entry.type === "answer") as
+      | AnswerEntry
+      | undefined
+
+    const prevAnswerFile = prevAnswer?.files.find(
+      file => file.name === prevFile.name
+    )
+
+    return highlightFile(newFile, theme, prevAnswerFile)
   })
 
   fileInfoList.forEach(fileInfo => {
@@ -219,55 +229,5 @@ function getFiles(
     files,
     activeFile:
       activeFile || prevActiveFile || files[0]?.name,
-  }
-}
-
-function highlightFile(
-  fileInfo: FileInfo,
-  theme: RawTheme
-): EntryCodeFile {
-  if (!isLangLoaded(fileInfo.lang)) {
-    return {
-      name: fileInfo.name,
-      code: {
-        lines: [
-          {
-            tokens: [
-              {
-                content: ".",
-                props: {
-                  style: { color: "transparent" },
-                },
-              },
-            ],
-          },
-        ],
-        lang: fileInfo.lang,
-      },
-      text: "",
-      focus: "",
-      annotations: [],
-    }
-  }
-  const result = highlightSync(
-    fileInfo.text,
-    fileInfo.lang,
-    theme
-  )
-  const lines = result.lines.map(line => ({
-    tokens: line.map(token => ({
-      content: token.content,
-      props: { style: token.style },
-    })),
-  }))
-  return {
-    name: fileInfo.name,
-    code: {
-      lines,
-      lang: fileInfo.lang,
-    },
-    text: fileInfo.text,
-    focus: "",
-    annotations: [],
   }
 }

@@ -16,7 +16,7 @@ type ChatProps = {
   theme: RawTheme
 } & React.HTMLAttributes<HTMLElement>
 
-export function NewChat({
+export function Chat({
   staticMediaQuery = "not screen, (max-width: 930px)",
   theme,
   style,
