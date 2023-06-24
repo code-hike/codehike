@@ -1,8 +1,11 @@
 // turns streaming markdown into codeblocks, content and replies
 // doesnt care about previous answers
-export function parseAnswer(markdown: string) {
+export function parseAnswer(
+  markdown: string,
+  isStreaming: boolean
+) {
   const { markdownWithoutCode, fileInfoList } =
-    extractCodeBlocks(markdown)
+    extractCodeBlocks(markdown, isStreaming)
   const [answerText, repliesText] =
     markdownWithoutCode.split(/\n+---\n+/)
   const replies = repliesText
@@ -18,7 +21,10 @@ export function parseAnswer(markdown: string) {
   }
 }
 
-function extractCodeBlocks(markdown: string) {
+function extractCodeBlocks(
+  markdown: string,
+  isStreaming: boolean
+) {
   const closedCodeBlocks =
     markdown.match(/```[\s\S]*?```/g) || []
   const markdownWithoutClosedCodeBlocs = markdown.replace(
@@ -26,24 +32,37 @@ function extractCodeBlocks(markdown: string) {
     ""
   )
 
-  const openCodeBlock =
-    markdownWithoutClosedCodeBlocs.match(/```[\s\S]*?$/g)
-
-  const markdownWithoutCode = markdownWithoutClosedCodeBlocs
-    .replace(/```[\s\S]*?$/g, "")
-    .trim()
-
   const fileInfoList = closedCodeBlocks.map(s => ({
     ...codeblockToFileInfo(s),
     open: false,
   }))
 
-  if (openCodeBlock) {
-    fileInfoList.push({
-      ...codeblockToFileInfo(openCodeBlock[0] + "\n```"),
-      open: true,
-    })
+  let markdownWithoutCode = markdownWithoutClosedCodeBlocs
+
+  if (isStreaming) {
+    const markdownWithoutLineInProgress =
+      markdownWithoutClosedCodeBlocs
+        .split("\n")
+        .slice(0, -1)
+        .join("\n")
+    const openCodeBlock =
+      markdownWithoutLineInProgress.match(/```[\s\S]*?$/g)
+
+    if (openCodeBlock) {
+      markdownWithoutCode = markdownWithoutLineInProgress
+        .replace(/```[\s\S]*?$/g, "")
+        .trim()
+
+      const streamingCodeBlock = openCodeBlock[0]
+      fileInfoList.push({
+        ...codeblockToFileInfo(
+          streamingCodeBlock + "\n```"
+        ),
+        open: isStreaming,
+      })
+    }
   }
+
   return { markdownWithoutCode, fileInfoList }
 }
 

@@ -30,6 +30,14 @@ export default function Page() {
     input.focus()
   }, [])
 
+  const preRef = React.useRef<HTMLPreElement>(null)
+
+  React.useEffect(() => {
+    if (preRef.current) {
+      preRef.current.scrollTop = preRef.current.scrollHeight
+    }
+  }, [progress])
+
   return (
     <div>
       <style jsx global>{`
@@ -44,7 +52,10 @@ export default function Page() {
 
         .ch-chat {
           width: 900px;
-          margin: 10vh auto;
+          margin: 0 auto;
+        }
+
+        .ch-scrollycoding-sticker {
         }
       `}</style>
       <NewChat
@@ -55,11 +66,28 @@ export default function Page() {
       <div
         style={{
           position: "fixed",
-          bottom: 8,
+          bottom: 0,
           left: 0,
           right: 0,
+          height: "20vh",
+          padding: "2px 0 8px",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
+        <pre
+          ref={preRef}
+          style={{
+            width: "100%",
+            flex: 1,
+            background: "black",
+            color: "white",
+            overflow: "auto",
+          }}
+        >
+          {messages[messages.length - 1]?.content}
+        </pre>
         <input
           autoFocus
           style={{ width: "100%", padding: 0, margin: 0 }}

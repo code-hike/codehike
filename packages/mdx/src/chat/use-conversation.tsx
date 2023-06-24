@@ -128,11 +128,10 @@ function getEntry(
     }
   }
 
-  const content = isStreaming
-    ? newMessage.content.split("\n").slice(0, -1).join("\n")
-    : newMessage.content
-
-  const parsedAnswer = parseAnswer(content)
+  const parsedAnswer = parseAnswer(
+    newMessage.content,
+    isStreaming
+  )
 
   const { files, activeFile } = getFiles(
     parsedAnswer.fileInfoList,

@@ -40,5 +40,5 @@ console.log(1)
 ].map(x => x.replace(/~/g, "`"))
 
 test.each(fixtures)("%s", async markdown => {
-  expect(parseAnswer(markdown)).toMatchSnapshot()
+  expect(parseAnswer(markdown, true)).toMatchSnapshot()
 })
