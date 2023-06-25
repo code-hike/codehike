@@ -9,15 +9,12 @@ import {
   Message,
 } from "./types"
 import React from "react"
-import {
-  highlightSync,
-  RawTheme,
-} from "@code-hike/lighter/dist/browser.esm.mjs"
+import { RawTheme } from "@code-hike/lighter/dist/browser.esm.mjs"
 import {
   getLoadedLanguages,
   isLangLoaded,
   loadLang,
-} from "./laguages"
+} from "./languages"
 import { highlightFile } from "./highlight-code"
 
 export function useConversation(
@@ -30,8 +27,14 @@ export function useConversation(
     oldConversation: [] as ConversationEntry[],
   })
 
+  const [loadingLangs, setLoadingLangs] = React.useState(
+    [] as string[]
+  )
+
+  console.log(loadingLangs)
+
   const { oldConversation } = ref.current
-  const newConversation = getNewConversation(
+  let newConversation = getNewConversation(
     [],
     messages,
     oldConversation,
@@ -39,6 +42,44 @@ export function useConversation(
     onReply,
     theme
   )
+
+  const missingLangs = [] as string[]
+  for (const entry of newConversation) {
+    if (entry.type === "answer") {
+      for (const file of entry.files) {
+        if (
+          !isLangLoaded(file.code.lang) &&
+          !missingLangs.includes(file.code.lang) &&
+          !loadingLangs.includes(file.code.lang)
+        ) {
+          missingLangs.push(file.code.lang)
+        }
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    if (missingLangs.length === 0) return
+    missingLangs.forEach(lang => {
+      loadLang(lang).then(() => {
+        setLoadingLangs(prev =>
+          prev.includes(lang) ? prev : [...prev, lang]
+        )
+      })
+    })
+  }, [missingLangs.join(",")])
+
+  // newConversation.forEach(entry => {
+  //   if (entry.type === "answer") {
+  //     entry.files = entry.files?.filter(
+  //       f => !missingLangs.includes(f.code.lang)
+  //     )
+  //   }
+  // })
+
+  if (!isStreaming && missingLangs.length > 0) {
+    newConversation = []
+  }
 
   ref.current.oldConversation = newConversation
 
@@ -54,10 +95,6 @@ function getNewConversation(
   onReply: (reply: string) => void,
   theme: RawTheme
 ): ConversationEntry[] {
-  const [loadedLangs, setLoadedLangs] = React.useState(
-    getLoadedLanguages
-  )
-
   const headCount = Math.max(oldConversation.length - 2, 0)
   const conversation = oldConversation.slice(0, headCount)
 
@@ -82,29 +119,6 @@ function getNewConversation(
       break
     }
   }
-
-  const missingLangs = [] as string[]
-  for (const entry of conversation) {
-    if (entry.type === "answer") {
-      for (const file of entry.files) {
-        if (
-          !loadedLangs.includes(file.code.lang) &&
-          !missingLangs.includes(file.code.lang)
-        ) {
-          missingLangs.push(file.code.lang)
-        }
-      }
-    }
-  }
-
-  // todo - should be effect
-  missingLangs.forEach(lang => {
-    loadLang(lang).then(() => {
-      setLoadedLangs(prev =>
-        prev.includes(lang) ? prev : [...prev, lang]
-      )
-    })
-  })
 
   return conversation
 }

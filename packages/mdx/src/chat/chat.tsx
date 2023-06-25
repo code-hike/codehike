@@ -55,6 +55,11 @@ function StaticChat({
         entry.type === "answer" ? (
           <React.Fragment key={i}>
             <Code
+              key={
+                entry.files?.find(
+                  f => f.name === entry.activeFile
+                )?.text
+              }
               files={entry.files}
               activeFile={entry.activeFile}
             />
@@ -192,8 +197,16 @@ const Code = React.memo(
 
     if (!files || !files.length) return null
 
+    // console.log("render code", files, activeFile)
+
+    const raw = files.find(f => f.name === active)?.raw
+    // console.log(
+    //   raw,
+    //   files.find(f => f.name === active)
+    // )
     return (
       <InnerCode
+        key={raw?.toString()}
         codeConfig={{
           showCopyButton: true,
           showExpandButton: true,
@@ -216,7 +229,9 @@ const Code = React.memo(
       prevProps.activeFile === nextProps.activeFile &&
       prevProps.files?.length === nextProps.files?.length &&
       prevProps.files?.every(
-        (f, i) => f.text === nextProps.files[i]?.text
+        (f, i) =>
+          f.text === nextProps.files[i]?.text &&
+          f.raw === nextProps.files[i]?.raw
       )
     )
   }

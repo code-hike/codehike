@@ -1,4 +1,7 @@
-import { preload } from "@code-hike/lighter/dist/browser.esm.mjs"
+import {
+  preload,
+  LANG_NAMES,
+} from "@code-hike/lighter/dist/browser.esm.mjs"
 
 const cache = new Map<
   string,
@@ -11,7 +14,15 @@ export function getLoadedLanguages() {
     .map(([lang]) => lang)
 }
 
+export function isLangSupported(lang: string) {
+  return LANG_NAMES.includes(lang)
+}
+
 export function isLangLoaded(lang: string) {
+  if (!isLangSupported(lang)) {
+    return true
+  }
+
   // if is server side return false
   if (typeof window === "undefined") {
     return false

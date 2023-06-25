@@ -26,4 +26,7 @@ export type FileInfo = {
   open: boolean
 }
 
-export type EntryCodeFile = CodeFile & { text: string }
+export type EntryCodeFile = CodeFile & {
+  text: string
+  raw?: boolean
+}

@@ -2,7 +2,7 @@ import {
   highlightSync,
   RawTheme,
 } from "@code-hike/lighter/dist/browser.esm.mjs"
-import { isLangLoaded } from "./laguages"
+import { isLangLoaded, isLangSupported } from "./languages"
 import { EntryCodeFile, FileInfo } from "./types"
 
 import { diffLines } from "diff"
@@ -31,15 +31,21 @@ export function highlightFile(
         lang: fileInfo.lang,
       },
       text: "",
+      raw: true,
       focus: "",
       annotations: [],
     }
   }
+
   const text = getStreamingCode(
     fileInfo.text,
     prevFile?.text
   )
-  const result = highlightSync(text, fileInfo.lang, theme)
+  const result =
+    isLangSupported(fileInfo.lang) &&
+    isLangLoaded(fileInfo.lang)
+      ? highlightSync(text, fileInfo.lang, theme)
+      : highlightSync(text, "text", theme)
   const lines = result.lines.map(line => ({
     tokens: line.map(token => ({
       content: token.content,
@@ -55,6 +61,7 @@ export function highlightFile(
     },
     text,
     focus: getDiffFocus(prevFile?.text || "", text),
+    raw: !isLangLoaded(fileInfo.lang),
     annotations: [],
   }
 }

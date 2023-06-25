@@ -5,7 +5,7 @@ import theme from "@code-hike/lighter/themes/github-dark.json"
 import { Message } from "../src/chat/types"
 
 export default function Page() {
-  const [progress, setProgress] = React.useState(0)
+  const [progress, setProgress] = React.useState(max)
   const messages = steps[progress]
   const isStreaming =
     messages[messages.length - 1]?.isStreaming
@@ -20,7 +20,7 @@ export default function Page() {
   // console.log(progress)
   // console.log({ messages })
   // console.log(messages[messages.length - 1]?.content)
-  // console.log({ conversation })
+  console.log({ conversation })
 
   React.useEffect(() => {
     // focus input range
@@ -132,6 +132,13 @@ const messages = [
 ~~~js foo.js
 console.log("this is foo")
 console.log("this too")
+console.log("this too")
+console.log("this too")
+console.log("this too")
+~~~
+
+~~~py bar.py
+print("this is foo")
 ~~~
 
 That is bar.
