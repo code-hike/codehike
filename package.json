@@ -8,6 +8,7 @@
       "site"
     ]
   },
+  "version": "0.0.0",
   "scripts": {
     "build": "lerna run --stream build",
     "build:lib": "lerna run --stream --scope @*/mdx build",
