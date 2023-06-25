@@ -211,6 +211,7 @@ const Code = React.memo(
           showCopyButton: true,
           showExpandButton: true,
         }}
+        rows="focus"
         northPanel={{
           tabs: files.map(f => f.name),
           active: active || activeFile,

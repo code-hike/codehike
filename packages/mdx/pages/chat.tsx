@@ -1,25 +1,42 @@
 import React from "react"
-import { Chat } from "../src/mdx-client/chat"
-import { useFakeGPT } from "../dev/chat/fake-gpt"
+import { Chat } from "../src/chat/chat"
+import { useConversation } from "../src/chat/use-conversation"
+import theme from "@code-hike/lighter/themes/github-dark.json"
+import { Message } from "../src/chat/types"
 
 export default function Page() {
-  const inputRef = React.useRef<any>(null)
-  const [convo, sendQuestion] = useFakeGPT(
-    conversation,
-    true
+  const [progress, setProgress] = React.useState(max)
+  const messages = steps[progress]
+  const isStreaming =
+    messages[messages.length - 1]?.isStreaming
+  const conversation = useConversation(
+    messages,
+    !!isStreaming,
+    x => {
+      console.log(x)
+    },
+    theme
   )
+  // console.log(progress)
+  // console.log({ messages })
+  // console.log(messages[messages.length - 1]?.content)
+  // console.log({ conversation })
 
-  const handleSend = () => {
-    const value = inputRef?.current?.value
-    sendQuestion(value)
-    // clean input
-    inputRef.current.value = ""
-  }
-  const handleKeyDown = event => {
-    if (event.key === "Enter") {
-      handleSend()
+  React.useEffect(() => {
+    // focus input range
+    const input = document.querySelector(
+      "input[type=range]"
+    ) as HTMLInputElement
+    input.focus()
+  }, [])
+
+  const preRef = React.useRef<HTMLPreElement>(null)
+
+  React.useEffect(() => {
+    if (preRef.current) {
+      preRef.current.scrollTop = preRef.current.scrollHeight
     }
-  }
+  }, [progress])
 
   return (
     <div>
@@ -32,300 +49,144 @@ export default function Page() {
           background: #ccc !important;
           color: #fff;
         }
+
+        .ch-chat {
+          width: 900px;
+          margin: 0 auto;
+        }
+
+        .ch-scrollycoding-sticker {
+        }
       `}</style>
       <Chat
-        steps={convo}
-        style={{
-          width: 900,
-          margin: "10vh auto",
-        }}
+        conversation={conversation}
         height="80vh"
-        onReply={sendQuestion}
-        theme="github-dark"
+        theme={theme as any}
       />
       <div
         style={{
           position: "fixed",
           bottom: 0,
-          width: "100%",
-          background: "#444d",
+          left: 0,
+          right: 0,
+          height: "20vh",
+          padding: "2px 0 8px",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <div
+        <pre
+          ref={preRef}
           style={{
-            width: 600,
-            margin: "20px auto",
-            display: "flex",
-            gap: 10,
+            width: "100%",
+            flex: 1,
+            background: "black",
+            color: "white",
+            overflow: "auto",
+            // opacity: 0,
           }}
         >
-          <input
-            ref={inputRef}
-            style={{ flex: 1 }}
-            onKeyDown={handleKeyDown}
-          />
-          <button onClick={handleSend}>Send</button>
-        </div>
+          {messages[messages.length - 1]?.content}
+        </pre>
+        <input
+          autoFocus
+          style={{ width: "100%", padding: 0, margin: 0 }}
+          type="range"
+          min="0"
+          max={max}
+          value={progress}
+          onChange={e =>
+            setProgress(Number(e.target.value))
+          }
+          onKeyDown={event => {
+            if (
+              event.key === "ArrowRight" &&
+              progress < 100
+            ) {
+              setProgress(prevValue =>
+                Math.min(prevValue + 1, max)
+              )
+            } else if (
+              event.key === "ArrowLeft" &&
+              progress > 0
+            ) {
+              setProgress(prevValue =>
+                Math.max(prevValue - 1, 0)
+              )
+            }
+          }}
+        />
       </div>
     </div>
-
-    // copy to
   )
 }
 
-const conversation = [
+const messages = [
   {
-    question:
-      'convert into typescript function\n{\n      name: "getCityWeather",\n      description: "Get the weather in a given city",\n      parameters: {\n        type: "object",\n        properties: {\n          city: { type: "string", description: "The city" },\n          unit: { type: "string", enum: ["C", "F"] },\n        },\n        required: ["city"],\n      },\n    },'
-        .replace(/\r\n|\r|\n/g, "  \n")
-        .replace(/\t/g, "  "),
-    answer: `I'm assuming you're currently using {the Fetch API}
-to make a {request.
+    role: "user",
+    content: "hi",
+  },
+  {
+    role: "assistant",
+    content: `
+~~~ 
+console.log("this is foo")
+console.log("this too")
+console.log("this 3")
+console.log("this 4oo")
+console.log("this 5oo")
+~~~
 
-Is this accurate?
+
+That is bar.
 `,
-    code: [
-      {
-        title: "foo.html",
-        lang: "html",
-        text: `<button onclick="fetchData()">Fetch Data</button>`,
-      },
-    ],
-    replies: [
-      "Yes",
-      "No, I'm using XMLHttpRequest. Please help with a solution for that",
-      "No, I'm using promises",
-      "Ask GPT-4",
-    ],
   },
   {
-    question: `how to stop a *fetch* in js?`,
-    answer: `I'm assuming you're currently using the Fetch API
-to make a request.
-
-Is this accurate?
-`,
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}`,
-      },
-      {
-        title: "foo.html",
-        lang: "html",
-        text: `<button onclick="fetchData()">Fetch Data</button>`,
-      },
-    ],
-    replies: [
-      "Yes",
-      "No, I'm using XMLHttpRequest. Please help with a solution for that",
-      "No, I'm using promises",
-      "Ask GPT-4",
-    ],
+    role: "user",
+    content: "help me `code`",
   },
-  {
-    question: "how to stop a fetch in js?",
-    answer: `I'm assuming you're currently using the Fetch API
-to make a request.
+].map(m => ({
+  ...m,
+  content: m.content.replace(/~/g, "`"),
+}))
 
-Is this accurate?
-`,
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error(error);
-  }
-}`,
-      },
-      {
-        title: "foo.html",
-        lang: "html",
-        text: `<button onclick="fetchData()">Fetch Data</button>
-<div>Yes</div>`,
-      },
-    ],
-    replies: ["Yes", "No", "Maybe", "Ask GPT-4"],
-  },
-  {
-    question: "I'm using promises",
-    answer: `Thanks for the clarification.
+function getSteps() {
+  const steps = [[]] as (Message & {
+    isStreaming?: boolean
+  })[][]
+  const current = [] as Message[]
+  messages.forEach(m => {
+    if (m.role === "user") {
+      current.push(m)
+      steps.push([...current])
+      return
+    }
 
-Is this accurate?`,
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `fetch('https://api.example.com/data')
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    console.error(error);
-  });`,
-      },
-    ],
-    replies: ["Yes, continue"],
-  },
-  {
-    question: "Yes, continue",
-    answer: ` Now, let's introduce the AbortController to enable
-aborting the fetch request.
+    let newContent = ""
+    steps.push([
+      ...current,
+      { ...m, content: newContent, isStreaming: true },
+    ])
 
-Here, we create an instance of AbortController and
-get its signal property. We then pass this signal
-to the fetch request options. The signal allows us
-to control the fetch request and abort it when
-necessary.`,
-    code: [
-      {
-        title: "foo.js",
-        lang: "js",
-        text: `const controller = new AbortController();
-const signal = controller.signal;
+    const splits = m.content.match(/.{1,2}/gs) || []
+    splits.forEach(s => {
+      newContent += s
+      steps.push([
+        ...current,
+        { ...m, content: newContent, isStreaming: true },
+      ])
+    })
 
-fetch('https://api.example.com/data', { signal })
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => {
-    console.error(error);
-  });`,
-      },
-    ],
-  },
-  //   {
-  //     question: "Go on",
-  //     answer: (
-  //       <>
-  //         <p>
-  //           Now, to abort the fetch request, you can simply
-  //           call the abort method on the AbortController
-  //           instance. For example, you can abort the request
-  //           after a certain time.
-  //         </p>
-  //         <p>
-  //           This will abort the fetch request if it hasn't
-  //           completed within 5 seconds.
-  //         </p>
-  //       </>
-  //     ),
-  //     code: [
-  //       {
-  //         title: "foo.js",
-  //         lang: "js",
-  //         text: `const controller = new AbortController();
-  // const signal = controller.signal;
+    steps.push([
+      ...current,
+      { ...m, content: newContent, isStreaming: false },
+    ])
 
-  // fetch('https://api.example.com/data', { signal })
-  //   .then((response) => response.json())
-  //   .then((data) => console.log(data))
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
+    current.push(m)
+  })
+  return steps
+}
 
-  // setTimeout(() => controller.abort(), 5000);`,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     question: "Go on",
-  //     answer: (
-  //       <>
-  //         <p>
-  //           When you call controller.abort(), the fetch
-  //           request is interrupted, and the promise returned
-  //           by the fetch function is rejected with an
-  //           AbortError. You can catch this error in the .catch
-  //           block of your fetch request and handle it
-  //           accordingly.
-  //         </p>
-  //         <p>
-  //           The .catch block in the fetch request will handle
-  //           the abort error, logging "Fetch aborted" to the
-  //           console.
-  //         </p>
-  //       </>
-  //     ),
-  //     code: [
-  //       {
-  //         title: "foo.js",
-  //         lang: "js",
-  //         text: `const controller = new AbortController();
-  // const signal = controller.signal;
-
-  // fetch('https://api.example.com/data', { signal })
-  //   .then((response) => response.json())
-  //   .then((data) => console.log(data))
-  //   .catch((error) => {
-  //     if (error.name === 'AbortError') {
-  //       console.log('Fetch aborted');
-  //     } else {
-  //       console.error(error);
-  //     }
-  //   });
-
-  // setTimeout(() => controller.abort(), 5000);`,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     question: "Go on",
-  //     answer: (
-  //       <div>
-  //         In summary, to stop a fetch request in JavaScript:
-  //         <ul>
-  //           <li>
-  //             Create an instance of AbortController and get
-  //             its signal property
-  //           </li>
-  //           <li>
-  //             Pass the signal to the fetch request options
-  //           </li>
-  //           <li>
-  //             Call the abort method on the AbortController
-  //             instance to abort the fetch request
-  //           </li>
-  //           <li>
-  //             Catch the AbortError in the .catch block of the
-  //             fetch request
-  //           </li>
-  //         </ul>
-  //       </div>
-  //     ),
-  //     code: [
-  //       {
-  //         title: "foo.js",
-  //         lang: "js",
-  //         text: `const controller = new AbortController();
-  // const signal = controller.signal;
-
-  // fetch('https://api.example.com/data', { signal })
-  //   .then((response) => response.json())
-  //   .then((data) => console.log(data))
-  //   .catch((error) => {
-  //     if (error.name === 'AbortError') {
-  //       console.log('Fetch aborted');
-  //     } else {
-  //       console.error(error);
-  //     }
-  //   });
-
-  // setTimeout(() => controller.abort(), 5000);`,
-  //       },
-  //     ],
-  //   },
-]
+const steps = getSteps()
+const max = steps.length - 1

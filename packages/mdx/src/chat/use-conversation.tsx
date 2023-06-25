@@ -31,8 +31,6 @@ export function useConversation(
     [] as string[]
   )
 
-  console.log(loadingLangs)
-
   const { oldConversation } = ref.current
   let newConversation = getNewConversation(
     [],

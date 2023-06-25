@@ -93,7 +93,7 @@ function codeblockToFileInfo(codeblock: string): {
 
   return {
     lang: match?.[1] || "",
-    name: match?.[2] || "",
+    name: match?.[2] || "answer",
     text: match?.[3] || "",
   }
 }
