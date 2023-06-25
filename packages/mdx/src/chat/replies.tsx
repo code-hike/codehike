@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown"
+import React from 'react'
 
 export function Replies({
   replies,

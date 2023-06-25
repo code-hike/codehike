@@ -8,7 +8,8 @@ import { Spotlight } from "./mdx-client/spotlight"
 import { Scrollycoding } from "./mdx-client/scrollycoding"
 import { CodeSlot, PreviewSlot } from "./mdx-client/slots"
 import { Slideshow } from "./mdx-client/slideshow"
-import { Chat, useConversation } from "./chat/chat"
+import { Chat } from "./chat/chat"
+import { useConversation } from "./chat/use-conversation"
 import {
   annotationsMap,
   Annotation,
