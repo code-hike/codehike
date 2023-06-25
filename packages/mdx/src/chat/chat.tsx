@@ -132,24 +132,30 @@ function DynamicChat({
         style={{ minHeight: height }}
         ref={contentRef}
       >
-        {conversation.map((kid, i) => (
-          <div
-            key={i}
-            className="ch-scrollycoding-step-content"
-          >
-            {kid.type === "answer" ? (
-              <div className="ch-chat-message ch-chat-answer">
-                {kid.children}
-              </div>
-            ) : kid.type === "question" ? (
-              <div className="ch-chat-message ch-chat-question">
-                {kid.children}
-              </div>
-            ) : (
-              kid.children
-            )}
-          </div>
-        ))}
+        {conversation.map((kid, i) =>
+          kid.type === "answer" ? (
+            <div
+              className="ch-scrollycoding-step-content ch-chat-message ch-chat-answer"
+              key={i}
+            >
+              {kid.children}
+            </div>
+          ) : kid.type === "question" ? (
+            <div
+              className="ch-scrollycoding-step-content ch-chat-message ch-chat-question"
+              key={i}
+            >
+              {kid.children}
+            </div>
+          ) : (
+            <div
+              className="ch-scrollycoding-step-content"
+              key={i}
+            >
+              {kid.children}
+            </div>
+          )
+        )}
       </div>
     </section>
   )

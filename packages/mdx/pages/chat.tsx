@@ -130,7 +130,7 @@ const messages = [
   {
     role: "assistant",
     content: `
-~~~ 
+~~~js foo.js
 console.log("this is foo")
 console.log("this too")
 console.log("this 3")
@@ -150,6 +150,23 @@ That is bar.
   {
     role: "user",
     content: "help me `code`",
+  },
+  {
+    role: "assistant",
+    content: `
+~~~js foo.js
+console.log("this is bar")
+console.log("this ssss")
+~~~
+
+
+That is bar.
+
+---
+
+- foo
+- bar bax
+`,
   },
 ].map(m => ({
   ...m,
