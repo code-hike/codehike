@@ -36,7 +36,10 @@ export function useConversation(
   const lastMessage = messages[messages.length - 1]
   let newMessages = messages
   if (lastMessage?.role === "user") {
-    newMessages.push({ role: "assistant", content: "" })
+    newMessages = [
+      ...messages,
+      { role: "assistant", content: "" },
+    ]
   }
 
   let newConversation = getNewConversation(
