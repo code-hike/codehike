@@ -34,12 +34,7 @@ console.log(2)
 
 world 1`] = `
 {
-  "content": "
-
-
-
-
-# hello
+  "content": "# hello
 
 world",
   "fileInfoList": [
@@ -77,10 +72,7 @@ world
 
  1`] = `
 {
-  "content": "
-
-
-# hello
+  "content": "# hello
 
 world",
   "fileInfoList": [
