@@ -37,10 +37,12 @@ export function highlightFile(
     }
   }
 
-  const text = getStreamingCode(
+  const text = fileInfo.open ? getStreamingCode(
     fileInfo.text,
     prevFile?.text
-  )
+  ) : fileInfo.text 
+
+
   const result =
     isLangSupported(fileInfo.lang) &&
     isLangLoaded(fileInfo.lang)
