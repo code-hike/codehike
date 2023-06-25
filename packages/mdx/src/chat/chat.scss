@@ -53,18 +53,6 @@
     gap: 10px;
   }
 
-  .ch-scrollycoding-content p {
-    margin: 1.5rem 0;
-  }
-
-  .ch-scrollycoding-content p:last-child {
-    margin-bottom: 0;
-  }
-
-  .ch-scrollycoding-content p:first-child {
-    margin-top: 0;
-  }
-
   .ch-scrollycoding-step-content {
     border-radius: 18px !important;
     padding: 0px !important;
@@ -91,6 +79,18 @@
   border-radius: 16px;
   color: white;
   line-height: 1.5;
+}
+
+.ch-chat-message p {
+  margin: 1.5rem 0;
+}
+
+.ch-chat-message p:last-child {
+  margin-bottom: 0;
+}
+
+.ch-chat-message p:first-child {
+  margin-top: 0;
 }
 
 .ch-chat-question {
