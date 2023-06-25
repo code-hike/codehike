@@ -32,9 +32,16 @@ export function useConversation(
   )
 
   const { oldConversation } = ref.current
+
+  const lastMessage = messages[messages.length - 1]
+  let newMessages = messages
+  if (lastMessage?.role === "user") {
+    newMessages.push({ role: "assistant", content: "" })
+  }
+
   let newConversation = getNewConversation(
     [],
-    messages,
+    newMessages,
     oldConversation,
     isStreaming,
     onReply,
