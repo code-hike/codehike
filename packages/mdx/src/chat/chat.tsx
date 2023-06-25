@@ -89,11 +89,9 @@ function DynamicChat({
   height,
   ...props
 }: Omit<ChatProps, "staticMediaQuery" | "theme">) {
-  const hasCode =
-    true ||
-    conversation.some(
-      s => s.type === "answer" && s.files?.length
-    )
+  const hasCode = conversation.some(
+    s => s.type === "answer" && s.files?.length
+  )
   const contentRef = React.useRef<HTMLDivElement>(null)
   const stickerRef = React.useRef<HTMLDivElement>(null)
   React.useLayoutEffect(() => {
