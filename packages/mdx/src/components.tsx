@@ -17,10 +17,18 @@ import {
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
 import type { MDXComponents } from "mdx/types"
+import {
+  setMetadata,
+  removeMetadata,
+  getMetadata,
+} from "./chat/metadata"
 
 export {
   Chat,
   useConversation,
+  setMetadata,
+  removeMetadata,
+  getMetadata,
   Code,
   Section,
   SectionLink,
