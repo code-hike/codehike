@@ -16,6 +16,7 @@ import {
   loadLang,
 } from "./languages"
 import { highlightFile } from "./highlight-code"
+import { getMetadata, removeMetadata } from "./metadata"
 
 export function useConversation(
   messages: Message[],
@@ -38,7 +39,10 @@ export function useConversation(
   if (lastMessage?.role === "user") {
     newMessages = [
       ...messages,
-      { role: "assistant", content: "" },
+      {
+        role: "assistant",
+        content: "",
+      },
     ]
   }
 
@@ -145,8 +149,11 @@ function getEntry(
     return {
       type: "question",
       children: (
-        <ReactMarkdown>{newMessage.content}</ReactMarkdown>
+        <ReactMarkdown>
+          {removeMetadata(newMessage.content)}
+        </ReactMarkdown>
       ),
+      metadata: getMetadata(newMessage.content),
     }
   }
 
@@ -161,15 +168,21 @@ function getEntry(
     conversation,
     theme
   )
+
+  const lastEntry = conversation[conversation.length - 1]
   return {
     type: "answer",
     files,
     activeFile,
+    metadata: {
+      ...lastEntry?.metadata,
+      ...getMetadata(parsedAnswer.content),
+    },
     children: (
       <>
         {parsedAnswer.content ? (
           <ReactMarkdown>
-            {parsedAnswer.content}
+            {removeMetadata(parsedAnswer.content)}
           </ReactMarkdown>
         ) : (
           <BouncingDots />

@@ -4,6 +4,7 @@ export type ConversationEntry =
   | {
       type: "question" | "other"
       children: React.ReactNode
+      metadata?: Record<string, string>
     }
   | AnswerEntry
 
@@ -12,6 +13,7 @@ export type AnswerEntry = {
   files: EntryCodeFile[]
   activeFile?: string
   children: React.ReactNode
+  metadata?: Record<string, string>
 }
 
 export type Message = {

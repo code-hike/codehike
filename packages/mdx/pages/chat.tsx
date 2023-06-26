@@ -3,6 +3,7 @@ import { Chat } from "../src/chat/chat"
 import { useConversation } from "../src/chat/use-conversation"
 import theme from "@code-hike/lighter/themes/github-dark.json"
 import { Message } from "../src/chat/types"
+import { setMetadata } from "../src/chat/metadata"
 
 export default function Page() {
   const [progress, setProgress] = React.useState(max)
@@ -132,10 +133,21 @@ const messages = [
       "```jsx index.jsx\nfunction MyComponent() {\n  const [data, setData] = useState(null)\n\n  useEffect(() => {\n    fetch(\"https://api.example.com/data\")\n      .then(response => response.json())\n      .then(data => setData(data))\n      .catch(error => console.error(error))\n  }, [])\n\n  return (\n    <div>\n      {data ? (\n        <ul>\n          {data.map(item => (\n            <li key={item.id}>{item.name}</li>\n          ))}\n        </ul>\n      ) : (\n        <p>Loading...</p>\n      )}\n    </div>\n  )\n}\n```\n\nYou can use the Fetch API to make a request to the API endpoint that returns JSON data. Then, use the `json()` method to parse the response into a JavaScript object.\n\nHere's an example of how to use `fetch()` with React's `useState()` and `useEffect()` hooks to fetch and display JSON data.\n\nDoes this help?\n\n---\n\n- Yes, thank you!\n- Can you explain what `useEffect()` does?\n- How can I handle errors when fetching data?",
     role: "assistant",
   },
-].map(m => ({
-  ...m,
-  content: m.content.replace(/~/g, "`"),
-}))
+]
+  .map(m => ({
+    ...m,
+    content: m.content.replace(/~/g, "`"),
+  }))
+  .map(m =>
+    m.role === "assistant"
+      ? m
+      : {
+          ...m,
+          content: setMetadata(m.content, {
+            model: "GPT-3",
+          }),
+        }
+  )
 
 function getSteps() {
   const steps = [[]] as (Message & {
