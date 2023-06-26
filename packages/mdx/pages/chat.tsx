@@ -125,48 +125,12 @@ export default function Page() {
 const messages = [
   {
     role: "user",
-    content: "hi",
+    content: "fetch json in react",
   },
   {
+    content:
+      "```jsx index.jsx\nfunction MyComponent() {\n  const [data, setData] = useState(null)\n\n  useEffect(() => {\n    fetch(\"https://api.example.com/data\")\n      .then(response => response.json())\n      .then(data => setData(data))\n      .catch(error => console.error(error))\n  }, [])\n\n  return (\n    <div>\n      {data ? (\n        <ul>\n          {data.map(item => (\n            <li key={item.id}>{item.name}</li>\n          ))}\n        </ul>\n      ) : (\n        <p>Loading...</p>\n      )}\n    </div>\n  )\n}\n```\n\nYou can use the Fetch API to make a request to the API endpoint that returns JSON data. Then, use the `json()` method to parse the response into a JavaScript object.\n\nHere's an example of how to use `fetch()` with React's `useState()` and `useEffect()` hooks to fetch and display JSON data.\n\nDoes this help?\n\n---\n\n- Yes, thank you!\n- Can you explain what `useEffect()` does?\n- How can I handle errors when fetching data?",
     role: "assistant",
-    content: `
-~~~js foo.js
-console.log("this is foo")
-console.log("this too")
-console.log("this 3")
-console.log("this 4oo")
-console.log("this 5oo")
-~~~
-
-
-That is bar.
-
----
-
-- foo
-- bar bax
-`,
-  },
-  {
-    role: "user",
-    content: "help me `code`",
-  },
-  {
-    role: "assistant",
-    content: `
-~~~js foo.js
-console.log("this is bar")
-console.log("this ssss")
-~~~
-
-
-That is bar.
-
----
-
-- foo
-- bar bax
-`,
   },
 ].map(m => ({
   ...m,

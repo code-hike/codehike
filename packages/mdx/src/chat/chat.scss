@@ -54,16 +54,10 @@
   }
 
   .ch-scrollycoding-step-content {
-    border-radius: 18px !important;
     padding: 16px !important;
-    border: 0px !important;
     margin: 0px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px;
     /* min-height: 50vh !important; */
     min-height: 10px !important;
-    justify-content: flex-end;
   }
   .ch-scrollycoding-step-content[data-selected] {
     border-color: transparent !important;
