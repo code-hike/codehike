@@ -126,11 +126,12 @@ export default function Page() {
 const messages = [
   {
     role: "user",
-    content: "fetch json in react",
+    content:
+      "---\nmodel: gpt-3.5-turbo-0301\n---\na React app showing photos from a google photos album",
   },
   {
     content:
-      "```jsx index.jsx\nfunction MyComponent() {\n  const [data, setData] = useState(null)\n\n  useEffect(() => {\n    fetch(\"https://api.example.com/data\")\n      .then(response => response.json())\n      .then(data => setData(data))\n      .catch(error => console.error(error))\n  }, [])\n\n  return (\n    <div>\n      {data ? (\n        <ul>\n          {data.map(item => (\n            <li key={item.id}>{item.name}</li>\n          ))}\n        </ul>\n      ) : (\n        <p>Loading...</p>\n      )}\n    </div>\n  )\n}\n```\n\nYou can use the Fetch API to make a request to the API endpoint that returns JSON data. Then, use the `json()` method to parse the response into a JavaScript object.\n\nHere's an example of how to use `fetch()` with React's `useState()` and `useEffect()` hooks to fetch and display JSON data.\n\nDoes this help?\n\n---\n\n- Yes, thank you!\n- Can you explain what `useEffect()` does?\n- How can I handle errors when fetching data?",
+      "```jsx index.js\nimport React, { useState, useEffect } from 'react'\n\nfunction App() {\n  const [photos, setPhotos] = useState([])\n\n  useEffect(() => {\n    fetch('https://photoslibrary.googleapis.com/v1/mediaItems', {\n      headers: {\n        Authorization: `Bearer ${accessToken}`,\n        'Content-type': 'application/json'\n      }\n    })\n      .then(response => response.json())\n      .then(data => setPhotos(data.mediaItems))\n      .catch(error => console.error(error))\n  }, [])\n\n  return (\n    <div>\n      {photos.map(photo => (\n        <img key={photo.id} src={photo.baseUrl} alt={photo.filename} />\n      ))}\n    </div>\n  )\n}\n```\n\n\nYou can use the Google Photos API to fetch photos from an album. \n\nFirst, you need to authenticate and get an access token. Then, you can make a request to the API to get the media items from the album. Finally, you can render the photos in your React component.\n\nDoes this help you get started?\n\n---\n\n- Yes, thank you!\n- How can I filter the photos by date?\n- Can you show me how to use a library to fetch the photos?",
     role: "assistant",
   },
 ]

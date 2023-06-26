@@ -14,9 +14,10 @@ export function parseAnswer(
         .map((r: string) => r.replace(/^-\s*/, "").trim())
         .filter((r: any) => r !== "")
     : []
+
   return {
     fileInfoList: fileInfoList,
-    content: answerText,
+    content: answerText.replace(/\n-+$/, ""),
     replies,
   }
 }

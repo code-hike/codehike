@@ -98,6 +98,73 @@ exports[` 1`] = `
 }
 `;
 
+exports[`\`\`\`js foo.js
+console.log(1)
+\`\`\`
+
+Hello
+
+- 1`] = `
+{
+  "content": "Hello
+",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": false,
+      "text": "console.log(1)",
+    },
+  ],
+  "replies": [],
+}
+`;
+
+exports[`\`\`\`js foo.js
+console.log(1)
+\`\`\`
+
+Hello
+
+---
+ 1`] = `
+{
+  "content": "Hello
+",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": false,
+      "text": "console.log(1)",
+    },
+  ],
+  "replies": [],
+}
+`;
+
+exports[`\`\`\`js foo.js
+console.log(1)
+\`\`\`
+
+Hello
+
+--- 1`] = `
+{
+  "content": "Hello
+",
+  "fileInfoList": [
+    {
+      "lang": "js",
+      "name": "foo.js",
+      "open": false,
+      "text": "console.log(1)",
+    },
+  ],
+  "replies": [],
+}
+`;
+
 exports[`Hello 1`] = `
 {
   "content": "Hello",

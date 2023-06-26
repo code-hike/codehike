@@ -37,6 +37,29 @@ world`,
 console.log(1)
 
 `,
+  `~~~js foo.js
+console.log(1)
+~~~
+
+Hello
+
+-`,
+  `~~~js foo.js
+console.log(1)
+~~~
+
+Hello
+
+---`,
+  ,
+  `~~~js foo.js
+console.log(1)
+~~~
+
+Hello
+
+---
+`,
 ].map(x => x.replace(/~/g, "`"))
 
 test.each(fixtures)("%s", async markdown => {
