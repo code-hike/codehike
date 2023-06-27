@@ -127,11 +127,40 @@ const messages = [
   {
     role: "user",
     content:
-      "---\nmodel: gpt-3.5-turbo-0301\n---\na React app showing photos from a google photos album",
+      "---\nmodel: gpt-3.5-turbo-0301\n---\nremove margin from first and last child",
+  },
+  {
+    role: "assistant",
+    content:
+      "```css style.css\n.parent > *:first-child {\n  margin-top: 0;\n}\n\n.parent > *:last-child {\n  margin-bottom: 0;\n}\n```\n\n\nUse the `:first-child` and `:last-child` pseudo-classes to target the first and last child elements respectively. Then set their `margin-top` and `margin-bottom` properties to `0`.\n\nDoes this solve your problem?\n\n---\n\n- Yes, thank you!\n- Can I use this with other properties like padding?\n- What if the first/last child already has a margin?",
+  },
+  {
+    role: "user",
+    content: "---\nmodel: gpt-3.5-turbo-0301\n---\nhtml",
+  },
+  {
+    role: "assistant",
+    content:
+      '```html index.html\n<div class="parent">\n  <div>First child</div>\n  <div>Second child</div>\n  <div>Last child</div>\n</div>\n```\n\n\nThis is an example of a parent `div` element with three child `div` elements. The first child has the text "First child", the second child has the text "Second child", and the last child has the text "Last child".\n\nIs there anything else you need help with?\n\n---\n\n- No, that\'s all for now.',
+  },
+  {
+    role: "user",
+    content:
+      "---\nmodel: gpt-3.5-turbo-0301\n---\nwith flex",
+  },
+  {
+    role: "assistant",
+    content:
+      "```css style.css\n.parent {\n  display: flex;\n  flex-direction: column;\n}\n\n.parent > *:first-child {\n  margin-top: 0;\n}\n\n.parent > *:last-child {\n  margin-bottom: 0;\n}\n```\n\n\nThis code sets the parent element to a flex container with a column direction. Then, it uses the `:first-child` and `:last-child` pseudo-classes to remove the top margin from the first child and the bottom margin from the last child.\n\nDoes this help you with your issue?\n\n---\n\n- Yes, thank you!\n- Can I use this with other flex properties?\n- What if I want to remove the margin from the second child?",
+  },
+  {
+    role: "user",
+    content:
+      "---\nmodel: gpt-3.5-turbo-0301\n---\nCan I use this with other flex properties?",
   },
   {
     content:
-      "```jsx index.js\nimport React, { useState, useEffect } from 'react'\n\nfunction App() {\n  const [photos, setPhotos] = useState([])\n\n  useEffect(() => {\n    fetch('https://photoslibrary.googleapis.com/v1/mediaItems', {\n      headers: {\n        Authorization: `Bearer ${accessToken}`,\n        'Content-type': 'application/json'\n      }\n    })\n      .then(response => response.json())\n      .then(data => setPhotos(data.mediaItems))\n      .catch(error => console.error(error))\n  }, [])\n\n  return (\n    <div>\n      {photos.map(photo => (\n        <img key={photo.id} src={photo.baseUrl} alt={photo.filename} />\n      ))}\n    </div>\n  )\n}\n```\n\n\nYou can use the Google Photos API to fetch photos from an album. \n\nFirst, you need to authenticate and get an access token. Then, you can make a request to the API to get the media items from the album. Finally, you can render the photos in your React component.\n\nDoes this help you get started?\n\n---\n\n- Yes, thank you!\n- How can I filter the photos by date?\n- Can you show me how to use a library to fetch the photos?",
+      "```css style.css\n.parent {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.parent > *:first-child {\n  margin-top: 0;\n}\n\n.parent > *:last-child {\n  margin-bottom: 0;\n}\n```\n\n\nYes, you can use this code with other flex properties. In this example, the `justify-content` and `align-items` properties are set to `center` to center the child elements both horizontally and vertically.\n\nIs there anything else you need help with?\n\n---\n\n- No, that's all for now.",
     role: "assistant",
   },
 ]

@@ -120,7 +120,7 @@ function getNewConversation(
       oldMessage,
       newMessage,
       oldEntry,
-      conversation,
+      [...conversation],
       onReply,
       isStreamingEntry,
       theme
@@ -220,7 +220,7 @@ function getFiles(
     prevFiles = oldEntry.files
     prevActiveFile = oldEntry.activeFile
   } else {
-    const lastAnswer = conversation
+    const lastAnswer = [...conversation]
       .reverse()
       .find(entry => entry.type === "answer") as
       | AnswerEntry
@@ -238,7 +238,7 @@ function getFiles(
       return prevFile
     }
 
-    const prevAnswer = conversation
+    const prevAnswer = [...conversation]
       .reverse()
       .find(entry => entry.type === "answer") as
       | AnswerEntry
