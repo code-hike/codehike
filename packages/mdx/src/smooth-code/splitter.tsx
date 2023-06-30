@@ -269,7 +269,7 @@ export function splitTokens(
     ...extremes.map(e => e.end),
   ]
 
-  let oldTokens = tokens
+  let oldTokens = tokens || []
   splitIndexes.forEach(splitIndex => {
     const newTokens = [] as MergedLine["tokens"]
     let i = 0

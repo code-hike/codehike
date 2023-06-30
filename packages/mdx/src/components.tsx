@@ -8,6 +8,8 @@ import { Spotlight } from "./mdx-client/spotlight"
 import { Scrollycoding } from "./mdx-client/scrollycoding"
 import { CodeSlot, PreviewSlot } from "./mdx-client/slots"
 import { Slideshow } from "./mdx-client/slideshow"
+import { Chat } from "./chat/chat"
+import { useConversation } from "./chat/use-conversation"
 import {
   annotationsMap,
   Annotation,
@@ -15,8 +17,18 @@ import {
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
 import type { MDXComponents } from "mdx/types"
+import {
+  setMetadata,
+  removeMetadata,
+  getMetadata,
+} from "./chat/metadata"
 
 export {
+  Chat,
+  useConversation,
+  setMetadata,
+  removeMetadata,
+  getMetadata,
   Code,
   Section,
   SectionLink,

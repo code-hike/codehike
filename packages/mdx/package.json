@@ -44,8 +44,9 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@code-hike/lighter": "0.7.0",
-    "node-fetch": "^2.0.0"
+    "@code-hike/lighter": "0.7.1",
+    "node-fetch": "^2.0.0",
+    "react-markdown": "^8.0.7"
   },
   "devDependencies": {
     "@codesandbox/sandpack-client": "^0.19.0",

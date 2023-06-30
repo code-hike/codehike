@@ -16,6 +16,7 @@ import banner2 from "rollup-plugin-banner2"
 const clientExternal = [
   "react",
   "react-dom",
+  "react-markdown",
   // "@codesandbox/sandpack-client",
   // "use-spring",
   // "diff",

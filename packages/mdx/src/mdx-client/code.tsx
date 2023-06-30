@@ -66,7 +66,7 @@ export function InnerCode({
   ...props
 }: EditorProps & {
   onTabClick?: (filename: string) => void
-} & Partial<CodeHikeConfig>) {
+} & Partial<CodeConfig>) {
   const { className, style, codeConfig, ...editorProps } =
     mergeCodeConfig(props)
 

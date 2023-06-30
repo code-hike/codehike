@@ -1,0 +1,23 @@
+// Vitest Snapshot v1
+
+exports[`add 1`] = `
+"---
+foo: bar
+x: y
+---
+hello"
+`;
+
+exports[`change 1`] = `
+"---
+foo: y
+---
+hello"
+`;
+
+exports[`set 1`] = `
+"---
+foo: bar
+---
+hello"
+`;
