@@ -70,6 +70,7 @@ const bashLikeLangs = [
   "sh",
   "shell",
   "python",
+  "yaml",
   "py",
 ]
 const bashLikeCommentRegex = /#\s+(\w+)(\S*)\s*(.*)/
