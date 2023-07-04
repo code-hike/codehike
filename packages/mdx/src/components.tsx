@@ -15,6 +15,10 @@ import {
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
 import type { MDXComponents } from "mdx/types"
+import {
+  useStaticToggle,
+  StaticToggle,
+} from "./mdx-client/ssmq"
 
 export {
   Code,
@@ -30,6 +34,8 @@ export {
   InlineCode,
   CodeSlot,
   PreviewSlot,
+  useStaticToggle,
+  StaticToggle,
 }
 
 export const CH: MDXComponents = {
@@ -46,6 +52,7 @@ export const CH: MDXComponents = {
   InlineCode,
   CodeSlot,
   PreviewSlot,
+  StaticToggle,
 }
 
 import { MiniBrowser } from "./mini-browser"

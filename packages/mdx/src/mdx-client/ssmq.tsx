@@ -3,6 +3,56 @@
 import React from "react"
 
 let suffixCounter = 0
+const PREFERS_STATIC_KEY = "ch-prefers-static"
+
+export function toggleStatic() {
+  localStorage.setItem(
+    "ch-prefers-static",
+    localStorage.getItem("ch-prefers-static") === "true"
+      ? "false"
+      : "true"
+  )
+  window.dispatchEvent(
+    new StorageEvent("storage", {
+      key: "ch-prefers-static",
+    })
+  )
+}
+
+export function StaticToggle({
+  viewDynamicText = "View dynamic version",
+  viewStaticText = "View static version",
+}) {
+  const [forceStatic, toggleStatic] = useStaticToggle()
+  return (
+    <button
+      onClick={toggleStatic}
+      className="ch-static-toggle"
+      data-ch-static={forceStatic}
+    >
+      {forceStatic ? viewDynamicText : viewStaticText}
+    </button>
+  )
+}
+
+export function useStaticToggle() {
+  const { showStatic: forceStatic } = useMedia(
+    "screen and (max-width: 0px)"
+  )
+
+  const [firstRender, setFirstRender] = React.useState(true)
+
+  React.useLayoutEffect(() => {
+    if (forceStatic) {
+      setFirstRender(false)
+    }
+  }, [])
+
+  return [
+    firstRender ? false : forceStatic,
+    toggleStatic,
+  ] as const
+}
 
 /**
  * @typedef SwapProps
@@ -14,139 +64,110 @@ let suffixCounter = 0
  * @param {SwapProps} props
  */
 
-export function Swap({ match }) {
-  const queries = match.map(([q]) => q)
-  const { isServer, matchedIndex } = useMedia(queries)
+export function Swap({ query, staticElement, children }) {
+  const dynamicElement = children
+
+  const { isServer, showStatic } = useMedia(query)
   const mainClassName = isServer
     ? "ssmq-" + suffixCounter++
     : ""
-
   return isServer ? (
     <React.Fragment>
       <style
         className={mainClassName}
         dangerouslySetInnerHTML={{
-          __html: getStyle(queries, mainClassName),
+          __html: getStyle(query, mainClassName),
         }}
       />
-      {match.map(([query, element]) => (
-        <div
-          key={query}
-          className={`${mainClassName} ${getClassName(
-            query
-          )}`}
-        >
-          {element}
-        </div>
-      ))}
+      <div className={`${mainClassName} ssmq-static`}>
+        {staticElement}
+      </div>
+      <div className={`${mainClassName} ssmq-dynamic`}>
+        {dynamicElement}
+      </div>
       <script
         className={mainClassName}
         dangerouslySetInnerHTML={{
-          __html: getScript(match, mainClassName),
+          __html: getScript(query, mainClassName),
         }}
       />
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <div>{match[matchedIndex][1]}</div>
+      <div>
+        {showStatic ? staticElement : dynamicElement}
+      </div>
     </React.Fragment>
   )
 }
 
-function getStyle(queries, mainClass) {
-  const reversedQueries = queries.slice().reverse()
-  const style = reversedQueries
-    .map(query => {
-      const currentStyle = `.${mainClass}.${getClassName(
-        query
-      )}{display:block}`
-      const otherStyle = `.${mainClass}:not(.${getClassName(
-        query
-      )}){display: none;}`
-
-      if (query === "default") {
-        return `${currentStyle}${otherStyle}`
-      } else {
-        return `@media ${query}{${currentStyle}${otherStyle}}`
-      }
-    })
-    .join("\n")
-  return style
+function getStyle(query, mainClass) {
+  return `.${mainClass}.ssmq-dynamic { display: block; }
+.${mainClass}.ssmq-static { display: none; }
+@media ${query} {
+  .${mainClass}.ssmq-dynamic { display: none; }
+  .${mainClass}.ssmq-static { display: block; }
+}
+`
 }
 
-function getScript(match, mainClass) {
-  const queries = match.map(([query]) => query)
-  const classes = queries.map(getClassName)
+function getScript(query, mainClass) {
   return `(function() {
-  var qs = ${JSON.stringify(queries)};
-  var clss = ${JSON.stringify(classes)};
+  var q = ${JSON.stringify(query)};
   var mainCls = "${mainClass}";
 
-  var scrEls = document.getElementsByTagName("script");
-  var scrEl = scrEls[scrEls.length - 1];
-  var parent = scrEl.parentNode;
+  var dynamicEl = document.querySelector(
+    "." + mainCls + ".ssmq-dynamic"
+  )
+  var staticEl = document.querySelector(
+    "." + mainCls + ".ssmq-static"
+  )
+  var parent = dynamicEl.parentNode
 
-  var el = null;
-  for (var i = 0; i < qs.length - 1; i++) {
-    if (window.matchMedia(qs[i]).matches) {
-      el = parent.querySelector(":scope > ." + mainCls + "." + clss[i]);
-      break;
-    }
+  if (window.matchMedia(q).matches || localStorage.getItem("${PREFERS_STATIC_KEY}") === 'true') {
+    staticEl.removeAttribute("class")
+  } else {
+    dynamicEl.removeAttribute("class")
   }
-  if (!el) {
-    var defaultClass = clss.pop();
-    el = parent.querySelector(":scope > ." + mainCls + "." + defaultClass);
-  }
-  el.removeAttribute("class");
 
-  parent.querySelectorAll(":scope > ." + mainCls).forEach(function (e) {
-    parent.removeChild(e);
-  });
+  parent
+    .querySelectorAll(":scope > ." + mainCls)
+    .forEach(function (e) {
+      parent.removeChild(e)
+    })
 })();`
 }
 
-function getClassName(string) {
-  return (
-    "ssmq-" +
-    string
-      .replace(
-        /[!\"#$%&'\(\)\*\+,\.\/:;<=>\?\@\[\\\]\^`\{\|\}~\s]/g,
-        ""
-      )
-      .toLowerCase()
-  )
-}
-
-function useMedia(queries) {
+function useMedia(query) {
   const isServer = typeof window === "undefined"
 
-  const allQueries = queries.slice(0, -1)
-
-  if (queries[queries.length - 1] !== "default") {
-    console.warn("last media query should be 'default'")
+  if (isServer) {
+    return { isServer, showStatic: false }
   }
 
   const [, setValue] = React.useState(0)
 
-  const mediaQueryLists = isServer
-    ? []
-    : allQueries.map(q => window.matchMedia(q))
-
+  const mql = window.matchMedia(query)
   React.useEffect(() => {
     const handler = () => setValue(x => x + 1)
-    mediaQueryLists.forEach(mql => mql.addListener(handler))
-    return () =>
-      mediaQueryLists.forEach(mql =>
-        mql.removeListener(handler)
-      )
+    mql.addEventListener("change", handler)
+    window.addEventListener("storage", event => {
+      if (event.key === PREFERS_STATIC_KEY) {
+        handler()
+      }
+    })
+    return () => {
+      mql.removeEventListener("change", handler)
+      window.removeEventListener("storage", handler)
+    }
   }, [])
 
-  const matchedIndex = mediaQueryLists.findIndex(
-    mql => mql.matches
-  )
+  const showStatic =
+    mql.matches ||
+    localStorage.getItem(PREFERS_STATIC_KEY) === "true"
+
   return {
     isServer,
-    matchedIndex:
-      matchedIndex < 0 ? queries.length - 1 : matchedIndex,
+    showStatic,
   }
 }
