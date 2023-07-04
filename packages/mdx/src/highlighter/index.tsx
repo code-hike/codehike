@@ -44,6 +44,7 @@ export async function highlight({
       )
       warnings.add(lang)
     }
+    // potential endless loop
     return highlight({ code, lang: "text", theme })
   }
 }

@@ -22,14 +22,11 @@ type ScrollycodingProps = {
 export function Scrollycoding(props) {
   return (
     <Swap
-      match={[
-        [
-          props.codeConfig.staticMediaQuery,
-          <StaticScrollycoding {...props} />,
-        ],
-        ["default", <DynamicScrollycoding {...props} />],
-      ]}
-    />
+      query={props.codeConfig.staticMediaQuery}
+      staticElement={<StaticScrollycoding {...props} />}
+    >
+      <DynamicScrollycoding {...props} />
+    </Swap>
   )
 }
 
@@ -213,6 +210,7 @@ function DynamicScrollycoding({
           {...rest}
           {...(tab as any)}
           codeConfig={codeConfig}
+          rows={undefined}
           onTabClick={onTabClick}
         />
         {presetConfig ? (
