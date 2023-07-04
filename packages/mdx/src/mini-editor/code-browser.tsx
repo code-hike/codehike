@@ -35,11 +35,12 @@ function Sidebar({
   activeFile: CodeFile
   setActiveFile: (file: CodeFile) => void
 }) {
+  const noFiles = files.length === 0 || !files[0].name
   const tree = React.useMemo(
     () => toFileTree(files),
     [files]
   )
-  return (
+  return noFiles ? null : (
     <div className="ch-code-browser-sidebar">
       <SidebarNodes
         tree={tree}

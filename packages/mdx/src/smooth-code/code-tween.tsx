@@ -14,6 +14,7 @@ import {
 } from "./partial-step-parser"
 import { SmoothLines } from "./smooth-lines"
 import { CopyButton } from "./copy-button"
+import { CodeExpandButton } from "mini-editor/expand-button"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -95,6 +96,7 @@ export function CodeTween({
       config={config}
       progress={progress}
       htmlProps={preProps}
+      tween={tween}
     />
   )
 }
@@ -126,12 +128,14 @@ function AfterDimensions({
   progress,
   htmlProps,
   config,
+  tween,
 }: {
   dimensions: NonNullable<Dimensions>
   stepInfo: CodeShift
   config: CodeConfig
   progress: number
   htmlProps: HTMLProps
+  tween: FullTween<CodeStep>
 }) {
   return (
     <Wrapper htmlProps={htmlProps} measured={true}>
@@ -144,12 +148,20 @@ function AfterDimensions({
         maxZoom={maxZoom}
         center={horizontalCenter}
       />
-      {config.showCopyButton ? (
-        <CopyButton
-          className="ch-code-button"
-          content={stepInfo?.code?.prev}
-        />
-      ) : undefined}
+      <div className="ch-code-buttons">
+        {config.showCopyButton ? (
+          <CopyButton
+            className="ch-code-button"
+            content={stepInfo?.code?.prev}
+          />
+        ) : undefined}
+        {config.showExpandButton ? (
+          <CodeExpandButton
+            className="ch-code-button"
+            step={tween.prev}
+          />
+        ) : undefined}
+      </div>
     </Wrapper>
   )
 }

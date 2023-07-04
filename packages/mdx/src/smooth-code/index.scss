@@ -30,14 +30,18 @@
   color: inherit;
 }
 
-.ch-code-button {
-  @include button-reset;
-
+.ch-code-buttons {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.ch-code-button {
+  @include button-reset;
+
   width: 1.1em;
   height: 1.1em;
+  margin-left: 0.5em;
 }
 
 .ch-code-wrapper {

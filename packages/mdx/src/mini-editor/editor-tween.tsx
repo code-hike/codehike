@@ -8,7 +8,7 @@ import { useTransition, EditorStep } from "./editor-shift"
 import { CodeConfig } from "../smooth-code"
 import { useLayoutEffect } from "../utils"
 import { CopyButton } from "smooth-code/copy-button"
-import { ExpandButton } from "mini-editor/expand-button"
+import { EditorExpandButton } from "mini-editor/expand-button"
 
 export { EditorTransition, EditorTween }
 export type { EditorTransitionProps, EditorTweenProps }
@@ -105,7 +105,7 @@ function EditorTween({
         />
       ) : undefined}
       {showExpandButton ? (
-        <ExpandButton
+        <EditorExpandButton
           className="ch-editor-button"
           step={next || prev}
         />
