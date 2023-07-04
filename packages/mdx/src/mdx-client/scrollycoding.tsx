@@ -210,6 +210,7 @@ function DynamicScrollycoding({
           {...rest}
           {...(tab as any)}
           codeConfig={codeConfig}
+          rows={undefined}
           onTabClick={onTabClick}
         />
         {presetConfig ? (
