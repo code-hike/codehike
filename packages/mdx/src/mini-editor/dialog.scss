@@ -7,7 +7,7 @@
 .ch-expand-dialog {
   height: 100vh;
   width: 100vw;
-  max-width: 900px;
+  max-width: min(900px, calc((100% - 6px) - 2em));
   border: 0;
   background-color: transparent;
 }

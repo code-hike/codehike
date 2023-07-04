@@ -1,21 +1,63 @@
 import React from "react"
 import { CodeBrowser } from "./code-browser"
 import { EditorStep } from "./editor-shift"
+import { CodeStep } from "../smooth-code/code-tween"
 
-export function ExpandButton({
-  style,
+export function EditorExpandButton({
   step,
-  className,
+  ...props
 }: {
   style?: React.CSSProperties
   step: EditorStep
+  className?: string
+}) {
+  const files = step.files
+  const activeFileName = step.northPanel.active
+
+  return (
+    <ExpandButton
+      {...props}
+      files={step.files}
+      activeFileName={step.northPanel?.active}
+    />
+  )
+}
+
+export function CodeExpandButton({
+  step,
+  ...props
+}: {
+  style?: React.CSSProperties
+  step: CodeStep
+  className?: string
+}) {
+  const file = { ...step, name: "" }
+  const activeFileName = ""
+
+  return (
+    <ExpandButton
+      {...props}
+      files={[file]}
+      activeFileName={activeFileName}
+    />
+  )
+}
+
+function ExpandButton({
+  style,
+  className,
+  files,
+  activeFileName,
+}: {
+  style?: React.CSSProperties
+  files: EditorStep["files"]
+  activeFileName: string
   className?: string
 }) {
   const [expanded, setExpanded] = React.useState(false)
   const [dialogSupported, setDialogSupported] =
     React.useState(true)
   const ref = React.useRef<any>(null)
-  const files = step.files
 
   // check if <dialog /> is supported
   React.useEffect(() => {
@@ -62,7 +104,7 @@ export function ExpandButton({
           <div className="ch-expand-dialog-content">
             <CodeBrowser
               files={files}
-              startingFileName={step.northPanel.active}
+              startingFileName={activeFileName}
             />
           </div>
         ) : undefined}
