@@ -136,8 +136,8 @@ function useDimensions(
   const allDeps = [
     ...deps,
     windowWidth,
-    prevLongestLine,
-    nextLongestLine,
+    // prevLongestLine,
+    // nextLongestLine,
     minColumns,
     visibility,
   ]
