@@ -1,17 +1,11 @@
 import { highlight } from "../highlighter"
-import { extractLinks } from "./links"
 import { NodeInfo, splitChildren } from "./unist-utils"
 import { CodeStep } from "../smooth-code"
 import { EditorProps } from "../mini-editor"
-import {
-  getAnnotationsFromMetastring,
-  extractAnnotationsFromCode,
-  extractJSXAnnotations,
-} from "./annotations"
-import { Code, mergeFocus } from "../utils"
+import { getAnnotationsFromMetastring } from "./annotations.metastring"
 import { CodeNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
-import { getCommentData } from "./comment-data"
+import { splitCodeAndAnnotations } from "./annotations.comments"
 
 export function isEditorNode(
   node: SuperNode,
@@ -120,52 +114,45 @@ async function mapFile(
 
   const lang = (node.lang as string) || "text"
 
-  let code = await highlight({
-    code: node.value as string,
+  const {
+    code,
+    annotations: commentAnnotations,
+    focus: commentFocus,
+  } = await splitCodeAndAnnotations(
+    node.value as string,
+    lang,
+    config
+  )
+
+  let highlightedCode = await highlight({
+    code,
     lang,
     theme,
   })
 
-  // if the code is a single line with a "from" annotation
-  code = await getCodeFromExternalFileIfNeeded(code, config)
-
-  const [commentAnnotations, commentFocus] =
-    extractAnnotationsFromCode(code, config)
-
   const options = parseMetastring(
     typeof node.meta === "string" ? node.meta : ""
   )
-
   const metaAnnotations = getAnnotationsFromMetastring(
     options as any
   )
 
-  // const linkAnnotations = extractLinks(
-  //   node,
-  //   index,
-  //   parent,
-  //   nodeValue as string
-  // )
-
-  const jsxAnnotations = extractJSXAnnotations(
-    node,
-    index,
-    parent
-  )
-
-  const file = {
+  return {
     ...options,
+    code: highlightedCode,
     focus: mergeFocus(options.focus, commentFocus),
-    code,
     name: options.name || "",
     annotations: [
       ...metaAnnotations,
       ...commentAnnotations,
-      ...jsxAnnotations,
     ],
   }
+}
 
-  return file
+function mergeFocus(fs1: string, fs2: string) {
+  if (!fs1) return fs2 || ""
+  if (!fs2) return fs1 || ""
+  return `${fs1},${fs2}`
 }
 
 type FileOptions = {
@@ -191,88 +178,4 @@ function parseMetastring(
     }
   })
   return { name: name || "", ...options }
-}
-
-async function getCodeFromExternalFileIfNeeded(
-  code: Code,
-  config: CodeHikeConfig
-) {
-  if (code?.lines?.length != 1) {
-    return code
-  }
-
-  const firstLine = code.lines[0]
-  const commentData = getCommentData(firstLine, code.lang)
-
-  if (!commentData || commentData.key != "from") {
-    return code
-  }
-
-  const fileText = firstLine.tokens
-    .map(t => t.content)
-    .join("")
-
-  const [codepath, range] = commentData.data
-    ?.trim()
-    .split(/\s+/)
-
-  let fs, path
-
-  try {
-    fs = (await import("fs")).default
-    path = (await import("path")).default
-    if (!fs || !fs.readFileSync || !path || !path.resolve) {
-      throw new Error("fs or path not found")
-    }
-  } catch (e) {
-    e.message = `Code Hike couldn't resolve this annotation:
-${fileText}
-Looks like node "fs" and "path" modules are not available.`
-    throw e
-  }
-
-  // if we don't know the path of the mdx file:
-  if (config.filepath === undefined) {
-    throw new Error(
-      `Code Hike couldn't resolve this annotation:
-  ${fileText}
-  Someone is calling the mdx compile function without setting the path.
-  Open an issue on CodeHike's repo for help.`
-    )
-  }
-
-  const dir = path.dirname(config.filepath)
-  const absoluteCodepath = path.resolve(dir, codepath)
-
-  let content: string
-  try {
-    content = fs.readFileSync(absoluteCodepath, "utf8")
-  } catch (e) {
-    e.message = `Code Hike couldn't resolve this annotation:
-${fileText}
-${absoluteCodepath} doesn't exist.`
-    throw e
-  }
-
-  if (range) {
-    const [start, end] = range.split(":")
-    const startLine = parseInt(start)
-    const endLine = parseInt(end)
-    if (isNaN(startLine) || isNaN(endLine)) {
-      throw new Error(
-        `Code Hike couldn't resolve this annotation:
-${fileText}
-The range is not valid. Should be something like:
- ${codepath} 2:5`
-      )
-    }
-    const lines = content.split("\n")
-    content = lines.slice(startLine - 1, endLine).join("\n")
-  }
-
-  return await highlight({
-    code: content,
-    lang: code.lang,
-    theme: config.theme,
-  })
 }

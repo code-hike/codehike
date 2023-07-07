@@ -323,12 +323,3 @@ function toFocusString(focusMap: FocusMap) {
   })
   return parts.join(",")
 }
-
-export function mergeFocus(
-  fs1: FocusString,
-  fs2: FocusString
-) {
-  if (!fs1) return fs2 || ""
-  if (!fs2) return fs1 || ""
-  return `${fs1},${fs2}`
-}

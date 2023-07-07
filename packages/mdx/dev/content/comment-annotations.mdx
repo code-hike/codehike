@@ -112,3 +112,44 @@ function adipiscing(...elit) {
   return elit.map(ipsum => ipsum.sit)
 }
 ```
+
+## Inline comments
+
+```css
+body {
+  margin: 12px; /* mark[11:14] */
+}
+```
+
+## Other syntaxes
+
+```html hello.html
+<!-- mark[6:14] -->
+<div>Code Hike</div>
+```
+
+```mdx
+# Hello {/* mark */}
+```
+
+```jsonc
+{
+  // mark[12:20]
+  "name": "Code Hike"
+}
+```
+
+```lua
+-- mark[8:16]
+print("Code Hike")
+```
+
+```matlab
+% mark[7:15]
+disp('Code Hike')
+```
+
+```lisp
+; mark[9:17]
+(print "Code Hike")
+```
