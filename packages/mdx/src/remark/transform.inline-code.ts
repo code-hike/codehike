@@ -1,5 +1,5 @@
 import { visitAsync, toJSX } from "./unist-utils"
-import { highlight } from "../highlighter"
+import { highlight } from "./lighter"
 import { EditorStep } from "../mini-editor"
 import { Code } from "../utils"
 import { SuperNode, visit } from "./nodes"

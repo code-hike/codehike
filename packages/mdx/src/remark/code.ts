@@ -1,4 +1,4 @@
-import { highlight } from "../highlighter"
+import { highlight } from "./lighter"
 import { NodeInfo, splitChildren } from "./unist-utils"
 import { CodeStep } from "../smooth-code"
 import { EditorProps } from "../mini-editor"

@@ -1,8 +1,10 @@
 import {
-  highlight,
+  highlight as light,
   extractAnnotations,
   Annotation,
+  LANG_NAMES,
 } from "@code-hike/lighter"
+import { Code } from "utils"
 import { annotationsMap } from "../mdx-client/annotations"
 import { CodeAnnotation } from "../smooth-code"
 
@@ -20,48 +22,11 @@ export async function extractLighterAnnotations(
 ) {
   return await extractAnnotations(
     codeWithAnnotations,
-    lang,
+    warnIfUnknownLang(lang),
     annotationNames
   )
 }
 
-export async function extractAnnotationsFromCode(
-  codeWithAnnotations: string,
-  lang: string,
-  names?: string[]
-) {
-  const { code, annotations } = await extractAnnotations(
-    codeWithAnnotations,
-    lang,
-    names || annotationNames
-  )
-
-  const focusList = [] as string[]
-
-  const codeAnnotations = [] as CodeAnnotation[]
-
-  annotations.forEach(({ name, query, ranges }) => {
-    ranges.forEach(range => {
-      const focus = rangeString(range)
-      if (name === "focus") {
-        focusList.push(focus)
-      } else {
-        const Component = annotationsMap[name]
-        if (Component) {
-          codeAnnotations.push({
-            Component,
-            focus: focus,
-            data: query,
-          })
-        }
-      }
-    })
-  })
-
-  return { code, annotations: codeAnnotations }
-}
-
-// lighter annotations to CodeAnnotations
 export function parseLighterAnnotations(
   annotations: LighterAnnotation[]
 ) {
@@ -101,4 +66,45 @@ function rangeString(range: Annotation["ranges"][0]) {
   } else {
     return `${range.fromLineNumber}:${range.toLineNumber}`
   }
+}
+
+const warnings = new Set()
+
+function warnIfUnknownLang(lang: string) {
+  if (!LANG_NAMES.includes(lang)) {
+    if (!warnings.has(lang)) {
+      console.warn(
+        "[Code Hike warning]",
+        `${lang} isn't a valid language, no syntax highlighting will be applied.`
+      )
+      warnings.add(lang)
+    }
+    return "text"
+  }
+  return lang
+}
+
+export async function highlight({
+  code,
+  lang,
+  theme,
+}: {
+  code: string
+  lang: string
+  theme: any // TODO type this
+}): Promise<Code> {
+  const r = await light(
+    code,
+    warnIfUnknownLang(lang),
+    theme
+  )
+
+  const lines = r.lines.map(line => ({
+    tokens: line.map(token => ({
+      content: token.content,
+      props: { style: token.style },
+    })),
+  }))
+
+  return { lines, lang: r.lang }
 }

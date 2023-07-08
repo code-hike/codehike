@@ -455,10 +455,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@code-hike/lighter@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.7.0.tgz#7bb7d59631237d7d2e82434c3ea6fe1875813cb0"
-  integrity sha512-64O07rIORKQLB+5T/GKAmKcD9sC0N9yHFJXa0Hs+0Aee1G+I4bSXxTccuDFP6c/G/3h5Pk7yv7PoX9/SpzaeiQ==
+"@code-hike/lighter@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.7.3.tgz#729a7ab484f11069d258c34dfe39be918f093e39"
+  integrity sha512-IW3nBrnQRSoYDY2suXUjNZegCGVH3ljEH5w51chazy30s103CdpwSwvFya3e6GbY/xfbyAVj+Uyg6HH4L5T6tw==
 
 "@codesandbox/sandpack-client@^0.19.0":
   version "0.19.0"
