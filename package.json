@@ -2,7 +2,6 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "examples/bundle-test",
       "packages/mdx",
       "playground",
       "site"
