@@ -4,21 +4,16 @@ import {
   Annotation,
   LANG_NAMES,
 } from "@code-hike/lighter"
-import { Code } from "utils"
-import { annotationsMap } from "../mdx-client/annotations"
+import { Code } from "../utils"
 import { CodeAnnotation } from "../smooth-code"
+import { annotationsMap } from "../mdx-client/annotations"
 
 export type LighterAnnotation = Annotation
 
-const annotationNames = [
-  "focus",
-  "from",
-  ...Object.keys(annotationsMap),
-]
-
 export async function extractLighterAnnotations(
   codeWithAnnotations: string,
-  lang: string
+  lang: string,
+  annotationNames: string[]
 ) {
   return await extractAnnotations(
     codeWithAnnotations,

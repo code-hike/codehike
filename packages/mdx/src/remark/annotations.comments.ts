@@ -4,6 +4,9 @@ import {
   extractLighterAnnotations,
   parseLighterAnnotations,
 } from "./lighter"
+import { annotationsMap } from "../mdx-client/annotations"
+
+const annotationNames = Object.keys(annotationsMap)
 
 export async function splitCodeAndAnnotations(
   rawCode: string,
@@ -15,7 +18,11 @@ export async function splitCodeAndAnnotations(
   focus: string
 }> {
   let { code, annotations } =
-    await extractLighterAnnotations(rawCode, lang)
+    await extractLighterAnnotations(rawCode, lang, [
+      ...annotationNames,
+      "from",
+      "focus",
+    ])
 
   // import external code if needed and re-run annotations extraction
   const fromAnnotations = annotations.filter(
@@ -29,10 +36,11 @@ export async function splitCodeAndAnnotations(
       config.filepath,
       range
     )
-    // TODO remove 'from' annotation from the annotation names to avoid loops
+
     const result = await extractLighterAnnotations(
       externalFileContent,
-      lang
+      lang,
+      [...annotationNames, "focus"]
     )
     code = result.code
     annotations = result.annotations
