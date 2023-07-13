@@ -112,3 +112,31 @@ div#__next > div {
   --ch-25: #afb8c133;
   --ch-26: #ffffffe6;
 }
+
+.code {
+  background-color: #222;
+  padding: 20px;
+  font-size: 15px;
+  color: #fff;
+  width: 600px;
+  height: 400px;
+  margin: 0 auto;
+  padding-left: 300px;
+  font-family: monospace;
+}
+
+.line {
+  outline: 1px dashed #9999;
+  width: 200px;
+  animation: x 1s ease-in-out;
+  animation-fill-mode: backwards;
+}
+
+@keyframes x {
+  0% {
+    transform: var(--transform);
+    opacity: var(--opacity);
+  }
+  100% {
+  }
+}
