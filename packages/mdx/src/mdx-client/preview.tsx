@@ -6,7 +6,7 @@ import {
   SandboxInfo,
 } from "@codesandbox/sandpack-client"
 import { EditorStep } from "../mini-editor"
-import { CodeConfig } from "../smooth-code"
+import { CodeSettings } from "../core/types"
 
 export type PresetConfig = SandboxInfo
 export function Preview({
@@ -27,7 +27,7 @@ export function Preview({
   show?: string
   style?: React.CSSProperties
   children?: React.ReactNode
-  codeConfig?: CodeConfig
+  codeConfig?: CodeSettings
 }) {
   const kids = presetConfig ? (
     <SandpackPreview

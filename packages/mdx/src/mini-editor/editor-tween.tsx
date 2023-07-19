@@ -5,10 +5,10 @@ import {
 } from "./editor-frame"
 import { TerminalPanel } from "./terminal-panel"
 import { useTransition, EditorStep } from "./editor-shift"
-import { CodeConfig } from "../smooth-code"
 import { useLayoutEffect } from "../utils"
 import { CopyButton } from "smooth-code/copy-button"
 import { EditorExpandButton } from "mini-editor/expand-button"
+import { CodeSettings } from "../core/types"
 
 export { EditorTransition, EditorTween }
 export type { EditorTransitionProps, EditorTweenProps }
@@ -18,7 +18,7 @@ type EditorTransitionProps = {
   next?: EditorStep
   t: number
   backward: boolean
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
 } & Omit<EditorFrameProps, "northPanel" | "southPanel">
 
 type DivProps = React.PropsWithoutRef<
@@ -30,7 +30,7 @@ type EditorTweenProps = {
   next?: EditorStep
   t: number
   backward: boolean
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
   frameProps?: Partial<EditorFrameProps>
 } & DivProps
 

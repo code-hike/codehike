@@ -1,15 +1,13 @@
 import React from "react"
-import { CodeConfig, CodeSpring } from "../smooth-code"
+import { CodeSpring } from "../smooth-code"
 import {
   EditorSpring,
   EditorProps,
   EditorStep,
 } from "../mini-editor"
-import { CodeHikeConfig } from "../remark/config"
+import { CodeSettings, GlobalConfig } from "../core/types"
 
-export function Code(
-  props: EditorProps & Partial<CodeHikeConfig>
-) {
+export function Code(props: EditorProps & GlobalConfig) {
   const [step, setStep] = React.useState(props)
 
   function onTabClick(filename: string) {
@@ -22,8 +20,8 @@ export function Code(
 
 // build the CodeConfig from props and props.codeConfig
 export function mergeCodeConfig<T>(
-  props: Partial<CodeConfig> & {
-    codeConfig: Partial<CodeConfig>
+  props: Partial<CodeSettings> & {
+    codeConfig: Partial<CodeSettings>
   } & T
 ) {
   const {
@@ -66,7 +64,7 @@ export function InnerCode({
   ...props
 }: EditorProps & {
   onTabClick?: (filename: string) => void
-} & Partial<CodeHikeConfig>) {
+} & GlobalConfig) {
   const { className, style, codeConfig, ...editorProps } =
     mergeCodeConfig(props)
 

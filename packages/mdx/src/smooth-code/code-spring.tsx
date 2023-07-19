@@ -1,11 +1,8 @@
 import React from "react"
 import { useSpring } from "use-spring"
 import { FullTween } from "../utils"
-import {
-  CodeTween,
-  CodeConfig,
-  CodeStep,
-} from "./code-tween"
+import { CodeTween, CodeStep } from "./code-tween"
+import { CodeSettings } from "../core/types"
 
 type SpringConfig = Parameters<typeof useSpring>[1]
 
@@ -27,7 +24,7 @@ export function CodeSpring({
   ...htmlProps
 }: {
   step: CodeStep
-  config: CodeConfig & { spring?: SpringConfig }
+  config: CodeSettings & { spring?: SpringConfig }
 } & HTMLProps) {
   const { tween, t } = useStepSpring(step, config.spring)
   return (

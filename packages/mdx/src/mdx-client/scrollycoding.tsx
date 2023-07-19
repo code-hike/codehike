@@ -1,5 +1,5 @@
 import React from "react"
-import { EditorProps, EditorStep } from "../mini-editor"
+import { EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Scroller, Step as ScrollerStep } from "../scroller"
 import { Preview, PresetConfig } from "./preview"
@@ -7,11 +7,12 @@ import { LinkableSection } from "./section"
 import { extractPreviewSteps } from "./steps"
 import { Swap } from "./ssmq"
 import { StaticStepContext } from "./slots"
+import { GlobalConfig } from "../core/types"
 
 type ScrollycodingProps = {
   children: React.ReactNode
   editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
+  codeConfig: GlobalConfig
   start?: number
   presetConfig?: PresetConfig
   className?: string

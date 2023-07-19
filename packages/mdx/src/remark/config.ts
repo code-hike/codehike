@@ -1,17 +1,6 @@
-import { Theme } from "@code-hike/lighter"
+import { RemarkConfig } from "../core/types"
 
-export type CodeHikeConfig = {
-  theme: Theme
-  lineNumbers?: boolean
-  autoImport?: boolean
-  skipLanguages: string[]
-  showExpandButton?: boolean
-  showCopyButton?: boolean
-  autoLink?: boolean
-  staticMediaQuery?: string
-  // path to the current file, internal use only
-  filepath?: string
-}
+export type CodeHikeConfig = RemarkConfig
 
 /**
  * Add defaults and normalize config

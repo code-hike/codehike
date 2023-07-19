@@ -15,6 +15,7 @@ import {
 import { SmoothLines } from "./smooth-lines"
 import { CopyButton } from "./copy-button"
 import { CodeExpandButton } from "mini-editor/expand-button"
+import { CodeSettings } from "../core/types"
 
 type HTMLProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -26,29 +27,13 @@ type TriggerPosition = `${number}px` | `${number}%`
 export type CodeTweenProps = {
   tween: FullTween<CodeStep>
   progress: number
-  config: CodeConfig
+  config: CodeSettings
 } & HTMLProps
 
 export type CodeStep = {
   code: Code
   focus: FocusString
   annotations?: CodeAnnotation[]
-}
-export type CodeConfig = {
-  /* not really the height, when this changes we measure everything again */
-  parentHeight?: any
-  minColumns?: number
-  minZoom?: number
-  maxZoom?: number
-  horizontalCenter?: boolean
-  lineNumbers?: boolean
-  showCopyButton?: boolean
-  showExpandButton?: boolean
-  staticMediaQuery?: string
-  rows?: number | "focus" | (number | "focus")[]
-  triggerPosition?: TriggerPosition
-  debug?: boolean
-  themeName?: string
 }
 
 function useCodeShift({
@@ -132,7 +117,7 @@ function AfterDimensions({
 }: {
   dimensions: NonNullable<Dimensions>
   stepInfo: CodeShift
-  config: CodeConfig
+  config: CodeSettings
   progress: number
   htmlProps: HTMLProps
   tween: FullTween<CodeStep>

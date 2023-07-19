@@ -1,9 +1,9 @@
 import React from "react"
 import { useSpring } from "use-spring"
 import { EditorTween } from "./editor-tween"
-import { CodeConfig } from "../smooth-code"
 import { EditorFrameProps } from "./editor-frame"
 import { EditorStep, CodeFile } from "./editor-shift"
+import { CodeSettings } from "../core/types"
 
 export { EditorSpring }
 export type { EditorProps, EditorStep, CodeFile }
@@ -22,7 +22,7 @@ const defaultSpring = {
 }
 type EditorProps = EditorStep & {
   frameProps?: Partial<EditorFrameProps>
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
   springConfig?: SpringConfig
 } & DivProps
 
