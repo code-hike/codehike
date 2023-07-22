@@ -146,7 +146,7 @@ async function getCSSVariables(
 }
 
 /**
- * Creates a `chCodeConfig` variable node in the tree
+ * Creates a `chGlobalConfig` variable node in the tree
  * so that the components can access the config
  *
  * Also add a style tags with all the css variables with the theme colors

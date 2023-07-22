@@ -2,53 +2,74 @@ import React from "react"
 import { EditorStep } from "../mini-editor"
 import { InnerCode } from "./code"
 import { Preview } from "./preview"
+import {
+  CodeConfigProps,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
 
-export function CodeSlot() {
+type CodeSlotProps = CodeConfigProps & ElementProps
+
+export function CodeSlot(localProps: CodeSlotProps) {
   const context = React.useContext(StaticStepContext)
 
   if (!context) {
     return null
   }
 
-  return <InnerCodeSlot {...context} />
-}
-
-function InnerCodeSlot({ editorStep, setFocus }) {
+  const {
+    editorStep,
+    codeConfigProps,
+    setFocus,
+    globalConfig,
+  } = context
   const onTabClick = (filename: string) => {
     setFocus({ fileName: filename, focus: null, id: "" })
   }
-  const { preset, presetConfig, ...props } = editorStep
-  return <InnerCode {...props} onTabClick={onTabClick} />
+
+  return (
+    <InnerCode
+      globalConfig={globalConfig}
+      editorStep={editorStep}
+      codeConfigProps={{
+        ...codeConfigProps,
+        ...localProps,
+      }}
+      onTabClick={onTabClick}
+    />
+  )
 }
-export function PreviewSlot() {
+
+export function PreviewSlot(localProps: any) {
   const context = React.useContext(StaticStepContext)
   if (!context) {
     return null
   }
 
-  return <InnerPreviewSlot {...context} />
-}
+  const {
+    editorStep,
+    previewStep,
+    presetConfig,
+    globalConfig,
+  } = context
 
-function InnerPreviewSlot({
-  previewStep,
-  allProps,
-  editorStep,
-}) {
-  const { preset, ...props } = allProps
   return (
     <Preview
       className="ch-scrollycoding-preview"
-      {...props}
-      {...previewStep?.props}
       files={editorStep.files}
+      globalConfig={globalConfig}
+      presetConfig={presetConfig}
+      {...previewStep["props"]}
     />
   )
 }
 
 export const StaticStepContext = React.createContext<{
   editorStep: EditorStep
+  globalConfig: GlobalConfig
   previewStep: React.ReactNode
-  allProps: any
+  presetConfig?: any
+  codeConfigProps: CodeConfigProps
   setFocus: (x: {
     fileName?: string
     focus: string | null

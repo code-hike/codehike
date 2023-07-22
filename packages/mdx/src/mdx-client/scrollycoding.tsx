@@ -7,23 +7,33 @@ import { LinkableSection } from "./section"
 import { extractPreviewSteps } from "./steps"
 import { Swap } from "./ssmq"
 import { StaticStepContext } from "./slots"
-import { GlobalConfig } from "../core/types"
+import {
+  CodeConfigProps,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
 
 type ScrollycodingProps = {
+  globalConfig: GlobalConfig
+  // data
   children: React.ReactNode
   editorSteps: EditorStep[]
-  codeConfig: GlobalConfig
-  start?: number
   presetConfig?: PresetConfig
-  className?: string
-  style?: React.CSSProperties
   hasPreviewSteps?: boolean
-}
+  // custom props
+  staticMediaQuery?: string
+  start?: number
+  // more things like : rows, showCopyButton, showExpandButton, lineNumbers, staticMediaQuery
+} & CodeConfigProps &
+  ElementProps
 
-export function Scrollycoding(props) {
+export function Scrollycoding(props: ScrollycodingProps) {
+  const staticMediaQuery =
+    props.staticMediaQuery ??
+    props.globalConfig.staticMediaQuery
   return (
     <Swap
-      query={props.codeConfig.staticMediaQuery}
+      query={staticMediaQuery}
       staticElement={<StaticScrollycoding {...props} />}
     >
       <DynamicScrollycoding {...props} />
@@ -32,17 +42,30 @@ export function Scrollycoding(props) {
 }
 
 function StaticScrollycoding({
+  globalConfig,
+  // data
   children,
-  hasPreviewSteps,
   editorSteps,
-  ...rest
+  presetConfig,
+  hasPreviewSteps,
+  // local config
+  staticMediaQuery,
+  start = 0,
+  // element props:
+  className,
+  style,
+  // code config props
+  ...codeConfigProps
 }: ScrollycodingProps) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
   return (
     <section
-      className="ch-scrollycoding-static"
-      data-ch-theme={rest?.codeConfig?.themeName}
+      className={`ch-scrollycoding-static ${
+        className || ""
+      }`}
+      data-ch-theme={globalConfig.themeName}
+      style={style}
     >
       {stepsChildren.map((children, i) => (
         <StaticSection
@@ -51,7 +74,9 @@ function StaticScrollycoding({
           previewStep={
             previewChildren && previewChildren[i]
           }
-          allProps={rest}
+          presetConfig={presetConfig}
+          codeConfigProps={codeConfigProps}
+          globalConfig={globalConfig}
         >
           {children}
         </StaticSection>
@@ -63,23 +88,33 @@ function StaticScrollycoding({
 function StaticSection({
   editorStep,
   previewStep,
-  allProps,
   children,
+  presetConfig,
+  codeConfigProps,
+  globalConfig,
 }: {
   editorStep: EditorStep
   previewStep: React.ReactNode
   children: React.ReactNode
-  allProps: any
+  presetConfig?: PresetConfig
+  codeConfigProps: CodeConfigProps
+  globalConfig: GlobalConfig
 }) {
   const [step, setStep] = React.useState({
-    ...editorStep,
-    ...allProps,
+    editorStep,
+    previewStep,
+    presetConfig,
+    codeConfigProps,
+    selectedId: undefined,
   })
 
   const resetFocus = () =>
     setStep({
-      ...editorStep,
-      ...allProps,
+      editorStep,
+      previewStep,
+      presetConfig,
+      codeConfigProps,
+      selectedId: undefined,
     })
   const setFocus = ({
     fileName,
@@ -90,11 +125,15 @@ function StaticSection({
     focus: string | null
     id: string
   }) => {
-    const newStep = updateEditorStep(step, fileName, focus)
+    const newEditorStep = updateEditorStep(
+      step.editorStep,
+      fileName,
+      focus
+    )
 
     setStep({
       ...step,
-      ...newStep,
+      editorStep: newEditorStep,
       selectedId: id,
     })
   }
@@ -102,10 +141,9 @@ function StaticSection({
   return (
     <StaticStepContext.Provider
       value={{
-        editorStep: step,
-        previewStep: previewStep,
-        allProps,
+        ...step,
         setFocus,
+        globalConfig,
       }}
     >
       <LinkableSection
@@ -119,15 +157,20 @@ function StaticSection({
 }
 
 function DynamicScrollycoding({
+  globalConfig,
+  // data
   children,
   editorSteps,
-  codeConfig,
   presetConfig,
+  hasPreviewSteps,
+  // local config
+  staticMediaQuery,
   start = 0,
+  // element props:
   className,
   style,
-  hasPreviewSteps,
-  ...rest
+  // code config props
+  ...codeConfigProps
 }: ScrollycodingProps) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
@@ -173,12 +216,12 @@ function DynamicScrollycoding({
         withPreview ? "ch-scrollycoding-with-preview" : ""
       } ${className || ""}`}
       style={style}
-      data-ch-theme={codeConfig?.themeName}
+      data-ch-theme={globalConfig?.themeName}
     >
       <div className="ch-scrollycoding-content">
         <Scroller
           onStepChange={onStepChange}
-          triggerPosition={codeConfig?.triggerPosition}
+          triggerPosition={globalConfig?.triggerPosition}
         >
           {stepsChildren.map((children, i) => (
             <ScrollerStep
@@ -207,23 +250,27 @@ function DynamicScrollycoding({
       </div>
       <div className="ch-scrollycoding-sticker">
         <InnerCode
-          showExpandButton={true}
-          {...rest}
-          {...(tab as any)}
-          codeConfig={codeConfig}
-          rows={undefined}
+          editorStep={tab}
+          globalConfig={globalConfig}
           onTabClick={onTabClick}
+          codeConfigProps={{
+            showExpandButton: true,
+            ...codeConfigProps,
+            rows: undefined, // rows are not supported in scrollycoding
+          }}
         />
         {presetConfig ? (
           <Preview
             className="ch-scrollycoding-preview"
             files={tab.files}
+            globalConfig={globalConfig}
             presetConfig={presetConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-scrollycoding-preview"
             {...previewChildren[state.stepIndex]["props"]}
+            globalConfig={globalConfig}
           />
         ) : null}
       </div>

@@ -1,29 +1,37 @@
 import React from "react"
-import { EditorProps, EditorStep } from "../mini-editor"
+import { EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
+import {
+  CodeConfigProps,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
+
+type SpotlightProps = {
+  globalConfig: GlobalConfig
+  // data
+  children: React.ReactNode
+  editorSteps: EditorStep[]
+  presetConfig?: PresetConfig
+  hasPreviewSteps?: boolean
+  // local config
+  start?: number
+} & CodeConfigProps &
+  ElementProps
 
 export function Spotlight({
   children,
   editorSteps,
-  codeConfig,
+  globalConfig,
   start = 0,
   presetConfig,
   className,
   style,
   hasPreviewSteps,
-  ...rest
-}: {
-  children: React.ReactNode
-  editorSteps: EditorStep[]
-  codeConfig: EditorProps["codeConfig"]
-  start?: number
-  presetConfig?: PresetConfig
-  className?: string
-  style?: React.CSSProperties
-  hasPreviewSteps?: boolean
-}) {
+  ...codeConfigProps
+}: SpotlightProps) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
 
@@ -54,7 +62,7 @@ export function Spotlight({
         withPreview ? "ch-spotlight-with-preview" : ""
       } ${className || ""}`}
       style={style}
-      data-ch-theme={codeConfig.themeName}
+      data-ch-theme={globalConfig.themeName}
     >
       <div className="ch-spotlight-tabs">
         {headerElement?.props?.children ? (
@@ -82,9 +90,9 @@ export function Spotlight({
       </div>
       <div className="ch-spotlight-sticker">
         <InnerCode
-          {...rest}
-          {...(tab as any)}
-          codeConfig={codeConfig}
+          editorStep={tab}
+          globalConfig={globalConfig}
+          codeConfigProps={codeConfigProps}
           onTabClick={onTabClick}
         />
         {presetConfig ? (
@@ -92,11 +100,13 @@ export function Spotlight({
             className="ch-spotlight-preview"
             files={tab.files}
             presetConfig={presetConfig}
+            globalConfig={globalConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-spotlight-preview"
             {...previewChildren[state.stepIndex]["props"]}
+            globalConfig={globalConfig}
           />
         ) : null}
       </div>

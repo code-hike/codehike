@@ -59,9 +59,11 @@ export async function extractStepsInfo(
           filter
         )
       }
+      const node = child as any
       step.children.push({
         type: "mdxJsxFlowElement",
         name: "CH.CodeSlot",
+        attributes: node.attributes,
       })
     } else if (
       child.type === "mdxJsxFlowElement" &&

@@ -1,4 +1,5 @@
 import type { Theme } from "@code-hike/lighter"
+import type { CodeStep } from "../smooth-code"
 
 type TriggerPosition = `${number}px` | `${number}%`
 
@@ -25,6 +26,10 @@ export type GlobalConfig = {
   showCopyButton?: boolean
   staticMediaQuery?: string
   triggerPosition?: TriggerPosition
+
+  minZoom?: number
+  maxZoom?: number
+  horizontalCenter?: boolean
 }
 
 export function toGlobalConfig({
@@ -62,4 +67,37 @@ export type CodeSettings = {
   horizontalCenter?: boolean
   rows?: number | "focus" | (number | "focus")[]
   debug?: boolean
+}
+
+export type ElementProps = {
+  style?: React.CSSProperties
+  className?: string
+}
+
+export type CodeConfigProps = {
+  rows?: number | "focus" | (number | "focus")[]
+  showCopyButton?: boolean
+  showExpandButton?: boolean
+  lineNumbers?: boolean
+
+  minZoom?: number
+  maxZoom?: number
+  horizontalCenter?: boolean
+}
+
+type EditorPanel = {
+  tabs: string[]
+  active: string
+  heightRatio: number
+}
+
+export type EditorStep = {
+  files: CodeFile[]
+  northPanel: EditorPanel
+  southPanel?: EditorPanel
+  terminal?: string
+}
+
+export type CodeFile = CodeStep & {
+  name: string
 }

@@ -6,29 +6,31 @@ import {
   SandboxInfo,
 } from "@codesandbox/sandpack-client"
 import { EditorStep } from "../mini-editor"
-import { CodeSettings } from "../core/types"
+import { ElementProps, GlobalConfig } from "../core/types"
+
+type PreviewProps = {
+  globalConfig: GlobalConfig
+  // data
+  files: EditorStep["files"]
+  presetConfig?: PresetConfig
+  children?: React.ReactNode
+  // local config
+  show?: string
+  frameless?: boolean
+} & ElementProps
 
 export type PresetConfig = SandboxInfo
 export function Preview({
-  className,
+  globalConfig,
   files,
   presetConfig,
   show,
   children,
-  style,
   frameless,
-  codeConfig,
+  className,
+  style,
   ...rest
-}: {
-  className: string
-  frameless?: boolean
-  files: EditorStep["files"]
-  presetConfig?: PresetConfig
-  show?: string
-  style?: React.CSSProperties
-  children?: React.ReactNode
-  codeConfig?: CodeSettings
-}) {
+}: PreviewProps) {
   const kids = presetConfig ? (
     <SandpackPreview
       files={files}
@@ -43,7 +45,7 @@ export function Preview({
         "ch-preview" + (className ? " " + className : "")
       }
       style={style}
-      data-ch-theme={codeConfig?.themeName}
+      data-ch-theme={globalConfig?.themeName}
     >
       {frameless ? (
         kids

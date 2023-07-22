@@ -3,7 +3,7 @@ import { Code } from "../utils"
 
 export function InlineCode({
   className,
-  codeConfig,
+  globalConfig,
   children,
   code,
   ...rest
@@ -11,14 +11,14 @@ export function InlineCode({
   className: string
   code: Code
   children?: React.ReactNode
-  codeConfig: { themeName: string }
+  globalConfig: { themeName: string }
 }) {
   const { lines } = code
   const allTokens = lines.flatMap(line => line.tokens)
 
   return (
     <span
-      data-ch-theme={codeConfig.themeName}
+      data-ch-theme={globalConfig.themeName}
       className={
         "ch-inline-code not-prose" +
         (className ? " " + className : "")
