@@ -1,98 +1,83 @@
 import React from "react"
-import { CodeConfig, CodeSpring } from "../smooth-code"
+import { CodeSpring } from "../smooth-code"
+import { EditorSpring, EditorStep } from "../mini-editor"
 import {
-  EditorSpring,
-  EditorProps,
-  EditorStep,
-} from "../mini-editor"
-import { CodeHikeConfig } from "../remark/config"
+  CodeConfigProps,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
 
-export function Code(
-  props: EditorProps & Partial<CodeHikeConfig>
-) {
-  const [step, setStep] = React.useState(props)
+type Props = {
+  editorStep: EditorStep
+  globalConfig: GlobalConfig
+} & ElementProps &
+  CodeConfigProps
+
+export function Code(props: Props) {
+  const { editorStep, globalConfig, ...codeConfigProps } =
+    props
+  const [step, setStep] = React.useState(editorStep)
 
   function onTabClick(filename: string) {
-    const newStep = updateEditorStep(step, filename, null)
+    const newStep = updateEditorStep(
+      props.editorStep,
+      filename,
+      null
+    )
     setStep({ ...step, ...newStep })
   }
 
-  return <InnerCode {...step} onTabClick={onTabClick} />
+  return (
+    <InnerCode
+      editorStep={step}
+      onTabClick={onTabClick}
+      globalConfig={globalConfig}
+      codeConfigProps={codeConfigProps}
+    />
+  )
 }
 
-// build the CodeConfig from props and props.codeConfig
-export function mergeCodeConfig<T>(
-  props: Partial<CodeConfig> & {
-    codeConfig: Partial<CodeConfig>
-  } & T
-) {
-  const {
-    lineNumbers,
-    showCopyButton,
-    showExpandButton,
-    minZoom,
-    maxZoom,
-    ...rest
-  } = props
-  const codeConfig = {
-    ...props.codeConfig,
-    maxZoom:
-      maxZoom == null ? props.codeConfig?.maxZoom : maxZoom,
-    minZoom:
-      minZoom == null ? props.codeConfig?.minZoom : minZoom,
-    horizontalCenter:
-      props.codeConfig?.horizontalCenter ??
-      props.horizontalCenter,
-    lineNumbers:
-      lineNumbers == null
-        ? props.codeConfig?.lineNumbers
-        : lineNumbers,
-    showCopyButton:
-      showCopyButton == null
-        ? props.codeConfig?.showCopyButton
-        : showCopyButton,
-    showExpandButton:
-      showExpandButton == null
-        ? props.codeConfig?.showExpandButton
-        : showExpandButton,
-    rows: props.rows,
-    debug: props.debug ?? props.codeConfig?.debug,
-  }
-  return { ...rest, codeConfig }
+type InnerCodeProps = {
+  onTabClick: (filename: string) => void
+  globalConfig: GlobalConfig
+  editorStep: EditorStep
+  codeConfigProps: CodeConfigProps & ElementProps
 }
 
 export function InnerCode({
   onTabClick,
-  ...props
-}: EditorProps & {
-  onTabClick?: (filename: string) => void
-} & Partial<CodeHikeConfig>) {
-  const { className, style, codeConfig, ...editorProps } =
-    mergeCodeConfig(props)
+  globalConfig,
+  editorStep,
+  codeConfigProps,
+}: InnerCodeProps) {
+  const { className, style, ...config } = mergeCodeConfig(
+    globalConfig,
+    codeConfigProps
+  )
 
   if (
-    !props.southPanel &&
-    props.files.length === 1 &&
-    !props.files[0].name
+    !editorStep.southPanel &&
+    editorStep.files.length === 1 &&
+    !editorStep.files[0].name
   ) {
     return (
       <div
         className={`ch-codeblock not-prose ${
           className || ""
         }`}
-        data-ch-theme={props.codeConfig?.themeName}
+        data-ch-theme={globalConfig.themeName}
         style={style}
       >
         <CodeSpring
           className="ch-code"
-          config={codeConfig}
-          step={editorProps.files[0]}
+          config={config}
+          step={editorStep.files[0]}
         />
       </div>
     )
   } else {
     const frameProps = {
-      ...editorProps?.frameProps,
+      // ...editorStep?.frameProps,
       onTabClick,
     }
     return (
@@ -100,16 +85,41 @@ export function InnerCode({
         className={`ch-codegroup not-prose ${
           className || ""
         }`}
-        data-ch-theme={props.codeConfig?.themeName}
+        data-ch-theme={globalConfig.themeName}
         style={style}
       >
         <EditorSpring
-          {...editorProps}
+          {...editorStep}
           frameProps={frameProps}
-          codeConfig={codeConfig}
+          codeConfig={config}
         />
       </div>
     )
+  }
+}
+
+export function mergeCodeConfig(
+  globalConfig: GlobalConfig,
+  local: CodeConfigProps & ElementProps
+) {
+  const {
+    // ignore these
+    staticMediaQuery,
+    themeName,
+    triggerPosition,
+    // keep the rest
+    ...global
+  } = globalConfig
+  return {
+    ...global,
+    ...local,
+    lineNumbers: local.lineNumbers ?? global.lineNumbers,
+    maxZoom: local.maxZoom ?? global.maxZoom,
+    minZoom: local.minZoom ?? global.minZoom,
+    horizontalCenter:
+      local.horizontalCenter ?? global.horizontalCenter,
+    showCopyButton:
+      local.showCopyButton ?? global.showCopyButton,
   }
 }
 

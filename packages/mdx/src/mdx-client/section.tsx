@@ -1,32 +1,43 @@
 import React from "react"
-import { EditorProps } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
+import {
+  CodeConfigProps,
+  EditorStep,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
 
 const SectionContext = React.createContext<{
-  props: EditorProps
+  codeConfigProps: CodeConfigProps
+  editorStep: EditorStep
   setFocus: (x: {
     fileName?: string
     focus: string | null
     id: string
   }) => void
 }>({
-  props: null!,
+  codeConfigProps: {},
+  editorStep: null!,
   setFocus: () => {},
 })
+
+type SectionProps = {
+  globalConfig: GlobalConfig
+  children: React.ReactNode
+  editorStep: EditorStep
+} & CodeConfigProps &
+  ElementProps
 
 export function Section({
   children,
   className,
   style,
-  ...props
-}: {
-  children: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
-}) {
-  const [state, setState] = React.useState<any>(props)
+  editorStep,
+  ...codeConfigProps
+}: SectionProps) {
+  const [state, setState] = React.useState<any>(editorStep)
 
-  const resetFocus = () => setState(props)
+  const resetFocus = () => setState(editorStep)
 
   const setFocus = ({
     fileName,
@@ -55,7 +66,8 @@ export function Section({
     >
       <SectionContext.Provider
         value={{
-          props: rest,
+          codeConfigProps,
+          editorStep: rest,
           setFocus,
         }}
       >
@@ -70,18 +82,29 @@ export function Section({
   )
 }
 
-export function SectionCode(innerProps) {
-  const { props, setFocus } =
-    React.useContext(SectionContext)
+export function SectionCode({
+  globalConfig,
+  ...codeConfigProps
+}: { globalConfig: GlobalConfig } & CodeConfigProps &
+  ElementProps) {
+  const section = React.useContext(SectionContext)
 
   const onTabClick = (filename: string) => {
-    setFocus({ fileName: filename, focus: null, id: "" })
+    section.setFocus({
+      fileName: filename,
+      focus: null,
+      id: "",
+    })
   }
 
   return (
     <InnerCode
-      {...innerProps}
-      {...props}
+      editorStep={section.editorStep}
+      globalConfig={globalConfig}
+      codeConfigProps={{
+        ...section.codeConfigProps,
+        ...codeConfigProps,
+      }}
       onTabClick={onTabClick}
     />
   )

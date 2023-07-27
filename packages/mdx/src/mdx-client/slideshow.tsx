@@ -1,46 +1,56 @@
 import React from "react"
 import { clamp, useInterval } from "utils"
-import { EditorProps, EditorStep } from "../mini-editor"
+import { EditorStep } from "../mini-editor"
 import { InnerCode, updateEditorStep } from "./code"
 import { Preview, PresetConfig } from "./preview"
 import { extractPreviewSteps } from "./steps"
+import {
+  CodeConfigProps,
+  ElementProps,
+  GlobalConfig,
+} from "../core/types"
 
-type ChangeEvent = {
-  index: number
+type SlideshowProps = {
+  globalConfig: GlobalConfig
+  // data
+  children: React.ReactNode
+  editorSteps: EditorStep[]
+  hasPreviewSteps?: boolean
+  presetConfig?: PresetConfig
+  // local config
+  autoFocus?: boolean
+  start?: number
+  onChange?: (e: { index: number }) => void
+  autoPlay?: number
+  loop?: boolean
+} & CodeConfigProps &
+  ElementProps
+
+export function Slideshow(props: SlideshowProps) {
+  return <InnerSlideshow {...props} />
 }
 
-export function Slideshow({
+function InnerSlideshow({
+  globalConfig,
+  // data
   children,
-  className,
-  code,
-  codeConfig,
   editorSteps,
-  autoFocus,
   hasPreviewSteps,
+  presetConfig,
+  // local config:
+  autoFocus,
+  autoPlay,
   // Set the initial slide index
   start = 0,
   // Called when the slideshow state changes and returns the current state object
   onChange: onSlideshowChange = () => {},
-  presetConfig,
-  style,
-  autoPlay,
   loop = false,
-  ...rest
-}: {
-  children: React.ReactNode
-  className?: string
-  code?: EditorProps["codeConfig"]
-  codeConfig: EditorProps["codeConfig"]
-  editorSteps: EditorStep[]
-  hasPreviewSteps?: boolean
-  autoFocus?: boolean
-  start?: number
-  onChange?: (e: ChangeEvent) => void
-  presetConfig?: PresetConfig
-  style?: React.CSSProperties
-  autoPlay?: number
-  loop?: boolean
-}) {
+  // element props:
+  className,
+  style,
+  // code config props:
+  ...codeConfigProps
+}: SlideshowProps) {
   const { stepsChildren, previewChildren } =
     extractPreviewSteps(children, hasPreviewSteps)
   const withPreview = presetConfig || hasPreviewSteps
@@ -97,16 +107,13 @@ export function Slideshow({
         withPreview ? "ch-slideshow-with-preview" : ""
       } ${className || ""}`}
       style={style}
-      data-ch-theme={codeConfig.themeName}
+      data-ch-theme={globalConfig.themeName}
     >
       <div className="ch-slideshow-slide">
         <InnerCode
-          {...rest}
-          {...(tab as any)}
-          codeConfig={{
-            ...codeConfig,
-            ...code,
-          }}
+          globalConfig={globalConfig}
+          editorStep={tab}
+          codeConfigProps={codeConfigProps}
           onTabClick={onTabClick}
         />
         {presetConfig ? (
@@ -114,11 +121,13 @@ export function Slideshow({
             className="ch-slideshow-preview"
             files={tab.files}
             presetConfig={presetConfig}
+            globalConfig={globalConfig}
           />
         ) : hasPreviewSteps ? (
           <Preview
             className="ch-slideshow-preview"
             {...previewChildren[currentIndex]["props"]}
+            globalConfig={globalConfig}
           />
         ) : null}
       </div>

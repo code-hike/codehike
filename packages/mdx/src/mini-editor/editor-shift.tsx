@@ -1,10 +1,7 @@
-import {
-  CodeTween,
-  CodeConfig,
-  CodeStep,
-} from "../smooth-code"
+import { CodeTween, CodeStep } from "../smooth-code"
 import React from "react"
 import { codeToText } from "utils"
+import { CodeSettings } from "../core/types"
 
 export type CodeFile = CodeStep & {
   name: string
@@ -56,7 +53,7 @@ type Snapshot = {
   southTabs: TabsSnapshot | null
 }
 
-function northConfig(codeConfig: CodeConfig) {
+function northConfig(codeConfig: CodeSettings) {
   if (Array.isArray(codeConfig.rows)) {
     return {
       ...codeConfig,
@@ -66,7 +63,7 @@ function northConfig(codeConfig: CodeConfig) {
   return codeConfig
 }
 
-function southConfig(codeConfig: CodeConfig) {
+function southConfig(codeConfig: CodeSettings) {
   if (Array.isArray(codeConfig.rows)) {
     return {
       ...codeConfig,
@@ -82,7 +79,7 @@ export function useTransition(
   next: EditorStep,
   t: number,
   backward: boolean,
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
 ): Transition {
   // prevSnapshot has the dimensions of the editor for t=0
   // nextSnapshot has the dimensions of the editor for t=1
@@ -174,7 +171,7 @@ export function useTransition(
 function startingPosition(
   prev: EditorStep,
   next: EditorStep,
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
 ): Transition {
   const inputNorthPanel = prev.northPanel
   const inputSouthPanel = prev.southPanel
@@ -235,7 +232,7 @@ function startingPosition(
 function endingPosition(
   prev: EditorStep,
   next: EditorStep,
-  codeConfig: CodeConfig
+  codeConfig: CodeSettings
 ): Transition {
   const inputNorthPanel = next.northPanel
   const inputSouthPanel = next.southPanel
@@ -312,7 +309,7 @@ function CodeTransition({
   nextFile: CodeFile
   t: number
   parentHeight: string
-  codeConfig: CodeConfig & { htmlProps?: any }
+  codeConfig: CodeSettings & { htmlProps?: any }
 }) {
   const htmlProps = {
     ...codeConfig?.htmlProps,

@@ -13,6 +13,7 @@ import { addConfigDefaults, CodeHikeConfig } from "./config"
 
 import type { Node } from "unist"
 import { getThemeColors } from "@code-hike/lighter"
+import { toGlobalConfig } from "core/types"
 
 const transforms = [
   transformPreviews,
@@ -145,7 +146,7 @@ async function getCSSVariables(
 }
 
 /**
- * Creates a `chCodeConfig` variable node in the tree
+ * Creates a `chGlobalConfig` variable node in the tree
  * so that the components can access the config
  *
  * Also add a style tags with all the css variables with the theme colors
@@ -155,16 +156,12 @@ async function addConfig(
   config: CodeHikeConfig
 ) {
   const { theme } = config
-  const themeName =
-    typeof theme === "string" ? theme : theme.name
-  const style = await getStyle(theme, themeName)
 
-  const codeConfig = {
-    staticMediaQuery: config.staticMediaQuery,
-    lineNumbers: config.lineNumbers,
-    showCopyButton: config.showCopyButton,
-    themeName,
-  }
+  const globalConfig = toGlobalConfig(config)
+  const style = await getStyle(
+    theme,
+    globalConfig.themeName
+  )
 
   tree.children.unshift({
     type: "mdxJsxFlowElement",
@@ -236,7 +233,7 @@ async function addConfig(
                     type: "Identifier",
                     name: CH_CODE_CONFIG_VAR_NAME,
                   },
-                  init: valueToEstree(codeConfig),
+                  init: valueToEstree(globalConfig),
                 },
               ],
               kind: "const",

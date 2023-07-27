@@ -46,7 +46,7 @@ export async function visitAsync(
   await Promise.all(promises)
 }
 
-export const CH_CODE_CONFIG_VAR_NAME = "chCodeConfig"
+export const CH_CODE_CONFIG_VAR_NAME = "chGlobalConfig"
 
 /**
  * Transforms a node into a JSX Flow ELement (or another given type).
@@ -89,7 +89,7 @@ export function toJSX(
 
   if (addConfigProp) {
     node.attributes.push(
-      toAttribute("codeConfig", CH_CODE_CONFIG_VAR_NAME, {
+      toAttribute("globalConfig", CH_CODE_CONFIG_VAR_NAME, {
         type: "Identifier",
         name: CH_CODE_CONFIG_VAR_NAME,
       })

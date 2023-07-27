@@ -1,11 +1,11 @@
 import { highlight } from "./lighter"
 import { NodeInfo, splitChildren } from "./unist-utils"
 import { CodeStep } from "../smooth-code"
-import { EditorProps } from "../mini-editor"
 import { getAnnotationsFromMetastring } from "./annotations.metastring"
 import { CodeNode, SuperNode } from "./nodes"
 import { CodeHikeConfig } from "./config"
 import { splitCodeAndAnnotations } from "./annotations.comments"
+import { EditorStep } from "../core/types"
 
 export function isEditorNode(
   node: SuperNode,
@@ -34,14 +34,12 @@ export async function mapAnyCodeNode(
   }
 }
 
-type Props = Omit<EditorProps, "codeConfig">
-
 async function mapCode(
   nodeInfo: NodeInfo<CodeNode>,
   config: CodeHikeConfig
-): Promise<Props> {
+): Promise<EditorStep> {
   const file = await mapFile(nodeInfo, config)
-  const props: Props = {
+  const props: EditorStep = {
     northPanel: {
       tabs: [file.name],
       active: file.name,
@@ -55,7 +53,7 @@ async function mapCode(
 export async function mapEditor(
   { node }: NodeInfo,
   config: CodeHikeConfig
-): Promise<Props> {
+): Promise<EditorStep> {
   const [northNodes, southNodes = []] = splitChildren(
     node,
     "thematicBreak"

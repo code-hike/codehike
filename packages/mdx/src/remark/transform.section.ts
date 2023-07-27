@@ -35,6 +35,7 @@ async function transformSection(
         toJSX(editorNode, {
           name: "CH.SectionCode",
           appendProps: true,
+          addConfigProp: true,
           props: {},
         })
       }
@@ -46,7 +47,7 @@ async function transformSection(
   if (props) {
     toJSX(node, {
       name: "CH.Section",
-      props: props as any,
+      props: { editorStep: props },
       addConfigProp: true,
       appendProps: true,
     })
