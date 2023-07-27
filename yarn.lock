@@ -455,10 +455,12 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@code-hike/lighter@0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.7.3.tgz#729a7ab484f11069d258c34dfe39be918f093e39"
-  integrity sha512-IW3nBrnQRSoYDY2suXUjNZegCGVH3ljEH5w51chazy30s103CdpwSwvFya3e6GbY/xfbyAVj+Uyg6HH4L5T6tw==
+"@code-hike/lighter@0.8.2":
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@code-hike/lighter/-/lighter-0.8.2.tgz#21fe70c339b645718606a8aa301f15524e5f829f"
+  integrity sha512-h7PA2+90rIRQWamxeHSpcgVLs9hwhz8UW8+RG+vYIYh2Y4F2GTa4c+7S5HQH/BKTyMPv5yrSCEwhCB605gO5og==
+  dependencies:
+    ansi-sequence-parser "^1.1.0"
 
 "@codesandbox/sandpack-client@^0.19.0":
   version "0.19.0"
@@ -1963,6 +1965,11 @@ ansi-regex@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz#082cb2c89c9fe8659a311a53bd6a4dc5301db304"
   integrity sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==
+
+ansi-sequence-parser@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ansi-sequence-parser/-/ansi-sequence-parser-1.1.0.tgz#4d790f31236ac20366b23b3916b789e1bde39aed"
+  integrity sha512-lEm8mt52to2fT8GhciPCGeCXACSz2UwIN4X2e2LJSnZ5uAbn2/dsYdOmUXq0AtWS5cpAupysIneExOgH0Vd2TQ==
 
 ansi-styles@^3.2.1:
   version "3.2.1"
