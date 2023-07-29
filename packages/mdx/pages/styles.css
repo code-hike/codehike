@@ -128,7 +128,7 @@ div#__next > div {
 .line {
   outline: 1px dashed #9999;
   width: 200px;
-  animation: x 1s ease-in-out;
+  animation: x var(--duration) ease-in-out;
   animation-fill-mode: backwards;
 }
 

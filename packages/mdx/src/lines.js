@@ -1,4 +1,4 @@
-const EXIT_DURATION = 0.5
+const SINGLE_DURATION = 0.1
 
 export function setLines(parent, lines) {
   const oldLineElements = Array.from(parent.children)
@@ -11,6 +11,10 @@ export function setLines(parent, lines) {
 
   const measureNew = measureProperties(newLineElements)
 
+  parent.style.setProperty(
+    "--duration",
+    `${SINGLE_DURATION}s`
+  )
   fillAnimationStart(measureOld, measureNew)
 }
 
@@ -39,6 +43,8 @@ function fillAnimationStart(measureOld, measureNew) {
     const dx = mOld.x - mNew.x
     const dy = mOld.y - mNew.y
 
+    const delay = staggerDelay(i, exitCounts, exitsDuration)
+
     element.style.setProperty("--opacity", mOld.opacity)
     element.style.setProperty(
       "--transform",
@@ -47,7 +53,7 @@ function fillAnimationStart(measureOld, measureNew) {
     element.style.setProperty("animation-name", "x")
     element.style.setProperty(
       "animation-delay",
-      `${staggerDelay(i, exitCounts, exitsDuration)}s`
+      `${delay}s`
     )
   })
 
@@ -71,7 +77,7 @@ function fillAnimationStart(measureOld, measureNew) {
   })
 
   const enterStart =
-    exitsDuration + (moves.length > 0 ? EXIT_DURATION : 0)
+    exitsDuration + (moves.length > 0 ? SINGLE_DURATION : 0)
   const enterCounts = enters.length
   const entersDuration = fullStaggerDuration(enterCounts)
 
@@ -79,12 +85,7 @@ function fillAnimationStart(measureOld, measureNew) {
     const delay =
       enterStart +
       staggerDelay(i, enterCounts, entersDuration)
-    console.log({
-      enterStart,
-      enterCounts,
-      entersDuration,
-      delay,
-    })
+    console.log({ delay })
     element.style.setProperty("--opacity", "0.1")
     element.style.setProperty(
       "--transform",
@@ -199,12 +200,12 @@ function prepareToRemoveLine(oldElement) {
 
 function fullStaggerDuration(count) {
   if (count === 0) return 0
-  return 2 * EXIT_DURATION * (1 - 1 / (1 + count))
+  return 2 * SINGLE_DURATION * (1 - 1 / (1 + count))
 }
 
 function staggerDelay(i, n, duration) {
   if (i === 0) return 0
-  const max = duration - EXIT_DURATION
+  const max = duration - SINGLE_DURATION
   console.log({ i, n, max })
   return (i / (n - 1)) * max
 }
