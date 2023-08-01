@@ -79,19 +79,21 @@ export function diff(prev, next) {
     } else if (removed) {
       pIndex += count
     } else {
-      nextIds = nextIds.concat(value.map(t => t.id))
-      pIndex += count
+      value.forEach(_ => {
+        nextIds.push(ps[pIndex++].id)
+      })
     }
   })
 
   let nIndex = 0
-  return next.map((token, i) => {
+  const nextTokens = next.map(token => {
     if (token.style) {
       return { ...token, id: nextIds[nIndex++] }
     } else {
       return token
     }
   })
+  return nextTokens
 }
 
 // n numbers between before and after (exclusive)
