@@ -2,7 +2,9 @@ import { highlight } from "@code-hike/lighter"
 import { diffArrays } from "diff"
 
 export async function tokenize(code, lang, theme) {
-  const { lines } = await highlight(code, lang, theme)
+  const { lines } = await highlight(code, lang, theme, {
+    scopes: true,
+  })
   const tokens = lines.flatMap(line => [
     ...line,
     { content: "\n" },
@@ -62,7 +64,6 @@ export function diff(prev, next) {
   const ps = prev.filter(t => t.style)
   const ns = next.filter(t => t.style)
 
-  // console.log(Diff)
   const result = diffArrays(ps, ns, {
     comparator: (a, b) => a.content == b.content,
   })
@@ -72,6 +73,7 @@ export function diff(prev, next) {
 
   result.forEach(part => {
     const { added, removed, count, value } = part
+    console.log(part)
     if (added) {
       const before = ps[pIndex - 1]?.id
       const after = ps[pIndex]?.id

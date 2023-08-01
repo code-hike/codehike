@@ -180,7 +180,8 @@ function setTokens(parent, prevTokens, nextTokens) {
       // span.style.setProperty("opacity", "0.1")
       span.animate([{ opacity: 0 }, { opacity: 1 }], {
         duration: 1000,
-        fill: "forwards",
+        fill: "both",
+        delay: 2000,
       })
       return
     }
@@ -205,7 +206,8 @@ function setTokens(parent, prevTokens, nextTokens) {
       ],
       {
         duration: 1000,
-        fill: "forwards",
+        fill: "both",
+        delay: 1000,
       }
     )
   })
@@ -221,9 +223,9 @@ function setTokens(parent, prevTokens, nextTokens) {
       span.style.setProperty("left", `${prevRect.dx}px`)
       span.style.setProperty("position", "absolute")
       parent.appendChild(span)
-      span.animate([{ opacity: 1 }, { opacity: 0.1 }], {
+      span.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 1000,
-        fill: "forwards",
+        fill: "both",
       })
     }
   })
