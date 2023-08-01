@@ -177,7 +177,11 @@ function setTokens(parent, prevTokens, nextTokens) {
 
     if (prevIndex === -1) {
       // console.log("+", nextSpanData[nextIndex].content)
-      span.style.setProperty("opacity", "0.1")
+      // span.style.setProperty("opacity", "0.1")
+      span.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 1000,
+        fill: "forwards",
+      })
       return
     }
     // console.log("=", nextSpanData[nextIndex].content)
@@ -188,9 +192,21 @@ function setTokens(parent, prevTokens, nextTokens) {
     const dy =
       prevSpanRect[prevIndex].dy -
       nextSpanRect[nextIndex].dy
-    span.style.setProperty(
-      "transform",
-      `translateX(${dx}px) translateY(${dy}px)`
+    // span.style.setProperty(
+    //   "transform",
+    //   `translateX(${dx}px) translateY(${dy}px)`
+    // )
+    span.animate(
+      [
+        {
+          transform: `translateX(${dx}px) translateY(${dy}px)`,
+        },
+        { transform: "none" },
+      ],
+      {
+        duration: 1000,
+        fill: "forwards",
+      }
     )
   })
 
@@ -205,6 +221,10 @@ function setTokens(parent, prevTokens, nextTokens) {
       span.style.setProperty("left", `${prevRect.dx}px`)
       span.style.setProperty("position", "absolute")
       parent.appendChild(span)
+      span.animate([{ opacity: 1 }, { opacity: 0.1 }], {
+        duration: 1000,
+        fill: "forwards",
+      })
     }
   })
 }
