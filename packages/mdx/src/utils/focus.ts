@@ -132,8 +132,8 @@ export function getFocusIndexes(
     parseInt(i, 10)
   )
 
-  const isIndexOutOfRange = focusedIndexes.some(i => i > lines.length)
-  if(isIndexOutOfRange)
+  const hasOutOfRangeIndex = focusedIndexes.some(i => i + 1 > lines.length)
+  if(hasOutOfRangeIndex)
     throw new Error("Out of bound focus line number(s)")
 
   return focusedIndexes

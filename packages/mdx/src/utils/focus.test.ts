@@ -1,6 +1,7 @@
 import { describe, it, expect, test } from "vitest"
 
 import {
+  getFocusIndexes,
   mapFocusToLineNumbers,
   relativeToAbsolute,
 } from "./focus"
@@ -33,3 +34,31 @@ describe("relative to absolute", () => {
     )
   })
 })
+
+describe("get focus indexes", () => {
+  it("return correct focus indexes", () => {
+    expect(getFocusIndexes("3:4", fixtureCode)).toEqual([2, 3])
+    expect(getFocusIndexes("1:8", fixtureCode)).toEqual([0, 1, 2, 3, 4, 5, 6, 7])
+  })
+  it("return all lines when focus string is empty", () => {
+    expect(getFocusIndexes(null, fixtureCode)).toEqual([0, 1, 2, 3, 4, 5, 6, 7])
+    expect(getFocusIndexes("", fixtureCode)).toEqual([0, 1, 2, 3, 4, 5, 6, 7])
+  })
+  it("throws error if one or many indexes are larger than lines count", () => {
+    expect(() => getFocusIndexes("13:14", fixtureCode)).toThrowError("Out of bound focus line number(s)")
+    expect(() => getFocusIndexes("7:9", fixtureCode)).toThrowError("Out of bound focus line number(s)")
+    expect(() => getFocusIndexes("1:3,7:9", fixtureCode)).toThrowError("Out of bound focus line number(s)")
+  })
+})
+
+const fixtureCode = [
+  "function doStuffToFoo(foo: any) {",
+  "",
+  " const bar = doStuff(foo)",
+  " if(!bar)",
+  "   return null",
+  "",
+  " return bar",
+  "}",
+]
+
