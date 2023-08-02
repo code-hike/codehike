@@ -20,7 +20,9 @@ export default function Home({ versions }) {
     versions[0]
   )
   return (
-    <>
+    <main
+      style={{ height: "100vh", background: "#0d1117" }}
+    >
       <nav
         style={{ margin: "0 auto", textAlign: "center" }}
       >
@@ -36,7 +38,7 @@ export default function Home({ versions }) {
         })}
       </nav>
       <Code tokens={selected} />
-    </>
+    </main>
   )
 }
 
@@ -93,7 +95,6 @@ ReactDOM.render(app, document.getElementById("root"))
 import React from "react"
 import ReactDOM from "react-dom"
 
-const app = <h1 style={{ color: "teal" }}>Hello React</h1>
 
 ReactDOM.render(app, document.getElementById("root"))
 `.trim(),`
@@ -123,6 +124,12 @@ function initTokens(parent, tokens) {
   tokens.forEach((token, i) => {
     parent.appendChild(createSpan(token))
   })
+}
+
+const config = {
+  removeDuration: 100,
+  moveDuration: 300,
+  addDuration: 500,
 }
 
 function setTokens(parent, prevTokens, nextTokens) {
@@ -163,6 +170,8 @@ function setTokens(parent, prevTokens, nextTokens) {
 
   // console.log({ prevSpanRect, nextSpanRect })
 
+  const moved = []
+  const added = []
   // change styles
   parent.childNodes.forEach(span => {
     if (span.tagName !== "SPAN") return
@@ -173,19 +182,11 @@ function setTokens(parent, prevTokens, nextTokens) {
     const nextIndex = nextSpanData.findIndex(
       t => t.id === id
     )
-    // console.log({ id, prevIndex, nextIndex })
 
     if (prevIndex === -1) {
-      // console.log("+", nextSpanData[nextIndex].content)
-      // span.style.setProperty("opacity", "0.1")
-      span.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: 1000,
-        fill: "both",
-        delay: 2000,
-      })
+      added.push({ span })
       return
     }
-    // console.log("=", nextSpanData[nextIndex].content)
 
     const dx =
       prevSpanRect[prevIndex].dx -
@@ -193,41 +194,96 @@ function setTokens(parent, prevTokens, nextTokens) {
     const dy =
       prevSpanRect[prevIndex].dy -
       nextSpanRect[nextIndex].dy
-    // span.style.setProperty(
-    //   "transform",
-    //   `translateX(${dx}px) translateY(${dy}px)`
-    // )
-    span.animate(
-      [
-        {
-          transform: `translateX(${dx}px) translateY(${dy}px)`,
-        },
-        { transform: "none" },
-      ],
-      {
-        duration: 1000,
-        fill: "both",
-        delay: 1000,
-      }
-    )
+    moved.push({
+      span,
+      dx,
+      dy,
+      fromColor: prevSpanData[prevIndex].style.color,
+      toColor: nextSpanData[nextIndex].style.color,
+    })
   })
 
   const nextIds = nextSpanData.map(t => t.id)
-  // add removed tokens
+  const removed = []
   prevSpanData.forEach((token, i) => {
     if (!nextIds.includes(token.id)) {
       const prevRect = prevSpanRect[i]
-
       const span = createSpan(token)
       span.style.setProperty("top", `${prevRect.dy}px`)
       span.style.setProperty("left", `${prevRect.dx}px`)
       span.style.setProperty("position", "absolute")
       parent.appendChild(span)
-      span.animate([{ opacity: 1 }, { opacity: 0 }], {
-        duration: 1000,
-        fill: "both",
-      })
+      removed.push({ span })
     }
+  })
+
+  const removeDuration = fullStaggerDuration(
+    removed.length,
+    config.removeDuration
+  )
+  const moveDuration = fullStaggerDuration(
+    moved.length,
+    config.moveDuration
+  )
+  const addDuration = fullStaggerDuration(
+    added.length,
+    config.addDuration
+  )
+
+  removed.forEach(({ span }, i) => {
+    span.animate([{ opacity: 1 }, { opacity: 0 }], {
+      duration: removeDuration,
+      fill: "both",
+      easing: "ease-out",
+      delay: staggerDelay(
+        i,
+        removed.length,
+        removeDuration,
+        config.removeDuration
+      ),
+    })
+  })
+
+  moved.forEach(
+    ({ span, dx, dy, fromColor, toColor }, i) => {
+      const transform = `translateX(${dx}px) translateY(${dy}px)`
+      span.animate(
+        [
+          { transform, color: fromColor },
+          { transform: "none", color: toColor },
+        ],
+        {
+          duration: config.moveDuration,
+          fill: "both",
+          easing: "ease-in-out",
+          delay:
+            removeDuration +
+            staggerDelay(
+              i,
+              moved.length,
+              moveDuration,
+              config.moveDuration
+            ),
+        }
+      )
+    }
+  )
+
+  added.forEach(({ span }, i) => {
+    span.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: config.addDuration,
+      fill: "both",
+      easing: "ease-in",
+      delay:
+        removeDuration +
+        config.moveDuration +
+        staggerDelay(
+          i,
+          added.length,
+          addDuration,
+          config.addDuration
+        ),
+    })
   })
 }
 
@@ -247,4 +303,17 @@ function createSpan(token) {
   })
   span.style.setProperty("display", "inline-block")
   return span
+}
+
+function fullStaggerDuration(count, singleDuration) {
+  if (count === 0) return 0
+  // return 2 * singleDuration * (1 - 1 / (1 + count))
+  return 1.5 * singleDuration - 1 / (1 + count)
+}
+
+function staggerDelay(i, n, duration, singleDuration) {
+  if (i === 0) return 0
+  const max = duration - singleDuration
+  console.log({ i, n, max })
+  return (i / (n - 1)) * max
 }
