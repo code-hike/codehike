@@ -1,82 +1,189 @@
+import { Code } from "../src/smooth-tokens"
+import { tokenize, tokenizeSync } from "../src/differ"
+import {
+  THEME_NAMES,
+  LANG_NAMES,
+  getThemeColorsSync,
+  preload,
+} from "@code-hike/lighter"
 import React from "react"
-import { diff, tokenize, withIds } from "../src/differ"
 
-export async function getStaticProps() {
-  const versions = await Promise.all(
-    code.map(async code => {
-      const result = await tokenize(
-        code,
-        "jsx",
-        "github-dark"
-      )
-      return result
+export default function Page() {
+  const [ready, setReady] = React.useState(false)
+
+  React.useEffect(() => {
+    preload(["jsx"], "github-dark").then(() => {
+      setReady(true)
     })
-  )
-  return { props: { versions } }
-}
+  }, [])
 
-export default function Home({ versions }) {
-  const [selected, setSelected] = React.useState(
-    versions[0]
-  )
-  return (
-    <main
-      style={{ height: "100vh", background: "#0d1117" }}
-    >
-      <nav
-        style={{ margin: "0 auto", textAlign: "center" }}
-      >
-        {versions.map((_, i) => {
-          return (
-            <button
-              key={i}
-              onClick={() => setSelected(versions[i])}
-            >
-              {i + 1}
-            </button>
-          )
-        })}
-      </nav>
-      <Code tokens={selected} />
-    </main>
-  )
-}
-
-function Code({ tokens }) {
-  const tokensWithIds = withIds(tokens)
-  const prevTokens = usePrevProps(tokensWithIds)
-  return (
-    <CodeTransition
-      currentTokens={tokensWithIds}
-      previousTokens={prevTokens}
-    />
-  )
-}
-
-function CodeTransition({ currentTokens, previousTokens }) {
-  const ref = React.useRef()
-  let tokens = currentTokens
-  if (previousTokens) {
-    const result = diff(previousTokens, currentTokens)
-    tokens = result
+  if (!ready) {
+    return (
+      <main
+        style={{
+          height: "100vh",
+          background: "rgb(13, 17, 23)",
+          padding: "1rem",
+          boxSizing: "border-box",
+          transition: "background 0.5s",
+        }}
+      />
+    )
   }
 
-  React.useLayoutEffect(() => {
-    setTokens(ref.current, previousTokens, tokens)
-  }, [currentTokens])
+  return <Main />
+}
+
+function Main() {
+  const [theme, setTheme] = React.useState("github-dark")
+  const [fromText, setFromText] = React.useState(code[0])
+  const [toText, setToText] = React.useState(code[1])
+  const [fromLang, setFromLang] = React.useState("jsx")
+  const [fromLangLoaded, setFromLangLoaded] =
+    React.useState("jsx")
+  const [toLang, setToLang] = React.useState("jsx")
+  const [toLangLoaded, setToLangLoaded] =
+    React.useState("jsx")
+  const [right, setRight] = React.useState(false)
+
+  const themeColors = getThemeColorsSync(theme)
+  const tokens = React.useMemo(() => {
+    return right
+      ? tokenizeSync(toText, toLangLoaded, theme)
+      : tokenizeSync(fromText, fromLangLoaded, theme)
+  }, [
+    right,
+    toText,
+    toLangLoaded,
+    fromText,
+    fromLangLoaded,
+    theme,
+  ])
 
   return (
-    <pre
+    <main
       style={{
-        color: "#c9d1d9",
-        background: "#0d1117",
+        height: "100vh",
+        background: themeColors.background,
+        color: themeColors.foreground,
         padding: "1rem",
-        width: "600px",
-        margin: "2rem auto",
-        position: "relative",
+        boxSizing: "border-box",
+        transition: "background 0.5s",
       }}
-      ref={ref}
-    />
+    >
+      <style>
+        {`
+        pre ::selection {
+          background: ${themeColors.selection};
+        }
+        `}
+      </style>
+      <select
+        style={{
+          width: 200,
+          margin: "1rem auto",
+          display: "block",
+        }}
+        value={theme}
+        onChange={e => {
+          const name = e.target.value
+          preload([], name).then(() => {
+            setTheme(name)
+          })
+        }}
+      >
+        {THEME_NAMES.filter(n => !n.endsWith("css")).map(
+          name => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          )
+        )}
+      </select>
+      <div
+        style={{
+          display: "flex",
+          width: 900,
+          margin: "1rem auto",
+          gap: "1rem",
+        }}
+      >
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <input
+            value={fromLang}
+            onChange={e => {
+              const name = e.target.value
+              setFromLang(name)
+              if (LANG_NAMES.includes(name)) {
+                preload([name]).then(() => {
+                  setFromLangLoaded(name)
+                })
+              }
+            }}
+            style={{
+              color: LANG_NAMES.includes(fromLang)
+                ? "black"
+                : "red",
+            }}
+          />
+          <textarea
+            rows={10}
+            value={fromText}
+            onChange={e => setFromText(e.target.value)}
+          />
+        </div>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
+          <input
+            value={toLang}
+            onChange={e => {
+              const name = e.target.value
+              setToLang(name)
+              if (LANG_NAMES.includes(name)) {
+                preload([name]).then(() => {
+                  setToLangLoaded(name)
+                })
+              }
+            }}
+            style={{
+              color: LANG_NAMES.includes(toLang)
+                ? "black"
+                : "red",
+            }}
+          />
+          <textarea
+            rows={10}
+            value={toText}
+            onChange={e => setToText(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <button
+        style={{
+          width: 200,
+          margin: "1rem auto",
+          display: "block",
+        }}
+        onClick={() => setRight(!right)}
+      >
+        Play
+      </button>
+      <Code tokens={tokens} />
+    </main>
   )
 }
 
@@ -110,210 +217,3 @@ const app = (
 ReactDOM.render(app, document.getElementById("root"))
 `.trim(),
 ]
-
-function usePrevProps(props) {
-  const ref = React.useRef()
-  React.useEffect(() => {
-    ref.current = props
-  })
-  return ref.current
-}
-
-function initTokens(parent, tokens) {
-  parent.innerHTML = ""
-  tokens.forEach((token, i) => {
-    parent.appendChild(createSpan(token))
-  })
-}
-
-const config = {
-  removeDuration: 100,
-  moveDuration: 300,
-  addDuration: 500,
-}
-
-function setTokens(parent, prevTokens, nextTokens) {
-  if (!prevTokens) {
-    initTokens(parent, nextTokens)
-    return
-  }
-
-  const prevSpanData = prevTokens.filter(t => t.style)
-  const nextSpanData = nextTokens.filter(t => t.style)
-  // console.log({ prevSpanData, nextSpanData })
-
-  const prevSpanRect = []
-  const { x: parentX, y: parentY } =
-    parent.getBoundingClientRect()
-
-  parent.childNodes.forEach(span => {
-    if (span.tagName !== "SPAN") return
-    const rect = span.getBoundingClientRect()
-    prevSpanRect.push({
-      dx: rect.x - parentX,
-      dy: rect.y - parentY,
-    })
-  })
-
-  initTokens(parent, nextTokens)
-
-  const nextSpanRect = []
-  parent.childNodes.forEach(span => {
-    if (span.tagName !== "SPAN") return
-    const rect = span.getBoundingClientRect()
-
-    nextSpanRect.push({
-      dx: rect.x - parentX,
-      dy: rect.y - parentY,
-    })
-  })
-
-  // console.log({ prevSpanRect, nextSpanRect })
-
-  const moved = []
-  const added = []
-  // change styles
-  parent.childNodes.forEach(span => {
-    if (span.tagName !== "SPAN") return
-    const id = Number(span.getAttribute("id"))
-    const prevIndex = prevSpanData.findIndex(
-      t => t.id === id
-    )
-    const nextIndex = nextSpanData.findIndex(
-      t => t.id === id
-    )
-
-    if (prevIndex === -1) {
-      added.push({ span })
-      return
-    }
-
-    const dx =
-      prevSpanRect[prevIndex].dx -
-      nextSpanRect[nextIndex].dx
-    const dy =
-      prevSpanRect[prevIndex].dy -
-      nextSpanRect[nextIndex].dy
-    moved.push({
-      span,
-      dx,
-      dy,
-      fromColor: prevSpanData[prevIndex].style.color,
-      toColor: nextSpanData[nextIndex].style.color,
-    })
-  })
-
-  const nextIds = nextSpanData.map(t => t.id)
-  const removed = []
-  prevSpanData.forEach((token, i) => {
-    if (!nextIds.includes(token.id)) {
-      const prevRect = prevSpanRect[i]
-      const span = createSpan(token)
-      span.style.setProperty("top", `${prevRect.dy}px`)
-      span.style.setProperty("left", `${prevRect.dx}px`)
-      span.style.setProperty("position", "absolute")
-      parent.appendChild(span)
-      removed.push({ span })
-    }
-  })
-
-  const removeDuration = fullStaggerDuration(
-    removed.length,
-    config.removeDuration
-  )
-  const moveDuration = fullStaggerDuration(
-    moved.length,
-    config.moveDuration
-  )
-  const addDuration = fullStaggerDuration(
-    added.length,
-    config.addDuration
-  )
-
-  removed.forEach(({ span }, i) => {
-    span.animate([{ opacity: 1 }, { opacity: 0 }], {
-      duration: removeDuration,
-      fill: "both",
-      easing: "ease-out",
-      delay: staggerDelay(
-        i,
-        removed.length,
-        removeDuration,
-        config.removeDuration
-      ),
-    })
-  })
-
-  moved.forEach(
-    ({ span, dx, dy, fromColor, toColor }, i) => {
-      const transform = `translateX(${dx}px) translateY(${dy}px)`
-      span.animate(
-        [
-          { transform, color: fromColor },
-          { transform: "none", color: toColor },
-        ],
-        {
-          duration: config.moveDuration,
-          fill: "both",
-          easing: "ease-in-out",
-          delay:
-            removeDuration +
-            staggerDelay(
-              i,
-              moved.length,
-              moveDuration,
-              config.moveDuration
-            ),
-        }
-      )
-    }
-  )
-
-  added.forEach(({ span }, i) => {
-    span.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: config.addDuration,
-      fill: "both",
-      easing: "ease-in",
-      delay:
-        removeDuration +
-        config.moveDuration +
-        staggerDelay(
-          i,
-          added.length,
-          addDuration,
-          config.addDuration
-        ),
-    })
-  })
-}
-
-function createSpan(token) {
-  if (!token.style) {
-    return document.createTextNode(token.content)
-  }
-  const span = document.createElement("span")
-  span.textContent = token.content
-
-  // set id
-  span.setAttribute("id", token.id)
-
-  // set style
-  Object.entries(token.style).forEach(([key, value]) => {
-    span.style.setProperty(key, value)
-  })
-  span.style.setProperty("display", "inline-block")
-  return span
-}
-
-function fullStaggerDuration(count, singleDuration) {
-  if (count === 0) return 0
-  // return 2 * singleDuration * (1 - 1 / (1 + count))
-  return 1.5 * singleDuration - 1 / (1 + count)
-}
-
-function staggerDelay(i, n, duration, singleDuration) {
-  if (i === 0) return 0
-  const max = duration - singleDuration
-  console.log({ i, n, max })
-  return (i / (n - 1)) * max
-}
