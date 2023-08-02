@@ -124,15 +124,19 @@ export function getFocusIndexes(
   focus: FocusString,
   lines: any[]
 ): number[] {
-  if (!focus) {
-    return [...lines.keys()]
-  } else {
-    const parsed = parseFocus(focus)
-    const focusedIndexes = Object.keys(parsed).map(i =>
-      parseInt(i, 10)
-    )
-    return focusedIndexes
-  }
+  if (!focus)
+    return [...lines.keys()]  
+
+  const parsed = parseFocus(focus)
+  const focusedIndexes = Object.keys(parsed).map(i =>
+    parseInt(i, 10)
+  )
+
+  const isIndexOutOfRange = focusedIndexes.some(i => i > lines.length)
+  if(isIndexOutOfRange)
+    throw new Error("Out of bound focus line number(s)")
+
+  return focusedIndexes
 }
 
 function getFocusByKey(focus: FocusString, keys: number[]) {
