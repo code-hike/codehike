@@ -31,7 +31,11 @@ function CodeTransition({ currentTokens, previousTokens }) {
         width: "600px",
         margin: "2rem auto",
         position: "relative",
-        lineHeight: "1.1rem",
+        lineHeight: "1.3",
+        fontSize: "1.1rem",
+        // transformStyle: "preserve-3d",
+        // transform: "translateZ(0)",
+        // filter: "blur(0)",
       }}
       ref={ref}
     />
@@ -54,7 +58,7 @@ function initTokens(parent, tokens) {
 }
 
 const config = {
-  removeDuration: 100,
+  removeDuration: 50,
   moveDuration: 300,
   addDuration: 500,
 }
@@ -175,10 +179,13 @@ function setTokens(parent, prevTokens, nextTokens) {
     ({ span, dx, dy, fromColor, toColor }, i) => {
       const transform = `translateX(${dx}px) translateY(${dy}px)`
       span.animate(
-        [
-          { transform, color: fromColor },
-          { transform: "none", color: toColor },
-        ],
+        {
+          transform: [
+            transform,
+            "translateX(0px) translateY(0px)",
+          ],
+          color: [fromColor, toColor],
+        },
         {
           duration: config.moveDuration,
           fill: "both",
@@ -197,20 +204,30 @@ function setTokens(parent, prevTokens, nextTokens) {
   )
 
   added.forEach(({ span }, i) => {
-    span.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: config.addDuration,
-      fill: "both",
-      easing: "ease-in",
-      delay:
-        removeDuration +
-        config.moveDuration +
-        staggerDelay(
-          i,
-          added.length,
-          addDuration,
-          config.addDuration
-        ),
-    })
+    span.animate(
+      {
+        opacity: [0, 0.9, 1],
+        filter: [
+          "brightness(1)",
+          "brightness(1.4)",
+          "brightness(1)",
+        ],
+      },
+      {
+        duration: config.addDuration,
+        fill: "both",
+        easing: "ease-in",
+        delay:
+          removeDuration +
+          config.moveDuration +
+          staggerDelay(
+            i,
+            added.length,
+            addDuration,
+            config.addDuration
+          ),
+      }
+    )
   })
 }
 
@@ -229,6 +246,8 @@ function createSpan(token) {
     span.style.setProperty(key, value)
   })
   span.style.setProperty("display", "inline-block")
+
+  // span.style.setProperty("will-change", "transform")
   return span
 }
 
@@ -241,6 +260,6 @@ function fullStaggerDuration(count, singleDuration) {
 function staggerDelay(i, n, duration, singleDuration) {
   if (i === 0) return 0
   const max = duration - singleDuration
-  console.log({ i, n, max })
+
   return (i / (n - 1)) * max
 }

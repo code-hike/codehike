@@ -63,7 +63,7 @@ function Main() {
   return (
     <main
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         background: themeColors.background,
         color: themeColors.foreground,
         padding: "1rem",
@@ -73,8 +73,8 @@ function Main() {
     >
       <style>
         {`
-        pre ::selection {
-          background: ${themeColors.selection};
+        pre::selection, pre ::selection {
+          background: ${themeColors.editor.selectionBackground};
         }
         `}
       </style>
@@ -189,31 +189,66 @@ function Main() {
 
 // prettier-ignore
 const code = [`
-import React from "react"
+function dropRight(array, n=1) {
+  const length = array == null ? 0 : array.length
+  n = length - toInteger(n)
+  return length ? slice(array, 0, n < 0 ? 0 : n) : []
+}
 
-const app = React.createElement(
-  "h1",
-  { style: { color: "teal" } },
-  "Hello React"
-)
+function castArray(...args) {
+  if (!args.length) {
+    return []
+  }
+  const value = args[0]
+  return Array.isArray(value) ? value : [value]
+}
 
-ReactDOM.render(app, document.getElementById("root"))
+function chunk(array, size = 1) {
+  size = Math.max(toInteger(size), 0)
+  const length = array == null ? 0 : array.length
+  if (!length || size < 1) {
+    return []
+  }
+  let index = 0
+  let resIndex = 0
+  const result = new Array(Math.ceil(length / size))
+
+  while (index < length) {
+    result[resIndex++] = slice(array, index, (index += size))
+  }
+  return result
+}
 `.trim(),`
-import React from "react"
-import ReactDOM from "react-dom"
+function dropRight(array, n=1) {
+  const length = array == null ? 0 : array.length
+  n = length - toInteger(n)
+  return length 
+    ? slice(array, 0, n < 0 ? 0 : n) 
+    : []
+}
 
+function castArray(...args) {
+  if (!args.length) {
+    return []
+  }
+  const value = args[0]
+  return Array.isArray(value) ? value : [value]
+}
 
-ReactDOM.render(app, document.getElementById("root"))
-`.trim(),`
-import React from "react"
-import ReactDOM from "react-dom"
+function chunk(array, size = 1) {
+  size = Math.max(toInteger(size), 0)
+  const length = array == null ? 0 : array.length
+  if (!length || size < 1) {
+    return []
+  }
+  let index = 0
+  let resIndex = 0
+  const result = new Array(Math.ceil(length / size))
 
-const app = (
-  <h1 style={{ color: "teal" }}>
-    Hello React
-  </h1>
-)
-
-ReactDOM.render(app, document.getElementById("root"))
-`.trim(),
+  while (index < length) {
+    result[resIndex++] = slice(array, index, (index += size))
+  }
+  return result
+}
+`.trim()
 ]

@@ -114,7 +114,6 @@ export function diff(prev, next) {
 
   result.forEach(part => {
     const { added, removed, count, value } = part
-    console.log(part)
     if (added) {
       const before = ps[pIndex - 1]?.id
       const after = ps[pIndex]?.id
