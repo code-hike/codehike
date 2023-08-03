@@ -104,8 +104,11 @@ function setTokens(parent, prevTokens, nextTokens) {
   const moved = []
   const added = []
   // change styles
-  parent.childNodes.forEach(span => {
-    if (span.tagName !== "SPAN") return
+  const childSpans = [...parent.childNodes].filter(
+    e => e.tagName == "SPAN"
+  )
+
+  childSpans.forEach((span, i) => {
     const id = Number(span.getAttribute("id"))
     const prevIndex = prevSpanData.findIndex(
       t => t.id === id
@@ -115,7 +118,13 @@ function setTokens(parent, prevTokens, nextTokens) {
     )
 
     if (prevIndex === -1) {
-      added.push({ span })
+      const lastGroup = added[added.length - 1]
+      const lastSpan = lastGroup?.[lastGroup.length - 1]
+      if (lastSpan?.i === i - 1) {
+        lastGroup.push({ span, i })
+      } else {
+        added.push([{ span, i }])
+      }
       return
     }
 
@@ -125,13 +134,35 @@ function setTokens(parent, prevTokens, nextTokens) {
     const dy =
       prevSpanRect[prevIndex].dy -
       nextSpanRect[nextIndex].dy
-    moved.push({
+
+    const item = {
       span,
-      dx,
-      dy,
+      i,
+      dx: Math.round(dx * 100) / 100,
+      dy: Math.round(dy * 100) / 100,
       fromColor: prevSpanData[prevIndex].style.color,
       toColor: nextSpanData[nextIndex].style.color,
-    })
+    }
+
+    if (
+      item.dx === 0 &&
+      item.dy === 0 &&
+      item.fromColor === item.toColor
+    ) {
+      return
+    }
+
+    const lastGroup = moved[moved.length - 1]
+    const lastSpan = lastGroup?.[lastGroup.length - 1]
+    if (
+      lastSpan?.i === i - 1 &&
+      lastSpan?.dx === item.dx &&
+      lastSpan?.dy === item.dy
+    ) {
+      lastGroup.push(item)
+    } else {
+      moved.push([item])
+    }
   })
 
   const nextIds = nextSpanData.map(t => t.id)
@@ -144,7 +175,14 @@ function setTokens(parent, prevTokens, nextTokens) {
       span.style.setProperty("left", `${prevRect.dx}px`)
       span.style.setProperty("position", "absolute")
       parent.appendChild(span)
-      removed.push({ span })
+
+      const lastGroup = removed[removed.length - 1]
+      const lastSpan = lastGroup?.[lastGroup.length - 1]
+      if (lastSpan?.i === i - 1) {
+        lastGroup.push({ span, i })
+      } else {
+        removed.push([{ span, i }])
+      }
     }
   })
 
@@ -161,73 +199,79 @@ function setTokens(parent, prevTokens, nextTokens) {
     config.addDuration
   )
 
-  removed.forEach(({ span }, i) => {
-    span.animate([{ opacity: 1 }, { opacity: 0 }], {
-      duration: removeDuration,
-      fill: "both",
-      easing: "ease-out",
-      delay: staggerDelay(
-        i,
-        removed.length,
-        removeDuration,
-        config.removeDuration
-      ),
+  removed.forEach((group, i) => {
+    group.forEach(({ span }) => {
+      span.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: removeDuration,
+        fill: "both",
+        easing: "ease-out",
+        delay: staggerDelay(
+          i,
+          removed.length,
+          removeDuration,
+          config.removeDuration
+        ),
+      })
     })
   })
 
-  moved.forEach(
-    ({ span, dx, dy, fromColor, toColor }, i) => {
-      const transform = `translateX(${dx}px) translateY(${dy}px)`
+  moved.forEach((group, i) => {
+    group.forEach(
+      ({ span, dx, dy, fromColor, toColor }) => {
+        const transform = `translateX(${dx}px) translateY(${dy}px)`
+        span.animate(
+          {
+            transform: [
+              transform,
+              "translateX(0px) translateY(0px)",
+            ],
+            color: [fromColor, toColor],
+          },
+          {
+            duration: config.moveDuration,
+            fill: "both",
+            easing: "ease-in-out",
+            delay:
+              removeDuration +
+              staggerDelay(
+                i,
+                moved.length,
+                moveDuration,
+                config.moveDuration
+              ),
+          }
+        )
+      }
+    )
+  })
+
+  added.forEach((group, i) => {
+    group.forEach(({ span }) => {
       span.animate(
         {
-          transform: [
-            transform,
-            "translateX(0px) translateY(0px)",
+          opacity: [0, 0.9, 1],
+          filter: [
+            "brightness(1)",
+            "brightness(1.4)",
+            "brightness(1)",
           ],
-          color: [fromColor, toColor],
         },
         {
-          duration: config.moveDuration,
+          duration: config.addDuration,
           fill: "both",
-          easing: "ease-in-out",
+          easing: "ease-in",
           delay:
             removeDuration +
+            config.moveDuration +
             staggerDelay(
               i,
-              moved.length,
-              moveDuration,
-              config.moveDuration
+              added.length,
+              addDuration,
+              config.addDuration
             ),
         }
       )
-    }
-  )
-
-  added.forEach(({ span }, i) => {
-    span.animate(
-      {
-        opacity: [0, 0.9, 1],
-        filter: [
-          "brightness(1)",
-          "brightness(1.4)",
-          "brightness(1)",
-        ],
-      },
-      {
-        duration: config.addDuration,
-        fill: "both",
-        easing: "ease-in",
-        delay:
-          removeDuration +
-          config.moveDuration +
-          staggerDelay(
-            i,
-            added.length,
-            addDuration,
-            config.addDuration
-          ),
-      }
-    )
+    })
   })
 }
 
