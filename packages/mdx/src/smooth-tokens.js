@@ -142,6 +142,7 @@ function setTokens(parent, prevTokens, nextTokens) {
       dy: Math.round(dy * 100) / 100,
       fromColor: prevSpanData[prevIndex].style.color,
       toColor: nextSpanData[nextIndex].style.color,
+      bwd: dy > 0 || (dy == 0 && dx > 0),
     }
 
     if (
@@ -197,6 +198,22 @@ function setTokens(parent, prevTokens, nextTokens) {
   const addDuration = fullStaggerDuration(
     added.length,
     config.addDuration
+  )
+
+  // sort moved, first bwd moves, then fwd moves (inverted)
+  moved.sort((group1, group2) => {
+    const [item1] = group1
+    const [item2] = group2
+
+    if (item1.bwd && !item2.bwd) return -1
+    if (!item1.bwd && item2.bwd) return 1
+    if (item1.bwd && item2.bwd) return item1.i - item2.i
+    if (!item1.bwd && !item2.bwd) return item2.i - item1.i
+    return 0
+  })
+
+  console.log(
+    moved.map(g => ({ bwd: g[0].bwd, i: g[0].i }))
   )
 
   removed.forEach((group, i) => {
