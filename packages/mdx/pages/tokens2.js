@@ -40,6 +40,7 @@ function Main({ list }) {
   const themeColors = getThemeColorsSync(theme)
 
   const [i, setI] = React.useState(0)
+  const [playing, setPlaying] = React.useState(false)
   const tokens = list[i]
 
   return (
@@ -83,10 +84,14 @@ function Main({ list }) {
           style={{
             width: 200,
           }}
-          onClick={() => setI((i + 1) % list.length)}
-          // onClick={() => setRight(!right)}
+          onClick={() => {
+            setPlaying(!playing)
+            if (!playing) {
+              setI((i + 1) % list.length)
+            }
+          }}
         >
-          Play
+          {playing ? "Pause" : "Play"}
         </button>
         <button
           style={{
@@ -98,43 +103,41 @@ function Main({ list }) {
           {`>`}
         </button>
       </div>
-      <Code tokens={tokens} />
+      <Code
+        tokens={tokens}
+        onTransitioned={() => {
+          if (!playing) return
+          setTimeout(() => {
+            setI((i + 1) % list.length)
+          }, 1000)
+        }}
+      />
     </main>
   )
 }
 
 const langs = [
-  "python",
-  "javascript",
   "java",
-  "csharp",
+  "scala",
+  "python",
   "ruby",
+  "matlab",
+  "r",
+  "javascript",
   "cpp",
+  "kotlin",
+  "go",
+  "swift",
+  "rust",
+  "fsharp",
+  "scheme",
 ]
 
 // prettier-ignore
 const code = [`
-# Python
-
-def factorial(n):
-    if n == 0:
-        return 1
-    else:
-        return n * factorial(n - 1)
-`.trim(),`
-// JavaScript
-
-function factorial(n) {
-    if (n === 0) {
-        return 1;
-    } else {
-        return n * factorial(n - 1);
-    }
-}
-`.trim(),`
 // Java
 
-public class Factorial {
+public class Main {
     public static int factorial(int n) {
         if (n == 0) {
             return 1;
@@ -144,22 +147,25 @@ public class Factorial {
     }
 }
 `.trim(),`
-// C#
+// Scala
 
-class Program
-{
-    static int Factorial(int n)
-    {
-        if (n == 0)
-        {
-            return 1;
-        }
-        else
-        {
-            return n * Factorial(n - 1);
-        }
+object Main {
+  def factorial(n: Int): Int = {
+    if (n == 0) {
+      return 1
+    } else {
+      return n * factorial(n - 1)
     }
+  }
 }
+`.trim(),`
+# Python
+
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
 `.trim(),`
 # Ruby
 
@@ -171,14 +177,99 @@ def factorial(n)
     end
 end
 `.trim(),`
+% MATLAB
+
+function result = factorial(n)
+    if n == 0
+        result = 1;
+    else
+        result = n * factorial(n - 1);
+    end
+end
+`.trim(),`
+# R
+
+factorial <- function(n) {
+    if (n == 0) {
+        return(1)
+    } else {
+        return(n * factorial(n - 1))
+    }
+}
+`.trim(),`
+// JavaScript
+
+function factorial(n) {
+    if (n === 0) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+`.trim(),`
 // C++
 
 int factorial(int n) {
-  if (n == 0) {
-      return 1;
-  } else {
-      return n * factorial(n - 1);
-  }
+    if (n == 0) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
 }
+`.trim(),`
+// Kotlin
+
+fun factorial(n: Int): Int {
+    return if (n == 0) {
+        1
+    } else {
+        n * factorial(n - 1)
+    }
+}
+`.trim(),`
+// Go
+
+func factorial(n int) int {
+    if n == 0 {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+`.trim(),`
+// Swift
+
+func factorial(n: Int) -> Int {
+    if n == 0 {
+        return 1
+    } else {
+        return n * factorial(n: n - 1)
+    }
+}
+`.trim(),`
+// Rust
+
+fn factorial(n: i32) -> i32 {
+    if n == 0 {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+`.trim(),`
+// F#
+
+let rec factorial n =
+    if n = 0 then
+        1
+    else
+        n * factorial (n - 1)
+`.trim(),`
+;; Scheme
+
+(define (factorial n)
+  (if (= n 0)
+      1
+      (* n (factorial (- n 1)))))
 `.trim()
 ]

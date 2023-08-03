@@ -1,18 +1,23 @@
 import React from "react"
 import { diff, tokenize, withIds } from "../src/differ"
 
-export function Code({ tokens }) {
+export function Code({ tokens, onTransitioned }) {
   const tokensWithIds = withIds(tokens)
   const prevTokens = usePrevProps(tokensWithIds)
   return (
     <CodeTransition
+      onTransitioned={onTransitioned}
       currentTokens={tokensWithIds}
       previousTokens={prevTokens}
     />
   )
 }
 
-function CodeTransition({ currentTokens, previousTokens }) {
+function CodeTransition({
+  currentTokens,
+  previousTokens,
+  onTransitioned,
+}) {
   const ref = React.useRef()
   let tokens = currentTokens
   if (previousTokens) {
@@ -21,7 +26,12 @@ function CodeTransition({ currentTokens, previousTokens }) {
   }
 
   React.useLayoutEffect(() => {
-    setTokens(ref.current, previousTokens, tokens)
+    setTokens(
+      ref.current,
+      previousTokens,
+      tokens,
+      onTransitioned
+    )
   }, [currentTokens])
 
   return (
@@ -63,7 +73,12 @@ const config = {
   addDuration: 500,
 }
 
-function setTokens(parent, prevTokens, nextTokens) {
+function setTokens(
+  parent,
+  prevTokens,
+  nextTokens,
+  callback
+) {
   if (!prevTokens) {
     initTokens(parent, nextTokens)
     return
@@ -212,10 +227,6 @@ function setTokens(parent, prevTokens, nextTokens) {
     return 0
   })
 
-  console.log(
-    moved.map(g => ({ bwd: g[0].bwd, i: g[0].i }))
-  )
-
   removed.forEach((group, i) => {
     group.forEach(({ span }) => {
       span.animate([{ opacity: 1 }, { opacity: 0 }], {
@@ -263,8 +274,11 @@ function setTokens(parent, prevTokens, nextTokens) {
   })
 
   added.forEach((group, i) => {
-    group.forEach(({ span }) => {
-      span.animate(
+    group.forEach(({ span }, j) => {
+      const isLastSpan =
+        i === added.length - 1 && j === group.length - 1
+
+      const animation = span.animate(
         {
           opacity: [0, 1],
           // filter: [
@@ -288,6 +302,10 @@ function setTokens(parent, prevTokens, nextTokens) {
             ),
         }
       )
+
+      if (isLastSpan && callback) {
+        animation.onfinish = callback
+      }
     })
   })
 }

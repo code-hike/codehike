@@ -12,7 +12,7 @@ export default function Page() {
   const [ready, setReady] = React.useState(false)
 
   React.useEffect(() => {
-    preload(["jsx"], "github-dark").then(() => {
+    preload(["scala", "python"], "github-dark").then(() => {
       setReady(true)
     })
   }, [])
@@ -38,12 +38,12 @@ function Main() {
   const [theme, setTheme] = React.useState("github-dark")
   const [fromText, setFromText] = React.useState(code[0])
   const [toText, setToText] = React.useState(code[1])
-  const [fromLang, setFromLang] = React.useState("jsx")
+  const [fromLang, setFromLang] = React.useState("scala")
   const [fromLangLoaded, setFromLangLoaded] =
-    React.useState("jsx")
-  const [toLang, setToLang] = React.useState("jsx")
+    React.useState("scala")
+  const [toLang, setToLang] = React.useState("python")
   const [toLangLoaded, setToLangLoaded] =
-    React.useState("jsx")
+    React.useState("python")
   const [right, setRight] = React.useState(false)
 
   const themeColors = getThemeColorsSync(theme)
@@ -189,66 +189,20 @@ function Main() {
 
 // prettier-ignore
 const code = [`
-function dropRight(array, n=1) {
-  const length = array == null ? 0 : array.length
-  n = length - toInteger(n)
-  return length ? slice(array, 0, n < 0 ? 0 : n) : []
-}
-
-function castArray(...args) {
-  if (!args.length) {
-    return []
+object Main {
+  def factorial(n: Int): Int = {
+    if (n == 0) {
+      return 1
+    } else {
+      return n * factorial(n - 1)
+    }
   }
-  const value = args[0]
-  return Array.isArray(value) ? value : [value]
-}
-
-function chunk(array, size = 1) {
-  size = Math.max(toInteger(size), 0)
-  const length = array == null ? 0 : array.length
-  if (!length || size < 1) {
-    return []
-  }
-  let index = 0
-  let resIndex = 0
-  const result = new Array(Math.ceil(length / size))
-
-  while (index < length) {
-    result[resIndex++] = slice(array, index, (index += size))
-  }
-  return result
 }
 `.trim(),`
-function dropRight(array, n=1) {
-  const length = array == null ? 0 : array.length
-  n = length - toInteger(n)
-  return length 
-    ? slice(array, 0, n < 0 ? 0 : n) 
-    : []
-}
-
-function castArray(...args) {
-  if (!args.length) {
-    return []
-  }
-  const value = args[0]
-  return Array.isArray(value) ? value : [value]
-}
-
-function chunk(array, size = 1) {
-  size = Math.max(toInteger(size), 0)
-  const length = array == null ? 0 : array.length
-  if (!length || size < 1) {
-    return []
-  }
-  let index = 0
-  let resIndex = 0
-  const result = new Array(Math.ceil(length / size))
-
-  while (index < length) {
-    result[resIndex++] = slice(array, index, (index += size))
-  }
-  return result
-}
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
 `.trim()
 ]
