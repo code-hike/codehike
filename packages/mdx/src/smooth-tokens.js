@@ -266,12 +266,12 @@ function setTokens(parent, prevTokens, nextTokens) {
     group.forEach(({ span }) => {
       span.animate(
         {
-          opacity: [0, 0.9, 1],
-          filter: [
-            "brightness(1)",
-            "brightness(1.4)",
-            "brightness(1)",
-          ],
+          opacity: [0, 1],
+          // filter: [
+          //   "brightness(1)",
+          //   "brightness(1.4)",
+          //   "brightness(1)",
+          // ],
         },
         {
           duration: config.addDuration,
@@ -314,8 +314,8 @@ function createSpan(token) {
 
 function fullStaggerDuration(count, singleDuration) {
   if (count === 0) return 0
-  // return 2 * singleDuration * (1 - 1 / (1 + count))
-  return 1.5 * singleDuration - 1 / (1 + count)
+  return 2 * singleDuration * (1 - 1 / (1 + count))
+  // return 1.5 * singleDuration - 1 / (1 + count)
 }
 
 function staggerDelay(i, n, duration, singleDuration) {
