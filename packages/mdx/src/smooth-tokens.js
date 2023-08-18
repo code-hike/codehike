@@ -60,6 +60,57 @@ function usePrevProps(props) {
   return ref.current
 }
 
+function updateDom(parent, prevTokens, newTokens) {
+  console.log({ prevTokens, newTokens })
+  const kids = [...parent.childNodes]
+
+  console.log(kids)
+
+  let prevIndex = 0
+  let nextIndex = 0
+
+  while (
+    prevIndex < prevTokens.length ||
+    nextIndex < newTokens.length
+  ) {
+    const prevToken = prevTokens[prevIndex]
+    const nextToken = newTokens[nextIndex]
+
+    // skip text nodes
+    if (prevToken.style) {
+      prevIndex++
+      continue
+    }
+    if (nextToken.style) {
+      nextIndex++
+      continue
+    }
+
+    const prevId = prevToken.id
+    const nextId = nextToken.id
+
+    if (prevId === nextId) {
+      prevIndex++
+      nextIndex++
+      continue
+    }
+
+    if (prevId < nextId) {
+      // remove prev
+      prevIndex++
+      nextIndex++
+      continue
+    }
+
+    if (prevId > nextId) {
+      // add next
+      prevIndex++
+      nextIndex++
+      continue
+    }
+  }
+}
+
 function initTokens(parent, tokens) {
   parent.innerHTML = ""
   tokens.forEach((token, i) => {
@@ -101,6 +152,7 @@ function setTokens(
     })
   })
 
+  updateDom(parent, prevTokens, nextTokens)
   initTokens(parent, nextTokens)
 
   const nextSpanRect = []

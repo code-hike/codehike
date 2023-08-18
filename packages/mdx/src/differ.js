@@ -102,7 +102,9 @@ export function diff(prev, next) {
     return withIds(next)
   }
 
-  const ps = prev.filter(t => t.style)
+  const ps = prev.filter(
+    t => t.style && t.style.position !== "absolute"
+  )
   const ns = next.filter(t => t.style)
 
   const result = diffArrays(ps, ns, {
@@ -111,6 +113,7 @@ export function diff(prev, next) {
 
   let nextIds = []
   let pIndex = 0
+  let deleted = {}
 
   result.forEach(part => {
     const { added, removed, count, value } = part
@@ -119,6 +122,14 @@ export function diff(prev, next) {
       const after = ps[pIndex]?.id
       nextIds = nextIds.concat(getIds(before, after, count))
     } else if (removed) {
+      deleted[nextIds.length] = value.map(t => ({
+        ...t,
+        style: {
+          ...t.style,
+          position: "absolute",
+          opacity: 0,
+        },
+      }))
       pIndex += count
     } else {
       value.forEach(_ => {
@@ -128,13 +139,31 @@ export function diff(prev, next) {
   })
 
   let nIndex = 0
-  const nextTokens = next.map(token => {
+  const nextTokens = deleted[0] || []
+  next.forEach(token => {
     if (token.style) {
-      return { ...token, id: nextIds[nIndex++] }
+      nextTokens.push({ ...token, id: nextIds[nIndex++] })
+      if (deleted[nIndex]) {
+        nextTokens.push(...deleted[nIndex])
+      }
     } else {
-      return token
+      nextTokens.push(token)
     }
   })
+
+  // console.log("Before:")
+  // console.table(
+  //   ps.map(t => ({ id: t.id, content: t.content }))
+  // )
+  // console.log("After:")
+  // console.table(
+  //   nextTokens
+  //     .filter(t => t.style)
+  //     .map(t => ({ id: t.id, content: t.content }))
+  // )
+
+  // console.log(nextTokens)
+
   return nextTokens
 }
 

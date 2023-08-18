@@ -1,4 +1,4 @@
-import { Code } from "../src/smooth-tokens"
+import { FlipCode } from "../src/flip-tokens"
 import { tokenize, tokenizeSync } from "../src/differ"
 import {
   THEME_NAMES,
@@ -103,7 +103,7 @@ function Main({ list }) {
           {`>`}
         </button>
       </div>
-      <Code
+      <FlipCode
         tokens={tokens}
         onTransitioned={() => {
           if (!playing) return
