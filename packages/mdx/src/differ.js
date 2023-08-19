@@ -111,6 +111,14 @@ export function diff(prev, next) {
     comparator: (a, b) => a.content == b.content,
   })
 
+  // highest id in ps
+  let highestId = 0
+  ps.forEach(t => {
+    if (t.id > highestId) {
+      highestId = t.id
+    }
+  })
+
   let nextIds = []
   let pIndex = 0
   let deleted = {}
@@ -120,7 +128,10 @@ export function diff(prev, next) {
     if (added) {
       const before = ps[pIndex - 1]?.id
       const after = ps[pIndex]?.id
-      nextIds = nextIds.concat(getIds(before, after, count))
+
+      for (let i = 0; i < count; i++) {
+        nextIds.push(++highestId)
+      }
     } else if (removed) {
       deleted[nextIds.length] = value.map(t => ({
         ...t,
@@ -165,15 +176,4 @@ export function diff(prev, next) {
   // console.log(nextTokens)
 
   return nextTokens
-}
-
-// n numbers between before and after (exclusive)
-function getIds(before, after, n) {
-  let b = before == null ? after - 1 : before
-  let a = after == null ? before + 1 : after
-  const ids = []
-  for (let i = 0; i < n; i++) {
-    ids.push(b + (a - b) * ((i + 1) / (n + 1)))
-  }
-  return ids
 }

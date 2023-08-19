@@ -30,6 +30,7 @@ function Tokens({ tokens }) {
             style={{
               ...token.style,
               display: "inline-block",
+              // willChange: "transform, opacity, color",
             }}
             key={token.id}
             ch-x={token.id}
