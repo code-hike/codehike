@@ -1,31 +1,3 @@
-import { Expression } from "estree"
-import isPlainObject from "is-plain-obj"
-import { annotationsMap } from "../mdx-client/annotations"
-// import unified from "unified"
-// import remarkRehype from "remark-rehype"
-import { Node } from "unist"
-
-// forked from https://github.com/remcohaszing/estree-util-value-to-estree/blob/main/src/index.ts
-
-// https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34960#issuecomment-576906058
-declare const URL: typeof globalThis extends {
-  URL: infer URLCtor
-}
-  ? URLCtor
-  : typeof import("url").URL
-declare const URLSearchParams: typeof globalThis extends {
-  URL: infer URLSearchParamsCtor
-}
-  ? URLSearchParamsCtor
-  : typeof import("url").URLSearchParams
-
-export interface Options {
-  /**
-   * If true, treat objects that have a prototype as plain objects.
-   */
-  instanceAsObject?: boolean
-}
-
 /**
  * Convert a value to an ESTree node
  *
@@ -33,10 +5,7 @@ export interface Options {
  * @param options - Additional options to configure the output.
  * @returns The ESTree node.
  */
-export function valueToEstree(
-  value?: unknown,
-  options: Options = {}
-): Expression {
+export function valueToEstree(value, options) {
   if (value === undefined) {
     return { type: "Identifier", name: "undefined" }
   }
@@ -54,12 +23,12 @@ export function valueToEstree(
   }
   if (typeof value === "bigint") {
     return value >= 0
-      ? ({
+      ? {
           type: "Literal",
           value,
           raw: `${value}n`,
           bigint: String(value),
-        } as any)
+        }
       : {
           type: "UnaryExpression",
           operator: "-",
@@ -111,7 +80,7 @@ export function valueToEstree(
     )
   }
   if (Array.isArray(value)) {
-    const elements: (Expression | null)[] = []
+    const elements = []
     for (let i = 0; i < value.length; i += 1) {
       elements.push(
         i in value ? valueToEstree(value[i], options) : null
@@ -180,18 +149,15 @@ export function valueToEstree(
       arguments: [valueToEstree(String(value), options)],
     }
   }
-  if (options.instanceAsObject || isPlainObject(value)) {
+  if (options?.instanceAsObject || isPlainObject(value)) {
     // if ((value as any)?.name === MDX_CHILDREN) {
     //   const tree = { ...(value as any) }
     //   tree.name = null
     //   return (mdastToEstree(tree) as any).body[0].expression
     // }
 
-    if (
-      (value as any)?.type ===
-      "mdxJsxAttributeValueExpression"
-    ) {
-      return (value as any).data.estree.body[0].expression
+    if (value?.type === "mdxJsxAttributeValueExpression") {
+      return value.data.estree.body[0].expression
     }
 
     return {
@@ -210,15 +176,14 @@ export function valueToEstree(
     }
   }
 
-  const isAnnotation = Object.values(
-    annotationsMap
-  ).includes(value as any)
+  const isAnnotation =
+    Object.values(annotationsMap).includes(value)
 
   // code hike annotations patch
   if (isAnnotation) {
     const identifier = Object.keys(annotationsMap).find(
       key => annotationsMap[key] === value
-    )!
+    )
     return {
       type: "MemberExpression",
       object: {
@@ -246,32 +211,32 @@ export function valueToEstree(
   throw new TypeError(`Unsupported value: ${String(value)}`)
 }
 
-// export function mdastToEstree(node: Node) {
-//   const nodeTypes = [
-//     "mdxFlowExpression",
-//     "mdxJsxFlowElement",
-//     "mdxJsxTextElement",
-//     "mdxTextExpression",
-//     "mdxjsEsm",
-//   ]
-//   const changedTree = unified()
-//     .use(remarkRehype, {
-//       allowDangerousHtml: true,
-//       passThrough: nodeTypes,
-//     })
-//     .use(rehypeRecma as any)
-//     .runSync(node)
+function isPlainObject(x) {
+  var toString = Object.prototype.toString
+  var prototype
+  return (
+    toString.call(x) === "[object Object]" &&
+    ((prototype = Object.getPrototypeOf(x)),
+    prototype === null ||
+      prototype === Object.getPrototypeOf({}))
+  )
+}
 
-//   return changedTree
-// }
-
-const MDX_CHILDREN = "MDX_CHILDREN"
-
-export function wrapChildren(children: Node[]) {
-  const tree = {
-    type: "mdxJsxFlowElement",
-    children,
-    name: MDX_CHILDREN,
+export function toValueExpression(value) {
+  return {
+    type: "mdxJsxAttributeValueExpression",
+    value: JSON.stringify(value),
+    data: {
+      estree: {
+        type: "Program",
+        body: [
+          {
+            type: "ExpressionStatement",
+            expression: valueToEstree(value),
+          },
+        ],
+        sourceType: "module",
+      },
+    },
   }
-  return tree
 }

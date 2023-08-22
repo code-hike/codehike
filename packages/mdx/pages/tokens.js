@@ -190,6 +190,7 @@ function Main() {
 // prettier-ignore
 const code = [`
 object Main {
+  // focus[3:15] my-annotation
   def factorial(n: Int): Int = {
     if (n == 0) {
       return 1
@@ -199,6 +200,7 @@ object Main {
   }
 }
 `.trim(),`
+# focus[1:12] my-annotation
 def factorial(n):
     if n == 0:
         return 1

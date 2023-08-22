@@ -3,6 +3,7 @@
   "workspaces": {
     "packages": [
       "packages/mdx",
+      "packages/core",
       "playground",
       "site"
     ]
