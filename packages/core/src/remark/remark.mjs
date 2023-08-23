@@ -1,7 +1,8 @@
 import { preload } from "@code-hike/lighter"
 import { visit } from "unist-util-visit"
 import { toValueExpression } from "./to-estree.mjs"
-import { tokenizeSync } from "./highlight.mjs"
+import { tokenize } from "./highlight.mjs"
+import { visitAsync } from "./visit.mjs"
 
 const theme = "github-dark"
 
@@ -22,9 +23,9 @@ export const myPlugin = config => {
   return async (tree, file) => {
     await preloadLanguages(tree)
 
-    visit(tree, "code", node => {
+    await visitAsync(tree, "code", async node => {
       const { lang, meta, value } = node
-      const tokens = tokenizeSync(value, lang, theme)
+      const tokens = await tokenize(value, lang, theme)
 
       node.type = "mdxJsxFlowElement"
       node.name = "Code"

@@ -1,9 +1,19 @@
-import { highlightSync } from "@code-hike/lighter"
+import {
+  highlight,
+  extractAnnotations,
+} from "@code-hike/lighter"
 
-export function tokenizeSync(code, lang, theme) {
-  const { lines } = highlightSync(code, lang, theme, {
-    scopes: true,
-  })
+export async function tokenize(code, lang, theme) {
+  const { code: codeWithoutAnnotations, annotations } =
+    await extractAnnotations(code, lang, ["mark"])
+  const { lines } = await highlight(
+    codeWithoutAnnotations,
+    lang,
+    theme,
+    {
+      scopes: true,
+    }
+  )
   const tokens = lines.flatMap(line => [
     ...line,
     { content: "\n" },
