@@ -1,5 +1,5 @@
 import createMDX from "@next/mdx"
-import { myPlugin } from "./src/remark.mjs"
+import { myPlugin } from "./src/remark/remark.mjs"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {}

@@ -1,7 +1,7 @@
 import { preload } from "@code-hike/lighter"
 import { visit } from "unist-util-visit"
 import { toValueExpression } from "./to-estree.mjs"
-import { tokenizeSync } from "./remark/highlight.mjs"
+import { tokenizeSync } from "./highlight.mjs"
 
 const theme = "github-dark"
 
@@ -31,7 +31,7 @@ export const myPlugin = config => {
       node.attributes = [
         {
           type: "mdxJsxAttribute",
-          name: "sticker",
+          name: "blaze",
           value: "code",
         },
         {
@@ -53,7 +53,7 @@ export const myPlugin = config => {
     })
 
     visit(tree, "mdxJsxFlowElement", node => {
-      if (node.name === "Steps") {
+      if (node.name === "Hike") {
         processSteps(node)
       }
     })
@@ -72,16 +72,16 @@ function processSteps(node) {
 
     const step = steps[steps.length - 1]
     console.log(child)
-    const stickerAttribute = child?.attributes?.find(
-      attribute => attribute.name === "sticker"
+    const blazeAttribute = child?.attributes?.find(
+      attribute => attribute.name === "blaze"
     )
 
-    const slot = stickerAttribute?.value ?? "content"
+    const slot = blazeAttribute?.value ?? "children"
 
     step[slot] = step[slot] ?? []
     step[slot].push(child)
 
-    // TODO push a placeholder to slot["content"] for the static version
+    // TODO push a placeholder to slot["children"] for the static version
   })
 
   node.children = steps.map(step => {

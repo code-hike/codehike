@@ -28,7 +28,7 @@ export function Scrollycoding({ steps }) {
               key={i}
               onClick={() => setCurrentStep(i)}
             >
-              {step.content}
+              {step.children}
             </div>
           )
         })}

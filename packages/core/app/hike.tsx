@@ -1,6 +1,6 @@
 import React from "react"
 
-export function Steps({ children, as, ...rest }) {
+export function Hike({ children, as, ...rest }) {
   console.log("client steps", children)
 
   const steps = React.Children.toArray(children).map(
