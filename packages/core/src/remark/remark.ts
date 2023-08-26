@@ -1,13 +1,13 @@
 import { preload } from "@code-hike/lighter"
 import { visit } from "unist-util-visit"
-import { toValueExpression } from "./to-estree.mjs"
-import { tokenize } from "./highlight.mjs"
-import { visitAsync } from "./visit.mjs"
+import { toValueExpression } from "./to-estree"
+import { tokenize } from "./highlight"
+import { visitAsync } from "./visit.js"
 
 const theme = "github-dark"
 
 async function preloadLanguages(tree) {
-  const langs = new Set()
+  const langs = new Set<string>()
 
   visit(tree, "code", node => {
     const { lang } = node
@@ -72,7 +72,7 @@ function processSteps(node) {
     }
 
     const step = steps[steps.length - 1]
-    console.log(child)
+    // console.log(child)
     const blazeAttribute = child?.attributes?.find(
       attribute => attribute.name === "blaze"
     )

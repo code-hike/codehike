@@ -16,7 +16,7 @@ export async function tokenize(code, lang, theme) {
   )
   const tokens = lines.flatMap(line => [
     ...line,
-    { content: "\n" },
+    { content: "\n", style: undefined },
   ])
   // split trimming whitespace for each token
   const splitTokens = tokens.flatMap(token => {

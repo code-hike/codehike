@@ -2,7 +2,7 @@ import {
   defineDocumentType,
   makeSource,
 } from "contentlayer/source-files"
-import { myPlugin } from "./src/remark/remark.mjs"
+import { myPlugin } from "./src/remark/remark"
 
 export const Post = defineDocumentType(() => ({
   name: "Post",

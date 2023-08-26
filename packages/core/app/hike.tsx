@@ -2,7 +2,7 @@
 import React from "react"
 
 export function Hike({ children, as, ...rest }) {
-  console.log("client steps", children)
+  // console.log("client steps", children)
 
   const steps = React.Children.toArray(children).map(
     (stepElement: any) => {
@@ -20,7 +20,7 @@ export function Hike({ children, as, ...rest }) {
     }
   )
 
-  console.log("steps", steps)
+  // console.log("steps", steps)
 
   return React.createElement(
     as,

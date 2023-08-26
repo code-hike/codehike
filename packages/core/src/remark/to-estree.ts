@@ -5,7 +5,7 @@
  * @param options - Additional options to configure the output.
  * @returns The ESTree node.
  */
-export function valueToEstree(value, options) {
+export function valueToEstree(value, options?) {
   if (value === undefined) {
     return { type: "Identifier", name: "undefined" }
   }
@@ -173,38 +173,6 @@ export function valueToEstree(value, options) {
           value: valueToEstree(val, options),
         })
       ),
-    }
-  }
-
-  const isAnnotation =
-    Object.values(annotationsMap).includes(value)
-
-  // code hike annotations patch
-  if (isAnnotation) {
-    const identifier = Object.keys(annotationsMap).find(
-      key => annotationsMap[key] === value
-    )
-    return {
-      type: "MemberExpression",
-      object: {
-        type: "MemberExpression",
-        object: {
-          type: "Identifier",
-          name: "CH",
-        },
-        property: {
-          type: "Identifier",
-          name: "annotations",
-        },
-        computed: false,
-        optional: false,
-      },
-      property: {
-        type: "Identifier",
-        name: identifier,
-      },
-      computed: false,
-      optional: false,
     }
   }
 
