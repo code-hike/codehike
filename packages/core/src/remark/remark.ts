@@ -1,8 +1,8 @@
 import { preload } from "@code-hike/lighter"
 import { visit } from "unist-util-visit"
 import { toValueExpression } from "./to-estree"
-import { tokenize } from "./highlight"
 import { visitAsync } from "./visit.js"
+import { tokenize } from "../tokens/code-to-tokens"
 
 const theme = "github-dark"
 
