@@ -27,8 +27,6 @@ function useTokensWithIds(
     prevRef.current = result
   }, [result])
 
-  console.log({ result })
-
   return result
 }
 
@@ -53,7 +51,7 @@ function TokenOrGroup({
 }) {
   if ("tokens" in token) {
     return (
-      <span>
+      <span className={token.name}>
         {token.tokens.map((token, i) => (
           <TokenOrGroup token={token} key={i} />
         ))}
@@ -61,7 +59,7 @@ function TokenOrGroup({
     )
   }
 
-  return token.style ? (
+  return "id" in token ? (
     <span
       style={{
         ...token.style,

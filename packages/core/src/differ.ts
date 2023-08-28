@@ -101,8 +101,6 @@ function replaceTokens(
 ): TokenWithIdOrGroup[] {
   const result: TokenWithIdOrGroup[] = []
 
-  console.log("replaceTokens", { tokens, tokensWithId })
-  debugger
   tokens.forEach(tokenOrGroup => {
     if ("tokens" in tokenOrGroup) {
       result.push({

@@ -5,6 +5,7 @@ import { allPosts } from "contentlayer/generated"
 // import { Slideshow } from "../../slideshow"
 // import { Code } from "../../code"
 import { PostClient } from "./post.client"
+import "./styles.css"
 
 export const generateStaticParams = async () =>
   allPosts.map(post => ({ slug: post._raw.flattenedPath }))
