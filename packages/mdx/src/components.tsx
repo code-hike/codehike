@@ -14,7 +14,6 @@ import {
 } from "./mdx-client/annotations"
 import { Preview } from "./mdx-client/preview"
 import { InlineCode } from "./mdx-client/inline-code"
-import type { MDXComponents } from "mdx/types"
 import {
   useStaticToggle,
   StaticToggle,
@@ -38,7 +37,7 @@ export {
   StaticToggle,
 }
 
-export const CH: MDXComponents = {
+export const CH = {
   Code,
   Section,
   SectionLink,
