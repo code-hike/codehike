@@ -1,0 +1,253 @@
+---
+title: Announcing Code Hike v1.0
+description: A new approach to turn markdown into rich interactive experiences
+authors: [pomber]
+date: 2024-08-16
+draft: true
+---
+
+import { CodeWithNotes } from "@/components/code/code-with-notes"
+import {
+  Codeblocks,
+  FineGrained,
+  Sponsors,
+} from "./v1"
+
+After a year of exploration and development, I’m thrilled to announce the stable release of Code Hike v1.0!
+
+## What is Code Hike?
+
+Code Hike is an open-source library designed to encourage the authoring of technical content that takes full advantage of the modern web.
+
+Code Hike v1 introduces two new features: **fine-grained markdown** and **headless codeblocks**.
+
+### Fine-grained Markdown
+
+When using Markdown, the content often becomes a large, inflexible block of UI that limits your control over its rendering.
+
+Code Hike allows you to break down your Markdown into smaller pieces, which you can then render however you like using React. This is done by using special decorators in Markdown:
+
+<FineGrained>
+
+{/* prettier-ignore */}
+````md !content content.md -w
+<!-- !mark[/!intro/] 0 -->
+## !intro The Roman Emperors
+
+The Roman Empire was one of the most influential empires in history.
+
+It was marked by a series of powerful rulers known as emperors.
+
+<!-- !mark[/!!emperors/mg] 2 -->
+## !!emperors Augustus
+
+The founder of the Roman Empire and its first Emperor.
+
+<!-- !mark[/!img/] 3 -->
+![!img cover](/one.png)
+
+<!-- !mark[/!code/] 3 -->
+```js !code
+console.log(1)
+```
+
+## !!emperors Nero
+
+Reigned from AD 54 to 68 and is one of the most infamous emperors in Roman history.
+
+## !!emperors Trajan
+
+The second of the Five Good Emperors, Trajan reigned from AD 98 to 117. He is remembered for his extensive public building programs and for expanding the empire to its greatest territorial extent.
+````
+
+## !page
+
+```tsx ! page.jsx
+import Content from "./content.md"
+import { parse } from "codehike"
+// !callout[/content/] json
+const content = parse(Content)
+
+function Page() {
+  const { intro, emperors } = content
+  return (
+    <main>
+      <h1>{intro.title}</h1>
+      {intro.children}
+      {emperors.map((emperor) => (
+        <section>...</section>
+      ))}
+    </main>
+  )
+}
+```
+
+### !!notes json
+
+```jsx !
+content = {
+  // !mark[/intro/] 0
+  intro: {
+    title: "The Roman Emperors",
+    children: <>
+      <p>The Roman Empire was ...</p>
+      <p>It was marked by ...</p>
+    </>,
+  },
+  // !mark[/emperors/] 2
+  emperors: [
+    {
+      title: "Augustus",
+      children: <p>The founder ...</p>,
+      // !mark[/img/] 3
+      img: { src: "/one.png" },
+      // !mark[/code/] 3
+      code: {
+        lang: "js",
+        value: "console.log(1)",
+      },
+    },
+    // !block 3
+    { title: "Nero", ... },
+    // !block 4
+    { title: "Trajan", ... },
+  ],
+}
+```
+
+</FineGrained>
+
+Code Hike also integrates nicely with [Zod schemas](docs/concepts/blocks#schema) giving you type-safe Markdown.
+
+Learn more:
+
+- Documentation: [Code Hike blocks](/docs/concepts/blocks)
+- Blog post: [Fine-grained Markdown](/blog/fine-grained-markdown)
+- Example: [SwiftUI tutorials clone](https://clone-swiftui-tutorial.vercel.app/)
+
+### Headless Codeblocks
+
+With Code Hike v1, you can build your own component library for codeblocks.
+
+- Use React components to define UI and behaviors: tooltips, animations, line numbers, diffs, copy buttons, collapse, fold, footnotes, links, tabs, callouts, language switchers, or whatever you can imagine.
+- Then add comments inside your codeblocks to make use of those components
+
+<Codeblocks>
+
+````md !content content.md -pw
+```js
+function sum(a, b) {
+  return a + b
+}
+
+// !!mark[/!tooltip/] 1
+// !tooltip[/result/] 23
+let result = sum("2", "3")
+```
+````
+
+```js !preview
+function sum(a, b) {
+  return a + b
+}
+
+// !tooltip[/result/] "23"
+let result = sum("2", "3")
+```
+
+```jsx !code code.jsx
+import { Pre, highlight } from "codehike/code"
+import { Tooltip } from "./my-tooltip"
+
+const tooltipHandler = {
+  // !mark[/tooltip/] 1
+  name: "tooltip",
+  Inline: ({ annotation, children }) => (
+    <Tooltip>
+      <Tooltip.Trigger>{children}</Tooltip.Trigger>
+      <Tooltip.Content>
+        {annotation.query}
+      </Tooltip.Content>
+    </Tooltip>
+  ),
+}
+
+export async function Code({ codeblock }) {
+  const code = await highlight(codeblock, "dracula")
+  return (
+    <Pre code={code} handlers={[tooltipHandler]} />
+  )
+}
+```
+
+</Codeblocks>
+
+You don't have to start from scratch. There are plenty of examples to copy, paste, and adapt to your needs in the [code examples](/docs/code) page.
+
+Learn more:
+
+- Documentation: [Code Blocks](/docs/concepts/codeblocks)
+- Documentation: [Code Annotations](/docs/concepts/annotations)
+- [Examples](/docs/code)
+
+## Who is it for?
+
+The main use cases are code walkthroughs, tutorials, and documentation. But it can be used for much more.
+
+#### Big docs
+
+If the people building your docs design system aren't the same as the ones writing the content, this is for you. Code Hike helps you build modern layouts, components, and codeblocks; all while keeping the authoring experience of markdown.
+
+#### Small docs and blogs
+
+If you are a solo developer or a small team, Code Hike makes your content flexible so you can use your creativity and the whole power of React to present it in the most engaging way.
+
+#### Content creators
+
+Videos, slides, screenshots. Code Hike makes separating content from presentation easy. Build the perfect style for your content using React, and reuse it across all your platforms. Did you know you can use [Code Hike with Remotion](/blog/remotion)?
+
+#### Any content website
+
+Landing pages, marketing sites, portfolios. It doesn't even need content related to programming. Code Hike helps you keep the content separated from the design.
+
+## Try Code Hike v1
+
+Try it online on [StackBlitz](https://stackblitz.com/github/code-hike/v1-starter). Or clone the Code Hike v1 starter:
+
+```bash -c
+# !link[24:62] https://github.com/code-hike/v1-starter
+npx create-next-app -e https://github.com/code-hike/v1-starter
+```
+
+If you were using a previous version of Code Hike, check the [migration guide](/blog/v1-migration).
+
+## Supported frameworks
+
+Code Hike depends on React and MDX, so any framework that supports those should work. These include Next.js, Remix, Docusaurus, Nextra, Fuma Docs, and more. One notable exception is Astro (because MDX is compiled to Astro components, not React).
+
+My recommendation for documentation sites is Next.js + [Fuma Docs](https://fumadocs.vercel.app/), because of its support of React Server Components. RSCs aren't required for Code Hike, but having components that only run at build-time gives you extra power and flexibility.
+
+Find examples for various frameworks in the [examples](/docs/examples) page.
+
+## Comparison with other tools
+
+**MDX**: Code Hike is built on top of MDX.
+
+**Markdoc**: Markdoc is another extension to Markdown. The main differences are:
+
+- Fine-grained markdown: similar to Code Hike, Markdoc lets you add some structure to Markdown, allowing more flexibility in how the content is rendered. Markdoc's approach is lower level, so an integration with Code Hike is something to explore in the future.
+- Code blocks: you can combine Code Hike and Markdoc by using Code Hike's `highlight` function instead of prismjs in Markdoc's [syntax highlighting example](https://markdoc.dev/docs/examples#syntax-highlighting).
+
+**Shiki**: A syntax highlighter that includes transformers to customize codeblocks. Code Hike uses [it's own highlighter](https://github.com/code-hike/lighter). The main difference between the highlighters is that Shiki transformers are used to transform the AST (abstract syntax tree) of the codebock, while Code Hike annotations are React components.
+
+**Docusaurus, Nextra, Fuma Docs**: These are _frameworks_ that help you build documentation sites, handling Markdown/MDX files and providing some UI components. You can use Code Hike on top of them. There is an overlap in how to handle codeblocks, but you can incrementally let Code Hike take over using the [`ignoreCode` config](docs/concepts/code#ignoring-some-codeblocks)
+
+## Thank you!
+
+Big thanks to all the sponsors, some of whom have been supporting Code Hike from the very beginning, when it was just an experiment.
+
+<Sponsors />
+
+Special thanks to the [GitHub Accelerator](https://github.blog/news-insights/company-news/github-accelerator-our-first-cohort-and-whats-next/) for selecting Code Hike for the first cohort of the program. Their sponsorship and guidance have been a huge help in getting Code Hike to this point.
+
+I'm excited about what’s next for Code Hike. You can [become a sponsor](https://github.com/sponsors/code-hike?metadata_source=v1-blog) to help us make it happen, every little bit helps!

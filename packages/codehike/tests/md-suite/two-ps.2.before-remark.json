@@ -1,0 +1,118 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [{ "type": "text", "value": "!valid" }]
+    },
+    {
+      "type": "paragraph",
+      "children": [{ "type": "text", "value": "!a1 1\r\n!!a2 2\r\n2\r\n!a3 3" }]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://b1.com",
+          "alt": "!b1 x"
+        },
+        { "type": "text", "value": "\r\n" },
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://b2.com",
+          "alt": "!!b2 x"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "!c1 1\r\ncc\r\n" },
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://c2.com",
+          "alt": "!c2 x"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://d1.com",
+          "alt": "!d1 x"
+        },
+        { "type": "text", "value": "\r\n!!d2 2" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [{ "type": "text", "value": "!e1 1\r\nee ee\r\nee" }]
+    },
+    {
+      "type": "heading",
+      "depth": 2,
+      "children": [{ "type": "text", "value": "!invalid" }]
+    },
+    {
+      "type": "paragraph",
+      "children": [{ "type": "text", "value": "ff ff\r\n!f1 dd" }]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "gg gg\r\n" },
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://g1.com",
+          "alt": "!g1 x"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://h1.com",
+          "alt": "!h1 x"
+        },
+        { "type": "text", "value": "\r\nhh hh" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "ii " },
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://i1.com",
+          "alt": "!i1 x"
+        },
+        { "type": "text", "value": " ii" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "image",
+          "title": null,
+          "url": "https://j2.com",
+          "alt": "!j1 x"
+        },
+        { "type": "text", "value": "\r\njjj\r\n!j2 2" }
+      ]
+    }
+  ]
+}

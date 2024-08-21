@@ -1,0 +1,117 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "mdxJsxFlowElement",
+      "name": "slot",
+      "attributes": [
+        {
+          "type": "mdxJsxAttribute",
+          "name": "__hike",
+          "value": {
+            "type": "mdxJsxAttributeValueExpression",
+            "value": "",
+            "data": {
+              "estree": {
+                "type": "Program",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "ObjectExpression",
+                      "properties": [
+                        {
+                          "type": "Property",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false,
+                          "key": { "type": "Literal", "value": "children" },
+                          "kind": "init",
+                          "value": {
+                            "type": "Literal",
+                            "value": "",
+                            "raw": "\"\""
+                          }
+                        },
+                        {
+                          "type": "Property",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false,
+                          "key": { "type": "Literal", "value": "title" },
+                          "kind": "init",
+                          "value": {
+                            "type": "Literal",
+                            "value": "",
+                            "raw": "\"\""
+                          }
+                        },
+                        {
+                          "type": "Property",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false,
+                          "key": { "type": "Literal", "value": "_data" },
+                          "kind": "init",
+                          "value": {
+                            "type": "ObjectExpression",
+                            "properties": [
+                              {
+                                "type": "Property",
+                                "method": false,
+                                "shorthand": false,
+                                "computed": false,
+                                "key": { "type": "Literal", "value": "header" },
+                                "kind": "init",
+                                "value": {
+                                  "type": "Literal",
+                                  "value": "",
+                                  "raw": "\"\""
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "Property",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false,
+                          "key": { "type": "Literal", "value": "hello" },
+                          "kind": "init",
+                          "value": {
+                            "type": "Literal",
+                            "value": "world",
+                            "raw": "\"world\""
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "sourceType": "module",
+                "comments": []
+              }
+            }
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "mdxJsxFlowElement",
+          "name": "slot",
+          "attributes": [
+            { "type": "mdxJsxAttribute", "name": "path", "value": "" }
+          ],
+          "children": [
+            {
+              "type": "heading",
+              "depth": 1,
+              "children": [{ "type": "text", "value": "Lorem" }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

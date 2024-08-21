@@ -1,0 +1,56 @@
+normal, extra spacer right
+
+```js
+function lorem(ipsum, dolor = 1) {
+  // !mark
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  // !mark
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  // !diff +
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+  // !collapse(1:3)
+  dolor = sit - amet(dolor)
+  // !callout[/sit/] hey
+  dolor = sit - amet(dolor)
+  dolor = sit - amet(dolor)
+}
+```
+
+<div style={{width: 300}}>
+
+overflow
+
+```js
+function lorem(ipsum, dolor = 1) {
+  // !mark
+  dolor = sit
+}
+```
+
+</div>
+
+<div style={{width: 300}}>
+
+wrap
+
+```js w
+// !callout[/lorem/] hey
+function lorem(ipsum) {
+  // !mark
+  dolor = sit - amet(dolor) - consectetur(ipsum)
+  // !callout[/dolor/] hey
+  if (dolor === 1) {
+    // !callout[/sit/] hey
+    dolor = sit
+  }
+}
+```
+
+</div>

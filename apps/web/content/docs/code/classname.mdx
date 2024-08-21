@@ -1,0 +1,39 @@
+---
+title: ClassName
+description: Add a class name to a piece of code
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Add a class name to a piece of code.
+
+<Demo name="classname" />
+
+## !implementation
+
+```tsx classname.tsx -c
+import { AnnotationHandler } from "codehike/code"
+
+export const className: AnnotationHandler = {
+  name: "className",
+  Block: ({ annotation, children }) => (
+    <div className={annotation.query}>{children}</div>
+  ),
+  Inline: ({ annotation, children }) => (
+    <span className={annotation.query}>{children}</span>
+  ),
+}
+```
+
+And then add the handler to your `Code` component:
+
+```tsx code.tsx -c
+import { RawCode, Pre, highlight } from "codehike/code"
+import { className } from "./classname"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[className]} />
+}
+```

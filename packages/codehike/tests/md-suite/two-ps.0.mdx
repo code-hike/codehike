@@ -1,0 +1,43 @@
+---
+snapshots:
+  - before-remark
+  - parsed-jsx
+---
+
+## !valid
+
+!a1 1
+!!a2 2
+2
+!a3 3
+
+![!b1 x](https://b1.com)
+![!!b2 x](https://b2.com)
+
+!c1 1
+cc
+![!c2 x](https://c2.com)
+
+![!d1 x](https://d1.com)
+!!d2 2
+
+!e1 1
+ee ee
+ee
+
+## !invalid
+
+ff ff
+!f1 dd
+
+gg gg
+![!g1 x](https://g1.com)
+
+![!h1 x](https://h1.com)
+hh hh
+
+ii ![!i1 x](https://i1.com) ii
+
+![!j1 x](https://j2.com)
+jjj
+!j2 2

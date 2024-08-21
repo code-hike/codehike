@@ -1,0 +1,85 @@
+---
+title: Language Switcher
+description: Switch between languages in a code block
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Add a language picker when you need to switch between languages in a code block.
+
+<Demo
+  name="language-switcher"
+  content="content.mdx"
+  className="[&>*]:max-h-[400px]"
+>
+  Pick a different language from the dropdown to see the code block change.
+</Demo>
+
+## !implementation
+
+We use the `Select` components from [shadcn/ui](https://ui.shadcn.com/docs/components/select):
+
+```bash -c
+npx shadcn-ui@latest add select
+```
+
+Since our component will have state we need a client component:
+
+```tsx code.tsx -c
+"use client"
+
+import { HighlightedCode, Pre, highlight } from "codehike/code"
+import { useState } from "react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+// !fold[/className="(.*?)"/gm]
+export function Code({ highlighted }: { highlighted: HighlightedCode[] }) {
+  const [selectedLang, setSelectedLang] = useState(highlighted[0].lang)
+  const selectedCode = highlighted.find((code) => code.lang === selectedLang)!
+
+  return (
+    <div className="relative">
+      <Pre code={selectedCode} className="m-0 pt-6 px-4 bg-zinc-950/80" />
+      <div className="absolute top-2 right-2">
+        <Select value={selectedLang} onValueChange={setSelectedLang}>
+          <SelectTrigger className="!bg-transparent border-none h-6 !p-2 gap-2 text-slate-300 !ring-zinc-300/50">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent position="item-aligned">
+            {highlighted.map(({ lang }, index) => (
+              <SelectItem key={index} value={lang}>
+                {lang}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  )
+}
+```
+
+If you are using React Server Components, we also need a component to highlight the codeblocks:
+
+```tsx language-switcher.tsx -c
+import { RawCode, highlight } from "codehike/code"
+import { Code } from "./code"
+
+export async function CodeSwitcher(props: { code: RawCode[] }) {
+  const highlighted = await Promise.all(
+    props.code.map((codeblock) => highlight(codeblock, "github-dark")),
+  )
+  return <Code highlighted={highlighted} />
+}
+```
+
+If you want to animate the transitions, you can use the [token transitions handler](/docs/code/token-transitions).
+
+If you need to persist and/or sync the selected language across multiple code blocks, you can replace the `useState` with a `useLocalStorage` hook, for example using [`@uidotdev/usehooks`](https://usehooks.com/uselocalstorage) or your own implementation.

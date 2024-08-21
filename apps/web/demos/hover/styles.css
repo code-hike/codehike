@@ -1,0 +1,6 @@
+.hover-container:has([data-hover="one"]:hover)
+  [data-line]:not([data-line="one"]),
+.hover-container:has([data-hover="two"]:hover)
+  [data-line]:not([data-line="two"]) {
+  opacity: 0.4;
+}

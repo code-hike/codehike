@@ -1,0 +1,13 @@
+{
+  "trailingComma": "all",
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.jsx"],
+      "options": {
+        "printWidth": 42,
+        "semi": false
+      }
+    }
+  ]
+}

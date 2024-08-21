@@ -1,0 +1,119 @@
+---
+title: Getting Started
+description: Getting started with Code Hike
+---
+
+## Quick start
+
+Start from a template with Next.js, MDX, Tailwind CSS:
+
+```bash -c
+# !link[24:62] https://github.com/code-hike/v1-starter
+npx create-next-app -e https://github.com/code-hike/v1-starter
+```
+
+Or try it online on [StackBlitz](https://stackblitz.com/github/code-hike/v1-starter) or [CodeSandbox](https://codesandbox.io/s/github/code-hike/v1-starter).
+
+For more complete starters, see the [examples](/docs/examples) page.
+
+For [manual installation](#manual-installation), see below.
+
+## Slow start
+
+### Why Code Hike?
+
+Code Hike gives structure to markdown, turning it into a powerful base for creating interactive user interfaces. By integrating deeply with React, it allows you to show content tailored for the modern web.
+
+### Who is it for?
+
+The main use cases are code walkthroughs, tutorials, and documentation. But it can be used for much more.
+
+#### Big docs
+
+If the people building your docs design system aren't the same as the ones writing the content, this is for you. Code Hike helps you build modern layouts, components, and codeblocks; all while keeping the authoring experience of markdown. Type-safe Stripe-level docs UI? We got you covered.
+
+#### Small docs and blogs
+
+If you are a solo developer or a small team, Code Hike makes your content flexible so you can use your creativity and the whole power of React to present it in the most engaging way.
+
+#### Content creators
+
+Videos, slides, screenshots. Code Hike makes separating content from presentation easy. Build the perfect style for your content using React, and reuse it across all your platforms. Did you know you can use [Code Hike with Remotion](/blog/remotion)?
+
+#### Any content website
+
+Landing pages, marketing sites, portfolios. It doesn't even need content related to programming. Code Hike helps you keep the content separated from the design.
+
+See the [examples](/docs/examples) for inspiration.
+
+### How?
+
+Code Hike uses MDX plugins to transform markdown content into objects. You can then access these objects in React Components and present the content with all the flexibility that React provides.
+
+For codeblocks, Code Hike provides a `highlight` function that not only applies syntax highlighting but also extract annotations from code comments. The result can be passed to a `Pre` component provided by Code Hike. You can write your own React Server Components to handle those annotations, giving you again all the power of React to display code.
+
+The docs provide a variety of examples, both for layouts and code annotations, that you can copy, paste and adapt to your needs.
+
+### Tech stack
+
+React and MDX are required.
+
+Zod is highly recommended for [schema validation](/docs/concepts/blocks#schema).
+
+A framework supporting React Server Components is recommended, but not required.
+
+Astro is not suppoted.
+
+Examples from the docs use Tailwind CSS, but it's not required.
+
+My recommendation for documentation sites is Next.js + [Fuma Docs](https://fumadocs.vercel.app/), because of its support of React Server Components. RSCs aren't required for Code Hike, but having components that only run at build-time gives you extra power and flexibility.
+
+For examples using various frameworks, see the [examples](/docs/examples).
+
+## Comparison with other tools
+
+**MDX**: Code Hike is built on top of MDX.
+
+**Markdoc**: Markdoc is another extension to Markdown. The main differences are:
+
+- Fine-grained markdown: similar to Code Hike, Markdoc lets you add some structure to Markdown, allowing more flexibility in how the content is rendered. Markdoc's approach is lower level, so an integration with Code Hike is something to explore in the future.
+- Code blocks: you can combine Code Hike and Markdoc by using Code Hike's `highlight` function instead of prismjs in Markdoc's [syntax highlighting example](https://markdoc.dev/docs/examples#syntax-highlighting).
+
+**Shiki**: A syntax highlighter that includes transformers to customize codeblocks. Code Hike uses [it's own highlighter](https://github.com/code-hike/lighter). The main difference between the highlighters is that Shiki transformers are used to transform the AST (abstract syntax tree) of the codebock, while Code Hike annotations are React components.
+
+**Docusaurus, Nextra, Fuma Docs**: These are _frameworks_ that help you build documentation sites, handling Markdown/MDX files and providing some UI components. You can use Code Hike on top of them. There is an overlap in how to handle codeblocks, but you can incrementally let Code Hike take over using the [`ignoreCode` config](docs/concepts/code#ignoring-some-codeblocks)
+
+### Manual Installation
+
+0. Make sure you already have a set up with a framework that handles MDX files (for Next.js you can follow [this guide](https://nextjs.org/docs/app/building-your-application/configuring/mdx)).
+
+1. Install Code Hike:
+
+```bash -c
+npm install codehike@beta
+```
+
+2. Set up MDX plugins:
+
+```js next.config.mjs -c
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+
+/** @type {import('codehike/mdx').CodeHikeConfig} */
+const chConfig = {
+  // !link[/code docs/] /docs/concepts/code
+  // optional (see code docs):
+  components: { code: "Code" },
+  // if you can't use RSC:
+  // syntaxHighlighting: {
+  //   theme: "github-dark",
+  // },
+}
+
+const mdxOptions = {
+  remarkPlugins: [[remarkCodeHike, chConfig]],
+  recmaPlugins: [[recmaCodeHike, chConfig]],
+  jsx: true,
+}
+```
+
+3. Try the examples from the [blocks](/docs/concepts/blocks) page.

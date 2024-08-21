@@ -1,0 +1,65 @@
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "paragraph",
+      "children": [
+        {
+          "type": "emphasis",
+          "children": [{ "type": "inlineCode", "value": "var x = 1" }]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "hello " },
+        {
+          "type": "emphasis",
+          "children": [
+            { "type": "text", "value": "html" },
+            { "type": "inlineCode", "value": "<div class=\"2\">hey</div>" }
+          ]
+        },
+        { "type": "text", "value": " world" }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "two lines " },
+        {
+          "type": "emphasis",
+          "children": [
+            { "type": "inlineCode", "value": "var x = 1\r\nvar y = 2" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "extra meta " },
+        {
+          "type": "emphasis",
+          "children": [
+            { "type": "text", "value": "jsx foo" },
+            { "type": "inlineCode", "value": "var x = 1" },
+            { "type": "text", "value": "bar bar" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "lorem " },
+        {
+          "type": "emphasis",
+          "children": [{ "type": "text", "value": "just emphasize" }]
+        },
+        { "type": "text", "value": " ipsum" }
+      ]
+    }
+  ]
+}

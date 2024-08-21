@@ -1,0 +1,113 @@
+<CodeSwitcher>
+
+```java !!
+public class Main {
+  public static int factorial(int n) {
+    if (n == 0) {
+      return 1;
+    } else {
+      return n * factorial(n - 1);
+    }
+  }
+}
+```
+
+```cpp !!
+int factorial(int n) {
+  if (n == 0) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
+```
+
+```scala !!
+object Main {
+  def factorial(n: Int): Int = {
+    if (n == 0) {
+      return 1
+    } else {
+      return n * factorial(n - 1)
+    }
+  }
+}
+```
+
+```py !!
+def factorial(n):
+  if n == 0:
+    return 1
+  else:
+    return n * factorial(n - 1)
+```
+
+```matlab !!
+function result = factorial(n)
+  if n == 0
+    result = 1;
+  else
+    result = n * factorial(n - 1);
+  end
+end
+```
+
+```js !!
+function factorial(n) {
+  if (n === 0) {
+    return 1
+  } else {
+    return n * factorial(n - 1)
+  }
+}
+```
+
+```kotlin !!
+fun factorial(n: Int): Int {
+  return if (n == 0) {
+    1
+  } else {
+    n * factorial(n - 1)
+  }
+}
+```
+
+```go !!
+func factorial(n int) int {
+  if n == 0 {
+    return 1
+  } else {
+    return n * factorial(n - 1)
+  }
+}
+```
+
+```swift !!
+func factorial(n: Int) -> Int {
+  if n == 0 {
+    return 1
+  } else {
+    return n * factorial(n: n - 1)
+  }
+}
+```
+
+```rust !!
+fn factorial(n: i32) -> i32 {
+  if n == 0 {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
+```
+
+```fsharp !!
+let rec factorial n =
+  if n = 0 then
+    1
+  else
+    n * factorial (n - 1)
+```
+
+</CodeSwitcher>

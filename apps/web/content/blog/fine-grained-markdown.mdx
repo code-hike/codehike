@@ -1,0 +1,350 @@
+---
+title: Fine-grained Markdown
+description: Flexible content, richer presentation
+date: 2024-07-17
+authors: [pomber]
+---
+
+import {
+  Scrolly,
+  Hover,
+} from "./fine-grained/scrolly"
+
+Markdown is great. Easy to write, easy to read, and covers most use cases for content websites.
+
+But sometimes it feels a bit limited. Sometimes your content is not so linear, it has more structure, and you want to present it in a way that reflects that structure. You want a [richer medium](/blog/rich-content-websites) to present your content.
+
+Let me show you what I mean, and how Code Hike can help you solve this problem.
+
+<br />
+
+Rendering markdown using React usually looks something like this:
+
+<Scrolly>
+
+## !! start
+
+```jsx !page page.jsx -wa
+import Content from "./content.md"
+
+export function Page() {
+  return (
+    <div className="...">
+      <SideBar />
+      <Content />
+    </div>
+  )
+}
+```
+
+```md !content content.md -wa
+# Hello
+
+Lorem ipsum dolor sit
+
+## Step one
+
+Amet consectetur adipiscing
+
+## Step two
+
+Elit sed do eiusmod
+
+## Step three
+
+Tempor incididunt ut labore
+```
+
+### !after
+
+We get the content as a component. We can render the rest of the page any way we want, but the content itself is a single rigid block.
+
+## !! frontmatter
+
+### Frontmatter
+
+We can convert part of the content into metadata using <Hover name="frontmatter">frontmatter</Hover>.
+
+```jsx !page page.jsx -wa
+import {
+  Content,
+  frontmatter,
+} from "./content.md"
+
+// !fblock
+const { title } = frontmatter
+
+export function Page() {
+  return (
+    <div>
+      <SideBar />
+      <main>
+        {/* !fblock  */}
+        <h1>{title}</h1>
+        <Content />
+      </main>
+    </div>
+  )
+}
+```
+
+{/* prettier-ignore */}
+```md !content content.md -wa
+<!-- !fblock(1:3) -->
+---
+title: Hello
+---
+
+Lorem ipsum dolor sit
+
+## Step one
+
+Amet consectetur adipiscing
+
+## Step two
+
+Elit sed do eiusmod
+
+## Step three
+```
+
+### !after
+
+This is a good start, it gives us some flexibility, but the main content is still a single block of markdown.
+
+If we want more flexibility, we need a way to break the content into smaller pieces.
+
+## !! parse
+
+### Code Hike Blocks
+
+To make the content flexible, Code Hike introduces the concept of [blocks](/docs/concepts/blocks).
+
+```jsx !page page.jsx -wa
+import Content from "./content.md"
+import { parse } from "codehike"
+
+// !fblock
+const { intro, steps } = parse(Content)
+
+export function Page() {
+  return (
+    <div>
+      <SideBar />
+      <main>
+        {/* !fblock(1:7) */}
+        {intro.children}
+        {steps.map((step) => (
+          <div>
+            <h2>{step.title}</h2>
+            {step.children}
+          </div>
+        ))}
+      </main>
+    </div>
+  )
+}
+```
+
+{/* prettier-ignore */}
+```md !content content.md -wa
+<!-- !fblock -->
+## !intro Hello
+
+Lorem ipsum dolor sit
+
+<!-- !fblock -->
+## !!steps Step one
+
+Amet consectetur adipiscing
+
+<!-- !fblock -->
+## !!steps Step two
+
+Elit sed do eiusmod
+
+<!-- !fblock -->
+## !!steps Step three
+
+Tempor incididunt ut labore
+```
+
+### !after
+
+We define blocks by adding a <Hover name="decoration">special decoration</Hover> to markdown headings.
+
+Blocks can now be <Hover name="destructured">destructured from the content</Hover>, giving us fine-grained control to render them any way we want.
+
+## !! img
+
+We can go even further and decorate paragraphs, images, and codeblocks.
+
+For example, we can add a <Hover name="cover">cover image</Hover> to each step.
+
+```jsx !page page.jsx -wa
+import Content from "./content.md"
+import { parse } from "codehike"
+
+const { intro, steps } = parse(Content)
+
+export function Page() {
+  return (
+    <div>
+      <SideBar />
+      <main>
+        {intro.children}
+        {steps.map((step) => (
+          <div>
+            {/* !fblock */}
+            <img src={step.cover} />
+            <h2>{step.title}</h2>
+            {step.children}
+          </div>
+        ))}
+      </main>
+    </div>
+  )
+}
+```
+
+{/* prettier-ignore */}
+```md !content content.md -wa
+## !intro Hello
+
+Lorem ipsum dolor sit
+
+## !!steps Step one
+
+<!-- !fblock -->
+![!cover](/one.png)
+
+Amet consectetur adipiscing
+
+## !!steps Step two
+
+<!-- !fblock -->
+![!cover](/two.png)
+
+## !!steps Step three
+```
+
+## !! schema
+
+### Content Schema
+
+We can define a schema so we get autocompletion and all the benefits of typescript in the editor.
+
+```jsx !page page.jsx -wa
+import Content from "./content.md"
+import {
+  parse,
+  Block,
+  ImageBlock,
+} from "codehike"
+import { z } from "zod"
+
+// !fblock(1:10)
+const Schema = Block.extend({
+  intro: Block,
+  steps: z.array(
+    Block.extend({ cover: ImageBlock }),
+  ),
+})
+const { intro, steps } = parse(
+  Content,
+  Schema,
+)
+
+export function Page() {
+  return <div>...</div>
+}
+```
+
+```md !content content.md -wa
+## !intro Hello
+
+Lorem ipsum dolor sit
+
+## !!steps Step one
+
+![!cover](/one.png)
+
+Amet consectetur adipiscing
+
+## !!steps Step two
+
+![!cover](/two.png)
+
+## !!steps Step three
+```
+
+## !! type-safe
+
+### Type-safe Markdown
+
+Adding a schema also means that now we validate that the content follows the structure we defined.
+
+For example, since we defined that each step should have a cover image, we get a type error if we forget to add the image inside a step.
+
+```jsx !page page.jsx -wa
+import Content from "./content.md"
+import {
+  parse,
+  Block,
+  ImageBlock,
+} from "codehike"
+import { z } from "zod"
+
+const Schema = Block.extend({
+  intro: Block,
+  steps: z.array(
+    // !fblock
+    Block.extend({ cover: ImageBlock }),
+  ),
+})
+// !fblock(1:4)
+const { intro, steps } = parse(
+  Content,
+  Schema,
+)
+
+export function Page() {
+  return <div>...</div>
+}
+```
+
+{/* prettier-ignore */}
+```md !content content.md -wa
+## !intro Hello
+
+Lorem ipsum dolor sit
+
+## !!steps Step one
+
+<!-- !fblock -->
+> no cover image!
+
+Amet consectetur adipiscing
+
+## !!steps Step two
+
+![!cover](/two.png)
+
+## !!steps Step three
+```
+
+</Scrolly>
+
+And that's how Code Hike gives you type-safe fine-grained markdown, making your content more flexible so you can use the whole power of React to present it in any way you want.
+
+---
+
+Learn more:
+
+- [Rich content websites vs lean content websites](/blog/rich-content-websites)
+- [Code Hike blocks](/docs/concepts/blocks)
+- Examples:
+  - [Scrollycoding layout](/docs/layouts/scrollycoding)
+  - [Spotlight layout](/docs/layouts/spotlight)
+
+<div style={{ height: "50vh" }} />

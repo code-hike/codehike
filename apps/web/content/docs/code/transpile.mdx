@@ -1,0 +1,50 @@
+---
+title: Transpile
+description: Show code together with its transpiled version
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Sometimes you have a code block that you want to show together with its versions in different languages. It may be typescript and javascript, or sass and css, or maybe you want to transform a cURL command into calls to SDKs in different languages.
+
+If you are using React Server Components and you have a function to transpile the code, you can call that function inside the component.
+
+Here's an example showing how to transpile a typescript code block to javascript, and then showing both versions in tabs:
+
+<Demo name="transpile" />
+
+## !implementation
+
+```tsx code.tsx -c
+import { RawCode } from "codehike/code"
+// !link[/tabs example/] tabs
+// CodeTabs is the component from the tabs example
+// !link[/CodeTabs/] tabs
+import { CodeTabs } from "@/components/tabs"
+import ts from "typescript"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  // Since this is a RSC we can transpile stuff here
+  // (there are probably more efficient ways to do this)
+  const result = ts.transpileModule(codeblock.value, {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ESNext,
+    },
+  })
+
+  const tsCode = {
+    ...codeblock,
+    meta: "typescript",
+  }
+  const jsCode = {
+    ...codeblock,
+    value: result.outputText,
+    lang: "js",
+    meta: "javascript",
+  }
+
+  return <CodeTabs tabs={[tsCode, jsCode]} />
+}
+```

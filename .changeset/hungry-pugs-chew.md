@@ -1,0 +1,5 @@
+---
+"codehike": patch
+---
+
+Export getHike
