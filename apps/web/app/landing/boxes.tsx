@@ -43,7 +43,7 @@ export function Boxes({ className }: { className?: string }) {
         href="/docs/code"
       >
         <h2 className="text-2xl font-bold px-4 text-center">
-          Copy 🡒 Paste 🡒 <br />
+          Copy, Paste, <br />
           Make it yours
         </h2>
         <p className="px-4 md:px-12">
