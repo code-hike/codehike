@@ -68,7 +68,7 @@ function VersionNav({ version }: { version: string }) {
           <span className="w-full px-2 py-1">{version}</span>
         </DropdownMenuItem>
         <DropdownMenuItem className="p-0">
-          <a href="https://v0.codehike.org" className="w-full px-2 py-1">
+          <a href="https://v0.codehike.org/docs" className="w-full px-2 py-1">
             0.9.0
           </a>
         </DropdownMenuItem>
