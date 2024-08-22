@@ -1,0 +1,84 @@
+---
+title: Callout
+description: Callout
+layout: PreviewAndImplementation
+---
+
+import { CodeWithNotes } from "@/components/code/code-with-notes"
+
+## !demo
+
+Add callouts inside your code blocks.
+
+<Demo name="callout" />
+
+## !implementation
+
+<CodeWithNotes>
+
+```tsx ! code.tsx -cwn
+import { InlineAnnotation, AnnotationHandler } from "codehike/code"
+
+const callout: AnnotationHandler = {
+  name: "callout",
+  // !mark
+  // !callout[/transform/] transform-annotations
+  transform: (annotation: InlineAnnotation) => {
+    const { name, query, lineNumber, fromColumn, toColumn, data } = annotation
+    return {
+      name,
+      query,
+      fromLineNumber: lineNumber,
+      toLineNumber: lineNumber,
+      // !callout[/column/] column
+      data: { ...data, column: (fromColumn + toColumn) / 2 },
+    }
+  },
+  Block: ({ annotation, children }) => {
+    const { column } = annotation.data
+    // !fold[/className="(.*?)"/gm]
+    return (
+      <>
+        {children}
+        <div
+          style={{ minWidth: `${column + 4}ch` }}
+          className="w-fit border bg-zinc-800 border-current rounded px-2 relative -ml-[1ch] mt-1 whitespace-break-spaces"
+        >
+          <div
+            style={{ left: `${column}ch` }}
+            className="absolute border-l border-t border-current w-2 h-2 rotate-45 -translate-y-1/2 -top-[1px] bg-zinc-800"
+          />
+          {annotation.query}
+        </div>
+      </>
+    )
+  },
+}
+```
+
+## !!notes transform-annotations
+
+We need to transform the annotations from `InlineAnnotation` to `BlockAnnotation`
+
+## !!notes column
+
+This will be the position of the arrow in the callout
+
+</CodeWithNotes>
+
+Then pass the `callout` handler to the `Pre` component:
+
+```tsx code.tsx -c
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[callout]} />
+}
+```
+
+## Make it better
+
+Some ways to improve the callout annotation:
+
+- add different annotations with different styles (like Warning, Error, Info, etc)
+- add an option to show the callout either before or after the line
+- put markdown inside the callout (see the [tooltip example](/docs/code/tooltip/))

@@ -1,0 +1,74 @@
+---
+title: Mark
+description: Mark annotation
+layout: PreviewAndImplementation
+---
+
+import { CodeWithNotes } from "@/components/code/code-with-notes"
+
+## !demo
+
+Highlight lines.
+
+<Demo name="mark" />
+
+## !implementation
+
+For the block annotations: implement the `Line` component, and for the inline annotations: implement the `Inline` component. Use the `annotation.query` as an optional color for the mark.
+
+<CodeWithNotes>
+
+```tsx ! code.tsx -c
+import { AnnotationHandler, InnerLine } from "codehike/code"
+
+// !fold[/className="(.*?)"/gm]
+const mark: AnnotationHandler = {
+  name: "mark",
+  Line: ({ annotation, ...props }) => {
+    const color = annotation?.query || "rgb(14 165 233)"
+    return (
+      <div
+        className="flex"
+        style={{
+          borderLeft: "solid 2px transparent",
+          borderLeftColor: annotation && color,
+          backgroundColor: annotation && `rgb(from ${color} r g b / 0.1)`,
+        }}
+      >
+        <InnerLine merge={props} className="px-2 flex-1" />
+      </div>
+    )
+  },
+  Inline: ({ annotation, children }) => {
+    const color = annotation?.query || "rgb(14 165 233)"
+    return (
+      <span
+        className="rounded px-0.5 py-0 -mx-0.5"
+        style={{
+          outline: `solid 1px rgb(from ${color} r g b / 0.5)`,
+          background: `rgb(from ${color} r g b / 0.13)`,
+        }}
+      >
+        {children}
+      </span>
+    )
+  },
+}
+```
+
+</CodeWithNotes>
+
+Pass it to the `handlers` prop of the `Pre` component.
+
+```tsx code.tsx -c
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[mark]} />
+}
+```
+
+## Make it better
+
+Some ideas to improve the mark annotation:
+
+- Mix it with the [`Focus annotation`](/docs/code/focus)

@@ -1,0 +1,53 @@
+---
+title: Word Wrap
+description: Word wrap
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Wrap lines to avoid horizontal overflow.
+
+<Demo name="word-wrap">Drag the right handle to resize the width</Demo>
+
+## !implementation
+
+The easy way to make the code wrap is to style the `<Pre />` component with `white-space: pre-wrap;`. But, when wrapping code, it's better to wrap the lines at the same indentation level. To do this, we can adjust the `text-indent` of each line:
+
+```tsx word-wrap.tsx -c
+import {
+  AnnotationHandler,
+  InnerLine,
+  InnerPre,
+  InnerToken,
+} from "codehike/code"
+
+export const wordWrap: AnnotationHandler = {
+  name: "word-wrap",
+  Pre: (props) => <InnerPre merge={props} className="whitespace-pre-wrap" />,
+  Line: (props) => (
+    <InnerLine merge={props}>
+      <div
+        style={{
+          textIndent: `${-props.indentation}ch`,
+          marginLeft: `${props.indentation}ch`,
+        }}
+      >
+        {props.children}
+      </div>
+    </InnerLine>
+  ),
+  Token: (props) => <InnerToken merge={props} style={{ textIndent: 0 }} />,
+}
+```
+
+Pass it to the `handlers` prop of the `Pre` component:
+
+```tsx code.tsx -c
+import { wordWrap } from "./word-wrap"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[wordWrap]} />
+}
+```

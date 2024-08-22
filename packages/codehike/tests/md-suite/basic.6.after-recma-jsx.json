@@ -1,0 +1,323 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "FunctionDeclaration",
+      "async": false,
+      "id": { "type": "Identifier", "name": "_createMdxContent" },
+      "params": [{ "type": "Identifier", "name": "props" }],
+      "body": {
+        "type": "BlockStatement",
+        "body": [
+          {
+            "type": "VariableDeclaration",
+            "kind": "const",
+            "declarations": [
+              {
+                "type": "VariableDeclarator",
+                "id": { "type": "Identifier", "name": "_components" },
+                "init": {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "Property",
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "h1" },
+                      "value": { "type": "Literal", "value": "h1" },
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false
+                    },
+                    {
+                      "type": "Property",
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "slot" },
+                      "value": { "type": "Literal", "value": "slot" },
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false
+                    },
+                    {
+                      "type": "SpreadElement",
+                      "argument": {
+                        "type": "MemberExpression",
+                        "object": { "type": "Identifier", "name": "props" },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "components"
+                        },
+                        "computed": false,
+                        "optional": false
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "VariableDeclaration",
+            "kind": "const",
+            "declarations": [
+              {
+                "type": "VariableDeclarator",
+                "id": { "type": "Identifier", "name": "_blocks" },
+                "init": {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "key": { "type": "Literal", "value": "children" },
+                      "kind": "init",
+                      "value": {
+                        "type": "JSXElement",
+                        "openingElement": {
+                          "type": "JSXOpeningElement",
+                          "attributes": [],
+                          "name": {
+                            "type": "JSXMemberExpression",
+                            "object": {
+                              "type": "JSXIdentifier",
+                              "name": "_components"
+                            },
+                            "property": {
+                              "type": "JSXIdentifier",
+                              "name": "h1"
+                            }
+                          },
+                          "selfClosing": false
+                        },
+                        "closingElement": {
+                          "type": "JSXClosingElement",
+                          "name": {
+                            "type": "JSXMemberExpression",
+                            "object": {
+                              "type": "JSXIdentifier",
+                              "name": "_components"
+                            },
+                            "property": {
+                              "type": "JSXIdentifier",
+                              "name": "h1"
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "JSXExpressionContainer",
+                            "expression": {
+                              "type": "Literal",
+                              "value": "Lorem"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "key": { "type": "Literal", "value": "title" },
+                      "kind": "init",
+                      "value": { "type": "Literal", "value": "", "raw": "\"\"" }
+                    },
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "key": { "type": "Literal", "value": "_data" },
+                      "kind": "init",
+                      "value": {
+                        "type": "ObjectExpression",
+                        "properties": [
+                          {
+                            "type": "Property",
+                            "method": false,
+                            "shorthand": false,
+                            "computed": false,
+                            "key": { "type": "Literal", "value": "header" },
+                            "kind": "init",
+                            "value": {
+                              "type": "Literal",
+                              "value": "",
+                              "raw": "\"\""
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "key": { "type": "Literal", "value": "hello" },
+                      "kind": "init",
+                      "value": {
+                        "type": "Literal",
+                        "value": "world",
+                        "raw": "\"world\""
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "IfStatement",
+            "test": {
+              "type": "MemberExpression",
+              "object": { "type": "Identifier", "name": "props" },
+              "property": { "type": "Identifier", "name": "_returnBlocks" }
+            },
+            "consequent": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ReturnStatement",
+                  "argument": { "type": "Identifier", "name": "_blocks" }
+                }
+              ]
+            }
+          },
+          {
+            "type": "ReturnStatement",
+            "argument": {
+              "type": "MemberExpression",
+              "object": { "type": "Identifier", "name": "_blocks" },
+              "property": { "type": "Identifier", "name": "children" }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "FunctionDeclaration",
+        "id": { "type": "Identifier", "name": "MDXContent" },
+        "params": [
+          {
+            "type": "AssignmentPattern",
+            "left": { "type": "Identifier", "name": "props" },
+            "right": { "type": "ObjectExpression", "properties": [] }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "kind": "const",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "ObjectPattern",
+                    "properties": [
+                      {
+                        "type": "Property",
+                        "kind": "init",
+                        "key": { "type": "Identifier", "name": "wrapper" },
+                        "value": { "type": "Identifier", "name": "MDXLayout" },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
+                      }
+                    ]
+                  },
+                  "init": {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "left": {
+                      "type": "MemberExpression",
+                      "object": { "type": "Identifier", "name": "props" },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "components"
+                      },
+                      "computed": false,
+                      "optional": false
+                    },
+                    "right": { "type": "ObjectExpression", "properties": [] }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "ConditionalExpression",
+                "test": { "type": "Identifier", "name": "MDXLayout" },
+                "consequent": {
+                  "type": "JSXElement",
+                  "openingElement": {
+                    "type": "JSXOpeningElement",
+                    "name": { "type": "JSXIdentifier", "name": "MDXLayout" },
+                    "attributes": [
+                      {
+                        "type": "JSXSpreadAttribute",
+                        "argument": { "type": "Identifier", "name": "props" }
+                      }
+                    ],
+                    "selfClosing": false
+                  },
+                  "closingElement": {
+                    "type": "JSXClosingElement",
+                    "name": { "type": "JSXIdentifier", "name": "MDXLayout" }
+                  },
+                  "children": [
+                    {
+                      "type": "JSXElement",
+                      "openingElement": {
+                        "type": "JSXOpeningElement",
+                        "name": {
+                          "type": "JSXIdentifier",
+                          "name": "_createMdxContent"
+                        },
+                        "attributes": [
+                          {
+                            "type": "JSXSpreadAttribute",
+                            "argument": {
+                              "type": "Identifier",
+                              "name": "props"
+                            }
+                          }
+                        ],
+                        "selfClosing": true
+                      },
+                      "closingElement": null,
+                      "children": []
+                    }
+                  ]
+                },
+                "alternate": {
+                  "type": "CallExpression",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "_createMdxContent"
+                  },
+                  "arguments": [{ "type": "Identifier", "name": "props" }],
+                  "optional": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "comments": [
+    {
+      "type": "Block",
+      "value": "@jsxRuntime automatic @jsxImportSource react",
+      "data": { "_mdxIsPragmaComment": true }
+    }
+  ]
+}

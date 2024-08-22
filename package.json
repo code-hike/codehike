@@ -1,38 +1,25 @@
 {
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/mdx",
-      "playground",
-      "site"
-    ]
-  },
   "scripts": {
-    "build": "lerna run --stream build",
-    "build:lib": "lerna run --stream --scope @*/mdx build",
-    "watch": "lerna run --stream --scope @*/mdx watch",
-    "build:playground": "lerna run --stream --scope playground build",
-    "test": "lerna run --stream test",
-    "dev": "lerna run --stream --scope @*/mdx dev",
-    "release": "auto shipit"
+    "build": "turbo build --filter=codehike...",
+    "web": "turbo dev --filter=web --filter=codehike... ",
+    "test": "turbo test",
+    "clean": "turbo clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
   "devDependencies": {
-    "auto": "^10.18.7",
-    "lerna": "^4.0.0",
-    "prettier": "^2.5.1"
+    "@changesets/cli": "2.27.1",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2"
   },
+  "packageManager": "pnpm@9.7.1",
   "repository": "code-hike/codehike",
-  "author": "pomber <pombopombopombo@gmail.com>",
-  "auto": {
-    "plugins": [
-      "npm",
-      [
-        "released",
-        {
-          "message": "Released in `%VERSION` :rocket:  \n\nThanks for using Code Hike! **[Become a sponsor](https://github.com/sponsors/code-hike?metadata_source=%TYPE)** and help us keep innovating."
-        }
-      ]
-    ],
-    "onlyPublishWithReleaseLabel": true
+  "homepage": "https://codehike.org",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/code-hike"
   }
 }

@@ -1,0 +1,30 @@
+---
+title: File name
+description: Show the file name in the code block
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Show a title or file name with the code block.
+
+<Demo name="filename" />
+
+## !implementation
+
+```tsx code.tsx -cw
+import { RawCode, Pre, highlight } from "codehike/code"
+
+// !fold[/className="(.*?)"/gm]
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return (
+    <div className="px-4 bg-zinc-950 rounded">
+      <div className="text-center text-zinc-400 text-sm py-2">
+        {highlighted.meta}
+      </div>
+      <Pre code={highlighted} />
+    </div>
+  )
+}
+```

@@ -1,0 +1,518 @@
+[
+  {
+    "name": "github",
+    "amount": 20550
+  },
+  {
+    "name": "facebook",
+    "amount": 5000
+  },
+  {
+    "name": "speakeasy-api",
+    "amount": 3078
+  },
+  {
+    "name": "uidotdev",
+    "amount": 3069
+  },
+  {
+    "name": "outerbounds",
+    "amount": 2710
+  },
+  {
+    "name": "fmvilas",
+    "amount": 2277
+  },
+  {
+    "name": "drivly",
+    "amount": 1688
+  },
+  {
+    "name": "kickstartDS",
+    "amount": 870
+  },
+  {
+    "name": "brianespinosa",
+    "amount": 825
+  },
+  {
+    "name": "jsheroes",
+    "amount": 535
+  },
+  {
+    "name": "winkerVSbecks",
+    "amount": 432
+  },
+  {
+    "name": "scvnc",
+    "amount": 421
+  },
+  {
+    "name": "arosenkranz",
+    "amount": 370
+  },
+  {
+    "name": "nathanclevenger",
+    "amount": 315
+  },
+  {
+    "name": "molebox",
+    "amount": 297
+  },
+  {
+    "name": "Naturalclar",
+    "amount": 294
+  },
+  {
+    "name": "cassieevans",
+    "amount": 288
+  },
+  {
+    "name": "codecrafters-io",
+    "amount": 288
+  },
+  {
+    "name": "traviscooper",
+    "amount": 288
+  },
+  {
+    "name": "nberger",
+    "amount": 279
+  },
+  {
+    "name": "obgibson",
+    "amount": 279
+  },
+  {
+    "name": "matthiaszepper",
+    "amount": 250
+  },
+  {
+    "name": "lostintangent",
+    "amount": 243
+  },
+  {
+    "name": "glenngillen",
+    "amount": 234
+  },
+  {
+    "name": "codeSTACKr",
+    "amount": 225
+  },
+  {
+    "name": "davo",
+    "amount": 225
+  },
+  {
+    "name": "kiliman",
+    "amount": 219
+  },
+  {
+    "name": "invertase",
+    "amount": 217
+  },
+  {
+    "name": "stefanjudis",
+    "amount": 207
+  },
+  {
+    "name": "discordjs",
+    "amount": 200
+  },
+  {
+    "name": "mrboen94",
+    "amount": 190
+  },
+  {
+    "name": "cabljac",
+    "amount": 189
+  },
+  {
+    "name": "ouiliame",
+    "amount": 189
+  },
+  {
+    "name": "josepot",
+    "amount": 180
+  },
+  {
+    "name": "codentell",
+    "amount": 175
+  },
+  {
+    "name": "jrolfs",
+    "amount": 162
+  },
+  {
+    "name": "Kishotta",
+    "amount": 154
+  },
+  {
+    "name": "AlexFrazer",
+    "amount": 153
+  },
+  {
+    "name": "jakobskrym",
+    "amount": 152
+  },
+  {
+    "name": "guicurcio",
+    "amount": 144
+  },
+  {
+    "name": "bouwe77",
+    "amount": 143
+  },
+  {
+    "name": "transmissions11",
+    "amount": 141
+  },
+  {
+    "name": "rohald89",
+    "amount": 135
+  },
+  {
+    "name": "pedroapfilho",
+    "amount": 127
+  },
+  {
+    "name": "may17",
+    "amount": 126
+  },
+  {
+    "name": "ryanwaits",
+    "amount": 122
+  },
+  {
+    "name": "yacinelakel",
+    "amount": 121
+  },
+  {
+    "name": "seanmay",
+    "amount": 117
+  },
+  {
+    "name": "NukaCody",
+    "amount": 114
+  },
+  {
+    "name": "mbifulco",
+    "amount": 100
+  },
+  {
+    "name": "brian-jensen",
+    "amount": 99
+  },
+  {
+    "name": "ZTMLuisRamirez",
+    "amount": 95
+  },
+  {
+    "name": "gordlea",
+    "amount": 90
+  },
+  {
+    "name": "oli-kitty",
+    "amount": 88
+  },
+  {
+    "name": "ranman",
+    "amount": 86
+  },
+  {
+    "name": "grikomsn",
+    "amount": 81
+  },
+  {
+    "name": "c0d3t3k",
+    "amount": 72
+  },
+  {
+    "name": "hydrosquall",
+    "amount": 72
+  },
+  {
+    "name": "panphora",
+    "amount": 72
+  },
+  {
+    "name": "zaphod72",
+    "amount": 72
+  },
+  {
+    "name": "devopsbarista",
+    "amount": 67
+  },
+  {
+    "name": "cdalsoniii",
+    "amount": 63
+  },
+  {
+    "name": "kasterra",
+    "amount": 63
+  },
+  {
+    "name": "ThinkThoughtThunk",
+    "amount": 63
+  },
+  {
+    "name": "thomasklemm",
+    "amount": 60
+  },
+  {
+    "name": "nabeelkausari",
+    "amount": 54
+  },
+  {
+    "name": "zevaverbach",
+    "amount": 54
+  },
+  {
+    "name": "nb",
+    "amount": 50
+  },
+  {
+    "name": "DanielFGray",
+    "amount": 45
+  },
+  {
+    "name": "kliukovkin",
+    "amount": 45
+  },
+  {
+    "name": "osiux",
+    "amount": 45
+  },
+  {
+    "name": "bdresser",
+    "amount": 40
+  },
+  {
+    "name": "matthewbub",
+    "amount": 38
+  },
+  {
+    "name": "MildTomato",
+    "amount": 36
+  },
+  {
+    "name": "Salakar",
+    "amount": 36
+  },
+  {
+    "name": "Corei13",
+    "amount": 35
+  },
+  {
+    "name": "JulesBlm",
+    "amount": 35
+  },
+  {
+    "name": "ianaya89",
+    "amount": 34
+  },
+  {
+    "name": "AlexzanderFlores",
+    "amount": 32
+  },
+  {
+    "name": "work-hadano",
+    "amount": 32
+  },
+  {
+    "name": "swyxio",
+    "amount": 30
+  },
+  {
+    "name": "hunterbecton",
+    "amount": 28
+  },
+  {
+    "name": "akhilkurnool",
+    "amount": 27
+  },
+  {
+    "name": "gheorghitahurmuz",
+    "amount": 27
+  },
+  {
+    "name": "luxonauta",
+    "amount": 27
+  },
+  {
+    "name": "nksaraf",
+    "amount": 27
+  },
+  {
+    "name": "sastan",
+    "amount": 27
+  },
+  {
+    "name": "loopholelabs",
+    "amount": 26
+  },
+  {
+    "name": "vprtwn",
+    "amount": 26
+  },
+  {
+    "name": "1rodriguez",
+    "amount": 25
+  },
+  {
+    "name": "codebender828",
+    "amount": 23
+  },
+  {
+    "name": "etienne-dldc",
+    "amount": 22
+  },
+  {
+    "name": "souporserious",
+    "amount": 20
+  },
+  {
+    "name": "stanleychris2",
+    "amount": 20
+  },
+  {
+    "name": "IGassmann",
+    "amount": 19
+  },
+  {
+    "name": "IliasHad",
+    "amount": 19
+  },
+  {
+    "name": "Kliton",
+    "amount": 19
+  },
+  {
+    "name": "rtktpeng",
+    "amount": 19
+  },
+  {
+    "name": "evanorti",
+    "amount": 15
+  },
+  {
+    "name": "seveibar",
+    "amount": 14
+  },
+  {
+    "name": "MarkusWendorf",
+    "amount": 10
+  },
+  {
+    "name": "ng-hai",
+    "amount": 10
+  },
+  {
+    "name": "berber1016",
+    "amount": 9
+  },
+  {
+    "name": "BnGyA",
+    "amount": 9
+  },
+  {
+    "name": "csenio",
+    "amount": 9
+  },
+  {
+    "name": "donghhan",
+    "amount": 9
+  },
+  {
+    "name": "K3ARN3Y",
+    "amount": 9
+  },
+  {
+    "name": "ManishPoduval",
+    "amount": 9
+  },
+  {
+    "name": "melodyclue",
+    "amount": 9
+  },
+  {
+    "name": "mkubilayk",
+    "amount": 9
+  },
+  {
+    "name": "n0lawz",
+    "amount": 9
+  },
+  {
+    "name": "NLKNguyen",
+    "amount": 9
+  },
+  {
+    "name": "wzard",
+    "amount": 9
+  },
+  {
+    "name": "yamatatsu",
+    "amount": 9
+  },
+  {
+    "name": "yld-labs",
+    "amount": 9
+  },
+  {
+    "name": "zmzlois",
+    "amount": 8
+  },
+  {
+    "name": "achan-godaddy",
+    "amount": 7
+  },
+  {
+    "name": "RayJason",
+    "amount": 6
+  },
+  {
+    "name": "samedskulj",
+    "amount": 6
+  },
+  {
+    "name": "BenEmdon",
+    "amount": 5
+  },
+  {
+    "name": "iancleary",
+    "amount": 5
+  },
+  {
+    "name": "tmkx",
+    "amount": 5
+  },
+  {
+    "name": "albseb511",
+    "amount": 4
+  },
+  {
+    "name": "danielcompton",
+    "amount": 3
+  },
+  {
+    "name": "SubstrateLabs",
+    "amount": 3
+  },
+  {
+    "name": "alexanderisora",
+    "amount": 2
+  },
+  {
+    "name": "jacksonkasi1",
+    "amount": 2
+  },
+  {
+    "name": "nullaf",
+    "amount": 1
+  },
+  {
+    "name": "xabierlameiro",
+    "amount": 1
+  }
+]

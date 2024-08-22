@@ -1,0 +1,224 @@
+---
+title: Code Blocks
+description: Showing code
+---
+
+import { LangList, ThemePicker } from "./theme-picker"
+import { SideBySide } from "@/components/code/side-by-side"
+
+To use a **custom component to render code blocks**, you need to provide the name of the component in the Code Hike configuration, and then make sure the component is available in the scope where you render the markdown content.
+
+<SideBySide>
+
+```js your-config.mjs -cw
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+
+const chConfig = {
+  components: { code: "MyCode" },
+}
+
+const mdxOptions = {
+  remarkPlugins: [[remarkCodeHike, chConfig]],
+  recmaPlugins: [[recmaCodeHike, chConfig]],
+}
+```
+
+```tsx page.tsx -cw
+import Content from "./content.md"
+import type { RawCode } from "codehike/code"
+
+export default function Page() {
+  return <Content components={{ MyCode }} />
+}
+
+function MyCode({ codeblock }: { codeblock: RawCode }) {
+  return <pre>{codeblock.value}</pre>
+}
+```
+
+</SideBySide>
+
+## Syntax highlighting
+
+To add syntax highlighting to your component, you can use the `highlight` function from the `codehike/code` module. This function takes a `RawCode` object and a theme name, and returns a `HighlightedCode` object. You can then pass this object to the `Pre` component to render the highlighted code.
+
+```tsx code.tsx -c
+import { Pre, RawCode, highlight } from "codehike/code"
+
+export async function MyCode({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} />
+}
+```
+
+### React Server Components
+
+Note that the `highlight` function is asynchronous, which means that the `MyCode` component will need to be an async as well. So the example above will only work if you're using React Server Components.
+
+**If you're using a framework that doesn't support React Server Components:** you can configure Code Hike to run the `highlight` during the compilation step, and pass a `HighlightedCode` object to the `MyCode` component.
+
+<SideBySide>
+
+```js your-config.mjs -cw
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+
+const chConfig = {
+  components: { code: "MyCode" },
+  // !diff(1:3) +
+  syntaxHighlighting: {
+    theme: "github-dark",
+  },
+}
+
+const mdxOptions = {
+  remarkPlugins: [[remarkCodeHike, chConfig]],
+  recmaPlugins: [[recmaCodeHike, chConfig]],
+}
+```
+
+```tsx page.tsx -cw
+import Content from "./content.md"
+import { HighlightedCode, Pre } from "codehike/code"
+
+export default function Page() {
+  return <Content components={{ MyCode }} />
+}
+
+function MyCode({ codeblock }: { codeblock: HighlightedCode }) {
+  return <Pre code={codeblock} />
+}
+```
+
+</SideBySide>
+
+This setting will also syntax highlight the code from [decorated codeblocks](/docs/concepts/blocks#images-codeblocks-and-paragraphs).
+
+## The `<Pre />` component
+
+Both the `highlight` function and the `Pre` component are optional. You can use a different solution for syntax highlighting instead of Code Hike's `highlight`, or render the highlighted tokens manually instead of using the `Pre` component. The main advantage of using them is the support for [annotations and annotation handlers](/docs/concepts/annotations).
+
+## Themes
+
+The `theme` option accepts a `string` for built-in themes or an `object` for custom themes.
+
+### Built-in themes
+
+<ThemePicker />
+
+### CSS Light/Dark themes
+
+There are also two built-in themes that support light/dark mode using CSS: `"github-from-css"` and `"material-from-css"`.
+
+To use them you need to include the colors as CSS variables. You can copy the CSS from here:
+
+- [`github-from-css` colors](https://github.com/code-hike/lighter/blob/main/lib/themes/github-from-css.css)
+- [`material-from-css` colors](https://github.com/code-hike/lighter/blob/main/lib/themes/material-from-css.css)
+
+and adapt it to your needs by changing the CSS selector.
+
+### Custom themes and VS Code themes
+
+You can use the [Theme Editor](https://themes.codehike.org/editor) to customize any of the built-in themes or any theme from the VS Code marketplace.
+
+## Languages
+
+<LangList />
+
+## Importing code from a file into a codeblock
+
+To include code from a file in your markdown codeblocks, you can use the `!from` directive followed by the path to the file (relative to the markdown file).
+
+````txt
+```js index.js
+!from ./assets/index.js
+```
+````
+
+This will try to find the `./assets/index.js` file relative to the markdown file and replace the codeblock with the content of the file.
+
+## Ignoring some codeblocks
+
+If there are codeblocks that you don't want to be processed by Code Hike, you can add an `ignoreCode` function to the configuration. This function receives a `RawCode` object and should return `true` if the codeblock should be ignored.
+
+```js your-config.mjs -c
+/** @type {import('codehike/mdx').CodeHikeConfig} */
+const chConfig = {
+  components: { code: "MyCode" },
+  ignoreCode: (codeblock) => codeblock.lang === "mermaid",
+}
+```
+
+## Inline code
+
+You can also provide a custom component for inline code:
+
+<SideBySide>
+
+```js your-config.mjs -cw
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+
+const chConfig = {
+  components: {
+    code: "MyCode",
+    // !diff +
+    inlineCode: "MyInlineCode",
+  },
+}
+
+const mdxOptions = {
+  remarkPlugins: [[remarkCodeHike, chConfig]],
+  recmaPlugins: [[recmaCodeHike, chConfig]],
+}
+```
+
+```tsx page.tsx -cw
+import Content from "./content.md"
+import { RawCode, Inline } from "codehike/code"
+
+// !mark[/MyInlineCode/mg] #3fb950
+export default function Page() {
+  return <Content components={{ MyInlineCode }} />
+}
+
+async function MyInlineCode({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Inline code={highlighted} style={highlighted.style} />
+}
+```
+
+</SideBySide>
+
+To use `MyInlineCode` from Markdown you need to use a special syntax: ``_`code`_``.
+
+This syntax also allows you to specify the language and meta for inline code ``_py lorem ipsum`print 5`_``, will give you _`{lang: "py", meta: "lorem ipsum", value: "print 5"}`_.
+
+<SideBySide>
+
+```md content.md -w
+This is not handled by Code Hike: `var x = 10`
+
+This is handled by Code Hike (with jsx as default lang): _`var x = 10`_
+
+With a diffrent language: _css`a { color: #123 }`_
+```
+
+<div className="border rounded my-2 overflow-hidden">
+
+<div
+  className="px-3 py-2 border-b border-editorGroup-border bg-editorGroupHeader-tabsBackground text-sm text-tab-activeForeground flex"
+  children="Output"
+/>
+
+<div className="px-3">
+
+This is not handled by Code Hike: `var x = 10`
+
+This is handled by Code Hike (with jsx as default lang): _`var x = 10`_
+
+With a diffrent language: _css`a { color: #123 }`_
+
+</div>
+
+</div>
+
+</SideBySide>

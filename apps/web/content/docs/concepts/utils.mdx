@@ -1,0 +1,99 @@
+---
+title: Utils
+description: Utilities for common patterns in Code Hike
+---
+
+Code Hike comes with a set of utilities that help you implement common patterns and to make it easier to migrate from previous versions.
+
+## Selection
+
+A common use case with Code Hike is to switch part of the UI based on the user's interaction with the content. Some examples are the [Scrollycoding layout](/docs/layouts/scrollycoding) or the [Spotlight layout](/docs/layouts/spotlight).
+
+```tsx my-layout.tsx -c
+import {
+  SelectionProvider,
+  Selectable,
+  Selection,
+} from "codehike/utils/selection"
+
+function MyLayout({
+  steps,
+}: {
+  steps: {
+    left: React.ReactNode
+    right: React.ReactNode
+  }[]
+}) {
+  return (
+    <SelectionProvider className="flex gap-4">
+      <div>
+        {steps.map((step, index) => (
+          <Selectable
+            key={index}
+            index={index}
+            selectOn={["click", "hover", "scroll"]}
+            className="border border-zinc-700 data-[selected=true]:border-blue-400"
+          >
+            {step.left}
+          </Selectable>
+        ))}
+      </div>
+      <Selection
+        from={steps.map((step) => (
+          <div>{step.right}</div>
+        ))}
+      />
+    </SelectionProvider>
+  )
+}
+```
+
+For more control over the selection, you can use the `useSelection` hook.
+
+```tsx my-layout.tsx -c
+import { useSelection } from "codehike/utils/selection"
+
+function MyLayout(...) {
+  const [ selectedIndex, setSelectedIndex ] = useSelection()
+  ...
+}
+```
+
+## Token Transitions
+
+When you want to animate the changes between two code snippets.
+
+```tsx -c
+import {
+  getStartingSnapshot,
+  calculateTransitions,
+} from "codehike/utils/token-transitions"
+
+const preElement = document.querySelector("pre")
+
+// you take a snapshot of the pre element before the change
+const startingSnapshot = getStartingSnapshot(preElement)
+
+// then after the code changes, you calculate the transitions
+const transitions = calculateTransitions(preElement, startingSnapshot)
+
+// so you can animate the changes
+const MAX_TRANSITION_DURATION = 900 // milliseconds
+transitions.forEach(({ element, keyframes, options }) => {
+  const { translateX, translateY, ...kf } = keyframes
+  if (translateX && translateY) {
+    kf.translate = [
+      `${translateX[0]}px ${translateY[0]}px`,
+      `${translateX[1]}px ${translateY[1]}px`,
+    ]
+  }
+  element.animate(kf, {
+    duration: options.duration * MAX_TRANSITION_DURATION,
+    delay: options.delay * MAX_TRANSITION_DURATION,
+    easing: options.easing,
+    fill: "both",
+  })
+})
+```
+
+See the [token transitions example](/docs/code/token-transitions) for a React component that uses this utility.

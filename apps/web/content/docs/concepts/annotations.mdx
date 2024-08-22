@@ -1,0 +1,219 @@
+---
+title: Code Annotations
+description: Customize how code is rendered with annotations
+---
+
+import { Demo } from "@/components/demo"
+
+You can extend how the `Pre` component renders code by using annotation handlers.
+
+For example, here we define two components: one that adds a red border to a block of code and another that adds a dark background.
+
+```tsx my-code.tsx -c
+import type { AnnotationHandler, RawCode } from "codehike/code"
+import { Pre, highlight } from "codehike/code"
+
+export async function MyCode({ codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  // !mark[/handlers/]
+  return <Pre code={highlighted} handlers={[borderHandler, bgHandler]} />
+}
+
+const borderHandler: AnnotationHandler = {
+  name: "border",
+  Block: ({ annotation, children }) => (
+    <div style={{ border: "1px solid red" }}>{children}</div>
+  ),
+}
+
+const bgHandler: AnnotationHandler = {
+  name: "bg",
+  Inline: ({ annotation, children }) => (
+    <span style={{ background: "#2d26" }}>{children}</span>
+  ),
+}
+```
+
+We can use the `name` of those handlers as comments in the code to use the components:
+
+<Demo name="annotations/basic" />
+
+## Annotation Comments
+
+We use comments to annotate codeblocks. **The comment syntax depends on the language**. For example, in javascript we use `// !name(1:5)` but in python we use `# !name(1:5)`. For JSON (that doesn't support comments), the recommendation is to instead use `jsonc` or `json5`, which support comments.
+
+In the previous example we can see the two types of annotations:
+
+- **Block annotations** are applied to a block of lines. They use parenthesis `()` to define the range of lines. The numbers are relative to the line where the comment is placed.
+- **Inline annotations** are applied to a group of tokens inside a line. They use square brackets `[]` to define the range of columns included in the annotation.
+
+## Annotation Query
+
+Any extra content in the annotation comment is passed to the annotation components as `query`.
+
+For example, we can change the components from the previous example to use the query to define the color of the border and background:
+
+```tsx my-code.tsx -cs
+const borderHandler: AnnotationHandler = {
+  name: "border",
+  Block: ({ annotation, children }) => {
+    const borderColor = annotation.query || "red"
+    return <div style={{ border: "1px solid", borderColor }}>{children}</div>
+  },
+}
+
+const bgHandler: AnnotationHandler = {
+  name: "bg",
+  Inline: ({ annotation, children }) => {
+    const background = annotation.query || "#2d26"
+    return <span style={{ background }}>{children}</span>
+  },
+}
+```
+
+<Demo name="annotations/query" />
+
+## Customizing Line and Token components
+
+Sometimes you want to **customize the rendering of every line or token**, not just the annotated ones. You can do that by defining the `Line` and `Token` components:
+
+```tsx my-code.tsx -c
+import { InnerLine } from "codehike/code"
+
+const myHandler: AnnotationHandler = {
+  name: "uglyLineNumbers",
+  Line: (props) => {
+    const { lineNumber, totalLines, indentation } = props
+    return (
+      <div>
+        {lineNumber} |
+        <InnerLine merge={props} className="inline-block" />
+      </div>
+    )
+  },
+}
+```
+
+What's `InnerLine`? Since the same line can be targeted by many annotation handlers, we need to make the components composable. So `InnerLine` will chain and merge all the props from the different handlers.
+
+For example, if we have these two handlers:
+
+```tsx my-code.tsx -c
+const bgHandler: AnnotationHandler = {
+  Line: (props) => (
+    <InnerLine
+      merge={props}
+      className="bg-red-200"
+      data-line={props.lineNumber}
+    />
+  ),
+}
+const paddingHandler: AnnotationHandler = {
+  Line: (props) => <InnerLine merge={props} className="px-2" />,
+}
+```
+
+The final rendering will be:
+
+```html output.html
+<pre>
+  <div className="bg-red-200 px-2" data-line="1">...</div>
+  <div className="bg-red-200 px-2" data-line="2">...</div>
+  <div className="bg-red-200 px-2" data-line="3">...</div>
+</pre>
+```
+
+Similarly, you can customize the rendering of every token, but this is far less common:
+
+```tsx my-code.tsx -c
+import { InnerToken } from "codehike/code"
+
+const myHandler: AnnotationHandler = {
+  Token: (props) => {
+    const { value, style, lineNumber } = props
+    return <InnerToken merge={props} style={{ display: "inline-block" }} />
+  },
+}
+```
+
+## Customizing the Pre component
+
+You can also customize the rendering of the `<pre>` element itself:
+
+```tsx my-code.tsx
+import { InnerPre, getPreRef } from "codehike/code"
+
+const myHandler: AnnotationHandler = {
+  Pre: (props) => (
+    <InnerPre merge={props} className="rounded border border-blue-100" />
+  ),
+  // If you need the ref to the pre element, use PreWithRef:
+  PreWithRef: (props) => {
+    const ref = getPreRef(props)
+    doSomethingWithRef(ref)
+    return <InnerPre merge={props} />
+  },
+}
+```
+
+## AnnotatedLine and AnnotatedToken
+
+Similar to `Line` and `Token`, you can define `AnnotatedLine` and `AnnotatedToken` to customize the rendering of individual lines and tokens that are part of an annotation.
+
+Sometimes it's useful to combine the `Line` and `AnnotatedLine` components to avoid repeating the same code.
+
+For example, here we add a `data-mark` attribute to the lines inside a `mark` annotation, then we have a `Line` component that adds a border, but we only add border color to the lines that have the `data-mark` attribute:
+
+```tsx my-code.tsx
+const mark: AnnotationHandler = {
+  name: "mark",
+  AnnotatedLine: ({ annotation, ...props }) => (
+    <InnerLine merge={props} data-mark={true} />
+  ),
+  Line: (props) => (
+    <InnerLine
+      merge={props}
+      className="px-2 border-l-4 border-transparent data-[mark]:border-blue-400"
+    />
+  ),
+}
+```
+
+<Demo name="annotations/mark" />
+
+## Transforming annotations
+
+You can also transform annotations before they are passed to the components. This is useful to:
+
+- split annotations (see [collapse example](/docs/code/collapse))
+- transform between inline and block annotations (see [callout example](/docs/code/callout))
+- add extra information to the annotation (see [callout example](/docs/code/callout))
+
+```tsx my-code.tsx
+const myHandler: AnnotationHandler = {
+  transform: (annotation: InlineAnnotation) => {
+    return {
+      ...annotation,
+      data: { lorem: "ipsum" },
+    }
+  },
+  ...
+}
+```
+
+## Using regular expressions instead of ranges
+
+Instead of using line and column ranges, you can use regular expressions to match the content of the annotation.
+
+You can use it for block annotations, but it's more common to use it for inline annotations:
+
+<Demo name="annotations/regex" />
+
+The regular expressions also support flags The two most common are `g` for global and `m` for multiline.
+
+- `m`: use it if you want to keep searching beyond the first line
+- `g`: use it if you want to match more than one occurrence
+
+You can also use [capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Capturing_group) (see [fold example](/docs/code/fold)):
+
+<Demo name="annotations/groups" />

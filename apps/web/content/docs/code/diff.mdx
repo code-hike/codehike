@@ -1,0 +1,52 @@
+---
+title: Diff
+description: Diff
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Show inserted and deleted lines.
+
+<Demo name="diff" />
+
+## !implementation
+
+There are two parts:
+
+- for the `+` and `-` icons, we customize the `Line` and prepend the `annotation.query`
+- for the border and color we use the `transform` function to add `mark` annotations and use the `AnnotationHandler` from the [mark example](/docs/code/mark)
+
+```tsx diff.tsx -c
+import { AnnotationHandler, InnerLine, BlockAnnotation } from "codehike/code"
+// !fold[/className="(.*?)"/gm]
+
+export const diff: AnnotationHandler = {
+  name: "diff",
+  onlyIfAnnotated: true,
+  transform: (annotation: BlockAnnotation) => {
+    const color = annotation.query == "-" ? "#f85149" : "#3fb950"
+    return [annotation, { ...annotation, name: "mark", query: color }]
+  },
+  Line: ({ annotation, ...props }) => (
+    <>
+      <div className="min-w-[1ch] box-content opacity-70 pl-2 select-none">
+        {annotation?.query}
+      </div>
+      <InnerLine merge={props} />
+    </>
+  ),
+}
+```
+
+Then pass the `mark` and `diff` handlers to the `Pre` component:
+
+```tsx code.tsx -c
+import { diff } from "./diff"
+import { mark } from "./mark"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[mark, diff]} />
+}
+```

@@ -1,0 +1,49 @@
+---
+title: Line Numbers
+description: Line numbers
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Display line numbers.
+
+<Demo name="line-numbers" />
+
+## !implementation
+
+Using a [custom line component](/docs/concepts/annotations#customizing-line-and-token-components):
+
+```tsx line-numbers.tsx -c
+import { AnnotationHandler, InnerLine } from "codehike/code"
+
+// !fold[/className="(.*?)"/gm]
+export const lineNumbers: AnnotationHandler = {
+  name: "line-numbers",
+  Line: (props) => {
+    const width = props.totalLines.toString().length + 1
+    return (
+      <div className="flex">
+        <span
+          className="text-right opacity-50 select-none"
+          style={{ minWidth: `${width}ch` }}
+        >
+          {props.lineNumber}
+        </span>
+        <InnerLine merge={props} className="flex-1 pl-2" />
+      </div>
+    )
+  },
+}
+```
+
+Pass it to the `handlers` prop of the `Pre` component:
+
+```tsx code.tsx -c
+import { lineNumbers } from "./line-numbers"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[lineNumbers]} />
+}
+```
