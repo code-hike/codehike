@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   title: "Code Hike",
   description:
     "Use Markdown and React to build rich content websites. Documentation, tutorials, blogs, videos, interactive walkthroughs, and more.",
-  metadataBase: new URL("https://v1.codehike.org"),
+  metadataBase: new URL("https://codehike.org"),
   openGraph: {
     title: "Code Hike",
     images: `/codehike.png`,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     types: {
-      "application/rss+xml": "https://v1.codehike.org/blog/feed.xml",
+      "application/rss+xml": "https://codehike.org/blog/feed.xml",
     },
   },
 }
