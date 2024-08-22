@@ -1,0 +1,175 @@
+---
+title: Migrating to Code Hike v1
+description: Incremental adoption guide
+authors: [pomber]
+date: 2024-08-16
+draft: true
+---
+
+import { CodeWithNotes } from "@/components/code/code-with-notes"
+
+If you were using Code Hike before v1 and want to migrate to the new version,
+this guide is for you. To learn more about the new features, read the [v1 announcement post](/blog/v1).
+
+Code Hike v1 is different from the previous versions in many ways, so migrating won't be trivial. The good news is that **the two version can coexist**, so you can adopt the new version incrementally.
+
+## Installing v1 (without removing v0)
+
+Since the new version of Code Hike is a different package, you can install it alongside the old one:
+
+```bash -c
+npm install codehike
+```
+
+Update your configuration file (depending on the framework, for example `next.config.mjs` for Next.js) to use the new package:
+
+```js config.mjs -cn
+// codehike v0
+import { remarkCodeHike } from "@code-hike/mdx"
+// !diff(1:2) +
+// codehike v1
+import * as v1 from "codehike/mdx"
+
+// !diff(1:4) +
+/** @type {import('codehike/mdx').CodeHikeConfig} */
+const chConfig = {
+  syntaxHighlighting: { theme: "github-dark" },
+}
+
+const mdxOptions = {
+  remarkPlugins: [
+    // !diff +
+    [v1.remarkCodeHike, chConfig],
+    [remarkCodeHike, { theme: "github-dark", lineNumbers: false }],
+  ],
+  // !diff +
+  recmaPlugins: [[v1.recmaCodeHike, chConfig]],
+}
+```
+
+With this setup, you can start using the new features of v1 while keeping the old ones working with v0.
+
+## Migrating codeblocks and annotations
+
+To avoid changing all your codeblocks at once, you can use the `ignoreCode` option to only use v1 for the codeblocks you want.
+
+<CodeWithNotes>
+
+```js ! config.mjs -cn
+import { remarkCodeHike } from "@code-hike/mdx"
+import * as v1 from "codehike/mdx"
+
+/** @type {import('codehike/mdx').CodeHikeConfig} */
+const chConfig = {
+  syntaxHighlighting: { theme: "github-dark" },
+  // !diff(1:2) +
+  // !callout[/MyCode/] MyCode
+  components: { code: "MyCode" },
+  // !callout[/use-v1/] use-v1
+  ignoreCode: ({ meta }) => !meta.startsWith("use-v1"),
+}
+
+const mdxOptions = {
+  remarkPlugins: [
+    [v1.remarkCodeHike, chConfig],
+    [remarkCodeHike, { theme: "github-dark", lineNumbers: false }],
+  ],
+  recmaPlugins: [[v1.recmaCodeHike, chConfig]],
+}
+```
+
+## !!notes MyCode
+
+In v1, you define [your own component to render codeblocks](/docs/concepts/code)
+
+## !!notes use-v1
+
+Opt-in to v1 when the codeblock metastring starts with `use-v1`
+
+</CodeWithNotes>
+
+In your MDX files, you can start adopting v1 by adding the `use-v1` metastring to the codeblocks you want to migrate:
+
+{/* prettier-ignore */}
+````mdx content.mdx
+# Hello world
+
+```js
+console.log("this is codehike v0")
+```
+
+{/* !mark[/use-v1/] */}
+```js use-v1
+console.log("this is codehike v1")
+```
+````
+
+Instead of "use-v1", you can use any string. Just make sure it's easy to find and replace when you finish the migration.
+
+## Comparison table
+
+Here's the equivalent features between v0 and v1, they aren't exactly the same, but they are similar:
+
+|                      | v0               | v1                  |
+| -------------------- | ---------------- | ------------------- |
+| Package name         | `@code-hike/mdx` | `codehike`          |
+| Line numbers         | [Config][1]      | [Example][21]       |
+| Copy button          | [Config][2]      | [Example][22]       |
+| Themes               | [Config][3]      | [Config][23]        |
+| Skip languages       | [Config][4]      | [Config][24]        |
+| Static components    | [Config][5]      | [Media queries][25] |
+| Auto import          | [Config][6]      | Not needed          |
+| Auto link            | [Config][7]      | [Example][26]       |
+| Codeblock filename   | [Directive][8]   | [Example][27]       |
+| `focus`              | [Annotation][9]  | [Example][28]       |
+| `mark`               | [Annotation][10] | [Example][29]       |
+| `withClass`          | [Annotation][11] | [Example][30]       |
+| `link`               | [Annotation][12] | [Example][31]       |
+| `from`               | [Annotation][13] | [Syntax][32]        |
+| `<CH.Code>` Tabs     | [Component][14]  | [Example][33]       |
+| `<CH.Code>` Panels   | [Component][15]  | -                   |
+| Inline code          | [Syntax][16]     | [Syntax][35]        |
+| Code mentions        | [Syntax][17]     | [Example][36]       |
+| `<CH.Scrollycoding>` | [Component][18]  | [Example][37]       |
+| `<CH.Spotlight>`     | [Component][19]  | [Example][38]       |
+| `<CH.Slideshow>`     | [Component][20]  | [Example][39]       |
+
+[1]: https://v0.codehike.org/docs/configuration#line-numbers
+[2]: https://v0.codehike.org/docs/configuration#copy-button
+[3]: https://v0.codehike.org/docs/themes
+[4]: https://v0.codehike.org/docs/configuration#skip-languages
+[5]: https://v0.codehike.org/docs/configuration#static-components
+[6]: https://v0.codehike.org/docs/configuration#auto-import
+[7]: https://v0.codehike.org/docs/configuration#auto-link
+[8]: https://v0.codehike.org/docs/codeblocks#filename
+[9]: https://v0.codehike.org/docs/annotations#focus-annotation
+[10]: https://v0.codehike.org/docs/annotations#mark-annotation
+[11]: https://v0.codehike.org/docs/annotations#withclass-annotation
+[12]: https://v0.codehike.org/docs/annotations#link-annotation
+[13]: https://v0.codehike.org/docs/annotations#from-annotation
+[14]: https://v0.codehike.org/docs/ch-code#tabs
+[15]: https://v0.codehike.org/docs/ch-code#panels
+[16]: https://v0.codehike.org/docs/ch-section#inline-code
+[17]: https://v0.codehike.org/docs/ch-section#code-mentions
+[18]: https://v0.codehike.org/docs/ch-scrollycoding
+[19]: https://v0.codehike.org/docs/ch-spotlight
+[20]: https://v0.codehike.org/docs/ch-slideshow
+[21]: /docs/code/line-numbers
+[22]: /docs/code/copy-button
+[23]: /docs/concepts/code#themes
+[24]: /docs/concepts/code#ignoring-some-codeblocks
+[25]: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries
+[26]: /docs/code/link#autolinking
+[27]: /docs/code/filename
+[28]: /docs/code/focus
+[29]: /docs/code/mark
+[30]: /docs/code/classname
+[31]: /docs/code/link
+[32]: /docs/concepts/code#importing-code-from-a-file-into-a-codeblock
+[33]: /docs/code/tabs
+[34]: /
+[35]: /docs/concepts/code#inline-code
+[36]: /docs/code/code-mentions
+[37]: /docs/layouts/scrollycoding
+[38]: /docs/layouts/spotlight
+[39]: /docs/layouts/slideshow

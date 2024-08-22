@@ -1,0 +1,48 @@
+---
+title: Fold
+description: Fold annotation
+layout: PreviewAndImplementation
+---
+
+## !demo
+
+Fold inline content.
+
+<Demo name="fold">Click on the ... to unfold the className</Demo>
+
+## !implementation
+
+```tsx fold.tsx -c
+"use client"
+import { AnnotationHandler } from "codehike/code"
+import { useState } from "react"
+
+export const InlineFold: AnnotationHandler["Inline"] = ({ children }) => {
+  const [folded, setFolded] = useState(true)
+  if (!folded) {
+    return children
+  }
+  return (
+    <button onClick={() => setFolded(false)} aria-label="Expand">
+      ...
+    </button>
+  )
+}
+```
+
+And then add the handler to your `Code` component:
+
+```tsx code.tsx -c
+import { RawCode, Pre, highlight, AnnotationHandler } from "codehike/code"
+import { InlineFold } from "./fold"
+
+async function Code({ codeblock }: { codeblock: RawCode }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return <Pre code={highlighted} handlers={[fold]} />
+}
+
+const fold: AnnotationHandler = {
+  name: "fold",
+  Inline: InlineFold,
+}
+```

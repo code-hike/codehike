@@ -1,0 +1,14 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "concepts/blocks",
+    "concepts/code",
+    "concepts/annotations",
+    "concepts/utils",
+    "---Examples---",
+    "code",
+    "layouts",
+    "examples"
+  ]
+}

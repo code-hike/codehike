@@ -1,0 +1,21 @@
+{
+  "trailingComma": "all",
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["remotion.mdx", "fine-grained-markdown.mdx"],
+      "options": {
+        "printWidth": 42,
+        "semi": false
+      }
+    },
+
+    {
+      "files": ["v1.mdx"],
+      "options": {
+        "printWidth": 52,
+        "semi": false
+      }
+    }
+  ]
+}

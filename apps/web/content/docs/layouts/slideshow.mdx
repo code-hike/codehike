@@ -1,0 +1,94 @@
+---
+title: Slideshow
+description: Slideshow layout
+---
+
+import { LayoutDemo } from "@/components/layout-demo"
+
+Showing content in slides.
+
+<LayoutDemo name="slideshow">
+
+```jsx page.jsx -cw
+import { Block, CodeBlock, parseRoot } from "codehike/blocks"
+import Content from "./content.md"
+import { z } from "zod"
+import { Selection, SelectionProvider } from "codehike/utils/selection"
+import { Pre, highlight } from "codehike/code"
+import { Controls } from "./controls"
+// !link[/token-transitions/] /docs/code/token-transitions
+// From token-transitions example
+import { tokenTransitions } from "@/components/token-transitions"
+
+const Schema = Block.extend({
+  steps: z.array(Block.extend({ code: CodeBlock })),
+})
+
+// !fold[/className="(.*?)"/gm]
+export default function Page() {
+  const { steps } = parseRoot(Content, Schema)
+  return (
+    <SelectionProvider>
+      <Selection
+        from={steps.map((step) => (
+          <Code codeblock={step.code} />
+        ))}
+      />
+      <Controls length={steps.length} />
+      <div className="px-4">
+        <Selection from={steps.map((step) => step.children)} />
+      </div>
+    </SelectionProvider>
+  )
+}
+
+async function Code({ codeblock }) {
+  const highlighted = await highlight(codeblock, "github-dark")
+  return (
+    <Pre
+      code={highlighted}
+      className="min-h-[15rem] !bg-zinc-900 m-0 mb-4 rounded-none p-2"
+      handlers={[tokenTransitions]}
+    />
+  )
+}
+```
+
+```jsx controls.jsx -cw
+"use client"
+import { useSelectedIndex } from "codehike/utils/selection"
+
+export function Controls({ length }) {
+  const [selectedIndex, setSelectedIndex] = useSelectedIndex()
+
+  return (
+    <div className="flex justify-center items-center">
+      <button
+        className="mr-4"
+        onClick={() => setSelectedIndex(Math.max(0, selectedIndex - 1))}
+      >
+        Prev
+      </button>
+      {[...Array(length)].map((_, i) => (
+        <button
+          key={i}
+          className={`w-2 h-2 rounded-full mx-1 cursor-pointer ${
+            selectedIndex === i ? "bg-white" : "bg-gray-600"
+          }`}
+          onClick={() => setSelectedIndex(i)}
+        />
+      ))}
+      <button
+        className="ml-4"
+        onClick={() =>
+          setSelectedIndex(Math.min(length - 1, selectedIndex + 1))
+        }
+      >
+        Next
+      </button>
+    </div>
+  )
+}
+```
+
+</LayoutDemo>

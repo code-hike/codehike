@@ -1,0 +1,295 @@
+---
+title: The Three-Component Problem
+description: And the limits of React composability
+date: 2024-06-30
+authors: [pomber]
+draft: true
+---
+
+I'm building a library that renders codeblocks.
+
+This is how a basic codeblock looks like in HTML:
+
+```html
+<!-- !caption A codeblock with two lines of code -->
+<pre>
+  <div>
+    <span style="color:#f87171">var</span> <span style="color:#7dd3fc">foo</span>
+  </div>
+  <div>
+    <span style="color:#f87171">let</span> <span style="color:#7dd3fc">bar</span>
+  </div>
+</pre>
+```
+
+The user of the library can customize how different parts of the codeblock look.
+
+For example, lines can be customized to have padding, line numers and an optional background:
+
+```html
+<!-- !caption A codeblock with two lines of code -->
+<pre>
+  <div style="padding: 8px">
+    <div>1</div>
+    <div><span style="...">var</span> <span style="...">foo</span></div>
+  </div>
+  <div style="padding: 8px; background: #f1f5f9">
+    <div>2</div>
+    <div><span style="...">let</span> <span style="...">bar</span></div>
+  </div>
+</pre>
+```
+
+To do something like this, the library allows the user to pass a `Line` component:
+
+```jsx
+// !caption Using React to customize a line
+import { Pre } from "library"
+
+function MyCode(props) {
+  return <Pre {...props} handlers={[{ Line: MyLine }]} />
+}
+
+function MyLine({ children, lineNumber }) {
+  return (
+    <div style={{ padding: "8px", background: "#f1f5f9" }}>
+      <div>{lineNumber}</div>
+      <div>{children}</div>
+    </div>
+  )
+}
+```
+
+But that makes all lines look the same.
+
+We want:
+
+- all lines to have padding
+- some codeblocks to have line numbers
+- some lines to have a background
+
+So we split `MyLine` into three components:
+
+```jsx
+function PaddedLine({ children }) {
+  return <div style={{ padding: "8px" }}>{children}</div>
+}
+
+function LineWithNumber({ children, lineNumber }) {
+  return (
+    <div>
+      <div>{lineNumber}</div>
+      <div>{children}</div>
+    </div>
+  )
+}
+
+function LineWithBackground({ children }) {
+  return <div style={{ background: "#f1f5f9" }}>{children}</div>
+}
+```
+
+But how to combine them?
+
+```jsx
+function PaddedLine({ children, style }) {
+  return <div style={{ padding: "8px", ...style }}>{children}</div>
+}
+
+function LineWithNumber({ children, lineNumber }) {
+  return (
+    <PaddedLine>
+      <div>{lineNumber}</div>
+      <div>{children}</div>
+    </PaddedLine>
+  )
+}
+
+function LineWithBackground({ children }) {
+  return <PaddedLine style={{ background: "#f1f5f9" }}>{children}</PaddedLine>
+}
+```
+
+```jsx library.jsx
+function Code(props) {
+  const lines = extractLinesAndAnnotations(props)
+  return <pre>{lines.map(renderLine)}</pre>
+}
+
+function renderLine({ components, children, lineNumber }) {
+  const Component = components[annotation] || components.Line
+  return <Component lineNumber={lineNumber}>{children}</Component>
+}
+```
+
+---
+
+## Some context
+
+I'm building a library for syntax highlighting. The library allows you to override a couple of things with components. For example, you can **override how a line looks**:
+
+{/* prettier-ignore */}
+```jsx user-code.jsx
+import { Code } from "library"
+
+function MyCode(props) {
+  return <Code {...props} components={{ Line: MyLine }} />
+}
+
+function MyLine({ lineNumber, children, ...props }) {
+  return <div {...props}>{lineNumber} - {children}</div>
+}
+```
+
+The library supports annotations. Annotations use components to change how a line looks or behave.
+
+{/* prettier-ignore */}
+```jsx user-code.jsx
+function MyCode(props) {
+  return <Code {...props}
+    components={{ Line: MyLine, RightBorder, BackgroundHover }}
+  />
+}
+
+function RightBorder(props) {
+  const [size, setSize] = useState(1)
+  return <MyLine {...props}
+    onClick={() => setSize(size + 1)}
+    style={{ borderRight: `${size}px solid green` }}
+  />
+}
+
+function BackgroundHover(props) {
+  // don't do this at home, use CSS instead
+  const [hover, setHover] = useState(false) 
+  return <MyLine {...props}
+    onMouseEnter={() => setHover(true)} 
+    onMouseLeave={() => setHover(false)}
+    className={hover ? "bg-blue-600" : "bg-red-600"} 
+  />
+}
+```
+
+Demo of this working
+
+````mdx content.md
+```js
+function lorem(ipsum) {
+  // BackgroundHover(1:2)
+  console.log(1)
+  console.log(2)
+  console.log(3)
+  // RightBorder(1:2)
+  console.log(3)
+  console.log(4)
+}
+```
+````
+
+The `Code` component that handles this could be something like this:
+
+```jsx library.jsx
+function Code({ components, ...props }) {
+  const lines = extractLinesAndAnnotations(props)
+  return (
+    <pre>
+      {lines.map((line) =>
+        renderLine({
+          components,
+          ...line,
+        }),
+      )}
+    </pre>
+  )
+}
+
+function renderLine({ components, annotation, children, lineNumber }) {
+  const Component = components[annotation] || components.Line
+  return <Component lineNumber={lineNumber}>{children}</Component>
+}
+```
+
+Notice how we have `annotation` (singular) and not `annotations` (plural).
+
+## The three-component problem
+
+But what happens when we have two annotations applied to the same line?
+
+How can we make a component that is `MyLine`, `BackgroundHover`, and `RightBorder` at the same time?
+
+This is the three-component problem.
+
+## Making the API composable
+
+We need an API that can handle stacking annotations.
+
+One option is to pass a `ChildLine` component as a prop:
+
+{/* prettier-ignore */}
+```jsx
+function RightBorder({ ChildLine, ...props }) {
+  const [size, setSize] = useState(1)
+  return <ChildLine {...props}
+    onClick={() => setSize(size + 1)}
+    style={{ borderRight: `${size}px solid green` }}
+  />
+}
+```
+
+From the `RightBorder` point of view, `ChildLine` could be `MyLine`, `BackgroundHover`, or whatever other annotation we add in the future.
+
+## Implementing the new API
+
+We can rewrite the `renderLine` function to accept a stack of annotations instead of just one, and pass the `ChildLine` prop:
+
+```jsx library.jsx
+function renderLine({ components, annotations, children, lineNumber }) {
+  const Line = annotations.reduce((ChildLine, annotation) => {
+    const Component = components[annotation]
+    return Component
+      ? (props) => <Component {...props} ChildLine={ChildLine} />
+      : ChildLine
+  }, components.Line)
+  return <Line lineNumber={lineNumber}>{children}</Line>
+}
+```
+
+There's a bug in this code. Can you spot it?
+
+````mdx content.md
+```js
+function lorem(ipsum) {
+  // BackgroundHover(1:5)
+  console.log(1)
+  console.log(2)
+  // RightBorder(1:2)
+  console.log(3)
+  console.log(4)
+  console.log(5)
+}
+```
+````
+
+Since we are using `useState` in the `RightBorder` component, the `size` state will be reset every time the `RightBorder` component is rendered. This is because the `RightBorder` component is being re-created every time `renderLine` is called.
+
+### Extra complexity
+
+Things we left out but are important:
+
+- It's not just lines, other components can be overridden and annotated too (tokens, token groups, line groups, pre blocks, etc).
+- We can't call the components as functions. Components may use hooks.
+- Should also work for RSC. Components can be `async`.
+- Ideally should also support `forwardRef`.
+
+## My Solution
+
+Calculate and memoize all permutations ahead of time
+
+-
+
+## Questions for you
+
+- How would you render the line for the given API
+- How would you redesign the API?
+
+Playground: https://codesandbox.io/p/sandbox/the-three-component-problem-pzp523?file=%2Fsrc%2Flibrary.js%3A4%2C2

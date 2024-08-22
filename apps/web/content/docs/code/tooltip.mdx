@@ -1,0 +1,94 @@
+---
+title: Tooltip
+description: Tooltip
+layout: PreviewAndImplementation
+---
+
+import { CodeWithNotes } from "@/components/code/code-with-notes"
+
+## !demo
+
+A tooltip annotation where the tooltip content can be any MDX content.
+
+<Demo name="tooltip" content="content.mdx" className="[&>*]:max-h-[500px]">
+  Hover (or focus) the **lorem** and **consectetur** tokens to see the
+  respective tooltips.
+</Demo>
+
+## !implementation
+
+After we highlight the code, we find annotations where the query matches a tooltip title. If we find a match, we include the tooltip content in the annotation data.
+
+<CodeWithNotes lineNumbers={false}>
+
+```tsx ! code.tsx -c
+import { Block, CodeBlock, parseProps } from "codehike/blocks"
+import { Pre, highlight } from "codehike/code"
+import { z } from "zod"
+
+const Schema = Block.extend({
+  code: CodeBlock,
+  tooltips: z.array(Block).optional(),
+})
+
+async function CodeWithTooltips(props: unknown) {
+  const { code, tooltips = [] } = parseProps(props, Schema)
+  const highlighted = await highlight(code, theme)
+
+  highlighted.annotations = highlighted.annotations.map((a) => {
+    const tooltip = tooltips.find((t) => t.title === a.query)
+    if (!tooltip) return a
+    return {
+      ...a,
+      // !callout[/tooltip/] data
+      data: { ...a.data, children: tooltip.children },
+    }
+  })
+  return <Pre code={highlighted} handlers={[tooltip]} />
+}
+```
+
+## !!notes data
+
+We store the tooltip content in the annotation data
+
+</CodeWithNotes>
+
+Then we define an `AnnotationHandler` to render the tooltip inline using the [shadcn tooltip](https://ui.shadcn.com/docs/components/tooltip) components (`npx shadcn-ui@latest add tooltip`):
+
+<CodeWithNotes lineNumbers={false}>
+
+```tsx ! code.tsx -c
+import { AnnotationHandler } from "codehike/code"
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip"
+
+const tooltip: AnnotationHandler = {
+  name: "tooltip",
+  Inline: ({ children, annotation }) => {
+    const { query, data } = annotation
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger className="underline decoration-dashed">
+            {children}
+          </TooltipTrigger>
+          <TooltipContent align="start">
+            {data?.children || query}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
+  },
+}
+```
+
+</CodeWithNotes>
+
+## Make it better
+
+You can use the same concept to embed the MDX not only in tooltips but other annotations like [callouts](/docs/code/callout).

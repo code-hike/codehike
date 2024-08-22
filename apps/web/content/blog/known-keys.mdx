@@ -1,0 +1,36 @@
+---
+title: Known keys
+description: When you need an object where all the keys are mapped to one type except some known keys that are mapped to different types.
+date: 2024-02-20
+authors: [pomber]
+draft: true
+---
+
+Sources:
+
+- https://github.com/microsoft/TypeScript/issues/31153
+- https://github.dev/sindresorhus/type-fest/blob/main/source/merge.d.ts
+
+```ts
+type MyType = {
+  [s: string]: string
+  foo: number
+}
+```
+
+When you need an object where all the keys are mapped to one type except some known keys that are mapped to different types.
+
+Why Omit doesn't work:
+
+```ts
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+```
+
+```ts
+interface FancyIndices {
+  [x: symbol]: number
+  [x: `${string}Token`]: string
+}
+```
+
+does this work?

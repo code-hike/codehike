@@ -1,0 +1,5 @@
+---
+"codehike": minor
+---
+
+Add totalLines

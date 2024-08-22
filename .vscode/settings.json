@@ -1,0 +1,7 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.0.mdx": "${capture}.*"
+  },
+  "explorer.fileNesting.expand": false
+}

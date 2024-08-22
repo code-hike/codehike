@@ -1,0 +1,466 @@
+---
+title: Blocks
+description: Making markdown mallable with blocks
+---
+
+import { BlocksDemo } from "@/components/code/blocks-demo"
+import { Pill } from "@/components/annotations/pill"
+
+You can <Pill>decorate</Pill> markdown elements with a special syntax, Code Hike will transform them into objects and pass them as props to your components.
+
+This lets you add structure to your markdown content that you can then use to render it in any way you want using React components.
+
+<BlocksDemo>
+
+!caption Code Hike transforming decorated markdown into props
+
+```mdx !content content.mdx -c
+{/* !pill[/!!?mordor/mg] 2 */}
+{/* !pill[/!!?isengard/mg] 3 */}
+{/* !ruler(5) 1 */}
+{/* !ruler(7:11) 2 */}
+{/* !ruler(13:15) 3 */}
+import { MyComponent } from "./my-component"
+
+<MyComponent>
+
+The two towers
+
+## !mordor Barad-dûr
+
+The Dark Tower
+
+Sauron's fortress
+
+## !isengard Orthanc
+
+Saruman's stronghold
+
+</MyComponent>
+```
+
+```jsx !component my-component.jsx
+// !callout[/props/] result
+export function MyComponent(props) {
+  ...
+}
+
+```
+
+```jsx !result
+props = {
+  // !ruler 1
+  children: <p>The two towers</p>,
+  // !ruler(1:9) 2
+  // !pill[/mordor/] 2
+  mordor: {
+    title: "Barad-dûr",
+    children: (
+      <>
+        <p>The Dark Tower</p>
+        <p>Sauron's fortress</p>
+      </>
+    ),
+  },
+  // !ruler(1:4) 3
+  // !pill[/isengard/] 3
+  isengard: {
+    title: "Orthanc",
+    children: <p>Saruman's stronghold</p>,
+  },
+}
+```
+
+</BlocksDemo>
+
+The <Pill n={2}>!mordor</Pill> decoration at the start of the first heading tells Code Hike to group the content between this heading and the next one, the <Pill n={3}>!isengard</Pill> heading. That content group becomes a block object, that you can then use in your components.
+
+## Images, CodeBlocks, and Paragraphs
+
+Besides headings, you can add the `!` decoration to images, codeblocks, and paragraphs.
+
+<BlocksDemo>
+
+!caption Decorated paragraphs, images, and codeblocks
+
+````mdx !content content.mdx -c
+{/* !pill[/!!?author/mg] 2 */}
+{/* !pill[/!!?cover/mg] 3 */}
+{/* !pill[/!!?riddle/mg] 4 */}
+{/* !pill[/!!?moria/mg] 5 */}
+{/* !ruler(5) 1 */}
+{/* !ruler(7) 2 */}
+{/* !ruler(9) 3 */}
+{/* !ruler(11:13) 4 */}
+{/* !ruler(15:17) 5 */}
+import { MyComponent } from "./my-component"
+
+<MyComponent>
+
+The Fellowship of the Ring
+
+!author Tolkien
+
+![!cover Gandalf](/gandalf.jpg "a wizard")
+
+```js !riddle mellon.js
+speak("friend")
+```
+
+## !moria western gate
+
+Speak, friend, and enter
+
+</MyComponent>
+````
+
+```jsx !component my-component.jsx
+// !callout[/props/] result
+export function MyComponent(props) {
+  ...
+}
+
+```
+
+```jsx !result
+props = {
+  // !ruler 1
+  children: <p>The Fellowship of the Ring</p>,
+  // !ruler 2
+  // !pill[/author/] 2
+  author: "Tolkien",
+  // !ruler(1:5) 3
+  // !pill[/cover/] 3
+  cover: {
+    alt: "Gandalf",
+    url: "/gandalf.jpg",
+    title: "a wizard",
+  },
+  // !ruler(1:5) 4
+  // !pill[/riddle/] 4
+  riddle: {
+    lang: "js",
+    meta: "mellon.js",
+    value: 'speak("friend")',
+  },
+  // !ruler(1:4) 5
+  // !pill[/moria/] 5
+  moria: {
+    title: "western gate",
+    children: <p>Speak, friend, and enter</p>,
+  },
+}
+```
+
+</BlocksDemo>
+
+## Lists
+
+You can use `!!`, instead of `!`, to list all the blocks with the same decoration in an array.
+
+<BlocksDemo>
+
+!caption Using !! for lists
+
+```mdx !content content.mdx -c
+{/* !pill[/!!?\w+/mg] 0 */}
+{/* !ruler(5) 1 */}
+{/* !ruler(7:9) 2 */}
+{/* !ruler(11:13) 3 */}
+import { MyComponent } from "./my-component"
+
+<MyComponent>
+
+The Brandybuck Brunch
+
+## !!breakfasts first
+
+Grilled mushrooms
+
+## !!breakfasts second
+
+Apple pancakes
+
+</MyComponent>
+```
+
+```jsx !component my-component.jsx
+// !callout[/props/] result
+export function MyComponent(props) {
+  ...
+}
+
+```
+
+```jsx !result
+props = {
+  // !ruler 1
+  children: <p>The Brandybuck Brunch</p>,
+  // !pill[/breakfasts/] 0
+  breakfasts: [
+    // !ruler(1:4) 2
+    {
+      title: "first",
+      children: <p>Grilled mushrooms</p>,
+    },
+    // !ruler(1:4) 3
+    {
+      title: "second",
+      children: <p>Apple pancakes</p>,
+    },
+  ],
+}
+```
+
+</BlocksDemo>
+
+The same applies to images, codeblocks, and paragraphs.
+
+## Nesting
+
+You can use headigns with different levels to create nested blocks.
+
+<BlocksDemo>
+
+!caption Using header levels for nesting
+
+```mdx !content content.mdx -c
+{/* !pill[/!!?master/mg] 2 */}
+{/* !pill[/!!?rings/mg] 0 */}
+{/* !ruler(5) 1 */}
+{/* !ruler(7:21) 2 */}
+{/* !ruler(11:13) 3 2 */}
+{/* !ruler(15:17) 4 2 */}
+{/* !ruler(19:21) 5 2 */}
+import { MyComponent } from "./my-component"
+
+<MyComponent>
+
+The Rings of Power
+
+## !master
+
+The One Ring
+
+### !!rings Elves
+
+Three rings
+
+### !!rings Dwarves
+
+Seven rings
+
+### !!rings Men
+
+Nine rings
+
+</MyComponent>
+```
+
+```jsx !component my-component.jsx
+// !callout[/props/] result
+export function MyComponent(props) {
+  ...
+}
+
+```
+
+```jsx !result
+props = {
+  // !ruler 1
+  children: <p>The Rings of Power</p>,
+  // !ruler(1:18) 2
+  // !pill[/master/] 2
+  master: {
+    title: "",
+    children: <p>The One Ring</p>,
+    // !pill[/rings/] 0
+    rings: [
+      // !ruler(1:4) 3 2
+      {
+        title: "Elves",
+        children: <p>Three rings</p>,
+      },
+      // !ruler(1:4) 4 2
+      {
+        title: "Dwarves",
+        children: <p>Seven rings</p>,
+      },
+      // !ruler(1:4) 5 2
+      {
+        title: "Men",
+        children: <p>Nine rings</p>,
+      },
+    ],
+  },
+}
+```
+
+</BlocksDemo>
+
+## Schema
+
+You can use [zod](https://zod.dev/) schemas to validate the content coming from the MDX.
+
+```bash -c
+npm install zod
+```
+
+This has two benefits:
+
+- **Type-safe markdown**: You'll see an error if the content doesn't match the schema
+- **Better tooling**:You'll get autocompletion and type checking in your editor
+
+<BlocksDemo>
+
+!caption Using schemas for markdown validation and typing
+
+````mdx !content content.mdx -c
+{/* !pill[/!!?author/mg] 2 */}
+{/* !pill[/!!?cover/mg] 3 */}
+{/* !pill[/!!?riddle/mg] 4 */}
+{/* !pill[/!!?breakfasts/mg] 5 */}
+{/* !ruler(5) 1 */}
+{/* !ruler(7) 2 */}
+{/* !ruler(9) 3 */}
+{/* !ruler(11:13) 4 */}
+{/* !ruler(15:17) 5 */}
+{/* !ruler(19:21) 5 */}
+import { MyComponent } from "./my-component"
+
+<MyComponent>
+
+The Fellowship of the Ring
+
+!author Tolkien
+
+![!cover Gandalf](/gandalf.jpg "a wizard")
+
+```js !riddle mellon.js
+speak("friend")
+```
+
+## !!breakfasts first
+
+Grilled mushrooms
+
+## !!breakfasts second
+
+Apple pancakes
+
+</MyComponent>
+````
+
+```jsx !component my-component.tsx
+import { z } from "zod"
+import {
+  parseProps, Block, CodeBlock, ImageBlock
+} from "codehike/blocks"
+
+const Schema = Block.extend({
+  // !ruler 2
+  // !pill[/author/] 2
+  author: z.string(),
+  // !ruler 3
+  // !pill[/cover/] 3
+  cover: ImageBlock.optional(),
+  // !ruler 4
+  // !pill[/riddle/] 4
+  riddle: CodeBlock,
+  // !ruler 5
+  // !pill[/breakfasts/] 5
+  breakfasts: z.array(Block),
+})
+
+export function MyComponent(props) {
+  // !callout[/data/] result
+  const data = parseProps(props, Schema)
+  ...
+}
+
+```
+
+```tsx !result
+const data: {
+  title: string
+  // !ruler 1
+  children?: ReactNode
+  // !ruler 2
+  // !pill[/author/] 2
+  author: string
+  // !ruler(1:5) 3
+  // !pill[/cover/] 3
+  cover?: {
+    alt: string
+    url: string
+    title: string
+  }
+  // !ruler(1:5) 4
+  // !pill[/riddle/] 4
+  riddle: {
+    lang: string
+    meta: string
+    value: string
+  }
+  // !ruler(1:4) 5
+  // !pill[/breakfasts/] 5
+  breakfasts: {
+    title: string
+    children?: ReactNode
+  }[]
+}
+```
+
+</BlocksDemo>
+
+## Root level blocks
+
+You can use decorated elements directly in the root of your Markdown/MDX file.
+
+<BlocksDemo>
+
+!caption Using decorated elements in plain markdown
+
+```mdx !content content.md
+{/* !pill[/!!?\w+/mg] */}
+The Brandybuck Brunch
+
+## !!breakfasts first
+
+Grilled mushrooms
+
+## !!breakfasts second
+
+Apple pancakes
+```
+
+```jsx !component page.jsx
+import { parseRoot } from "codehike/blocks"
+import MDX from "./content.md"
+
+const Schema = Block.extend({
+  breakfasts: z.array(Block),
+})
+
+export default function Page() {
+  const data = parseRoot(MDX, Schema)
+  ...
+}
+
+```
+
+```tsx !result
+const data: {}
+```
+
+</BlocksDemo>
+
+## Component blocks
+
+Coming soon
+
+## Examples
+
+The [code tooltip example](/docs/code/tooltip) shows how to use blocks at a component level.
+
+The [scrollycoding example](/docs/layouts/scrollycoding) shows how to use blocks for layout at a page level.
