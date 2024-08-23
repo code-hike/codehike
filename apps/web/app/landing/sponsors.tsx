@@ -7,6 +7,82 @@ import UidevLogo from "./logo.uidev.svg"
 import Image from "next/image"
 import Link from "next/link"
 import sponsorData from "./sponsors.json"
+import { Check, CheckCheck, Heart } from "lucide-react"
+
+export function Pricing() {
+  const current = 624
+  const goal = 950
+  return (
+    <section className="max-w-3xl mx-2 pb-12">
+      <h3 className="text-center pb-12 text-primary/60 text-lg">Pricing</h3>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-4">
+        <div className="flex flex-col items-center space-y-4 border py-4 rounded min-h-72">
+          <h4 className="text-2xl font-bold py-4">Free</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li>
+              <Check className="inline text-green-400" size={20} /> Full access
+              to all features
+            </li>
+            <li>
+              <Check className="inline text-green-400" size={20} /> Regular
+              updates
+            </li>
+            <li>
+              <Check className="inline text-green-400" size={20} />{" "}
+              Comprehensive documentation
+            </li>
+            <li>
+              <Check className="inline text-green-400" size={20} /> Support on
+              GitHub and Discord
+            </li>
+            <li>
+              <Check className="inline text-green-400" size={20} /> Plenty
+              copy-pastable examples
+            </li>
+          </ul>
+          <div className="flex-1" />
+          <Link
+            href="/docs"
+            className="block border rounded p-2 mx-4 text-center hover:border-primary transition-colors self-stretch text-muted-foreground hover:text-primary"
+          >
+            Get started
+          </Link>
+        </div>
+        <div className="flex flex-col items-center space-y-4 border py-4 rounded min-h-72 border-pink-400">
+          <h4 className="text-2xl font-bold py-4">Pay what you want</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li>
+              <CheckCheck className="inline text-green-400" size={20} />{" "}
+              Everything in Free
+            </li>
+            <li>
+              <Heart className="inline text-pink-400 align-bottom" size={18} />{" "}
+              Contribute to sustainable open source
+            </li>
+          </ul>
+          <div className="flex-1" />
+          <div className="self-stretch mx-4 text-primary/70">
+            <div className="text-xs pb-2 text-center">
+              {Math.round((100 * current) / goal)}% towards $950 per month goal
+            </div>
+            <div className=" w-full h-2 bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-pink-400 transition-all duration-500 ease-in-out"
+                style={{ width: `${(100 * current) / goal}%` }}
+              />
+            </div>
+          </div>
+          <Link
+            href="https://github.com/sponsors/code-hike?metadata_source=pricing"
+            className="block border text-primary border-pink-400/50 rounded p-2 mx-4 text-center hover:border-pink-400 transition-colors self-stretch"
+          >
+            Become a sponsor
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export function TopSponsors({
   title = "Top Sponsors",
