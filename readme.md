@@ -1,6 +1,6 @@
 ### Build rich content websites with Markdown and React
 
-Code Hike is an open-source library designed to encourage the authoring of technical content that takes full advantage of the modern web.
+Code Hike is an open-source library that bridges the gap between Markdown and React to help you create technical content that takes advantage of the modern web.
 
 **Docs: https://codehike.org/docs**
 

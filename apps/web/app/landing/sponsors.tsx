@@ -10,7 +10,7 @@ import sponsorData from "./sponsors.json"
 import { Check, CheckCheck, Heart } from "lucide-react"
 
 export function Pricing() {
-  const current = 624
+  const current = 625
   const goal = 950
   return (
     <section className="max-w-3xl mx-2 pb-12">
