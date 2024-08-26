@@ -1,5 +1,0 @@
----
-"codehike": minor
----
-
-Blocks API

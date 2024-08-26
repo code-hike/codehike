@@ -1,5 +1,14 @@
 # codehike
 
+## 1.0.0
+
+### Major Changes
+
+- Fine-grained Markdown
+- Headless codeblocks
+
+See [the announcement blog post](https://codehike.org/blog/v1) for more details.
+
 ## 1.0.0-beta.9
 
 ### Patch Changes
