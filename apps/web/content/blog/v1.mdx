@@ -1,9 +1,9 @@
 ---
-title: Announcing Code Hike v1.0
+title: Announcing Code Hike 1.0
 description: A new approach to turn markdown into rich interactive experiences
 authors: [pomber]
-date: 2024-08-16
-draft: true
+date: 2024-08-26
+draft: false
 ---
 
 import { CodeWithNotes } from "@/components/code/code-with-notes"
@@ -13,13 +13,15 @@ import {
   Sponsors,
 } from "./v1"
 
-After a year of exploration and development, I’m thrilled to announce the stable release of Code Hike v1.0!
+After a year of exploration and development, I’m thrilled to announce the stable release of Code Hike 1.0!
 
 ## What is Code Hike?
 
-Code Hike is an open-source library designed to encourage the authoring of technical content that takes full advantage of the modern web.
+Code Hike is an **open-source library that bridges the gap between Markdown and React to help you create technical content that takes full advantage of the modern web.**
 
-Code Hike v1 introduces two new features: **fine-grained markdown** and **headless codeblocks**.
+While **the main use cases are code walkthroughs and interactive documentation**, Code Hike can be used for any combination of content and presentation. And since it's all React components, it can be rendered anywhere React can be rendered.
+
+Code Hike 1.0 introduces two new features: **fine-grained markdown** and **headless codeblocks**.
 
 ### Fine-grained Markdown
 
@@ -117,7 +119,7 @@ content = {
 
 </FineGrained>
 
-Code Hike also integrates nicely with [Zod schemas](docs/concepts/blocks#schema) giving you type-safe Markdown.
+Code Hike also integrates nicely with [Zod schemas](docs/concepts/blocks#schema), giving you type-safe Markdown.
 
 Learn more:
 
@@ -127,7 +129,7 @@ Learn more:
 
 ### Headless Codeblocks
 
-With Code Hike v1, you can build your own component library for codeblocks.
+With Code Hike 1.0, you can build your own component library for codeblocks.
 
 - Use React components to define UI and behaviors: tooltips, animations, line numbers, diffs, copy buttons, collapse, fold, footnotes, links, tabs, callouts, language switchers, or whatever you can imagine.
 - Then add comments inside your codeblocks to make use of those components
@@ -210,9 +212,9 @@ Videos, slides, screenshots. Code Hike makes separating content from presentatio
 
 Landing pages, marketing sites, portfolios. It doesn't even need content related to programming. Code Hike helps you keep the content separated from the design.
 
-## Try Code Hike v1
+## Try Code Hike 1.0
 
-Try it online on [StackBlitz](https://stackblitz.com/github/code-hike/v1-starter), or clone the Code Hike v1 starter:
+Try it online on [StackBlitz](https://stackblitz.com/github/code-hike/v1-starter?file=app%2Fpage.mdx), or clone the Code Hike v1 starter:
 
 ```bash -c
 # !link[24:62] https://github.com/code-hike/v1-starter
@@ -250,4 +252,4 @@ Big thanks to all the sponsors, some of whom have been supporting Code Hike from
 
 Special thanks to the [GitHub Accelerator](https://github.blog/news-insights/company-news/github-accelerator-our-first-cohort-and-whats-next/) for selecting Code Hike for the first cohort of the program. Their sponsorship and guidance have been a huge help in getting Code Hike to this point.
 
-I'm excited about what’s next for Code Hike. You can [become a sponsor](https://github.com/sponsors/code-hike?metadata_source=v1-blog) to help us make it happen, every little bit helps!
+I'm excited about what’s next for Code Hike. You can [become a sponsor](https://github.com/sponsors/code-hike?metadata_source=v1-blog) to help us make it happen!

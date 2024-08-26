@@ -1,5 +1,0 @@
----
-"codehike": patch
----
-
-Add schemas

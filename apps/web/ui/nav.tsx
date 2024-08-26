@@ -60,7 +60,7 @@ export function NavBar({ version }: { version: string }) {
 function VersionNav({ version }: { version: string }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-sm bg-yellow-200 dark:bg-yellow-900 text-yellow-900 dark:text-yellow-200 rounded-lg px-2">
+      <DropdownMenuTrigger className="text-sm bg-secondary text-primary rounded-lg px-2">
         {version}
       </DropdownMenuTrigger>
       <DropdownMenuContent>

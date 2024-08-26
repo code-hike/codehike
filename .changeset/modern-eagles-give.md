@@ -1,5 +1,0 @@
----
-"codehike": major
----
-
-Init codehike
