@@ -8,12 +8,14 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,mdx}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "prerelease": "pkg-pr-new publish --compact './packages/codehike'"
   },
   "devDependencies": {
     "@changesets/cli": "2.27.1",
     "prettier": "^3.1.1",
-    "turbo": "^1.11.2"
+    "turbo": "^1.11.2",
+    "pkg-pr-new": "0.0.20"
   },
   "packageManager": "pnpm@9.7.1",
   "repository": "code-hike/codehike",
