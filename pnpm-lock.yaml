@@ -68,6 +68,9 @@ importers:
       dotenv:
         specifier: ^16.4.1
         version: 16.4.1
+      estree-util-to-js:
+        specifier: ^2.0.0
+        version: 2.0.0
       lucide-react:
         specifier: ^0.303.0
         version: 0.303.0(react@18.2.0)

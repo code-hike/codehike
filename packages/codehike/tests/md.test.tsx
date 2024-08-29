@@ -69,7 +69,7 @@ testNames.forEach(async (filename) => {
   })
 })
 
-const js = ["before-recma-compiled-js", "compiled-js"]
+const js = ["before-recma-compiled-js", "compiled-js", "compiled-js-dev"]
 const jsx = [
   "before-recma-compiled-jsx",
   "compiled-jsx",
@@ -82,7 +82,7 @@ function sn(filename: string, step: string) {
   const extention =
     step === "error"
       ? "md"
-      : step === "rendered"
+      : step === "rendered" || step === "rendered-dev"
         ? "html"
         : js.includes(step)
           ? "js"
@@ -101,14 +101,18 @@ const indexes = {
   "before-recma-compiled-jsx": 5,
   "before-recma-compiled-function": 5,
   "before-recma-js": 5,
+  "before-recma-js-dev": 5,
   "before-recma-jsx": 5,
   "after-recma-js": 6,
+  "after-recma-js-dev": 6,
   "after-recma-jsx": 6,
   "compiled-js": 7,
+  "compiled-js-dev": 7,
   "compiled-jsx": 7,
   "compiled-function": 7,
   "parsed-jsx": 8,
   rendered: 9,
+  "rendered-dev": 9,
 }
 
 async function getStepOutput(
@@ -153,9 +157,23 @@ async function getStepOutput(
         remarkPlugins: [[remarkCodeHike, chConfig]],
         recmaPlugins: [X],
       }))
+    case "before-recma-js-dev":
+      return await compileAST(file, (X) => ({
+        jsx: false,
+        development: true,
+        remarkPlugins: [[remarkCodeHike, chConfig]],
+        recmaPlugins: [X],
+      }))
     case "after-recma-js":
       return await compileAST(file, (X) => ({
         jsx: false,
+        remarkPlugins: [[remarkCodeHike, chConfig]],
+        recmaPlugins: [[recmaCodeHike, chConfig], X],
+      }))
+    case "after-recma-js-dev":
+      return await compileAST(file, (X) => ({
+        jsx: false,
+        development: true,
         remarkPlugins: [[remarkCodeHike, chConfig]],
         recmaPlugins: [[recmaCodeHike, chConfig], X],
       }))
@@ -171,6 +189,13 @@ async function getStepOutput(
         remarkPlugins: [[remarkCodeHike, chConfig]],
         recmaPlugins: [[recmaCodeHike, chConfig], X],
       }))
+    case "compiled-js-dev":
+      return await compileJS(file, {
+        jsx: false,
+        development: true,
+        remarkPlugins: [[remarkCodeHike, chConfig]],
+        recmaPlugins: [[recmaCodeHike, chConfig]],
+      })
     case "compiled-js":
       return await compileJS(file, {
         jsx: false,
@@ -201,6 +226,18 @@ async function getStepOutput(
         {
           remarkPlugins: [[remarkCodeHike, chConfig]],
           recmaPlugins: [[recmaCodeHike, chConfig]],
+          jsx: false,
+        },
+        render,
+      )
+    case "rendered-dev":
+      return await renderHTML(
+        file,
+        {
+          remarkPlugins: [[remarkCodeHike, chConfig]],
+          recmaPlugins: [[recmaCodeHike, chConfig]],
+          jsx: false,
+          development: true,
         },
         render,
       )

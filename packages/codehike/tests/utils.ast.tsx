@@ -2,6 +2,7 @@ import * as prettier from "prettier"
 import { compile, CompileOptions, run } from "@mdx-js/mdx"
 import { Pluggable } from "unified"
 import * as runtime from "react/jsx-runtime"
+import * as devRuntime from "react/jsx-dev-runtime"
 import { parse } from "../src/"
 import { renderToReadableStream } from "react-dom/server.edge"
 import React from "react"
@@ -53,7 +54,10 @@ export async function parsedJS(file: MDFile, options: CompileOptions) {
     outputFormat: "function-body",
     jsx: false,
   })
-  const { default: Content } = await run(result, runtime as any)
+  const { default: Content } = await run(
+    result,
+    (options.development ? devRuntime : runtime) as any,
+  )
   const block = parse(Content)
   return { block }
 }
@@ -67,7 +71,10 @@ export async function renderHTML(
     ...options,
     outputFormat: "function-body",
   })
-  const { default: Content } = await run(result, runtime as any)
+  const { default: Content } = await run(
+    result,
+    (options.development ? devRuntime : runtime) as any,
+  )
 
   const html = await rscToHTML(render(Content))
   return html
