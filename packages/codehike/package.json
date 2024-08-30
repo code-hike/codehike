@@ -23,19 +23,27 @@
     "type": "github",
     "url": "https://github.com/sponsors/code-hike"
   },
+  "files": [
+    "dist/**"
+  ],
   "exports": {
     "./package.json": "./package.json",
     ".": "./dist/index.js",
     "./mdx": "./dist/mdx.js",
     "./blocks": "./dist/blocks.js",
-    "./code": "./dist/code/index.js",
+    "./code": "./dist/code.js",
     "./utils/token-transitions": "./dist/utils/token-transitions.js",
     "./utils/static-fallback": "./dist/utils/static-fallback.js",
     "./utils/selection": "./dist/utils/selection.js"
   },
-  "files": [
-    "dist/**"
-  ],
+  "types": "index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsc -p . ",
     "dev": "tsc -p . --watch",
