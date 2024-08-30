@@ -137,7 +137,7 @@ function forEachHikeElementMoveChildrenToHikeProp(root: any, jsxOn: boolean) {
   visit(root, (node: any) => {
     if (isElementWithHikeAttribute(node, jsxOn)) {
       if (jsxOn) {
-        moveChildrenToHikePropJSX(node, jsxOn)
+        moveChildrenToHikePropJSX(node)
       } else {
         moveChildrenToHikeProp(node)
       }
@@ -157,7 +157,7 @@ function isElementWithHikeAttribute(node: any, jsxOn: boolean) {
         )
 }
 
-function moveChildrenToHikePropJSX(node: any, jsxOn: boolean) {
+function moveChildrenToHikePropJSX(node: any) {
   // dictionary of children by path
   const childrenByPath: any = {}
   node.children.forEach((slot: any) => {
@@ -252,14 +252,24 @@ function moveChildrenToHikeProp(node: any) {
     (p: any) => p.key.name !== "children",
   )
 
-  // jsxs calls can only have arrays as children, so we turn any jsxs without array into jsx call
   visit(node, function (node: any) {
+    // jsxs calls can only have arrays as children, so we turn any jsxs without array into jsx call
     if (node.type === "CallExpression" && node.callee.name === "_jsxs") {
       const childrenProp = node.arguments[1].properties.find(
         (p: any) => p.key.value === "children",
       )
       if (childrenProp && childrenProp.value.type !== "ArrayExpression") {
         node.callee.name = "_jsx"
+      }
+    }
+
+    // same, but in dev mode  the name is _jsxDEV, and we should change the `isStaticChildren` argument
+    if (node.type === "CallExpression" && node.callee.name === "_jsxDEV") {
+      const childrenProp = node.arguments[1].properties.find(
+        (p: any) => p.key.value === "children",
+      )
+      if (childrenProp && childrenProp.value.type !== "ArrayExpression") {
+        node.arguments[3] = { type: "Literal", value: false }
       }
     }
   })

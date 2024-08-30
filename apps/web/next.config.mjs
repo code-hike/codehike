@@ -1,5 +1,16 @@
 import createNextDocsMDX from "next-docs-mdx/config"
 import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+// import fs from "node:fs"
+// import { jsx, toJs } from "estree-util-to-js"
+// function recmaPlugin() {
+//   return (tree) => {
+//     const result = toJs(tree, { handlers: jsx })
+//     // console.log("```js")
+//     // console.log(result.value)
+//     // console.log("```")
+//     fs.writeFileSync("recma.js", result.value)
+//   }
+// }
 
 /** @type {import('codehike/mdx').CodeHikeConfig} */
 const chConfig = {
@@ -17,7 +28,7 @@ const withMDX = createNextDocsMDX({
   mdxOptions: {
     remarkPlugins: [[remarkCodeHike, chConfig]],
     recmaPlugins: [[recmaCodeHike, chConfig]],
-    jsx: true,
+    // jsx: true,
   },
 })
 

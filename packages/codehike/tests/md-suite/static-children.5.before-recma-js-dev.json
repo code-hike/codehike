@@ -1,0 +1,1381 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [
+        {
+          "type": "ImportSpecifier",
+          "imported": { "type": "Identifier", "name": "Fragment" },
+          "local": { "type": "Identifier", "name": "_Fragment" }
+        },
+        {
+          "type": "ImportSpecifier",
+          "imported": { "type": "Identifier", "name": "jsxDEV" },
+          "local": { "type": "Identifier", "name": "_jsxDEV" }
+        }
+      ],
+      "source": { "type": "Literal", "value": "react/jsx-dev-runtime" }
+    },
+    {
+      "type": "FunctionDeclaration",
+      "async": false,
+      "id": { "type": "Identifier", "name": "_createMdxContent" },
+      "params": [{ "type": "Identifier", "name": "props" }],
+      "body": {
+        "type": "BlockStatement",
+        "body": [
+          {
+            "type": "VariableDeclaration",
+            "kind": "const",
+            "declarations": [
+              {
+                "type": "VariableDeclarator",
+                "id": { "type": "Identifier", "name": "_components" },
+                "init": {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "Property",
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "p" },
+                      "value": { "type": "Literal", "value": "p" },
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false
+                    },
+                    {
+                      "type": "Property",
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "slot" },
+                      "value": { "type": "Literal", "value": "slot" },
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false
+                    },
+                    {
+                      "type": "SpreadElement",
+                      "argument": {
+                        "type": "MemberExpression",
+                        "object": { "type": "Identifier", "name": "props" },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "components"
+                        },
+                        "computed": false,
+                        "optional": false
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "ReturnStatement",
+            "argument": {
+              "type": "CallExpression",
+              "callee": { "type": "Identifier", "name": "_jsxDEV" },
+              "arguments": [
+                { "type": "Identifier", "name": "_Fragment" },
+                {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "Property",
+                      "key": { "type": "Identifier", "name": "children" },
+                      "value": {
+                        "type": "ArrayExpression",
+                        "elements": [
+                          {
+                            "type": "CallExpression",
+                            "callee": {
+                              "type": "Identifier",
+                              "name": "_jsxDEV"
+                            },
+                            "arguments": [
+                              { "type": "Literal", "value": "div" },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "Property",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "__hike"
+                                    },
+                                    "value": {
+                                      "type": "ObjectExpression",
+                                      "properties": [
+                                        {
+                                          "type": "Property",
+                                          "method": false,
+                                          "shorthand": false,
+                                          "computed": false,
+                                          "key": {
+                                            "type": "Literal",
+                                            "value": "children"
+                                          },
+                                          "kind": "init",
+                                          "value": {
+                                            "type": "Literal",
+                                            "value": "",
+                                            "raw": "\"\""
+                                          }
+                                        },
+                                        {
+                                          "type": "Property",
+                                          "method": false,
+                                          "shorthand": false,
+                                          "computed": false,
+                                          "key": {
+                                            "type": "Literal",
+                                            "value": "title"
+                                          },
+                                          "kind": "init",
+                                          "value": {
+                                            "type": "Literal",
+                                            "value": "",
+                                            "raw": "\"\""
+                                          }
+                                        },
+                                        {
+                                          "type": "Property",
+                                          "method": false,
+                                          "shorthand": false,
+                                          "computed": false,
+                                          "key": {
+                                            "type": "Literal",
+                                            "value": "_data"
+                                          },
+                                          "kind": "init",
+                                          "value": {
+                                            "type": "ObjectExpression",
+                                            "properties": [
+                                              {
+                                                "type": "Property",
+                                                "method": false,
+                                                "shorthand": false,
+                                                "computed": false,
+                                                "key": {
+                                                  "type": "Literal",
+                                                  "value": "header"
+                                                },
+                                                "kind": "init",
+                                                "value": {
+                                                  "type": "Literal",
+                                                  "value": "",
+                                                  "raw": "\"\""
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        {
+                                          "type": "Property",
+                                          "method": false,
+                                          "shorthand": false,
+                                          "computed": false,
+                                          "key": {
+                                            "type": "Literal",
+                                            "value": "foo"
+                                          },
+                                          "kind": "init",
+                                          "value": {
+                                            "type": "ObjectExpression",
+                                            "properties": [
+                                              {
+                                                "type": "Property",
+                                                "method": false,
+                                                "shorthand": false,
+                                                "computed": false,
+                                                "key": {
+                                                  "type": "Literal",
+                                                  "value": "children"
+                                                },
+                                                "kind": "init",
+                                                "value": {
+                                                  "type": "Literal",
+                                                  "value": "foo",
+                                                  "raw": "\"foo\""
+                                                }
+                                              },
+                                              {
+                                                "type": "Property",
+                                                "method": false,
+                                                "shorthand": false,
+                                                "computed": false,
+                                                "key": {
+                                                  "type": "Literal",
+                                                  "value": "title"
+                                                },
+                                                "kind": "init",
+                                                "value": {
+                                                  "type": "Literal",
+                                                  "value": "",
+                                                  "raw": "\"\""
+                                                }
+                                              },
+                                              {
+                                                "type": "Property",
+                                                "method": false,
+                                                "shorthand": false,
+                                                "computed": false,
+                                                "key": {
+                                                  "type": "Literal",
+                                                  "value": "_data"
+                                                },
+                                                "kind": "init",
+                                                "value": {
+                                                  "type": "ObjectExpression",
+                                                  "properties": [
+                                                    {
+                                                      "type": "Property",
+                                                      "method": false,
+                                                      "shorthand": false,
+                                                      "computed": false,
+                                                      "key": {
+                                                        "type": "Literal",
+                                                        "value": "header"
+                                                      },
+                                                      "kind": "init",
+                                                      "value": {
+                                                        "type": "Literal",
+                                                        "value": "## !foo",
+                                                        "raw": "\"## !foo\""
+                                                      }
+                                                    }
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    "kind": "init",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
+                                  },
+                                  {
+                                    "type": "Property",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "children"
+                                    },
+                                    "value": {
+                                      "type": "ArrayExpression",
+                                      "elements": [
+                                        {
+                                          "type": "CallExpression",
+                                          "callee": {
+                                            "type": "Identifier",
+                                            "name": "_jsxDEV"
+                                          },
+                                          "arguments": [
+                                            {
+                                              "type": "MemberExpression",
+                                              "object": {
+                                                "type": "Identifier",
+                                                "name": "_components"
+                                              },
+                                              "property": {
+                                                "type": "Identifier",
+                                                "name": "slot"
+                                              },
+                                              "computed": false,
+                                              "optional": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "path"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": ""
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "children"
+                                                  },
+                                                  "value": {
+                                                    "type": "CallExpression",
+                                                    "callee": {
+                                                      "type": "Identifier",
+                                                      "name": "_jsxDEV"
+                                                    },
+                                                    "arguments": [
+                                                      {
+                                                        "type": "Identifier",
+                                                        "name": "_Fragment"
+                                                      },
+                                                      {
+                                                        "type": "ObjectExpression",
+                                                        "properties": [
+                                                          {
+                                                            "type": "Property",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "children"
+                                                            },
+                                                            "value": {
+                                                              "type": "ArrayExpression",
+                                                              "elements": [
+                                                                {
+                                                                  "type": "CallExpression",
+                                                                  "callee": {
+                                                                    "type": "Identifier",
+                                                                    "name": "_jsxDEV"
+                                                                  },
+                                                                  "arguments": [
+                                                                    {
+                                                                      "type": "MemberExpression",
+                                                                      "object": {
+                                                                        "type": "Identifier",
+                                                                        "name": "_components"
+                                                                      },
+                                                                      "property": {
+                                                                        "type": "Identifier",
+                                                                        "name": "p"
+                                                                      },
+                                                                      "computed": false,
+                                                                      "optional": false
+                                                                    },
+                                                                    {
+                                                                      "type": "ObjectExpression",
+                                                                      "properties": [
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "children"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": "hey"
+                                                                          },
+                                                                          "kind": "init",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "type": "Identifier",
+                                                                      "name": "undefined"
+                                                                    },
+                                                                    {
+                                                                      "type": "Literal",
+                                                                      "value": false
+                                                                    },
+                                                                    {
+                                                                      "type": "ObjectExpression",
+                                                                      "properties": [
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "fileName"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                                          }
+                                                                        },
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "lineNumber"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": 3
+                                                                          }
+                                                                        },
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "columnNumber"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": 1
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "type": "ThisExpression"
+                                                                    }
+                                                                  ],
+                                                                  "optional": false
+                                                                },
+                                                                {
+                                                                  "type": "CallExpression",
+                                                                  "callee": {
+                                                                    "type": "Identifier",
+                                                                    "name": "_jsxDEV"
+                                                                  },
+                                                                  "arguments": [
+                                                                    {
+                                                                      "type": "MemberExpression",
+                                                                      "object": {
+                                                                        "type": "Identifier",
+                                                                        "name": "_components"
+                                                                      },
+                                                                      "property": {
+                                                                        "type": "Identifier",
+                                                                        "name": "p"
+                                                                      },
+                                                                      "computed": false,
+                                                                      "optional": false
+                                                                    },
+                                                                    {
+                                                                      "type": "ObjectExpression",
+                                                                      "properties": [
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "children"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": "ho"
+                                                                          },
+                                                                          "kind": "init",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "type": "Identifier",
+                                                                      "name": "undefined"
+                                                                    },
+                                                                    {
+                                                                      "type": "Literal",
+                                                                      "value": false
+                                                                    },
+                                                                    {
+                                                                      "type": "ObjectExpression",
+                                                                      "properties": [
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "fileName"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                                          }
+                                                                        },
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "lineNumber"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": 5
+                                                                          }
+                                                                        },
+                                                                        {
+                                                                          "type": "Property",
+                                                                          "method": false,
+                                                                          "shorthand": false,
+                                                                          "computed": false,
+                                                                          "kind": "init",
+                                                                          "key": {
+                                                                            "type": "Identifier",
+                                                                            "name": "columnNumber"
+                                                                          },
+                                                                          "value": {
+                                                                            "type": "Literal",
+                                                                            "value": 1
+                                                                          }
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "type": "ThisExpression"
+                                                                    }
+                                                                  ],
+                                                                  "optional": false
+                                                                }
+                                                              ]
+                                                            },
+                                                            "kind": "init",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "Identifier",
+                                                        "name": "undefined"
+                                                      },
+                                                      {
+                                                        "type": "Literal",
+                                                        "value": true
+                                                      },
+                                                      {
+                                                        "type": "ObjectExpression",
+                                                        "properties": [
+                                                          {
+                                                            "type": "Property",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false,
+                                                            "kind": "init",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "fileName"
+                                                            },
+                                                            "value": {
+                                                              "type": "Literal",
+                                                              "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                            }
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "ThisExpression"
+                                                      }
+                                                    ],
+                                                    "optional": false
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "Identifier",
+                                              "name": "undefined"
+                                            },
+                                            {
+                                              "type": "Literal",
+                                              "value": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "fileName"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            { "type": "ThisExpression" }
+                                          ],
+                                          "optional": false
+                                        },
+                                        {
+                                          "type": "CallExpression",
+                                          "callee": {
+                                            "type": "Identifier",
+                                            "name": "_jsxDEV"
+                                          },
+                                          "arguments": [
+                                            {
+                                              "type": "MemberExpression",
+                                              "object": {
+                                                "type": "Identifier",
+                                                "name": "_components"
+                                              },
+                                              "property": {
+                                                "type": "Identifier",
+                                                "name": "slot"
+                                              },
+                                              "computed": false,
+                                              "optional": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "path"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "foo"
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "children"
+                                                  },
+                                                  "value": {
+                                                    "type": "CallExpression",
+                                                    "callee": {
+                                                      "type": "Identifier",
+                                                      "name": "_jsxDEV"
+                                                    },
+                                                    "arguments": [
+                                                      {
+                                                        "type": "MemberExpression",
+                                                        "object": {
+                                                          "type": "Identifier",
+                                                          "name": "_components"
+                                                        },
+                                                        "property": {
+                                                          "type": "Identifier",
+                                                          "name": "p"
+                                                        },
+                                                        "computed": false,
+                                                        "optional": false
+                                                      },
+                                                      {
+                                                        "type": "ObjectExpression",
+                                                        "properties": [
+                                                          {
+                                                            "type": "Property",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "children"
+                                                            },
+                                                            "value": {
+                                                              "type": "Literal",
+                                                              "value": "bar"
+                                                            },
+                                                            "kind": "init",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "Identifier",
+                                                        "name": "undefined"
+                                                      },
+                                                      {
+                                                        "type": "Literal",
+                                                        "value": false
+                                                      },
+                                                      {
+                                                        "type": "ObjectExpression",
+                                                        "properties": [
+                                                          {
+                                                            "type": "Property",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false,
+                                                            "kind": "init",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "fileName"
+                                                            },
+                                                            "value": {
+                                                              "type": "Literal",
+                                                              "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                            }
+                                                          },
+                                                          {
+                                                            "type": "Property",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false,
+                                                            "kind": "init",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "lineNumber"
+                                                            },
+                                                            "value": {
+                                                              "type": "Literal",
+                                                              "value": 9
+                                                            }
+                                                          },
+                                                          {
+                                                            "type": "Property",
+                                                            "method": false,
+                                                            "shorthand": false,
+                                                            "computed": false,
+                                                            "kind": "init",
+                                                            "key": {
+                                                              "type": "Identifier",
+                                                              "name": "columnNumber"
+                                                            },
+                                                            "value": {
+                                                              "type": "Literal",
+                                                              "value": 1
+                                                            }
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "type": "ThisExpression"
+                                                      }
+                                                    ],
+                                                    "optional": false
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "Identifier",
+                                              "name": "undefined"
+                                            },
+                                            {
+                                              "type": "Literal",
+                                              "value": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "fileName"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            { "type": "ThisExpression" }
+                                          ],
+                                          "optional": false
+                                        }
+                                      ]
+                                    },
+                                    "kind": "init",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
+                                  }
+                                ]
+                              },
+                              { "type": "Identifier", "name": "undefined" },
+                              { "type": "Literal", "value": true },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "fileName"
+                                    },
+                                    "value": {
+                                      "type": "Literal",
+                                      "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                    }
+                                  },
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "lineNumber"
+                                    },
+                                    "value": { "type": "Literal", "value": 1 }
+                                  },
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "columnNumber"
+                                    },
+                                    "value": { "type": "Literal", "value": 1 }
+                                  }
+                                ]
+                              },
+                              { "type": "ThisExpression" }
+                            ],
+                            "optional": false
+                          },
+                          { "type": "Literal", "value": "\n" },
+                          {
+                            "type": "CallExpression",
+                            "callee": {
+                              "type": "Identifier",
+                              "name": "_jsxDEV"
+                            },
+                            "arguments": [
+                              { "type": "Literal", "value": "section" },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "Property",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "children"
+                                    },
+                                    "value": {
+                                      "type": "ArrayExpression",
+                                      "elements": [
+                                        {
+                                          "type": "CallExpression",
+                                          "callee": {
+                                            "type": "Identifier",
+                                            "name": "_jsxDEV"
+                                          },
+                                          "arguments": [
+                                            {
+                                              "type": "MemberExpression",
+                                              "object": {
+                                                "type": "Identifier",
+                                                "name": "_components"
+                                              },
+                                              "property": {
+                                                "type": "Identifier",
+                                                "name": "p"
+                                              },
+                                              "computed": false,
+                                              "optional": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "children"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "asdf"
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "Identifier",
+                                              "name": "undefined"
+                                            },
+                                            {
+                                              "type": "Literal",
+                                              "value": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "fileName"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                  }
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "lineNumber"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": 15
+                                                  }
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "columnNumber"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": 1
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            { "type": "ThisExpression" }
+                                          ],
+                                          "optional": false
+                                        },
+                                        {
+                                          "type": "CallExpression",
+                                          "callee": {
+                                            "type": "Identifier",
+                                            "name": "_jsxDEV"
+                                          },
+                                          "arguments": [
+                                            {
+                                              "type": "MemberExpression",
+                                              "object": {
+                                                "type": "Identifier",
+                                                "name": "_components"
+                                              },
+                                              "property": {
+                                                "type": "Identifier",
+                                                "name": "p"
+                                              },
+                                              "computed": false,
+                                              "optional": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "children"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "aa"
+                                                  },
+                                                  "kind": "init",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "Identifier",
+                                              "name": "undefined"
+                                            },
+                                            {
+                                              "type": "Literal",
+                                              "value": false
+                                            },
+                                            {
+                                              "type": "ObjectExpression",
+                                              "properties": [
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "fileName"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                                  }
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "lineNumber"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": 17
+                                                  }
+                                                },
+                                                {
+                                                  "type": "Property",
+                                                  "method": false,
+                                                  "shorthand": false,
+                                                  "computed": false,
+                                                  "kind": "init",
+                                                  "key": {
+                                                    "type": "Identifier",
+                                                    "name": "columnNumber"
+                                                  },
+                                                  "value": {
+                                                    "type": "Literal",
+                                                    "value": 1
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            { "type": "ThisExpression" }
+                                          ],
+                                          "optional": false
+                                        }
+                                      ]
+                                    },
+                                    "kind": "init",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false
+                                  }
+                                ]
+                              },
+                              { "type": "Identifier", "name": "undefined" },
+                              { "type": "Literal", "value": true },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "fileName"
+                                    },
+                                    "value": {
+                                      "type": "Literal",
+                                      "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                    }
+                                  },
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "lineNumber"
+                                    },
+                                    "value": { "type": "Literal", "value": 13 }
+                                  },
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "columnNumber"
+                                    },
+                                    "value": { "type": "Literal", "value": 1 }
+                                  }
+                                ]
+                              },
+                              { "type": "ThisExpression" }
+                            ],
+                            "optional": false
+                          }
+                        ]
+                      },
+                      "kind": "init",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false
+                    }
+                  ]
+                },
+                { "type": "Identifier", "name": "undefined" },
+                { "type": "Literal", "value": true },
+                {
+                  "type": "ObjectExpression",
+                  "properties": [
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "fileName" },
+                      "value": {
+                        "type": "Literal",
+                        "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                      }
+                    },
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "lineNumber" },
+                      "value": { "type": "Literal", "value": 1 }
+                    },
+                    {
+                      "type": "Property",
+                      "method": false,
+                      "shorthand": false,
+                      "computed": false,
+                      "kind": "init",
+                      "key": { "type": "Identifier", "name": "columnNumber" },
+                      "value": { "type": "Literal", "value": 1 }
+                    }
+                  ]
+                },
+                { "type": "ThisExpression" }
+              ],
+              "optional": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "FunctionDeclaration",
+        "id": { "type": "Identifier", "name": "MDXContent" },
+        "params": [
+          {
+            "type": "AssignmentPattern",
+            "left": { "type": "Identifier", "name": "props" },
+            "right": { "type": "ObjectExpression", "properties": [] }
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "kind": "const",
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "id": {
+                    "type": "ObjectPattern",
+                    "properties": [
+                      {
+                        "type": "Property",
+                        "kind": "init",
+                        "key": { "type": "Identifier", "name": "wrapper" },
+                        "value": { "type": "Identifier", "name": "MDXLayout" },
+                        "method": false,
+                        "shorthand": false,
+                        "computed": false
+                      }
+                    ]
+                  },
+                  "init": {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "left": {
+                      "type": "MemberExpression",
+                      "object": { "type": "Identifier", "name": "props" },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "components"
+                      },
+                      "computed": false,
+                      "optional": false
+                    },
+                    "right": { "type": "ObjectExpression", "properties": [] }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "ReturnStatement",
+              "argument": {
+                "type": "ConditionalExpression",
+                "test": { "type": "Identifier", "name": "MDXLayout" },
+                "consequent": {
+                  "type": "CallExpression",
+                  "callee": { "type": "Identifier", "name": "_jsxDEV" },
+                  "arguments": [
+                    { "type": "Identifier", "name": "MDXLayout" },
+                    {
+                      "type": "ObjectExpression",
+                      "properties": [
+                        {
+                          "type": "SpreadElement",
+                          "argument": { "type": "Identifier", "name": "props" }
+                        },
+                        {
+                          "type": "Property",
+                          "key": { "type": "Identifier", "name": "children" },
+                          "value": {
+                            "type": "CallExpression",
+                            "callee": {
+                              "type": "Identifier",
+                              "name": "_jsxDEV"
+                            },
+                            "arguments": [
+                              {
+                                "type": "Identifier",
+                                "name": "_createMdxContent"
+                              },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "SpreadElement",
+                                    "argument": {
+                                      "type": "Identifier",
+                                      "name": "props"
+                                    }
+                                  }
+                                ]
+                              },
+                              { "type": "Identifier", "name": "undefined" },
+                              { "type": "Literal", "value": false },
+                              {
+                                "type": "ObjectExpression",
+                                "properties": [
+                                  {
+                                    "type": "Property",
+                                    "method": false,
+                                    "shorthand": false,
+                                    "computed": false,
+                                    "kind": "init",
+                                    "key": {
+                                      "type": "Identifier",
+                                      "name": "fileName"
+                                    },
+                                    "value": {
+                                      "type": "Literal",
+                                      "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                                    }
+                                  }
+                                ]
+                              },
+                              { "type": "ThisExpression" }
+                            ],
+                            "optional": false
+                          },
+                          "kind": "init",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false
+                        }
+                      ]
+                    },
+                    { "type": "Identifier", "name": "undefined" },
+                    { "type": "Literal", "value": false },
+                    {
+                      "type": "ObjectExpression",
+                      "properties": [
+                        {
+                          "type": "Property",
+                          "method": false,
+                          "shorthand": false,
+                          "computed": false,
+                          "kind": "init",
+                          "key": { "type": "Identifier", "name": "fileName" },
+                          "value": {
+                            "type": "Literal",
+                            "value": "C:\\p\\dev\\codehike\\packages\\codehike\\tests\\md-suite\\static-children.0.mdx"
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "ThisExpression" }
+                  ],
+                  "optional": false
+                },
+                "alternate": {
+                  "type": "CallExpression",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "_createMdxContent"
+                  },
+                  "arguments": [{ "type": "Identifier", "name": "props" }],
+                  "optional": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "comments": []
+}

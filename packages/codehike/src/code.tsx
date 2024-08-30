@@ -16,11 +16,11 @@ import type {
   CustomToken,
   CustomTokenWithAnnotation,
   InlineProps,
-} from "./types.js"
+} from "./code/types.js"
 
-import { highlight } from "./highlight.js"
-import { Pre, Inline } from "./pre.js"
-import { InnerPre, getPreRef, InnerLine, InnerToken } from "./inner.js"
+import { highlight } from "./code/highlight.js"
+import { Pre, Inline } from "./code/pre.js"
+import { InnerPre, getPreRef, InnerLine, InnerToken } from "./code/inner.js"
 
 export type {
   RawCode,
