@@ -60,15 +60,18 @@ export function NavBar({ version }: { version: string }) {
 function VersionNav({ version }: { version: string }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-sm bg-secondary text-primary rounded-lg px-2">
+      <DropdownMenuTrigger className="text-sm bg-secondary text-primary rounded-lg px-2 tabular-nums">
         {version}
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem className="p-0">
-          <span className="w-full px-2 py-1">{version}</span>
+      <DropdownMenuContent className="min-w-[5rem]">
+        <DropdownMenuItem className="p-0 text-center">
+          <span className="w-full px-2 py-1 tabular-nums">{version}</span>
         </DropdownMenuItem>
-        <DropdownMenuItem className="p-0">
-          <a href="https://v0.codehike.org/docs" className="w-full px-2 py-1">
+        <DropdownMenuItem className="p-0 text-center">
+          <a
+            href="https://v0.codehike.org/docs"
+            className="w-full px-2 py-1 tabular-nums"
+          >
             0.9.0
           </a>
         </DropdownMenuItem>
