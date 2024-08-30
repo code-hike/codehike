@@ -9,7 +9,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "prerelease": "pkg-pr-new publish --no-template --compact './packages/codehike'"
+    "canary": "pkg-pr-new publish --no-template --compact './packages/codehike'"
   },
   "devDependencies": {
     "@changesets/cli": "2.27.1",

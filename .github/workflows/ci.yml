@@ -25,4 +25,4 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - run: pnpm prerelease
+      - run: pnpm canary
