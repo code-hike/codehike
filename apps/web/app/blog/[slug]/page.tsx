@@ -83,7 +83,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
       title: page.data.title,
       type: "article",
       description: page.data.description,
-      images: `/blog/${params.slug}.png`,
+      images: `https://codehike.org/blog/${params.slug}.png`,
     },
     twitter: {
       card: "summary_large_image",
@@ -91,7 +91,7 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
       creator: "@pomber",
       title: page.data.title,
       description: page.data.description,
-      images: `/blog/${params.slug}.png`,
+      images: `https://codehike.org/blog/${params.slug}.png`,
     },
   } satisfies Metadata
 }

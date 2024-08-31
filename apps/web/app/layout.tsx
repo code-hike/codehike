@@ -32,14 +32,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://codehike.org"),
   openGraph: {
     title: "Code Hike",
-    images: `/codehike.png`,
+    images: `https://codehike.org/codehike.png`,
     siteName: "Code Hike",
   },
   twitter: {
     card: "summary_large_image",
     site: "@codehike_",
     creator: "@pomber",
-    images: `/codehike.png`,
+    images: `https://codehike.org/codehike.png`,
   },
   alternates: {
     types: {
