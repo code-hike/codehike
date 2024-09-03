@@ -1,0 +1,483 @@
+---
+title: Build-time Components
+description: Why React Server Components are a leap forward for content-driven websites
+date: 2024-09-04
+authors: [pomber]
+draft: true
+---
+
+import { Demo, Chain } from "./build-time-components"
+
+In content-driven websites, it's common to have content that needs some transformation or refinement before being rendered. For example, a blog written in Markdown might need syntax highlighting for code blocks.
+
+Let's use a small example to illustrate the problem.
+
+We have a Markdown file with links, we want to make those links show the open graph image of the linked URL in a hover card:
+
+<Demo>
+
+```md content.md -w
+# Hello
+
+Use [Next.js](https://nextjs.org) and [Code Hike](https://codehike.org)
+```
+
+</Demo>
+
+We'll see three ways to solve this problem.
+
+But first, let's do a quick recap of how the content is transformed from Markdown to the JS we end up deploying to a CDN.
+
+## What happens to Markdown when we run `next build`
+
+We have a Next.js app using the Pages Router, the `@next/mdx` plugin, and [static exports](https://nextjs.org/docs/pages/building-your-application/deploying/static-exports).
+
+Let's see what happens to the `pages/index.jsx` page when we run `next build`:
+
+```jsx pages/index.jsx -w
+import Content from "./content.md"
+
+function MyLink({ href, children }) {
+  return <a href={href}>{children}</a>
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+<Chain >
+
+## !intro
+
+The _`import Content from "./content.md"`_ will make the MDX loader process the `content.md` file.
+
+## !!steps
+
+```md ! content.md -w
+# Hello
+
+This is [Code Hike](https://codehike.org)
+```
+
+### !next
+
+The mdx loader will process `content.md` in several steps.
+
+The first step is **transforming the source string into a markdown abstract syntax tree** (mdast).
+
+## !!steps
+
+```json ! Markdown Abstract Syntax Tree -w
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "heading",
+      "depth": 1,
+      "children": [{ "type": "text", "value": "Hello" }]
+    },
+    {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "This is " },
+        {
+          "type": "link",
+          "url": "https://codehike.org",
+          "children": [{ "type": "text", "value": "Code Hike" }]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### !this
+
+### Remark Plugins
+
+If there are any remark plugins, they will be applied one by one to the mdast.
+
+This is where you can plug any transformation you want to apply to the markdown.
+
+### !next
+
+After all the remark plugins are applied, the mdast is transformed to another AST: HTML abstract syntax tree (hast).
+
+It's called HTML abstract syntax tree, but it won't be used to generate HTML, it will be used to generate JSX, which is similar enough.
+
+## !!steps
+
+```json ! HTML Abstract Syntax Tree -w
+{
+  "type": "root",
+  "children": [
+    {
+      "type": "element",
+      "tagName": "h1",
+      "children": [{ "type": "text", "value": "Hello" }]
+    },
+    {
+      "type": "element",
+      "tagName": "p",
+      "children": [
+        { "type": "text", "value": "This is " },
+        {
+          "type": "element",
+          "tagName": "a",
+          "properties": { "href": "https://codehike.org" },
+          "children": [{ "type": "text", "value": "Code Hike" }]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### !this
+
+### Rehype Plugins
+
+If there are any rehype plugins, they will be applied to the hast, one by one.
+
+At this stage is common to add, for example, syntax highlighting to code blocks. A rehype plugin will find any `pre` element and replace its content with styled `span`s.
+
+### !next
+
+The hast is then transformed to another AST: the esast (ECMAScript Abstract Syntax Tree).
+
+The esast is then transformed to a JSX file.
+
+This JSX file is the output of the mdx loader, which will pass the control back to the bundler.
+
+## !!steps
+
+```jsx ! Compiled Markdown -w
+export default function MDXContent(props = {}) {
+  const _components = {
+    a: "a",
+    h1: "h1",
+    p: "p",
+    ...props.components,
+  }
+  return (
+    <>
+      <_components.h1>Hello</_components.h1>
+      <_components.p>
+        {"This is "}
+        <_components.a href="https://codehike.org">Code Hike</_components.a>
+      </_components.p>
+    </>
+  )
+}
+```
+
+### !next
+
+The bundler now understands what the _`import Content from "./content.md"`_ was importing. So it can finish processing the `pages/index.jsx` file, and bundle it together with the compiled `content.md` file.
+
+It will also compile the JSX away and minify the code, but for clarity let's ignore that.
+
+## !!steps
+
+```jsx ! out/pages/index.js -w
+import React from "react"
+
+function Content(props = {}) {
+  const _components = {
+    a: "a",
+    h1: "h1",
+    p: "p",
+    ...props.components,
+  }
+  return (
+    <>
+      <_components.h1>Hello</_components.h1>
+      <_components.p>
+        {"This is "}
+        <_components.a href="https://codehike.org">Code Hike</_components.a>
+      </_components.p>
+    </>
+  )
+}
+
+function MyLink({ href, children }) {
+  return <a href={href}>{children}</a>
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+</Chain>
+
+---
+
+Now let's go back to our problem: we want to show the open graph image of the linked URL in a hover card.
+
+## Client-side approach
+
+If you didn't know anything about the build process, your first thought might be to fetch the image on the client-side when the link is rendered. So let's start with that.
+
+Let's assume we already have a _`async function scrape(url)`_ that given a URL it fetches the HTML, finds the open graph image tag, and returns the `content` attribute, which is the URL of the image we want.
+
+We also have a _`function LinkWithCard({ href, children, image })`_ that renders a link with a hover card that shows the image (I'm using [shadcn's Hover Card](https://ui.shadcn.com/docs/components/hover-card)).
+
+A component that solves this client-side would look like this:
+
+```jsx pages/index.jsx -w
+import { useEffect, useState } from "react"
+import Content from "./content.mdx"
+import { scrape } from "./scraper"
+import { LinkWithCard } from "./card"
+
+function MyLink({ href, children }) {
+  // !mark(1:6)
+  const [image, setImage] = useState(null)
+  useEffect(() => {
+    scrape(href).then((data) => {
+      setImage(data.image)
+    })
+  }, [href])
+  return (
+    <LinkWithCard href={href} image={image}>
+      {children}
+    </LinkWithCard>
+  )
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+This is a simple approach that gets the job done, but it has some major downsides:
+
+- every user will be doing fetches for every link in the page
+- we are shipping the scraper code to the client
+
+For different use cases, this approach could even be impossible. For example, if instead of the open graph image we wanted to show a screenshot of the linked URL.
+
+## Build-time plugin approach
+
+A more efficient way to solve this problem is to move the scraping part to build-time using something like a rehype plugin:
+
+```jsx next.config.mjs -w
+import { visit } from "unist-util-visit"
+import { scrape } from "./scraper"
+
+function rehypeLinkImage() {
+  return async (tree) => {
+    const links = []
+    visit(tree, (node) => {
+      if (node.tagName === "a") {
+        links.push(node)
+      }
+    })
+    const promises = links.map(async (node) => {
+      const url = node.properties.href
+      const { image } = await scrape(url)
+      node.properties["data-image"] = image
+    })
+    await Promise.all(promises)
+  }
+}
+```
+
+This plugin adds a `data-image` attribute to every _`<a>`_ tag in the HTML syntax tree.
+
+We can then use this attribute in our component and pass it to the _`<LinkWithCard>`_ component:
+
+```jsx pages/index.jsx -w
+import Content from "./content.mdx"
+import { LinkWithCard } from "./card"
+
+function MyLink({ href, children, ...props }) {
+  const image = props["data-image"]
+  return (
+    <LinkWithCard href={href} image={image}>
+      {children}
+    </LinkWithCard>
+  )
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+We solve the downsides of the client-side approach. But is this approach strictly better?
+
+## Comparing the two approaches
+
+The **build-time plugin** approach:
+
+- ✅ Fetches on build-time, saving the users from making redundant work
+- ✅ Doesn't ship the scraper code to the client
+
+But the **client-side** approach has some advantages too:
+
+- ✅ All the behavior is contained in one component, for example, if we want to add the open graph desciption to the hover card, we can do it in one place
+- ✅ We can use the component from other places, not just markdown
+- ✅ We don't need to learn how to write rehype plugins
+
+**It's a trade-off between developer experience and user experience.**
+
+In this case, the user experience wins. But what if we could remove the trade-off?
+
+## React Server Components approach
+
+A third option, that before Next.js 13 wasn't possible, is to use React Server Components:
+
+```jsx app/page.jsx -w
+import { LinkWithCard } from "./card"
+import { scrape } from "./scraper"
+
+async function MyLink({ href, children }) {
+  const { image } = await scrape(href)
+  return (
+    <LinkWithCard href={href} image={image}>
+      {children}
+    </LinkWithCard>
+  )
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+With React Server Components (using Next.js App Router), we have one more step when we run `next build`:
+
+<Chain>
+
+## !!steps
+
+```jsx ! bundled js -w
+import React from "react"
+import { LinkWithCard } from "./card"
+import { scrape } from "./scraper"
+
+function Content(props = {}) {
+  const _components = {
+    a: "a",
+    h1: "h1",
+    p: "p",
+    ...props.components,
+  }
+  return (
+    <>
+      <_components.h1>Hello</_components.h1>
+      <_components.p>
+        {"This is "}
+        {/* !mark */}
+        <_components.a href="https://codehike.org">Code Hike</_components.a>
+      </_components.p>
+    </>
+  )
+}
+
+async function MyLink({ href, children }) {
+  const { image } = await scrape(href)
+  return (
+    <LinkWithCard href={href} image={image}>
+      {children}
+    </LinkWithCard>
+  )
+}
+
+export default function Page() {
+  return <Content components={{ a: MyLink }} />
+}
+```
+
+### !next
+
+Since _`function Page()`_ is a server component, it will be run at build-time and replaced by its result.
+
+The output of _`function Page()`_ is:
+
+{/* prettier-ignore */}
+```jsx -w
+<>
+  <h1>Hello</h1>
+  <p>
+    {"This is "}
+    {/* !mark(1:3) */}
+    <MyLink href="https://codehike.org">
+      Code Hike
+    </MyLink>
+  </p>
+</>
+```
+
+But _`function MyLink()`_ is also a server component, so it will also be resolved at build-time.
+
+Running _`<MyLink href="https://codehike.org">Code Hike</MyLink>`_ means we are running _`scrape("https://codehike.org")`_ at build-time and replacing the element with:
+
+```jsx -w
+<LinkWithCard
+  href="https://codehike.org"
+  image="https://codehike.org/codehike.png"
+>
+  Code Hike
+</LinkWithCard>
+```
+
+And since we are not using the _`function scrape()`_ anymore, the _`import { scrape } from "./scraper"`_ will be removed from the bundle.
+
+## !!steps
+
+```jsx ! out/app/page.js
+import { LinkWithCard } from "./card"
+
+export default function Page() {
+  return (
+    <>
+      <h1>Hello</h1>
+      <p>
+        {"This is "}
+        <LinkWithCard
+          href="https://codehike.org"
+          image="https://codehike.org/codehike.png"
+        >
+          Code Hike
+        </LinkWithCard>
+      </p>
+    </>
+  )
+}
+```
+
+</Chain>
+
+Just to be clear because the name React **Server** Components can be confusing: **this is happening at build-time**, we can deploy the static output of the build to a CDN.
+
+Comparing this to the other two approaches, we have all the advantages:
+
+- ✅ Fetches on build-time, saving the users from making redundant work
+- ✅ Doesn't ship the scraper code to the client
+- ✅ All the behavior is contained in one component, for example, if we want to add the open graph desciption to the hover card, we can do it in one place
+- ✅ We can use the component from other places, not just markdown
+- ✅ We don't need to learn how to write rehype plugins
+
+wihout any of the downsides.
+
+**This approach has the best of both worlds. Best UX, best DX.**
+
+## Conclusion
+
+In the talk [Mind the Gap](https://www.youtube.com/watch?v=zqhE-CepH2g), Ryan Florence explains how we have different solutions for handling the network in web apps, different solutions with different trade-offs. With the introduction of React Server Components, components are now able to _cross_ the network and those trade-offs are gone.
+
+This same technology that abstracted the network layer is also abstracting the build-time layer.
+
+I hope these wins in developer experience translate in [richer](/blog/rich-content-websites) content-driven websites.
+
+---
+
+If you need more examples of the new possibilities that React Server Components bring to content websites, here are some that I've been exploring:
+
+- [Showing Typescript compiler information in codeblocks](/docs/code/twoslash)
+- [Transpiling codeblocks to other languages](/docs/code/transpile)
+- [Transforming TailwindCSS classes to CSS](https://x.com/pomber/status/1821554941753729451)

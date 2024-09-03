@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   title: "Code Hike",
   description:
     "Use Markdown and React to build rich content websites. Documentation, tutorials, blogs, videos, interactive walkthroughs, and more.",
-  metadataBase: new URL("https://codehike.org"),
+  // metadataBase: new URL("https://codehike.org"),
   openGraph: {
     title: "Code Hike",
     images: `https://codehike.org/codehike.png`,

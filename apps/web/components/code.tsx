@@ -26,7 +26,13 @@ import { tooltip } from "./annotations/tooltip"
 
 export async function InlineCode({ codeblock }: { codeblock: RawCode }) {
   const highlighted = await highlight(codeblock, theme)
-  return <Inline code={highlighted} style={highlighted.style} />
+  return (
+    <Inline
+      code={highlighted}
+      style={highlighted.style}
+      className="selection:bg-editor-selectionBackground"
+    />
+  )
 }
 
 export async function Code({
