@@ -23,12 +23,12 @@ export function Chain(props: unknown) {
     }),
   )
   return (
-    <section className="grid grid-cols-2 grid-flow-col gap-2 md:-mx-10 lg:-mx-32 mt-2">
+    <section className="md:grid grid-cols-2 grid-flow-col gap-2 md:-mx-10 lg:-mx-32 mt-2">
       <div className="col-start-2 flex">
         {intro && (
           <>
             <Arrow intro />
-            <div className=" self-center flex-1">{intro?.children}</div>
+            <div className=" self-center flex-1 min-w-0">{intro?.children}</div>
           </>
         )}
       </div>
@@ -42,14 +42,18 @@ export function Chain(props: unknown) {
             {step.this && (
               <>
                 <Arrow />
-                <div className=" self-center flex-1">{step.this.children}</div>
+                <div className=" self-center flex-1 min-w-0">
+                  {step.this.children}
+                </div>
               </>
             )}
           </div>
           {i < steps.length - 1 && (
             <div className="col-start-2 row-span-2 flex">
               <Arrow />
-              <div className=" self-center flex-1">{step.next?.children}</div>
+              <div className=" self-center flex-1 min-w-0">
+                {step.next?.children}
+              </div>
             </div>
           )}
         </>
@@ -61,7 +65,7 @@ export function Chain(props: unknown) {
 
 function Arrow({ intro }: { intro?: boolean }) {
   return (
-    <div className="h-full mr-3 flex-col w-5 flex">
+    <div className="h-full mr-3 flex-col w-5 hidden md:flex">
       {!intro && <div className="h-2 bg-zinc-500/50 rounded-se-2xl mt-6" />}
       <div className="flex-1 w-2 bg-zinc-500/50 self-end" />
       <div className="h-2 bg-zinc-500/50 rounded-ee-2xl ml-2 mb-6">
