@@ -38,10 +38,12 @@ export function WithTooltip({
     ? "p-0 [&>*]:my-0 border-none overflow-auto rounded-none"
     : ""
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={100}>
       <Tooltip>
-        <TooltipTrigger className="underline decoration-dotted underline-offset-4 cursor-help">
-          {children}
+        <TooltipTrigger asChild>
+          <span className="underline decoration-dotted underline-offset-4 cursor-help">
+            {children}
+          </span>
         </TooltipTrigger>
         <TooltipContent className={className}>{block?.children}</TooltipContent>
       </Tooltip>
