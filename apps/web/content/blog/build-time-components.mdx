@@ -285,7 +285,7 @@ function rehypeLinkImage() {
 }
 ```
 
-This plugin adds a `data-image` attribute to every _`<a>`_ tag in the HTML syntax tree.
+This plugin adds a `data-image` attribute to every _`<a>`_ tag in the HTML syntax tree (don't worry if you can't follow the code, the fact that it's hard to follow is one of the points I want to make later).
 
 We can then use this attribute in our component and pass it to the _`<LinkWithCard>`_ component:
 
@@ -318,7 +318,7 @@ The **build-time plugin** approach:
 
 But the **client-side** approach has some advantages too:
 
-- ✅ All the behavior is contained in one component, for example, if we want to add the open graph desciption to the hover card, we can do it in one place
+- ✅ All the behavior is contained in one component, for example, if we want to add the open graph description to the hover card, we can do it in one place
 - ✅ We can use the component from other places, not just markdown
 - ✅ We don't need to learn how to write rehype plugins
 
@@ -458,11 +458,11 @@ Comparing this to the other two approaches, we have all the advantages:
 
 - ✅ Fetches on build-time, saving the users from making redundant work
 - ✅ Doesn't ship the scraper code to the client
-- ✅ All the behavior is contained in one component, for example, if we want to add the open graph desciption to the hover card, we can do it in one place
+- ✅ All the behavior is contained in one component, for example, if we want to add the open graph description to the hover card, we can do it in one place
 - ✅ We can use the component from other places, not just markdown
 - ✅ We don't need to learn how to write rehype plugins
 
-wihout any of the downsides.
+without any of the downsides.
 
 **This approach has the best of both worlds. Best UX, best DX.**
 
