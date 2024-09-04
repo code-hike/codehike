@@ -3,7 +3,7 @@ title: Build-time Components
 description: Why React Server Components are a leap forward for content-driven websites
 date: 2024-09-04
 authors: [pomber]
-draft: true
+draft: false
 ---
 
 import {
@@ -236,29 +236,14 @@ We also have a <WithTooltip name="two">_`function LinkWithCard({ href, children,
 !isCode true
 
 ```jsx scraper.js
-function LinkWithCard({
-  href,
-  children,
-  image,
-}: {
-  href: string
-  children: React.ReactNode
-  image: string
-}) {
-  return (
-    <HoverCard openDelay={200} closeDelay={100}>
-      <HoverCardTrigger
-        className="text-zinc-900 decoration-zinc-700"
-        href={href}
-      >
-        {children}
-        <img src={image} alt={href} className="hidden" fetchPriority="low" />
-      </HoverCardTrigger>
-      <HoverCardContent className="p-0 overflow-hidden [&>*]:m-0">
-        <img src={image} alt={href} />
-      </HoverCardContent>
-    </HoverCard>
-  )
+const regex = /<meta property="og:image" content="([^"]+)"/
+export async function scrape(url) {
+  const res = await fetch(url)
+  const html = await res.text()
+  const match = html.match(regex)
+  return {
+    image: match ? match[1] : null,
+  }
 }
 ```
 
@@ -537,7 +522,7 @@ In the talk [Mind the Gap](https://www.youtube.com/watch?v=zqhE-CepH2g), Ryan Fl
 
 This same technology that abstracted the network layer is also abstracting the build-time layer.
 
-I hope these wins in developer experience translate in [richer](/blog/rich-content-websites) content-driven websites.
+I hope these wins in developer experience translate into [richer](/blog/rich-content-websites) content-driven websites.
 
 ---
 
