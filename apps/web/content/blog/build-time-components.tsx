@@ -6,6 +6,7 @@ import {
 import { Block, CodeBlock, parseProps } from "codehike/blocks"
 import { z } from "zod"
 import { Code } from "../../components/code"
+import { Fragment } from "react"
 
 export function Chain(props: unknown) {
   const { intro, steps, outro } = parseProps(
@@ -33,7 +34,7 @@ export function Chain(props: unknown) {
         )}
       </div>
       {steps.map((step, i) => (
-        <>
+        <Fragment key={i}>
           <div className="col-start-1 row-span-3 ">
             <Code codeblock={step.code} className="h-full m-0" />
           </div>
@@ -56,7 +57,7 @@ export function Chain(props: unknown) {
               </div>
             </div>
           )}
-        </>
+        </Fragment>
       ))}
       <div className="col-start-2">{outro?.children}</div>
     </section>
@@ -66,11 +67,11 @@ export function Chain(props: unknown) {
 function Arrow({ intro }: { intro?: boolean }) {
   return (
     <div className="h-full mr-3 flex-col w-5 hidden md:flex">
-      {!intro && <div className="h-2 bg-zinc-500/50 rounded-se-2xl mt-6" />}
-      <div className="flex-1 w-2 bg-zinc-500/50 self-end" />
-      <div className="h-2 bg-zinc-500/50 rounded-ee-2xl ml-2 mb-6">
+      {!intro && <div className="h-2 bg-zinc-500/20 rounded-se-2xl mt-6" />}
+      <div className="flex-1 w-2 bg-zinc-500/20 self-end" />
+      <div className="h-2 bg-zinc-500/20 rounded-ee-2xl ml-2 mb-6">
         <div
-          className="border-zinc-500/50 -ml-2"
+          className="border-zinc-500/20 -ml-2"
           style={{
             width: 0,
             height: 0,
@@ -142,6 +143,7 @@ function LinkWithCard({
         href={href}
       >
         {children}
+        <img src={image} alt={href} className="hidden" fetchPriority="low" />
       </HoverCardTrigger>
       <HoverCardContent className="p-0 overflow-hidden [&>*]:m-0">
         <img src={image} alt={href} />
