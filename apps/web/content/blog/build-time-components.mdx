@@ -6,7 +6,12 @@ authors: [pomber]
 draft: true
 ---
 
-import { Demo, Chain } from "./build-time-components"
+import {
+  Demo,
+  Chain,
+  BlocksToContext,
+  WithTooltip,
+} from "./build-time-components"
 
 In content-driven websites, it's common to have content that needs some transformation or refinement before being rendered. For example, a blog written in Markdown might need syntax highlighting for code blocks.
 
@@ -220,9 +225,69 @@ Now let's go back to our problem: we want to show the open graph image of the li
 
 If you didn't know anything about the build process, your first thought might be to fetch the image on the client-side when the link is rendered. So let's start with that.
 
-Let's assume we already have a _`async function scrape(url)`_ that given a URL it fetches the HTML, finds the open graph image tag, and returns the `content` attribute, which is the URL of the image we want.
+<BlocksToContext>
 
-We also have a _`function LinkWithCard({ href, children, image })`_ that renders a link with a hover card that shows the image (I'm using [shadcn's Hover Card](https://ui.shadcn.com/docs/components/hover-card)).
+Let's assume we already have a <WithTooltip name="one">_`async function scrape(url)`_</WithTooltip> that given a URL it fetches the HTML, finds the open graph image tag, and returns the `content` attribute, which is the URL of the image we want.
+
+We also have a <WithTooltip name="two">_`function LinkWithCard({ href, children, image })`_</WithTooltip> that renders a link with a hover card that shows the image (I'm using [shadcn's Hover Card](https://ui.shadcn.com/docs/components/hover-card)).
+
+## !one
+
+!isCode true
+
+```jsx scraper.js
+function LinkWithCard({
+  href,
+  children,
+  image,
+}: {
+  href: string
+  children: React.ReactNode
+  image: string
+}) {
+  return (
+    <HoverCard openDelay={200} closeDelay={100}>
+      <HoverCardTrigger
+        className="text-zinc-900 decoration-zinc-700"
+        href={href}
+      >
+        {children}
+        <img src={image} alt={href} className="hidden" fetchPriority="low" />
+      </HoverCardTrigger>
+      <HoverCardContent className="p-0 overflow-hidden [&>*]:m-0">
+        <img src={image} alt={href} />
+      </HoverCardContent>
+    </HoverCard>
+  )
+}
+```
+
+## !two
+
+!isCode true
+
+```jsx card.jsx
+// !link[/(http.*?$)/] https://ui.shadcn.com/docs/components/hover-card
+// from https://ui.shadcn.com/docs/components/hover-card
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+
+export function LinkWithCard({ href, children, image }) {
+  return (
+    <HoverCard openDelay={200} closeDelay={100}>
+      <HoverCardTrigger href={href}>{children}</HoverCardTrigger>
+      <HoverCardContent className="p-0">
+        <img src={image} alt={href} />
+      </HoverCardContent>
+    </HoverCard>
+  )
+}
+```
+
+</BlocksToContext>
 
 A component that solves this client-side would look like this:
 

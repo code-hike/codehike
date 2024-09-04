@@ -5,8 +5,9 @@ import {
 } from "@/components/ui/hover-card"
 import { Block, CodeBlock, parseProps } from "codehike/blocks"
 import { z } from "zod"
-import { Code } from "../../components/code"
+import { Code } from "@/components/code"
 import { Fragment } from "react"
+export { BlocksToContext, WithTooltip } from "@/components/blocks-to-context"
 
 export function Chain(props: unknown) {
   const { intro, steps, outro } = parseProps(
