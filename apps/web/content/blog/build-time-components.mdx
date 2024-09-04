@@ -145,7 +145,7 @@ It's called HTML abstract syntax tree, but it won't be used to generate HTML, it
 
 If there are any rehype plugins, they will be applied to the hast, one by one.
 
-At this stage is common to add, for example, syntax highlighting to code blocks. A rehype plugin will find any `pre` element and replace its content with styled `span`s.
+At this stage is common to add, for example, syntax highlighting to code blocks: a rehype plugin will find any `pre` element and replace its content with styled `span`s.
 
 ### !next
 
@@ -444,7 +444,7 @@ export default function Page() {
 
 ### !next
 
-Since _`function Page()`_ is a server component, it will be run at build-time and replaced by its result.
+Since _`function Page()`_ is a server component, it will be run at build-time and replaced by its result (not 100% true, but it's a good mental model).
 
 The output of _`function Page()`_ is:
 
@@ -522,7 +522,7 @@ In the talk [Mind the Gap](https://www.youtube.com/watch?v=zqhE-CepH2g), Ryan Fl
 
 This same technology that abstracted the network layer is also abstracting the build-time layer.
 
-I hope these wins in developer experience translate into [richer](/blog/rich-content-websites) content-driven websites.
+I'm optimistic that these wins in developer experience will translate into [richer](/blog/rich-content-websites) content-driven websites.
 
 ---
 
