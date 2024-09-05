@@ -235,8 +235,9 @@ We also have a <WithTooltip name="two">_`function LinkWithCard({ href, children,
 
 !isCode true
 
-```jsx scraper.js
+```jsx scraper.js -c
 const regex = /<meta property="og:image" content="([^"]+)"/
+
 export async function scrape(url) {
   const res = await fetch(url)
   const html = await res.text()
@@ -251,7 +252,7 @@ export async function scrape(url) {
 
 !isCode true
 
-```jsx card.jsx
+```jsx card.jsx -c
 // !link[/(http.*?$)/] https://ui.shadcn.com/docs/components/hover-card
 // from https://ui.shadcn.com/docs/components/hover-card
 import {
@@ -328,7 +329,7 @@ function rehypeLinkImage() {
     const promises = links.map(async (node) => {
       const url = node.properties.href
       const { image } = await scrape(url)
-      node.properties["data-image"] = image
+      node.properties["dataImage"] = image
     })
     await Promise.all(promises)
   }
