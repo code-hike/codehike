@@ -33,7 +33,39 @@ export default async function Page({ params }: { params: { slug: string } }) {
         {page.data.description}
       </h2>
       <MDX />
+      <Footer />
     </main>
+  )
+}
+
+function Footer() {
+  return (
+    <>
+      <hr className="mb-12" />
+      <footer className="flex sm:flex-row flex-col gap-4 ">
+        <Image
+          src={pomber}
+          alt="Rodrigo Pombo"
+          width={64}
+          height={64}
+          priority={true}
+          className="rounded-lg my-0 self-center sm:self-start"
+        />
+        <p className="min-w-0 self-start my-0 text-pretty">
+          <strong>Rodrigo Pombo</strong>, a.k.a.{" "}
+          <a href="https://x.com/pomber">
+            <strong>@pomber</strong>
+          </a>
+          , is a software overengineer working on{" "}
+          <Link href="/" className="whitespace-nowrap">
+            Code Hike
+          </Link>
+          , an open-source library that bridges the gap between Markdown and
+          React to help developers{" "}
+          <strong>create rich technical content for the modern web</strong>.
+        </p>
+      </footer>
+    </>
   )
 }
 
