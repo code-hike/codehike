@@ -1,0 +1,45 @@
+name: Release PR Merged
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - next
+
+jobs:
+  release:
+    name: Release
+    if: >
+      github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - run: pnpm install
+
+      - run: pnpm build
+
+      - name: Release and update issues comments
+        run: node .github/scripts/release.mjs
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

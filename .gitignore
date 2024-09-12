@@ -146,3 +146,4 @@ dist-ssr
 server/dist
 public/dist
 .turbo
+canary.json

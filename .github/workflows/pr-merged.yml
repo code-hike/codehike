@@ -1,0 +1,41 @@
+name: PR Merged
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - next
+
+jobs:
+  comment-issues:
+    name: Comment Issues
+    if: >
+      github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'changeset')
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - run: pnpm install
+
+      - name: Add comment to issues
+        run: node .github/scripts/pr-merged.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
