@@ -6,4 +6,126 @@ authors: [pomber]
 draft: true
 ---
 
-test
+Let's tart with an example.
+
+> demo (roman emperors)
+
+This is a UI pattern commonly referred as scrollytelling, where the content is presented in a way that is tightly coupled with the user's scroll position.
+
+You may have seen it in websites like [The Pudding](https://pudding.cool/), [The New York Times](https://www.nytimes.com/), or [The Washington Post](https://www.washingtonpost.com/).
+
+It's also used for technical content like [Stripe's API reference](https://stripe.com/docs/api) or.
+
+A component to implement this pattern is not super hard to build, usually it's a combination of an intersection observer and position sticky.
+
+```tsx
+type Props = {
+  steps: {
+    content: React.ReactNode
+    sticker: React.ReactNode
+  }[]
+}
+function Scrollytelling({ steps }: Props) {
+  const [currentStep, setCurrentStep] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCurrentStep(parseInt(entry.target.id))
+        }
+      },
+      { threshold: 0.5 },
+    )
+
+    steps.forEach((_, i) => {
+      observer.observe(document.getElementById(i.toString())!)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref}>
+      {steps.map((step, i) => (
+        <div key={i} id={i.toString()}>
+          {step.content}
+        </div>
+      ))}
+      <div style={{ position: "sticky", top: 0 }}>
+        {steps[currentStep].sticker}
+      </div>
+    </div>
+  )
+}
+```
+
+Using this component is as simple as passing an array of steps, each with a content and a sticker.
+
+```tsx page.tsx
+export default function Page() {
+  return (
+    <Scrollytelling
+      steps={[
+        {
+          content: (
+            <div>
+              <h1>Augustus</h1>
+              <p>
+                Augustus was the first Roman emperor, reigning from 27 BC until
+                his death in AD 14.
+              </p>
+            </div>
+          ),
+          sticker: <img src="/augustus.jpg" alt="Augustus" />,
+        },
+        {
+          content: (
+            <div>
+              <h1>Nero</h1>
+              <p>
+                Nero was the last Roman emperor of the Julio-Claudian dynasty.
+              </p>
+            </div>
+          ),
+          sticker: <img src="/nero.jpg" alt="Nero" />,
+        },
+        {
+          content: (
+            <div>
+              <h1>Trajan</h1>
+              <p>Trajan was Roman emperor from 98 to 117.</p>
+            </div>
+          ),
+          sticker: <img src="/trajan.jpg" alt="Trajan" />,
+        },
+      ]}
+    />
+  )
+}
+```
+
+Even with this simple example, you can see that writing content in this way isn't vert straightforward.
+
+Ideally, you would want to put the content in Markdown like this:
+
+```md
+## Augustus
+
+Augustus was the first Roman emperor, reigning from 27 BC until his death in AD 14.
+
+![Augustus](/augustus.jpg)
+
+## Nero
+
+Nero was the last Roman emperor of the Julio-Claudian dynasty.
+
+![Nero](/nero.jpg)
+
+## Trajan
+
+Trajan was Roman emperor from 98 to 117.
+
+![Trajan](/trajan.jpg)
+```

@@ -48,13 +48,13 @@ function MyLayout({
 }
 ```
 
-For more control over the selection, you can use the `useSelection` hook.
+For more control over the selection, you can use the `useSelectedIndex` hook.
 
 ```tsx my-layout.tsx -c
-import { useSelection } from "codehike/utils/selection"
+import { useSelectedIndex } from "codehike/utils/selection"
 
 function MyLayout(...) {
-  const [ selectedIndex, setSelectedIndex ] = useSelection()
+  const [ selectedIndex, setSelectedIndex ] = useSelectedIndex()
   ...
 }
 ```
