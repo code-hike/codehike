@@ -6,9 +6,13 @@ authors: [pomber]
 draft: true
 ---
 
+import { Demo } from "./content-presentation-gap"
+
+Notice: content means Markdown, presentation means UI components. So, another title could be "The Markdown-React gap".
+
 Let's tart with an example.
 
-> demo (roman emperors)
+<Demo />
 
 This is a UI pattern commonly referred as scrollytelling, where the content is presented in a way that is tightly coupled with the user's scroll position.
 
@@ -19,6 +23,8 @@ It's also used for technical content like [Stripe's API reference](https://strip
 A component to implement this pattern is not super hard to build, usually it's a combination of an intersection observer and position sticky.
 
 ```tsx
+import { useEffect, useRef, useState } from "react"
+
 type Props = {
   steps: {
     content: React.ReactNode
