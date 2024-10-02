@@ -241,6 +241,7 @@ function toSnapshotElement(el: HTMLElement): SnapshotElement {
     y += p.offsetTop
     p = p.offsetParent
   }
+  el?.getAnimations().forEach((a) => a.cancel())
   const style = window.getComputedStyle(el)
   const color = style.color
   const content = el.textContent
