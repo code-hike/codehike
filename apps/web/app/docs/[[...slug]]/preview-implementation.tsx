@@ -4,6 +4,7 @@ import { z } from "zod"
 import { Demo } from "@/components/demo"
 import { Pre, RawCode, highlight } from "codehike/code"
 import { CopyButton } from "@/components/copy-button"
+import { ComponentPackLink } from "@/components/component-pack-link"
 
 const ContentSchema = Block.extend({
   demo: Block,
