@@ -1,0 +1,213 @@
+---
+title: API Reference
+description: Comprehensive list of codehike's API
+---
+
+import { Usage } from "./api"
+
+## `codehike/mdx`
+
+```tsx
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+```
+
+### `remarkCodeHike`
+
+A remark plugin that transform codeblocks and inline code into the specified components.
+
+- from annotation
+- you have to provide the components
+
+```tsx
+import { remarkCodeHike, recmaCodeHike } from "codehike/mdx"
+
+/** @type {import('codehike/mdx').CodeHikeConfig} */
+const chConfig = {
+  components: { code: "MyCode", inlineCode: "MyInlineCode" },
+  ignoreCode: (codeblock) => codeblock.lang === "mermaid",
+  syntaxHighlighting: { theme: "github-dark" },
+}
+
+// what you do with the `mdxOptions` depends on what you use to handle mdx
+const mdxOptions = {
+  remarkPlugins: [[remarkCodeHike, chConfig], ...otherRemarkPlugins],
+  recmaPlugins: [[recmaCodeHike, chConfig]],
+}
+```
+
+#### `CodeHikeConfig.components.code`
+
+If you specify a component for `code`, the `remarkCodeHike` plugin will replace code blocks with that component. The language, meta, and value of the code block will be passed inside a `codeblock` prop.
+
+<Usage>
+
+## !caption
+
+How `remarkCodeHike` compiles codeblocks using the `code` component
+
+## !left
+
+```tsx your-config.js
+const chConfig = {
+  // !mark[/MyCode/] 1
+  components: { code: "MyCode" },
+}
+```
+
+{/* prettier-ignore */}
+````mdx content.mdx
+# Hello
+
+{/* !mark[/js|lorem ipsum|console.log\(1\)/gm] 5 */}
+```js lorem ipsum
+console.log(1)
+```
+````
+
+## !right
+
+{/* prettier-ignore */}
+```jsx compiled output -w
+export default function Content(props = {}) {
+  // !mark[/MyCode/gm] 1
+  // !mark[/js|lorem ipsum|console.log\(1\)/gm] 5
+  const { MyCode } = props.components
+  return (
+    <>
+      <h1>Hello</h1>
+      <MyCode codeblock={{ 
+        lang: "js", 
+        meta: "lorem ipsum", 
+        value: "console.log(1)" 
+      }} />
+    </>
+  )
+}
+```
+
+</Usage>
+
+FAQ
+
+- how to pass the components to the `Content` component?
+- how to syntax highlight the code?
+
+#### `CodeHikeConfig.components.inlineCode`
+
+If you specify a component for `inlineCode`, the `remarkCodeHike` plugin will replace inline code with that component. The value of the inline code will be passed inside a `codeblock` prop.
+
+Code Hike uses a special syntax to define inline code ``_`code`_``. This syntax also allows you to specify the language and meta for inline code ``_py lorem ipsum`print 5`_``, will give you _`{lang: "py", meta: "lorem ipsum", value: "print 5"}`_.
+
+<Usage>
+
+## !caption
+
+How `remarkCodeHike` compiles inline code using the `inlineCode` component
+
+## !left
+
+```tsx your-config.js
+const chConfig = {
+  // !mark[/MyInlineCode/] 1
+  components: { inlineCode: "MyInlineCode" },
+}
+```
+
+{/* prettier-ignore */}
+````mdx content.mdx -w
+# Hello
+
+Case 1: `var x = 10`
+
+Case 2: _`var x = 10`_
+
+Case 3: _css`a { color: #123 }`_
+````
+
+## !right
+
+{/* prettier-ignore */}
+```jsx compiled output -w
+export default function Content(props = {}) {
+  // !mark[/MyInlineCode/gm] 1
+  const { MyInlineCode } = props.components
+  return (
+    <>
+      <h1>Hello</h1>
+      <p>Case 1: <code>var x = 10</code></p>
+      <p>Case 2: 
+        <MyInlineCode codeblock={{ 
+          lang: "jsx", 
+          value: "var x = 10" 
+        }} />
+      </p>
+      <p>Case 3: 
+        <MyInlineCode codeblock={{ 
+          lang: "css", 
+          value: "a { color: #123 }" 
+        }} />
+      </p>
+    </>
+  )
+}
+```
+
+</Usage>
+
+#### `CodeHikeConfig.ignoreCode`
+
+#### `CodeHikeConfig.syntaxHighlighting`
+
+### `recmaCodeHike`
+
+A recma plugin that parses code hike blocks.
+
+## `codehike`
+
+```tsx
+import { parse } from "codehike"
+```
+
+## `codehike/blocks`
+
+```tsx
+import {
+  parseRoot,
+  parseProps,
+  Block,
+  CodeBlock,
+  HighlightedCodeBlock,
+  ImageBlock,
+} from "codehike/blocks"
+```
+
+## `codehike/code`
+
+```tsx
+import {
+  highlight,
+  Pre,
+  Inline,
+  InnerPre,
+  InnerLine,
+  InnerToken,
+  getPreRef,
+} from "codehike/code"
+```
+
+## `codehike/utils`
+
+```tsx
+import {
+  SelectionProvider,
+  Selectable,
+  Selection,
+  useSelectedIndex,
+} from "codehike/utils/selection"
+
+import {
+  TokenTransitionsSnapshot,
+  calculateTransitions,
+  getStartingSnapshot,
+} from "codehike/utils/token-transitions"
+```
