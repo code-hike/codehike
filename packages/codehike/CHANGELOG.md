@@ -1,5 +1,11 @@
 # codehike
 
+## 1.0.3
+
+### Patch Changes
+
+- [#470](https://github.com/code-hike/codehike/pull/470) [`930646c`](https://github.com/code-hike/codehike/commit/930646c4949111ea1ddb823e3ec0305493952ecc) Thanks [@pomber](https://github.com/pomber)! - Don't fail with `undefined` `children` in remark plugin
+
 ## 1.0.2
 
 ### Patch Changes

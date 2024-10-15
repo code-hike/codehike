@@ -11,7 +11,7 @@ export async function transformAllHikes(root: Root, config: CodeHikeConfig) {
   const hikes: MdxJsxFlowElement[] = []
 
   visit(tree, "mdxJsxFlowElement", (node) => {
-    if (node.children.some(isHikeElement)) {
+    if (node.children?.some(isHikeElement)) {
       hikes.push(node)
     }
   })
@@ -24,7 +24,7 @@ export async function transformAllHikes(root: Root, config: CodeHikeConfig) {
 function wrapInHike(root: Root) {
   // if we find any hikeable element outside of <Hike>s,
   // let's wrap everything in a <Hike>
-  if (root.children.some(isHikeElement)) {
+  if (root.children?.some(isHikeElement)) {
     root.children = [
       {
         type: "mdxJsxFlowElement",
