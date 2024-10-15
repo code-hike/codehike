@@ -65,7 +65,7 @@ export async function listToSection(
   hikeElement: MdxJsxFlowElement,
   config: CodeHikeConfig,
 ): Promise<HikeSection> {
-  const { children } = hikeElement
+  const { children = [] } = hikeElement
 
   const root: HikeSection = {
     type: "section",
