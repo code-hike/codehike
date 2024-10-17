@@ -1,5 +1,11 @@
 # codehike
 
+## 1.0.4
+
+### Patch Changes
+
+- [#474](https://github.com/code-hike/codehike/pull/474) [`d193364`](https://github.com/code-hike/codehike/commit/d193364129d3d4d18a58469e8f3795d9c4b02863) Thanks [@pomber](https://github.com/pomber)! - Add `color-scheme` to `highlight` result
+
 ## 1.0.3
 
 ### Patch Changes
