@@ -36,6 +36,7 @@ function _createMdxContent(props) {
           style: {
             color: "#c9d1d9",
             background: "#0d1117",
+            colorScheme: "dark",
           },
         }}
       />
@@ -70,6 +71,7 @@ function _createMdxContent(props) {
       style: {
         color: "#c9d1d9",
         background: "#0d1117",
+        colorScheme: "dark",
       },
     },
   }

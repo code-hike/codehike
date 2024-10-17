@@ -184,8 +184,8 @@ importers:
   packages/codehike:
     dependencies:
       '@code-hike/lighter':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.0.1
+        version: 1.0.1
       diff:
         specifier: ^5.1.0
         version: 5.1.0
@@ -368,8 +368,8 @@ packages:
   '@code-hike/lighter@0.9.4':
     resolution: {integrity: sha512-WnYhKFaYDHOVKXyII5iYegve/W3jgV9kOfo34rKDXdZjTFbCJMbTPzdG+SKfvUtw7lzWWuJGmu0WQJ0/PDhL0g==}
 
-  '@code-hike/lighter@1.0.0':
-    resolution: {integrity: sha512-GVd0NveUTZ2jgeUh4lrLBZr2zSQT1ws32H747qK6AxSOMas4lXfp5KvkgmsHVg8WLdWwhtaaU9IXpyHEjfeDBw==}
+  '@code-hike/lighter@1.0.1':
+    resolution: {integrity: sha512-mccvcsk5UTScRrE02oBz1/qzckyhD8YE3VQlQv++2bSVVZgNuCUX8MpokSCi5OmfRAAxbj6kmNiqq1Um8eXPrw==}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -4779,7 +4779,7 @@ snapshots:
     dependencies:
       ansi-sequence-parser: 1.1.1
 
-  '@code-hike/lighter@1.0.0':
+  '@code-hike/lighter@1.0.1':
     dependencies:
       ansi-sequence-parser: 1.1.1
 
