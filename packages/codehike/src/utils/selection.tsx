@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { ObservedDiv, Scroller } from "./scroller.js"
+import { MarginConfig, ObservedDiv, Scroller } from "./scroller.js"
 
 const StepsContext = React.createContext<{
   selectedIndex: number
@@ -15,7 +15,7 @@ export function SelectionProvider({
   rootMargin,
   ...rest
 }: React.HTMLAttributes<HTMLDivElement> & {
-  rootMargin?: string
+  rootMargin?: MarginConfig
 }) {
   const [selectedIndex, selectIndex] = React.useState<number>(0)
   return (

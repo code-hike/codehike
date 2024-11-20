@@ -6,6 +6,8 @@ const ObserverContext = React.createContext<IntersectionObserver | undefined>(
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect
 
+export type MarginConfig = string | { top: number; height: number }
+
 export function Scroller({
   onIndexChange,
   triggerPosition = "50%",
@@ -14,26 +16,48 @@ export function Scroller({
 }: {
   onIndexChange: (index: number) => void
   triggerPosition?: TriggerPosition
-  rootMargin?: string
+  rootMargin?: MarginConfig
   children: React.ReactNode
 }) {
   const [observer, setObserver] = React.useState<IntersectionObserver>()
   const vh = useWindowHeight()
+  const ratios = React.useRef<Record<number, number>>({})
   useIsomorphicLayoutEffect(() => {
     const windowHeight = vh || 0
     const handleIntersect: IntersectionObserverCallback = (entries) => {
+      let enteringIndex = -1
       entries.forEach((entry) => {
+        const index = +entry.target.getAttribute("data-index")!
+        ratios.current[index] = entry.intersectionRatio
         if (entry.intersectionRatio > 0) {
-          // get entry.target index
-          const index = entry.target.getAttribute("data-index")
-          onIndexChange(+index!)
+          enteringIndex = index
         }
       })
+
+      if (enteringIndex >= 0) {
+        // on enter
+        onIndexChange(enteringIndex)
+      } else {
+        // on exit (go tos the higher intersection)
+        const sorted = Object.entries(ratios.current).sort(
+          ([, a], [, b]) => b - a,
+        )
+        const [index] = sorted[0]
+        if (ratios.current[+index] > 0) {
+          onIndexChange(+index)
+        }
+      }
     }
-    const observer = newIntersectionObserver(
-      handleIntersect,
-      rootMargin || defaultRootMargin(windowHeight, triggerPosition),
-    )
+    const rm = !rootMargin
+      ? defaultRootMargin(windowHeight, triggerPosition)
+      : typeof rootMargin === "string"
+        ? rootMargin
+        : `${-rootMargin.top}px 0px ${-(
+            windowHeight -
+            rootMargin.top -
+            rootMargin.height
+          )}px`
+    const observer = newIntersectionObserver(handleIntersect, rm)
     setObserver(observer)
 
     return () => observer.disconnect()
@@ -50,11 +74,16 @@ function newIntersectionObserver(
   handleIntersect: IntersectionObserverCallback,
   rootMargin: string,
 ) {
-  return new IntersectionObserver(handleIntersect, {
-    rootMargin,
-    threshold: 0.000001,
-    root: null,
-  })
+  try {
+    return new IntersectionObserver(handleIntersect, {
+      rootMargin,
+      threshold: 0.000001,
+      root: null,
+    })
+  } catch (e) {
+    // console.error({ rootMargin })
+    throw e
+  }
 }
 
 export function ObservedDiv({
