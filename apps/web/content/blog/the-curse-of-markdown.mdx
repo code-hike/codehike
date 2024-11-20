@@ -1,62 +1,115 @@
 ---
 title: The Curse of Markdown
-description: And the website wasteland
-date: 2024-10-12
+description: And the content website wasteland
+date: 2024-11-21
 authors: [pomber]
 draft: true
 ---
 
-import { Chart } from "./the-curse-of-markdown"
+import { Layout, RainbowList } from "./the-curse-of-markdown"
 
-Markdown is so good that it can hurt you.
+<Layout>
 
-first
+## !!steps lean
 
-<Chart name="first" />
+### The Lean-Rich Spectrum
 
-In a world without Markdown,
+We can think of content websites on a scale from lean to rich.
 
-<Chart name="second" />
+A good example of a **lean content website** is [nat.org](https://nat.org), it's just text with minimal styling.
 
-chapters:s
+Making nat.org richer—by adding interactive elements or a fancy layout—won't add much value to its purpose, only distraction from the content.
 
-- introducing richness vs ax
-- pre-markdown tradeoffs
-- enter markdown
-- the tradeoff wall
-- enter mdx
-- enter rsc
-- the content presentation gap
-- enter code hike
+## !!steps rich
 
-Tradeoffs: https://youtu.be/zqhE-CepH2g?si=7iYgDUjAhJNVmYJN&t=446
+A great example of a **rich content website** is the [Tailwind CSS](https://tailwindcss.com) landing page.
 
-- technical cost vs product benefit
+It uses interactive examples, animations, and engaging visuals to highlight how TailwindCSS works and what it can do.
 
-examples of websites that mdx allow:
+Making the site leaner—by removing these rich elements—would make it harder for visitors to understand what TailwindCSS offers.
 
-- interactive blogs
-- interactive docs
+## !!steps rich
 
----
+Along the spectrum from lean to rich, we can find websites like:
 
-it doesnt mean that there aren't websites in this zone. but they pay a high price, either because they have resources to do so, or because they care a lot about the product.
+<RainbowList>
 
-Examples are:
+- Static blogs
+- Documentation websites
+- Visual essays
+- Explorable explanations
+- Interactive tutorials
 
-- stripe
-- swiftui
+</RainbowList>
 
----
+## !!steps richness
 
-specific tools like:
+### The Content-Richness Sweet Spot
 
-- swiftui docc
-- tutorialkit
-- codehike before v1
+For each piece of content, there is a sweet spot of richness. The perfect richness level depends on how complex the content is.
 
----
+Not enough richness makes it harder for the author to express their ideas and for the reader to understand them.
 
-The curse:
+Too much richness requires extra effort from the author and leads to more distractions for the reader.
 
-More often than not, the answer is to stick with Markdown and compromise on the complexity of the site. It’s easier, it’s familiar, and it lets you avoid the cost of adopting more complicated solutions. And that’s where the curse lies: Markdown is so effective at the simple stuff that we often don't even try to build things that are slightly more ambitious. The result is a gap in the spectrum of static sites — a whole category of rich, content-driven sites that never get built because the trade-off doesn’t seem worth it.
+## !!steps effort
+
+### The Cost of Richness
+
+Making a website richer requires more effort.
+
+**In a world without Markdown** or any markup language other than HTML, **the cost of building a website grows linearly with its richness**. A slightly richer website requires a slightly higher effort to build.
+
+## !!steps markdown
+
+If we add Markdown back into the equation, the cost of building lean websites becomes much lower. Markdown’s simplicity and tooling make it almost effortless to create text-focused sites like blogs or documentation.
+
+Tools like MDX, Markdoc, and plugins extend the range of websites that can be built with Markdown, allowing for richer websites with some extra effort.
+
+## !!steps wall
+
+### The Tradeoff Wall
+
+But Markdown has its limits. Beyond a certain level, Markdown stops being helpful and the cost of building remains as high as before.
+
+**This jump in cost disrupts the trade-off between richness and effort**. For content with a sweet spot just beyond Markdown’s limits, the additional effort often seems too high for the small gain in richness, leading to a preference for staying with Markdown and sacrificing richness.
+
+## !!steps population
+
+The impact of Markdown becomes clear if we plot a random sample of content websites. (Disclaimer: the data is made-up, based on my perception of the state of the web)
+
+Most websites are on the lean side. A few outliers sit just beyond Markdown’s limits. At the richer end we see a decent share of websites, where the tradeoff between effort and richness starts to make sense again.
+
+## !!steps wasteland
+
+### The Website Wasteland
+
+That sparse area just beyond the limits of Markdown is of vital importance to the web. These websites are not only a joy to read but also the ones that explore the web's possibilities, embracing the medium and evoking a truly web-native feel.
+
+Currently, these websites are outliers created by individuals who care deeply about the reader's experience or by companies willing to invest extra effort. We need more of them.
+
+## !!steps repopulating
+
+### Repopulating the Wasteland
+
+To bring more websites into this space, we need tools that lower the effort required to create richer content.
+
+Some new tools address this by focusing on **specific content-presentation types**, like [Swift-DocC](https://github.com/swiftlang/swift-docc), that compiles Swift into rich developer documentation, or [TutorialKit](https://github.com/stackblitz/tutorialkit) a tool for creating interactive tutorials.
+
+## !!steps repopulating2
+
+While those tools are great, they target very specific types of websites. This was also the case with Code Hike before version 1.0—a tool I built that was limited to a set of layouts without much flexibility.
+
+But I believe that more **general-purpose tools** are possible. Tools that bring the trade-off between richness and effort back into balance.
+
+That's my vision for Code Hike v1, and the idea behind [fine-grained markdown](/blog/fine-grained-markdown).
+
+## !!steps why
+
+### Why does it matter?
+
+Imagine how many ideas are held back because their authors don’t have the right tools to express them.
+
+By lowering the barriers to richer content websites, we can unlock the web’s unmatched potential to support the full spectrum of richness, allowing every idea to be expressed in the most fitting way for its depth and complexity.
+
+</Layout>

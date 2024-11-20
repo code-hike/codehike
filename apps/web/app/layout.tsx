@@ -14,7 +14,12 @@ import { Metadata } from "next"
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.className} snap-y`}
+      suppressHydrationWarning
+    >
+      {/* <script src="https://unpkg.com/intersection-observer-debugger"></script> */}
       <body suppressHydrationWarning>
         <RootProvider>
           <NavBar version={ch.version} />
