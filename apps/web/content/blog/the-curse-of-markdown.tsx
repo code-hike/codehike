@@ -108,11 +108,11 @@ function Axis({ cost, rich }: { cost?: string; rich?: string }) {
     <>
       <div className={cn("transition-all", rich)}>
         <div
-          className="absolute bottom-2 left-2 right-3 h-0.5 bg-zinc-100"
+          className="absolute bottom-2 left-2 right-3 h-0.5 bg-zinc-900 dark:bg-zinc-100"
           style={{ translate: "0 50%" }}
         />
         <div
-          className="border-zinc-100 absolute right-2 bottom-2"
+          className="border-zinc-900 dark:border-zinc-100 absolute right-2 bottom-2"
           style={{
             width: 0,
             height: 0,
@@ -122,17 +122,17 @@ function Axis({ cost, rich }: { cost?: string; rich?: string }) {
             translate: "0 50%",
           }}
         />
-        <div className="absolute bottom-3 right-2 text-sm text-zinc-100">
+        <div className="absolute bottom-3 right-2 text-sm text-zinc-900 dark:text-zinc-100">
           Richness
         </div>
       </div>
       <div className={cn("transition-all", cost)}>
         <div
-          className="absolute top-3 left-2 bottom-2 w-0.5 bg-zinc-100"
+          className="absolute top-3 left-2 bottom-2 w-0.5 bg-zinc-900 dark:bg-zinc-100"
           style={{ translate: "-50% 0" }}
         />
         <div
-          className="border-zinc-100 absolute top-2 left-2"
+          className="border-zinc-900 dark:border-zinc-100 absolute top-2 left-2"
           style={{
             width: 0,
             height: 0,
@@ -143,7 +143,9 @@ function Axis({ cost, rich }: { cost?: string; rich?: string }) {
             translate: "-50% 0",
           }}
         />
-        <div className="absolute top-1 left-5 text-sm text-zinc-100">Cost</div>
+        <div className="absolute top-1 left-5 text-sm text-zinc-900 dark:text-zinc-100">
+          Cost
+        </div>
       </div>
     </>
   )
@@ -240,11 +242,8 @@ function SmallLayout({
       {steps.map((step, i) => (
         <div key={i}>
           <div
-            className="h-96 w-[324px] max-w-full relative mx-auto bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-black rounded"
-            style={{
-              backgroundPosition: "center",
-              backgroundSize: "26px",
-            }}
+            className="h-96 w-[324px] max-w-full relative mx-auto bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-white rounded"
+            style={{ backgroundPosition: "center", backgroundSize: "26px" }}
           >
             <Chart data={data[i]} />
           </div>
@@ -269,7 +268,7 @@ function ScrollyLayout({
     >
       <div className="flex-1">
         <div
-          className="top-64 sticky h-96 flex-1 rounded bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-black flex items-center justify-center"
+          className="top-64 sticky h-96 flex-1 rounded bg-[url(/grid.svg)] dark:bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-zinc-300/10 flex items-center justify-center"
           style={{
             backgroundPosition: "center",
             backgroundSize: "26px",

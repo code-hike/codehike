@@ -6,14 +6,14 @@ const lean = {
   extra: "opacity-0",
   points: [
     { rich: 10, cost: 50, pop: [], className: "bg-teal-600" },
-    { rich: 20, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 30, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 40, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 50, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 60, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 70, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 80, cost: 50, pop: [], className: "bg-zinc-800" },
-    { rich: 90, cost: 50, pop: [], className: "bg-zinc-800" },
+    { rich: 20, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 30, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 40, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 50, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 60, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 70, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 80, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
+    { rich: 90, cost: 50, pop: [], className: "bg-zinc-400 dark:bg-zinc-800" },
     {
       rich: 65,
       cost: 33.6,
@@ -109,15 +109,15 @@ const distribution = {
 const wasteland = {
   wall: "opacity-50 top-0 bottom-0 right-[15%] bg-pink-500/10 border-x-2 border-pink-500/80",
   points: [
-    { rich: 10, className: "bg-zinc-500" },
-    { rich: 20, className: "bg-zinc-500" },
-    { rich: 30, className: "bg-zinc-500" },
-    { rich: 40, className: "bg-zinc-500" },
-    { rich: 50, className: "bg-zinc-500" },
-    // { rich: 60, className: "bg-zinc-500" },
-    // { rich: 70, className: "bg-zinc-500" },
-    // { rich: 80, className: "bg-zinc-500" },
-    { rich: 90, className: "bg-zinc-500" },
+    { rich: 10, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 20, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 30, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 40, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 50, className: "bg-zinc-400 dark:bg-zinc-500" },
+    // { rich: 60, className: "bg-zinc-400 dark:bg-zinc-500" },
+    // { rich: 70, className: "bg-zinc-400 dark:bg-zinc-500" },
+    // { rich: 80, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 90, className: "bg-zinc-400 dark:bg-zinc-500" },
   ],
 }
 const repopulating = {
@@ -134,9 +134,9 @@ const repopulating = {
       className:
         "bg-purple-500 data-[main=true]:opacity-0 data-[extra]:animate-appear",
     },
-    { rich: 60, className: "bg-zinc-500" },
-    { rich: 70, className: "bg-zinc-500" },
-    { rich: 80, className: "bg-zinc-500" },
+    { rich: 60, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 70, className: "bg-zinc-400 dark:bg-zinc-500" },
+    { rich: 80, className: "bg-zinc-400 dark:bg-zinc-500" },
   ],
 }
 const repopulating2 = {
