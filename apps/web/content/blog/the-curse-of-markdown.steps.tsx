@@ -1,5 +1,5 @@
 const lean = {
-  richAxis: "text-yellow-500",
+  richAxis: "opacity-90",
   costAxis: "opacity-0",
   richScreenshot: "",
   leanScreenshot: "opacity-100",
@@ -18,13 +18,13 @@ const lean = {
       rich: 65,
       cost: 33.6,
       pop: circle(65, 40.1, 60, 2.5),
-      className: "bg-teal-600 !opacity-0",
+      className: "bg-purple-500 !opacity-0",
     },
     {
       rich: 75,
       cost: 47.6,
       pop: circle(75, 56.3, 60, 2.5),
-      className: "bg-teal-600 !opacity-0",
+      className: "bg-purple-500 !opacity-0",
     },
   ],
 }
@@ -57,7 +57,8 @@ const richness = {
 const effort = {
   leanScreenshot: "opacity-0",
   richScreenshot: "opacity-0",
-  costAxis: "text-yellow-500",
+  richAxis: "opacity-30",
+  costAxis: "opacity-90",
   points: [
     { rich: 10, cost: 10 },
     { rich: 20, cost: 20 },
@@ -72,7 +73,6 @@ const effort = {
 }
 
 const markdown = {
-  costAxis: "",
   points: [
     { rich: 10, cost: 10, pop: line(10, 9.9, 10.3, 24) },
     { rich: 20, cost: 10.8, pop: line(20, 10.3, 11.6, 24) },
@@ -87,12 +87,12 @@ const markdown = {
 }
 
 const wall = {
+  costAxis: "opacity-30",
   wall: "opacity-50 top-0 bottom-0 bg-pink-500/10 border-x-2 border-pink-500/80",
 }
 
 const distribution = {
   extra: "opacity-100",
-  costAxis: "",
   points: [
     { rich: 10, pop: line(10, 9.9, 10.3, 16) },
     { rich: 20, pop: line(20, 10.3, 11.6, 24) },
@@ -173,9 +173,9 @@ const why = {
     { rich: 30, className: "bg-sky-500" },
     { rich: 40, className: "bg-blue-500" },
     { rich: 50, className: "bg-indigo-500" },
-    { rich: 60, className: "bg-violet-500" },
-    { rich: 70, className: "bg-purple-500" },
-    { rich: 80, className: "bg-fuchsia-500" },
+    { rich: 60 },
+    { rich: 70 },
+    { rich: 80 },
     { rich: 90, className: "bg-pink-500" },
   ],
 }
@@ -208,23 +208,6 @@ function merge(rawSteps: any) {
     })
     prev = { ...prev, ...step, points }
     return prev
-  })
-}
-
-function extra(
-  rich: number,
-  cost: number,
-  n: number,
-  noise: number,
-  angle: number = 0,
-) {
-  return Array.from({ length: n * 2 }, (_, i) => {
-    const dx = (Math.random() * 2 - 1) * noise
-    const dy = (Math.random() * 2 - 1) * 0
-    return {
-      rich: rich + dx,
-      cost: cost + Math.sin(angle) * dx + Math.cos(angle) * dy,
-    }
   })
 }
 
