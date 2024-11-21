@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         page.data.className,
       )}
     >
-      <div className="mb-4">
+      <div className="mb-4 text-sm md:text-base">
         {page.data.date.toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",

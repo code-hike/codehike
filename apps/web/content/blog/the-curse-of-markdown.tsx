@@ -106,31 +106,33 @@ function Screenshots({ lean, rich }: { lean?: string; rich?: string }) {
 function Axis({ cost, rich }: { cost?: string; rich?: string }) {
   return (
     <>
-      <div
-        className="absolute bottom-2 left-2 right-3 h-0.5 bg-zinc-700"
-        style={{ translate: "0 50%" }}
-      />
-      <div
-        className="border-zinc-700 absolute right-2 bottom-2"
-        style={{
-          width: 0,
-          height: 0,
-          borderTop: "5px solid transparent",
-          borderBottom: "5px solid transparent",
-          borderLeftWidth: "6px",
-          translate: "0 50%",
-        }}
-      />
-      <div className="absolute bottom-3 right-2 text-xs text-zinc-500">
-        Richness
+      <div className={cn("transition-all", rich)}>
+        <div
+          className="absolute bottom-2 left-2 right-3 h-0.5 bg-zinc-100"
+          style={{ translate: "0 50%" }}
+        />
+        <div
+          className="border-zinc-100 absolute right-2 bottom-2"
+          style={{
+            width: 0,
+            height: 0,
+            borderTop: "5px solid transparent",
+            borderBottom: "5px solid transparent",
+            borderLeftWidth: "6px",
+            translate: "0 50%",
+          }}
+        />
+        <div className="absolute bottom-3 right-2 text-sm text-zinc-100">
+          Richness
+        </div>
       </div>
       <div className={cn("transition-all", cost)}>
         <div
-          className="absolute top-3 left-2 bottom-2 w-0.5 bg-zinc-700"
+          className="absolute top-3 left-2 bottom-2 w-0.5 bg-zinc-100"
           style={{ translate: "-50% 0" }}
         />
         <div
-          className="border-zinc-700 absolute top-2 left-2"
+          className="border-zinc-100 absolute top-2 left-2"
           style={{
             width: 0,
             height: 0,
@@ -141,7 +143,7 @@ function Axis({ cost, rich }: { cost?: string; rich?: string }) {
             translate: "-50% 0",
           }}
         />
-        <div className="absolute top-1 left-5 text-xs text-zinc-500">Cost</div>
+        <div className="absolute top-1 left-5 text-sm text-zinc-100">Cost</div>
       </div>
     </>
   )
@@ -216,42 +218,85 @@ export function Layout(props: unknown) {
   const { steps } = parseProps(props, Block.extend({ steps: z.array(Block) }))
   return (
     <>
-      <div className="md:hidden">TODO: small screen</div>
-      <SelectionProvider
-        className="hidden md:flex gap-6 relative mb-[max(calc(100vh-788px),64px)]"
-        rootMargin={{ top: 256 + 48, height: 384 - 48 * 2 }}
-      >
-        <div className="flex-1">
+      <div className="md:hidden">
+        <SmallLayout steps={steps} />
+      </div>
+      <div className="hidden md:block">
+        <ScrollyLayout steps={steps} />
+      </div>
+    </>
+  )
+}
+
+function SmallLayout({
+  steps,
+}: {
+  steps: {
+    children?: React.ReactNode
+  }[]
+}) {
+  return (
+    <div className="flex flex-col gap-6">
+      {steps.map((step, i) => (
+        <div key={i}>
           <div
-            className="top-64 sticky h-96 flex-1 rounded bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-black flex items-center justify-center"
+            className="h-96 w-[324px] max-w-full relative mx-auto bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-black rounded"
             style={{
               backgroundPosition: "center",
               backgroundSize: "26px",
             }}
           >
-            <Selection
-              from={steps.map((step, i) => (
-                <Chart data={data[i]} />
-              ))}
-            />
+            <Chart data={data[i]} />
           </div>
+          {step.children}
         </div>
-        <div className="flex-1 min-w-0 flex flex-col">
-          {steps.map((step, i) => (
-            <Selectable
-              key={i}
-              index={i}
-              className="h-96 data-[selected=true]:opacity-100 opacity-20 transition-opacity snap-start scroll-mt-64 [&>:first-child]:mt-0 flex items-center"
-              selectOn={["scroll"]}
-            >
-              <div className="[&>:first-child]:mt-0 [&>:last-child]:mb-0">
-                {step.children}
-              </div>
-            </Selectable>
-          ))}
+      ))}
+    </div>
+  )
+}
+
+function ScrollyLayout({
+  steps,
+}: {
+  steps: {
+    children?: React.ReactNode
+  }[]
+}) {
+  return (
+    <SelectionProvider
+      className="hidden md:flex gap-6 relative mb-[max(calc(100vh-788px),64px)]"
+      rootMargin={{ top: 256 + 48 * 3, height: 48 }}
+    >
+      <div className="flex-1">
+        <div
+          className="top-64 sticky h-96 flex-1 rounded bg-[url(/dark-grid.svg)] dark:bg-[#e6edff05] bg-black flex items-center justify-center"
+          style={{
+            backgroundPosition: "center",
+            backgroundSize: "26px",
+          }}
+        >
+          <Selection
+            from={steps.map((step, i) => (
+              <Chart data={data[i]} />
+            ))}
+          />
         </div>
-      </SelectionProvider>
-    </>
+      </div>
+      <div className="flex-1 min-w-0 flex flex-col">
+        {steps.map((step, i) => (
+          <Selectable
+            key={i}
+            index={i}
+            className="h-96 data-[selected=true]:opacity-100 opacity-20 transition-opacity scroll-mt-64 [&>:first-child]:mt-0 flex items-center " // snap-start
+            selectOn={["scroll"]}
+          >
+            <div className="[&>:first-child]:mt-0 [&>:last-child]:mb-0 prose-h3:scroll-m-64">
+              {step.children}
+            </div>
+          </Selectable>
+        ))}
+      </div>
+    </SelectionProvider>
   )
 }
 
