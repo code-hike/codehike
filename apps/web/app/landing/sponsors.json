@@ -9,7 +9,7 @@
   },
   {
     "name": "speakeasy-api",
-    "amount": 3078
+    "amount": 4331
   },
   {
     "name": "uidotdev",
@@ -25,15 +25,15 @@
   },
   {
     "name": "drivly",
-    "amount": 1688
+    "amount": 2084
   },
   {
     "name": "kickstartDS",
-    "amount": 870
+    "amount": 957
   },
   {
     "name": "brianespinosa",
-    "amount": 825
+    "amount": 912
   },
   {
     "name": "jsheroes",
@@ -48,15 +48,23 @@
     "amount": 421
   },
   {
+    "name": "nathanclevenger",
+    "amount": 372
+  },
+  {
     "name": "arosenkranz",
     "amount": 370
   },
   {
-    "name": "nathanclevenger",
+    "name": "molebox",
+    "amount": 333
+  },
+  {
+    "name": "traviscooper",
     "amount": 315
   },
   {
-    "name": "molebox",
+    "name": "obgibson",
     "amount": 297
   },
   {
@@ -72,20 +80,20 @@
     "amount": 288
   },
   {
-    "name": "traviscooper",
-    "amount": 288
-  },
-  {
     "name": "nberger",
     "amount": 279
   },
   {
-    "name": "obgibson",
-    "amount": 279
+    "name": "codeSTACKr",
+    "amount": 252
   },
   {
     "name": "matthiaszepper",
     "amount": 250
+  },
+  {
+    "name": "kiliman",
+    "amount": 246
   },
   {
     "name": "lostintangent",
@@ -96,16 +104,8 @@
     "amount": 234
   },
   {
-    "name": "codeSTACKr",
-    "amount": 225
-  },
-  {
     "name": "davo",
     "amount": 225
-  },
-  {
-    "name": "kiliman",
-    "amount": 219
   },
   {
     "name": "invertase",
@@ -244,6 +244,10 @@
     "amount": 67
   },
   {
+    "name": "zmzlois",
+    "amount": 65
+  },
+  {
     "name": "cdalsoniii",
     "amount": 63
   },
@@ -272,6 +276,10 @@
     "amount": 50
   },
   {
+    "name": "nlawz",
+    "amount": 47
+  },
+  {
     "name": "DanielFGray",
     "amount": 45
   },
@@ -288,8 +296,16 @@
     "amount": 40
   },
   {
+    "name": "IliasHad",
+    "amount": 38
+  },
+  {
     "name": "matthewbub",
     "amount": 38
+  },
+  {
+    "name": "ianaya89",
+    "amount": 37
   },
   {
     "name": "MildTomato",
@@ -306,10 +322,6 @@
   {
     "name": "JulesBlm",
     "amount": 35
-  },
-  {
-    "name": "ianaya89",
-    "amount": 34
   },
   {
     "name": "AlexzanderFlores",
@@ -348,11 +360,11 @@
     "amount": 27
   },
   {
-    "name": "loopholelabs",
+    "name": "0thernet",
     "amount": 26
   },
   {
-    "name": "vprtwn",
+    "name": "loopholelabs",
     "amount": 26
   },
   {
@@ -377,10 +389,6 @@
   },
   {
     "name": "IGassmann",
-    "amount": 19
-  },
-  {
-    "name": "IliasHad",
     "amount": 19
   },
   {
@@ -440,10 +448,6 @@
     "amount": 9
   },
   {
-    "name": "n0lawz",
-    "amount": 9
-  },
-  {
     "name": "NLKNguyen",
     "amount": 9
   },
@@ -460,12 +464,12 @@
     "amount": 9
   },
   {
-    "name": "zmzlois",
-    "amount": 8
-  },
-  {
     "name": "achan-godaddy",
     "amount": 7
+  },
+  {
+    "name": "peterfox",
+    "amount": 6
   },
   {
     "name": "RayJason",
