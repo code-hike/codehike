@@ -7,7 +7,7 @@ import UidevLogo from "./logo.uidev.svg"
 import Image from "next/image"
 import Link from "next/link"
 import sponsorData from "./sponsors.json"
-import { Check, CheckCheck, Heart } from "lucide-react"
+import { Check, CheckCheck, GithubIcon, Heart, Star } from "lucide-react"
 
 export function Pricing() {
   const current = 625
@@ -99,27 +99,6 @@ export function TopSponsors({
       <div className="flex gap-4 justify-center invert dark:invert-0 flex-wrap">
         <a
           className="overflow-hidden flex p-2 items-center gap-1  cursor-pointer opacity-80 hover:opacity-100"
-          href="https://github.blog/2023-04-12-github-accelerator-our-first-cohort-and-whats-next/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            src={GHLogo}
-            alt="GitHub logo"
-            height={36 * scale}
-            placeholder="empty"
-            priority={true}
-          />
-          <Image
-            src={GHText}
-            alt="GitHub"
-            height={36 * scale}
-            placeholder="empty"
-            priority={true}
-          />
-        </a>
-        <a
-          className="overflow-hidden flex p-2 items-center gap-1  cursor-pointer opacity-80 hover:opacity-100"
           href="https://opensource.fb.com/"
           target="_blank"
           rel="noopener noreferrer"
@@ -127,6 +106,20 @@ export function TopSponsors({
           <Image
             src={MetaLogo}
             alt="Meta logo"
+            height={36 * scale}
+            placeholder="empty"
+            priority={true}
+          />
+        </a>
+        <a
+          className="overflow-hidden flex p-2 items-center gap-1  cursor-pointer opacity-80 hover:opacity-100"
+          href="https://www.speakeasy.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image
+            src={SpeakeasyLogo}
+            alt="Speakeasy logo"
             height={36 * scale}
             placeholder="empty"
             priority={true}
@@ -149,19 +142,49 @@ export function TopSponsors({
         </a>
         <a
           className="overflow-hidden flex p-2 items-center gap-1  cursor-pointer opacity-80 hover:opacity-100"
-          href="https://www.speakeasy.com/"
+          href="https://driv.ly/"
           target="_blank"
           rel="noopener noreferrer"
         >
           <Image
-            src={SpeakeasyLogo}
-            alt="Speakeasy logo"
-            height={36 * scale}
+            src={DrivlyLogo}
+            alt="Drivly logo"
+            height={44 * scale}
             placeholder="empty"
             priority={true}
           />
         </a>
       </div>
+      <a
+        className="overflow-hidden flex gap-4 justify-center items-center mt-16 cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
+        href="https://github.blog/2023-04-12-github-accelerator-our-first-cohort-and-whats-next/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div className="dark:text-yellow-500/80 text-yellow-500/60">
+          <Star className="fill-current ml-auto" size={17} />
+          <Star className="fill-current mr-1" size={22} />
+          <Star className="fill-current ml-auto" size={17} />
+        </div>
+        <Image
+          src={GHLogo}
+          alt="GitHub logo"
+          height={42}
+          width={42}
+          placeholder="empty"
+          priority={true}
+          className="invert dark:invert-0"
+        />
+        <span className="flex flex-col">
+          <span className="text-primary/60 text-sm">Backed by</span>
+          <span className="text-lg font-bold">GitHub Accelerator</span>
+        </span>
+        <div className="dark:text-yellow-500/80 text-yellow-500/60">
+          <Star className="fill-current" size={17} />
+          <Star className="fill-current ml-1" size={22} />
+          <Star className="fill-current" size={17} />
+        </div>
+      </a>
     </section>
   )
 }
