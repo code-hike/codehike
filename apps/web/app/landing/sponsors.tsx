@@ -8,6 +8,8 @@ import Image from "next/image"
 import Link from "next/link"
 import sponsorData from "./sponsors.json"
 import { Check, CheckCheck, GithubIcon, Heart, Star } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { TimeAgo } from "@/components/time-ago"
 
 export function Pricing() {
   const current = 625
@@ -81,6 +83,65 @@ export function Pricing() {
         </div>
       </div>
     </section>
+  )
+}
+
+export async function LatestSponsor({ className }: { className?: string }) {
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN
+  if (!GITHUB_TOKEN) {
+    throw new Error("Missing process.env.GITHUB_TOKEN")
+  }
+
+  const r = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    body: JSON.stringify({ query: latestSponsorsQuery }),
+    headers: { Authorization: "bearer " + GITHUB_TOKEN },
+  })
+  if (!r.ok) {
+    throw new Error(`Failed to fetch: ${r.status} ${r.statusText}`)
+  }
+  const { data, errors } = await r.json()
+  if (errors) {
+    throw new Error(JSON.stringify(errors))
+  }
+
+  const sponsors = data.organization.sponsorshipsAsMaintainer.edges
+  if (!sponsors.length) {
+    throw new Error("No sponsors found")
+  }
+
+  const latest = sponsors[0].node
+
+  return (
+    <a
+      href={`https://github.com/${latest.sponsorEntity.login}`}
+      className={cn(
+        className,
+        "rounded bg-zinc-50 dark:bg-zinc-900 p-3 flex gap-3 border border-zinc-200/50 dark:border-zinc-700/50 hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors w-96 md:w-full mx-auto",
+      )}
+    >
+      <Image
+        className="rounded my-0 max-h-20"
+        src={`${latest.sponsorEntity.avatarUrl}`}
+        alt={latest.sponsorEntity.name}
+        height={80}
+        width={80}
+        placeholder="empty"
+      />
+      <div className="flex-1 flex flex-col justify-between">
+        {/* <div>{new Date().toString()}</div> */}
+        <div className="text-primary/70 text-sm">
+          Latest sponsor · <TimeAgo date={latest.createdAt} />
+        </div>
+        <div className="text-2xl font-bold">
+          {latest.sponsorEntity.name || latest.sponsorEntity.login}
+        </div>
+        <div className="text-primary/90 text-sm">
+          Sponsoring <strong>{latest.tier.name}</strong>{" "}
+        </div>
+      </div>
+      {/* <pre>{JSON.stringify(latest, null, 2)}</pre> */}
+    </a>
   )
 }
 
@@ -440,3 +501,37 @@ function BrowserStack() {
     </svg>
   )
 }
+
+const latestSponsorsQuery = `query {
+  organization(login: "code-hike") {
+    sponsorshipsAsMaintainer(first: 50, orderBy: {field: CREATED_AT, direction: DESC}, activeOnly: false) {
+      edges {
+        node {
+          createdAt
+          privacyLevel
+          tier {
+            name
+            monthlyPriceInDollars
+          }
+          sponsorEntity {
+            ... on User {
+              login
+              name
+              avatarUrl
+              websiteUrl
+              location
+            }
+            ... on Organization {
+              login
+              name
+              avatarUrl
+              websiteUrl
+              location
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
