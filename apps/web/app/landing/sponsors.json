@@ -9,7 +9,7 @@
   },
   {
     "name": "speakeasy-api",
-    "amount": 4331
+    "amount": 4649
   },
   {
     "name": "uidotdev",
@@ -29,11 +29,11 @@
   },
   {
     "name": "kickstartDS",
-    "amount": 957
+    "amount": 986
   },
   {
     "name": "brianespinosa",
-    "amount": 912
+    "amount": 941
   },
   {
     "name": "jsheroes",
@@ -48,8 +48,12 @@
     "amount": 421
   },
   {
+    "name": "remotion-dev",
+    "amount": 400
+  },
+  {
     "name": "nathanclevenger",
-    "amount": 372
+    "amount": 391
   },
   {
     "name": "arosenkranz",
@@ -57,11 +61,11 @@
   },
   {
     "name": "molebox",
-    "amount": 333
+    "amount": 342
   },
   {
     "name": "traviscooper",
-    "amount": 315
+    "amount": 324
   },
   {
     "name": "obgibson",
@@ -85,15 +89,15 @@
   },
   {
     "name": "codeSTACKr",
-    "amount": 252
+    "amount": 261
+  },
+  {
+    "name": "kiliman",
+    "amount": 255
   },
   {
     "name": "matthiaszepper",
     "amount": 250
-  },
-  {
-    "name": "kiliman",
-    "amount": 246
   },
   {
     "name": "lostintangent",
@@ -220,6 +224,10 @@
     "amount": 86
   },
   {
+    "name": "zmzlois",
+    "amount": 84
+  },
+  {
     "name": "grikomsn",
     "amount": 81
   },
@@ -242,10 +250,6 @@
   {
     "name": "devopsbarista",
     "amount": 67
-  },
-  {
-    "name": "zmzlois",
-    "amount": 65
   },
   {
     "name": "cdalsoniii",
@@ -372,6 +376,10 @@
     "amount": 25
   },
   {
+    "name": "yowainwright",
+    "amount": 25
+  },
+  {
     "name": "codebender828",
     "amount": 23
   },
@@ -464,12 +472,12 @@
     "amount": 9
   },
   {
-    "name": "achan-godaddy",
-    "amount": 7
+    "name": "peterfox",
+    "amount": 8
   },
   {
-    "name": "peterfox",
-    "amount": 6
+    "name": "achan-godaddy",
+    "amount": 7
   },
   {
     "name": "RayJason",
