@@ -1,6 +1,7 @@
 import Link from "next/link"
 import {
   AllSponsors,
+  LatestSponsor,
   PoweredBy,
   Pricing,
   TopSponsors,
@@ -38,7 +39,9 @@ export default function HomePage() {
 
       <Pricing />
 
-      <AllSponsors className="mb-24" title="Sponsors" />
+      <h3 className="text-center pb-8 text-primary/60 text-lg">Sponsors</h3>
+      <LatestSponsor className="mb-4" />
+      <AllSponsors cta="Become a sponsor" className="mb-24" />
 
       <PoweredBy className="mb-8 text-center flex items-center justify-center gap-4 w-full flex-wrap" />
     </main>
