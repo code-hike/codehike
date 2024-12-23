@@ -22,7 +22,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: "${{ github.event.pull_request.head.sha }}"
+          ref: "${{ github.event.pull_request.merge_commit_sha }}"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
