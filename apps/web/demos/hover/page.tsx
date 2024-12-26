@@ -16,7 +16,7 @@ export default function Page() {
 
 function HoverContainer(props: { children: React.ReactNode }) {
   return (
-    <div className="bg-zinc-900/80 px-2 rounded hover-container">
+    <div className="bg-zinc-900/80 px-2 rounded hover-container text-white">
       {props.children}
     </div>
   )

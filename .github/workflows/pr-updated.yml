@@ -1,7 +1,7 @@
 name: PR Updated
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - next
 
@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: "${{ github.event.pull_request.head.sha }}"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
