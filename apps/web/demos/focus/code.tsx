@@ -35,10 +35,10 @@ export function CodeContainer({ code }: { code: HighlightedCode }) {
         }}
         handlers={[focus]}
       />
-      <div className="p-2 mt-auto font-light text-center">
+      <div className="p-2 mt-auto font-light text-center text-white">
         You can also change the focus annotations on a rendered codeblock:
       </div>
-      <div className="flex justify-center gap-2 pb-4">
+      <div className="flex justify-center gap-2 pb-4 text-white">
         <button
           onClick={() => setFocused("lorem")}
           disabled={focused === "lorem"}
