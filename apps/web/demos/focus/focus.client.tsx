@@ -1,47 +1,3 @@
----
-title: Focus
-description: Focus annotation
-layout: PreviewAndImplementation
----
-
-## !demo
-
-Focus blocks of code. Dim the unfocused code. Ensure the focused code is visible when there's overflow.
-
-Useful when you want to change a codeblock focus depending on the user's interaction.
-
-<Demo name="focus" />
-
-## !implementation
-
-We need two things:
-
-- Set a `data-focus={true}` to the focused lines
-- Get a `ref` of the `pre` element, and scroll it if needed
-
-```tsx focus.tsx -c
-// !fold[/className="(.*?)"/gm]
-import { AnnotationHandler, InnerLine } from "codehike/code"
-import { PreWithFocus } from "./focus.client"
-
-export const focus: AnnotationHandler = {
-  name: "focus",
-  onlyIfAnnotated: true,
-  PreWithRef: PreWithFocus,
-  Line: (props) => (
-    <InnerLine
-      merge={props}
-      className="opacity-50 data-[focus]:opacity-100 px-2"
-    />
-  ),
-  AnnotatedLine: ({ annotation, ...props }) => (
-    <InnerLine merge={props} data-focus={true} className="bg-zinc-700/30" />
-  ),
-}
-```
-
-```tsx focus.client.tsx -c
-// !fold[/className="(.*?)"/gm]
 "use client"
 
 import React, { useLayoutEffect, useRef } from "react"
@@ -83,4 +39,3 @@ function useScrollToFocus(ref: React.RefObject<HTMLPreElement>) {
     }
   })
 }
-```
