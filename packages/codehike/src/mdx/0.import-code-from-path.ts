@@ -56,8 +56,8 @@ async function readFile(
   let fs, path
 
   try {
-    fs = (await import("fs")).default
-    path = (await import("path")).default
+    fs = require("fs")
+    path = require("path")
     if (!fs || !fs.readFileSync || !path || !path.resolve) {
       throw new Error("fs or path not found")
     }
