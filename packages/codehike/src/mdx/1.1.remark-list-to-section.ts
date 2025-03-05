@@ -216,7 +216,8 @@ function isImageAndParagraphs(child: any): child is {
     return (
       (c.type === "image" && c.alt?.startsWith("!")) ||
       (c.type === "text" && c.value.trim().startsWith("!")) ||
-      (c.type === "text" && c.value.trim() === "")
+      (c.type === "text" && c.value.trim() === "") ||
+      c.type === "break"
     )
   })
 }
