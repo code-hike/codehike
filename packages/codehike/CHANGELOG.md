@@ -1,5 +1,11 @@
 # codehike
 
+## 1.0.5
+
+### Patch Changes
+
+- [#499](https://github.com/code-hike/codehike/pull/499) [`360df6e`](https://github.com/code-hike/codehike/commit/360df6e84793bc106350693cabbe06efe170b2e8) Thanks [@pomber](https://github.com/pomber)! - Parse two values separated by a markdown break
+
 ## 1.0.4
 
 ### Patch Changes
