@@ -57,6 +57,14 @@
       "children": [{ "type": "text", "value": "!e1 1\r\nee ee\r\nee" }]
     },
     {
+      "type": "paragraph",
+      "children": [
+        { "type": "text", "value": "!k two-spaces-after-value" },
+        { "type": "break" },
+        { "type": "text", "value": "!l because-some-use-prettier-proseWrap" }
+      ]
+    },
+    {
       "type": "heading",
       "depth": 2,
       "children": [{ "type": "text", "value": "!invalid" }]
