@@ -1,13 +1,8 @@
 import { Code, Root } from "mdast"
 import { visit } from "unist-util-visit"
-
 /**
- * Find all codeblocks like:
- *
- * ```jsx
- * !from ./foo/bar.js
- * ```
- * and replace the value with the content of the referenced file.
+ * Find all codeblocks that contain lines starting with !from
+ * and replace those lines with the content from the referenced files.
  */
 export async function transformImportedCode(
   tree: Root,
@@ -15,7 +10,7 @@ export async function transformImportedCode(
 ) {
   const nodes: Code[] = []
   visit(tree, "code", (node) => {
-    if (node.value?.startsWith("!from ")) {
+    if (node.value?.includes("\n!from ") || node.value?.startsWith("!from ")) {
       nodes.push(node)
     }
   })
@@ -27,9 +22,18 @@ export async function transformImportedCode(
   const mdxPath = file?.history ? file.history[file.history.length - 1] : null
   await Promise.all(
     nodes.map(async (code) => {
-      const fromData = code.value.slice(6).trim()
-      const [codepath, range] = fromData?.split(/\s+/) || []
-      code.value = await readFile(codepath, mdxPath, range)
+      const lines = code.value.split("\n")
+      const newLines = await Promise.all(
+        lines.map(async (line) => {
+          if (line.startsWith("!from ")) {
+            const fromData = line.slice(6).trim()
+            const [codepath, range] = fromData?.split(/\s+/) || []
+            return await readFile(codepath, mdxPath, range)
+          }
+          return line
+        }),
+      )
+      code.value = newLines.join("\n")
     }),
   )
 

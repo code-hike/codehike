@@ -1,6 +1,7 @@
 ---
 snapshots:
   - compiled-jsx
+  - rendered
 ---
 
 hello
@@ -10,5 +11,15 @@ hello
 ```
 
 ```py !
+!from ./assets/test.py
+```
+
+```py
+# !mark(2) bar
+!from ./assets/test.py
+
+def hello():
+    print("hello")
+
 !from ./assets/test.py
 ```
