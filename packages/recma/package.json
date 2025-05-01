@@ -1,0 +1,12 @@
+{
+  "name": "recma-codehike",
+  "version": "0.0.1",
+  "main": "index.js",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": "code-hike/codehike",
+  "dependencies": {
+    "codehike": "*"
+  }
+}

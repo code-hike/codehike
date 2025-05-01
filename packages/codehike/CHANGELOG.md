@@ -1,5 +1,13 @@
 # codehike
 
+## 1.0.6
+
+### Patch Changes
+
+- [#513](https://github.com/code-hike/codehike/pull/513) [`c8815fa`](https://github.com/code-hike/codehike/commit/c8815fa63f1b1ece57f3aac7f73f30dfb710ac81) Thanks [@pomber](https://github.com/pomber)! - Better turbopack support
+
+- [#510](https://github.com/code-hike/codehike/pull/510) [`9ae57ed`](https://github.com/code-hike/codehike/commit/9ae57ed82c89e37ced68945478919f3a1e204559) Thanks [@pomber](https://github.com/pomber)! - More flexible `!from` directive
+
 ## 1.0.5
 
 ### Patch Changes
