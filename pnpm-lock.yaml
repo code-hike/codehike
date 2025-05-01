@@ -254,6 +254,18 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
 
+  packages/recma:
+    dependencies:
+      codehike:
+        specifier: '*'
+        version: 1.0.5
+
+  packages/remark:
+    dependencies:
+      codehike:
+        specifier: '*'
+        version: 1.0.5
+
 packages:
 
   '@actions/exec@1.1.1':
@@ -2106,6 +2118,9 @@ packages:
   coa@2.0.2:
     resolution: {integrity: sha512-q5/jG+YQnSy4nRTV4F7lPepBJZ8qBNJJDBuJdoejDyLXgmL7IEo+Le2JDZudFTFt7mrCqIRaSjws4ygRCTCAXA==}
     engines: {node: '>= 4.0'}
+
+  codehike@1.0.5:
+    resolution: {integrity: sha512-y3lL/3nPcvT7GNuEKw687AIip1Mg864lA/knWcCGn7Yp2FBQovsPqPTCpf/aodzWZ12HjWGfli+oxaSeuSyFXg==}
 
   collapse-white-space@2.1.0:
     resolution: {integrity: sha512-loKTxY1zCOuG4j9f6EPnuyyYkf58RnhhWTvRoZEokgB+WbdXehfjFviyOVYkqzEWz1Q5kRiZdBYS5SwxbQYwzw==}
@@ -6518,6 +6533,16 @@ snapshots:
       '@types/q': 1.5.8
       chalk: 2.4.2
       q: 1.5.1
+
+  codehike@1.0.5:
+    dependencies:
+      '@code-hike/lighter': 1.0.1
+      diff: 5.1.0
+      estree-util-visit: 2.0.0
+      mdast-util-mdx-jsx: 3.0.0
+      unist-util-visit: 5.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   collapse-white-space@2.1.0: {}
 
