@@ -26,12 +26,21 @@ async function extractCommentAnnotations(
   annotationPrefix = "!",
 ) {
   const extractor = (comment: string) => {
-    // const regex = /\s*(!?[\w-]+)?(\([^\)]*\)|\[[^\]]*\])?(.*)$/
+    const body = "(?:\\\\.|[^\\\\/])+"
+    const nestedBracketRegex = new RegExp(
+      `\\s*(${annotationPrefix}?[\\w-]+)?(\\[\\/${body}\\/[a-zA-Z]*\\])(.*)$`,
+    )
+    const nestedParenRegex = new RegExp(
+      `\\s*(${annotationPrefix}?[\\w-]+)?(\\(\\/${body}\\/[a-zA-Z]*\\))(.*)$`,
+    )
     const regex = new RegExp(
       `\\s*(${annotationPrefix}?[\\w-]+)?(\\([^\\)]*\\)|\\[[^\\]]*\\])?(.*)$`,
     )
 
-    const match = comment.match(regex)
+    const match =
+      comment.match(nestedBracketRegex) ||
+      comment.match(nestedParenRegex) ||
+      comment.match(regex)
     if (!match) {
       return null
     }
