@@ -1,5 +1,11 @@
 # codehike
 
+## 1.0.7
+
+### Patch Changes
+
+- [#515](https://github.com/code-hike/codehike/pull/515) [`d75d16f`](https://github.com/code-hike/codehike/commit/d75d16f52618a8f863127a18f74487b8282bd7ea) Thanks [@pomber](https://github.com/pomber)! - Better regex parsing in annotation range
+
 ## 1.0.6
 
 ### Patch Changes
