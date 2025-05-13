@@ -1,15 +1,15 @@
 import { MdxJsxAttribute, MdxJsxFlowElement } from "mdast-util-mdx-jsx"
-import {
-  HikeContent,
-  HikeSection,
-  JSXChild,
-} from "./1.1.remark-list-to-section.js"
+import { toMarkdown } from "mdast-util-to-markdown"
+import { HikeSection, JSXChild } from "./1.1.remark-list-to-section.js"
 import { getObjectAttribute } from "./estree.js"
 
-export function sectionToAttribute(root: HikeSection) {
+export function sectionToAttribute(
+  root: HikeSection,
+  markdownEnabled: boolean,
+) {
   const children: JSXChild[] = getSectionContainers(root, "")
 
-  const serializableTree = getSerializableNode(root, "")
+  const serializableTree = getSerializableNode(root, "", markdownEnabled)
 
   return {
     children,
@@ -23,7 +23,11 @@ export function sectionToAttribute(root: HikeSection) {
   }
 }
 
-function getSerializableNode(section: HikeSection, path: string) {
+function getSerializableNode(
+  section: HikeSection,
+  path: string,
+  markdownEnabled: boolean = false,
+) {
   const newPath = path ? [path, section.name].join(".") : section.name
   const node: any = {
     children: newPath,
@@ -33,10 +37,21 @@ function getSerializableNode(section: HikeSection, path: string) {
 
   section.children.forEach((child) => {
     if (child.type === "content") {
+      if (markdownEnabled) {
+        // If Markdown is enabled, convert paragraph nodes into Markdown text
+        // and accumulate them in the `node.markdown` property.
+        if (child.value.type === "paragraph") {
+          if (node.markdown == null) {
+            node.markdown = toMarkdown(child.value)
+          } else {
+            node.markdown += toMarkdown(child.value)
+          }
+        }
+      }
       return
     }
     if (child.type === "section") {
-      const childNode = getSerializableNode(child, newPath)
+      const childNode = getSerializableNode(child, newPath, markdownEnabled)
 
       if (child.multi) {
         node[child.name] = node[child.name] || []
