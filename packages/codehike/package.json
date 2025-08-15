@@ -57,6 +57,7 @@
     "diff": "^5.1.0",
     "estree-util-visit": "^2.0.0",
     "mdast-util-mdx-jsx": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.2",
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
