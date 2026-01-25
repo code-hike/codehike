@@ -86,7 +86,7 @@ export function Pricing() {
   )
 }
 
-export async function LatestSponsor({ className }: { className?: string }) {
+export async function fetchLatestSponsors(limit: number = 5) {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN
   if (!GITHUB_TOKEN) {
     throw new Error("Missing process.env.GITHUB_TOKEN")
@@ -110,11 +110,27 @@ export async function LatestSponsor({ className }: { className?: string }) {
     throw new Error("No sponsors found")
   }
 
-  const latest = sponsors[0].node
+  return sponsors.slice(0, limit).map((edge: any) => {
+    const node = edge.node
+    const entity = node.sponsorEntity
+    return {
+      login: entity.login,
+      name: entity.name || entity.login,
+      avatarUrl: entity.avatarUrl,
+      createdAt: node.createdAt,
+      tierName: node.tier.name,
+      websiteUrl: entity.websiteUrl,
+    }
+  })
+}
+
+export async function LatestSponsor({ className }: { className?: string }) {
+  const sponsors = await fetchLatestSponsors(1)
+  const latest = sponsors[0]
 
   return (
     <a
-      href={`https://github.com/${latest.sponsorEntity.login}`}
+      href={`https://github.com/${latest.login}`}
       className={cn(
         className,
         "rounded bg-zinc-50 dark:bg-zinc-900 p-3 flex gap-3 border border-zinc-200/50 dark:border-zinc-700/50 hover:border-zinc-200 dark:hover:border-zinc-700 transition-colors w-96 md:w-full mx-auto",
@@ -122,8 +138,8 @@ export async function LatestSponsor({ className }: { className?: string }) {
     >
       <Image
         className="rounded my-0 max-h-20"
-        src={`${latest.sponsorEntity.avatarUrl}`}
-        alt={latest.sponsorEntity.name}
+        src={latest.avatarUrl}
+        alt={latest.name}
         height={80}
         width={80}
         placeholder="empty"
@@ -133,11 +149,9 @@ export async function LatestSponsor({ className }: { className?: string }) {
         <div className="text-primary/70 text-sm">
           Latest sponsor · <TimeAgo date={latest.createdAt} />
         </div>
-        <div className="text-2xl font-bold">
-          {latest.sponsorEntity.name || latest.sponsorEntity.login}
-        </div>
+        <div className="text-2xl font-bold">{latest.name}</div>
         <div className="text-primary/90 text-sm">
-          Sponsoring <strong>{latest.tier.name}</strong>{" "}
+          Sponsoring <strong>{latest.tierName}</strong>{" "}
         </div>
       </div>
       {/* <pre>{JSON.stringify(latest, null, 2)}</pre> */}
