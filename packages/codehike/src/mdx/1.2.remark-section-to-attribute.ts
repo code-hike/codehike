@@ -1,15 +1,20 @@
 import { MdxJsxAttribute, MdxJsxFlowElement } from "mdast-util-mdx-jsx"
-import {
-  HikeContent,
-  HikeSection,
-  JSXChild,
-} from "./1.1.remark-list-to-section.js"
+import { HikeSection, JSXChild } from "./1.1.remark-list-to-section.js"
 import { getObjectAttribute } from "./estree.js"
 
-export function sectionToAttribute(root: HikeSection) {
+export function sectionToAttribute(
+  root: HikeSection,
+  markdownEnabled: boolean,
+  source?: string,
+) {
   const children: JSXChild[] = getSectionContainers(root, "")
 
-  const serializableTree = getSerializableNode(root, "")
+  const serializableTree = getSerializableNode(
+    root,
+    "",
+    markdownEnabled,
+    source,
+  )
 
   return {
     children,
@@ -23,7 +28,12 @@ export function sectionToAttribute(root: HikeSection) {
   }
 }
 
-function getSerializableNode(section: HikeSection, path: string) {
+function getSerializableNode(
+  section: HikeSection,
+  path: string,
+  markdownEnabled: boolean = false,
+  source?: string,
+) {
   const newPath = path ? [path, section.name].join(".") : section.name
   const node: any = {
     children: newPath,
@@ -31,12 +41,26 @@ function getSerializableNode(section: HikeSection, path: string) {
     _data: section._data,
   }
 
+  const markdown = computeSectionMarkdownFromContentNodes(
+    section,
+    markdownEnabled,
+    source,
+  )
+  if (markdown !== undefined) {
+    node.markdown = markdown
+  }
+
   section.children.forEach((child) => {
     if (child.type === "content") {
       return
     }
     if (child.type === "section") {
-      const childNode = getSerializableNode(child, newPath)
+      const childNode = getSerializableNode(
+        child,
+        newPath,
+        markdownEnabled,
+        source,
+      )
 
       if (child.multi) {
         node[child.name] = node[child.name] || []
@@ -62,6 +86,90 @@ function getSerializableNode(section: HikeSection, path: string) {
   })
 
   return node
+}
+
+function computeSectionMarkdownFromContentNodes(
+  section: HikeSection,
+  markdownEnabled: boolean,
+  source?: string,
+): string | undefined {
+  if (!markdownEnabled || source == null) {
+    return undefined
+  }
+
+  let markdown: string | undefined
+  let pendingBrCount = 0
+
+  for (const child of section.children) {
+    if (child.type !== "content") {
+      continue
+    }
+
+    const contentNode = child.value
+
+    if (isFlowBrElement(contentNode)) {
+      pendingBrCount += 1
+      continue
+    }
+
+    if (isParagraphNode(contentNode)) {
+      let paragraph = sliceOriginalSourceByNodeOffset(source, contentNode)
+      paragraph = paragraph.trimEnd()
+
+      if (paragraph === "") {
+        continue
+      }
+
+      if (markdown === undefined) {
+        // First paragraph in this section.
+        // Each preceding flow-level <br /> adds one leading newline.
+        const leadingNewlines =
+          pendingBrCount > 0 ? "\n".repeat(pendingBrCount) : ""
+        markdown = leadingNewlines + paragraph
+      } else {
+        // For each paragraph after the first:
+        // Add one newline by default, plus one extra newline for each
+        // flow-level <br /> seen since the previous paragraph.
+        const newlineCount = 1 + pendingBrCount
+        markdown += "\n".repeat(newlineCount) + paragraph
+      }
+
+      // Reset pending flow-level <br /> spacing after applying it to this paragraph.
+      pendingBrCount = 0
+    }
+  }
+
+  if (markdown !== undefined && pendingBrCount > 0) {
+    markdown += "\n".repeat(pendingBrCount)
+  }
+
+  return markdown
+}
+
+function sliceOriginalSourceByNodeOffset(
+  source: string,
+  node: JSXChild,
+): string {
+  const start = node.position?.start?.offset
+  const end = node.position?.end?.offset
+
+  if (typeof start !== "number" || typeof end !== "number") {
+    return ""
+  }
+
+  return source.slice(start, end)
+}
+
+function isParagraphNode(node: JSXChild): boolean {
+  return node.type === "paragraph"
+}
+
+function isFlowBrElement(node: JSXChild): boolean {
+  return (
+    node.type === "mdxJsxFlowElement" &&
+    typeof node.name === "string" &&
+    node.name.toLowerCase() === "br"
+  )
 }
 
 function getSectionContainers(section: HikeSection, path: string) {
