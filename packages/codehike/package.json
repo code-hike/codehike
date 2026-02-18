@@ -47,7 +47,7 @@
   "scripts": {
     "build": "tsc -p . ",
     "dev": "tsc -p . --watch",
-    "test": "vitest run markdown-enabled.test.ts",
+    "test": "vitest run",
     "watch": "vitest -u",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "check-exports": "attw --pack ."
