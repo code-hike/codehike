@@ -9,10 +9,11 @@ function ipsum(ipsum, dolor = 1) {
   return dolor
 }
 
-// !focus(1:5)
+// !focus(start)
 function dolor(ipsum, dolor = 1) {
   const sit = ipsum == null ? 0 : ipsum.sit
   dolor = sit - amet(dolor)
   return sit ? consectetur(ipsum) : []
 }
+// !focus(end)
 ```
