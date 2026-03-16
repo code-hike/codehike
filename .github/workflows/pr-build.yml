@@ -1,7 +1,7 @@
-name: PR Updated
+name: PR Build
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - next
 
@@ -10,19 +10,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  comment-pr:
-    name: Comment PR
+  build:
+    name: Build PR
     runs-on: ubuntu-latest
-
-    permissions:
-      issues: write
-      pull-requests: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: "${{ github.event.pull_request.head.sha }}"
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -41,7 +35,8 @@ jobs:
 
       - run: pnpm canary
 
-      - name: Add or update PR comment
-        run: node .github/scripts/pr-updated.mjs ${{ github.event.pull_request.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-build
+          path: canary.json

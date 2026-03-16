@@ -5,7 +5,9 @@ import { IDENTIFIER, PACKAGE_NAME } from "./params.mjs"
 import github from "@actions/github"
 
 const octokit = new Octokit({})
-const prNumber = github.context.payload.pull_request.number
+const prNumber =
+  github.context.payload.pull_request?.number ||
+  Number(process.env.PR_NUMBER)
 
 async function createOrUpdateComment(prevComment, prNumber, body) {
   if (prevComment) {
