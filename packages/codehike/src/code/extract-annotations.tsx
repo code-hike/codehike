@@ -121,10 +121,10 @@ async function extractCommentAnnotations(
     // Handle start/end range markers: !name(start) and !name(end)
     if (rangeString === "(start)") {
       query = START_MARKER + query
-      rangeString = undefined
+      rangeString = "(1)"
     } else if (rangeString === "(end)") {
       query = END_MARKER + query
-      rangeString = undefined
+      rangeString = "(1)"
     }
 
     return {

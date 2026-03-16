@@ -7,6 +7,14 @@ async function t(comment: string) {
   return annotations[0]
 }
 
+function getBlockRange(annotation: { ranges: any[] }, index = 0) {
+  const range = annotation.ranges[index]
+  if (!("fromLineNumber" in range) || !("toLineNumber" in range)) {
+    throw new Error("Expected block range")
+  }
+  return range
+}
+
 test("extracts basic annotation name", async () => {
   const annotation = await t("!foo bar")
   expect(annotation.name).toEqual("foo")
@@ -80,7 +88,7 @@ test("start/end creates block annotation spanning the range", async () => {
   const a = annotations[0]
   expect(a.name).toEqual("focus")
   expect(a.ranges).toHaveLength(1)
-  const range = a.ranges[0]
+  const range = getBlockRange(a)
   // after removing 2 comment lines, the code is 4 lines
   // "let b = 2" is line 2, "let c = 3" is line 3
   expect(range.fromLineNumber).toEqual(2)
@@ -123,8 +131,9 @@ test("start/end works with other annotations", async () => {
   const focus = annotations.find((a) => a.name === "focus")
   expect(mark).toBeDefined()
   expect(focus).toBeDefined()
-  expect(focus!.ranges[0].fromLineNumber).toBeDefined()
-  expect(focus!.ranges[0].toLineNumber).toBeDefined()
+  const range = getBlockRange(focus!)
+  expect(range.fromLineNumber).toBeDefined()
+  expect(range.toLineNumber).toBeDefined()
 })
 
 test("multiple start/end pairs of same name", async () => {
@@ -148,8 +157,8 @@ test("multiple start/end pairs of same name", async () => {
   expect(annotations[0].name).toEqual("focus")
   expect(annotations[1].name).toEqual("focus")
   // The two ranges should not overlap
-  const r0 = annotations[0].ranges[0]
-  const r1 = annotations[1].ranges[0]
+  const r0 = getBlockRange(annotations[0])
+  const r1 = getBlockRange(annotations[1])
   expect(r0.toLineNumber).toBeLessThan(r1.fromLineNumber)
 })
 
@@ -262,8 +271,9 @@ test("start/end works with Python comments", async () => {
   const { annotations } = await splitAnnotationsAndCode(code, "python", "!")
   expect(annotations).toHaveLength(1)
   expect(annotations[0].name).toEqual("focus")
-  expect(annotations[0].ranges[0].fromLineNumber).toEqual(2)
-  expect(annotations[0].ranges[0].toLineNumber).toEqual(3)
+  const range = getBlockRange(annotations[0])
+  expect(range.fromLineNumber).toEqual(2)
+  expect(range.toLineNumber).toEqual(3)
 })
 
 test("start/end works with block comments", async () => {
