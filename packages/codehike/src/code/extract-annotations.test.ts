@@ -1,4 +1,4 @@
-import { expect, test } from "vitest"
+import { expect, test, vi } from "vitest"
 import { splitAnnotationsAndCode } from "./extract-annotations.js"
 
 async function t(comment: string) {
@@ -153,6 +153,36 @@ test("multiple start/end pairs of same name", async () => {
   expect(r0.toLineNumber).toBeLessThan(r1.fromLineNumber)
 })
 
+test("same-name nested start/end pairs preserve nesting", async () => {
+  const code = [
+    "// !focus(start)",
+    "const outer = 1",
+    "// !focus(start)",
+    "const inner = 2",
+    "// !focus(end)",
+    "const outerTail = 3",
+    "// !focus(end)",
+    "const after = 4",
+  ].join("\n")
+  const { annotations } = await splitAnnotationsAndCode(
+    code,
+    "javascript",
+    "!",
+  )
+
+  expect(annotations).toHaveLength(2)
+  expect(annotations[0].name).toEqual("focus")
+  expect(annotations[0].ranges[0]).toEqual({
+    fromLineNumber: 1,
+    toLineNumber: 3,
+  })
+  expect(annotations[1].name).toEqual("focus")
+  expect(annotations[1].ranges[0]).toEqual({
+    fromLineNumber: 2,
+    toLineNumber: 2,
+  })
+})
+
 test("different annotation names with start/end", async () => {
   const code = [
     "// !focus(start)",
@@ -193,6 +223,31 @@ test("start/end removes comment lines from code", async () => {
   expect(lines[0]).toContain("let a = 1")
   expect(lines[1]).toContain("let b = 2")
   expect(lines[2]).toContain("let c = 3")
+})
+
+test("adjacent start/end markers are ignored instead of creating empty ranges", async () => {
+  const warn = vi.spyOn(console, "warn").mockImplementation(() => {})
+  try {
+    const code = [
+      "// !focus(start)",
+      "// !focus(end)",
+      "const x = 1",
+    ].join("\n")
+
+    const { code: resultCode, annotations } = await splitAnnotationsAndCode(
+      code,
+      "javascript",
+      "!",
+    )
+
+    expect(resultCode).toEqual("const x = 1")
+    expect(annotations).toHaveLength(0)
+    expect(warn).toHaveBeenCalledWith(
+      "Code Hike warning: Empty !focus start/end annotation range",
+    )
+  } finally {
+    warn.mockRestore()
+  }
 })
 
 test("start/end works with Python comments", async () => {

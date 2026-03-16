@@ -22,70 +22,69 @@ function getLineFromRange(range: any): number {
 }
 
 function processStartEndMarkers(annotations: Annotation[]): Annotation[] {
-  const regular: Annotation[] = []
-  const starts: { name: string; query: string; line: number }[] = []
-  const ends: { name: string; query: string; line: number }[] = []
+  const stacks = new Map<
+    string,
+    { name: string; query: string; line: number; order: number }[]
+  >()
+  const orderedAnnotations: { order: number; annotation: Annotation }[] = []
 
-  for (const a of annotations) {
+  for (const [order, a] of annotations.entries()) {
     const q = a.query ?? ""
     if (q.startsWith(START_MARKER)) {
-      starts.push({
+      const start = {
         name: a.name,
         query: q.slice(START_MARKER.length),
         line: getLineFromRange(a.ranges[0]),
-      })
+        order,
+      }
+      const stack = stacks.get(a.name) ?? []
+      stack.push(start)
+      stacks.set(a.name, stack)
     } else if (q.startsWith(END_MARKER)) {
-      ends.push({
-        name: a.name,
-        query: q.slice(END_MARKER.length),
-        line: getLineFromRange(a.ranges[0]),
+      const stack = stacks.get(a.name)
+      const start = stack?.pop()
+      if (!start) {
+        console.warn(
+          `Code Hike warning: Unmatched !${a.name}(end) annotation`,
+        )
+        continue
+      }
+
+      const endLine = getLineFromRange(a.ranges[0]) - 1
+      if (endLine < start.line) {
+        console.warn(
+          `Code Hike warning: Empty !${a.name} start/end annotation range`,
+        )
+        continue
+      }
+
+      orderedAnnotations.push({
+        order: start.order,
+        annotation: {
+          name: start.name,
+          query: start.query,
+          ranges: [{ fromLineNumber: start.line, toLineNumber: endLine }],
+        },
       })
     } else {
-      regular.push(a)
+      orderedAnnotations.push({ order, annotation: a })
     }
   }
 
-  if (starts.length === 0 && ends.length === 0) {
+  if (orderedAnnotations.length === annotations.length) {
     return annotations
   }
 
-  const paired: Annotation[] = []
-  const usedEnds = new Set<number>()
-
-  for (const start of starts) {
-    // find the first unused end with the same name that comes after the start
-    const endIndex = ends.findIndex(
-      (e, i) =>
-        !usedEnds.has(i) &&
-        e.name === start.name &&
-        e.line >= start.line,
-    )
-    if (endIndex === -1) {
+  for (const stack of stacks.values()) {
+    for (const start of stack) {
       console.warn(
         `Code Hike warning: Unmatched !${start.name}(start) annotation`,
       )
-      continue
-    }
-    usedEnds.add(endIndex)
-    const end = ends[endIndex]
-    paired.push({
-      name: start.name,
-      query: start.query,
-      ranges: [
-        { fromLineNumber: start.line, toLineNumber: end.line - 1 },
-      ],
-    })
-  }
-
-  for (let i = 0; i < ends.length; i++) {
-    if (!usedEnds.has(i)) {
-      console.warn(
-        `Code Hike warning: Unmatched !${ends[i].name}(end) annotation`,
-      )
     }
   }
 
-  return [...regular, ...paired]
+  orderedAnnotations.sort((a, b) => a.order - b.order)
+  return orderedAnnotations.map((entry) => entry.annotation)
 }
 
 async function extractCommentAnnotations(
