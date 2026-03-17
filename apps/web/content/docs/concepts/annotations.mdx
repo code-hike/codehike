@@ -40,7 +40,7 @@ We can use the `name` of those handlers as comments in the code to use the compo
 
 ## Annotation Comments
 
-We use comments to annotate codeblocks. **The comment syntax depends on the language**. For example, in javascript we use `// !name(1:5)` but in python we use `# !name(1:5)`. For JSON (that doesn't support comments), the recommendation is to instead use `jsonc` or `json5`, which support comments.
+We use comments to annotate codeblocks. **The comment syntax depends on the language**. For example, in javascript we use `// !name(1:5)`, but in python we use `# !name(1:5)`. For JSON (that doesn't support comments), the recommendation is to instead use `jsonc` or `json5`, which support comments.
 
 In the previous example we can see the two types of annotations:
 
@@ -217,3 +217,9 @@ The regular expressions also support flags The two most common are `g` for globa
 You can also use [capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Capturing_group) (see [fold example](/docs/code/fold)):
 
 <Demo name="annotations/groups" />
+
+## Using start/end comments instead of ranges
+
+Instead of counting lines for the range, you can use `!name(start)` and `!name(end)` comments to mark the block:
+
+<Demo name="annotations/start-end" />
