@@ -5,7 +5,48 @@ import { isHikeElement, listToSection } from "./1.1.remark-list-to-section.js"
 import { sectionToAttribute } from "./1.2.remark-section-to-attribute.js"
 import { CodeHikeConfig } from "./config.js"
 
-export async function transformAllHikes(root: Root, config: CodeHikeConfig) {
+/**
+ * Determines whether Markdown is enabled for the given MDX JSX element.
+ *
+ * This function checks for the presence of a `markdownEnabled` attribute:
+ * - If no attribute is found, it returns `false`.
+ * - If the attribute is present in shorthand form (e.g. `<SomeTag
+ *   markdownEnabled>`), it returns `true`.
+ * - If the attribute is an MDX expression (e.g. `<SomeTag
+ *   markdownEnabled={true} />`), it checks if the raw expression text is
+ *   literally `"true"`.
+ */
+export function isMarkdownEnabled(node: MdxJsxFlowElement): boolean {
+  // Look for the "markdownEnabled" attribute within the node’s attributes.
+  const markdownEnabledAttr = node.attributes.find(
+    (attr): attr is MdxJsxAttribute =>
+      attr.type === "mdxJsxAttribute" && attr.name === "markdownEnabled",
+  )
+
+  if (!markdownEnabledAttr) return false
+
+  // Shorthand (<Component markdownEnabled>) implies true.
+  if (markdownEnabledAttr.value === null) return true
+
+  // If the attribute value is an object, it indicates an MDX expression
+  // (e.g. markdownEnabled={true}). The `.value` property on this object is the
+  // raw string representation of the expression, so we check if it’s
+  // literally "true".
+  if (
+    typeof markdownEnabledAttr.value === "object" &&
+    markdownEnabledAttr.value.type === "mdxJsxAttributeValueExpression"
+  ) {
+    return markdownEnabledAttr.value.value.trim() === "true"
+  }
+
+  return false
+}
+
+export async function transformAllHikes(
+  root: Root,
+  config: CodeHikeConfig,
+  source?: string,
+) {
   let tree = wrapInHike(root)
 
   const hikes: MdxJsxFlowElement[] = []
@@ -16,7 +57,7 @@ export async function transformAllHikes(root: Root, config: CodeHikeConfig) {
     }
   })
 
-  await Promise.all(hikes.map((h) => transformRemarkHike(h, config)))
+  await Promise.all(hikes.map((h) => transformRemarkHike(h, config, source)))
 
   return tree
 }
@@ -41,9 +82,14 @@ function wrapInHike(root: Root) {
 async function transformRemarkHike(
   node: MdxJsxFlowElement,
   config: CodeHikeConfig,
+  source?: string,
 ) {
   const section = await listToSection(node, config)
-  const { children, attributes } = sectionToAttribute(section)
+  const { children, attributes } = sectionToAttribute(
+    section,
+    markdownEnabled,
+    source,
+  )
 
   node.children = children
   node.attributes.push(...attributes)

@@ -16,8 +16,9 @@ export const remarkCodeHike: Plugin<[CodeHikeConfig?], Root, Root> = (
 ) => {
   const safeConfig = config || {}
   return async (root, file) => {
+    const source = typeof file.value === "string" ? file.value : undefined
     let tree = await transformImportedCode(root, file)
-    tree = await transformAllHikes(tree, safeConfig)
+    tree = await transformAllHikes(tree, safeConfig, source)
     tree = await transformAllCode(tree, safeConfig)
     return tree
   }
