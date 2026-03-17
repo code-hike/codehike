@@ -40,27 +40,12 @@ We can use the `name` of those handlers as comments in the code to use the compo
 
 ## Annotation Comments
 
-We use comments to annotate codeblocks. **The comment syntax depends on the language**. For example, in javascript we use `// !name(1:5)` or `// !name(start)`, but in python we use `# !name(1:5)` or `# !name(start)`. For JSON (that doesn't support comments), the recommendation is to instead use `jsonc` or `json5`, which support comments.
+We use comments to annotate codeblocks. **The comment syntax depends on the language**. For example, in javascript we use `// !name(1:5)`, but in python we use `# !name(1:5)`. For JSON (that doesn't support comments), the recommendation is to instead use `jsonc` or `json5`, which support comments.
 
 In the previous example we can see the two types of annotations:
 
-- **Block annotations** are applied to a block of lines. They can use parenthesis `()` to define the range of lines, or `!name(start)` / `!name(end)` comments to mark the beginning and end of the block. Numeric ranges are relative to the line where the comment is placed.
+- **Block annotations** are applied to a block of lines. They use parenthesis `()` to define the range of lines. The numbers are relative to the line where the comment is placed.
 - **Inline annotations** are applied to a group of tokens inside a line. They use square brackets `[]` to define the range of columns included in the annotation.
-
-For example, these two block annotations are equivalent:
-
-```js
-// !focus(1:2)
-const b = 2
-const c = 3
-```
-
-```js
-// !focus(start)
-const b = 2
-const c = 3
-// !focus(end)
-```
 
 ## Annotation Query
 
