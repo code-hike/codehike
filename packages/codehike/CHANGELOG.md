@@ -1,5 +1,11 @@
 # codehike
 
+## 1.1.0
+
+### Minor Changes
+
+- [#532](https://github.com/code-hike/codehike/pull/532) [`b4d10f5`](https://github.com/code-hike/codehike/commit/b4d10f5330c6c30a79eed5a0f42710bec822d51c) Thanks [@pomber](https://github.com/pomber)! - Add support for `!name(start)` and `!name(end)` comment markers as an alternative way to define multi-line code annotation ranges.
+
 ## 1.0.7
 
 ### Patch Changes
