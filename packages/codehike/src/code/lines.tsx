@@ -99,6 +99,13 @@ function applyBlockAnnotation(
     }
   })
 
+  if (inside.length === 0) {
+    const lastLine = lines[lines.length - 1]?.range[1] ?? 0
+    throw new Error(
+      `Cannot generate a valid range for the given code. Annotation "${annotation.name}" targets lines ${fromLineNumber}-${toLineNumber}, but the code only has ${lastLine} lines.`,
+    )
+  }
+
   return [
     ...before,
     {
